@@ -1,0 +1,29 @@
+# Select image from https://hub.docker.com/r/_/php/
+image: php:7.1
+
+# Services
+services:
+  - mysql:latest
+
+# Variables and root user used
+variables:
+  MYSQL_ROOT_PASSWORD: secret
+  MYSQL_USER: gitlab-ci
+  MYSQL_PASSWORD: secret
+  MYSQL_DATABASE: your_db_name
+
+# Before Script
+before_script:
+  - bash .gitlab-ci.sh > /dev/null
+  #- cd /builds/zeedenis/ZeeApi
+  - php -v
+  - ping -c 3 mysql
+ # - cp app/config/parameters.gitlab-ci.yml app/config/parameters.yml
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install
+  - php bin/console doctrine:database:create --env=test --if-not-exists
+  - php bin/console doctrine:schema:create --env=test
+
+test:app:
+  script:
+  - phpunit -c app --debug
