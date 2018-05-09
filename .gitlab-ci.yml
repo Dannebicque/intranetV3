@@ -1,41 +1,9 @@
 # Select image from https://hub.docker.com/r/_/php/
 image: php:7.1
 
-# Services
-services:
-  - mysql:latest
-
-# Variables and root user used
-variables:
-  MYSQL_ROOT_PASSWORD: secret
-  MYSQL_USER: gitlab-ci
-  MYSQL_PASSWORD: secret
-  MYSQL_DATABASE: your_db_name
-
-# Before Script
 before_script:
-  #- bash .gitlab-ci.sh > /dev/null
-  #- cd /builds/zeedenis/ZeeApi
-  #!/bin/bash
-
-  # Install dependencies only for Docker.
- # [[ ! -e /.dockerinit ]] && exit 0
-  #set -xe
-
-  # Update packages and install composer and PHP dependencies.
-  - apt-get update -yqq
-  - apt-get install git libcurl4-gnutls-dev libicu-dev libmcrypt-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libpq-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev phpunit -yqq
-
-  # Compile PHP, include these extensions.
-  - docker-php-ext-install mbstring mcrypt pdo pdo_mysql curl json intl gd xml zip bz2 opcache
-  - php -v
-  - ping -c 3 mysql
- # - cp app/config/parameters.gitlab-ci.yml app/config/parameters.yml
-  - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install
-  - php bin/console doctrine:database:create --env=test --if-not-exists
-  - php bin/console doctrine:schema:create --env=test
+  - bash ci/docker_install.sh > /dev/null
 
 test:app:
   script:
-  - phpunit -c app --debug
+  - phpunit --configuration phpunit.xml
