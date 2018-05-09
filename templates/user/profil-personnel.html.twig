@@ -1,0 +1,396 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'profil.personnel.heading'|trans }}
+    Profil de <strong>{{ user.display }}</strong>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action bg-white">
+        <nav class="nav">
+            <a class="nav-link active" href="#">Timeline</a>
+            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#">Photos</a>
+            <a class="nav-link" href="#">Friends</a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="main-content">
+        <div class="row">
+            <div class="col-md-8">
+
+                <div class="publisher publisher-multi bg-white b-1 mb-30">
+                    <textarea class="publisher-input auto-expand" rows="4" placeholder="Write something"></textarea>
+                    <div class="flexbox">
+                        <div class="gap-items">
+                  <span class="publisher-btn file-group">
+                    <i class="fa fa-image file-browser"></i>
+                    <input type="file">
+                  </span>
+                            <a class="publisher-btn" href="#"><i class="fa fa-map-marker"></i></a>
+                            <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+                        </div>
+
+                        <button class="btn btn-sm btn-bold btn-primary">Post</button>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="media bb-1 border-fade">
+                        <img class="avatar avatar-lg" src="../assets/img/avatar/1.jpg" alt="...">
+                        <div class="media-body">
+                            <p>
+                                <strong class="fs-14">Maryam Amiri</strong>
+                                <time class="float-right text-lighter" datetime="2018">24 min ago</time>
+                            </p>
+                            <p>
+                                <small>Designer</small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <a href="#">
+                        <img src="../assets/img/gallery/1.jpg" alt="..." data-provide="lity">
+                    </a>
+
+                    <div class="card-body py-12">
+                        <div class="gap-items-4">
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-thumbs-up mr-1"></i> 83
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-comment mr-1"></i> 0
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-share-alt mr-1"></i> 1
+                            </a>
+                        </div>
+                    </div>
+
+                    <form class="publisher bg-transparent bt-1 border-fade">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
+                        <input class="publisher-input" type="text" placeholder="Add Comment">
+                        <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+                        <span class="publisher-btn file-group">
+                  <i class="fa fa-camera file-browser"></i>
+                  <input type="file">
+                </span>
+                    </form>
+
+                </div>
+
+
+                <div class="card">
+                    <div class="media bb-1 border-fade">
+                        <img class="avatar avatar-lg" src="../assets/img/avatar/1.jpg" alt="...">
+                        <div class="media-body">
+                            <p>
+                                <strong class="fs-14">Maryam Amiri</strong>
+                                <time class="float-right text-lighter" datetime="2018">3 hours ago</time>
+                            </p>
+                            <p>
+                                <small>Designer</small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-body bb-1 border-fade">
+                        <p class="lead">Authoritatively syndicate goal-oriented leadership skills for clicks-and-mortar
+                            outsourcing. Synergistically reconceptualize enabled catalysts for change.</p>
+
+                        <div class="gap-items-4 mt-2">
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-thumbs-up mr-1"></i> 196
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-comment mr-1"></i> 24
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-share-alt mr-1"></i> 3
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="media-list media-list-divided bg-lighter">
+                        <div class="media">
+                            <a class="avatar" href="#">
+                                <img src="../assets/img/avatar/4.jpg" alt="...">
+                            </a>
+                            <div class="media-body">
+                                <p>
+                                    <a href="#"><strong>Frank Camley</strong></a>
+                                    <time class="float-right text-fade" datetime="2018-07-14 20:00">Just now</time>
+                                </p>
+                                <p>Uniquely enhance world-class channels with just in time schemas.</p>
+
+                                <div class="media px-0">
+                                    <a class="avatar" href="#">
+                                        <img src="../assets/img/avatar/1.jpg" alt="...">
+                                    </a>
+                                    <div class="media-body">
+                                        <p>
+                                            <a href="#"><strong>Maryam Amiri</strong></a>
+                                            <time class="float-right text-fade" datetime="2018-07-14 20:00">26 mins
+                                                ago
+                                            </time>
+                                        </p>
+                                        <p>Thank you for your nice comment.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="media">
+                            <a class="avatar" href="#">
+                                <img src="../assets/img/avatar/5.jpg" alt="...">
+                            </a>
+                            <div class="media-body">
+                                <p>
+                                    <a href="#"><strong>Tim Hank</strong></a>
+                                    <time class="float-right text-fade" datetime="2018-07-14 20:00">2 hours ago</time>
+                                </p>
+                                <p>Continually drive user friendly solutions through performance based
+                                    infomediaries.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <form class="publisher bt-1 border-fade bg-white">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
+                        <input class="publisher-input" type="text" placeholder="Add Your Comment">
+                        <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+                        <span class="publisher-btn file-group">
+                  <i class="fa fa-camera file-browser"></i>
+                  <input type="file">
+                </span>
+                    </form>
+
+                </div>
+
+
+                <div class="card">
+                    <div class="media bb-1 border-fade">
+                        <img class="avatar avatar-lg" src="../assets/img/avatar/1.jpg" alt="...">
+                        <div class="media-body">
+                            <p>
+                                <strong class="fs-14">Maryam Amiri</strong>
+                                <time class="float-right text-lighter" datetime="2018">Yesterday</time>
+                            </p>
+                            <p>
+                                <small>Designer</small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="lead">Check this out. It is the next big thing!!</p>
+                    </div>
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.youtube.com/embed/M5S_JBRjd1s" frameborder="0"
+                                allowfullscreen=""></iframe>
+                    </div>
+
+
+                    <div class="card-body py-12">
+                        <div class="gap-items-4">
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-thumbs-up mr-1"></i> 196
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-comment mr-1"></i> 24
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-share-alt mr-1"></i> 3
+                            </a>
+                        </div>
+                    </div>
+
+                    <form class="publisher bg-transparent bt-1 border-fade">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
+                        <input class="publisher-input" type="text" placeholder="Add Comment">
+                        <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+                        <span class="publisher-btn file-group">
+                  <i class="fa fa-camera file-browser"></i>
+                  <input type="file">
+                </span>
+                    </form>
+
+                </div>
+
+
+                <div class="card">
+                    <div class="media bb-1 border-fade">
+                        <img class="avatar avatar-lg" src="../assets/img/avatar/1.jpg" alt="...">
+                        <div class="media-body">
+                            <p>
+                                <strong class="fs-14">Maryam Amiri</strong>
+                                <time class="float-right text-lighter" datetime="2018">18 Feb</time>
+                            </p>
+                            <p>
+                                <small>Designer</small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <p>Best memory from the beach...</p>
+                    </div>
+
+                    <div class="row gap-1" data-provide="photoswipe">
+                        <a class="col-6" href="#">
+                            <img src="../assets/img/gallery/11.jpg" alt="...">
+                        </a>
+
+                        <a class="col-6" href="#">
+                            <img src="../assets/img/gallery/12.jpg" alt="...">
+                        </a>
+                    </div>
+
+
+                    <div class="card-body py-12">
+                        <div class="gap-items-4">
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-thumbs-up mr-1"></i> 196
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-comment mr-1"></i> 24
+                            </a>
+                            <a class="text-lighter hover-light" href="#">
+                                <i class="fa fa-share-alt mr-1"></i> 3
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="media-list media-list-divided bg-lighter">
+                        <div class="media">
+                            <a class="avatar" href="#">
+                                <img src="../assets/img/avatar/5.jpg" alt="...">
+                            </a>
+                            <div class="media-body">
+                                <p>
+                                    <a href="#"><strong>Tim Hank</strong></a>
+                                    <time class="float-right text-fade" datetime="2018-07-14 20:00">25 Feb</time>
+                                </p>
+                                <p>Continually drive user friendly solutions through performance based
+                                    infomediaries.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <form class="publisher bg-transparent bt-1 border-fade">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
+                        <input class="publisher-input" type="text" placeholder="Add Comment">
+                        <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+                        <span class="publisher-btn file-group">
+                  <i class="fa fa-camera file-browser"></i>
+                  <input type="file">
+                </span>
+                    </form>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="card">
+                    <div class="text-white card-body bg-img text-center py-50"
+                         style="background-image: url(../assets/img/gallery/2.jpg);">
+                        <a href="#">
+                            <img class="avatar avatar-xxl avatar-bordered" src="../assets/img/avatar/1.jpg">
+                        </a>
+                        <h5 class="mt-2 mb-0"><a class="hover-primary text-white" href="#">Maryam Amiri</a></h5>
+                        <span>Web Designer</span>
+                    </div>
+                    <ul class="flexbox flex-justified text-center p-20">
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Followers</span><br>
+                            <span class="fs-22">3.6K</span>
+                        </li>
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Following</span><br>
+                            <span class="fs-22">426</span>
+                        </li>
+                        <li>
+                            <span class="text-muted">Tweets</span><br>
+                            <span class="fs-22">165</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flexbox align-items-baseline mb-20">
+                            <h6 class="text-uppercase ls-2">Friends</h6>
+                            <small>17</small>
+                        </div>
+
+                        <div class="gap-items-2 gap-y">
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/2.jpg" alt="..."></a>
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/3.jpg" alt="..."></a>
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/4.jpg" alt="..."></a>
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/5.jpg" alt="..."></a>
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/6.jpg" alt="..."></a>
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/7.jpg" alt="..."></a>
+                            <a class="avatar" href="#"><img src="../assets/img/avatar/8.jpg" alt="..."></a>
+                            <a class="avatar avatar-more" href="#">+9</a>
+                        </div>
+                    </div>
+
+                    <div class="text-center bt-1 border-light p-12">
+                        <a class="text-uppercase d-block fs-10 fw-500 ls-1 text-light" href="#">Invite People</a>
+                    </div>
+                </div>
+
+                <div class="card card-inverse card-carousel slide" data-ride="carousel"
+                     style="background-color: #00aced">
+                    <div class="card-header no-border">
+                        <span class="fa fa-twitter fs-25"></span>
+                        <h6 class="card-title card-title-bold">Twitter feed</h6>
+                    </div>
+
+                    <div class="carousel-inner">
+                        <blockquote class="blockquote blockquote-inverse no-border card-body m-0 carousel-item active">
+                            <p class="fs-16">Holisticly benchmark plug imperatives for multifunctional deliverables.
+                                Seamlessly incubate cross functional action.</p>
+                            <div class="flexbox">
+                                <time class="text-white" datetime="2018-10-02 20:00">2 October, 2017</time>
+                                <span class="fs-14"><i class="fa fa-heart"></i> 12</span>
+                            </div>
+                        </blockquote>
+
+                        <blockquote class="blockquote blockquote-inverse no-border card-body m-0 carousel-item">
+                            <p class="fs-16">Uniquely revolutionize leveraged catalysts for change for world class web
+                                services. Efficiently underwhelm competitive.</p>
+                            <div class="flexbox">
+                                <time class="text-white" datetime="2018-10-02 20:00">29 September, 2017</time>
+                                <span class="fs-14"><i class="fa fa-heart"></i> 35</span>
+                            </div>
+                        </blockquote>
+
+                        <blockquote class="blockquote blockquote-inverse no-border card-body m-0 carousel-item">
+                            <p class="fs-16">Enthusiastically optimize cross media manufactured products without process
+                                centric web services. Conveniently.</p>
+                            <div class="flexbox">
+                                <time class="text-white" datetime="2018-10-02 20:00">25 September, 2017</time>
+                                <span class="fs-14"><i class="fa fa-heart"></i> 91</span>
+                            </div>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

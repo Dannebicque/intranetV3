@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Gestion du <strong>semestre {{ semestre.libelle }}</strong>
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestres %}
+            <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="Changer de semestre"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 sol-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title">Gestion des <strong>Absences</strong></h4>
+                    <div class="card-header-actions">
+                        <a class="btn btn-sm btn-primary btn-square btn-round"
+                           title="Saisir des absences"
+                           data-provide="tooltip"
+                           data-placement="bottom"
+                           href="{{ path('administration_absences_semestre_saisie',{semestre:semestre.id}) }}"
+                        >
+                            <i class="ti ti-plus"></i>
+                        </a>
+                        <ul class="card-controls">
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" href="#"><i
+                                            class="ti-more-alt rotate-90"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" class="dropdown-item"><i class="ti-export"></i>Exporter (xls)</a>
+                                    <a href="#" class="dropdown-item"><i class="ti-printer"></i>Exporter (pdf)</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('administration_absences_semestre_liste',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        Afficher les absences</a>
+                    <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        Justifier des absences</a>
+                    <a href="{{ path('administration_commission_absences_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        Commission des absences</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 sol-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title">Gestion des <strong>Notes</strong></h4>
+                    <ul class="card-controls">
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item"><i class="ti-export"></i> Exporter (xls)</a>
+                                <a href="#" class="dropdown-item"><i class="ti-printer"></i> Exporter (pdf)</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a>
+                            </div>
+                        </li>
+                    </ul>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        Afficher les notes
+                    </a>
+                    <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        Demandes de rattrapages
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 sol-sm-12">
+            <div class="card">
+                <header class="card-header"><h4 class="card-title">Gestion des <strong>Etudiants</strong></h4>
+                    <div class="card-header-actions">
+                        <button class="btn btn-sm btn-primary btn-square btn-round"
+                                title="Ajouter des étudiants"
+                                data-provide="tooltip"
+                                data-placement="bottom">
+                            <i class="ti ti-plus"></i>
+                        </button>
+                        <ul class="card-controls">
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" class="dropdown-item"><i class="ti-export"></i>Exporter (xls)</a>
+                                    <a href="#" class="dropdown-item"><i class="ti-printer"></i>Exporter (pdf)</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('administration_etudiant_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary"> Données des étudiants</a>
+                    <a href="{{ path('administration_etudiant_groupe_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary"> Groupes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 sol-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title"><strong>Fin</strong> de semestre</h4>
+                    <ul class="card-controls">
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" href="#" aria-expanded="false"><i
+                                        class="ti-more-alt rotate-90"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item"><i class="ti-export"></i> Exporter (xls)</a>
+                                <a href="#" class="dropdown-item"><i class="ti-printer"></i> Exporter (pdf)</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a></div>
+                        </li>
+                    </ul>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('administration_sous_comission_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-warning"> Sous-commission</a>
+                    <a href="{{ path('administration_fin_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-danger"> Changement de semestre</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

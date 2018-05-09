@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.site.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+<div class="header-action">
+    {{ include('composants/sadm-buttons-show.html.twig', {elt: 'site', id: site.id}) }}
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.site.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ site.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle'|trans }}</th>
+                <td>{{ site.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.adresse'|trans }}</th>
+                <td>{% if site.adresse != null %}{{ site.adresse.display|raw  }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.ufr_site'|trans }}</th>
+                <td>
+                    <ul>{% for ufr in site.ufrs %}
+                            <li><a href="{{ path('sa_ufr_show', {id:ufr.id}) }}" target="_blank">{{ ufr.libelle }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ site.created ? site.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ site.updated ? site.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

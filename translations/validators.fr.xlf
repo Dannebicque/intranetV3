@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
+  <file id="validators.fr">
+    <unit id="VKDowX6" name="Error">
+      <notes>
+        <note category="file-source" priority="1">templates/form/bootstrap_4_layout.html.twig:267</note>
+      </notes>
+      <segment>
+        <source>Error</source>
+        <target></target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <strong>Prévisionnels</strong> de la formation
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'previsionnel'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">Par enseignant</h4>
+                <div class="card-body">
+                    <div class="form-group">
+                        <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previPersonnel">
+                            <option value="">Choisir l'enseignant</option>
+                            {% for personnel in user_data.personnels %}
+                            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">Par matière</h4>
+                <div class="card-body">
+                    <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previMatiere">
+                        <option value="">Choisir la matière</option>
+                        {% for matiere in matieres %}
+                            <option value="{{ matiere.id }}">{{ matiere.codeMatiere }} | {{ matiere.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">Par semestre</h4>
+                <div class="card-body">
+                    <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previSemestre">
+                        <option value="">Choisir le semestre</option>
+                        {% for semestre in user_data.semestres %}
+                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="blocPrevisionnel">
+        <h4 class="card-title">{{ 'adm.previsionnel.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <div class="alert alert-info">Veuillez choisir dans une des listes ci-dessus.</div>
+        </div>
+    </div>
+
+{#    <div class="callout callout-success" role="alert">
+        <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+            <span>&times;</span>
+        </button>
+        <h5>Well done!</h5>
+        <p>You successfully read this important alert message.</p>
+    </div>#}
+{% endblock %}
+
+{#{% block javascript %}
+<script>
+toastr.info('Are you the 6 fingered man?')
+</script>
+{% endblock %}#}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_previsionnel_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_previsionnel_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('administration_previsionnel_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'adm_previsionnel_index'}),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

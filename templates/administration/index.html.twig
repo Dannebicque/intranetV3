@@ -1,0 +1,171 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Administration
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card"><h4 class="card-title"><strong>Etudiants</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        {% for semestre in user_data.semestres %}
+                        <div class="col-md-2"><a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                                 class="btn btn-block btn-primary">
+                                {{ semestre.libelle }}
+                            </a></div>
+                        {% endfor %}
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-sm-4">
+                            <div><a href="{{ path('administration_etudiant_index') }}" class="btn btn-block btn-primary"> Tous les
+                                    étudiants</a></div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div><a href="{{ path('administration_statistique_index') }}" class="btn btn-block btn-primary">
+                                    Statistiques</a></div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div><a href="{{ path('administration_cohorte_index') }}" class="btn btn-block btn-primary">
+                                    Cohortes</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card"><h4 class="card-title"><strong>Personnels</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12"><a href="{{ path('administration_personnel_index') }}"
+                                                 class="btn btn-block btn-primary"> Permanents & vacataires de la formation
+                            </a></div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_previsionnel_index') }}" class="btn btn-block btn-primary">
+                                    Prévisionnels</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card"><h4 class="card-title"><strong>PPN</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_matiere_index') }}" class="btn btn-block btn-primary"> Programmes
+                                    Pédagogiques</a></div>
+                        </div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_groupe_index') }}" class="btn btn-block btn-primary"> Types de
+                                    Groupes</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card"><h4 class="card-title"><strong>Documents</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_document_index') }}" class="btn btn-block btn-primary"> Gérer les
+                                    documents</a></div>
+                        </div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_type_document_index') }}" class="btn btn-block btn-primary"> Gérer les
+                                    catégories de documents</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card"><h4 class="card-title"><strong>Emploi du Temps</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_edt_index') }}" class="btn btn-block btn-primary"> Gérer
+                                    l'emploi du temps</a></div>
+                        </div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_date_index') }}" class="btn btn-block btn-primary"> Gestion des
+                                    dates</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <div class="card"><h4 class="card-title"><strong>Stages</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-4">
+                            <div><a href="{{ path('administration_stage_index', {periode:1}) }}" class="btn btn-block btn-primary"> Période ...</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div><a href="/administration/stages/2" class="btn btn-block btn-primary"> Période ...</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div><a href="/administration/stages/3" class="btn btn-block btn-primary"> Période ...</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_stage_gestion_index') }}" class="btn btn-block btn-primary"> Gérer
+                                    (ajouter période, offres de stages, statistiques)</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card"><h4 class="card-title"><strong>Actualités/Articles</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12"><a href="{{ path('administration_article_new') }}"
+                                                  class="btn btn-block btn-primary"> Ajouter un article
+                                (RI/Formation/...)
+                            </a></div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12"><a href="{{ path('administration_article_index') }}"
+                                                  class="btn btn-block btn-primary"> Gérer les articles
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card"><h4 class="card-title"><strong>Structure &amp; Configuration</strong></h4>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_structure_index') }}" class="btn btn-block btn-primary"> Structure de la
+                                    formation</a></div>
+                        </div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div><a href="{{ path('administration_configuration') }}" class="btn btn-block btn-primary">
+                                    Configuration</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

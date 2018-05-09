@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.structure.diplome.new.heading'|trans }}
+{% endblock %}
+
+{%block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-new.html.twig', {elt: 'structure_diplome'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.structure.diplome.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

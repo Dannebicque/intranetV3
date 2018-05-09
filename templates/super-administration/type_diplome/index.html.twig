@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_diplome.index.heading'|trans }}
+{% endblock %}
+
+{%block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-index.html.twig', {elt:'type_diplome'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_diplome.index.heading'|trans }}</h4>
+
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.sigle'|trans }}</th>
+                    <th>{{ 'table.nb_semestres'|trans }}</th>
+                    <th>{{ 'table.niveau_entree'|trans }}</th>
+                    <th>{{ 'table.niveau_sortie'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for type_diplome in type_diplomes %}
+                    <tr>
+                        <td>{{ type_diplome.id }}</td>
+                        <td>{{ type_diplome.libelle }}</td>
+                        <td>{{ type_diplome.sigle }}</td>
+                        <td>{{ type_diplome.nbSemestres }}</td>
+                        <td>{{ type_diplome.niveauEntree }}</td>
+                        <td>{{ type_diplome.niveauSortie }}</td>
+                        <td>
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'type_diplome', id:type_diplome.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="bg-pale-warning">
+                        <td colspan="7">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('sa_type_diplome_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('sa_type_diplome_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('sa_type_diplome_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {'sujet' : 'sadm_type_diplome_index'}),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

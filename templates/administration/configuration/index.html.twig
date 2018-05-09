@@ -1,0 +1,637 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.configuration.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab" href="#tab-formation" role="tab"
+                   aria-selected="false">{{ 'adm.configuration.tab.formation.menu'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-diplome" role="tab"
+                   aria-selected="false">{{ 'adm.configuration.tab.diplome.menu'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-annee"
+                   role="tab">{{ 'adm.configuration.tab.annee.menu'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-semestre"
+                   role="tab">{{ 'adm.configuration.tab.semestre.menu'|trans }}</a>
+            </li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="tab-content">
+        <div class="tab-pane active show" id="tab-formation" role="tabpanel">
+            <div class="card">
+                <h4 class="card-title">{{ 'adm.configuration.tab.formation.heading'|trans }}</h4>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.annee_courante'|trans }}</strong></p>
+                                    <p>{{ 'help.annee_courante'|trans }}</p>
+                                </div>
+                                <select class="form-control col-sm-6 changeOption"
+                                        name="annee_courante"
+                                        id="annee_courante"
+                                        data-type="formation"
+                                >
+                                    <option value="">Non sélectionnée / Aucune</option>
+                                    {% for annee in 'now'|date('Y')-2 .. 'now'|date('Y')+2 %}
+                                        <option value="{{ annee }}">{{ annee }} / {{ annee+1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_annee_previsionnel'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_annee_previsionnel'|trans }}</p>
+                                </div>
+                                <select class="form-control col-sm-6 changeOption"
+                                        name="opt_annee_previsionnel"
+                                        id="opt_annee_previsionnel"
+                                        data-type="formation">
+                                    <option value="">Non sélectionnée / Aucune</option>
+                                    {% for annee in 'now'|date('Y')-2 .. 'now'|date('Y')+2 %}
+                                        <option value="{{ annee }}">{{ annee }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_edt'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_edt'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optEdt ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_edt"
+                                           id="opt_edt"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_stage'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_stage'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optStage ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_stage"
+                                           id="opt_stage"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_update_celcat'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_update_celcat'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optUpdateCelcat ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_update_celcat"
+                                           id="opt_update_celcat"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_messagerie'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_messagerie'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optMessagerie ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_messagerie"
+                                           id="opt_messagerie"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_agence'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_agence'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optAgence ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_agence"
+                                           id="opt_agence"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_materiel'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_materiel'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optMateriel ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_materiel"
+                                           id="opt_materiel"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_synthese'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_synthese'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optSynthese ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_synthese"
+                                           id="opt_synthese"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_RI'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_RI'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optRi ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_RI"
+                                           id="opt_RI"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.respRi'|trans }}</strong></p>
+                                    <p>{{ 'help.respRi'|trans }}</p>
+                                </div>
+                                <select class="form-control col-sm-6 changeOption"
+                                        name="respRi"
+                                        id="respRi"
+                                        data-type="formation">
+                                    <option value="">Non sélectionné / Aucun</option>
+                                    {% for personnel in user_data.personnels %}
+                                        <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="media">
+                                <div class="media-body">
+                                    <p><strong>{{ 'table.opt_Infos'|trans }}</strong></p>
+                                    <p>{{ 'help.opt_Infos'|trans }}</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" {{ user_data.formation.optInfos ? 'checked': '' }}
+                                           class="changeOption"
+                                           name="opt_Infos"
+                                           id="opt_Infos"
+                                           data-type="formation">
+                                    <span class="switch-indicator"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-diplome" role="tabpanel">
+            <div class="card">
+                <h4 class="card-title">{{ 'adm.configuration.tab.diplome.heading'|trans }}</h4>
+                <div class="card-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        {% for diplome in user_data.diplomes %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                                   href="#diplome{{ diplome.id }}">{{ diplome.libelle }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        {% for diplome in user_data.diplomes %}
+                        <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                             id="diplome{{ diplome.id }}">
+                            {{ diplome.libelle }}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_nb_jours_saisie'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_nb_jours_saisie'|trans }}</p>
+                                        </div>
+                                        <input type="text" class="form-control col-sm-6 changeOption"
+                                               name="opt_nb_jours_saisie_{{ diplome.id }}"
+                                               id="opt_nb_jours_saisie_{{ diplome.id }}"
+                                               data-type="diplome"
+                                               data-id="{{ diplome.id }}">
+                                    </div>
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_suppr_absence'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_suppr_absence'|trans }}</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" checked=""
+                                                   class="changeOption"
+                                                   name="opt_suppr_absence_{{ diplome.id }}"
+                                                   id="opt_suppr_absence_{{ diplome.id }}"
+                                                   data-type="diplome"
+                                                   data-id="{{ diplome.id }}">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_espace_perso_visible'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_espace_perso_visible'|trans }}</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" checked=""
+                                                   class="changeOption"
+                                                   name="opt_espace_perso_visible_{{ diplome.id }}"
+                                                   id="opt_espace_perso_visible_{{ diplome.id }}"
+                                                   data-type="diplome"
+                                                   data-id="{{ diplome.id }}">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_dilpome_decale'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_dilpome_decale'|trans }}</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" checked=""
+                                                   class="changeOption"
+                                                   name="opt_dilpome_decale_{{ diplome.id }}"
+                                                   id="opt_dilpome_decale_{{ diplome.id }}"
+                                                   data-type="diplome"
+                                                   data-id="{{ diplome.id }}">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_anonymat'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_anonymat'|trans }}</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" checked=""
+                                                   class="changeOption"
+                                                   name="opt_anonymat_{{ diplome.id }}"
+                                                   id="opt_anonymat_{{ diplome.id }}"
+                                                   data-type="diplome"
+                                                   data-id="{{ diplome.id }}">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_commentaires_releve'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_commentaires_releve'|trans }}</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" checked=""
+                                                   class="changeOption"
+                                                   name="opt_commentaires_releve_{{ diplome.id }}"
+                                                   id="opt_commentaires_releve_{{ diplome.id }}"
+                                                   data-type="diplome"
+                                                   data-id="{{ diplome.id }}">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_methode_calcul'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_methode_calcul'|trans }}</p>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" checked=""
+                                                   class="changeOption"
+                                                   name="opt_methode_calcul_{{ diplome.id }}"
+                                                   id="opt_methode_calcul_{{ diplome.id }}"
+                                                   data-type="diplome"
+                                                   data-id="{{ diplome.id }}">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-annee" role="tabpanel">
+            <div class="card">
+                <h4 class="card-title">{{ 'adm.configuration.tab.annee.heading'|trans }}</h4>
+                <div class="card-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        {% for annee in user_data.annees %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                                   href="#annee{{ annee.id }}">{{ annee.libelle }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        {% for annee in user_data.annees %}
+                            <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                                 id="annee{{ annee.id }}">
+                                {{ annee.libelle }}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_alternance'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_alternance'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_alternance_{{ annee.id }}"
+                                                       id="opt_alternance_{{ annee.id }}"
+                                                       data-type="annee"
+                                                       data-id="{{ annee.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tab-semestre" role="tabpanel">
+            <div class="card">
+                <h4 class="card-title">{{ 'adm.configuration.tab.semestre.heading'|trans }}</h4>
+                <div class="card-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        {% for semestre in user_data.semestres %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                                   href="#sem{{ semestre.id }}">{{ semestre.libelle }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        {% for semestre in user_data.semestres %}
+                            <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                                 id="sem{{ semestre.id }}">
+                                {{ semestre.libelle }}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_mail_releve'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_mail_releve'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_mail_releve_{{ semestre.id }}"
+                                                       id="opt_mail_releve_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_destinataire_mail_releve'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_destinataire_mail_releve'|trans }}</p>
+                                            </div>
+                                            <select class="form-control col-sm-6 changeOption"
+                                                    name="opt_destinataire_mail_releve_{{ semestre.id }}"
+                                                    id="opt_destinataire_mail_releve_{{ semestre.id }}"
+                                                    data-type="semestre"
+                                                    data-id="{{ semestre.id }}">
+                                                <option value="">Non sélectionné / Aucun</option>
+                                                {% for personnel in user_data.personnels %}
+                                                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_mail_modification_note'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_mail_modification_note'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_mail_modification_note_{{ semestre.id }}"
+                                                       id="opt_mail_modification_note_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p>
+                                                    <strong>{{ 'table.opt_destinataure_mail_modification_note'|trans }}</strong>
+                                                </p>
+                                                <p>{{ 'help.opt_destinataure_mail_modification_note'|trans }}</p>
+                                            </div>
+                                            <select class="form-control col-sm-6 changeOption"
+                                                    name="opt_destinataure_mail_modification_note_{{ semestre.id }}"
+                                                    id="opt_destinataure_mail_modification_note_{{ semestre.id }}"
+                                                    data-type="semestre"
+                                                    data-id="{{ semestre.id }}">
+                                                <option value="">Non sélectionné / Aucun</option>
+                                                {% for personnel in user_data.personnels %}
+                                                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_mail_absence_responsable'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_mail_absence_responsable'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_mail_absence_responsable_{{ semestre.id }}"
+                                                       id="opt_mail_absence_responsable_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p>
+                                                    <strong>{{ 'table.opt_destinataure_mail_absence_responsable'|trans }}</strong>
+                                                </p>
+                                                <p>{{ 'help.opt_destinataure_mail_absence_responsable'|trans }}</p>
+                                            </div>
+                                            <select class="form-control col-sm-6 changeOption"
+                                                    name="opt_destinataure_mail_absence_responsable_{{ semestre.id }}"
+                                                    id="opt_destinataure_mail_absence_responsable_{{ semestre.id }}"
+                                                    data-type="semestre"
+                                                    data-id="{{ semestre.id }}">
+                                                <option value="">Non sélectionné / Aucun</option>
+                                                {% for personnel in user_data.personnels %}
+                                                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_evaluation_visible'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_evaluation_visible'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_evaluation_visible_{{ semestre.id }}"
+                                                       id="opt_evaluation_visible_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_evaluation_modifiable'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_evaluation_modifiable'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_evaluation_modifiable_{{ semestre.id }}"
+                                                       id="opt_evaluation_modifiable_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_mail_absence_etudiant'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_mail_absence_etudiant'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_mail_absence_etudiant_{{ semestre.id }}"
+                                                       id="opt_mail_absence_etudiant_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_penalite_absence'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_penalite_absence'|trans }}</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked=""
+                                                       class="changeOption"
+                                                       name="opt_penalite_absence_{{ semestre.id }}"
+                                                       id="opt_penalite_absence_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_point_penalite_absence'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_point_penalite_absence'|trans }}</p>
+                                            </div>
+                                            <input type="text" class="form-control col-sm-6 changeOption"
+                                                   name="opt_point_penalite_absence_{{ semestre.id }}"
+                                                   id="opt_point_penalite_absence_{{ semestre.id }}"
+                                                   data-type="semestre"
+                                                   data-id="{{ semestre.id }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

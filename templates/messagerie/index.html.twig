@@ -1,0 +1,327 @@
+
+    <div class="row">
+        <div class="col-sm-2">
+            {{ include('messagerie/sidebar.html.twig') }}
+        </div>
+        <div class="col-sm-9">
+
+
+            <div class="media-list media-list-divided media-list-hover" data-provide="selectall">
+
+                <header class="flexbox align-items-center media-list-header bg-transparent b-0 py-16 pl-20">
+                    <div class="flexbox align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <span class="divider-line mx-1"></span>
+
+                        <div class="btn-group">
+                            <button class="btn" title="Archive" data-provide="tooltip"><i class="fa fa-archive"></i>
+                            </button>
+                            <button class="btn" title="Spam" data-provide="tooltip"><i
+                                        class="fa fa-exclamation-circle"></i></button>
+                            <button class="btn" title="Trash" data-provide="tooltip"><i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+
+                        <span class="divider-line mx-1"></span>
+
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Move to"
+                               data-provide="tooltip"><i class="fa fa-folder pr-1"></i></a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Important</a>
+                                <a class="dropdown-item" href="#">Social</a>
+                                <a class="dropdown-item" href="#">Bank Statements</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Create a folder</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Labels"
+                               data-provide="tooltip"><i class="fa fa-tag pr-1"></i></a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#"><span
+                                            class="badge badge-ring badge-danger mr-2"></span> Family</a>
+                                <a class="dropdown-item" href="#"><span
+                                            class="badge badge-ring badge-warning mr-2"></span> Friends</a>
+                                <a class="dropdown-item" href="#"><span class="badge badge-ring badge-info mr-2"></span>
+                                    Work</a>
+                                <a class="dropdown-item" href="#"><span
+                                            class="badge badge-ring badge-purple mr-2"></span> Bills</a>
+                            </div>
+                        </div>
+
+                        <span class="divider-line mx-1 d-none d-md-block"></span>
+
+                        <div class="dropdown d-none d-md-block">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="More"
+                               data-provide="tooltip"><i class="ti-more-alt pr-2"></i></a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Mark as unread</a>
+                                <a class="dropdown-item" href="#">Mark as unimportant</a>
+                                <a class="dropdown-item" href="#">Add star</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Mute</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="d-none d-md-block">
+                        <div class="lookup lookup-circle lookup-right">
+                            <input type="text" data-provide="media-search">
+                        </div>
+                    </div>
+                </header>
+
+
+                <div class="media-list-body bg-white b-1">
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox">
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-danger"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/1.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Maryam Amiri</h6>
+                            <small>
+                                <strong>Happy Christmas!</strong>
+                                <span class="fw-300 opacity-80">Conveniently parallel task wireless convergence before goal-oriented human capital.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">12:35 AM</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox">
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-danger opacity-0"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/2.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Hossein Shams</h6>
+                            <small>
+                                <strong>Vacation checklist</strong>
+                                <span class="fw-300 opacity-80">Synergistically underwhelm clicks-and.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">06:35 PM</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox" checked>
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-bills"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/3.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Sarah Conner</h6>
+                            <small>
+                                <strong>List of bills that I paid</strong>
+                                <span class="fw-300 opacity-80">Globally synthesize seamless process improvements whereas technically sound infrastructures.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">09:48 PM</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox" checked>
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-danger opacity-0"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/4.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Tim Hank</h6>
+                            <small>
+                                <strong>No Subject</strong>
+                                <span class="fw-300 opacity-80">Objectively disintermediate intermandated applications with next-generation ideas. Authoritatively supply.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">Yesterday</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox">
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-danger"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/5.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Frank Camly</h6>
+                            <small>
+                                <strong>Watch this awesome video</strong>
+                                <span class="fw-300 opacity-80">If you can't see this email, please click on the following link.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">Yesterday</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox">
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-info"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/default.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Luz Pintor</h6>
+                            <small>
+                                <strong>Could you stay at work today?</strong>
+                                <span class="fw-300 opacity-80">If you can't see this email, please click on the following link.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">2 days ago</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox" checked>
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-danger opacity-0"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/6.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Gary Camara</h6>
+                            <small>
+                                <strong>Respond my friend request!</strong>
+                                <span class="fw-300 opacity-80">If you can't see this email, please click on the following link.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">3 days ago</time>
+                    </div>
+
+
+                    <div class="media align-items-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label"></label>
+                        </div>
+
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox">
+                            <i class="fa fa-star"></i>
+                        </label>
+
+                        <span class="badge badge-dot badge-warning"></span>
+
+                        <a href="#"><img class="avatar" src="../assets/img/avatar/7.jpg" alt="..."></a>
+
+                        <a class="media-body text-truncate" href="mailbox-single.html">
+                            <h6>Bobby Mincy</h6>
+                            <small>
+                                <strong>See you tonight?</strong>
+                                <span class="fw-300 opacity-80">If you can't see this email, please click on the following link.</span>
+                            </small>
+                        </a>
+
+                        <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
+
+                        <time datetime="2018">Last week</time>
+                    </div>
+
+                </div>
+
+
+                <footer class="flexbox align-items-center py-20">
+                    <span class="flex-grow text-right text-lighter pr-2">1-20 of 367</span>
+                    <nav>
+                        <a class="btn btn-sm btn-square disabled" href="#"><i class="ti-angle-left"></i></a>
+                        <a class="btn btn-sm btn-square" href="#"><i class="ti-angle-right"></i></a>
+                    </nav>
+                </footer>
+
+            </div>
+        </div>
+    </div>

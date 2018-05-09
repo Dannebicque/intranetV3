@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Applications
+{% endblock %}
+
+{% block headeractions %}
+    {{ include('application/menu.html.twig') }}
+{% endblock %}
+
+{% block content %}
+        {{ render(controller(
+            'App\\Controller\\PrevisionnelController::index'
+        )) }}
+{% endblock %}

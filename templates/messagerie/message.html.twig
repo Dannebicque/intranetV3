@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'message.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-2">
+            {{ include('messagerie/sidebar.html.twig') }}
+        </div>
+        <div class="col-sm-10">
+            <div class="card">
+                <header class="card-header cursor-pointer" data-toggle="collapse" data-target="#email-1">
+                    <div class="card-title flexbox">
+                        <img class="avatar" src="../assets/img/avatar/2.jpg" alt="...">
+                        <div>
+                            <h6 class="mb-0">Hossein Shams</h6>
+                            <small>Today at 11:34 AM</small>
+                            <small><a class="text-info no-collapsing ml-1" href="#email-info-1" data-toggle="collapse">Details</a></small>
+
+                            <div class="collapse no-collapsing cursor-text" id="email-info-1">
+                                <small class="d-inline-block w-40px mt-1">From:</small>
+                                <small>theadmin@thetheme.io</small>
+                                <br>
+                                <small class="d-inline-block w-40px">To:</small>
+                                <small>subscriber@yahoo.com</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a class="text-lighter" data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><i class="fa fa-reply"></i> Reply</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-share"></i> Forward</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-print"></i> Print</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="collapse" id="email-1">
+                    <div class="card-body">
+                        <p>Credibly harness multidisciplinary ideas via alternative e-commerce. Intrinsicly transition interdependent best practices before resource sucking outsourcing.</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="card">
+                <header class="card-header cursor-pointer" data-toggle="collapse" data-target="#email-2">
+                    <div class="card-title flexbox">
+                        <img class="avatar" src="../assets/img/avatar/1.jpg" alt="...">
+                        <div>
+                            <h6 class="mb-0">Hossein Shams</h6>
+                            <small>Today at 11:34 AM</small>
+                            <small><a class="text-info no-collapsing ml-1" href="#email-info-2" data-toggle="collapse">Details</a></small>
+
+                            <div class="collapse no-collapsing cursor-text" id="email-info-2">
+                                <small class="d-inline-block w-40px mt-1">From:</small>
+                                <small>theadmin@thetheme.io</small>
+                                <br>
+                                <small class="d-inline-block w-40px">To:</small>
+                                <small>subscriber@yahoo.com</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a class="text-lighter" data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><i class="fa fa-reply"></i> Reply</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-share"></i> Forward</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-print"></i> Print</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="collapse show" id="email-2">
+                    <div class="card-body">
+                        <p>Uniquely restore granular schemas with enterprise services. Competently maximize team driven networks and cross-platform users. Completely recaptiualize cross-platform networks functionalized services. Holisticly matrix extensible models via corporate value. Continually revolutionize open-source markets through high-quality functionalities.</p>
+                        <hr>
+                        <h6 class="text-lighter text-uppercase mb-3">
+                            <i class="fa fa-paperclip mr-2"></i>
+                            <small>Attchments (3)</small>
+                        </h6>
+                        <div class="gap-items-2 gap-y" data-provide="photoswipe">
+                            <a class="d-inline-block" href="#"><img class="w-140px" src="../assets/img/gallery/thumb-sm/10.jpg" data-original-src="../assets/img/gallery/10.jpg" data-original-src-width="1920" data-original-src-height="1280" alt="..."></a>
+                            <a class="d-inline-block" href="#"><img class="w-140px" src="../assets/img/gallery/thumb-sm/9.jpg" data-original-src="../assets/img/gallery/9.jpg" data-original-src-width="1920" data-original-src-height="1280" alt="..."></a>
+                            <a class="d-inline-block" href="#"><img class="w-140px" src="../assets/img/gallery/thumb-sm/16.jpg" data-original-src="../assets/img/gallery/16.jpg" data-original-src-width="1920" data-original-src-height="1280" alt="..."></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="card">
+                <header class="card-header cursor-pointer" data-toggle="collapse" data-target="#email-3">
+                    <div class="card-title flexbox">
+                        <img class="avatar" src="../assets/img/avatar/2.jpg" alt="...">
+                        <div>
+                            <h6 class="mb-0">Hossein Shams</h6>
+                            <small>Today at 11:34 AM</small>
+                            <small><a class="text-info no-collapsing ml-1" href="#email-info-3" data-toggle="collapse">Details</a></small>
+
+                            <div class="collapse no-collapsing cursor-text" id="email-info-3">
+                                <small class="d-inline-block w-40px mt-1">From:</small>
+                                <small>theadmin@thetheme.io</small>
+                                <br>
+                                <small class="d-inline-block w-40px">To:</small>
+                                <small>subscriber@yahoo.com</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <a class="text-lighter" data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><i class="fa fa-reply"></i> Reply</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-share"></i> Forward</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-print"></i> Print</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="collapse show" id="email-3">
+                    <div class="card-body">
+                        <p>Thank you so much</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+            <div class="divider fs-15">Reply</div>
+            <form>
+                <div class="form-group">
+                    <textarea data-provide="summernote" data-min-height="150"></textarea>
+                </div>
+                <button class="btn btn-primary">Reply</button>
+            </form>
+            <br>
+        </div>
+    </div>
+{% endblock %}

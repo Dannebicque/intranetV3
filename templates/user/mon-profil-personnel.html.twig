@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'mon.profil.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action bg-white">
+        <nav class="nav">
+            <a class="nav-link changeprofil active" href="{{ path('profil_personnel_timeline') }}" id="profil-timeline">{{ 'tab.timeline'|trans }}</a>
+            <a class="nav-link changeprofil" href="{{ path('profil_personnel_about') }}" id="profil-about">{{ 'tab.a-propos'|trans }}</a>
+            <a class="nav-link changeprofil" href="{{ path('profil_personnel_previsionnel') }}" id="profil-previsionnel">{{ 'tab.previsionnel'|trans }}</a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+        {{ render(controller(
+            'App\\Controller\\ProfilPersonnelController::timeline'
+        )) }}
+{% endblock %}

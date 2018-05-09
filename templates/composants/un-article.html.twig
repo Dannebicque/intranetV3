@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="row no-gutters">
+        <a class="col-4 bg-img d-none d-md-block" style="background-image: url(../assets/img/gallery/thumb/9.jpg)"
+           href="#"></a>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5><a class="hover-primary text-uppercase fs-15 fw-400 ls-1" href="#">{{ article.titre }}</a></h5>
+                <hr class="w-50px ml-0 bt-2 border-pink hr-sm">
+
+                <p>{{ article.resume }}</p>
+
+                <div class="flexbox align-items-center mt-3">
+                    <a class="btn btn-round btn-bold btn-primary" href="#">{{ 'btn.read_more'|trans }}</a>
+
+                    <div class="gap-items-4">
+                        <a class="text-light" href="#">
+                            <span class="fw-500 ml-2">Hos Shams</span>
+                        </a>
+                        <a class="text-muted" href="#">
+                            <i class="ti-heart text-danger fs-11"></i> {{ article.nbLike }}
+                        </a>
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-comment mr-1"></i> 3
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

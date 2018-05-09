@@ -1,0 +1,22 @@
+<div class="fab fab-fixed">
+    <button class="btn btn-float btn-primary" data-toggle="button">
+        <i class="fab-icon-default ti-plus"></i>
+        <i class="fab-icon-active ti-close"></i>
+    </button>
+
+    <ul class="fab-buttons">
+        {% for bouton in boutons %}
+            <li><a class="btn btn-float btn-sm btn-{{ bouton.type }}" href="{{ bouton.href }}"
+                   title="{{ bouton.title }}" data-provide="tooltip"
+                   data-placement="left"
+                   target="{{ bouton.target is defined ? bouton.target : '' }}"
+                ><i class="{{ bouton.icone }}" ></i></a></li>
+        {% endfor %}
+        {#<li><a class="btn btn-float btn-sm btn-info" href="#" title="Sauvegarder" data-provide="tooltip"
+               data-placement="left"><i class="ti-save"></i></a></li>
+        <li><a class="btn btn-float btn-sm btn-info" href="#" title="Ajouter" data-provide="tooltip"
+               data-placement="left"><i class="ti-plus"></i></a></li>
+        <li><a class="btn btn-float btn-sm btn-info" href="#" title="Aide" data-provide="tooltip"
+               data-placement="left"><i class="ti-help"></i></a></li>#}
+    </ul>
+</div>

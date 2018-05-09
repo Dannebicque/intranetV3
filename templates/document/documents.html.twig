@@ -1,0 +1,27 @@
+{% for document in documents %}
+    <div class="col-md-6 col-xl-4 code code-card code-fold">
+        <div class="code-preview">
+            <div class="media align-items-center">
+                <span>
+                    <i class="ti-file fs-30 text-info"></i>
+                </span>
+                <div class="media-body">
+                    <h5>{{ document.libelle }}</h5>
+                    <p class="gap-items">
+                        <small>{{ 'taille'|trans }}: {{ document.taille }} ko</small>
+                        <small>{{ 'type_fichier'|trans }}: {{ document.typeFichier }}</small>
+                    </p>
+                    <p>
+                        <small>{{ 'created'|trans }}: {{ document.updated|localizeddate('long', 'short', app.request.getLocale()) }}</small>
+                    </p>
+                </div>
+                <a class="media-action hover-primary" href="#" data-provide="tooltip" title="{{ 'telecharger'|trans }}"><i
+                            class="ti-save"></i></a>
+                <a class="media-action hover-primary" href="#" data-provide="tooltip" title="{{ 'modifier'|trans }}"><i
+                            class="ti-pencil"></i></a>
+                <a class="media-action hover-danger" href="#" data-provide="tooltip" title="{{ 'supprimer'|trans }}"><i
+                            class="ti-close"></i></a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

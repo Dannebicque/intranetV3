@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_document.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'type_document', id: type_document.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_document.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ type_document.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ type_document.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ type_document.created ? type_document.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ type_document.updated ? type_document.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_document.liste.documents'|trans }}</h4>
+        <div class="card-body">
+            {{ include('administration/document/liste-document.html.twig', {documents: type_document.documents}) }}
+        </div>
+    </div>
+{% endblock %}

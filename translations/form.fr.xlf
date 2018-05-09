@@ -1,0 +1,1513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
+  <file id="form.fr">
+    <unit id="lRFM2Mc" name="label.libelle">
+      <notes>
+        <note category="file-source" priority="1">src/Form/TypeHrsType.php:16</note>
+        <note category="file-source" priority="1">src/Form/UfrType.php:16</note>
+        <note category="file-source" priority="1">src/Form/TypeDiplomeType.php:16</note>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:17</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:25</note>
+        <note category="file-source" priority="1">src/Form/PpnType.php:23</note>
+        <note category="file-source" priority="1">src/Form/DocumentType.php:28</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:23</note>
+        <note category="file-source" priority="1">src/Form/UeType.php:25</note>
+        <note category="file-source" priority="1">src/Form/UeType.php:27</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:23</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:57</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:25</note>
+        <note category="file-source" priority="1">src/Form/TypeDocumentType.php:16</note>
+      </notes>
+      <segment>
+        <source>label.libelle</source>
+        <target>Libellé</target>
+      </segment>
+    </unit>
+    <unit id="VcZND81" name="photo">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>photo</source>
+        <target>Photo</target>
+      </segment>
+    </unit>
+    <unit id="1C7xSXk" name="visible">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>visible</source>
+        <target>Visible</target>
+      </segment>
+    </unit>
+    <unit id="Gi.Cbcf" name="signature">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>signature</source>
+        <target>Signature</target>
+      </segment>
+    </unit>
+    <unit id="swgzorP" name="remarque">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>remarque</source>
+        <target>Remarques</target>
+      </segment>
+    </unit>
+    <unit id="9UO1eFb" name="tel2">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>tel2</source>
+        <target>Autre Téléphone</target>
+      </segment>
+    </unit>
+    <unit id="bNcgOz3" name="tel1">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>tel1</source>
+        <target>Téléphone</target>
+      </segment>
+    </unit>
+    <unit id="FIJngbV" name="date_naissance">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>date_naissance</source>
+        <target>Date de naissance</target>
+      </segment>
+    </unit>
+    <unit id="PKZ8guU" name="sexe">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>sexe</source>
+        <target>Sexe</target>
+      </segment>
+    </unit>
+    <unit id="ueAiRmy" name="site_perso">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>site_perso</source>
+        <target>Site web personnel</target>
+      </segment>
+    </unit>
+    <unit id="7pyQ2k3" name="mail_perso">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>mail_perso</source>
+        <target>Email personnel</target>
+      </segment>
+    </unit>
+    <unit id="Z7p.pcn" name="site_univ">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>site_univ</source>
+        <target>Site web université ou professionnel</target>
+      </segment>
+    </unit>
+    <unit id="6rkHuNr" name="mail_univ">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>mail_univ</source>
+        <target>Email université (ou professionnel)</target>
+      </segment>
+    </unit>
+    <unit id="KcFzACF" name="prenom">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>prenom</source>
+        <target>Prénom</target>
+      </segment>
+    </unit>
+    <unit id="L1iK.hS" name="nom">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+        <note category="file-source" priority="1">src/Form/SiteType.php:14</note>
+      </notes>
+      <segment>
+        <source>nom</source>
+        <target>Nom</target>
+      </segment>
+    </unit>
+    <unit id="R0fY3NV" name="type_user">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>type_user</source>
+        <target>Type d'utilisateur</target>
+      </segment>
+    </unit>
+    <unit id="zQOGHw." name="slug">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>slug</source>
+        <target>Slug</target>
+      </segment>
+    </unit>
+    <unit id="QoghNQ6" name="login">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>login</source>
+        <target>Login</target>
+      </segment>
+    </unit>
+    <unit id="J_teUVB" name="updated">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>updated</source>
+        <target>Mise à jour le</target>
+      </segment>
+    </unit>
+    <unit id="QG7.sen" name="created">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>created</source>
+        <target>Créé le</target>
+      </segment>
+    </unit>
+    <unit id="Kc3uSOK" name="cv">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>cv</source>
+        <target>CV</target>
+      </segment>
+    </unit>
+    <unit id="dDOrN1A" name="initiales">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>initiales</source>
+        <target>Initiales</target>
+      </segment>
+    </unit>
+    <unit id="BOQsnGV" name="numero_harpege">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>numero_harpege</source>
+        <target>Numéro identifiant personnel</target>
+      </segment>
+    </unit>
+    <unit id="KE8P4Uy" name="bureau2">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>bureau2</source>
+        <target>Autre bureau</target>
+      </segment>
+    </unit>
+    <unit id="9gXkUcW" name="bureau1">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>bureau1</source>
+        <target>Bureau</target>
+      </segment>
+    </unit>
+    <unit id="5dHoUso" name="entreprise">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>entreprise</source>
+        <target>Entreprise (vacataires)</target>
+      </segment>
+    </unit>
+    <unit id="G.6nkEW" name="domaines">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>domaines</source>
+        <target>Domaines d'enseignements</target>
+      </segment>
+    </unit>
+    <unit id="19WHaez" name="responsabilites">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>responsabilites</source>
+        <target>Responsabilités</target>
+      </segment>
+    </unit>
+    <unit id="dZds84y" name="tel_bureau">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>tel_bureau</source>
+        <target>Téléphone de bureau</target>
+      </segment>
+    </unit>
+    <unit id="q1gaOry" name="poste_interne">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>poste_interne</source>
+        <target>N° poste interne</target>
+      </segment>
+    </unit>
+    <unit id="_VEcnv0" name="statut">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+      </notes>
+      <segment>
+        <source>statut</source>
+        <target>Statut</target>
+      </segment>
+    </unit>
+    <unit id="_DZbZ.T" name="choice.ri">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:27</note>
+      </notes>
+      <segment>
+        <source>choice.ri</source>
+        <target>Relations Internationales</target>
+      </segment>
+    </unit>
+    <unit id="UcfRcqS" name="choice.c2i">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:27</note>
+      </notes>
+      <segment>
+        <source>choice.c2i</source>
+        <target>C2I</target>
+      </segment>
+    </unit>
+    <unit id="2zPw27B" name="choice.info_pratique">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:27</note>
+      </notes>
+      <segment>
+        <source>choice.info_pratique</source>
+        <target>Informations pratiques</target>
+      </segment>
+    </unit>
+    <unit id="2_MhTes" name="label.titre">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:20</note>
+      </notes>
+      <segment>
+        <source>label.titre</source>
+        <target>Titre</target>
+      </segment>
+    </unit>
+    <unit id=".2zVZ0y" name="label.texte">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:23</note>
+      </notes>
+      <segment>
+        <source>label.texte</source>
+        <target>Texte</target>
+      </segment>
+    </unit>
+    <unit id="Q68iraS" name="label.type_article">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:26</note>
+      </notes>
+      <segment>
+        <source>label.type_article</source>
+        <target>Type d'article</target>
+      </segment>
+    </unit>
+    <unit id="VK1CbWx" name="label.semestres_article">
+      <notes>
+        <note category="file-source" priority="1">src/Form/ArticleType.php:35</note>
+      </notes>
+      <segment>
+        <source>label.semestres_article</source>
+        <target>Article visible pour les semestres</target>
+      </segment>
+    </unit>
+    <unit id="ejxU1sP" name="label.sigle">
+      <notes>
+        <note category="file-source" priority="1">src/Form/TypeDiplomeType.php:17</note>
+      </notes>
+      <segment>
+        <source>label.sigle</source>
+        <target>Sigle</target>
+      </segment>
+    </unit>
+    <unit id="YJgGblB" name="label.nb_semestres">
+      <notes>
+        <note category="file-source" priority="1">src/Form/TypeDiplomeType.php:18</note>
+      </notes>
+      <segment>
+        <source>label.nb_semestres</source>
+        <target>Nombre de semestres</target>
+      </segment>
+    </unit>
+    <unit id="mbR91YW" name="label.niveau_entree">
+      <notes>
+        <note category="file-source" priority="1">src/Form/TypeDiplomeType.php:19</note>
+      </notes>
+      <segment>
+        <source>label.niveau_entree</source>
+        <target>Niveau d'entrée</target>
+      </segment>
+    </unit>
+    <unit id="2aa2Au2" name="label.niveau_sortie">
+      <notes>
+        <note category="file-source" priority="1">src/Form/TypeDiplomeType.php:20</note>
+      </notes>
+      <segment>
+        <source>label.niveau_sortie</source>
+        <target>Niveau de sortie</target>
+      </segment>
+    </unit>
+    <unit id="CpBAdjn" name="Oui">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Oui</source>
+        <target>Oui</target>
+      </segment>
+    </unit>
+    <unit id="f2JJawy" name="Non">
+      <notes>
+        <note category="state" priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>Non</source>
+        <target>Non</target>
+      </segment>
+    </unit>
+    <unit id="cCt8r9a" name="label.libelle_long">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:20</note>
+      </notes>
+      <segment>
+        <source>label.libelle_long</source>
+        <target>Libellé long</target>
+      </segment>
+    </unit>
+    <unit id="bUdungP" name="label.code_apogee">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:23</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:28</note>
+        <note category="file-source" priority="1">src/Form/UeType.php:29</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:24</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:38</note>
+      </notes>
+      <segment>
+        <source>label.code_apogee</source>
+        <target>Code Apogée</target>
+      </segment>
+    </unit>
+    <unit id="Bqjk861" name="label.code_version">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:26</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:31</note>
+        <note category="file-source" priority="1">src/Form/UeType.php:30</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:25</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:41</note>
+      </notes>
+      <segment>
+        <source>label.code_version</source>
+        <target>Code version</target>
+      </segment>
+    </unit>
+    <unit id="Y77CuwI" name="label.code_departement">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:29</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:34</note>
+        <note category="file-source" priority="1">src/Form/UeType.php:31</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:26</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:44</note>
+      </notes>
+      <segment>
+        <source>label.code_departement</source>
+        <target>Code département</target>
+      </segment>
+    </unit>
+    <unit id="Eal.IO_" name="label.ordre">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:32</note>
+      </notes>
+      <segment>
+        <source>label.ordre</source>
+        <target>Ordre</target>
+      </segment>
+    </unit>
+    <unit id="dxIyPNH" name="label.couleur_cm">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:35</note>
+      </notes>
+      <segment>
+        <source>label.couleur_cm</source>
+        <target>Couleur des CM (EDT)</target>
+      </segment>
+    </unit>
+    <unit id="KZCstF." name="label.couleur_td">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:39</note>
+      </notes>
+      <segment>
+        <source>label.couleur_td</source>
+        <target>Couleur des TD (EDT)</target>
+      </segment>
+    </unit>
+    <unit id="gQWUuIK" name="label.couleur_tp">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:43</note>
+      </notes>
+      <segment>
+        <source>label.couleur_tp</source>
+        <target>Couleur des TP (EDT)</target>
+      </segment>
+    </unit>
+    <unit id="8Ir0pt8" name="label.couleur_texte">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:47</note>
+      </notes>
+      <segment>
+        <source>label.couleur_texte</source>
+        <target>Couleur des textes</target>
+      </segment>
+    </unit>
+    <unit id="gRlGOI8" name="label.opt_alternance">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:52</note>
+      </notes>
+      <segment>
+        <source>label.opt_alternance</source>
+        <target>Année en alternance</target>
+      </segment>
+    </unit>
+    <unit id="__vJoSM" name="choice.oui">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:54</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:51</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:66</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:78</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:85</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:97</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:104</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:111</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:123</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:130</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:59</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:66</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:73</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:80</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:87</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:94</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:101</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:108</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:40</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:52</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:59</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:74</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:82</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:89</note>
+      </notes>
+      <segment>
+        <source>choice.oui</source>
+        <target>Oui</target>
+      </segment>
+    </unit>
+    <unit id="Fdhx4Ah" name="choice.non">
+      <notes>
+        <note category="file-source" priority="1">src/Form/AnneeType.php:54</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:51</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:66</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:78</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:85</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:97</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:104</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:111</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:123</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:130</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:59</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:66</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:73</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:80</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:87</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:94</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:101</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:108</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:40</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:52</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:59</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:74</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:82</note>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:89</note>
+      </notes>
+      <segment>
+        <source>choice.non</source>
+        <target>Non</target>
+      </segment>
+    </unit>
+    <unit id="VOOPghq" name="label.couleur">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:37</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:46</note>
+      </notes>
+      <segment>
+        <source>label.couleur</source>
+        <target>Couleur</target>
+      </segment>
+    </unit>
+    <unit id="kSdeoLD" name="label.ordre_annee">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:40</note>
+      </notes>
+      <segment>
+        <source>label.ordre_annee</source>
+        <target>Ordre dans l'année</target>
+      </segment>
+    </unit>
+    <unit id="Y8B5DM7" name="label.ordre_lmd">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:45</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:56</note>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:60</note>
+      </notes>
+      <segment>
+        <source>label.ordre_lmd</source>
+        <target>Ordre dans le système LMD</target>
+      </segment>
+    </unit>
+    <unit id="S.CIyfz" name="label.actif">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:50</note>
+      </notes>
+      <segment>
+        <source>label.actif</source>
+        <target>Actif</target>
+      </segment>
+    </unit>
+    <unit id="AFPUui7" name="label.opt_mail_releve">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:65</note>
+      </notes>
+      <segment>
+        <source>label.opt_mail_releve</source>
+        <target>Mail en cas de saisie d'un relevé de notes à un responsable</target>
+      </segment>
+    </unit>
+    <unit id="ABQ8mNL" name="label.opt_destinataire_mail_releve">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:71</note>
+      </notes>
+      <segment>
+        <source>label.opt_destinataire_mail_releve</source>
+        <target>Destinataire du mail pour la saisie d'un relevé de notes</target>
+      </segment>
+    </unit>
+    <unit id="yXMkePv" name="label.opt_evaluation_modifiable">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:77</note>
+      </notes>
+      <segment>
+        <source>label.opt_evaluation_modifiable</source>
+        <target>Evaluation modifiable après saisie</target>
+      </segment>
+    </unit>
+    <unit id="wvPBWsS" name="label.opt_mail_modification_note">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:84</note>
+      </notes>
+      <segment>
+        <source>label.opt_mail_modification_note</source>
+        <target>Mail en cas de modification d'une note à un responsable</target>
+      </segment>
+    </unit>
+    <unit id="s3DCOiM" name="label.opt_destinataire_mail_modification_note">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:90</note>
+      </notes>
+      <segment>
+        <source>label.opt_destinataire_mail_modification_note</source>
+        <target>Destinataire du mail pour une modification de note</target>
+      </segment>
+    </unit>
+    <unit id="Tw.Iytx" name="label.opt_evaluation_visible">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:96</note>
+      </notes>
+      <segment>
+        <source>label.opt_evaluation_visible</source>
+        <target>Evaluation visible des étudiants</target>
+      </segment>
+    </unit>
+    <unit id="PYEWFrj" name="label.opt_penalite_absence">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:103</note>
+      </notes>
+      <segment>
+        <source>label.opt_penalite_absence</source>
+        <target>Pénalité en cas d'absence</target>
+      </segment>
+    </unit>
+    <unit id="Y4vo4c_" name="label.opt_mail_absence_responsable">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:110</note>
+      </notes>
+      <segment>
+        <source>label.opt_mail_absence_responsable</source>
+        <target>Mail en cas d'absence à un responsable</target>
+      </segment>
+    </unit>
+    <unit id="BuXTiek" name="label.opt_destinataire_mail_absence_responsable">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:116</note>
+      </notes>
+      <segment>
+        <source>label.opt_destinataire_mail_absence_responsable</source>
+        <target>Destinataire des mails en cas d'absence d'un étudiant</target>
+      </segment>
+    </unit>
+    <unit id="d2_QbBI" name="label.opt_mail_absence_etudiant">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:122</note>
+      </notes>
+      <segment>
+        <source>label.opt_mail_absence_etudiant</source>
+        <target>Mail en cas d'absence à l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="bl8N_s1" name="label.opt_point_penalite_absence">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:129</note>
+      </notes>
+      <segment>
+        <source>label.opt_point_penalite_absence</source>
+        <target>Nombre de point de pénalité en cas d'absence</target>
+      </segment>
+    </unit>
+    <unit id="Er01f0O" name="label.semestre_precedent">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:135</note>
+      </notes>
+      <segment>
+        <source>label.semestre_precedent</source>
+        <target>Semestre précédent</target>
+      </segment>
+    </unit>
+    <unit id="4XOXY70" name="label.semestre_suivant">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:144</note>
+      </notes>
+      <segment>
+        <source>label.semestre_suivant</source>
+        <target>Semestre suivant</target>
+      </segment>
+    </unit>
+    <unit id="mNTnUAd" name="label.semestre_decale">
+      <notes>
+        <note category="file-source" priority="1">src/Form/SemestreType.php:153</note>
+      </notes>
+      <segment>
+        <source>label.semestre_decale</source>
+        <target>Semestre décalé équivalent</target>
+      </segment>
+    </unit>
+    <unit id="yXNAvSF" name="label.annee_sortie">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PpnType.php:24</note>
+      </notes>
+      <segment>
+        <source>label.annee_sortie</source>
+        <target>Année de sortie</target>
+      </segment>
+    </unit>
+    <unit id="utzR9HY" name="label.diplome">
+      <notes>
+        <note category="file-source" priority="1">src/Form/PpnType.php:25</note>
+      </notes>
+      <segment>
+        <source>label.diplome</source>
+        <target>Diplôme</target>
+      </segment>
+    </unit>
+    <unit id="4cEApe1" name="label.description">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DocumentType.php:29</note>
+        <note category="file-source" priority="1">src/Form/FormationType.php:54</note>
+      </notes>
+      <segment>
+        <source>label.description</source>
+        <target>Description</target>
+      </segment>
+    </unit>
+    <unit id="MVIu471" name="label.fichier">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DocumentType.php:30</note>
+      </notes>
+      <segment>
+        <source>label.fichier</source>
+        <target>Fichier</target>
+      </segment>
+    </unit>
+    <unit id="Fg8FivQ" name="label.type_document">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DocumentType.php:36</note>
+      </notes>
+      <segment>
+        <source>label.type_document</source>
+        <target>Catégorie du document</target>
+      </segment>
+    </unit>
+    <unit id="728prI." name="label.semestres_document">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DocumentType.php:37</note>
+      </notes>
+      <segment>
+        <source>label.semestres_document</source>
+        <target>Document visible pour les semestres</target>
+      </segment>
+    </unit>
+    <unit id="DdW5EV0" name="label.logoFile">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:26</note>
+      </notes>
+      <segment>
+        <source>label.logoFile</source>
+        <target>Fichier du logo</target>
+      </segment>
+    </unit>
+    <unit id="V3G8MhU" name="label.annee_courante">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:29</note>
+      </notes>
+      <segment>
+        <source>label.annee_courante</source>
+        <target>Année courante</target>
+      </segment>
+    </unit>
+    <unit id="f_6EcAW" name="label.opt_annee_previsionnel">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:34</note>
+      </notes>
+      <segment>
+        <source>label.opt_annee_previsionnel</source>
+        <target>Année du prévisionnel</target>
+      </segment>
+    </unit>
+    <unit id="iAvB1g1" name="label.tel_contact">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:38</note>
+      </notes>
+      <segment>
+        <source>label.tel_contact</source>
+        <target>Téléphone de la formation</target>
+      </segment>
+    </unit>
+    <unit id="eRyhERS" name="label.fax">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:42</note>
+      </notes>
+      <segment>
+        <source>label.fax</source>
+        <target>Fax</target>
+      </segment>
+    </unit>
+    <unit id="3ZeX5VF" name="label.site_web">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:50</note>
+      </notes>
+      <segment>
+        <source>label.site_web</source>
+        <target>Site Web</target>
+      </segment>
+    </unit>
+    <unit id="4gviqYu" name="label.opt_update_celcat">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:58</note>
+      </notes>
+      <segment>
+        <source>label.opt_update_celcat</source>
+        <target>Synchronisation avec Celcat</target>
+      </segment>
+    </unit>
+    <unit id="vWN0jVK" name="label.opt_agence">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:65</note>
+      </notes>
+      <segment>
+        <source>label.opt_agence</source>
+        <target>Notion d'agence ou de groupe de projet</target>
+      </segment>
+    </unit>
+    <unit id="JHyU9ST" name="label.opt_materiel">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:72</note>
+      </notes>
+      <segment>
+        <source>label.opt_materiel</source>
+        <target>Onglet "emprunt matériel"</target>
+      </segment>
+    </unit>
+    <unit id="9ZzDtPN" name="label.opt_edt">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:79</note>
+      </notes>
+      <segment>
+        <source>label.opt_edt</source>
+        <target>Onglet Emploi du temps</target>
+      </segment>
+    </unit>
+    <unit id="Y7wlZCt" name="label.opt_stage">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:86</note>
+      </notes>
+      <segment>
+        <source>label.opt_stage</source>
+        <target>Onglet Stage</target>
+      </segment>
+    </unit>
+    <unit id="Ld2DzR3" name="label.opt_synthese">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:93</note>
+      </notes>
+      <segment>
+        <source>label.opt_synthese</source>
+        <target>Onglet "synthèse des semestres"</target>
+      </segment>
+    </unit>
+    <unit id="4M84rzi" name="label.opt_messagerie">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:100</note>
+      </notes>
+      <segment>
+        <source>label.opt_messagerie</source>
+        <target>Onglet "Messagerie"</target>
+      </segment>
+    </unit>
+    <unit id="0fEXTUn" name="label.opt_RI">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:107</note>
+      </notes>
+      <segment>
+        <source>label.opt_RI</source>
+        <target>Onglet relations internationales</target>
+      </segment>
+    </unit>
+    <unit id="o_U6SaS" name="label.respri">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:113</note>
+      </notes>
+      <segment>
+        <source>label.respri</source>
+        <target>Responsable des relations internationales</target>
+      </segment>
+    </unit>
+    <unit id="ZZhOaXT" name="label.site">
+      <notes>
+        <note category="file-source" priority="1">src/Form/FormationType.php:119</note>
+      </notes>
+      <segment>
+        <source>label.site</source>
+        <target>Site géographique</target>
+      </segment>
+    </unit>
+    <unit id="8jZd_oz" name="label.numero_ue">
+      <notes>
+        <note category="file-source" priority="1">src/Form/UeType.php:26</note>
+      </notes>
+      <segment>
+        <source>label.numero_ue</source>
+        <target>Numéro de l'UE</target>
+      </segment>
+    </unit>
+    <unit id="jnzDNnd" name="label.nb_ects">
+      <notes>
+        <note category="file-source" priority="1">src/Form/UeType.php:28</note>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:37</note>
+      </notes>
+      <segment>
+        <source>label.nb_ects</source>
+        <target>Nombre d'ECTS</target>
+      </segment>
+    </unit>
+    <unit id="9yJvckA" name="label.semestre">
+      <notes>
+        <note category="file-source" priority="1">src/Form/UeType.php:32</note>
+      </notes>
+      <segment>
+        <source>label.semestre</source>
+        <target>Semestre</target>
+      </segment>
+    </unit>
+    <unit id="PpWyuWe" name="label.code_matiere">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:27</note>
+      </notes>
+      <segment>
+        <source>label.code_matiere</source>
+        <target>Code Matière</target>
+      </segment>
+    </unit>
+    <unit id="U98RoBx" name="label.cm_ppn">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:28</note>
+      </notes>
+      <segment>
+        <source>label.cm_ppn</source>
+        <target>Nb. Heures CM (PPN)</target>
+      </segment>
+    </unit>
+    <unit id="DzEVaUz" name="label.td_ppn">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:29</note>
+      </notes>
+      <segment>
+        <source>label.td_ppn</source>
+        <target>Nb. Heures CM (PPN)</target>
+      </segment>
+    </unit>
+    <unit id="E.3Nh1D" name="label.tp_ppn">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:30</note>
+      </notes>
+      <segment>
+        <source>label.tp_ppn</source>
+        <target>Nb. Heures TP (PPN)</target>
+      </segment>
+    </unit>
+    <unit id="CVKUf2G" name="label.cm_formation">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:31</note>
+      </notes>
+      <segment>
+        <source>label.cm_formation</source>
+        <target>Nb. Heures CM (80%)</target>
+      </segment>
+    </unit>
+    <unit id="NHabo7Y" name="label.td_formation">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:32</note>
+      </notes>
+      <segment>
+        <source>label.td_formation</source>
+        <target>Nb. Heures TD (80%)</target>
+      </segment>
+    </unit>
+    <unit id="qk8RJzv" name="label.tp_formation">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:33</note>
+      </notes>
+      <segment>
+        <source>label.tp_formation</source>
+        <target>Nb. Heures TP (80%)</target>
+      </segment>
+    </unit>
+    <unit id="JQR.X9w" name="label.commentaire">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:34</note>
+      </notes>
+      <segment>
+        <source>label.commentaire</source>
+        <target>Commentaire</target>
+      </segment>
+    </unit>
+    <unit id="xAsJxkg" name="label.nb_notes">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:35</note>
+      </notes>
+      <segment>
+        <source>label.nb_notes</source>
+        <target>Nombre de notes</target>
+      </segment>
+    </unit>
+    <unit id="v6o8Z5o" name="label.coefficient">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:36</note>
+      </notes>
+      <segment>
+        <source>label.coefficient</source>
+        <target>Coefficient</target>
+      </segment>
+    </unit>
+    <unit id="TAPcasH" name="label.pac">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:38</note>
+      </notes>
+      <segment>
+        <source>label.pac</source>
+        <target>PAC, ou Sport</target>
+      </segment>
+    </unit>
+    <unit id="j9yR0IK" name="label.objectifs_module">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:44</note>
+      </notes>
+      <segment>
+        <source>label.objectifs_module</source>
+        <target>Objectifs du module</target>
+      </segment>
+    </unit>
+    <unit id="C.t8EOR" name="label.competences_visees">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:46</note>
+      </notes>
+      <segment>
+        <source>label.competences_visees</source>
+        <target>Compétences visées</target>
+      </segment>
+    </unit>
+    <unit id="AXpGh28" name="label.contenu">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:47</note>
+      </notes>
+      <segment>
+        <source>label.contenu</source>
+        <target>Contenu</target>
+      </segment>
+    </unit>
+    <unit id="Hj52T0G" name="label.pre_requis">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:48</note>
+      </notes>
+      <segment>
+        <source>label.pre_requis</source>
+        <target>Pré-requis</target>
+      </segment>
+    </unit>
+    <unit id="eEiKn42" name="label.modalites">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:49</note>
+      </notes>
+      <segment>
+        <source>label.modalites</source>
+        <target>Modalités</target>
+      </segment>
+    </unit>
+    <unit id="0lCrI63" name="label.prolongements">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:50</note>
+      </notes>
+      <segment>
+        <source>label.prolongements</source>
+        <target>Prolongements</target>
+      </segment>
+    </unit>
+    <unit id="G.xYWAE" name="label.mots_cles">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:51</note>
+      </notes>
+      <segment>
+        <source>label.mots_cles</source>
+        <target>Mots clés</target>
+      </segment>
+    </unit>
+    <unit id="EKwEMgD" name="label.Ppn">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:52</note>
+      </notes>
+      <segment>
+        <source>label.Ppn</source>
+        <target>PPN</target>
+      </segment>
+    </unit>
+    <unit id="yBByWEn" name="label.ue">
+      <notes>
+        <note category="file-source" priority="1">src/Form/MatiereType.php:63</note>
+      </notes>
+      <segment>
+        <source>label.ue</source>
+        <target>Unité d'enseignement (UE)</target>
+      </segment>
+    </unit>
+    <unit id="ku3iH.m" name="label.titre_date">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:25</note>
+      </notes>
+      <segment>
+        <source>label.titre_date</source>
+        <target>Titre de l'événement</target>
+      </segment>
+    </unit>
+    <unit id="G.R.2_I" name="label.texte_date">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:28</note>
+      </notes>
+      <segment>
+        <source>label.texte_date</source>
+        <target>Description de l'événement</target>
+      </segment>
+    </unit>
+    <unit id="xM4v26r" name="label.date_debut">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:31</note>
+      </notes>
+      <segment>
+        <source>label.date_debut</source>
+        <target>Date de début</target>
+      </segment>
+    </unit>
+    <unit id="9pl6Wz7" name="label.heure_debut">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:32</note>
+      </notes>
+      <segment>
+        <source>label.heure_debut</source>
+        <target>Heure de début</target>
+      </segment>
+    </unit>
+    <unit id="QVby70Z" name="label.date_fin">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:33</note>
+      </notes>
+      <segment>
+        <source>label.date_fin</source>
+        <target>Date de fin</target>
+      </segment>
+    </unit>
+    <unit id="Ci6xJ4l" name="label.heure_fin">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:34</note>
+      </notes>
+      <segment>
+        <source>label.heure_fin</source>
+        <target>Heure de fin</target>
+      </segment>
+    </unit>
+    <unit id="NwM3ATA" name="label.lieu_date">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:35</note>
+      </notes>
+      <segment>
+        <source>label.lieu_date</source>
+        <target>Lieu de l'événement</target>
+      </segment>
+    </unit>
+    <unit id="lrOP15z" name="label.allday">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:38</note>
+      </notes>
+      <segment>
+        <source>label.allday</source>
+        <target>Toute la journée</target>
+      </segment>
+    </unit>
+    <unit id="D_jLNmS" name="label.qui_concerne">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:41</note>
+      </notes>
+      <segment>
+        <source>label.qui_concerne</source>
+        <target>Qui concerné par l'événement</target>
+      </segment>
+    </unit>
+    <unit id="Z4if3Io" name="label.semestres_date">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DatesType.php:44</note>
+      </notes>
+      <segment>
+        <source>label.semestres_date</source>
+        <target>Date visible pour les semestres</target>
+      </segment>
+    </unit>
+    <unit id="ZSI9QIN" name="choice.moymodules">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:66</note>
+      </notes>
+      <segment>
+        <source>choice.moymodules</source>
+        <target>Moyenne des modules</target>
+      </segment>
+    </unit>
+    <unit id="whYHka4" name="choice.moyues">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:66</note>
+      </notes>
+      <segment>
+        <source>choice.moyues</source>
+        <target>Moyennes des UEs</target>
+      </segment>
+    </unit>
+    <unit id="RMhbXia" name="label.type_diplome">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:20</note>
+      </notes>
+      <segment>
+        <source>label.type_diplome</source>
+        <target>Type de diplôme</target>
+      </segment>
+    </unit>
+    <unit id="mGu0Yn8" name="label.responsable_diplome">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:28</note>
+      </notes>
+      <segment>
+        <source>label.responsable_diplome</source>
+        <target>Responsable du diplôme</target>
+      </segment>
+    </unit>
+    <unit id="0MoRkJN" name="label.assistant_diplome">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:33</note>
+      </notes>
+      <segment>
+        <source>label.assistant_diplome</source>
+        <target>Assistant(e) du diplôme</target>
+      </segment>
+    </unit>
+    <unit id="tUkBPMc" name="label.opt_nb_jours_saisie">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:47</note>
+      </notes>
+      <segment>
+        <source>label.opt_nb_jours_saisie</source>
+        <target>Nb. de jour pour saisir les absences</target>
+      </segment>
+    </unit>
+    <unit id="BCCUZVX" name="label.opt_dilpome_decale">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:51</note>
+      </notes>
+      <segment>
+        <source>label.opt_dilpome_decale</source>
+        <target>Diplôme proposé en semestres décalés</target>
+      </segment>
+    </unit>
+    <unit id="GA8mhl4" name="label.opt_suppr_absence">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:58</note>
+      </notes>
+      <segment>
+        <source>label.opt_suppr_absence</source>
+        <target>Possibilité de supprimer des absences après leur saisie</target>
+      </segment>
+    </unit>
+    <unit id="vHKDvk6" name="label.opt_methode_calcul">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:65</note>
+      </notes>
+      <segment>
+        <source>label.opt_methode_calcul</source>
+        <target>Choix de la méthode de calcul des moyennes</target>
+      </segment>
+    </unit>
+    <unit id="Ckhq1k4" name="label.opt_anonymat">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:73</note>
+      </notes>
+      <segment>
+        <source>label.opt_anonymat</source>
+        <target>Documents anonymes</target>
+      </segment>
+    </unit>
+    <unit id="uc1ADoH" name="label.opt_commentaires_releve">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:81</note>
+      </notes>
+      <segment>
+        <source>label.opt_commentaires_releve</source>
+        <target>Commentaires sur les relevés de notes</target>
+      </segment>
+    </unit>
+    <unit id="9JV_We7" name="label.opt_espace_perso_visible">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:88</note>
+      </notes>
+      <segment>
+        <source>label.opt_espace_perso_visible</source>
+        <target>Lien vers les espaces personnels des étudiants visible</target>
+      </segment>
+    </unit>
+    <unit id="uE9pa8a" name="label.volume_horaire">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:95</note>
+      </notes>
+      <segment>
+        <source>label.volume_horaire</source>
+        <target>Volume horaire du diplôme</target>
+      </segment>
+    </unit>
+    <unit id="WT_XafZ" name="label.code_celcat_departement">
+      <notes>
+        <note category="file-source" priority="1">src/Form/DiplomeType.php:98</note>
+      </notes>
+      <segment>
+        <source>label.code_celcat_departement</source>
+        <target>Code Celcat du diplôme</target>
+      </segment>
+    </unit>
+    <unit id="8Rm3PgY" name="label.incluService">
+      <segment>
+        <source>label.incluService</source>
+        <target>Comptabilisé dans le service</target>
+      </segment>
+    </unit>
+    <unit id="Xm.Zcaq" name="label.maximum">
+      <segment>
+        <source>label.maximum</source>
+        <target>Nb. Heures Maximum</target>
+      </segment>
+    </unit>
+    <unit id="W4Yn.7q" name="choice.hrs">
+      <segment>
+        <source>choice.hrs</source>
+        <target>HRS</target>
+      </segment>
+    </unit>
+    <unit id="EUKVfG2" name="choice.pca">
+      <segment>
+        <source>choice.pca</source>
+        <target>PCA</target>
+      </segment>
+    </unit>
+    <unit id="bJLMjns" name="choice.prp">
+      <segment>
+        <source>choice.prp</source>
+        <target>PRP</target>
+      </segment>
+    </unit>
+    <unit id="RQg.ik3" name="choice.suivi">
+      <segment>
+        <source>choice.suivi</source>
+        <target>Suivi</target>
+      </segment>
+    </unit>
+    <unit id="gpAQTDE" name="choice.autre">
+      <segment>
+        <source>choice.autre</source>
+        <target>Autre</target>
+      </segment>
+    </unit>
+    <unit id="mdEioge" name="label.adresse">
+      <segment>
+        <source>label.adresse</source>
+        <target>Adresse</target>
+      </segment>
+    </unit>
+    <unit id=".nU._5u" name="Pays">
+      <segment>
+        <source>Pays</source>
+        <target>Pays</target>
+      </segment>
+    </unit>
+    <unit id="tFNBHfa" name="label.adresse1">
+      <segment>
+        <source>label.adresse1</source>
+        <target>Adresse (numéro, rue)</target>
+      </segment>
+    </unit>
+    <unit id="w1aYsXn" name="label.adresse2">
+      <segment>
+        <source>label.adresse2</source>
+        <target>Suite adresse (étage, bâtiment, ...)</target>
+      </segment>
+    </unit>
+    <unit id="P0Z4w2V" name="label.adresse3">
+      <segment>
+        <source>label.adresse3</source>
+        <target>Complément d'adresse</target>
+      </segment>
+    </unit>
+    <unit id="VSpK2HG" name="label.code_postal">
+      <segment>
+        <source>label.code_postal</source>
+        <target>Code Postal</target>
+      </segment>
+    </unit>
+    <unit id="nkDD5Bw" name="label.ville">
+      <segment>
+        <source>label.ville</source>
+        <target>Ville</target>
+      </segment>
+    </unit>
+    <unit id="QeUDT6V" name="label.pays">
+      <segment>
+        <source>label.pays</source>
+        <target>Pays</target>
+      </segment>
+    </unit>
+    <unit id="JSx8pYK" name="label.sites">
+      <segment>
+        <source>label.sites</source>
+        <target>Sites</target>
+      </segment>
+    </unit>
+    <unit id="2m4vU5c" name="2016">
+      <segment>
+        <source>2016</source>
+        <target>2016</target>
+      </segment>
+    </unit>
+    <unit id="RuZ8UlY" name="2017">
+      <segment>
+        <source>2017</source>
+        <target>2017</target>
+      </segment>
+    </unit>
+    <unit id="FS5pzzy" name="2018">
+      <segment>
+        <source>2018</source>
+        <target>2018</target>
+      </segment>
+    </unit>
+    <unit id="Aj4zUEq" name="2019">
+      <segment>
+        <source>2019</source>
+        <target>2019</target>
+      </segment>
+    </unit>
+    <unit id="c6KviGT" name="2020">
+      <segment>
+        <source>2020</source>
+        <target>2020</target>
+      </segment>
+    </unit>
+    <unit id="G_og4d8" name="2021">
+      <segment>
+        <source>2021</source>
+        <target>2021</target>
+      </segment>
+    </unit>
+    <unit id="saseiSY" name="2022">
+      <segment>
+        <source>2022</source>
+        <target>2022</target>
+      </segment>
+    </unit>
+    <unit id="WkgPDEK" name="label.typehrs">
+      <segment>
+        <source>label.typehrs</source>
+        <target>label.typehrs</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

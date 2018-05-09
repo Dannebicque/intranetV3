@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Liste des <strong>absences du semestre {{ semestre.libelle }}</strong>
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestres %}
+            <a href="{{ path('administration_absences_semestre_liste', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="Changer de semestre"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Etudiant</th> {# todo: absence a la demi-journée ou au module ... faire une option par année ? semestre ? #}
+                    <th>Nb cours manqués</th>
+                    <th>Total durée</th>
+                    <th>Nb non justifiées</th>
+                    <th>Nb justifiées</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for absence in absences %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a href="{{ path('user_profil', {'slug': absence.etudiant.slug}) }}"
+                               class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="Détails" target="_blank"><i class="ti-eye"></i></a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

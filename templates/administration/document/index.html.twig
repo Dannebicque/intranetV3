@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.document.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'document'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.document.index.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('administration/document/liste-document.html.twig', {documents: documents}) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_document_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_document_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('administration_document_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'adm_document_index'}),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

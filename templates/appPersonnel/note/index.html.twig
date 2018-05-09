@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{{ 'app.personnel.note.index.titre'|trans }} | <strong>{{ matiere.libelle }}</strong>{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if matiere.nbNotes > 0 %}
+        <ul class="nav nav-tabs" role="tablist">
+            {% for numNote in 1..matiere.nbNotes %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                       href="#">Evaluation N° {{ numNote }} - ...</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="buttons">
+            <a href="{{ path('default_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% if matiere.nbNotes > 0 %}
+        <div class="card">
+            <h4 class="card-title">Evaluation N° 1 | {{ matiere.libelle }}</h4>
+            <div class="card-body">
+
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <h4 class="card-title">{{ 'app.personnel.note.index.titre'|trans }} | {{ matiere.libelle }}</h4>
+            <div class="card-body">
+Aucune note pour le module
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('application_personnel_note_imprimer',{evaluation:matiere.id}),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('application_personnel_note_save',{evaluation:matiere.id}),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('application_personnel_note_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

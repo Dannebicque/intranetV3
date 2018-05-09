@@ -1,0 +1,193 @@
+<div class="col-md-12">
+    <div class="card">
+        <h4 class="card-header card-title">
+            {{ 'mes_cours.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    {% for semestre in user_data.semestres %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                               href="#sem{{ semestre.id }}">{{ semestre.libelle }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="tab-content">
+                {% for semestre in user_data.semestres %}
+                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="sem{{ semestre.id }}">
+                        <h3>Vos Modules au semestre {{ semestre.display }}</h3>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'table.matiere'|trans }}</th>
+                                <th>{{ 'table.previ'|trans }}</th>
+                                <th>{{ 'table.absences'|trans }}</th>
+                                <th>{{ 'table.notes'|trans }}</th>
+                                <th>{{ 'table.exports'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for matiere in previsionnel if matiere.matiere.ue.semestre.id == semestre.id %}
+                                <tr>
+                                    <td>{{ matiere.matiere.libelle }}</td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-btn btn-block btn-primary-outline"
+                                                title="{{ 'previsionnel.et.intervenants.matiere'|trans }}Prévisionnel et intervenants pour le module"
+                                                data-provide="tooltip"
+                                                data-placement="bottom"
+                                                data-toggle="modal"
+                                                data-target="#modal1"
+                                        >
+                                            {{ 'voir'|trans }}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('application_personnel_absence_index',{'matiere':matiere.matiere.id}) }}"
+                                           class="btn btn-block btn-primary-outline"
+                                           title="{{ 'saisir.voir.modifier.absences'|trans }}Saisir, voir ou modifier les absences"
+                                           data-provide="tooltip"
+                                           data-placement="bottom"
+                                        >
+                                            {{ 'saisir.voir.modifier.absences'|trans }}
+                                        </a></td>
+                                    <td>
+                                        <a href="{{ path('application_personnel_note_index',{'matiere':matiere.matiere.id}) }}"
+                                           class="btn btn-block btn-primary-outline"
+                                           title="{{ 'saisir.voir.modifier.notes'|trans }}Saisir, voir ou modifier les notes"
+                                           data-provide="tooltip"
+                                           data-placement="bottom"
+                                        >
+                                            {{ 'saisir.voir.modifier.notes'|trans }}
+                                        </a></td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-btn btn-block btn-primary-outline"
+                                                title="{{ 'export'|trans }}"
+                                                data-provide="tooltip"
+                                                data-placement="bottom"
+                                                data-toggle="modal" data-target="#modalExport"
+                                        >
+                                            {{ 'choisir'|trans }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div> <!---->
+
+            <div id="modal1" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+                <div class="modal-dialog modal-md modal-dialog-centered">
+                    <div tabindex="-1" class="modal-content">
+                        <header class="modal-header"><h5 class="modal-title">
+                                Bootstrap-Vue</h5>
+                            <button type="button" data-dismiss="modal" class="close">×</button>
+                        </header>
+                        <div class="modal-body"><p class="my-4"></p></div>
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modalExport" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div tabindex="-1" class="modal-content">
+                        <header class="modal-header"><h5
+                                    class="modal-title">Choisir le document et le format</h5>
+                            <button type="button" data-dismiss="modal" class="close">×</button>
+                        </header>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4>Type de document</h4>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                               id="exampleRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Emargement
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                               id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Evaluation
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h4>Format</h4>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFormat"
+                                               id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Csv (;)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFormat"
+                                               id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Csv (,)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFormat"
+                                               id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Excel (xlsx)
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFormat"
+                                               id="exampleRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            PDF
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h4>"Découpage"</h4>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFiltre"
+                                               id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            CM
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFiltre"
+                                               id="exampleRadios1" value="option1">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            TD
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exportFiltre"
+                                               id="exampleRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            TP
+                                        </label>
+                                    </div>
+                                    {# todo: tous les groupes de groupes #}
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

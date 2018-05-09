@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.structure.ue.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_ue', id: ue.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">Détails de Ue</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ ue.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle'|trans }}</th>
+                <td>{{ ue.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.numero_ue'|trans }}</th>
+                <td>{{ ue.numeroUe }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.coefficient'|trans }}</th>
+                <td>{{ ue.coefficient }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.nb_ects'|trans }}</th>
+                <td>{{ ue.nbEcts }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ ue.created ? ue.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ ue.updated ? ue.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.code_apogee'|trans }}</th>
+                <td>{{ ue.codeApogee }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.code_version'|trans }}</th>
+                <td>{{ ue.codeVersion }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.code_departement'|trans }}</th>
+                <td>{{ ue.codeDepartement }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% import "macros/show-line.html.twig" as table %}
+
+{% block header %}
+    {{ 'adm.ppn.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+<div class="header-action">
+    {{ include('composants/adm-buttons-show.html.twig', {elt: 'ppn', id: ppn.id}) }}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.ppn.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+        {{ table.line('table.id', ppn.id) }}
+        {{ table.line('table.libelle', ppn.libelle) }}
+        {{ table.line('table.annee_ppn', ppn.annee) }}
+        {{ table.line('table.diplome', ppn.diplome ? ppn.diplome.libelle : 'non.defini'|trans) }}
+        {{ table.line('table.created', ppn.created ? ppn.created|localizeddate('long', 'short', app.request.getLocale()) : '') }}
+        {{ table.line('table.updated', ppn.updated ? ppn.updated|localizeddate('long', 'short', app.request.getLocale()) : '') }}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

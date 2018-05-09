@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'application.votre.previsionnel.chronologique.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    {{ include('application/menu.html.twig') }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title"><strong>{{ 'service.chronologique.heading'|trans }}</strong> | {# todo: erreur user_data.user.display #} | ({{ 'periode'|trans }}
+                : {{ user_data.formation.optAnneePrevisionnel }})</h4>
+            <ul class="card-controls">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#"><i class="ti-export"></i> {{ 'export'|trans }}</a>
+                    </div>
+                </li>
+            </ul>
+        </header>
+
+        <div class="card-body">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th>{{ 'table.matiere'|trans }}</th>
+                    <th>{{ 'table.jour'|trans }}</th>
+                    <th>{{ 'table.date'|trans }}</th>
+                    <th>{{ 'table.heure'|trans }}</th>
+                    <th>{{ 'table.type_cours'|trans }}</th>
+                    <th>{{ 'table.groupe'|trans }}</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+{% endblock %}

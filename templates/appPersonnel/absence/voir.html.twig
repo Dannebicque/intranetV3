@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{{ 'app.personnel.absence.voir'|trans }} | <strong>{{ matiere.libelle }}</strong>{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_personnel_absence_index',{matiere:matiere.id}) }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_saisie'|trans }}"><i class="ti-plus"></i></a>
+            <a href="{{ path('default_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.personnel.absence.voir'|trans }} | <strong>{{ matiere.libelle }}</strong></h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'app.personnel.absence.nom'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.prenom'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.date'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.heure'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.dureee'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.saisiepar'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.justifie'|trans }}</th>
+                    <th>{{ 'actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for absence in absences %}
+                    <tr>
+                        <td>{{ absence.etudiant.nom }}</td>
+                        <td>{{ absence.etudiant.prenom }}</td>
+                        <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence.duree ? absence.duree|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence.personnel.display }}</td>
+                        <td><label><input type="radio" value="true" name="abs_{{ absence.id }}" {% if absence.justifie == true %}checked{% endif %}> Oui</label><label><input type="radio" value="false" name="abs_{{ absence.id }}" {% if absence.justifie == false %}checked{% endif %}> Non</label></td>
+                        <td>
+                            <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, page: 'absences'}) }}"
+                               class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'details.des.absences'|trans }}"><i class="ti-eye"></i></a>
+
+                            <a href="{{ path('application_personnel_absence_delete', {id: absence.id}) }}" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                        title="{{ 'supprimer'|trans }}"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('application_personnel_absence_imprimer',{matiere:matiere.id}),
+            title:'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('application_personnel_absence_save',{matiere:matiere.id}),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('application_personnel_absence_index',{matiere:matiere.id}),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('application_personnel_absence_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

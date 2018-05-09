@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.matiere.modification.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+<div class="header-action">
+    {{ include('composants/adm-buttons-edit.html.twig', {elt:'matiere', id: matiere.id}) }}
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.matiere.modification.heading'|trans }}</h4>
+    <div class="card-body">
+        {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+    </div>
+</div>
+{% endblock %}

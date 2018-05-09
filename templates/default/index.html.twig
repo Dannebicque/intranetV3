@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Intranet du département <strong>{{ user_data.formation.libelle }}</strong>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <h4 class="card-title">Card title</h4>
+
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+
+        {% if is_granted('ROLE_PERMANENT') %}
+            {{ render(controller(
+                'App\\Controller\\BlocNotesAbsencesController::personnel'
+            )) }}
+        {% elseif is_granted('ROLE_ETUDIANT') %}
+            {{ render(controller(
+                'App\\Controller\\BlocNotesAbsencesController::etudiant'
+            )) }}
+        {% endif %}
+    </div>
+{% endblock %}

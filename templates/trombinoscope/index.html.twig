@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'trombinoscope.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            {% for semestre in user_data.semestres %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-toggle="tab"
+                       href="#" data-sem="{{ semestre.id }}" role="tab">{{ semestre.libelle }}
+                        <small>({{ semestre.etudiants|length }})</small>
+                    </a>
+                </li>
+            {% endfor %}
+            <li class="nav-item">
+                <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="permanent" role="tab"> {{ 'permanents.heading'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">Card title</h4>
+            <div class="card-header-actions" style="">
+                <span id="trombifiltre">
+                    <a href="#" class="btn btn-sm btn btn-info"> {{ 'cm'|trans }}</a>
+                    <a href="#" class="btn btn-sm btn-flat btn-info">{{ 'td'|trans }}</a>
+                    <a href="#" class="btn btn-sm btn-flat btn-info">{{ 'tp'|trans }}</a>
+                </span>
+                <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                            <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel</a>
+                            <a href="#" class="dropdown-item"><i class="fa fa-file-text-o"></i> CSV</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </header>
+        <div class="card-body">
+            <div class="row" id="trombi">
+            </div>
+        </div>
+    </div>
+{% endblock %}

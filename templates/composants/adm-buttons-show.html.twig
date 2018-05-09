@@ -1,0 +1,9 @@
+<div class="buttons">
+    <a href="{{ path('administration_'~ elt ~ '_delete', {id: id}) }}" class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-provide="tooltip"
+       data-placement="bottom"><i class="ti-trash"></i></a>
+    <a href="{{ path('administration_'~elt~'_edit', {id: id}) }}" class="btn btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-provide="tooltip"
+       data-placement="bottom"><i class="ti-pencil"></i></a>
+
+    <a href="{{ path('administration_'~elt~'_index') }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+       data-placement="bottom"><i class="ti-arrow-left"></i></a>
+</div>
