@@ -8,7 +8,6 @@
 
 ###> symfony/phpunit-bridge ###
 .phpunit
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 /.idea/dictionaries/davidannebicque.xml
 /.idea/misc.xml
@@ -42,3 +41,4 @@ symfony.lock
 translations/VichUploaderBundle.fr.xlf
 web/
 yarn.lock
+!/phpunit.xml
