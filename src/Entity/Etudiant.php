@@ -27,18 +27,19 @@ class Etudiant extends Utilisateur
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="etudiant")
+     *
      */
     private $notes;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $num_etudiant;
+    private $numEtudiant;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $num_ine;
+    private $numIne;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
@@ -48,11 +49,18 @@ class Etudiant extends Utilisateur
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $annee_bac;
+    private $anneeBac;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Absence", mappedBy="etudiant")
+     * @ORM\OrderBy({"date" = "desc", "heure" = "desc"})
+     */
+    private $absences;
 
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->absences = new ArrayCollection();
     }
 
     public function getId()
@@ -107,26 +115,27 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
+
     public function getNumEtudiant(): ?string
     {
-        return $this->num_etudiant;
+        return $this->numEtudiant;
     }
 
-    public function setNumEtudiant(string $num_etudiant): self
+    public function setNumEtudiant(string $numEtudiant): self
     {
-        $this->num_etudiant = $num_etudiant;
+        $this->numEtudiant = $numEtudiant;
 
         return $this;
     }
 
     public function getNumIne(): ?string
     {
-        return $this->num_ine;
+        return $this->numIne;
     }
 
-    public function setNumIne(string $num_ine): self
+    public function setNumIne(string $numIne): self
     {
-        $this->num_ine = $num_ine;
+        $this->numIne = $numIne;
 
         return $this;
     }
@@ -145,12 +154,43 @@ class Etudiant extends Utilisateur
 
     public function getAnneeBac(): ?int
     {
-        return $this->annee_bac;
+        return $this->anneeBac;
     }
 
-    public function setAnneeBac(?int $annee_bac): self
+    public function setAnneeBac(?int $anneeBac): self
     {
-        $this->annee_bac = $annee_bac;
+        $this->anneeBac = $anneeBac;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Absence[]
+     */
+    public function getAbsences(): Collection
+    {
+        return $this->absences;
+    }
+
+    public function addAbsence(Absence $absence): self
+    {
+        if (!$this->absences->contains($absence)) {
+            $this->absences[] = $absence;
+            $absence->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsence(Absence $absence): self
+    {
+        if ($this->absences->contains($absence)) {
+            $this->absences->removeElement($absence);
+            // set the owning side to null (unless already changed)
+            if ($absence->getEtudiant() === $this) {
+                $absence->setEtudiant(null);
+            }
+        }
 
         return $this;
     }

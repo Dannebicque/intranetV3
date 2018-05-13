@@ -10,11 +10,15 @@
                 <p>{{ article.resume }}</p>
 
                 <div class="flexbox align-items-center mt-3">
-                    <a class="btn btn-round btn-bold btn-primary" href="#">{{ 'btn.read_more'|trans }}</a>
+                    <a class="btn btn-round btn-bold btn-primary"
+                       href="{{ path('article_read_more', {slug:article.slug}) }}">{{ 'btn.read_more'|trans }}</a>
 
                     <div class="gap-items-4">
                         <a class="text-light" href="#">
                             <span class="fw-500 ml-2">Hos Shams</span>
+                        </a>
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-share-alt"></i>
                         </a>
                         <a class="text-muted" href="#">
                             <i class="ti-heart text-danger fs-11"></i> {{ article.nbLike }}

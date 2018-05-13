@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/ppn",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/programme-pedagogique",
+ *         "en":"administration/educational-program"}
+ *)
  */
 class PpnController extends Controller
 {

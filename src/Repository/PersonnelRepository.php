@@ -67,14 +67,19 @@ class PersonnelRepository extends ServiceEntityRepository
 
     public function findByFormation($formation)
     {
+        return $this->findByFormationBuilder($formation)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByFormationBuilder($formation)
+    {
         return $this->createQueryBuilder('p')
             ->innerJoin(PersonnelFormation::class, 'f', 'WITH', 'f.personnel = p.id')
             ->where('f.formation = :formation')
             ->setParameter('formation', $formation)
             ->orderBy('p.nom', 'ASC')
-            ->orderBy('p.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('p.prenom', 'ASC');
     }
 
 //    /**

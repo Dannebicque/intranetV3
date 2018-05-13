@@ -1,0 +1,62 @@
+<table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th class="cm">NB h*</th>
+        <th class="cm">NB Gr.</th>
+        <th class="cm">1.5**</th>
+
+        <th class="previtd">NB h/ Gr.*</th>
+        <th class="previtd">NB Gr.</th>
+        <th class="previtd">1.5**</th>
+
+        <th class="previtp">NB h/ Gr.*</th>
+        <th class="previtp">NB Gr.</th>
+        <th class="previtp">1.5**</th>
+
+        <th class="cm">tot. CM*</th>
+        <th class="previtd">tot. TD</th>
+        <th class="previtp">tot. TP</th>
+
+        <th>total eq. TD**</th>
+        <th>total etu.</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if previsionnel.servicePrevisionnelBySemestre[semestre.id] is defined %}
+        {% for previsionnel in previsionnel.servicePrevisionnelBySemestre[semestre.id] %}
+            <tr>
+                <td colspan="12">
+                    {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }}
+                    | {{ previsionnel.matiere.codeApogee }}
+                </td>
+                <td colspan="2">
+                    <a href="">Détail du module</a>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ previsionnel.nbHCm }} h</td>
+                <td>{{ previsionnel.nbGrCm }}</td>
+                <td>{{ previsionnel.nbSeanceCm }}</td>
+                <td class="previtd">{{ previsionnel.nbHTd }} h</td>
+                <td class="previtd">{{ previsionnel.nbGrTd }}</td>
+                <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
+
+                <td class="previtp">{{ previsionnel.nbHTp }} h</td>
+                <td class="previtp">{{ previsionnel.nbGrTp }}</td>
+                <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
+
+                <td>{{ previsionnel.totalHCm }} h</td>
+                <td class="previtd">{{ previsionnel.totalHTd }} h</td>
+                <td class="previtp">{{ previsionnel.totalHTp }} h</td>
+
+                <td>{{ previsionnel.totalEqTd }} h</td>
+                <td>{{ previsionnel.totalEtudiant }} h</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="14">Pas de sercice</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>

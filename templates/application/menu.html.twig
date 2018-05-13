@@ -1,16 +1,34 @@
 <div class="header-action">
     <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link changeapplication active" href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link changeapplication" href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link changeapplication" href="" role="tab">Quizz</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link changeapplication" href="" role="tab">Stages</a>
-        </li>
+        {% if is_granted('ROLE_PERMANENT') %}
+            <li class="nav-item">
+                <a class="nav-link changeapplication active"
+                   href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link changeapplication"
+                   href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link changeapplication" href="{{ path('application_personnel_stage_index') }}" role="tab">Stages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link changeapplication" href="{{ path('application_personnel_quizz_index') }}" role="tab">Quizz</a>
+            </li>
+
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link changeapplication active"
+                   href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link changeapplication" href="{{ path('application_etudiant_stage_index') }}" role="tab">Stages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link changeapplication" href="{{ path('application_etudiant_quizz_index') }}" role="tab">Quizz</a>
+            </li>
+
+        {% endif %}
+
     </ul>
 </div>

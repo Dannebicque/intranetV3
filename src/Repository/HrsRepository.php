@@ -32,32 +32,18 @@ class HrsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-//    /**
-//     * @return Hrs[] Returns an array of Hrs objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function findHrsFormation($formation, $annee)
     {
         return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('h.personnel = :user')
+            ->andWhere('h.annee = :annee')
+            ->setParameter('user', $getUser)
+            ->setParameter('annee', $annee)
+            ->orderBy('h.typeHrs', 'ASC')
+            ->orderBy('h.semestre', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Hrs
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

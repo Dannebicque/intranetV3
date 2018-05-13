@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class NotesController
  * @package App\Controller
- * @Route("/{_locale}/application/personnel/note",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"application/personnel/note",
+ *         "en":"application/team/mark"}
+ *)
  * @IsGranted("ROLE_PERMANENT")
  */
 class NoteController extends Controller
@@ -24,7 +24,7 @@ class NoteController extends Controller
      *
      * @return Response
      */
-    public function index(Matiere $matiere)
+    public function index(Matiere $matiere) :Response
     {
         return $this->render('appPersonnel/note/index.html.twig', [
             'matiere' => $matiere

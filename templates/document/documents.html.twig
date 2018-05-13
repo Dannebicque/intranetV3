@@ -15,12 +15,12 @@
                         <small>{{ 'created'|trans }}: {{ document.updated|localizeddate('long', 'short', app.request.getLocale()) }}</small>
                     </p>
                 </div>
-                <a class="media-action hover-primary" href="#" data-provide="tooltip" title="{{ 'telecharger'|trans }}"><i
+                <a class="primary" href="#" data-provide="tooltip" title="{{ 'telecharger'|trans }}"><i
                             class="ti-save"></i></a>
-                <a class="media-action hover-primary" href="#" data-provide="tooltip" title="{{ 'modifier'|trans }}"><i
-                            class="ti-pencil"></i></a>
-                <a class="media-action hover-danger" href="#" data-provide="tooltip" title="{{ 'supprimer'|trans }}"><i
-                            class="ti-close"></i></a>
+                <label class="toggler toggler-danger fs-16" data-provide="tooltip" title="{{ 'favori'|trans }}">
+                    <input type="checkbox">
+                    <i class="fa fa-heart"></i>
+                </label>
             </div>
         </div>
     </div>

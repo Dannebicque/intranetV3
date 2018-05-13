@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/matiere",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/matiere",
+ *         "en":"administration/course"}
+ *)
  */
 class MatiereController extends Controller
 {

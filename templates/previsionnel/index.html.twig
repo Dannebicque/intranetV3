@@ -30,61 +30,8 @@
             <div class="tab-content">
                 {% for semestre in previsionnel.semestres %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
-                        <table class="table table-bordered table-condensed">
-                            <thead>
-                            <tr>
-                                <th class="cm">NB h*</th>
-                                <th class="cm">NB Gr.</th>
-                                <th class="cm">1.5**</th>
+                        {{ include('bloc_previsionnel/previ_semestre.html.twig') }}
 
-                                <th class="previtd">NB h/ Gr.*</th>
-                                <th class="previtd">NB Gr.</th>
-                                <th class="previtd">1.5**</th>
-
-                                <th class="previtp">NB h/ Gr.*</th>
-                                <th class="previtp">NB Gr.</th>
-                                <th class="previtp">1.5**</th>
-
-                                <th class="cm">tot. CM*</th>
-                                <th class="previtd">tot. TD</th>
-                                <th class="previtp">tot. TP</th>
-
-                                <th>total eq. TD**</th>
-                                <th>total etu.</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for previsionnel in previsionnel.servicePrevisionnelBySemestre[semestre.id] %}
-                            <tr class="prev_3312">
-                                <td colspan="12">
-                                    {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }} | {{ previsionnel.matiere.codeApogee }}
-                                </td>
-                                <td colspan="2">
-                                    <a href="">Détail du module</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ previsionnel.nbHCm }} h</td>
-                                <td>{{ previsionnel.nbGrCm }}</td>
-                                <td>{{ previsionnel.nbSeanceCm }}</td>
-                                <td class="previtd">{{ previsionnel.nbHTd }} h</td>
-                                <td class="previtd">{{ previsionnel.nbGrTd }}</td>
-                                <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
-
-                                <td class="previtp">{{  previsionnel.nbHTp }} h</td>
-                                <td class="previtp">{{ previsionnel.nbGrTp }}</td>
-                                <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
-
-                                <td>{{ previsionnel.totalHCm }} h</td>
-                                <td class="previtd">{{ previsionnel.totalHTd }} h</td>
-                                <td class="previtp">{{ previsionnel.totalHTp }} h</td>
-
-                                <td>{{ previsionnel.totalEqTd }} h</td>
-                                <td>{{ previsionnel.totalEtudiant }} h</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
                         <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
                             Information indicative !
                         </div>
@@ -94,97 +41,11 @@
         </div>
     </div>
 
-    <div class="card">
-        <header class="card-header">
-            <h4 class="card-title"><strong>{{ 'hrs.suivis.responsabilite.heading'|trans }}HRS / Suivis, Reponsabiltiés</strong> | {{ user_data.user.display }} |
-                ({{ 'periode'|trans }} : {{ user_data.formation.optAnneePrevisionnel }})</h4>
-        </header>
+    {{ include('bloc_previsionnel/hrs.html.twig') }}
 
-        <div class="card-body">
-            <table class="table table-hover table-striped">
-                <thead>
-                <tr>
-                    <th>{{ 'table.type_responsabilite'|trans }}</th>
-                    <th>{{ 'table.semestre'|trans }}</th>
-                    <th>{{ 'table.type_hrs'|trans }}</th>
-                    <th>{{ 'table.nb_heures_eq_td'|trans }}Nb. Heures (éq. TD)</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for hr in previsionnel.hrs %}
-                <tr>
-                    <td>{{ hr.libelle }}</td>
-                    <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
-                    <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
-                    <td>{{ hr.nbHeuresTd }} h</td>
-                </tr>
-                    {% if loop.last %}
-                    <tr>
-                        <td colspan="3" style="text-align: right;">{{ 'table.total_prime'|trans }}Total Primes (HRS, PRP, ...) :</td>
-                        <td>{{ previsionnel.totalHrs }} h (éq. TD)</td>
-                    </tr>
-                    {% endif %}
-                {% else %}
-                    <tr>
-                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
-                    </tr>
-                {% endfor %}
+    {{ include('bloc_previsionnel/total.html.twig') }}
 
-                </tbody>
-            </table>
-        </div>
-    </div>
 
-    <div class="card">
-        <header class="card-header">
-            <h4 class="card-title"><strong>{{ 'synthese.previsionnel.heading'|trans }}Synthèse de votre service</strong> | {{ user_data.user.display }} |
-                ({{ 'periode'|trans }} : {{ user_data.formation.optAnneePrevisionnel }})</h4>
-        </header>
-
-        <div class="card-body">
-            <table class="table table-striped table-condensed table-hover">
-                <tbody><tr>
-                    <th></th>
-                    <th class="importantgros">CM</th>
-                    <th class="previtd">TD</th>
-                    <th class="previtp">TP</th>
-                    <th class="importantgros">Eq. TD</th>
-                </tr>
-                <tr>
-                    <td class="importantgros">Total général (h) (hors HRS)</td>
-                    <td class="importantgros">{{ previsionnel.totalCm }} h</td>
-                    <td class="previtd">{{ previsionnel.totalTd }} h</td>
-                    <td class="previtp">{{ previsionnel.totalTp }} h</td>
-                    <td class="importantgros">{{ previsionnel.totalService }} h</td>
-                </tr>
-                {#<tr>
-                    <td class="importantgros">Proratisation </td>
-                    <td class="importantgros">11.37 %</td>
-                    <td class="previtd">43.14 %</td>
-                    <td class="previtp">45.48 %</td>
-                    <td class="importantgros">&nbsp;</td>
-                </tr>#}
-                <tr>
-                    <td class="importantgros">Heures complémentaires </td>
-                    <td class="importantgros" colspan="3"></td>
-                    <td class="importantgros">{{ previsionnel.nbHeuresComplementaires }} h</td>
-                </tr>
-                {#<tr>
-                    <td class="importantgros">Service après proratisation (estimation) </td>
-                    <td class="importantgros" colspan="3">&nbsp;</td>
-                    <td class="importantgros">264.11 h (éq. TD)</td>
-                </tr>#}
-                <tr>
-                    <td class="importantgros">Service + Primes (HRS, PRP, ...) </td>
-                    <td class="importantgros" colspan="3">&nbsp;</td>
-                    <td class="importantgros">{{ previsionnel.totalHrsService }} h (éq. TD)</td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-            <div class="alert alert-warning">Total et proratisation donnés à titre indicatif. Le calcul est effectué sur le prévisionnel connu dans le département !</div>
-        </div>
-    </div>
 
 {{ include('composants/fab-buttons.html.twig', {boutons:[
     {type: 'info',

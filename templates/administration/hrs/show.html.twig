@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% import "macros/show-line.html.twig" as table %}
+
+{% block header %}
+    {{ 'adm.hrs.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'hrs', id: hrs.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.hrs.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                {{ table.line('table.id', hrs.id) }}
+                {{ table.line('table.libelle', hrs.libelle) }}
+                {{ table.line('table.annee', hrs.annee) }}
+                {{ table.line('table.type_hrs', hrs.typeHrs ? hrs.typeHrs.libelle : 'non.defini'|trans ) }}
+                {{ table.line('table.semestre_ou_diplome', hrs.diplome ? hrs.diplome.libelle : (hrs.semestre ? hrs.semestre.libelle : 'non.defini'|trans)) }}
+                {{ table.line('table.nb_heures_td', hrs.nbHeuresTd) }}
+                {{ table.line('table.personnel', hrs.personnel ? hrs.personnel.display : 'non.defini'|trans) }}
+                {{ table.line('table.created', hrs.created ? hrs.created|localizeddate('long', 'short', app.request.getLocale()) : '') }}
+                {{ table.line('table.updated', hrs.updated ? hrs.updated|localizeddate('long', 'short', app.request.getLocale()) : '') }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

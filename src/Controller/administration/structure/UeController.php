@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/structure/ue",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/structure/unite-enseignement",
+ *         "en":"administration/organization/teaching-unit"}
+ *)
  */
 class UeController extends Controller
 {
@@ -120,6 +120,7 @@ class UeController extends Controller
                 'form' => $form->createView(),
             ]);
         }
+        return $this->render('erreur/404.html.twig');
     }
 
     /**

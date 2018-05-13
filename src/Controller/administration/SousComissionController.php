@@ -10,9 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class SousComissionController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/etudiant/sous-comission",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/sous-commission",
+ *         "en":"administration/subcommittee"}
+ *)
  */
 class SousComissionController extends Controller
 {

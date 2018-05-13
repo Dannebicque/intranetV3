@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/structure/annee",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/structure/annee",
+ *         "en":"administration/organization/year"}
+ *)
  */
 class AnneeController extends Controller
 {
     /**
-     * @Route("/", name="administration_structure_annee_index", methods="GET")
+     * @Route({"fr":"/", "en":"/"}, name="administration_structure_annee_index", methods="GET")
      * @param AnneeRepository $anneeRepository
      *
      * @return Response
@@ -30,7 +30,7 @@ class AnneeController extends Controller
     }
 
     /**
-    * @Route("/help", name="administration_structure_annee_help", methods="GET")
+    * @Route({"fr":"/aide", "en":"/help"}, name="administration_structure_annee_help", methods="GET")
     */
     public function help(): Response
     {
@@ -38,8 +38,9 @@ class AnneeController extends Controller
     }
 
     /**
-    * @Route("/save", name="administration_structure_annee_save", methods="GET")
-    */
+     * @Route({"fr":"/sauvegarder", "en":"/save"}, name="administration_structure_annee_save", methods="GET")
+     * @throws \InvalidArgumentException
+     */
     public function save(): Response
     {
         //save en csv
@@ -47,8 +48,9 @@ class AnneeController extends Controller
     }
 
     /**
-    * @Route("/imprimer", name="administration_structure_annee_print", methods="GET")
-    */
+     * @Route({"fr":"/imprimer", "en":"/print"}, name="administration_structure_annee_print", methods="GET")
+     * @throws \InvalidArgumentException
+     */
     public function imprimer(): Response
     {
         //print (pdf)
@@ -56,7 +58,7 @@ class AnneeController extends Controller
     }
 
     /**
-     * @Route("/new", name="administration_structure_annee_new", methods="GET|POST")
+     * @Route({"fr":"/nouveau", "en":"/new"}, name="administration_structure_annee_new", methods="GET|POST")
      * @param Request $request
      *
      * @return Response
@@ -83,7 +85,7 @@ class AnneeController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_annee_show", methods="GET")
+     * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_structure_annee_show", methods="GET")
      * @param Annee $annee
      *
      * @return Response
@@ -94,7 +96,7 @@ class AnneeController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_structure_annee_edit", methods="GET|POST")
+     * @Route({"fr":"/{id}/modifier", "en":"/{id}/edit"}, name="administration_structure_annee_edit", methods="GET|POST")
      * @param Request $request
      * @param Annee   $annee
      *
@@ -119,7 +121,7 @@ class AnneeController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_annee_delete", methods="DELETE")
+     * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_structure_annee_delete", methods="DELETE")
      */
     public function delete(): void
     {

@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class CohorteController
  * @package App\Controller\administration
- * @Route("/{_locale}/cohorte",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/cohorte",
+ *         "en":"administration/cohort"}
+ *)
  */
 class CohorteController extends Controller
 {

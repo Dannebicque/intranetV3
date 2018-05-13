@@ -1,0 +1,54 @@
+security:
+    encoders:
+        App\Entity\Utilisateur: bcrypt
+
+    providers:
+        chain_provider:
+            chain:
+                providers: [personnel_user, etudiant_user]
+        personnel_user:
+            entity: { class: App\Entity\Personnel, property: username }
+        etudiant_user:
+            entity: { class: App\Entity\Etudiant, property: username }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            #http_basic: ~
+            # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
+            pattern: ^/
+
+            # La connexion n'est pas requise sur toutes les pages
+            # par exemple la page d'accueil
+            anonymous: true
+
+            provider: chain_provider
+            form_login:
+                # Le nom de la route de la page de connexion
+                check_path: security_login
+                # Le nom de la route où se trouve le formulaire de connexion
+                # Si un utilisateur tente d'acceder à une page protégée sans en avoir les droits
+                # il sera redirigé sur cette page
+                login_path: security_login
+                # Securisation des formulaires
+                csrf_token_generator: security.csrf.token_manager
+                # La page par defaut apres une connexion reussie
+                default_target_path: default_index
+
+            logout:
+                # La route où se trouve le process de deconnexion
+                path: security_logout
+                # La route sur laquelle doit etre rediriger l'utilisateur apres une deconnexion
+                target: security_login
+
+    access_control:
+        # Les regles de securité
+        # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
+        # peuvent acceder à toutes les pages commençant par /admin
+        - { path: '^/[a-z]{2}/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
+        - { path: '^/[a-z]{2}/administration', roles: ROLE_PERMANENT }
+        - { path: '^/admin', roles: ROLE_PERMANENT }

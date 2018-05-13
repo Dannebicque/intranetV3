@@ -1,0 +1,40 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title"><strong>{{ 'hrs.suivis.responsabilite.heading'|trans }}HRS / Suivis, Reponsabiltiés</strong> | {{ user_data.user.display }} |
+            ({{ 'periode'|trans }} : {{ user_data.formation.optAnneePrevisionnel }})</h4>
+    </header>
+
+    <div class="card-body">
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'table.type_responsabilite'|trans }}</th>
+                <th>{{ 'table.semestre'|trans }}</th>
+                <th>{{ 'table.type_hrs'|trans }}</th>
+                <th>{{ 'table.nb_heures_eq_td'|trans }}Nb. Heures (éq. TD)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for hr in previsionnel.hrs %}
+                <tr>
+                    <td>{{ hr.libelle }}</td>
+                    <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
+                    <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
+                    <td>{{ hr.nbHeuresTd }} h</td>
+                </tr>
+                {% if loop.last %}
+                    <tr>
+                        <td colspan="3" style="text-align: right;">{{ 'table.total_prime'|trans }}Total Primes (HRS, PRP, ...) :</td>
+                        <td>{{ previsionnel.totalHrs }} h (éq. TD)</td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -10,9 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class SemestreController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/semestre",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/semestre",
+ *         "en":"administration/semester"}
+ *)
  */
 class SemestreController extends Controller
 {

@@ -27,7 +27,15 @@
             </tr>
             <tr>
                 <th>{{ 'table.texte'|trans }}</th>
-                <td>{{ article.texte }}</td>
+                <td>{{ article.texte|raw }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.nbLike'|trans }}</th>
+                <td>{{ article.nbLike }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.auteur'|trans }}</th>
+                <td>{{ article.personnel ? article.personnel.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.created'|trans }}</th>

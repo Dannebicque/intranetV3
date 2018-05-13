@@ -11,9 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class UserController
  * @package App\Controller
- * @Route("/{_locale}/user",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"utilisateur",
+ *         "en":"user"})
  */
 class ProfilPersonnelController extends Controller
 {

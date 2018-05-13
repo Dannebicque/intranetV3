@@ -1,0 +1,29 @@
+<div class="card">
+    <h4 class="card-title">{{ 'bloc.absence.etu.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table table-border">
+            <thead>
+            <tr>
+                <th>{{ 'date'|trans }}</th>
+                <th>{{ 'heure'|trans }}</th>
+                <th>{{ 'matiere'|trans }}</th>
+                <th>{{ 'justifiee'|trans }}</th>
+                <th>{{ 'saisie_par'|trans }}</th>
+                <th>{{ 'infos'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for absence in etudiant.absences %}
+                <tr>
+                    <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : ''  }}</td>
+                    <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : ''}}</td>
+                    <td>{{ absence.matiere.codeMatiere }}</td>
+                    <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
+                    <td>Infos</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

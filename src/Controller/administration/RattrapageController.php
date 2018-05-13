@@ -3,15 +3,16 @@
 namespace App\Controller\administration;
 
 use App\Entity\Semestre;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class RattrapageController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/rattrapge",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/rattrapage",
+ *         "en":"administration/picking-up"}
+ *)
  */
 class RattrapageController extends Controller
 {
@@ -21,7 +22,7 @@ class RattrapageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Semestre $semestre)
+    public function index(Semestre $semestre) :Response
     {
         return $this->render('administration/rattrapage/index.html.twig', [
             'semestre' => $semestre

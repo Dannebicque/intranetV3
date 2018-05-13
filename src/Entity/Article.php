@@ -23,7 +23,7 @@ class Article extends BaseEntity
      * @var integer
      * @ORM\Column(type="integer")
      */
-    private $nb_like = 0;
+    private $nbLike = 0;
 
     /**
      * @ORM\Column(type="text")
@@ -52,24 +52,30 @@ class Article extends BaseEntity
     private $semestres;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
+     */
+    private $personnel;
+
+    /**
      * @return int
      */
     public function getNbLike(): int
     {
-        return $this->nb_like;
+        return $this->nbLike;
     }
 
     /**
-     * @param int $nb_like
+     * @param int $nbLike
      */
-    public function setNbLike(int $nb_like): void
+    public function setNbLike(int $nbLike): void
     {
-        $this->nb_like = $nb_like;
+        $this->nbLike = $nbLike;
     }
 
 
-    public function __construct()
+    public function __construct(Personnel $personnel)
     {
+        $this->personnel = $personnel;
         $this->semestres = new ArrayCollection();
     }
 
@@ -168,6 +174,18 @@ class Article extends BaseEntity
         if ($this->semestres->contains($semestre)) {
             $this->semestres->removeElement($semestre);
         }
+
+        return $this;
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): self
+    {
+        $this->personnel = $personnel;
 
         return $this;
     }

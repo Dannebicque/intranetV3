@@ -10,9 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class CommissionAbsenceController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/etudiant/groupe",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/etudiant/groupe",
+ *         "en":"administration/student/group"}
+ *)
  */
 class EtudiantGroupeController extends Controller
 {

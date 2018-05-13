@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class InformationController
  * @package App\Controller
- * @Route("/{_locale}/informations",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"informations",
+ *         "en":"information"})
  */
 class InformationController extends Controller
 {

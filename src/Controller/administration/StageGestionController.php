@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class StageGestionController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/stage/gestion",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/stage/gestion",
+ *         "en":"administration/traineeship/manage"}
+ *)
  */
 class StageGestionController extends Controller
 {

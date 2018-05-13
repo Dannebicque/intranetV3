@@ -53,6 +53,9 @@ class SecurityController extends Controller
 
     /**
      * @Route("/lock", name="security_lock")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function lock(Request $request): Response
     {

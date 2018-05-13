@@ -2,6 +2,7 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
@@ -11,11 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/article",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/article",
+ *         "en":"administration/news"}
+ *)
  */
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
     /**
      * @Route("/", name="administration_article_index", methods="GET")
@@ -63,7 +64,7 @@ class ArticleController extends Controller
      */
     public function new(Request $request): Response
     {
-        $article = new Article();
+        $article = new Article($this->getUser());
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 

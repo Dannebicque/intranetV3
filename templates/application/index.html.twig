@@ -9,7 +9,13 @@
 {% endblock %}
 
 {% block content %}
+    {% if is_granted('ROLE_PERMANENT') %}
         {{ render(controller(
             'App\\Controller\\PrevisionnelController::index'
         )) }}
+    {% else %}
+        {{ render(controller(
+            'App\\Controller\\MessagerieController::index'
+        )) }}
+    {% endif %}
 {% endblock %}

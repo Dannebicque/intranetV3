@@ -27,35 +27,35 @@ class Annee extends BaseEntity
      *
      * @ORM\Column(name="couleurCM", type="string", length=7,nullable=true)
      */
-    private $couleur_cm = null;
+    private $couleur_cm;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurTD", type="string", length=7,nullable=true)
      */
-    private $couleur_td = null;
+    private $couleur_td;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurTP", type="string", length=7,nullable=true)
      */
-    private $couleur_tp = null;
+    private $couleur_tp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurtexte", type="string", length=7,nullable=true)
      */
-    private $couleur_texte = null;
+    private $couleur_texte;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
-    private $libelle_long = null;
+    private $libelle_long;
 
     /**
      * @ORM\Column(type="string", length=20)

@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/document",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/documents",
+ *         "en":"administration/files"}
+ *)
  */
 class DocumentController extends Controller
 {

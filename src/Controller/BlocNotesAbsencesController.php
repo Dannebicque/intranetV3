@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\MesClasses\DataUserSession;
+use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyPrevisionnel;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -21,17 +23,23 @@ class BlocNotesAbsencesController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function personnel(MyPrevisionnel $myPrevisionnel)
+    public function personnel(MyPrevisionnel $myPrevisionnel) :Response
    {
        return $this->render('bloc_notes_absences/personnel.html.twig',[
            'previsionnel' => $myPrevisionnel->getPrevisionnelEnseignantFormation($this->getUser(), $this->dataUserSession->getFormation())
        ]);
    }
 
-    public function etudiant()
+    /**
+     * @return Response
+     */
+    public function etudiant(MyEtudiant $myEtudiant) :Response
     {
-        return $this->render('bloc_notes_absences/etudiant.html.twig',[
+        $myEtudiant->setEtudiant($this->getUser());
+        $myEtudiant->getNotesAbsences();
 
+        return $this->render('bloc_notes_absences/etudiant.html.twig',[
+            'etudiant' => $myEtudiant,
         ]);
     }
 }

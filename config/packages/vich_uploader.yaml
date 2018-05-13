@@ -1,0 +1,17 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        document:
+            uri_prefix: /fichiers/documents
+            upload_destination: '%kernel.project_dir%/public/upload/documents'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: true
+        logo:
+            uri_prefix: /fichiers/logo
+            upload_destination: '%kernel.project_dir%/public/upload/logo'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            inject_on_load: true
+    #    products:
+    #        uri_prefix: /images/products
+    #        upload_destination: '%kernel.project_dir%/public/images/products'

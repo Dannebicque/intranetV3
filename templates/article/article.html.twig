@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ article.titre }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('informations_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_informations'|trans }}"><i
+                        class="ti-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="embed-responsive embed-responsive-16by9">
+
+        </div>
+
+        <div class="card-body">
+            <h4><a class="hover-primary" href="#">{{ article.titre }}</a></h4>
+            <p>
+                <time>{{ article.created ? article.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</time>
+            </p>
+
+            <p>{{ article.texte|raw }}</p>
+        </div>
+
+        <div class="card-body bg-lightest bt-1">
+            <div class="flexbox align-items-center">
+                {% if article.personnel != null %}
+                    <a class="text-primary fs-15"
+                       href="{{ path('user_profil', {slug: article.personnel.slug, type:'permanent'}) }}">{{ article.personnel.display }}</a>
+                {% endif %}
+                <ul class="flexbox">
+                    <li class="px-16 br-1 border-light">
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-share-alt"></i>
+                        </a>
+                    </li>
+
+                    <li class="px-16 br-1 border-light">
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-heart mr-1"></i> {{ article.nbLike }}
+                        </a>
+                    </li>
+
+                    <li class="px-16">
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-comment mr-1"></i> 3
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

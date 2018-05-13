@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class EdtController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/emploi-du-temps",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/emploi-du-temps",
+ *         "en":"administration/timetable"}
+ *)
  */
 class EdtController extends Controller
 {

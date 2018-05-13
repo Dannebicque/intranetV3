@@ -1,10 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block javascript %}
+{% block header %}
+    {{ 'adm.previsionnel.new.heading'|trans }}
+{% endblock %}
 
+{%block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-new.html.twig', {elt: 'previsionnel'}) }}
+    </div>
 {% endblock %}
 
 {% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.previsionnel.new.heading'|trans }}</h4>
+    <div class="card-body">
 
+    </div>
+</div>
 {% endblock %}
-

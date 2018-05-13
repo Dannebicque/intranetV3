@@ -106,8 +106,6 @@ class DataUserSession
     }
 
     /**
-     * @param TokenStorageInterface $user
-     *
      * @return \App\Entity\Personnel|\App\Entity\Etudiant|null
      */
     public function getUser()

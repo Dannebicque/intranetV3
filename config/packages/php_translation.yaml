@@ -1,0 +1,18 @@
+translation:
+    locales: ["fr", "en"]
+    symfony_profiler: # must be placed in config_dev.yml
+        enabled: true
+    webui:
+        enabled: true
+    edit_in_place:
+        enabled: true
+        config_name: app # the first one or one of your configs
+        activator: php_translation.edit_in_place.activator
+    auto_add_missing_translations:
+        config_name: 'app'
+    configs:
+        app:
+            dirs: ["%kernel.project_dir%/templates", "%kernel.project_dir%/src"]
+            output_dir: "%kernel.project_dir%/translations"
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [cache, data, logs]

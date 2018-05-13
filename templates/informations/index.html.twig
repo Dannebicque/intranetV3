@@ -1,35 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'informations.heading'|trans }}
+    {{ 'ri.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('internationale_index') }}">{{ 'menu.internationale'|trans }}</a>
+                <a class="nav-link changeinformation active"
+                   href="{{ path('article_categorie', {categorie: 'ri'}) }}">{{ 'menu.internationale'|trans }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tab-diplome" role="tab" aria-selected="false">C2I</a>
+                <a class="nav-link changeinformation" data-toggle="tab" href="{{ path('article_categorie', {categorie: 'c2i'}) }}"
+                   role="tab">C2I</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tab-annee" role="tab">Informations Pratiques</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tab-semestre" role="tab">{{ 'adm.configuration.tab.semestre.menu'|trans }}</a>
+                <a class="nav-link changeinformation" data-toggle="tab" href="{{ path('article_categorie', {categorie: 'infos'}) }}"
+                   role="tab">Informations Pratiques</a>
             </li>
         </ul>
     </div>
 {% endblock %}
 
 {% block content %}
-
-    <div class="card">
-        <h4 class="card-title">Card title</h4>
-
-        <div class="card-body">
-
-        </div>
-    </div>
+    {{ render(controller(
+        'App\\Controller\\ArticleController::categorie', {categorie: 'ri'}
+    )) }}
 {% endblock %}

@@ -12,9 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class EtudiantController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/etudiant",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/etudiant",
+ *         "en":"administration/student"}
+ *)
  */
 class EtudiantController extends BaseController
 {

@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
         {% if is_granted('ROLE_PERMANENT') %}
             {{ render(controller(
                 'App\\Controller\\BlocNotesAbsencesController::personnel'
@@ -25,5 +25,4 @@
                 'App\\Controller\\BlocNotesAbsencesController::etudiant'
             )) }}
         {% endif %}
-    </div>
 {% endblock %}

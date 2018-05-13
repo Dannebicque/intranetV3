@@ -5,13 +5,12 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    /**
-     * Class AgendaController
-     * @package App\Controller
-     * @Route("/{_locale}/trombinoscope",
-     *     requirements={
-     *         "_locale": "fr|en"})
-     */
+/**
+ * Class AgendaController
+ * @package App\Controller
+ * @Route({"fr":"trombinoscope",
+ *         "en":"who-s-who"})
+ */
 class TrombinoscopeController extends Controller
 {
     /**

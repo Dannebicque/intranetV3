@@ -3,15 +3,15 @@
 namespace App\Controller;
 
 use App\Repository\HelpRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class HelpController
  * @package App\Controller
- * @Route("/{_locale}/aide",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"aide",
+ *         "en":"help"})
  */
 class HelpController extends Controller
 {
@@ -31,7 +31,7 @@ class HelpController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function article(HelpRepository $helpRepository, $sujet)
+    public function article(HelpRepository $helpRepository, $sujet) :Response
     {
         $article = $helpRepository->findBySlug($sujet);
 
@@ -46,7 +46,7 @@ class HelpController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function imprimer($sujet)
+    public function imprimer($sujet) :Response
     {
         return $this->render('help/article.html.twig', [
         ]);

@@ -12,9 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/type-document",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/categories-document",
+ *         "en":"administration/category-document"})
  */
 class TypeDocumentController extends Controller
 {

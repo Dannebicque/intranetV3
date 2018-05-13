@@ -194,7 +194,7 @@ class Previsionnel
         return $this;
     }
 
-    public function getSemestre()
+    public function getSemestre() : ?Semestre
     {
         if ($this->getMatiere() !== null) {
             return $this->getMatiere()->getSemestre();
@@ -203,41 +203,65 @@ class Previsionnel
         return null;
     }
 
-    public function getNbSeanceCm()
+    /**
+     * @return string
+     */
+    public function getNbSeanceCm() :string
     {
         return number_format($this->nbHCm / self::DUREE_SEANCE, 2);
     }
 
-    public function getNbSeanceTd()
+    /**
+     * @return string
+     */
+    public function getNbSeanceTd() :string
     {
         return number_format($this->nbHTd / self::DUREE_SEANCE, 2);
     }
 
-    public function getNbSeanceTp()
+    /**
+     * @return string
+     */
+    public function getNbSeanceTp() :string
     {
         return number_format($this->nbHTp / self::DUREE_SEANCE, 2);
     }
 
+    /**
+     * @return float|int
+     */
     public function getTotalHCm()
     {
         return $this->nbHCm * $this->nbGrCm;
     }
 
+    /**
+     * @return float|int
+     */
     public function getTotalHTd()
     {
         return $this->nbHTd * $this->nbGrTd;
     }
 
+    /**
+     * @return float|int
+     */
     public function getTotalHTp()
     {
         return $this->nbHTp * $this->nbGrTp;
     }
 
+    /**
+     * @return float|int
+     */
     public function getTotalEqTd()
     {
         return $this->getTotalHCm() * 1.5 + $this->getTotalHTd() + $this->getTotalHTp();
     }
 
+    /**
+     * @return mixed
+     */
     public function getTotalEtudiant()
     {
         return $this->nbHCm + $this->nbHTd + $this->nbHTp;

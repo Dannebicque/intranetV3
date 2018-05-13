@@ -8,15 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\AdresseRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Adresse
+class Adresse extends BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -35,7 +28,7 @@ class Adresse
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_postal;
+    private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -46,28 +39,6 @@ class Adresse
      * @ORM\Column(type="string", length=100)
      */
     private $pays = 'France';
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new \DateTime();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedValue(): void
-    {
-        $this->created = new \DateTime();
-    }
 
     public function getAdresse1(): ?string
     {
@@ -107,12 +78,12 @@ class Adresse
 
     public function getCodePostal(): ?string
     {
-        return $this->code_postal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(string $code_postal): self
+    public function setCodePostal(string $codePostal): self
     {
-        $this->code_postal = $code_postal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }

@@ -45,21 +45,21 @@ class Absence extends BaseEntity
     private $personnel;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", fetch="EAGER")
-     */
-    private $etudiant;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="anneeuniversitaire", type="integer")
      */
-    private $anneeuniversitaire = 0;
+    private $anneeuniversitaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="absences")
      */
     private $matiere;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
+     */
+    private $etudiant;
 
    public function __construct()
    {

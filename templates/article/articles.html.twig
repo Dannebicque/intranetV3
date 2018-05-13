@@ -1,0 +1,25 @@
+{% for article in articles %}
+    {{ include('composants/un-article.html.twig', {article:article}) }}
+{% endfor %}
+
+<nav>
+    <ul class="pagination pagination-circle">
+        <li class="page-item disabled">
+            <a class="page-link" href="#">
+                <span class="ti-arrow-left"></span>
+            </a>
+        </li>
+        <li class="page-item active">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">
+                <span class="ti-arrow-right"></span>
+            </a>
+        </li>
+    </ul>
+</nav>

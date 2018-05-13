@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/structure/diplome",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/structure/diplome",
+ *         "en":"administration/organization/diploma"}
+ *)
  */
 class DiplomeController extends Controller
 {

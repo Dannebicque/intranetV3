@@ -1,0 +1,50 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title"><strong>{{ 'synthese.previsionnel.heading'|trans }}Synthèse de votre service</strong> | {{ previsionnel.personnel.display }} |
+            ({{ 'periode'|trans }} : {{ user_data.formation.optAnneePrevisionnel }})</h4>
+    </header>
+
+    <div class="card-body">
+        <table class="table table-striped table-condensed table-hover">
+            <tbody><tr>
+                <th></th>
+                <th class="importantgros">CM</th>
+                <th class="previtd">TD</th>
+                <th class="previtp">TP</th>
+                <th class="importantgros">Eq. TD</th>
+            </tr>
+            <tr>
+                <td class="importantgros">Total général (h) (hors HRS)</td>
+                <td class="importantgros">{{ previsionnel.totalCm }} h</td>
+                <td class="previtd">{{ previsionnel.totalTd }} h</td>
+                <td class="previtp">{{ previsionnel.totalTp }} h</td>
+                <td class="importantgros">{{ previsionnel.totalService }} h</td>
+            </tr>
+            {#<tr>
+                <td class="importantgros">Proratisation </td>
+                <td class="importantgros">11.37 %</td>
+                <td class="previtd">43.14 %</td>
+                <td class="previtp">45.48 %</td>
+                <td class="importantgros">&nbsp;</td>
+            </tr>#}
+            <tr>
+                <td class="importantgros">Heures complémentaires </td>
+                <td class="importantgros" colspan="3"></td>
+                <td class="importantgros">{{ previsionnel.nbHeuresComplementaires }} h</td>
+            </tr>
+            {#<tr>
+                <td class="importantgros">Service après proratisation (estimation) </td>
+                <td class="importantgros" colspan="3">&nbsp;</td>
+                <td class="importantgros">264.11 h (éq. TD)</td>
+            </tr>#}
+            <tr>
+                <td class="importantgros">Service + Primes (HRS, PRP, ...) </td>
+                <td class="importantgros" colspan="3">&nbsp;</td>
+                <td class="importantgros">{{ previsionnel.totalHrsService }} h (éq. TD)</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="alert alert-warning">Total et proratisation donnés à titre indicatif. Le calcul est effectué sur le prévisionnel connu dans le département !</div>
+    </div>
+</div>

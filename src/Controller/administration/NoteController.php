@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class NoteController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/note",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/note",
+ *         "en":"administration/mark"}
+ *)
  */
 class NoteController extends Controller
 {

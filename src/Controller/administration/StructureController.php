@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class StructureController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/structure",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/structure",
+ *         "en":"administration/organization"}
+ *)
  */
 class StructureController extends Controller
 {

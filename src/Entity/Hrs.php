@@ -131,4 +131,9 @@ class Hrs extends BaseEntity
 
         return $this;
     }
+
+    public function __construct($annee)
+    {
+        $this->annee = $annee;
+    }
 }

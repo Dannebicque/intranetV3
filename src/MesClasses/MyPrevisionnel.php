@@ -44,10 +44,16 @@ class MyPrevisionnel
     private $totalCm = 0.0;
     private $totalTd = 0.0;
     private $totalTp = 0.0;
+    private $totalEtuCm = 0.0;
+    private $totalEtuTd = 0.0;
+    private $totalEtuTp = 0.0;
     private $totalHrs = 0.0;
 
     /** @var Matiere */
     private $matiere;
+
+    /** @var Semestre */
+    private $semestre;
 
     /** @var Previsionnel[] */
     private $previsionnels;
@@ -56,6 +62,32 @@ class MyPrevisionnel
     {
         $this->previsionnelRepository = $previsionnelRepository;
         $this->hrsRepository = $hrsRepository;
+    }
+
+    /**
+     * @return Semestre
+     */
+    public function getSemestre(): Semestre
+    {
+        return $this->semestre;
+    }
+
+
+
+    /**
+     * @return Matiere
+     */
+    public function getMatiere(): Matiere
+    {
+        return $this->matiere;
+    }
+
+    /**
+     * @return Previsionnel[]
+     */
+    public function getPrevisionnels(): array
+    {
+        return $this->previsionnels;
     }
 
     /**
@@ -103,6 +135,11 @@ class MyPrevisionnel
         return $this->totalCm + $this->totalTd + $this->totalTp;
     }
 
+    public function getTotalEtu(): float
+    {
+        return $this->totalEtuCm + $this->totalEtuTd + $this->totalEtuTp;
+    }
+
     /**
      * @return Hrs[]
      */
@@ -127,6 +164,30 @@ class MyPrevisionnel
         $this->personnel = $personnel;
     }
 
+    /**
+     * @return float
+     */
+    public function getTotalEtuCm(): float
+    {
+        return $this->totalEtuCm;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalEtuTd(): float
+    {
+        return $this->totalEtuTd;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalEtuTp(): float
+    {
+        return $this->totalEtuTp;
+    }
+
 
 
     /**
@@ -147,8 +208,6 @@ class MyPrevisionnel
         return $tot < 0 ? 0 : $tot;
     }
 
-
-
     public function getTotalHrsService() :float
     {
         return $this->totalHrs + $this->getTotalService();
@@ -157,24 +216,19 @@ class MyPrevisionnel
     public function getPrevisionnelEnseignantFormation(
         Personnel $personnel,
         Formation $formation
-    )//todo: param sur Personnel
+    )
     {
 
         return $this->previsionnelRepository->findPrevisionnelEnseignantFormation($personnel, $formation);
     }
 
-    public function getPrevisionnelEnseignantComplet(Personnel $personnel, $annee)//todo: param sur Personnel
+    public function getPrevisionnelEnseignantComplet(Personnel $personnel, $annee) :array
     {
 
         return $this->previsionnelRepository->findPrevisionnelEnseignantComplet($personnel, $annee);
     }
 
-    public function getPrevisionnelEnseignant($getId)
-    {
-    }
-
     /**
-     * @param $getUser
      * @param $annee
      *
      */
@@ -182,44 +236,75 @@ class MyPrevisionnel
     {
         $previsionnels = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($this->personnel, $annee);
 
-        $t = array();
+        $tprev = array();
         /** @var Previsionnel $pr */
         foreach ($previsionnels as $pr) {
             $sem = $pr->getSemestre() ? $pr->getSemestre()->getId() : null;
 
             if ($sem !== null) {
 
-                if (!array_key_exists($sem, $t)) {
-                    $t[$sem] = array();
+                if (!array_key_exists($sem, $tprev)) {
+                    $tprev[$sem] = array();
                     $this->semestres[] = $pr->getSemestre();
                 }
-                $t[$sem][] = $pr;
+                $tprev[$sem][] = $pr;
                 $this->totalCm += $pr->getTotalHCm();
                 $this->totalTd += $pr->getTotalHTd();
                 $this->totalTp += $pr->getTotalHTp();
             }
         }
 
-        $this->servicePrevisionnelBySemestre = $t;
+        $this->servicePrevisionnelBySemestre = $tprev;
     }
 
     /**
-     * @param $getUser
      * @param $annee
      */
     public function getHrsEnseignant($annee): void
     {
         $this->hrs = $this->hrsRepository->findHrsEnseignant($this->personnel, $annee);
 
-        foreach ($this->hrs as $h) {
-            $this->totalHrs += $h->getNbHeuresTd();
+        foreach ($this->hrs as $hr) {
+            $this->totalHrs += $hr->getNbHeuresTd();
         }
     }
 
-    public function getPrevisionnelMatiere(Matiere $matiere, $annee)
+    /**
+     * @param Matiere $matiere
+     * @param         $annee
+     */
+    public function getPrevisionnelMatiere(Matiere $matiere, $annee) :void
     {
         $this->matiere = $matiere;
         $this->previsionnels = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $annee);
 
+        /** @var Previsionnel $previ */
+        foreach ($this->previsionnels as $previ) {
+            $this->totalCm += $previ->getTotalHCm();
+            $this->totalTp += $previ->getTotalHTp();
+            $this->totalTd += $previ->getTotalHTd();
+
+            $this->totalEtuCm += $previ->getNbHCm();
+            $this->totalEtuTd += $previ->getNbHTd();
+            $this->totalEtuTp += $previ->getNbHTp();
+        }
+
+    }
+
+    public function getPrevisionnelSemestre(Semestre $semestre, $annee)
+    {
+        $this->semestre = $semestre;
+        $this->previsionnels = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);
+
+        /** @var Previsionnel $previ */
+        foreach ($this->previsionnels as $previ) {
+            $this->totalCm += $previ->getTotalHCm();
+            $this->totalTp += $previ->getTotalHTp();
+            $this->totalTd += $previ->getTotalHTd();
+
+            $this->totalEtuCm += $previ->getNbHCm();
+            $this->totalEtuTd += $previ->getNbHTd();
+            $this->totalEtuTp += $previ->getNbHTp();
+        }
     }
 }

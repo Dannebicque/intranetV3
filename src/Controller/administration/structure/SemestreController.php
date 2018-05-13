@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/structure/semestre",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/structure/semestre",
+ *         "en":"administration/organization/semester"}
+ *)
  */
 class SemestreController extends Controller
 {
@@ -120,6 +120,8 @@ class SemestreController extends Controller
                 'form'     => $form->createView(),
             ]);
         }
+
+        return $this->render('erreur/404.html.twig');
     }
 
     /**

@@ -709,4 +709,14 @@ class Matiere extends BaseEntity
 
         return $this;
     }
+
+    public function getEqTdFormation():float
+    {
+        return $this->cm_formation*1.5 + $this->td_formation + $this->tp_formation;
+    }
+
+    public function getEtuFormation():float
+    {
+        return $this->cm_formation + $this->td_formation + $this->tp_formation;
+    }
 }

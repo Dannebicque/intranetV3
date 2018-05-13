@@ -14,9 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class AbsenceController
  * @package App\Controller
- * @Route("/{_locale}/application/personnel/absence",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"application/personnel/absence",
+ *         "en":"application/team/absence"}
+ *)
  * @IsGranted("ROLE_PERMANENT")
  */
 class AbsenceController extends Controller
@@ -36,7 +36,7 @@ class AbsenceController extends Controller
      *
      * @return Response
      */
-    public function index(Matiere $matiere)
+    public function index(Matiere $matiere): Response
     {
        return $this->render('appPersonnel/absence/index.html.twig', [
             'matiere' => $matiere
@@ -49,7 +49,7 @@ class AbsenceController extends Controller
      *
      * @return Response
      */
-    public function voir(Matiere $matiere)
+    public function voir(Matiere $matiere): Response
     {
         return $this->render('appPersonnel/absence/voir.html.twig', [
             'matiere' => $matiere,
@@ -62,6 +62,7 @@ class AbsenceController extends Controller
      */
     public function help(): Response
     {
+        return $this->render('appPersonnel/absence/help.html.twig');
     }
 
     /**

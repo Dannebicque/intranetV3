@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/administration/structure/formation",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/structure/formation",
+ *         "en":"administration/organization/training"}
+ *)
  */
 class FormationController extends Controller
 {

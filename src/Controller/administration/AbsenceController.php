@@ -11,9 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class AbsenceController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/absence",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/absence",
+ *         "en":"administration/en-absence"}
+ *)
  */
 class AbsenceController extends Controller
 {

@@ -17,10 +17,11 @@
                 <h4 class="card-title">Par enseignant</h4>
                 <div class="card-body">
                     <div class="form-group">
-                        <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previPersonnel">
+                        <select class="form-control" data-live-search="true" data-provide="selectpicker"
+                                id="previPersonnel">
                             <option value="">Choisir l'enseignant</option>
                             {% for personnel in user_data.personnels %}
-                            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -54,21 +55,21 @@
             </div>
         </div>
     </div>
-
-    <div class="card" id="blocPrevisionnel">
-        <h4 class="card-title">{{ 'adm.previsionnel.index.heading'|trans }}</h4>
-        <div class="card-body">
-            <div class="alert alert-info">Veuillez choisir dans une des listes ci-dessus.</div>
+    <div id="blocPrevisionnel">
+        <div class="card">
+            <h4 class="card-title">{{ 'adm.previsionnel.index.heading'|trans }}</h4>
+            <div class="card-body">
+                <div class="alert alert-info">Veuillez choisir dans une des listes ci-dessus.</div>
+            </div>
         </div>
     </div>
-
-{#    <div class="callout callout-success" role="alert">
-        <button type="button" class="close" data-dismiss="callout" aria-label="Close">
-            <span>&times;</span>
-        </button>
-        <h5>Well done!</h5>
-        <p>You successfully read this important alert message.</p>
-    </div>#}
+    {#    <div class="callout callout-success" role="alert">
+            <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>&times;</span>
+            </button>
+            <h5>Well done!</h5>
+            <p>You successfully read this important alert message.</p>
+        </div>#}
 {% endblock %}
 
 {#{% block javascript %}

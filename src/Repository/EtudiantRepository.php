@@ -122,7 +122,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @param $slug
      */
-    public function findOneBySlug($slug)
+    public function findOneBySlug($slug): void
     {
     }
 }

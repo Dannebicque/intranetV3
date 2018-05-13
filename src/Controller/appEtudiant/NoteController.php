@@ -2,17 +2,29 @@
 
 namespace App\Controller\appEtudiant;
 
+use App\Entity\Matiere;
+use App\Entity\Note;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class NotesController
  * @package App\Controller
- * @Route("/{_locale}/application/etudiant/note",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"application/etudiant/note",
+ *         "en":"application/student/mark"}
+ *)
+ * @IsGranted("ROLE_ETUDIANT")
  */
 class NoteController extends Controller
 {
+    /**
+     * @param Note $note
+     * @Route("/details/{id}", name="app_etudiant_note_detail")
+     */
+    public function details(Note $note)
+    {
 
+    }
 }

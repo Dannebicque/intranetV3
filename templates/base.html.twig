@@ -88,7 +88,7 @@
                     <span class="title">{{ 'menu.informations'|trans }}</span>
                 </a>
             </li>
-
+            {% if is_granted('ROLE_PERMANENT') %} {# todo: tester permanent +formation + admin #}
             <li class="menu-item" id="menu-administration">
                 <a class="menu-link" href="{{ path('administration_index') }}">
                     <span class="material-icons">build</span>
@@ -102,6 +102,7 @@
                     <span class="title">{{ 'menu.superadministration'|trans }}</span>
                 </a>
             </li>
+            {% endif %}
 
         </ul>
         <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 0;">
@@ -385,7 +386,7 @@
     <header class="header">
         <div class="header-info">
             <div class="left">
-                <h2 class="header-title">
+                <h2 class="header-title" id="header-title">
                     {% block header %}
                         <strong>No title</strong>
                     {% endblock %}

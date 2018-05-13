@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class StatistiqueController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/statistique",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/statistique",
+ *         "en":"administration/statistical"}
+ *)
  */
 class StatistiqueController extends Controller
 {

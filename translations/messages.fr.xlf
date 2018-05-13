@@ -3498,5 +3498,155 @@
         <target>tab.previsionnel</target>
       </segment>
     </unit>
+    <unit id="krbW2Eb" name="service.previsionnel.matiere.heading">
+      <segment>
+        <source>service.previsionnel.matiere.heading</source>
+        <target>service.previsionnel.matiere.heading</target>
+      </segment>
+    </unit>
+    <unit id="mKPkvok" name="service.previsionnel.semestre.heading">
+      <segment>
+        <source>service.previsionnel.semestre.heading</source>
+        <target>service.previsionnel.semestre.heading</target>
+      </segment>
+    </unit>
+    <unit id="QYqJJgt" name="adm.previsionnel.new.heading">
+      <segment>
+        <source>adm.previsionnel.new.heading</source>
+        <target>adm.previsionnel.new.heading</target>
+      </segment>
+    </unit>
+    <unit id="nKhVYNv" name="add.previsionnel.matiere">
+      <segment>
+        <source>add.previsionnel.matiere</source>
+        <target>add.previsionnel.matiere</target>
+      </segment>
+    </unit>
+    <unit id="qTPshb6" name="add.previsionnel.hrs">
+      <segment>
+        <source>add.previsionnel.hrs</source>
+        <target>add.previsionnel.hrs</target>
+      </segment>
+    </unit>
+    <unit id="CVK_8X2" name="adm.hrs.index.heading">
+      <segment>
+        <source>adm.hrs.index.heading</source>
+        <target>adm.hrs.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="0fcGqyZ" name="table.personnel">
+      <segment>
+        <source>table.personnel</source>
+        <target>table.personnel</target>
+      </segment>
+    </unit>
+    <unit id="SIrS_yP" name="table.semestre_ou_diplome">
+      <segment>
+        <source>table.semestre_ou_diplome</source>
+        <target>table.semestre_ou_diplome</target>
+      </segment>
+    </unit>
+    <unit id="Xf9h6LI" name="table.nb_heures_td">
+      <segment>
+        <source>table.nb_heures_td</source>
+        <target>table.nb_heures_td</target>
+      </segment>
+    </unit>
+    <unit id="AGaXHHP" name="adm.hrs.show.heading">
+      <segment>
+        <source>adm.hrs.show.heading</source>
+        <target>adm.hrs.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="1Qa9q_g" name="table.annee">
+      <segment>
+        <source>table.annee</source>
+        <target>table.annee</target>
+      </segment>
+    </unit>
+    <unit id="wBUu8at" name="adm.hrs.modification.heading">
+      <segment>
+        <source>adm.hrs.modification.heading</source>
+        <target>adm.hrs.modification.heading</target>
+      </segment>
+    </unit>
+    <unit id="lQV23AO" name="adm.hrs.new.heading">
+      <segment>
+        <source>adm.hrs.new.heading</source>
+        <target>adm.hrs.new.heading</target>
+      </segment>
+    </unit>
+    <unit id="uN0yd1B" name="adm.previsionnel.new.index.heading">
+      <segment>
+        <source>adm.previsionnel.new.index.heading</source>
+        <target>adm.previsionnel.new.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="m4kKyBJ" name="favori">
+      <segment>
+        <source>favori</source>
+        <target>favori</target>
+      </segment>
+    </unit>
+    <unit id="mL3K746" name="bloc.absence.etu.heading">
+      <segment>
+        <source>bloc.absence.etu.heading</source>
+        <target>bloc.absence.etu.heading</target>
+      </segment>
+    </unit>
+    <unit id="DodjLNR" name="date">
+      <segment>
+        <source>date</source>
+        <target>date</target>
+      </segment>
+    </unit>
+    <unit id="3ICQXp3" name="heure">
+      <segment>
+        <source>heure</source>
+        <target>heure</target>
+      </segment>
+    </unit>
+    <unit id="RpC_3Cb" name="matiere">
+      <segment>
+        <source>matiere</source>
+        <target>matiere</target>
+      </segment>
+    </unit>
+    <unit id="WRYgy7d" name="justifiee">
+      <segment>
+        <source>justifiee</source>
+        <target>justifiee</target>
+      </segment>
+    </unit>
+    <unit id="4XNTvNT" name="saisie_par">
+      <segment>
+        <source>saisie_par</source>
+        <target>saisie_par</target>
+      </segment>
+    </unit>
+    <unit id="fG.d9fV" name="infos">
+      <segment>
+        <source>infos</source>
+        <target>infos</target>
+      </segment>
+    </unit>
+    <unit id="o6H_RO5" name="bloc.note.etu.heading">
+      <segment>
+        <source>bloc.note.etu.heading</source>
+        <target>bloc.note.etu.heading</target>
+      </segment>
+    </unit>
+    <unit id="vkayQra" name="com_eval">
+      <segment>
+        <source>com_eval</source>
+        <target>com_eval</target>
+      </segment>
+    </unit>
+    <unit id="7bRlYkK" name="note">
+      <segment>
+        <source>note</source>
+        <target>note</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

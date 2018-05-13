@@ -54,7 +54,7 @@ class AppTranslationRearangeCommand extends Command
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 
-    private function insertData($keys, &$tab, $value)
+    private function insertData($keys, &$tab, $value): void
     {
         if (array_key_exists($keys[0], $tab)) {
             if (! \is_array($tab[$keys[0]]))

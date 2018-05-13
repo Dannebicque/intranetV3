@@ -4,21 +4,19 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Matiere;
+use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\MesClasses\MyPrevisionnel;
 use App\Repository\MatiereRepository;
-use App\Repository\PersonnelRepository;
-use App\Repository\PrevisionnelRepository;
-use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class PrevisionnelController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/previsionnel",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/service-previsionnel",
+ *         "en":"administration/estimated-service"}
+ *)
  */
 class PrevisionnelController extends BaseController
 {
@@ -51,29 +49,43 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/semestre", name="administration_previsionnel_semestre", options={"expose":true})
+     * @Route("/semestre/{semestre}", name="administration_previsionnel_semestre", options={"expose":true})
+     * @param MatiereRepository $matiereRepository
+     *
+     * @return Response
      */
-    public function semestre(MatiereRepository $matiereRepository)
+    public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre)
     {
+        $myPrevisionnel->getPrevisionnelSemestre($semestre, $this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+
         return $this->render('administration/previsionnel/semestre.html.twig', [
-            'matieres' => $matiereRepository->findAll()
+            'previsionnel' => $myPrevisionnel
+
         ]);
     }
 
     /**
-     * @Route("/personnel", name="administration_previsionnel_personnel", options={"expose":true})
+     * @Route("/personnel/{personnel}", name="administration_previsionnel_personnel", options={"expose":true})
+     * @param MyPrevisionnel $myPrevisionnel
+     * @param Personnel      $personnel
+     *
+     * @return Response
      */
-    public function personnel(MatiereRepository $matiereRepository)
+    public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel)
     {
+        $myPrevisionnel->setPersonnel($personnel);
+        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+
         return $this->render('administration/previsionnel/personnel.html.twig', [
-            'matieres' => $matiereRepository->findAll()
+            'previsionnel' => $myPrevisionnel
         ]);
     }
 
     /**
      * @Route("/new", name="administration_previsionnel_new", methods="GET|POST")
      */
-    public function new()
+    public function ajout()
     {
         return $this->render('administration/previsionnel/new.html.twig', [
             'controller_name' => 'PrevisionnelController',
@@ -94,5 +106,13 @@ class PrevisionnelController extends BaseController
     public function save(): Response
     {
         return new Response('', 200);
+    }
+
+    /**
+     * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_previsionnel_delete", methods="DELETE")
+     */
+    public function delete(): void
+    {
+
     }
 }

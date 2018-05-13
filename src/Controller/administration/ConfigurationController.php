@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class ConfigurationController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/configuration",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/configuration",
+ *         "en":"administration/settings"}
+ *)
  */
 class ConfigurationController extends Controller
 {

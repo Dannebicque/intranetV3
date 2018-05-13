@@ -1509,5 +1509,23 @@
         <target>label.typehrs</target>
       </segment>
     </unit>
+    <unit id="4hFUdrV" name="labele.libelle">
+      <segment>
+        <source>labele.libelle</source>
+        <target>labele.libelle</target>
+      </segment>
+    </unit>
+    <unit id="E6gOmBY" name="labele.nbHeuresTd">
+      <segment>
+        <source>labele.nbHeuresTd</source>
+        <target>labele.nbHeuresTd</target>
+      </segment>
+    </unit>
+    <unit id="L83.fq." name="label.personnel">
+      <segment>
+        <source>label.personnel</source>
+        <target>label.personnel</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

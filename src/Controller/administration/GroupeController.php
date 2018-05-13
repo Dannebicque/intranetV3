@@ -9,9 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class GroupeController
  * @package App\Controller\administration
- * @Route("/{_locale}/administration/groupe",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"administration/groupe",
+ *         "en":"administration/group"}
+ *)
  */
 class GroupeController extends Controller
 {
