@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Entity\Semestre;
+use App\Repository\RattrapageRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,14 +19,16 @@ class RattrapageController extends Controller
 {
     /**
      * @Route("/semestre/{semestre}", name="administration_rattrapage_semestre_index")
-     * @param Semestre $semestre
+     * @param RattrapageRepository $rattrapageRepository
+     * @param Semestre             $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Semestre $semestre) :Response
+    public function index(RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
     {
         return $this->render('administration/rattrapage/index.html.twig', [
-            'semestre' => $semestre
+            'rattrapages' => $rattrapageRepository->findBySemestre($semestre),
+            'semestre'    => $semestre
         ]);
     }
 }

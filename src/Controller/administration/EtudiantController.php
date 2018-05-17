@@ -52,6 +52,7 @@ class EtudiantController extends BaseController
     public function semestre(Semestre $semestre): Response
     {
         return $this->render('administration/etudiant/semestre.html.twig', [
+            'semestre' => $semestre
         ]);
     }
 }

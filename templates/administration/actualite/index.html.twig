@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.actualite.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'actualite'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.actualite.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Titre</th>
+                    <th>Texte</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for actualite in actualites %}
+                    <tr>
+                        <td>{{ actualite.id }}</td>
+                        <td>{{ actualite.created ? actualite.created|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ actualite.updated ? actualite.updated|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ actualite.titre }}</td>
+                        <td>{{ actualite.texte }}</td>
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'actualite', id: article.id}) }}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_actualite_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_actualite_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('administration_actualite_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('administration_actualite_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

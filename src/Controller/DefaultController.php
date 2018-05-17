@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\ActualiteRepository;
+use App\Repository\DateRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -12,15 +14,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={"_locale": "fr|en"},
  *     defaults={"_locale":"fr"})
  */
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     /**
      * @Route("/", name="default_index")
      */
-    public function index()
+    public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository)
     {
         return $this->render('default/index.html.twig', [
-
+            'actualites' => $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 2),
+            'dates'      => $dateRepository->findByFormation($this->dataUserSession->getFormation(), 2)
         ]);
     }
 }

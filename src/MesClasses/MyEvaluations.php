@@ -9,7 +9,12 @@
 namespace App\MesClasses;
 
 
+use App\Entity\Evaluation;
+use App\Entity\Matiere;
 use App\Entity\Semestre;
+use App\Repository\EvaluationRepository;
+use App\Repository\MatiereRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 
 class MyEvaluations
@@ -20,6 +25,29 @@ class MyEvaluations
     private $semestre;
 
     /**
+     * @var MatiereRepository
+     */
+    private $matiereRepository;
+
+    /**
+     * @var EvaluationRepository
+     */
+    private $evaluationRespository;
+
+    /**
+     * MyEvaluations constructor.
+     *
+     * @param MatiereRepository    $matiereRepository
+     * @param EvaluationRepository $evaluationRespository
+     */
+    public function __construct(MatiereRepository $matiereRepository, EvaluationRepository $evaluationRespository)
+    {
+        $this->matiereRepository = $matiereRepository;
+        $this->evaluationRespository = $evaluationRespository;
+    }
+
+
+    /**
      * @param $semestre
      */
     public function setSemestre($semestre): void
@@ -27,14 +55,34 @@ class MyEvaluations
         $this->semestre = $semestre;
     }
 
-    public function getMatieresSemestre()
+    /**
+     * @return Matiere[]
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getMatieresSemestre(): array
     {
-        return null;
+        return $this->matiereRepository->findBySemestre($this->semestre);
     }
 
-    public function getEvaluationsSemestre()
+    /**
+     * @return array
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getEvaluationsSemestre(): array
     {
-        return null;
+        $evaluations = $this->evaluationRespository->findBySemestre($this->semestre);
+        $tab = array();
+        /** @var Evaluation $eval */
+        foreach ($evaluations as $eval) {
+            $matiereId = $eval->getMatiere()->getId();
+            if (!array_key_exists($matiereId, $tab)) {
+                $tab[$matiereId] = array();
+            }
+
+            $tab[$matiereId][] = $eval;
+        }
+
+        return $tab;
     }
 
 }

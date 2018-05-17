@@ -209,6 +209,11 @@ class Semestre extends BaseEntity
      */
     private $options;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Borne", mappedBy="semestres")
+     */
+    private $bornes;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -216,6 +221,7 @@ class Semestre extends BaseEntity
         $this->dates = new ArrayCollection();
         $this->hrs = new ArrayCollection();
         $this->options = new ArrayCollection();
+        $this->bornes = new ArrayCollection();
     }
 
     /**
@@ -788,6 +794,34 @@ class Semestre extends BaseEntity
             if ($option->getSemestre() === $this) {
                 $option->setSemestre(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Borne[]
+     */
+    public function getBornes(): Collection
+    {
+        return $this->bornes;
+    }
+
+    public function addBorne(Borne $borne): self
+    {
+        if (!$this->bornes->contains($borne)) {
+            $this->bornes[] = $borne;
+            $borne->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorne(Borne $borne): self
+    {
+        if ($this->bornes->contains($borne)) {
+            $this->bornes->removeElement($borne);
+            $borne->removeSemestre($this);
         }
 
         return $this;

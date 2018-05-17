@@ -13,6 +13,7 @@ use App\Repository\AbsenceRepository;
 
 class MyAbsences
 {
+    /** @var AbsenceRepository */
     private $absenceRepository;
 
     /**
@@ -29,5 +30,9 @@ class MyAbsences
     public function getAbsencesMatiere($matiere, $anneeCourante)
     {
         return $this->absenceRepository->getAbsencesMatiere($matiere, $anneeCourante);
+    }
+
+    public function getAbsencesSemestre($semestre)
+    {
     }
 }

@@ -105,9 +105,9 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @param $semestre
      *
-     * @return ArrayCollection
+     * @return array
      */
-    public function findBySemestre($semestre): ArrayCollection
+    public function findBySemestre($semestre): array
     {
         return $this->createQueryBuilder('e')
             ->where('e.semestre = :semestre')
@@ -121,8 +121,16 @@ class EtudiantRepository extends ServiceEntityRepository
 
     /**
      * @param $slug
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneBySlug($slug): void
+    public function findOneBySlug($slug)
     {
+        return $this->createQueryBuilder('e')
+            ->where('e.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

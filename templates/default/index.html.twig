@@ -6,16 +6,27 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <div class="card">
-                <h4 class="card-title">Card title</h4>
-
+                <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
                 <div class="card-body">
+                    {% for actualite in actualites %}
 
+                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
+                <div class="card-body">
+                    {% for date in dates %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
         {% if is_granted('ROLE_PERMANENT') %}
             {{ render(controller(
                 'App\\Controller\\BlocNotesAbsencesController::personnel'
@@ -24,5 +35,8 @@
             {{ render(controller(
                 'App\\Controller\\BlocNotesAbsencesController::etudiant'
             )) }}
+
+            {# todo: MCC #}
         {% endif %}
+    </div>
 {% endblock %}

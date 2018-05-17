@@ -12,7 +12,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for note in etudiant.notes %}
+            {% for note in notes %}
                 <tr>
                     <td>{{ note.evaluation.matiere.codeMatiere }}</td>
                     <td>{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>

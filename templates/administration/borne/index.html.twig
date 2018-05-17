@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.borne.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'borne'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.borne.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Icone</th>
+                    <th>Couleur</th>
+                    <th>Message</th>
+                    <th>Url</th>
+                    <th>DateDebutPublication</th>
+                    <th>DateFinPublication</th>
+                    <th>Visible</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for borne in bornes %}
+                    <tr>
+                        <td>{{ borne.id }}</td>
+                        <td>{{ borne.icone }}</td>
+                        <td>{{ borne.couleur }}</td>
+                        <td>{{ borne.message }}</td>
+                        <td>{{ borne.url }}</td>
+                        <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ borne.dateFinPublication ? borne.dateFinPublication|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ borne.visible ? 'Yes' : 'No' }}</td>
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'borne', id: article.id}) }}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+        {% block fabactions %}
+            {{ include('composants/fab-buttons.html.twig', {boutons:[
+                {type: 'info',
+                    href: path('administration_borne_print'),
+                    title: 'imprimer'|trans,
+                    icone : "ti-printer"},
+                {
+                    type:'info',
+                    href:path('administration_borne_save'),
+                    title: 'sauvegarder'|trans,
+                    icone: 'ti-save'
+                },
+                {
+                    type:'info',
+                    href:path('administration_borne_new'),
+                    title: 'ajouter'|trans,
+                    icone: 'ti-plus'
+                },
+                {
+                    type:'info',
+                    href:path('administration_borne_help'),
+                    title: 'aide'|trans,
+                    icone: 'ti-help'
+                }
+            ]}) }}
+        {% endblock %}

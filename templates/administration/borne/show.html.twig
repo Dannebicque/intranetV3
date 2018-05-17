@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.borne.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'borne', id: borne.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.borne.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ borne.id }}</td>
+                </tr>
+                <tr>
+                    <th>Icone</th>
+                    <td>{{ borne.icone }}</td>
+                </tr>
+                <tr>
+                    <th>Couleur</th>
+                    <td>{{ borne.couleur }}</td>
+                </tr>
+                <tr>
+                    <th>Message</th>
+                    <td>{{ borne.message }}</td>
+                </tr>
+                <tr>
+                    <th>Url</th>
+                    <td>{{ borne.url }}</td>
+                </tr>
+                <tr>
+                    <th>DateDebutPublication</th>
+                    <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>DateFinPublication</th>
+                    <td>{{ borne.dateFinPublication ? borne.dateFinPublication|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Visible</th>
+                    <td>{{ borne.visible ? 'Yes' : 'No' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

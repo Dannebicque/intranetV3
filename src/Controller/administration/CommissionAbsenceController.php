@@ -25,6 +25,7 @@ class CommissionAbsenceController extends Controller
     public function index(Semestre $semestre): Response
     {
         return $this->render('administration/commission_absence/index.html.twig', [
+            'semestre' => $semestre
         ]);
     }
 }

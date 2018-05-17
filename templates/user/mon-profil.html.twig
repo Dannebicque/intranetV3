@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'mon.profil.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action bg-white">
+        <nav class="nav">
+            {% if is_granted('ROLE_PERMANENT') %}
+                <a class="nav-link changeprofil active" href="{{ path('profil_timeline') }}"
+                   id="profil-timeline">{{ 'tab.timeline'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_about') }}"
+                   id="profil-about">{{ 'tab.a-propos'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_previsionnel') }}"
+                   id="profil-previsionnel">{{ 'tab.previsionnel'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_action') }}"
+                   id="profil-about">{{ 'tab.actions'|trans }}</a>
+            {% else %}
+                <a class="nav-link changeprofil active" href="{{ path('profil_timeline') }}"
+                   id="profil-timeline">{{ 'tab.timeline'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_scolarite') }}"
+                   id="profil-scolarité">{{ 'tab.scolarite'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_notes') }}"
+                   id="profil-scolarité">{{ 'tab.notes'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_absences') }}"
+                   id="profil-scolarité">{{ 'tab.absences'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_about') }}"
+                   id="profil-about">{{ 'tab.a-propos'|trans }}</a>
+                <a class="nav-link changeprofil" href="{{ path('profil_action') }}"
+                   id="profil-about">{{ 'tab.actions'|trans }}</a>
+            {% endif %}
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8" id="profilContent">
+            {{ render(controller(
+                'App\\Controller\\ProfilController::timeline'
+            )) }}
+        </div>
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="text-white card-body bg-img text-center py-50"
+                     style="background-image: url(../assets/img/gallery/2.jpg);">
+                    <a href="#">
+                        <img class="avatar avatar-xxl avatar-bordered" src="../assets/img/avatar/1.jpg">
+                    </a>
+                    <h5 class="mt-2 mb-0"><a class="hover-primary text-white" href="#">Maryam Amiri</a></h5>
+                    <span>Web Designer</span>
+                </div>
+                <ul class="flexbox flex-justified text-center p-20">
+                    <li class="br-1 border-light">
+                        <span class="text-muted">Followers</span><br>
+                        <span class="fs-22">3.6K</span>
+                    </li>
+                    <li class="br-1 border-light">
+                        <span class="text-muted">Following</span><br>
+                        <span class="fs-22">426</span>
+                    </li>
+                    <li>
+                        <span class="text-muted">Tweets</span><br>
+                        <span class="fs-22">165</span>
+                    </li>
+                </ul>
+            </div>
+
+            {% if is_granted('ROLE_ETUDIANT') %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flexbox align-items-baseline mb-20">
+                            <h6 class="text-uppercase ls-2">Friends</h6>
+                            <small>{{ user_data.user.etudiantDemande|length }}</small>
+                        </div>
+
+                        <div class="gap-items-2 gap-y">
+                            {% for favori in user_data.user.etudiantDemande|slice(0, 8) %}
+                                <a class="avatar"
+                                   href="{{ path('user_profil', {type: 'etudiant', slug: favori.etudiantDemande.slug}) }}"
+                                   title="{{ favori.etudiantDemande.display }}"
+                                   target="_blank"
+                                ><img src="../assets/img/avatar/2.jpg" alt="{{ favori.etudiantDemande.display }}"></a>
+                            {% endfor %}
+                            {% if user_data.user.etudiantDemande|length > 8 %}
+                                {% set nb = user_data.user.etudiantDemande - 8 %}
+                                <a class="avatar avatar-more" href="#">+{{ nb }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

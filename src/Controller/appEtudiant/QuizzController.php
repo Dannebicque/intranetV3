@@ -2,8 +2,6 @@
 
 namespace App\Controller\appEtudiant;
 
-use App\Entity\Matiere;
-use App\Entity\Note;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +20,7 @@ class QuizzController extends Controller
     /**
      * @Route("/", name="application_etudiant_quizz_index")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('appEtudiant/quizz/index.html.twig', []);
     }

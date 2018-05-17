@@ -62,7 +62,7 @@ class ArticleController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $article = new Article($this->getUser());
         $form = $this->createForm(ArticleType::class, $article);

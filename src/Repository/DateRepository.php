@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
 use App\Entity\Date;
+use App\Entity\Diplome;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,32 +22,19 @@ class DateRepository extends ServiceEntityRepository
         parent::__construct($registry, Date::class);
     }
 
-//    /**
-//     * @return Date[] Returns an array of Date objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function findByFormation($formation, $nbResult)
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+            ->leftJoin('d.semestres', 's')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
+            ->andWhere('p.formation = :formation')
+            ->setParameter('formation', $formation)
+            ->orderBy('d.date_debut', 'DESC')
+            ->setMaxResults($nbResult)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Date
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

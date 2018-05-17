@@ -8,7 +8,8 @@
             <div class="dropdown">
                 <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90 text-muted"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ path('user_profil', {slug:'david'}) }}"><i class="fa fa-user"></i> {{ 'profil'|trans }}</a>
+                    <a class="dropdown-item" href="{{ path('user_profil', {type:'etudiant',slug:'david'}) }}"><i
+                                class="fa fa-user"></i> {{ 'profil'|trans }}</a>
                     <a class="dropdown-item" href="#"><i class="fa fa-picture-o"></i>{{ 'site-personnel'|trans }}</a>
                     <a class="dropdown-item" href="#"><i class="ti-world"></i> {{ 'site-univ'|trans }}</a>
                     <a class="dropdown-item" href="#"><i class="ti-email"></i> {{ 'contacter'|trans }}</a>
@@ -16,11 +17,11 @@
             </div>
         </div>
         <div class="card-body text-center pt-1 pb-50">
-            <a href="{{ path('user_profil', {slug:'david'}) }}">
+            <a href="{{ path('user_profil', {type:'etudiant',slug:'david'}) }}">
                 <img class="avatar avatar-xxl" src="">
             </a>
             <h5 class="mt-3 mb-1">
-                <a class="hover-primary" href="{{ path('user_profil', {slug:'david'}) }}">David
+                <a class="hover-primary" href="{{ path('user_profil', {type:'etudiant',slug:'david'}) }}">David
                 </a>
             </h5>
         </div>

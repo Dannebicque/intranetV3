@@ -1527,5 +1527,47 @@
         <target>label.personnel</target>
       </segment>
     </unit>
+      <unit id="3M33H0L" name="Mail perso">
+          <segment>
+              <source>Mail perso</source>
+              <target>Mail perso</target>
+          </segment>
+      </unit>
+      <unit id="F8B7PFs" name="Site perso">
+          <segment>
+              <source>Site perso</source>
+              <target>Site perso</target>
+          </segment>
+      </unit>
+      <unit id="oKBXaoa" name="Tel1">
+          <segment>
+              <source>Tel1</source>
+              <target>Tel1</target>
+          </segment>
+      </unit>
+      <unit id="yXpTtPt" name="Tel2">
+          <segment>
+              <source>Tel2</source>
+              <target>Tel2</target>
+          </segment>
+      </unit>
+      <unit id="8ac_IgS" name="Signature">
+          <segment>
+              <source>Signature</source>
+              <target>Signature</target>
+          </segment>
+      </unit>
+      <unit id="eeXPIN4" name="Adresse">
+          <segment>
+              <source>Adresse</source>
+              <target>Adresse</target>
+          </segment>
+      </unit>
+      <unit id="SMfclVY" name="Adresse parentale">
+          <segment>
+              <source>Adresse parentale</source>
+              <target>Adresse parentale</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

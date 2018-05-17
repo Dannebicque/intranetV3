@@ -169,10 +169,16 @@ class Formation extends BaseEntity
      */
     private $personnelFormations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="formation")
+     */
+    private $actualites;
+
     public function __construct()
     {
         $this->typeDocuments = new ArrayCollection();
         $this->personnelFormations = new ArrayCollection();
+        $this->actualites = new ArrayCollection();
     }
 
     /**
@@ -576,6 +582,37 @@ class Formation extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($personnelFormation->getFormation() === $this) {
                 $personnelFormation->setFormation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Actualite[]
+     */
+    public function getActualites(): Collection
+    {
+        return $this->actualites;
+    }
+
+    public function addActualite(Actualite $actualite): self
+    {
+        if (!$this->actualites->contains($actualite)) {
+            $this->actualites[] = $actualite;
+            $actualite->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActualite(Actualite $actualite): self
+    {
+        if ($this->actualites->contains($actualite)) {
+            $this->actualites->removeElement($actualite);
+            // set the owning side to null (unless already changed)
+            if ($actualite->getFormation() === $this) {
+                $actualite->setFormation(null);
             }
         }
 

@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for absence in etudiant.absences %}
+            {% for absence in absences %}
                 <tr>
                     <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : ''  }}</td>
                     <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : ''}}</td>

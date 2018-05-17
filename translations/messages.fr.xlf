@@ -637,7 +637,7 @@
       </notes>
       <segment>
         <source>profil.etudiant.heading</source>
-        <target></target>
+          <target>Profil de l'étudiant</target>
       </segment>
     </unit>
     <unit id="sub7le2" name="mon.profil.heading">
@@ -656,7 +656,7 @@
       </notes>
       <segment>
         <source>profil.personnel.heading</source>
-        <target></target>
+          <target>Profil du personnel</target>
       </segment>
     </unit>
     <unit id="JOaczlw" name="settings.heading">
@@ -759,7 +759,7 @@
       </notes>
       <segment>
         <source>app.personnel.note.index.titre</source>
-        <target></target>
+          <target>Evaluations / Notes</target>
       </segment>
     </unit>
     <unit id="jQxXiLV" name="atitle.retour_dashboard">
@@ -862,7 +862,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.voir</source>
-        <target></target>
+          <target>Voir</target>
       </segment>
     </unit>
     <unit id="Y2yNuqw" name="atitle.retour_saisie">
@@ -880,7 +880,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.nom</source>
-        <target></target>
+          <target>Nom</target>
       </segment>
     </unit>
     <unit id="SZQm.sL" name="app.personnel.absence.prenom">
@@ -889,7 +889,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.prenom</source>
-        <target></target>
+          <target>Prénom</target>
       </segment>
     </unit>
     <unit id="MAUdfjw" name="app.personnel.absence.date">
@@ -898,7 +898,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.date</source>
-        <target></target>
+          <target>Date de l'absence</target>
       </segment>
     </unit>
     <unit id="nMsXYb5" name="app.personnel.absence.heure">
@@ -907,7 +907,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.heure</source>
-        <target></target>
+          <target>Heure de l'absence</target>
       </segment>
     </unit>
     <unit id="_25dxB9" name="app.personnel.absence.dureee">
@@ -916,7 +916,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.dureee</source>
-        <target></target>
+          <target>Durée de l'absence</target>
       </segment>
     </unit>
     <unit id="g6lyGP1" name="app.personnel.absence.saisiepar">
@@ -925,7 +925,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.saisiepar</source>
-        <target></target>
+          <target>Saisie par</target>
       </segment>
     </unit>
     <unit id="ciNLLxf" name="app.personnel.absence.justifie">
@@ -934,7 +934,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.justifie</source>
-        <target></target>
+          <target>Absence justifiée</target>
       </segment>
     </unit>
     <unit id="Kw3N1AA" name="actions">
@@ -3178,7 +3178,7 @@
       </notes>
       <segment>
         <source>adm.type_document.modification.heading</source>
-        <target></target>
+          <target>Modification d'un type de document</target>
       </segment>
     </unit>
     <unit id="wKmhL76" name="adm.type_document.new.heading">
@@ -3188,7 +3188,7 @@
       </notes>
       <segment>
         <source>adm.type_document.new.heading</source>
-        <target></target>
+          <target>Création d'un type de document</target>
       </segment>
     </unit>
     <unit id="Z5z.VG3" name="adm.type_document.show.heading">
@@ -3198,7 +3198,7 @@
       </notes>
       <segment>
         <source>adm.type_document.show.heading</source>
-        <target></target>
+          <target>Détails d'un type de document</target>
       </segment>
     </unit>
     <unit id="c9lE5tM" name="table.annee_ppn">
@@ -3255,7 +3255,7 @@
     <unit id="ROU9AfE" name="adm.gestion.des.etudiants.formation">
       <segment>
         <source>adm.gestion.des.etudiants.formation</source>
-        <target>adm.gestion.des.etudiants.formation</target>
+          <target>Gestion des étudiants de la formation</target>
       </segment>
     </unit>
     <unit id="qbQqJrC" name="table.numetudiant">
@@ -3267,7 +3267,7 @@
     <unit id="P5KUhk0" name="help.annee_courante">
       <segment>
         <source>help.annee_courante</source>
-        <target>help.annee_courante</target>
+          <target>Année courante pour la formation universitaire ou le service prévisionnel</target>
       </segment>
     </unit>
     <unit id="dmverp9" name="help.opt_annee_previsionnel">
@@ -3471,7 +3471,7 @@
     <unit id="0y2glNh" name="connectez.vous">
       <segment>
         <source>connectez.vous</source>
-        <target>connectez.vous</target>
+          <target>Connectez-vous</target>
       </segment>
     </unit>
     <unit id="Sb1GcVd" name="saisir.password.lock">
@@ -3513,7 +3513,7 @@
     <unit id="QYqJJgt" name="adm.previsionnel.new.heading">
       <segment>
         <source>adm.previsionnel.new.heading</source>
-        <target>adm.previsionnel.new.heading</target>
+          <target>Création d'un Service Prévisionnel</target>
       </segment>
     </unit>
     <unit id="nKhVYNv" name="add.previsionnel.matiere">
@@ -3531,7 +3531,7 @@
     <unit id="CVK_8X2" name="adm.hrs.index.heading">
       <segment>
         <source>adm.hrs.index.heading</source>
-        <target>adm.hrs.index.heading</target>
+          <target>Liste des HRS et Primes</target>
       </segment>
     </unit>
     <unit id="0fcGqyZ" name="table.personnel">
@@ -3555,7 +3555,7 @@
     <unit id="AGaXHHP" name="adm.hrs.show.heading">
       <segment>
         <source>adm.hrs.show.heading</source>
-        <target>adm.hrs.show.heading</target>
+          <target>Détails d'une HRS ou Prime</target>
       </segment>
     </unit>
     <unit id="1Qa9q_g" name="table.annee">
@@ -3567,19 +3567,13 @@
     <unit id="wBUu8at" name="adm.hrs.modification.heading">
       <segment>
         <source>adm.hrs.modification.heading</source>
-        <target>adm.hrs.modification.heading</target>
+          <target>Modification d'une HRS ou Prime</target>
       </segment>
     </unit>
     <unit id="lQV23AO" name="adm.hrs.new.heading">
       <segment>
         <source>adm.hrs.new.heading</source>
-        <target>adm.hrs.new.heading</target>
-      </segment>
-    </unit>
-    <unit id="uN0yd1B" name="adm.previsionnel.new.index.heading">
-      <segment>
-        <source>adm.previsionnel.new.index.heading</source>
-        <target>adm.previsionnel.new.index.heading</target>
+          <target>Création d'une HRS ou Prime</target>
       </segment>
     </unit>
     <unit id="m4kKyBJ" name="favori">
@@ -3591,7 +3585,7 @@
     <unit id="mL3K746" name="bloc.absence.etu.heading">
       <segment>
         <source>bloc.absence.etu.heading</source>
-        <target>bloc.absence.etu.heading</target>
+          <target>Vos absences</target>
       </segment>
     </unit>
     <unit id="DodjLNR" name="date">
@@ -3621,7 +3615,7 @@
     <unit id="4XNTvNT" name="saisie_par">
       <segment>
         <source>saisie_par</source>
-        <target>saisie_par</target>
+          <target>Saisie par</target>
       </segment>
     </unit>
     <unit id="fG.d9fV" name="infos">
@@ -3633,13 +3627,13 @@
     <unit id="o6H_RO5" name="bloc.note.etu.heading">
       <segment>
         <source>bloc.note.etu.heading</source>
-        <target>bloc.note.etu.heading</target>
+          <target>Vos notes</target>
       </segment>
     </unit>
     <unit id="vkayQra" name="com_eval">
       <segment>
         <source>com_eval</source>
-        <target>com_eval</target>
+          <target>Commentaire de l'évaluation</target>
       </segment>
     </unit>
     <unit id="7bRlYkK" name="note">
@@ -3648,5 +3642,113 @@
         <target>note</target>
       </segment>
     </unit>
+      <unit id="pOmD1jw" name="dernieres.actualites.departement.heading">
+          <segment>
+              <source>dernieres.actualites.departement.heading</source>
+              <target>Dernières actualités du département</target>
+          </segment>
+      </unit>
+      <unit id="FMJ23B." name="prochains.evenements.heading">
+          <segment>
+              <source>prochains.evenements.heading</source>
+              <target>Prochains événements</target>
+          </segment>
+      </unit>
+      <unit id="6ZE7uVQ" name="tab.scolarite">
+          <segment>
+              <source>tab.scolarite</source>
+              <target>tab.scolarite</target>
+          </segment>
+      </unit>
+      <unit id="0yv.kf9" name="tab.actions">
+          <segment>
+              <source>tab.actions</source>
+              <target>tab.actions</target>
+          </segment>
+      </unit>
+      <unit id="ciMQQ7w" name="post">
+          <segment>
+              <source>post</source>
+              <target>Post</target>
+          </segment>
+      </unit>
+      <unit id="HRKwzv3" name="saisir.evaluation">
+          <segment>
+              <source>saisir.evaluation</source>
+              <target>Saisir l'évaluation</target>
+          </segment>
+      </unit>
+      <unit id="FXxXjh1" name="table.etudiant">
+          <segment>
+              <source>table.etudiant</source>
+              <target>table.etudiant</target>
+          </segment>
+      </unit>
+      <unit id="fPd8tj8" name="table.date_evaluation">
+          <segment>
+              <source>table.date_evaluation</source>
+              <target>table.date_evaluation</target>
+          </segment>
+      </unit>
+      <unit id="YZvadwy" name="table.date_demande">
+          <segment>
+              <source>table.date_demande</source>
+              <target>table.date_demande</target>
+          </segment>
+      </unit>
+      <unit id="kikG._i" name="table.absence_justifiee">
+          <segment>
+              <source>table.absence_justifiee</source>
+              <target>table.absence_justifiee</target>
+          </segment>
+      </unit>
+      <unit id="CQhquus" name="tab.notes">
+          <segment>
+              <source>tab.notes</source>
+              <target>tab.notes</target>
+          </segment>
+      </unit>
+      <unit id="kwiHOLa" name="tab.absences">
+          <segment>
+              <source>tab.absences</source>
+              <target>tab.absences</target>
+          </segment>
+      </unit>
+      <unit id="EFwHdzP" name="bloc.scolarite.etu.heading">
+          <segment>
+              <source>bloc.scolarite.etu.heading</source>
+              <target>bloc.scolarite.etu.heading</target>
+          </segment>
+      </unit>
+      <unit id="tlDHWop" name="table.decision">
+          <segment>
+              <source>table.decision</source>
+              <target>table.decision</target>
+          </segment>
+      </unit>
+      <unit id="ZfWzYu3" name="table.proposition">
+          <segment>
+              <source>table.proposition</source>
+              <target>table.proposition</target>
+          </segment>
+      </unit>
+      <unit id="1xa.LrN" name="table.moyenneues">
+          <segment>
+              <source>table.moyenneues</source>
+              <target>table.moyenneues</target>
+          </segment>
+      </unit>
+      <unit id="PPkxfDJ" name="table.moyenne">
+          <segment>
+              <source>table.moyenne</source>
+              <target>table.moyenne</target>
+          </segment>
+      </unit>
+      <unit id="0aNSn8n" name="table.infos">
+          <segment>
+              <source>table.infos</source>
+              <target>table.infos</target>
+          </segment>
+      </unit>
   </file>
 </xliff>
