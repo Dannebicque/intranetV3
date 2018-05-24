@@ -41,7 +41,7 @@ class UfrController extends Controller
      */
     public function save(): Response
     {
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -49,7 +49,7 @@ class UfrController extends Controller
      */
     public function imprimer(): Response
     {
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -59,7 +59,7 @@ class UfrController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $ufr = new Ufr();
         $form = $this->createForm(UfrType::class, $ufr);

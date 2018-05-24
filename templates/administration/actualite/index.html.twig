@@ -17,30 +17,25 @@
             <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th>Titre</th>
-                    <th>Texte</th>
-                    <th>actions</th>
+                    <th>{{ 'table.titre'|trans }}</th>
+                    <th>{{ 'table.texte'|trans }}</th>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for actualite in actualites %}
-                    <tr>
-                        <td>{{ actualite.id }}</td>
-                        <td>{{ actualite.created ? actualite.created|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>{{ actualite.updated ? actualite.updated|date('Y-m-d H:i:s') : '' }}</td>
+                    <tr id="ligne_{{ actualite.id }}">
                         <td>{{ actualite.titre }}</td>
                         <td>{{ actualite.texte }}</td>
+                        <td>{{ actualite.updated ? actualite.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                         <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'actualite', id: article.id}) }}
-
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'actualite', id: actualite.id}) }}
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

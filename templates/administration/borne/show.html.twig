@@ -18,36 +18,52 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th>{{ 'table.id'|trans }}</th>
                     <td>{{ borne.id }}</td>
                 </tr>
                 <tr>
-                    <th>Icone</th>
+                    <th>{{ 'table.icone'|trans }}</th>
                     <td>{{ borne.icone }}</td>
                 </tr>
                 <tr>
-                    <th>Couleur</th>
+                    <th>{{ 'table.couleur'|trans }}</th>
                     <td>{{ borne.couleur }}</td>
                 </tr>
                 <tr>
-                    <th>Message</th>
+                    <th>{{ 'table.message'|trans }}</th>
                     <td>{{ borne.message }}</td>
                 </tr>
                 <tr>
-                    <th>Url</th>
+                    <th>{{ 'table.semestres'|trans }}</th>
+                    <td>?? Semestre</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.url'|trans }}</th>
                     <td>{{ borne.url }}</td>
                 </tr>
                 <tr>
-                    <th>DateDebutPublication</th>
-                    <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>{{ 'table.qrcode'|trans }}</th>
+                    <td>{{ borne.url }}QRCODE généré</td>
                 </tr>
                 <tr>
-                    <th>DateFinPublication</th>
-                    <td>{{ borne.dateFinPublication ? borne.dateFinPublication|date('Y-m-d H:i:s') : '' }}</td>
+                    <th>{{ 'table.id'|trans }}DateDebutPublication</th>
+                    <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Visible</th>
-                    <td>{{ borne.visible ? 'Yes' : 'No' }}</td>
+                    <th>{{ 'table.id'|trans }}DateFinPublication</th>
+                    <td>{{ borne.dateFinPublication ? borne.dateFinPublication|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ borne.created ? borne.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ borne.updated ? borne.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.visible'|trans }}</th>
+                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
                 </tr>
                 </tbody>
             </table>

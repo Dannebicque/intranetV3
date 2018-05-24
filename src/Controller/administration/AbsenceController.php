@@ -2,6 +2,7 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\MesClasses\MyAbsences;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/en-absence"}
  *)
  */
-class AbsenceController extends Controller
+class AbsenceController extends BaseController
 {
     /**
      * @Route("/semestre/{semestre}/liste", name="administration_absences_semestre_liste")
@@ -23,12 +24,15 @@ class AbsenceController extends Controller
      * @param Semestre   $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      */
     public function liste(MyAbsences $myAbsences, Semestre $semestre): Response
     {
+        $myAbsences->getAbsencesSemestre($semestre, $this->dataUserSession->getFormation()->getAnneeCourante());
+
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
-            'absences' => $myAbsences->getAbsencesSemestre($semestre)
+            'absences' => $myAbsences
         ]);
     }
 

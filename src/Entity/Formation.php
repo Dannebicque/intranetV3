@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -18,6 +20,7 @@ class Formation extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"acutalite_administration"})
      */
     private $libelle;
 
@@ -46,14 +49,14 @@ class Formation extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $annee_courante = 0;
+    private $anneeCourante = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=16, nullable=true)
      */
-    private $tel_contact;
+    private $telContact;
 
     /**
      * @var string
@@ -74,7 +77,7 @@ class Formation extends BaseEntity
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $site_web;
+    private $siteWeb;
 
     /**
      * @var string
@@ -88,63 +91,56 @@ class Formation extends BaseEntity
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_update_celcat = false;
+    private $optUpdateCelcat = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_agence = false;
+    private $optAgence = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_materiel = false;
+    private $optMateriel = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_edt = true;
+    private $optEdt = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_stage = true;
+    private $optStage = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_synthese = true;
+    private $optSynthese = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_messagerie = true;
+    private $optMessagerie = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_RI = false;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $opt_Infos = false;
+    private $optInfos = false;
 
     /**
      * @var Personnel
@@ -157,10 +153,11 @@ class Formation extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $opt_annee_previsionnel = 0;
+    private $optAnneePrevisionnel = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="formation")
+     * @MaxDepth(1)
      */
     private $typeDocuments;
 
@@ -218,15 +215,15 @@ class Formation extends BaseEntity
      */
     public function getAnneeCourante(): ?int
     {
-        return $this->annee_courante;
+        return $this->anneeCourante;
     }
 
     /**
-     * @param int $annee_courante
+     * @param int $anneeCourante
      */
-    public function setAnneeCourante(int $annee_courante): void
+    public function setAnneeCourante(int $anneeCourante): void
     {
-        $this->annee_courante = $annee_courante;
+        $this->anneeCourante = $anneeCourante;
     }
 
     /**
@@ -234,15 +231,15 @@ class Formation extends BaseEntity
      */
     public function getTelContact(): ?string
     {
-        return $this->tel_contact;
+        return $this->telContact;
     }
 
     /**
-     * @param string $tel_contact
+     * @param string $telContact
      */
-    public function setTelContact(string $tel_contact): void
+    public function setTelContact(string $telContact): void
     {
-        $this->tel_contact = $tel_contact;
+        $this->telContact = $telContact;
     }
 
     /**
@@ -282,15 +279,15 @@ class Formation extends BaseEntity
      */
     public function getSiteWeb(): ?string
     {
-        return $this->site_web;
+        return $this->siteWeb;
     }
 
     /**
-     * @param string $site_web
+     * @param string $siteWeb
      */
-    public function setSiteWeb(string $site_web): void
+    public function setSiteWeb(string $siteWeb): void
     {
-        $this->site_web = $site_web;
+        $this->siteWeb = $siteWeb;
     }
 
     /**
@@ -314,15 +311,15 @@ class Formation extends BaseEntity
      */
     public function isOptUpdateCelcat(): bool
     {
-        return $this->opt_update_celcat;
+        return $this->optUpdateCelcat;
     }
 
     /**
-     * @param bool $opt_update_celcat
+     * @param bool $optUpdateCelcat
      */
-    public function setOptUpdateCelcat(bool $opt_update_celcat): void
+    public function setOptUpdateCelcat(bool $optUpdateCelcat): void
     {
-        $this->opt_update_celcat = $opt_update_celcat;
+        $this->optUpdateCelcat = $optUpdateCelcat;
     }
 
     /**
@@ -330,15 +327,15 @@ class Formation extends BaseEntity
      */
     public function isOptAgence(): bool
     {
-        return $this->opt_agence;
+        return $this->optAgence;
     }
 
     /**
-     * @param bool $opt_agence
+     * @param bool $optAgence
      */
-    public function setOptAgence(bool $opt_agence): void
+    public function setOptAgence(bool $optAgence): void
     {
-        $this->opt_agence = $opt_agence;
+        $this->optAgence = $optAgence;
     }
 
     /**
@@ -346,15 +343,15 @@ class Formation extends BaseEntity
      */
     public function isOptMateriel(): bool
     {
-        return $this->opt_materiel;
+        return $this->optMateriel;
     }
 
     /**
-     * @param bool $opt_materiel
+     * @param bool $optMateriel
      */
-    public function setOptMateriel(bool $opt_materiel): void
+    public function setOptMateriel(bool $optMateriel): void
     {
-        $this->opt_materiel = $opt_materiel;
+        $this->optMateriel = $optMateriel;
     }
 
     /**
@@ -362,15 +359,15 @@ class Formation extends BaseEntity
      */
     public function isOptEdt(): bool
     {
-        return $this->opt_edt;
+        return $this->optEdt;
     }
 
     /**
-     * @param bool $opt_edt
+     * @param bool $optEdt
      */
-    public function setOptEdt(bool $opt_edt): void
+    public function setOptEdt(bool $optEdt): void
     {
-        $this->opt_edt = $opt_edt;
+        $this->optEdt = $optEdt;
     }
 
     /**
@@ -378,15 +375,15 @@ class Formation extends BaseEntity
      */
     public function isOptStage(): bool
     {
-        return $this->opt_stage;
+        return $this->optStage;
     }
 
     /**
-     * @param bool $opt_stage
+     * @param bool $optStage
      */
-    public function setOptStage(bool $opt_stage): void
+    public function setOptStage(bool $optStage): void
     {
-        $this->opt_stage = $opt_stage;
+        $this->optStage = $optStage;
     }
 
     /**
@@ -394,15 +391,15 @@ class Formation extends BaseEntity
      */
     public function isOptSynthese(): bool
     {
-        return $this->opt_synthese;
+        return $this->optSynthese;
     }
 
     /**
-     * @param bool $opt_synthese
+     * @param bool $optSynthese
      */
-    public function setOptSynthese(bool $opt_synthese): void
+    public function setOptSynthese(bool $optSynthese): void
     {
-        $this->opt_synthese = $opt_synthese;
+        $this->optSynthese = $optSynthese;
     }
 
     /**
@@ -410,31 +407,15 @@ class Formation extends BaseEntity
      */
     public function isOptMessagerie(): bool
     {
-        return $this->opt_messagerie;
+        return $this->optMessagerie;
     }
 
     /**
-     * @param bool $opt_messagerie
+     * @param bool $optMessagerie
      */
-    public function setOptMessagerie(bool $opt_messagerie): void
+    public function setOptMessagerie(bool $optMessagerie): void
     {
-        $this->opt_messagerie = $opt_messagerie;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOptRI(): bool
-    {
-        return $this->opt_RI;
-    }
-
-    /**
-     * @param bool $opt_RI
-     */
-    public function setOptRI(bool $opt_RI): void
-    {
-        $this->opt_RI = $opt_RI;
+        $this->optMessagerie = $optMessagerie;
     }
 
     /**
@@ -442,15 +423,15 @@ class Formation extends BaseEntity
      */
     public function isOptInfos(): bool
     {
-        return $this->opt_Infos;
+        return $this->optInfos;
     }
 
     /**
-     * @param bool $opt_Infos
+     * @param bool $optInfos
      */
-    public function setOptInfos(bool $opt_Infos): void
+    public function setOptInfos(bool $optInfos): void
     {
-        $this->opt_Infos = $opt_Infos;
+        $this->optInfos = $optInfos;
     }
 
     /**
@@ -474,15 +455,15 @@ class Formation extends BaseEntity
      */
     public function getOptAnneePrevisionnel(): ?int
     {
-        return $this->opt_annee_previsionnel;
+        return $this->optAnneePrevisionnel;
     }
 
     /**
-     * @param int $opt_annee_previsionnel
+     * @param int $optAnneePrevisionnel
      */
-    public function setOptAnneePrevisionnel(int $opt_annee_previsionnel): void
+    public function setOptAnneePrevisionnel(int $optAnneePrevisionnel): void
     {
-        $this->opt_annee_previsionnel = $opt_annee_previsionnel;
+        $this->optAnneePrevisionnel = $optAnneePrevisionnel;
     }
 
     /**
@@ -617,5 +598,18 @@ class Formation extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function update($name, $value)
+    {
+
+        $name[0] = \chr(\ord($name[0]) - 32);
+        $method = 'set' . $name;
+        dump($method);
+        if (method_exists($this, $method)) {
+            echo 'ok';
+            $this->$method($value);
+            //dump($this->$method2());
+        }
     }
 }

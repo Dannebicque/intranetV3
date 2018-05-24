@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Actualite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,14 +20,24 @@ class ActualiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Actualite::class);
     }
 
-    public function findByFormation($formation, $nbResult)
+    /**
+     * @param $formation
+     * @param $nbResult
+     *
+     * @return Actualite[]
+     */
+    public function findByFormation($formation, $nbResult = 2): array
     {
-        return $this->createQueryBuilder('a')
+        $q = $this->createQueryBuilder('a')
             ->andWhere('a.formation = :formation')
             ->setParameter('formation', $formation)
-            ->orderBy('a.created', 'DESC')
-            ->setMaxResults($nbResult)
-            ->getQuery()
+            ->orderBy('a.created', 'DESC');
+
+        if ($nbResult > 0) {
+            $q->setMaxResults($nbResult);
+        }
+
+        return $q->getQuery()
             ->getResult();
     }
 }

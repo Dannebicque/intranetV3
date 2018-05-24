@@ -20,17 +20,17 @@ class Semestre extends BaseEntity
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $code_apogee;
+    private $codeApogee;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_version;
+    private $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_departement;
+    private $codeDepartement;
 
     /**
      * @var Annee
@@ -50,14 +50,14 @@ class Semestre extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $ordre_annee; //dans l'année
+    private $ordreAnnee; //dans l'année
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $ordre_lmd; //dans le LMD
+    private $ordreLmd; //dans le LMD
 
     /**
      * @var boolean
@@ -92,14 +92,14 @@ class Semestre extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $nb_groupes_td = 1;
+    private $nbGroupesTd = 1;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $nb_groupes_TP = 2;
+    private $nbGroupesTP = 2;
 
     /**
      * @var
@@ -112,77 +112,77 @@ class Semestre extends BaseEntity
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_mail_releve = false;
+    private $optMailReleve = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_mail_modification_note = false;
+    private $optMailModificationNote = false;
 
     /**
      * @var Personnel
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $opt_destinataire_mail_releve;
+    private $optDestMailReleve;
 
     /**
      * @var Personnel
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $opt_destinataire_mail_modification_note;
+    private $optDestMailModifNote;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_evaluation_visible = true;
+    private $optEvaluationVisible = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_evaluation_modifiable = true;
+    private $optEvaluationModifiable = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_penalite_absence = true;
+    private $optPenaliteAbsence = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_mail_absence_responsable = false;
+    private $optMailAbsenceResp = false;
 
     /**
      * @var Personnel
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $opt_destinataire_mail_absence_responsable;
+    private $optDestMailAbsenceResp;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_mail_absence_etudiant = false;
+    private $optMailAbsenceEtudiant = false;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $opt_point_penalite_absence = 0.5;
+    private $optPointPenaliteAbsence = 0.5;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="semestres")
@@ -214,6 +214,11 @@ class Semestre extends BaseEntity
      */
     private $bornes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="semestre")
+     */
+    private $cahierTextes;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -222,6 +227,7 @@ class Semestre extends BaseEntity
         $this->hrs = new ArrayCollection();
         $this->options = new ArrayCollection();
         $this->bornes = new ArrayCollection();
+        $this->cahierTextes = new ArrayCollection();
     }
 
     /**
@@ -229,15 +235,15 @@ class Semestre extends BaseEntity
      */
     public function getCodeApogee()
     {
-        return $this->code_apogee;
+        return $this->codeApogee;
     }
 
     /**
-     * @param mixed $code_apogee
+     * @param mixed $codeApogee
      */
-    public function setCodeApogee($code_apogee): void
+    public function setCodeApogee($codeApogee): void
     {
-        $this->code_apogee = $code_apogee;
+        $this->codeApogee = $codeApogee;
     }
 
     /**
@@ -245,15 +251,15 @@ class Semestre extends BaseEntity
      */
     public function getCodeVersion()
     {
-        return $this->code_version;
+        return $this->codeVersion;
     }
 
     /**
-     * @param mixed $code_version
+     * @param mixed $codeVersion
      */
-    public function setCodeVersion($code_version): void
+    public function setCodeVersion($codeVersion): void
     {
-        $this->code_version = $code_version;
+        $this->codeVersion = $codeVersion;
     }
 
     /**
@@ -261,15 +267,15 @@ class Semestre extends BaseEntity
      */
     public function getCodeDepartement()
     {
-        return $this->code_departement;
+        return $this->codeDepartement;
     }
 
     /**
-     * @param mixed $code_departement
+     * @param mixed $codeDepartement
      */
-    public function setCodeDepartement($code_departement): void
+    public function setCodeDepartement($codeDepartement): void
     {
-        $this->code_departement = $code_departement;
+        $this->codeDepartement = $codeDepartement;
     }
 
     /**
@@ -325,15 +331,15 @@ class Semestre extends BaseEntity
      */
     public function getOrdreAnnee(): int
     {
-        return $this->ordre_annee;
+        return $this->ordreAnnee;
     }
 
     /**
-     * @param int $ordre_annee
+     * @param int $ordreAnnee
      */
-    public function setOrdreAnnee(int $ordre_annee): void
+    public function setOrdreAnnee(int $ordreAnnee): void
     {
-        $this->ordre_annee = $ordre_annee;
+        $this->ordreAnnee = $ordreAnnee;
     }
 
     /**
@@ -341,15 +347,15 @@ class Semestre extends BaseEntity
      */
     public function getOrdreLmd(): int
     {
-        return $this->ordre_lmd;
+        return $this->ordreLmd;
     }
 
     /**
-     * @param int $ordre_lmd
+     * @param int $ordreLmd
      */
-    public function setOrdreLmd(int $ordre_lmd): void
+    public function setOrdreLmd(int $ordreLmd): void
     {
-        $this->ordre_lmd = $ordre_lmd;
+        $this->ordreLmd = $ordreLmd;
     }
 
     /**
@@ -421,15 +427,15 @@ class Semestre extends BaseEntity
      */
     public function getNbGroupesTd(): int
     {
-        return $this->nb_groupes_td;
+        return $this->nbGroupesTd;
     }
 
     /**
-     * @param int $nb_groupes_td
+     * @param int $nbGroupesTd
      */
-    public function setNbGroupesTd(int $nb_groupes_td): void
+    public function setNbGroupesTd(int $nbGroupesTd): void
     {
-        $this->nb_groupes_td = $nb_groupes_td;
+        $this->nbGroupesTd = $nbGroupesTd;
     }
 
     /**
@@ -437,15 +443,15 @@ class Semestre extends BaseEntity
      */
     public function getNbGroupesTP(): int
     {
-        return $this->nb_groupes_TP;
+        return $this->nbGroupesTP;
     }
 
     /**
-     * @param int $nb_groupes_TP
+     * @param int $nbGroupesTP
      */
-    public function setNbGroupesTP(int $nb_groupes_TP): void
+    public function setNbGroupesTP(int $nbGroupesTP): void
     {
-        $this->nb_groupes_TP = $nb_groupes_TP;
+        $this->nbGroupesTP = $nbGroupesTP;
     }
 
     /**
@@ -453,15 +459,15 @@ class Semestre extends BaseEntity
      */
     public function isOptMailReleve(): bool
     {
-        return $this->opt_mail_releve;
+        return $this->optMailReleve;
     }
 
     /**
-     * @param bool $opt_mail_releve
+     * @param bool $optMailReleve
      */
-    public function setOptMailReleve(bool $opt_mail_releve): void
+    public function setOptMailReleve(bool $optMailReleve): void
     {
-        $this->opt_mail_releve = $opt_mail_releve;
+        $this->optMailReleve = $optMailReleve;
     }
 
     /**
@@ -469,47 +475,47 @@ class Semestre extends BaseEntity
      */
     public function isOptMailModificationNote(): bool
     {
-        return $this->opt_mail_modification_note;
+        return $this->optMailModificationNote;
     }
 
     /**
-     * @param bool $opt_mail_modification_note
+     * @param bool $optMailModificationNote
      */
-    public function setOptMailModificationNote(bool $opt_mail_modification_note): void
+    public function setOptMailModificationNote(bool $optMailModificationNote): void
     {
-        $this->opt_mail_modification_note = $opt_mail_modification_note;
-    }
-
-    /**
-     * @return Personnel
-     */
-    public function getOptDestinataireMailReleve(): ?Personnel
-    {
-        return $this->opt_destinataire_mail_releve;
-    }
-
-    /**
-     * @param Personnel $opt_destinataire_mail_releve
-     */
-    public function setOptDestinataireMailReleve(Personnel $opt_destinataire_mail_releve): void
-    {
-        $this->opt_destinataire_mail_releve = $opt_destinataire_mail_releve;
+        $this->optMailModificationNote = $optMailModificationNote;
     }
 
     /**
      * @return Personnel
      */
-    public function getOptDestinataireMailModificationNote(): ?Personnel
+    public function getOptDestMailReleve(): ?Personnel
     {
-        return $this->opt_destinataire_mail_modification_note;
+        return $this->optDestMailReleve;
     }
 
     /**
-     * @param Personnel $opt_destinataire_mail_modification_note
+     * @param Personnel $optDestMailReleve
      */
-    public function setOptDestinataireMailModificationNote(Personnel $opt_destinataire_mail_modification_note): void
+    public function setOptDestMailReleve(Personnel $optDestMailReleve): void
     {
-        $this->opt_destinataire_mail_modification_note = $opt_destinataire_mail_modification_note;
+        $this->optDestMailReleve = $optDestMailReleve;
+    }
+
+    /**
+     * @return Personnel
+     */
+    public function getOptDestMailModifNote(): ?Personnel
+    {
+        return $this->optDestMailModifNote;
+    }
+
+    /**
+     * @param Personnel $optDestMailModifNote
+     */
+    public function setOptDestMailModifNote(Personnel $optDestMailModifNote): void
+    {
+        $this->optDestMailModifNote = $optDestMailModifNote;
     }
 
     /**
@@ -517,15 +523,15 @@ class Semestre extends BaseEntity
      */
     public function isOptEvaluationVisible(): bool
     {
-        return $this->opt_evaluation_visible;
+        return $this->optEvaluationVisible;
     }
 
     /**
-     * @param bool $opt_evaluation_visible
+     * @param bool $optEvaluationVisible
      */
-    public function setOptEvaluationVisible(bool $opt_evaluation_visible): void
+    public function setOptEvaluationVisible(bool $optEvaluationVisible): void
     {
-        $this->opt_evaluation_visible = $opt_evaluation_visible;
+        $this->optEvaluationVisible = $optEvaluationVisible;
     }
 
     /**
@@ -533,15 +539,15 @@ class Semestre extends BaseEntity
      */
     public function isOptEvaluationModifiable(): bool
     {
-        return $this->opt_evaluation_modifiable;
+        return $this->optEvaluationModifiable;
     }
 
     /**
-     * @param bool $opt_evaluation_modifiable
+     * @param bool $optEvaluationModifiable
      */
-    public function setOptEvaluationModifiable(bool $opt_evaluation_modifiable): void
+    public function setOptEvaluationModifiable(bool $optEvaluationModifiable): void
     {
-        $this->opt_evaluation_modifiable = $opt_evaluation_modifiable;
+        $this->optEvaluationModifiable = $optEvaluationModifiable;
     }
 
     /**
@@ -549,47 +555,47 @@ class Semestre extends BaseEntity
      */
     public function isOptPenaliteAbsence(): bool
     {
-        return $this->opt_penalite_absence;
+        return $this->optPenaliteAbsence;
     }
 
     /**
-     * @param bool $opt_penalite_absence
+     * @param bool $optPenaliteAbsence
      */
-    public function setOptPenaliteAbsence(bool $opt_penalite_absence): void
+    public function setOptPenaliteAbsence(bool $optPenaliteAbsence): void
     {
-        $this->opt_penalite_absence = $opt_penalite_absence;
+        $this->optPenaliteAbsence = $optPenaliteAbsence;
     }
 
     /**
      * @return bool
      */
-    public function isOptMailAbsenceResponsable(): bool
+    public function isOptMailAbsenceResp(): bool
     {
-        return $this->opt_mail_absence_responsable;
+        return $this->optMailAbsenceResp;
     }
 
     /**
-     * @param bool $opt_mail_absence_responsable
+     * @param bool $optMailAbsenceResp
      */
-    public function setOptMailAbsenceResponsable(bool $opt_mail_absence_responsable): void
+    public function setOptMailAbsenceResp(bool $optMailAbsenceResp): void
     {
-        $this->opt_mail_absence_responsable = $opt_mail_absence_responsable;
+        $this->optMailAbsenceResp = $optMailAbsenceResp;
     }
 
     /**
      * @return Personnel
      */
-    public function getOptDestinataireMailAbsenceResponsable(): ?Personnel
+    public function getOptDestMailAbsenceResp(): ?Personnel
     {
-        return $this->opt_destinataire_mail_absence_responsable;
+        return $this->optDestMailAbsenceResp;
     }
 
     /**
-     * @param Personnel $opt_destinataire_mail_absence_responsable
+     * @param Personnel $optDestMailAbsenceResp
      */
-    public function setOptDestinataireMailAbsenceResponsable(Personnel $opt_destinataire_mail_absence_responsable): void
+    public function setOptDestMailAbsenceResp(Personnel $optDestMailAbsenceResp): void
     {
-        $this->opt_destinataire_mail_absence_responsable = $opt_destinataire_mail_absence_responsable;
+        $this->optDestMailAbsenceResp = $optDestMailAbsenceResp;
     }
 
     /**
@@ -597,15 +603,15 @@ class Semestre extends BaseEntity
      */
     public function isOptMailAbsenceEtudiant(): bool
     {
-        return $this->opt_mail_absence_etudiant;
+        return $this->optMailAbsenceEtudiant;
     }
 
     /**
-     * @param bool $opt_mail_absence_etudiant
+     * @param bool $optMailAbsenceEtudiant
      */
-    public function setOptMailAbsenceEtudiant(bool $opt_mail_absence_etudiant): void
+    public function setOptMailAbsenceEtudiant(bool $optMailAbsenceEtudiant): void
     {
-        $this->opt_mail_absence_etudiant = $opt_mail_absence_etudiant;
+        $this->optMailAbsenceEtudiant = $optMailAbsenceEtudiant;
     }
 
     /**
@@ -613,15 +619,15 @@ class Semestre extends BaseEntity
      */
     public function getOptPointPenaliteAbsence(): float
     {
-        return $this->opt_point_penalite_absence;
+        return $this->optPointPenaliteAbsence;
     }
 
     /**
-     * @param float $opt_point_penalite_absence
+     * @param float $optPointPenaliteAbsence
      */
-    public function setOptPointPenaliteAbsence(float $opt_point_penalite_absence): void
+    public function setOptPointPenaliteAbsence(float $optPointPenaliteAbsence): void
     {
-        $this->opt_point_penalite_absence = $opt_point_penalite_absence;
+        $this->optPointPenaliteAbsence = $optPointPenaliteAbsence;
     }
 
     /**
@@ -822,6 +828,49 @@ class Semestre extends BaseEntity
         if ($this->bornes->contains($borne)) {
             $this->bornes->removeElement($borne);
             $borne->removeSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function update($name, $value)
+    {
+        $t = explode('_', $name);
+        $name = $t[0];
+        $name[0] = \chr(\ord($name[0]) - 32);
+
+        $method = 'set' . $name;
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+        }
+    }
+
+    /**
+     * @return Collection|CahierTexte[]
+     */
+    public function getCahierTextes(): Collection
+    {
+        return $this->cahierTextes;
+    }
+
+    public function addCahierTexte(CahierTexte $cahierTexte): self
+    {
+        if (!$this->cahierTextes->contains($cahierTexte)) {
+            $this->cahierTextes[] = $cahierTexte;
+            $cahierTexte->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCahierTexte(CahierTexte $cahierTexte): self
+    {
+        if ($this->cahierTextes->contains($cahierTexte)) {
+            $this->cahierTextes->removeElement($cahierTexte);
+            // set the owning side to null (unless already changed)
+            if ($cahierTexte->getSemestre() === $this) {
+                $cahierTexte->setSemestre(null);
+            }
         }
 
         return $this;

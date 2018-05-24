@@ -22,6 +22,7 @@ class BaseController extends Controller
      */
     public function setDataUserSession(DataUserSession $dataUserSession): void
     {
+        //$this->get('php_translation.edit_in_place.activator')->activate();
         $this->dataUserSession = $dataUserSession;
     }
 }

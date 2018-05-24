@@ -43,18 +43,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for absence in absences %}
+                {% for etudiant in absences.etudiants %}
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ etudiant.display }}</td>
+                        <td>{{ absences.statistiques[etudiant.id].nbCoursManques }}</td>
+                        <td>{{ absences.statistiques[etudiant.id].totalDuree|localizeddate('none', 'short', app.request.getLocale()) }}</td>
+                        <td>{{ absences.statistiques[etudiant.id].nbNonJustifie }}</td>
+                        <td>{{ absences.statistiques[etudiant.id].nbJustifie }}</td>
                         <td>
-                            <a href="{{ path('user_profil', {'slug': absence.etudiant.slug}) }}"
+                            <a href="{{ path('user_profil', {type: 'etudiant', 'slug': etudiant.slug}) }}"
                                class="btn btn-info btn-outline btn-square" data-provide="tooltip"
                                data-placement="bottom" title="Détails" target="_blank"><i class="ti-eye"></i></a>
-
                         </td>
                     </tr>
                 {% endfor %}

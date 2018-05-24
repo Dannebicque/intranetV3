@@ -15,10 +15,12 @@
                 <a class="nav-link changeinformation" data-toggle="tab" href="{{ path('article_categorie', {categorie: 'c2i'}) }}"
                    role="tab">C2I</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link changeinformation" data-toggle="tab" href="{{ path('article_categorie', {categorie: 'infos'}) }}"
-                   role="tab">Informations Pratiques</a>
-            </li>
+            {% if user_data.formation.optInfos == true %}
+                <li class="nav-item">
+                    <a class="nav-link changeinformation" data-toggle="tab" href="{{ path('article_categorie', {categorie: 'infos'}) }}"
+                       role="tab">Informations Pratiques</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}

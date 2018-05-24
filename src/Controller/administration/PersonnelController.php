@@ -44,7 +44,7 @@ class PersonnelController extends BaseController
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -53,13 +53,13 @@ class PersonnelController extends BaseController
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
      * @Route("/add", name="administration_personnel_new", methods="GET")
      */
-    public function add(): Response
+    public function ajout(): Response
     {
 
         return $this->render('administration/personnel/add.html.twig');
@@ -72,7 +72,7 @@ class PersonnelController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel);

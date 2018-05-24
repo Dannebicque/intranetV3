@@ -35,7 +35,7 @@ class DocumentController extends Controller
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -44,7 +44,7 @@ class DocumentController extends Controller
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -55,7 +55,7 @@ class DocumentController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(DataUserSession $dataUserSession, Request $request): Response
+    public function create(DataUserSession $dataUserSession, Request $request): Response
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document, array('formation' => $dataUserSession->getFormation()->getId()));
@@ -117,8 +117,18 @@ class DocumentController extends Controller
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Document $document): Response
     {
+        $id = $document->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($document);
+            $em->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

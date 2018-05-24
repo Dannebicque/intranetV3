@@ -27,57 +27,57 @@ class Annee extends BaseEntity
      *
      * @ORM\Column(name="couleurCM", type="string", length=7,nullable=true)
      */
-    private $couleur_cm;
+    private $couleurCm;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurTD", type="string", length=7,nullable=true)
      */
-    private $couleur_td;
+    private $couleurTd;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurTP", type="string", length=7,nullable=true)
      */
-    private $couleur_tp;
+    private $couleurTp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurtexte", type="string", length=7,nullable=true)
      */
-    private $couleur_texte;
+    private $couleurTexte;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
-    private $libelle_long;
+    private $libelleLong;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $code_apogee;
+    private $codeApogee;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_version;
+    private $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_departement;
+    private $codeDepartement;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_alternance = false;
+    private $optAlternance = false;
 
     /**
      * @var Diplome
@@ -92,15 +92,15 @@ class Annee extends BaseEntity
      */
     public function getCodeApogee()
     {
-        return $this->code_apogee;
+        return $this->codeApogee;
     }
 
     /**
-     * @param mixed $code_apogee
+     * @param mixed $codeApogee
      */
-    public function setCodeApogee($code_apogee): void
+    public function setCodeApogee($codeApogee): void
     {
-        $this->code_apogee = $code_apogee;
+        $this->codeApogee = $codeApogee;
     }
 
     /**
@@ -108,15 +108,15 @@ class Annee extends BaseEntity
      */
     public function getCodeVersion()
     {
-        return $this->code_version;
+        return $this->codeVersion;
     }
 
     /**
-     * @param mixed $code_version
+     * @param mixed $codeVersion
      */
-    public function setCodeVersion($code_version): void
+    public function setCodeVersion($codeVersion): void
     {
-        $this->code_version = $code_version;
+        $this->codeVersion = $codeVersion;
     }
 
     /**
@@ -124,15 +124,15 @@ class Annee extends BaseEntity
      */
     public function getCodeDepartement()
     {
-        return $this->code_departement;
+        return $this->codeDepartement;
     }
 
     /**
-     * @param mixed $code_departement
+     * @param mixed $codeDepartement
      */
-    public function setCodeDepartement($code_departement): void
+    public function setCodeDepartement($codeDepartement): void
     {
-        $this->code_departement = $code_departement;
+        $this->codeDepartement = $codeDepartement;
     }
 
     /**
@@ -188,15 +188,15 @@ class Annee extends BaseEntity
      */
     public function getCouleurCm(): ?string
     {
-        return $this->couleur_cm;
+        return $this->couleurCm;
     }
 
     /**
-     * @param string $couleur_cm
+     * @param string $couleurCm
      */
-    public function setCouleurCm(string $couleur_cm): void
+    public function setCouleurCm(string $couleurCm): void
     {
-        $this->couleur_cm = $couleur_cm;
+        $this->couleurCm = $couleurCm;
     }
 
     /**
@@ -204,15 +204,15 @@ class Annee extends BaseEntity
      */
     public function getCouleurTd(): ?string
     {
-        return $this->couleur_td;
+        return $this->couleurTd;
     }
 
     /**
-     * @param string $couleur_td
+     * @param string $couleurTd
      */
-    public function setCouleurTd(string $couleur_td): void
+    public function setCouleurTd(string $couleurTd): void
     {
-        $this->couleur_td = $couleur_td;
+        $this->couleurTd = $couleurTd;
     }
 
     /**
@@ -220,15 +220,15 @@ class Annee extends BaseEntity
      */
     public function getCouleurTp(): ?string
     {
-        return $this->couleur_tp;
+        return $this->couleurTp;
     }
 
     /**
-     * @param string $couleur_tp
+     * @param string $couleurTp
      */
-    public function setCouleurTp(string $couleur_tp): void
+    public function setCouleurTp(string $couleurTp): void
     {
-        $this->couleur_tp = $couleur_tp;
+        $this->couleurTp = $couleurTp;
     }
 
     /**
@@ -236,15 +236,15 @@ class Annee extends BaseEntity
      */
     public function getCouleurTexte(): ?string
     {
-        return $this->couleur_texte;
+        return $this->couleurTexte;
     }
 
     /**
-     * @param string $couleur_texte
+     * @param string $couleurTexte
      */
-    public function setCouleurTexte(string $couleur_texte): void
+    public function setCouleurTexte(string $couleurTexte): void
     {
-        $this->couleur_texte = $couleur_texte;
+        $this->couleurTexte = $couleurTexte;
     }
 
     /**
@@ -252,15 +252,15 @@ class Annee extends BaseEntity
      */
     public function getLibelleLong(): ?string
     {
-        return $this->libelle_long;
+        return $this->libelleLong;
     }
 
     /**
-     * @param string $libelle_long
+     * @param string $libelleLong
      */
-    public function setLibelleLong(string $libelle_long): void
+    public function setLibelleLong(string $libelleLong): void
     {
-        $this->libelle_long = $libelle_long;
+        $this->libelleLong = $libelleLong;
     }
 
     /**
@@ -268,14 +268,26 @@ class Annee extends BaseEntity
      */
     public function isOptAlternance(): bool
     {
-        return $this->opt_alternance;
+        return $this->optAlternance;
     }
 
     /**
-     * @param bool $opt_alternance
+     * @param bool $optAlternance
      */
-    public function setOptAlternance(bool $opt_alternance): void
+    public function setOptAlternance(bool $optAlternance): void
     {
-        $this->opt_alternance = $opt_alternance;
+        $this->optAlternance = $optAlternance;
+    }
+
+    public function update($name, $value)
+    {
+        $t = explode('_', $name);
+        $name = $t[0];
+        $name[0] = \chr(\ord($name[0]) - 32);
+
+        $method = 'set' . $name;
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+        }
     }
 }

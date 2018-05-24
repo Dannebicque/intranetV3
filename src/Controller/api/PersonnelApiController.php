@@ -102,13 +102,13 @@ class PersonnelApiController extends BaseController
                 $em->persist($pf);
                 $em->flush();
 
-                return new Response('', 200);
+                return new Response('', Response::HTTP_OK);
             }
 
-            return new Response('Déjà dans la base', 200);
+            return new Response('Déjà dans la base', Response::HTTP_OK);
 
         }
 
-        return new Response('Erreur', 500);
+        return new Response('Erreur', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

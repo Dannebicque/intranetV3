@@ -2,10 +2,12 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Form\BorneType;
 use App\Repository\BorneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"administration/display"}
  *)
  */
-class BorneController extends Controller
+class BorneController extends BaseController
 {
     /**
      * @Route("/", name="administration_borne_index", methods="GET")
@@ -31,7 +33,8 @@ class BorneController extends Controller
     public function create(Request $request): Response
     {
         $borne = new Borne();
-        $form = $this->createForm(BorneType::class, $borne);
+        $form = $this->createForm(BorneType::class, $borne,
+            ['formation' => $this->dataUserSession->getFormation()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,7 +64,8 @@ class BorneController extends Controller
      */
     public function edit(Request $request, Borne $borne): Response
     {
-        $form = $this->createForm(BorneType::class, $borne);
+        $form = $this->createForm(BorneType::class, $borne,
+            ['formation' => $this->dataUserSession->getFormation()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -79,9 +83,19 @@ class BorneController extends Controller
     /**
      * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
      */
-    public function delete(Borne $borne): Response
+    public function delete(Request $request, Borne $borne): Response
     {
+        $id = $borne->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($borne);
+            $em->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -98,7 +112,7 @@ class BorneController extends Controller
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -107,6 +121,6 @@ class BorneController extends Controller
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 }

@@ -121,6 +121,11 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     private $nbHeuresService;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="personnel")
+     */
+    private $cahierTextes;
+
 
 
     public function __construct()
@@ -130,6 +135,7 @@ class Personnel extends Utilisateur // implements SerializerInterface
         $this->evaluations_auteur = new ArrayCollection();
         $this->evaluations_autorise = new ArrayCollection();
         $this->modificationNotes = new ArrayCollection();
+        $this->cahierTextes = new ArrayCollection();
         //$this->personnelFormations = new ArrayCollection();
     }
 
@@ -476,6 +482,37 @@ class Personnel extends Utilisateur // implements SerializerInterface
     public function setNbHeuresService(float $nbHeuresService): self
     {
         $this->nbHeuresService = $nbHeuresService;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CahierTexte[]
+     */
+    public function getCahierTextes(): Collection
+    {
+        return $this->cahierTextes;
+    }
+
+    public function addCahierTexte(CahierTexte $cahierTexte): self
+    {
+        if (!$this->cahierTextes->contains($cahierTexte)) {
+            $this->cahierTextes[] = $cahierTexte;
+            $cahierTexte->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCahierTexte(CahierTexte $cahierTexte): self
+    {
+        if ($this->cahierTextes->contains($cahierTexte)) {
+            $this->cahierTextes->removeElement($cahierTexte);
+            // set the owning side to null (unless already changed)
+            if ($cahierTexte->getPersonnel() === $this) {
+                $cahierTexte->setPersonnel(null);
+            }
+        }
 
         return $this;
     }

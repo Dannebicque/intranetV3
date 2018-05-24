@@ -25,6 +25,10 @@
                    id="profil-scolarité">{{ 'tab.notes'|trans }}</a>
                 <a class="nav-link changeprofil" href="{{ path('profil_absences') }}"
                    id="profil-scolarité">{{ 'tab.absences'|trans }}</a>
+                {% if user_data.formation.optStage == true %}
+                    <a class="nav-link changeprofil" href="{{ path('profil_stages') }}"
+                       id="profil-about">{{ 'tab.stages'|trans }}</a>
+                {% endif %}
                 <a class="nav-link changeprofil" href="{{ path('profil_about') }}"
                    id="profil-about">{{ 'tab.a-propos'|trans }}</a>
                 <a class="nav-link changeprofil" href="{{ path('profil_action') }}"

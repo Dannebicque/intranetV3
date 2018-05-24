@@ -10,9 +10,19 @@
             <div class="card">
                 <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
                 <div class="card-body">
-                    {% for actualite in actualites %}
-
-                    {% endfor %}
+                    <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                        {% for actualite in actualites %}
+                            <li class="timeline-block">
+                                <div class="timeline-point timeline-point-primary">
+                                    <span class="badge badge-ring badge-primary"></span>{# todo: varier les couleurs#}
+                                </div>
+                                <div class="timeline-content">
+                                    <time datetime="2018">{{ actualite.updated|localizeddate('short', 'short', app.request.getLocale()) }}</time>
+                                    <p>{{ actualite.titre }} : {{ actualite.texte }}</p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ol>
                 </div>
             </div>
         </div>

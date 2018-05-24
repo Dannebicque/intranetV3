@@ -1,4 +1,8 @@
 framework:
+    serializer:
+        enabled: true
+        enable_annotations: true
+
     secret: '%env(APP_SECRET)%'
     default_locale: fr
     translator:
@@ -36,3 +40,4 @@ framework:
 sensio_framework_extra:
      router:
          annotations: false
+

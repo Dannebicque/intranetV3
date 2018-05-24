@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Actualite;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +17,7 @@ class ActualiteType extends AbstractType
             ->add('titre', TextType::class, [
                 'label' => 'label.titre',
             ])
-            ->add('texte', TextType::class, [
+            ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
             ]);
     }

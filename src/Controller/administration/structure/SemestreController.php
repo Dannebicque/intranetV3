@@ -43,7 +43,7 @@ class SemestreController extends Controller
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -52,7 +52,7 @@ class SemestreController extends Controller
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -63,7 +63,7 @@ class SemestreController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(Request $request, Diplome $diplome): Response
+    public function create(Request $request, Diplome $diplome): Response
     {
         $semestre = new Semestre();
         $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $diplome->getId()]);

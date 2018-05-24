@@ -44,7 +44,7 @@ class AnneeController extends Controller
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -54,7 +54,7 @@ class AnneeController extends Controller
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -64,7 +64,7 @@ class AnneeController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $annee = new Annee();
         $form = $this->createForm(AnneeType::class, $annee);

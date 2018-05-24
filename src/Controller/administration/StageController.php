@@ -20,7 +20,6 @@ class StageController extends Controller
     public function index()
     {
         return $this->render('stage/index.html.twig', [
-            'controller_name' => 'StageController',
         ]);
     }
 }

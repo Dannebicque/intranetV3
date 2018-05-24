@@ -18,24 +18,24 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th>{{ 'table.id'|trans }}</th>
                     <td>{{ actualite.id }}</td>
                 </tr>
                 <tr>
-                    <th>Created</th>
-                    <td>{{ actualite.created ? actualite.created|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Updated</th>
-                    <td>{{ actualite.updated ? actualite.updated|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Titre</th>
+                    <th>{{ 'table.titre'|trans }}</th>
                     <td>{{ actualite.titre }}</td>
                 </tr>
                 <tr>
-                    <th>Texte</th>
+                    <th>{{ 'table.texte'|trans }}</th>
                     <td>{{ actualite.texte }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ actualite.created ? actualite.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ actualite.updated ? actualite.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                 </tr>
                 </tbody>
             </table>

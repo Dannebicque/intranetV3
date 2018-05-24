@@ -59,7 +59,7 @@ class PrevisionnelController extends BaseController
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -68,6 +68,6 @@ class PrevisionnelController extends BaseController
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 }

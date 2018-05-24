@@ -26,7 +26,18 @@ class MessagerieController extends Controller
     }
 
     /**
-     * @Route("/{message}", name="messagerie_message")
+     * @param $filtre
+     * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose":true})
+     */
+    public function filtre($filtre)
+    {
+        $t = array();
+
+        return $this->json($t);
+    }
+
+    /**
+     * @Route("/{message}", name="messagerie_message", options={"expose":true})
      * @param $message
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -36,4 +47,6 @@ class MessagerieController extends Controller
         return $this->render('messagerie/message.html.twig', [
         ]);
     }
+
+
 }

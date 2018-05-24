@@ -45,14 +45,17 @@
                                     <p><strong>{{ 'table.annee_courante'|trans }}</strong></p>
                                     <p>{{ 'help.annee_courante'|trans }}</p>
                                 </div>
-                                <select class="form-control col-sm-6 changeOption"
-                                        name="annee_courante"
-                                        id="annee_courante"
+                                <select class="form-control col-sm-6 changeOptionSelect"
+                                        name="anneeCourante"
+                                        id="anneeCourante"
                                         data-type="formation"
+                                        data-id="{{ user_data.formation.id }}"
                                 >
-                                    <option value="">Non sélectionnée / Aucune</option>
+                                    <option value="">{{ 'non.selectionee'|trans }} / {{ 'aucune'|trans }}</option>
                                     {% for annee in 'now'|date('Y')-2 .. 'now'|date('Y')+2 %}
-                                        <option value="{{ annee }}">{{ annee }} / {{ annee+1 }}</option>
+                                        <option value="{{ annee }}"
+                                                {% if user_data.formation.anneeCourante == annee %}selected{% endif %}>{{ annee }}
+                                            / {{ annee+1 }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -62,13 +65,15 @@
                                     <p><strong>{{ 'table.opt_annee_previsionnel'|trans }}</strong></p>
                                     <p>{{ 'help.opt_annee_previsionnel'|trans }}</p>
                                 </div>
-                                <select class="form-control col-sm-6 changeOption"
-                                        name="opt_annee_previsionnel"
-                                        id="opt_annee_previsionnel"
-                                        data-type="formation">
-                                    <option value="">Non sélectionnée / Aucune</option>
+                                <select class="form-control col-sm-6 changeOptionSelect"
+                                        name="optAnneePrevisionnel"
+                                        id="optAnneePrevisionnel"
+                                        data-type="formation"
+                                        data-id="{{ user_data.formation.id }}">
+                                    <option value="">{{ 'non.selectionee'|trans }} / {{ 'aucune'|trans }}</option>
                                     {% for annee in 'now'|date('Y')-2 .. 'now'|date('Y')+2 %}
-                                        <option value="{{ annee }}">{{ annee }}</option>
+                                        <option value="{{ annee }}"
+                                                {% if user_data.formation.optAnneePrevisionnel == annee %}selected{% endif %}>{{ annee }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -82,9 +87,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optEdt ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_edt"
-                                           id="opt_edt"
-                                           data-type="formation">
+                                           name="optEdt"
+                                           id="optEdt"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -97,9 +103,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optStage ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_stage"
-                                           id="opt_stage"
-                                           data-type="formation">
+                                           name="optStage"
+                                           id="optStage"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -112,9 +119,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optUpdateCelcat ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_update_celcat"
-                                           id="opt_update_celcat"
-                                           data-type="formation">
+                                           name="optUpdateCelcat"
+                                           id="optUpdateCelcat"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -127,9 +135,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optMessagerie ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_messagerie"
-                                           id="opt_messagerie"
-                                           data-type="formation">
+                                           name="optMessagerie"
+                                           id="optMessagerie"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -145,9 +154,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optAgence ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_agence"
-                                           id="opt_agence"
-                                           data-type="formation">
+                                           name="optAgence"
+                                           id="optAgence"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -160,9 +170,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optMateriel ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_materiel"
-                                           id="opt_materiel"
-                                           data-type="formation">
+                                           name="optMateriel"
+                                           id="optMateriel"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -175,39 +186,28 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optSynthese ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_synthese"
-                                           id="opt_synthese"
-                                           data-type="formation">
+                                           name="optSynthese"
+                                           id="optSynthese"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
 
                             <div class="media">
                                 <div class="media-body">
-                                    <p><strong>{{ 'table.opt_RI'|trans }}</strong></p>
-                                    <p>{{ 'help.opt_RI'|trans }}</p>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optRi ? 'checked': '' }}
-                                           class="changeOption"
-                                           name="opt_RI"
-                                           id="opt_RI"
-                                           data-type="formation">
-                                    <span class="switch-indicator"></span>
-                                </label>
-                            </div>
-                            <div class="media">
-                                <div class="media-body">
                                     <p><strong>{{ 'table.respRi'|trans }}</strong></p>
                                     <p>{{ 'help.respRi'|trans }}</p>
                                 </div>
-                                <select class="form-control col-sm-6 changeOption"
+                                <select class="form-control col-sm-6 changeOptionSelect"
                                         name="respRi"
                                         id="respRi"
-                                        data-type="formation">
-                                    <option value="">Non sélectionné / Aucun</option>
-                                    {% for personnel in user_data.personnels %}
-                                        <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                        data-type="formation"
+                                        data-id="{{ user_data.formation.id }}">
+                                    <option value="">{{ 'non.selectione'|trans }} / {{ 'aucun'|trans }}</option>
+                                    {% for personnel in user_data.personnels %} {# todo: ajotuer les seleected #}
+                                        <option value="pers{{ personnel.id }}"
+                                                {% if user_data.formation.respRi != null and user_data.formation.respRi.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -220,9 +220,10 @@
                                 <label class="switch">
                                     <input type="checkbox" {{ user_data.formation.optInfos ? 'checked': '' }}
                                            class="changeOption"
-                                           name="opt_Infos"
-                                           id="opt_Infos"
-                                           data-type="formation">
+                                           name="optInfos"
+                                           id="optInfos"
+                                           data-type="formation"
+                                           data-id="{{ user_data.formation.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -260,11 +261,21 @@
                                             <p><strong>{{ 'table.opt_nb_jours_saisie'|trans }}</strong></p>
                                             <p>{{ 'help.opt_nb_jours_saisie'|trans }}</p>
                                         </div>
-                                        <input type="text" class="form-control col-sm-6 changeOption"
-                                               name="opt_nb_jours_saisie_{{ diplome.id }}"
-                                               id="opt_nb_jours_saisie_{{ diplome.id }}"
-                                               data-type="diplome"
-                                               data-id="{{ diplome.id }}">
+                                        <select class="form-control col-sm-6 changeOptionSelect"
+                                                name="optNbJoursSaisie_{{ diplome.id }}"
+                                                id="optNbJoursSaisie_{{ diplome.id }}"
+                                                data-type="diplome"
+                                                data-id="{{ diplome.id }}"
+                                        >
+                                            <option value="0" selected>{{ 'non.selectione'|trans }}
+                                                / {{ 'illimite'|trans }}</option>
+                                            {% for i in 1 .. 30 %}
+                                                <option value="{{ i }}"
+                                                        {% if diplome.optNbJoursSaisie == i %}selected{% endif %}>{{ i }}
+                                                    jour(s)
+                                                </option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
 
                                     <div class="media">
@@ -273,10 +284,10 @@
                                             <p>{{ 'help.opt_suppr_absence'|trans }}</p>
                                         </div>
                                         <label class="switch">
-                                            <input type="checkbox" checked=""
+                                            <input type="checkbox" {{ diplome.optSupprAbsence ? 'checked': '' }}
                                                    class="changeOption"
-                                                   name="opt_suppr_absence_{{ diplome.id }}"
-                                                   id="opt_suppr_absence_{{ diplome.id }}"
+                                                   name="optSupprAbsence_{{ diplome.id }}"
+                                                   id="optSupprAbsence_{{ diplome.id }}"
                                                    data-type="diplome"
                                                    data-id="{{ diplome.id }}">
                                             <span class="switch-indicator"></span>
@@ -289,10 +300,10 @@
                                             <p>{{ 'help.opt_espace_perso_visible'|trans }}</p>
                                         </div>
                                         <label class="switch">
-                                            <input type="checkbox" checked=""
+                                            <input type="checkbox" {{ diplome.optEspacePersoVisible ? 'checked': '' }}
                                                    class="changeOption"
-                                                   name="opt_espace_perso_visible_{{ diplome.id }}"
-                                                   id="opt_espace_perso_visible_{{ diplome.id }}"
+                                                   name="optEspacePersoVisible_{{ diplome.id }}"
+                                                   id="optEspacePersoVisible_{{ diplome.id }}"
                                                    data-type="diplome"
                                                    data-id="{{ diplome.id }}">
                                             <span class="switch-indicator"></span>
@@ -307,10 +318,10 @@
                                             <p>{{ 'help.opt_dilpome_decale'|trans }}</p>
                                         </div>
                                         <label class="switch">
-                                            <input type="checkbox" checked=""
+                                            <input type="checkbox" {{ diplome.optDilpomeDecale ? 'checked': '' }}
                                                    class="changeOption"
-                                                   name="opt_dilpome_decale_{{ diplome.id }}"
-                                                   id="opt_dilpome_decale_{{ diplome.id }}"
+                                                   name="optDilpomeDecale_{{ diplome.id }}"
+                                                   id="optDilpomeDecale_{{ diplome.id }}"
                                                    data-type="diplome"
                                                    data-id="{{ diplome.id }}">
                                             <span class="switch-indicator"></span>
@@ -323,10 +334,10 @@
                                             <p>{{ 'help.opt_anonymat'|trans }}</p>
                                         </div>
                                         <label class="switch">
-                                            <input type="checkbox" checked=""
+                                            <input type="checkbox" {{ diplome.optAnonymat ? 'checked': '' }}
                                                    class="changeOption"
-                                                   name="opt_anonymat_{{ diplome.id }}"
-                                                   id="opt_anonymat_{{ diplome.id }}"
+                                                   name="optAnonymat_{{ diplome.id }}"
+                                                   id="optAnonymat_{{ diplome.id }}"
                                                    data-type="diplome"
                                                    data-id="{{ diplome.id }}">
                                             <span class="switch-indicator"></span>
@@ -339,10 +350,10 @@
                                             <p>{{ 'help.opt_commentaires_releve'|trans }}</p>
                                         </div>
                                         <label class="switch">
-                                            <input type="checkbox" checked=""
+                                            <input type="checkbox" {{ diplome.optCommentairesReleve ? 'checked': '' }}
                                                    class="changeOption"
-                                                   name="opt_commentaires_releve_{{ diplome.id }}"
-                                                   id="opt_commentaires_releve_{{ diplome.id }}"
+                                                   name="optCommentairesReleve_{{ diplome.id }}"
+                                                   id="optCommentairesReleve_{{ diplome.id }}"
                                                    data-type="diplome"
                                                    data-id="{{ diplome.id }}">
                                             <span class="switch-indicator"></span>
@@ -355,15 +366,20 @@
                                             <p><strong>{{ 'table.opt_methode_calcul'|trans }}</strong></p>
                                             <p>{{ 'help.opt_methode_calcul'|trans }}</p>
                                         </div>
-                                        <label class="switch">
-                                            <input type="checkbox" checked=""
-                                                   class="changeOption"
-                                                   name="opt_methode_calcul_{{ diplome.id }}"
-                                                   id="opt_methode_calcul_{{ diplome.id }}"
-                                                   data-type="diplome"
-                                                   data-id="{{ diplome.id }}">
-                                            <span class="switch-indicator"></span>
-                                        </label>
+                                        <select class="form-control col-sm-6 changeOptionSelect"
+                                                name="optMethodeCalcul_{{ diplome.id }}"
+                                                id="optMethodeCalcul_{{ diplome.id }}"
+                                                data-type="diplome"
+                                                data-id="{{ diplome.id }}">
+                                            <option value="moymodules"
+                                                    {% if diplome.optMethodeCalcul == 'moymodules' %}selected{% endif %}>
+                                                Moyenne des modules
+                                            </option>
+                                            <option value="moyues"
+                                                    {% if diplome.optMethodeCalcul == 'moyues' %}selected{% endif %}>
+                                                Moyenne des UEs
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -402,10 +418,10 @@
                                                 <p>{{ 'help.opt_alternance'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ annee.optAlternance ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_alternance_{{ annee.id }}"
-                                                       id="opt_alternance_{{ annee.id }}"
+                                                       name="optAlternance_{{ annee.id }}"
+                                                       id="optAlternance_{{ annee.id }}"
                                                        data-type="annee"
                                                        data-id="{{ annee.id }}">
                                                 <span class="switch-indicator"></span>
@@ -451,10 +467,10 @@
                                                 <p>{{ 'help.opt_mail_releve'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optMailReleve ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_mail_releve_{{ semestre.id }}"
-                                                       id="opt_mail_releve_{{ semestre.id }}"
+                                                       name="optMailReleve_{{ semestre.id }}"
+                                                       id="optMailReleve_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -466,14 +482,16 @@
                                                 <p><strong>{{ 'table.opt_destinataire_mail_releve'|trans }}</strong></p>
                                                 <p>{{ 'help.opt_destinataire_mail_releve'|trans }}</p>
                                             </div>
-                                            <select class="form-control col-sm-6 changeOption"
-                                                    name="opt_destinataire_mail_releve_{{ semestre.id }}"
-                                                    id="opt_destinataire_mail_releve_{{ semestre.id }}"
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optDestMailReleve_{{ semestre.id }}"
+                                                    id="optDestMailReleve_{{ semestre.id }}"
                                                     data-type="semestre"
                                                     data-id="{{ semestre.id }}">
-                                                <option value="">Non sélectionné / Aucun</option>
+                                                <option value="">{{ 'non.selectione'|trans }}
+                                                    / {{ 'aucun'|trans }}</option>
                                                 {% for personnel in user_data.personnels %}
-                                                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                                    <option value="pers{{ personnel.id }}"
+                                                            {% if semestre.optDestMailReleve != null and semestre.optDestMailReleve.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -484,10 +502,10 @@
                                                 <p>{{ 'help.opt_mail_modification_note'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optMailModificationNote ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_mail_modification_note_{{ semestre.id }}"
-                                                       id="opt_mail_modification_note_{{ semestre.id }}"
+                                                       name="optMailModificationNote_{{ semestre.id }}"
+                                                       id="optMailModificationNote_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -501,14 +519,16 @@
                                                 </p>
                                                 <p>{{ 'help.opt_destinataure_mail_modification_note'|trans }}</p>
                                             </div>
-                                            <select class="form-control col-sm-6 changeOption"
-                                                    name="opt_destinataure_mail_modification_note_{{ semestre.id }}"
-                                                    id="opt_destinataure_mail_modification_note_{{ semestre.id }}"
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optDestMailModifNote_{{ semestre.id }}"
+                                                    id="optDestMailModifNote_{{ semestre.id }}"
                                                     data-type="semestre"
                                                     data-id="{{ semestre.id }}">
-                                                <option value="">Non sélectionné / Aucun</option>
+                                                <option value="">{{ 'non.selectione'|trans }}
+                                                    / {{ 'aucun'|trans }}</option>
                                                 {% for personnel in user_data.personnels %}
-                                                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                                    <option value="pers{{ personnel.id }}"
+                                                            {% if semestre.optDestMailModifNote != null and semestre.optDestMailModifNote.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -519,10 +539,10 @@
                                                 <p>{{ 'help.opt_mail_absence_responsable'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optMailAbsenceResp ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_mail_absence_responsable_{{ semestre.id }}"
-                                                       id="opt_mail_absence_responsable_{{ semestre.id }}"
+                                                       name="optMailAbsenceResp_{{ semestre.id }}"
+                                                       id="optMailAbsenceResp_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -536,14 +556,16 @@
                                                 </p>
                                                 <p>{{ 'help.opt_destinataure_mail_absence_responsable'|trans }}</p>
                                             </div>
-                                            <select class="form-control col-sm-6 changeOption"
-                                                    name="opt_destinataure_mail_absence_responsable_{{ semestre.id }}"
-                                                    id="opt_destinataure_mail_absence_responsable_{{ semestre.id }}"
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optDestMailAbsenceResp_{{ semestre.id }}"
+                                                    id="optDestMailAbsenceResp_{{ semestre.id }}"
                                                     data-type="semestre"
                                                     data-id="{{ semestre.id }}">
-                                                <option value="">Non sélectionné / Aucun</option>
+                                                <option value="">{{ 'non.selectione'|trans }}
+                                                    / {{ 'aucun'|trans }}</option>
                                                 {% for personnel in user_data.personnels %}
-                                                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                                    <option value="pers{{ personnel.id }}"
+                                                            {% if semestre.optDestMailAbsenceResp != null and semestre.optDestMailAbsenceResp.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -556,10 +578,10 @@
                                                 <p>{{ 'help.opt_evaluation_visible'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optEvaluationVisible ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_evaluation_visible_{{ semestre.id }}"
-                                                       id="opt_evaluation_visible_{{ semestre.id }}"
+                                                       name="optEvaluationVisible_{{ semestre.id }}"
+                                                       id="optEvaluationVisible_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -572,10 +594,10 @@
                                                 <p>{{ 'help.opt_evaluation_modifiable'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optEvaluationModifiable ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_evaluation_modifiable_{{ semestre.id }}"
-                                                       id="opt_evaluation_modifiable_{{ semestre.id }}"
+                                                       name="optEvaluationModifiable_{{ semestre.id }}"
+                                                       id="optEvaluationModifiable_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -588,10 +610,10 @@
                                                 <p>{{ 'help.opt_mail_absence_etudiant'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optMailAbsenceEtudiant ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_mail_absence_etudiant_{{ semestre.id }}"
-                                                       id="opt_mail_absence_etudiant_{{ semestre.id }}"
+                                                       name="optMailAbsenceEtudiant_{{ semestre.id }}"
+                                                       id="optMailAbsenceEtudiant_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -604,10 +626,10 @@
                                                 <p>{{ 'help.opt_penalite_absence'|trans }}</p>
                                             </div>
                                             <label class="switch">
-                                                <input type="checkbox" checked=""
+                                                <input type="checkbox" {{ semestre.optPenaliteAbsence ? 'checked': '' }}
                                                        class="changeOption"
-                                                       name="opt_penalite_absence_{{ semestre.id }}"
-                                                       id="opt_penalite_absence_{{ semestre.id }}"
+                                                       name="optPenaliteAbsence_{{ semestre.id }}"
+                                                       id="optPenaliteAbsence_{{ semestre.id }}"
                                                        data-type="semestre"
                                                        data-id="{{ semestre.id }}">
                                                 <span class="switch-indicator"></span>
@@ -619,11 +641,16 @@
                                                 <p><strong>{{ 'table.opt_point_penalite_absence'|trans }}</strong></p>
                                                 <p>{{ 'help.opt_point_penalite_absence'|trans }}</p>
                                             </div>
-                                            <input type="text" class="form-control col-sm-6 changeOption"
-                                                   name="opt_point_penalite_absence_{{ semestre.id }}"
-                                                   id="opt_point_penalite_absence_{{ semestre.id }}"
-                                                   data-type="semestre"
-                                                   data-id="{{ semestre.id }}">
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optPointPenaliteAbsence_{{ semestre.id }}"
+                                                    id="optPointPenaliteAbsence_{{ semestre.id }}"
+                                                    data-type="semestre"
+                                                    data-id="{{ semestre.id }}">
+                                                {% for i in 1 .. 15 %}
+                                                    <option value="{{ i/10 }}"
+                                                            {% if semestre.optPointPenaliteAbsence == i/10 %}selected{% endif %}>{{ i/10 }} {{ 'point.s'|trans }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -103,13 +103,6 @@ class FormationType extends AbstractType
                     'expanded' => true,
                     'label'   => 'label.opt_messagerie'
                 ])
-            ->add('opt_RI', ChoiceType::class,
-                [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
-                    'label'   => 'label.opt_RI'
-                ])
             ->add('respri', EntityType::class,[
                 'class' => Personnel::class,
                 'choice_label' => 'display',

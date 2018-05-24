@@ -284,6 +284,21 @@
 
 {%- block button_label -%}{%- endblock -%}
 
+
+{# Help #}
+
+{% block form_help -%}
+    {%- if help is not empty -%}
+        <p id="{{ id }}_help" class="help-text">
+            {%- if translation_domain is same as(false) -%}
+                {{- help -}}
+            {%- else -%}
+                {{- help|trans({}, translation_domain) -}}
+            {%- endif -%}
+        </p>
+    {%- endif -%}
+{%- endblock form_help %}
+
 {# Rows #}
 
 {%- block repeated_row -%}

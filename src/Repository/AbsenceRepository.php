@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Absence;
+use App\Entity\Etudiant;
 use App\Entity\Matiere;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -32,6 +34,20 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
+    }
+
+    public function findBySemestre(Semestre $semestre, $anneeCourante)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant =e.id')
+            ->where('e.semestre = :semestre')
+            ->andWhere('a.anneeuniversitaire = :annee')
+            ->setParameter('semestre', $semestre->getId())
+            ->setParameter('annee', $anneeCourante)
+            ->orderBy('a.date', 'DESC')
+            ->orderBy('a.heure', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**

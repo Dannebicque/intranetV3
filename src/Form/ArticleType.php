@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Semestre;
+use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,8 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleType extends AbstractType
 {
+    private $formation;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->formation = $options['formation'];
+
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'label.titre',
@@ -32,13 +37,17 @@ class ArticleType extends AbstractType
                 'label'                     => 'label.type_article',
                 'choice_translation_domain' => 'form'
             ])
-            ->add('semestres', EntityType::class, [
-                'class'        => Semestre::class,
-                'expanded'     => true,
-                'multiple'     => true,
-                'choice_label' => 'libelle',
-                'label'        => 'label.semestres_article'
-            ]);
+            ->add('semestres', EntityType::class, array(
+                'class'         => Semestre::class,
+                'label'         => 'label.semestres_date',
+                'choice_label'  => 'libelle',
+                'query_builder' => function (SemestreRepository $semestreRepository) {
+                    return $semestreRepository->findByFormationBuilder($this->formation);
+                },
+                'required'      => true,
+                'expanded'      => true,
+                'multiple'      => true
+            ));
     }
 
     /**
@@ -50,6 +59,7 @@ class ArticleType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Article::class,
+            'formation'          => null,
             'translation_domain' => 'form'
 
         ]);

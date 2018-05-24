@@ -3,12 +3,13 @@
   <file id="form.en">
     <unit id="lRFM2Mc" name="label.libelle">
       <notes>
-        <note category="file-source" priority="1">src/Form/TypeHrsType.php:16</note>
-        <note category="file-source" priority="1">src/Form/UfrType.php:16</note>
+          <note category="file-source" priority="1">src/Form/TypeHrsType.php:17</note>
+          <note category="file-source" priority="1">src/Form/UfrType.php:18</note>
         <note category="file-source" priority="1">src/Form/TypeDiplomeType.php:16</note>
         <note category="file-source" priority="1">src/Form/AnneeType.php:17</note>
         <note category="file-source" priority="1">src/Form/SemestreType.php:25</note>
         <note category="file-source" priority="1">src/Form/PpnType.php:23</note>
+          <note category="file-source" priority="1">src/Form/SiteType.php:16</note>
         <note category="file-source" priority="1">src/Form/DocumentType.php:28</note>
         <note category="file-source" priority="1">src/Form/FormationType.php:23</note>
         <note category="file-source" priority="1">src/Form/UeType.php:25</note>
@@ -25,7 +26,7 @@
     </unit>
     <unit id="VcZND81" name="photo">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>photo</source>
@@ -34,7 +35,7 @@
     </unit>
     <unit id="1C7xSXk" name="visible">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>visible</source>
@@ -43,7 +44,8 @@
     </unit>
     <unit id="Gi.Cbcf" name="signature">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>signature</source>
@@ -52,7 +54,7 @@
     </unit>
     <unit id="swgzorP" name="remarque">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>remarque</source>
@@ -61,7 +63,8 @@
     </unit>
     <unit id="9UO1eFb" name="tel2">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>tel2</source>
@@ -70,7 +73,8 @@
     </unit>
     <unit id="bNcgOz3" name="tel1">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>tel1</source>
@@ -79,7 +83,7 @@
     </unit>
     <unit id="FIJngbV" name="date_naissance">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>date_naissance</source>
@@ -88,7 +92,7 @@
     </unit>
     <unit id="PKZ8guU" name="sexe">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>sexe</source>
@@ -97,7 +101,8 @@
     </unit>
     <unit id="ueAiRmy" name="site_perso">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>site_perso</source>
@@ -106,7 +111,8 @@
     </unit>
     <unit id="7pyQ2k3" name="mail_perso">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>mail_perso</source>
@@ -115,7 +121,7 @@
     </unit>
     <unit id="Z7p.pcn" name="site_univ">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>site_univ</source>
@@ -124,7 +130,7 @@
     </unit>
     <unit id="6rkHuNr" name="mail_univ">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>mail_univ</source>
@@ -133,7 +139,7 @@
     </unit>
     <unit id="KcFzACF" name="prenom">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>prenom</source>
@@ -142,8 +148,7 @@
     </unit>
     <unit id="L1iK.hS" name="nom">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
-        <note category="file-source" priority="1">src/Form/SiteType.php:14</note>
+          <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
       </notes>
       <segment>
         <source>nom</source>
@@ -152,7 +157,7 @@
     </unit>
     <unit id="R0fY3NV" name="type_user">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>type_user</source>
@@ -161,7 +166,7 @@
     </unit>
     <unit id="zQOGHw." name="slug">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>slug</source>
@@ -170,7 +175,7 @@
     </unit>
     <unit id="QoghNQ6" name="login">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>login</source>
@@ -179,7 +184,7 @@
     </unit>
     <unit id="J_teUVB" name="updated">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>updated</source>
@@ -188,7 +193,7 @@
     </unit>
     <unit id="QG7.sen" name="created">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>created</source>
@@ -197,7 +202,7 @@
     </unit>
     <unit id="Kc3uSOK" name="cv">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>cv</source>
@@ -206,7 +211,7 @@
     </unit>
     <unit id="dDOrN1A" name="initiales">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>initiales</source>
@@ -215,7 +220,7 @@
     </unit>
     <unit id="BOQsnGV" name="numero_harpege">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>numero_harpege</source>
@@ -224,7 +229,7 @@
     </unit>
     <unit id="KE8P4Uy" name="bureau2">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>bureau2</source>
@@ -233,7 +238,7 @@
     </unit>
     <unit id="9gXkUcW" name="bureau1">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>bureau1</source>
@@ -242,7 +247,7 @@
     </unit>
     <unit id="5dHoUso" name="entreprise">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>entreprise</source>
@@ -251,7 +256,7 @@
     </unit>
     <unit id="G.6nkEW" name="domaines">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>domaines</source>
@@ -260,7 +265,7 @@
     </unit>
     <unit id="19WHaez" name="responsabilites">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>responsabilites</source>
@@ -269,7 +274,7 @@
     </unit>
     <unit id="dZds84y" name="tel_bureau">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>tel_bureau</source>
@@ -278,7 +283,7 @@
     </unit>
     <unit id="q1gaOry" name="poste_interne">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>poste_interne</source>
@@ -287,7 +292,7 @@
     </unit>
     <unit id="_VEcnv0" name="statut">
       <notes>
-        <note category="file-source" priority="1">src/Form/PersonnelType.php:14</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>statut</source>
@@ -296,7 +301,7 @@
     </unit>
     <unit id="_DZbZ.T" name="choice.ri">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:27</note>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:32</note>
       </notes>
       <segment>
         <source>choice.ri</source>
@@ -305,7 +310,7 @@
     </unit>
     <unit id="UcfRcqS" name="choice.c2i">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:27</note>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:32</note>
       </notes>
       <segment>
         <source>choice.c2i</source>
@@ -314,7 +319,7 @@
     </unit>
     <unit id="2zPw27B" name="choice.info_pratique">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:27</note>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:32</note>
       </notes>
       <segment>
         <source>choice.info_pratique</source>
@@ -323,7 +328,8 @@
     </unit>
     <unit id="2_MhTes" name="label.titre">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:20</note>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:25</note>
+          <note category="file-source" priority="1">src/Form/ActualiteType.php:17</note>
       </notes>
       <segment>
         <source>label.titre</source>
@@ -332,7 +338,8 @@
     </unit>
     <unit id=".2zVZ0y" name="label.texte">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:23</note>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:28</note>
+          <note category="file-source" priority="1">src/Form/ActualiteType.php:20</note>
       </notes>
       <segment>
         <source>label.texte</source>
@@ -341,7 +348,7 @@
     </unit>
     <unit id="Q68iraS" name="label.type_article">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:26</note>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:31</note>
       </notes>
       <segment>
         <source>label.type_article</source>
@@ -350,7 +357,7 @@
     </unit>
     <unit id="VK1CbWx" name="label.semestres_article">
       <notes>
-        <note category="file-source" priority="1">src/Form/ArticleType.php:35</note>
+          <note category="state" priority="1">obsolete</note>
       </notes>
       <segment>
         <source>label.semestres_article</source>
@@ -515,6 +522,9 @@
     </unit>
     <unit id="__vJoSM" name="choice.oui">
       <notes>
+          <note category="file-source" priority="1">src/Form/TypeHrsType.php:20</note>
+          <note category="file-source" priority="1">src/Form/PersonnelType.php:38</note>
+          <note category="file-source" priority="1">src/Form/BorneType.php:48</note>
         <note category="file-source" priority="1">src/Form/AnneeType.php:54</note>
         <note category="file-source" priority="1">src/Form/SemestreType.php:51</note>
         <note category="file-source" priority="1">src/Form/SemestreType.php:66</note>
@@ -533,6 +543,7 @@
         <note category="file-source" priority="1">src/Form/FormationType.php:94</note>
         <note category="file-source" priority="1">src/Form/FormationType.php:101</note>
         <note category="file-source" priority="1">src/Form/FormationType.php:108</note>
+          <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:38</note>
         <note category="file-source" priority="1">src/Form/MatiereType.php:40</note>
         <note category="file-source" priority="1">src/Form/DiplomeType.php:52</note>
         <note category="file-source" priority="1">src/Form/DiplomeType.php:59</note>
@@ -547,6 +558,9 @@
     </unit>
     <unit id="Fdhx4Ah" name="choice.non">
       <notes>
+          <note category="file-source" priority="1">src/Form/TypeHrsType.php:20</note>
+          <note category="file-source" priority="1">src/Form/PersonnelType.php:38</note>
+          <note category="file-source" priority="1">src/Form/BorneType.php:48</note>
         <note category="file-source" priority="1">src/Form/AnneeType.php:54</note>
         <note category="file-source" priority="1">src/Form/SemestreType.php:51</note>
         <note category="file-source" priority="1">src/Form/SemestreType.php:66</note>
@@ -565,6 +579,7 @@
         <note category="file-source" priority="1">src/Form/FormationType.php:94</note>
         <note category="file-source" priority="1">src/Form/FormationType.php:101</note>
         <note category="file-source" priority="1">src/Form/FormationType.php:108</note>
+          <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:38</note>
         <note category="file-source" priority="1">src/Form/MatiereType.php:40</note>
         <note category="file-source" priority="1">src/Form/DiplomeType.php:52</note>
         <note category="file-source" priority="1">src/Form/DiplomeType.php:59</note>
@@ -579,6 +594,7 @@
     </unit>
     <unit id="VOOPghq" name="label.couleur">
       <notes>
+          <note category="file-source" priority="1">src/Form/BorneType.php:30</note>
         <note category="file-source" priority="1">src/Form/SemestreType.php:37</note>
         <note category="file-source" priority="1">src/Form/FormationType.php:46</note>
       </notes>
@@ -754,6 +770,7 @@
     <unit id="utzR9HY" name="label.diplome">
       <notes>
         <note category="file-source" priority="1">src/Form/PpnType.php:25</note>
+          <note category="file-source" priority="1">src/Form/HrsType.php:45</note>
       </notes>
       <segment>
         <source>label.diplome</source>
@@ -963,6 +980,7 @@
     <unit id="9yJvckA" name="label.semestre">
       <notes>
         <note category="file-source" priority="1">src/Form/UeType.php:32</note>
+          <note category="file-source" priority="1">src/Form/HrsType.php:36</note>
       </notes>
       <segment>
         <source>label.semestre</source>
@@ -1232,6 +1250,8 @@
     </unit>
     <unit id="Z4if3Io" name="label.semestres_date">
       <notes>
+          <note category="file-source" priority="1">src/Form/ArticleType.php:40</note>
+          <note category="file-source" priority="1">src/Form/BorneType.php:53</note>
         <note category="file-source" priority="1">src/Form/DatesType.php:44</note>
       </notes>
       <segment>
@@ -1362,8 +1382,628 @@
       </notes>
       <segment>
         <source>label.code_celcat_departement</source>
-        <target></target>
+          <target></target>
       </segment>
     </unit>
+      <unit id="W4Yn.7q" name="choice.hrs">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:26</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.hrs</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="EUKVfG2" name="choice.pca">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:26</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.pca</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="bJLMjns" name="choice.prp">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:26</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.prp</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="RQg.ik3" name="choice.suivi">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:26</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.suivi</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="gpAQTDE" name="choice.autre">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:26</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.autre</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="8Rm3PgY" name="label.incluService">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:18</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.incluService</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="WkgPDEK" name="label.typehrs">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:24</note>
+              <note category="file-source" priority="1">src/Form/HrsType.php:28</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.typehrs</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="Xm.Zcaq" name="label.maximum">
+          <notes>
+              <note category="file-source" priority="1">src/Form/TypeHrsType.php:30</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.maximum</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="QduJnpH" name="choice.femme">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:29</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:29</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.femme</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="MNiQFb_" name="choice.homme">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:29</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:29</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>choice.homme</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="YBStdvr" name="label.nom">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:21</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:21</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.nom</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="94qpMaC" name="label.prenom">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:22</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:22</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.prenom</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="050_398" name="label.mail_univ">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:23</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:23</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.mail_univ</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="_5of8La" name="label.site_univ">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:24</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:24</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.site_univ</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="nTToy6N" name="label.mail_perso">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:25</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:25</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.mail_perso</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="rVYExl3" name="label.site_perso">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:26</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:26</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.site_perso</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="tP3kBZ_" name="label.sexe">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:27</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:27</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.sexe</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="j4jB84y" name="label.date_naissance">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:33</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:33</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.date_naissance</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="R9C_2Hh" name="label.numero_harpege">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:34</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:34</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.numero_harpege</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="CLGOhVB" name="label.initiales">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:35</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:35</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.initiales</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="E2wzjl2" name="label.statut">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:36</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:36</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.statut</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="5dXVx_l" name="label.poste_interne">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:42</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:42</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.poste_interne</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="37dZZVc" name="label.tel_bureau">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:43</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:43</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.tel_bureau</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="OWAdLSm" name="label.tel1">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:44</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:44</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.tel1</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="UU1Oqhv" name="label.tel2">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:45</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:45</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.tel2</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="UI0STLl" name="label.responsabilites">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:47</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:46</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.responsabilites</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="uHUU5is" name="label.domaines">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:48</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:47</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.domaines</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="YpltcPM" name="label.remarque">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:49</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:48</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.remarque</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="7dMOMxQ" name="label.signature">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:50</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:49</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.signature</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id=".a7QVgp" name="label.entreprise">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:52</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:50</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.entreprise</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="9pFl1q0" name="label.bureau1">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:53</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:51</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.bureau1</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="Pn2TSk_" name="label.bureau2">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:54</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:52</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.bureau2</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="mdEioge" name="label.adresse">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:55</note>
+              <note category="file-source" priority="1">src/Form/SiteType.php:17</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:53</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.adresse</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="x7vVhiW" name="label.cv">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:57</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:54</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.cv</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="F_My2fP" name="label.photo">
+          <notes>
+              <note category="file-source" priority="1">src/Form/PersonnelType.php:59</note>
+              <note category="file-source" priority="1">src/Form/PersonnelProfilType.php:55</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.photo</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="UIBhtCT" name="label.icone">
+          <notes>
+              <note category="file-source" priority="1">src/Form/BorneType.php:27</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.icone</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="51OQi14" name="label.message">
+          <notes>
+              <note category="file-source" priority="1">src/Form/BorneType.php:33</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.message</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="UJDm2vF" name="label.url">
+          <notes>
+              <note category="file-source" priority="1">src/Form/BorneType.php:36</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.url</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="yMsereO" name="label.dateDebutPublication">
+          <notes>
+              <note category="file-source" priority="1">src/Form/BorneType.php:40</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.dateDebutPublication</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="bEuZ4wF" name="label.dateFinPublication">
+          <notes>
+              <note category="file-source" priority="1">src/Form/BorneType.php:43</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.dateFinPublication</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="CYpZwBz" name="label.visible">
+          <notes>
+              <note category="file-source" priority="1">src/Form/BorneType.php:47</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.visible</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="JSx8pYK" name="label.sites">
+          <notes>
+              <note category="file-source" priority="1">src/Form/UfrType.php:19</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.sites</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="rGCDn7t" name="adresseParentale">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>adresseParentale</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="GStp0_n" name="adresse">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantProfilType.php:15</note>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>adresse</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="tFNBHfa" name="label.adresse1">
+          <notes>
+              <note category="file-source" priority="1">src/Form/AdresseType.php:16</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.adresse1</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="w1aYsXn" name="label.adresse2">
+          <notes>
+              <note category="file-source" priority="1">src/Form/AdresseType.php:17</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.adresse2</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="P0Z4w2V" name="label.adresse3">
+          <notes>
+              <note category="file-source" priority="1">src/Form/AdresseType.php:18</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.adresse3</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="VSpK2HG" name="label.code_postal">
+          <notes>
+              <note category="file-source" priority="1">src/Form/AdresseType.php:19</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.code_postal</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="nkDD5Bw" name="label.ville">
+          <notes>
+              <note category="file-source" priority="1">src/Form/AdresseType.php:20</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.ville</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="QeUDT6V" name="label.pays">
+          <notes>
+              <note category="file-source" priority="1">src/Form/AdresseType.php:21</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.pays</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="FveKfWM" name="username">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>username</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="iBpPnJD" name="annee_bac">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>annee_bac</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="JopssP2" name="bac">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>bac</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="N_KDGO." name="num_ine">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>num_ine</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="z19k6u9" name="num_etudiant">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>num_etudiant</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="4jaDP7s" name="semestre">
+          <notes>
+              <note category="file-source" priority="1">src/Form/EtudiantType.php:14</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>semestre</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="4hFUdrV" name="labele.libelle">
+          <notes>
+              <note category="file-source" priority="1">src/Form/HrsType.php:34</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>labele.libelle</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="E6gOmBY" name="labele.nbHeuresTd">
+          <notes>
+              <note category="file-source" priority="1">src/Form/HrsType.php:35</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>labele.nbHeuresTd</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="L83.fq." name="label.personnel">
+          <notes>
+              <note category="file-source" priority="1">src/Form/HrsType.php:54</note>
+              <note category="state" priority="1">new</note>
+          </notes>
+          <segment>
+              <source>label.personnel</source>
+              <target></target>
+          </segment>
+      </unit>
   </file>
 </xliff>

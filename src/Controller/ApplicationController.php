@@ -15,12 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ApplicationController extends Controller
 {
     /**
-     * @Route("/", name="application_index")
+     * @Route("/{onglet}", name="application_index")
      */
-    public function index()
+    public function index($onglet = 'messagerie')
     {
         return $this->render('application/index.html.twig', [
-            'controller_name' => 'ApplicationController',
+            'onglet' => $onglet
         ]);
     }
 }

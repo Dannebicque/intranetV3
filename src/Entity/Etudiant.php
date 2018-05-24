@@ -82,6 +82,11 @@ class Etudiant extends Utilisateur
      */
     private $scolarites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="destinataire")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -90,6 +95,7 @@ class Etudiant extends Utilisateur
         $this->etudiantDemande = new ArrayCollection();
         $this->etudiantDemandeur = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId()
@@ -354,6 +360,37 @@ class Etudiant extends Utilisateur
             // set the owning side to null (unless already changed)
             if ($scolarite->getEtudiant() === $this) {
                 $scolarite->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setDestinataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getDestinataire() === $this) {
+                $notification->setDestinataire(null);
             }
         }
 

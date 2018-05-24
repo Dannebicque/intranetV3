@@ -46,7 +46,7 @@ class NoteController extends Controller
      */
     public function help(): Response
     {
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -55,7 +55,7 @@ class NoteController extends Controller
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -64,7 +64,7 @@ class NoteController extends Controller
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -72,6 +72,6 @@ class NoteController extends Controller
      */
     public function supprimer(): Response
     {
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 }

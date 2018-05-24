@@ -95,7 +95,7 @@ class EtudiantApiController extends BaseController
                 [], 0, false))
         ];
 
-        return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
-
+        //return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
+        return $this->json($output, Response::HTTP_OK);
     }
 }

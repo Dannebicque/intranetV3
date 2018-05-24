@@ -2,33 +2,52 @@
     <ul class="nav nav-tabs" role="tablist">
         {% if is_granted('ROLE_PERMANENT') %}
             <li class="nav-item">
-                <a class="nav-link changeapplication active"
-                   href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link changeapplication"
+                <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
                    href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link changeapplication" href="{{ path('application_personnel_stage_index') }}" role="tab">Stages</a>
+                <a class="nav-link changeapplication {% if onglet == 'previsionnel' %}active{% endif %}"
+                   href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
             </li>
+
+            {% if user_data.formation.optStage == true %}
+                <li class="nav-item">
+                    <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
+                       href="{{ path('application_personnel_stage_index') }}"
+                       role="tab">{{ 'menu.stages'|trans }}</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
-                <a class="nav-link changeapplication" href="{{ path('application_personnel_quizz_index') }}" role="tab">Quizz</a>
+                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
+                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
+                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
 
         {% else %}
-            <li class="nav-item">
-                <a class="nav-link changeapplication active"
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
                    href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link changeapplication" href="{{ path('application_etudiant_stage_index') }}" role="tab">Stages</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link changeapplication" href="{{ path('application_etudiant_quizz_index') }}" role="tab">Quizz</a>
+            {% if user_data.formation.optStage == true %}
+                <li class="nav-item ">
+                    <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
+                       href="{{ path('application_etudiant_stage_index') }}"
+                       role="tab">{{ 'menu.stages'|trans }}</a>
+                </li>
+            {% endif %}
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
+                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
             </li>
 
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
+                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
+            </li>
         {% endif %}
-
     </ul>
 </div>

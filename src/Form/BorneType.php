@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Borne;
 use App\Entity\Semestre;
+use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,8 +16,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BorneType extends AbstractType
 {
+    private $formation;
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->formation = $options['formation'];
+
+
         $builder
             ->add('icone', TextType::class, [
                 'label' => 'label.icone',
@@ -28,7 +34,8 @@ class BorneType extends AbstractType
                 'label' => 'label.message',
             ])
             ->add('url', TextType::class, [
-                'label' => 'label.url',
+                'label'    => 'label.url',
+                'required' => false
             ])
             ->add('dateDebutPublication', DateTimeType::class, [
                 'label' => 'label.dateDebutPublication',
@@ -43,19 +50,24 @@ class BorneType extends AbstractType
                     'choice_translation_domain' => 'form',
                     'label'                     => 'label.visible'
                 ])
-            ->add('semestres', EntityType::class, [
-                'class'        => Semestre::class,
-                'expanded'     => true,
-                'multiple'     => true,
-                'choice_label' => 'libelle',
-                'label'        => 'label.semestres_article'
-            ]);
+            ->add('semestres', EntityType::class, array(
+                'class'         => Semestre::class,
+                'label'         => 'label.semestres_date',
+                'choice_label'  => 'libelle',
+                'query_builder' => function (SemestreRepository $semestreRepository) {
+                    return $semestreRepository->findByFormationBuilder($this->formation);
+                },
+                'required'      => true,
+                'expanded'      => true,
+                'multiple'      => true
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class'         => Borne::class,
+            'formation'          => null,
             'translation_domain' => 'form'
         ]);
     }

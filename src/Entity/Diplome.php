@@ -20,99 +20,99 @@ class Diplome extends BaseEntity
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $code_apogee;
+    private $codeApogee;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_version;
+    private $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_departement;
+    private $codeDepartement;
 
     /**
      * @var Personnel
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $responsable_diplome;
+    private $responsableDiplome;
 
     /**
      * @var Personnel
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $assistant_diplome;
+    private $assistantDiplome;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDiplome")
      */
-    private $type_diplome;
+    private $typeDiplome;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $opt_nb_jours_saisie = 15;
+    private $optNbJoursSaisie = 15;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_dilpome_decale = false; //existance du diplôme en décalé
+    private $optDilpomeDecale = false; //existance du diplôme en décalé
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_suppr_absence = false;
+    private $optSupprAbsence = false;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=10)
      */
-    private $opt_methode_calcul = 'moymodules'; //ou moyues
+    private $optMethodeCalcul = 'moymodules'; //ou moyues
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_anonymat = false;
+    private $optAnonymat = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column( type="boolean")
      */
-    private $opt_commentaires_releve = false;
+    private $optCommentairesReleve = false;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $opt_espace_perso_visible = true;
+    private $optEspacePersoVisible = true;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $volume_horaire = 0;
+    private $volumeHoraire = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $code_celcat_departement = 0;
+    private $codeCelcatDepartement = 0;
 
     /**
      * @var Formation
@@ -138,36 +138,36 @@ class Diplome extends BaseEntity
 
     public function getCodeApogee(): ?string
     {
-        return $this->code_apogee;
+        return $this->codeApogee;
     }
 
-    public function setCodeApogee(string $code_apogee): self
+    public function setCodeApogee(string $codeApogee): self
     {
-        $this->code_apogee = $code_apogee;
+        $this->codeApogee = $codeApogee;
 
         return $this;
     }
 
     public function getCodeVersion(): ?string
     {
-        return $this->code_version;
+        return $this->codeVersion;
     }
 
-    public function setCodeVersion(string $code_version): self
+    public function setCodeVersion(string $codeVersion): self
     {
-        $this->code_version = $code_version;
+        $this->codeVersion = $codeVersion;
 
         return $this;
     }
 
     public function getCodeDepartement(): ?string
     {
-        return $this->code_departement;
+        return $this->codeDepartement;
     }
 
-    public function setCodeDepartement(string $code_departement): self
+    public function setCodeDepartement(string $codeDepartement): self
     {
-        $this->code_departement = $code_departement;
+        $this->codeDepartement = $codeDepartement;
 
         return $this;
     }
@@ -210,15 +210,15 @@ class Diplome extends BaseEntity
      */
     public function getResponsableDiplome(): ?Personnel
     {
-        return $this->responsable_diplome;
+        return $this->responsableDiplome;
     }
 
     /**
-     * @param Personnel $responsable_diplome
+     * @param Personnel $responsableDiplome
      */
-    public function setResponsableDiplome(Personnel $responsable_diplome): void
+    public function setResponsableDiplome(Personnel $responsableDiplome): void
     {
-        $this->responsable_diplome = $responsable_diplome;
+        $this->responsableDiplome = $responsableDiplome;
     }
 
     /**
@@ -226,15 +226,15 @@ class Diplome extends BaseEntity
      */
     public function getAssistantDiplome(): ?Personnel
     {
-        return $this->assistant_diplome;
+        return $this->assistantDiplome;
     }
 
     /**
-     * @param Personnel $assistant_diplome
+     * @param Personnel $assistantDiplome
      */
-    public function setAssistantDiplome(Personnel $assistant_diplome): void
+    public function setAssistantDiplome(Personnel $assistantDiplome): void
     {
-        $this->assistant_diplome = $assistant_diplome;
+        $this->assistantDiplome = $assistantDiplome;
     }
 
     /**
@@ -242,15 +242,15 @@ class Diplome extends BaseEntity
      */
     public function getTypeDiplome(): ?TypeDiplome
     {
-        return $this->type_diplome;
+        return $this->typeDiplome;
     }
 
     /**
-     * @param mixed $type_diplome
+     * @param mixed $typeDiplome
      */
-    public function setTypeDiplome($type_diplome): void
+    public function setTypeDiplome($typeDiplome): void
     {
-        $this->type_diplome = $type_diplome;
+        $this->typeDiplome = $typeDiplome;
     }
 
     /**
@@ -258,15 +258,15 @@ class Diplome extends BaseEntity
      */
     public function getOptNbJoursSaisie(): int
     {
-        return $this->opt_nb_jours_saisie;
+        return $this->optNbJoursSaisie;
     }
 
     /**
-     * @param int $opt_nb_jours_saisie
+     * @param int $optNbJoursSaisie
      */
-    public function setOptNbJoursSaisie(int $opt_nb_jours_saisie): void
+    public function setOptNbJoursSaisie(int $optNbJoursSaisie): void
     {
-        $this->opt_nb_jours_saisie = $opt_nb_jours_saisie;
+        $this->optNbJoursSaisie = $optNbJoursSaisie;
     }
 
     /**
@@ -274,15 +274,15 @@ class Diplome extends BaseEntity
      */
     public function isOptDilpomeDecale(): bool
     {
-        return $this->opt_dilpome_decale;
+        return $this->optDilpomeDecale;
     }
 
     /**
-     * @param bool $opt_dilpome_decale
+     * @param bool $optDilpomeDecale
      */
-    public function setOptDilpomeDecale(bool $opt_dilpome_decale): void
+    public function setOptDilpomeDecale(bool $optDilpomeDecale): void
     {
-        $this->opt_dilpome_decale = $opt_dilpome_decale;
+        $this->optDilpomeDecale = $optDilpomeDecale;
     }
 
     /**
@@ -290,15 +290,15 @@ class Diplome extends BaseEntity
      */
     public function isOptSupprAbsence(): bool
     {
-        return $this->opt_suppr_absence;
+        return $this->optSupprAbsence;
     }
 
     /**
-     * @param bool $opt_suppr_absence
+     * @param bool $optSupprAbsence
      */
-    public function setOptSupprAbsence(bool $opt_suppr_absence): void
+    public function setOptSupprAbsence(bool $optSupprAbsence): void
     {
-        $this->opt_suppr_absence = $opt_suppr_absence;
+        $this->optSupprAbsence = $optSupprAbsence;
     }
 
     /**
@@ -306,15 +306,15 @@ class Diplome extends BaseEntity
      */
     public function getOptMethodeCalcul(): string
     {
-        return $this->opt_methode_calcul;
+        return $this->optMethodeCalcul;
     }
 
     /**
-     * @param string $opt_methode_calcul
+     * @param string $optMethodeCalcul
      */
-    public function setOptMethodeCalcul(string $opt_methode_calcul): void
+    public function setOptMethodeCalcul(string $optMethodeCalcul): void
     {
-        $this->opt_methode_calcul = $opt_methode_calcul;
+        $this->optMethodeCalcul = $optMethodeCalcul;
     }
 
     /**
@@ -322,15 +322,15 @@ class Diplome extends BaseEntity
      */
     public function isOptAnonymat(): bool
     {
-        return $this->opt_anonymat;
+        return $this->optAnonymat;
     }
 
     /**
-     * @param bool $opt_anonymat
+     * @param bool $optAnonymat
      */
-    public function setOptAnonymat(bool $opt_anonymat): void
+    public function setOptAnonymat(bool $optAnonymat): void
     {
-        $this->opt_anonymat = $opt_anonymat;
+        $this->optAnonymat = $optAnonymat;
     }
 
     /**
@@ -338,15 +338,15 @@ class Diplome extends BaseEntity
      */
     public function isOptCommentairesReleve(): bool
     {
-        return $this->opt_commentaires_releve;
+        return $this->optCommentairesReleve;
     }
 
     /**
-     * @param bool $opt_commentaires_releve
+     * @param bool $optCommentairesReleve
      */
-    public function setOptCommentairesReleve(bool $opt_commentaires_releve): void
+    public function setOptCommentairesReleve(bool $optCommentairesReleve): void
     {
-        $this->opt_commentaires_releve = $opt_commentaires_releve;
+        $this->optCommentairesReleve = $optCommentairesReleve;
     }
 
     /**
@@ -354,15 +354,15 @@ class Diplome extends BaseEntity
      */
     public function isOptEspacePersoVisible(): bool
     {
-        return $this->opt_espace_perso_visible;
+        return $this->optEspacePersoVisible;
     }
 
     /**
-     * @param bool $opt_espace_perso_visible
+     * @param bool $optEspacePersoVisible
      */
-    public function setOptEspacePersoVisible(bool $opt_espace_perso_visible): void
+    public function setOptEspacePersoVisible(bool $optEspacePersoVisible): void
     {
-        $this->opt_espace_perso_visible = $opt_espace_perso_visible;
+        $this->optEspacePersoVisible = $optEspacePersoVisible;
     }
 
     /**
@@ -370,15 +370,15 @@ class Diplome extends BaseEntity
      */
     public function getVolumeHoraire(): int
     {
-        return $this->volume_horaire;
+        return $this->volumeHoraire;
     }
 
     /**
-     * @param int $volume_horaire
+     * @param int $volumeHoraire
      */
-    public function setVolumeHoraire(int $volume_horaire): void
+    public function setVolumeHoraire(int $volumeHoraire): void
     {
-        $this->volume_horaire = $volume_horaire;
+        $this->volumeHoraire = $volumeHoraire;
     }
 
     /**
@@ -386,15 +386,15 @@ class Diplome extends BaseEntity
      */
     public function getCodeCelcatDepartement(): int
     {
-        return $this->code_celcat_departement;
+        return $this->codeCelcatDepartement;
     }
 
     /**
-     * @param int $code_celcat_departement
+     * @param int $codeCelcatDepartement
      */
-    public function setCodeCelcatDepartement(int $code_celcat_departement): void
+    public function setCodeCelcatDepartement(int $codeCelcatDepartement): void
     {
-        $this->code_celcat_departement = $code_celcat_departement;
+        $this->codeCelcatDepartement = $codeCelcatDepartement;
     }
 
     /**
@@ -459,5 +459,14 @@ class Diplome extends BaseEntity
         return $this;
     }
 
-
+    public function update($name, $value)
+    {
+        $t = explode('_', $name);
+        $name = $t[0];
+        $name[0] = \chr(\ord($name[0]) - 32);
+        $method = 'set' . $name;
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+        }
+    }
 }

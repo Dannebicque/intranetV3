@@ -78,6 +78,17 @@ class ProfilController extends Controller
     }
 
     /**
+     * @Route("/mon-profil/stages", name="profil_stages")
+     * @throws \LogicException
+     */
+    public function stages()
+    {
+        return $this->render('user/composants/stages.html.twig', [
+            'stages' => $this->getUser()->getAbsences()
+        ]);
+    }
+
+    /**
      * @Route("/mon-profil/about", name="profil_about")
      * @throws \LogicException
      */

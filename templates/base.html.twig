@@ -121,6 +121,12 @@
 <header class="topbar">
     <div class="topbar-left">
         <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip" title=""
+           data-original-title="{{ 'fullscreen'|trans }}">
+            <i class="material-icons fullscreen-default">fullscreen</i>
+            <i class="material-icons fullscreen-active">fullscreen_exit</i>
+        </a>
+
         <div class="dropdown d-none d-md-block">
             <span class="topbar-btn" data-toggle="dropdown"><i class="ti-layout-grid3-alt"></i></span>
             <div class="dropdown-menu dropdown-grid">
@@ -132,7 +138,7 @@
                     <span data-i8-icon="stack_of_photos"></span>
                     <span class="title">Trombinoscope</span>
                 </a>
-                <a class="dropdown-item" href="../page/search.html">
+                <a class="dropdown-item" href="#">
                     <span data-i8-icon="search"></span>
                     <span class="title">Search</span>
                 </a>
@@ -140,7 +146,7 @@
                     <span data-i8-icon="calendar"></span>
                     <span class="title">Agenda</span>
                 </a>
-                <a class="dropdown-item" href="../page-app/chat.html">
+                <a class="dropdown-item" href="#">
                     <span data-i8-icon="sms"></span>
                     <span class="title">Chat</span>
                 </a>
@@ -148,11 +154,11 @@
                     <span data-i8-icon="invite"></span>
                     <span class="title">Emails</span>
                 </a>
-                <a class="dropdown-item" href="../page-app/users.html">
+                <a class="dropdown-item" href="#">
                     <span data-i8-icon="contacts"></span>
                     <span class="title">Contacts</span>
                 </a>
-                <a class="dropdown-item" href="../widget/chart.html">
+                <a class="dropdown-item" href="">
                     <span data-i8-icon="bar_chart"></span>
                     <span class="title">Charts</span>
                 </a>
@@ -165,7 +171,8 @@
         <div class="topbar-divider d-none d-md-block"></div>
 
         <div class="lookup d-none d-md-block topbar-search" id="theadmin-search">
-            <input class="form-control w-300px" type="text">
+            <label for="searchbar"></label>
+            <input class="form-control w-300px" type="text" id="searchbar">
             <div class="lookup-placeholder">
                 <i class="ti-search"></i>
                 <span data-provide="typing"
@@ -179,8 +186,9 @@
 
             <ul class="topbar-btns">
                 <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown"><img class="avatar" src="../assets/img/avatar/1.jpg"
-                                                                         alt="..."></span>
+                    <span class="topbar-btn" data-toggle="dropdown"><img class="avatar"
+                                                                         src="{{ asset('assets/avatar/1.jpg') }}"
+                                                                         alt="Votre avatar"></span>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
                         <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
@@ -277,7 +285,7 @@
                              style="height: 290px">
                             <a class="media media-new" href="{{ path('messagerie_message',{message:1}) }}">
                   <span class="avatar status-success">
-                    <img src="../assets/img/avatar/1.jpg" alt="...">
+                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
                   </span>
 
                                 <div class="media-body">
@@ -289,9 +297,9 @@
                                 </div>
                             </a>
 
-                            <a class="media media-new" href="../page-app/mailbox-single.html">
+                            <a class="media media-new" href="{{ path('messagerie_message', {message:1}) }}">
                   <span class="avatar status-warning">
-                    <img src="../assets/img/avatar/2.jpg" alt="...">
+                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
                   </span>
 
                                 <div class="media-body">
@@ -303,9 +311,9 @@
                                 </div>
                             </a>
 
-                            <a class="media" href="../page-app/mailbox-single.html">
+                            <a class="media" href=".{{ path('messagerie_message', {message:1}) }}">
                   <span class="avatar status-dark">
-                    <img src="../assets/img/avatar/3.jpg" alt="...">
+                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
                   </span>
 
                                 <div class="media-body">
@@ -317,7 +325,7 @@
                                 </div>
                             </a>
 
-                            <a class="media" href="../page-app/mailbox-single.html">
+                            <a class="media" href="{{ path('messagerie_message', {message:1}) }}">
                                 <span class="avatar status-success bg-purple">FT</span>
 
                                 <div class="media-body">
@@ -329,9 +337,9 @@
                                 </div>
                             </a>
 
-                            <a class="media" href="../page-app/mailbox-single.html">
+                            <a class="media" href="{{ path('messagerie_message', {message:1}) }}">
                   <span class="avatar status-danger">
-                    <img src="../assets/img/avatar/4.jpg" alt="...">
+                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
                   </span>
 
                                 <div class="media-body">
@@ -343,9 +351,9 @@
                                 </div>
                             </a>
 
-                            <a class="media" href="../page-app/mailbox-single.html">
+                            <a class="media" href="{{ path('messagerie_message', {message:1}) }}">
                   <span class="avatar status-success">
-                    <img src="../assets/img/avatar/5.jpg" alt="...">
+                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
                   </span>
 
                                 <div class="media-body">

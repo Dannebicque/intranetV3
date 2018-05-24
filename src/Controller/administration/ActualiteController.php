@@ -5,14 +5,16 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Actualite;
 use App\Form\ActualiteType;
+use App\MesClasses\Csv\Csv;
 use App\Repository\ActualiteRepository;
+use Doctrine\ORM\AbstractQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/actualite")
+ * @Route("/administration/actualite")
  */
 class ActualiteController extends BaseController
 {
@@ -23,6 +25,27 @@ class ActualiteController extends BaseController
     {
         return $this->render('administration/actualite/index.html.twig',
             ['actualites' => $actualiteRepository->findAll()]);
+    }
+
+    /**
+     * @Route("/save", name="administration_actualite_save", methods="GET")
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     */
+    public function save(Csv $csv, ActualiteRepository $actualiteRepository): Response
+    {
+        $actualites = $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $csv->export('actualites.csv', $actualites, array('acutalite_administration'));
+
+        return $csv->response();
+    }
+
+    /**
+     * @Route("/imprimer", name="administration_actualite_print", methods="GET")
+     */
+    public function imprimer(): Response
+    {
+        //print (pdf)
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -81,7 +104,17 @@ class ActualiteController extends BaseController
      */
     public function delete(Request $request, Actualite $actualite): Response
     {
+        $id = $actualite->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($actualite);
+            $em->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -92,21 +125,5 @@ class ActualiteController extends BaseController
         return $this->render('administration/actualite/help.html.twig');
     }
 
-    /**
-     * @Route("/save", name="administration_actualite_save", methods="GET")
-     */
-    public function save(): Response
-    {
-        //save en csv
-        return new Response('', 200);
-    }
 
-    /**
-     * @Route("/imprimer", name="administration_actualite_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
-        return new Response('', 200);
-    }
 }

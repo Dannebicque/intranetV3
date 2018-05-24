@@ -43,7 +43,7 @@ class ArticleController extends BaseController
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -52,7 +52,7 @@ class ArticleController extends BaseController
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -65,7 +65,8 @@ class ArticleController extends BaseController
     public function create(Request $request): Response
     {
         $article = new Article($this->getUser());
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article,
+            ['formation' => $this->dataUserSession->getFormation()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -103,7 +104,8 @@ class ArticleController extends BaseController
      */
     public function edit(Request $request, Article $article): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article,
+            ['formation' => $this->dataUserSession->getFormation()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -121,8 +123,18 @@ class ArticleController extends BaseController
     /**
      * @Route("/{id}", name="administration_article_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Article $article): Response
     {
+        $id = $article->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($article);
+            $em->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

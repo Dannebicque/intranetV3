@@ -75,7 +75,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_destinataire_mail_releve'|trans }}</th>
-                <td>{{ semestre.optDestinataireMailReleve ? semestre.optDestinataireMailReleve.display : 'non.defini'|trans }}</td>
+                <td>{{ semestre.optDestMailReleve ? semestre.optDestMailReleve.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_evaluation_modifiable'|trans }}</th>
@@ -87,7 +87,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_destinataure_mail_modification_note'|trans }}</th>
-                <td>{{ semestre.optDestinataireMailModificationNote ? semestre.optDestinataireMailModificationNote.display : 'non.defini'|trans }}</td>
+                <td>{{ semestre.optDestMailModifNote ? semestre.optDestMailModifNote.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_evaluation_visible'|trans }}</th>
@@ -104,11 +104,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_mail_absence_responsable'|trans }}</th>
-                <td>{{ semestre.optMailAbsenceResponsable ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optMailAbsenceResp ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_destinataure_mail_absence_responsable'|trans }}</th>
-                <td>{{ semestre.optDestinataireMailAbsenceResponsable ? semestre.optDestinataireMailAbsenceResponsable.display : 'non.defini'|trans }}</td>
+                <td>{{ semestre.optMailAbsenceResp ? semestre.optMailAbsenceResp.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_mail_absence_etudiant'|trans }}</th>

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\MappedSuperclass
@@ -14,18 +15,21 @@ abstract class BaseEntity
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"acutalite_administration"})
      */
     private $id;
 
     /**
      * @var \DateTime $created
      * @ORM\Column(type="datetime")
+     * @Groups({"acutalite_administration"})
      */
     private $created;
 
     /**
      * @var \DateTime $updated
      * @ORM\Column(type="datetime")
+     * @Groups({"acutalite_administration"})
      */
     private $updated;
 

@@ -44,7 +44,7 @@ class DiplomeController extends Controller
     public function save(): Response
     {
         //save en csv
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -53,7 +53,7 @@ class DiplomeController extends Controller
     public function imprimer(): Response
     {
         //print (pdf)
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -63,7 +63,7 @@ class DiplomeController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function new(Request $request): Response
+    public function create(Request $request): Response
     {
         $diplome = new Diplome();
         $form = $this->createForm(DiplomeType::class, $diplome);
@@ -122,7 +122,7 @@ class DiplomeController extends Controller
     /**
      * @Route("/{id}", name="administration_structure_diplome_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Diplome $id): void
     {
 
     }

@@ -103,7 +103,7 @@ class UserController extends Controller
             $em->persist($fav);
             $em->flush();
 
-            return new Response('ok', 200);
+            return new Response('ok', Response::HTTP_OK);
         } elseif ($user && $action === 'false') {
             $fav = $favoriRepository->findBy(array(
                 'etudiantDemandeur' => $this->getUser()->getId(),
@@ -114,10 +114,10 @@ class UserController extends Controller
             }
             $em->flush();
 
-            return new Response('ok', 200);
+            return new Response('ok', Response::HTTP_OK);
 
         }
 
-        return new Response('nok', 500);
+        return new Response('nok', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

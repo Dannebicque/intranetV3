@@ -40,6 +40,11 @@ class Article extends BaseEntity
      */
     private $type;
 
+    //todo: remplacer par SINGLE_TABLE
+// @ORM\InheritanceType("SINGLE_TABLE")
+// @ORM\DiscriminatorColumn(name="class_type", type="string")
+// @ORM\DiscriminatorMap( {"article" = "Articles", "news" = "News", "ri" = "RI",  "c2i" = "C2I", "infos"= "Infos"} )
+
     /**
      * @var Formation
      * @ORM\ManyToOne(targetEntity="App\Entity\Formation")

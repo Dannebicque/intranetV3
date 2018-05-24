@@ -94,7 +94,7 @@ class HrsController extends BaseController
      */
     public function imprimer(): Response
     {
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -102,7 +102,7 @@ class HrsController extends BaseController
      */
     public function save(): Response
     {
-        return new Response('', 200);
+        return new Response('', Response::HTTP_OK);
     }
 
     /**
@@ -119,9 +119,19 @@ class HrsController extends BaseController
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_hrs_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Hrs $hrs): Response
     {
+        $id = $hrs->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($hrs);
+            $em->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
 

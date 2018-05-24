@@ -3,7 +3,7 @@
         <div class="col-sm-2">
             {{ include('messagerie/sidebar.html.twig') }}
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
 
 
             <div class="media-list media-list-divided media-list-hover" data-provide="selectall">
@@ -20,25 +20,11 @@
                         <div class="btn-group">
                             <button class="btn" title="Archive" data-provide="tooltip"><i class="fa fa-archive"></i>
                             </button>
-                            <button class="btn" title="Spam" data-provide="tooltip"><i
-                                        class="fa fa-exclamation-circle"></i></button>
                             <button class="btn" title="Trash" data-provide="tooltip"><i class="fa fa-trash"></i>
                             </button>
                         </div>
 
                         <span class="divider-line mx-1"></span>
-
-                        <div class="dropdown">
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Move to"
-                               data-provide="tooltip"><i class="fa fa-folder pr-1"></i></a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Important</a>
-                                <a class="dropdown-item" href="#">Social</a>
-                                <a class="dropdown-item" href="#">Bank Statements</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Create a folder</a>
-                            </div>
-                        </div>
 
                         <div class="dropdown">
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Labels"
@@ -79,7 +65,7 @@
                 </header>
 
 
-                <div class="media-list-body bg-white b-1">
+                <div class="media-list-body bg-white b-1" id="messages-liste">
                     <div class="media align-items-center">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input">
@@ -95,7 +81,7 @@
 
                         <a href="#"><img class="avatar" src="../assets/img/avatar/1.jpg" alt="..."></a>
 
-                        <a class="media-body text-truncate" href="mailbox-single.html">
+                        <a class="media-body text-truncate message-read" href="#" data-message="1">
                             <h6>Maryam Amiri</h6>
                             <small>
                                 <strong>Happy Christmas!</strong>
