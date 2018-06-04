@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning Annuel{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">Planning {{ annee }} / {{ annee+1 }}</h4>
+            <div class="card-header-actions" style="">
+
+                <span>
+                    {% for semestre in user_data.semestres %}
+                        <a href="#" class="btn btn-sm btn btn-info"> {{ semestre.libelle }}</a>
+                    {% endfor %}
+                    <a href="#" class="btn btn-sm btn btn-info"> Enseignant</a>
+                </span>
+
+                <span>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Soutenance(s)</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Projet(s)</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Stage(s)</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Jury/Commission(s)</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Réunion(s)/conseils</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Rentrée(s)</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-success"> Autre(s)</a>
+                </span>
+            </div>
+        </header>
+        <div class="card-body">
+
+            <table class="table table-bordered" id="planning">
+                <thead>
+                <tr>
+                    <th colspan="4">Septembre</th>
+                    <th colspan="4">Octobre</th>
+                    <th colspan="4">Novembre</th>
+                    <th colspan="4">Décembre</th>
+                    <th colspan="4">Janvier</th>
+                    <th colspan="4">Février</th>
+                    <th colspan="4">Mars</th>
+                    <th colspan="4">Avril</th>
+                    <th colspan="4">Mai</th>
+                    <th colspan="4">Juin</th>
+                    <th colspan="4">Juillet</th>
+                    <th colspan="4">Août</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in 1..31 %}
+                    <tr>
+                        {% for j in 1..12 %}
+                            {% if tabPlanning[j][i] is defined %}
+                                {% set we = tabPlanning[j][i]|date('N') == 6 or tabPlanning[j][i]|date('N') == 7 %}
+                                {% if tabPlanning[j][i]|date('N') == 1 %}
+                                    {% if tabFinMois[j]-i >6 %}
+                                        <td rowspan="7">{{ tabPlanning[j][i]|date('W') }}</td>
+                                    {% else %}
+                                        <td rowspan="{{ tabFinMois[j] - i + 1 }}">{{ tabPlanning[j][i]|date('W') }}</td>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if i == 1 and tabPlanning[j][i]|date('N') != 1 %}
+                                    <td rowspan="{{ 8 - tabPlanning[j][i]|date('N') }}">{{ tabPlanning[j][i]|date('W') }}</td>
+                                {% endif %}
+
+                                <td {{ we ? 'style="background-color: #00AAAA"' }}>{{ tabJour[tabPlanning[j][i]|date('N')] }}</td>
+                                <td {{ we ? 'style="background-color: #00AAAA"' }}>{{ tabPlanning[j][i]|date('d') }}</td>
+                                <td
+                                        {% if tabPlanning[j][i]|date('Y-m-d') in tabFerie %}
+                                        style="background-color: orangered">
+                                    Férié
+                                    {% else %}
+                                        >{% if events[tabPlanning[j][i]|date('Y-m-d')] is defined %}
+                                        {% for event in events[tabPlanning[j][i]|date('Y-m-d')] %}
+                                            <span class="event">{{ event.libelle }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td colspan="4">&nbsp;</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
