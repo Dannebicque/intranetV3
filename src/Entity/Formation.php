@@ -171,11 +171,17 @@ class Formation extends BaseEntity
      */
     private $actualites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="formation")
+     */
+    private $trelloTaches;
+
     public function __construct()
     {
         $this->typeDocuments = new ArrayCollection();
         $this->personnelFormations = new ArrayCollection();
         $this->actualites = new ArrayCollection();
+        $this->trelloTaches = new ArrayCollection();
     }
 
     /**
@@ -611,5 +617,36 @@ class Formation extends BaseEntity
             $this->$method($value);
             //dump($this->$method2());
         }
+    }
+
+    /**
+     * @return Collection|TrelloTache[]
+     */
+    public function getTrelloTaches(): Collection
+    {
+        return $this->trelloTaches;
+    }
+
+    public function addTrelloTach(TrelloTache $trelloTach): self
+    {
+        if (!$this->trelloTaches->contains($trelloTach)) {
+            $this->trelloTaches[] = $trelloTach;
+            $trelloTach->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrelloTach(TrelloTache $trelloTach): self
+    {
+        if ($this->trelloTaches->contains($trelloTach)) {
+            $this->trelloTaches->removeElement($trelloTach);
+            // set the owning side to null (unless already changed)
+            if ($trelloTach->getFormation() === $this) {
+                $trelloTach->setFormation(null);
+            }
+        }
+
+        return $this;
     }
 }

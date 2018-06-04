@@ -12,13 +12,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Date extends BaseEntity
 {
+    public const TYPE_STAGE = 'type.stage';
+    public const TYPE_SOUTENANCE = 'type.soutenance';
+    public const TYPE_PROJET = 'type.projet';
+    public const TYPE_AUTRE = 'type.autre';
+    public const TYPE_COMMISSION = 'type.commission';
+    public const TYPE_REUNION = 'type.reunion';
+    public const TYPE_RENTREE = 'type.rentree';
+
+    public const QUI_ETUDIANT = 'E';
+    public const QUI_PERSONNEL = 'P';
+
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    private $libelle;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $texte;
 
@@ -27,28 +38,28 @@ class Date extends BaseEntity
      *
      * @ORM\Column(type="date")
      */
-    private $date_debut;
+    private $dateDebut;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      */
-    private $heure_debut;
+    private $heureDebut;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="date")
      */
-    private $date_fin;
+    private $dateFin;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      */
-    private $heure_fin;
+    private $heureFin;
 
     /**
      * @var string
@@ -69,7 +80,7 @@ class Date extends BaseEntity
      *
      * @ORM\Column(type="string", length=1)
      */
-    private $qui = 'E'; //ou P si uniquement prof
+    private $qui;
 
     /**
      * @var Formation
@@ -83,19 +94,37 @@ class Date extends BaseEntity
      */
     private $semestres;
 
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
     }
 
-    public function getTitre(): ?string
+    public static function getTypeList(): array
     {
-        return $this->titre;
+        return array(
+            self::TYPE_AUTRE,
+            self::TYPE_COMMISSION,
+            self::TYPE_PROJET,
+            self::TYPE_REUNION,
+            self::TYPE_SOUTENANCE,
+            self::TYPE_STAGE,
+            self::TYPE_RENTREE,
+        );
     }
 
-    public function setTitre(string $titre): self
+    public function getLibelle(): ?string
     {
-        $this->titre = $titre;
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
 
         return $this;
     }
@@ -117,15 +146,15 @@ class Date extends BaseEntity
      */
     public function getDateDebut(): ?\DateTime
     {
-        return $this->date_debut;
+        return $this->dateDebut;
     }
 
     /**
-     * @param \DateTime $date_debut
+     * @param \DateTime $dateDebut
      */
-    public function setDateDebut(\DateTime $date_debut): void
+    public function setDateDebut(\DateTime $dateDebut): void
     {
-        $this->date_debut = $date_debut;
+        $this->dateDebut = $dateDebut;
     }
 
     /**
@@ -133,15 +162,15 @@ class Date extends BaseEntity
      */
     public function getHeureDebut(): ?\DateTime
     {
-        return $this->heure_debut;
+        return $this->heureDebut;
     }
 
     /**
-     * @param \DateTime $heure_debut
+     * @param \DateTime $heureDebut
      */
-    public function setHeureDebut(\DateTime $heure_debut): void
+    public function setHeureDebut(\DateTime $heureDebut): void
     {
-        $this->heure_debut = $heure_debut;
+        $this->heureDebut = $heureDebut;
     }
 
     /**
@@ -149,15 +178,15 @@ class Date extends BaseEntity
      */
     public function getDateFin(): ?\DateTime
     {
-        return $this->date_fin;
+        return $this->dateFin;
     }
 
     /**
-     * @param \DateTime $date_fin
+     * @param \DateTime $dateFin
      */
-    public function setDateFin(\DateTime $date_fin): void
+    public function setDateFin(\DateTime $dateFin): void
     {
-        $this->date_fin = $date_fin;
+        $this->dateFin = $dateFin;
     }
 
     /**
@@ -165,15 +194,15 @@ class Date extends BaseEntity
      */
     public function getHeureFin(): ?\DateTime
     {
-        return $this->heure_fin;
+        return $this->heureFin;
     }
 
     /**
-     * @param \DateTime $heure_fin
+     * @param \DateTime $heureFin
      */
-    public function setHeureFin(\DateTime $heure_fin): void
+    public function setHeureFin(\DateTime $heureFin): void
     {
-        $this->heure_fin = $heure_fin;
+        $this->heureFin = $heureFin;
     }
 
     /**
@@ -262,6 +291,18 @@ class Date extends BaseEntity
         if ($this->semestres->contains($semestre)) {
             $this->semestres->removeElement($semestre);
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

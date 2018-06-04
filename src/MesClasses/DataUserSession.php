@@ -15,6 +15,7 @@ use App\Entity\Semestre;
 use App\Repository\AnneeRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\FormationRepository;
+use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -51,14 +52,21 @@ class DataUserSession
 
     /** @var SemestreRepository */
     protected $semestreRepository;
+
     /** @var AnneeRepository */
     protected $anneeRepository;
+
     /** @var DiplomeRepository */
     protected $diplomeRepository;
+
     /** @var PersonnelRepository */
     protected $personnelRepository;
+
     /** @var FormationRepository */
     protected $formationRepository;
+
+    /** @var NotificationRepository */
+    protected $notificationRepository;
 
     public function __construct(
         SemestreRepository $semestreRepository,
@@ -66,6 +74,7 @@ class DataUserSession
         DiplomeRepository $diplomeRepository,
         PersonnelRepository $personnelRepository,
         FormationRepository $formationRepository,
+        NotificationRepository $notificationRepository,
         TokenStorageInterface $user
     ) {
         $this->semestreRepository = $semestreRepository;
@@ -73,6 +82,7 @@ class DataUserSession
         $this->diplomeRepository = $diplomeRepository;
         $this->personnelRepository = $personnelRepository;
         $this->formationRepository = $formationRepository;
+        $this->notificationRepository = $notificationRepository;
 
         $this->user = $user;
         $this->semestres = $semestreRepository->findAll(); //todo à filter selon la formation
@@ -129,5 +139,12 @@ class DataUserSession
     public function getPersonnels()
     {
         return $this->personnelRepository->findByFormation($this->formation->getId());
+    }
+
+    /**
+     */
+    public function getNotifications()
+    {
+        return $this->getUser()->getNotifications();
     }
 }

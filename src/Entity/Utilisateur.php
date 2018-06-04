@@ -23,7 +23,7 @@ abstract class Utilisateur implements UserInterface
      *
      * @ORM\Column(type="string")
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -536,8 +536,13 @@ abstract class Utilisateur implements UserInterface
         $this->roles = json_encode($roles);
     }
 
-    public function getDisplay() : string
+    public function getDisplayPr(): string
     {
         return ucfirst($this->prenom). ' ' . mb_strtoupper($this->nom);
+    }
+
+    public function getDisplay(): string
+    {
+        return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
     }
 }

@@ -2166,5 +2166,191 @@
               <target>label.dateRetour</target>
           </segment>
       </unit>
+      <unit id="X_zrZv." name="0">
+          <segment>
+              <source>0</source>
+              <target>0</target>
+          </segment>
+      </unit>
+      <unit id="a4ayc.8" name="1">
+          <segment>
+              <source>1</source>
+              <target>1</target>
+          </segment>
+      </unit>
+      <unit id="1HNeOiZ" name="2">
+          <segment>
+              <source>2</source>
+              <target>2</target>
+          </segment>
+      </unit>
+      <unit id="TgdAhWK" name="3">
+          <segment>
+              <source>3</source>
+              <target>3</target>
+          </segment>
+      </unit>
+      <unit id="SyJ3d9T" name="4">
+          <segment>
+              <source>4</source>
+              <target>4</target>
+          </segment>
+      </unit>
+      <unit id="7y0SfeN" name="5">
+          <segment>
+              <source>5</source>
+              <target>5</target>
+          </segment>
+      </unit>
+      <unit id="5.bAEXd" name="6">
+          <segment>
+              <source>6</source>
+              <target>6</target>
+          </segment>
+      </unit>
+      <unit id="eQJpm_Q" name="7">
+          <segment>
+              <source>7</source>
+              <target>7</target>
+          </segment>
+      </unit>
+      <unit id="LGJCMs3" name="8">
+          <segment>
+              <source>8</source>
+              <target>8</target>
+          </segment>
+      </unit>
+      <unit id="GVgeJ95" name="9">
+          <segment>
+              <source>9</source>
+              <target>9</target>
+          </segment>
+      </unit>
+      <unit id="SkTcFTZ" name="10">
+          <segment>
+              <source>10</source>
+              <target>10</target>
+          </segment>
+      </unit>
+      <unit id="T8grJq7" name="11">
+          <segment>
+              <source>11</source>
+              <target>11</target>
+          </segment>
+      </unit>
+      <unit id="a1HUMd9" name="12">
+          <segment>
+              <source>12</source>
+              <target>12</target>
+          </segment>
+      </unit>
+      <unit id="P9ujXwT" name="13">
+          <segment>
+              <source>13</source>
+              <target>13</target>
+          </segment>
+      </unit>
+      <unit id="hSeokeI" name="14">
+          <segment>
+              <source>14</source>
+              <target>14</target>
+          </segment>
+      </unit>
+      <unit id="5in6ZZj" name="15">
+          <segment>
+              <source>15</source>
+              <target>15</target>
+          </segment>
+      </unit>
+      <unit id="sX720Zx" name="16">
+          <segment>
+              <source>16</source>
+              <target>16</target>
+          </segment>
+      </unit>
+      <unit id="RSNUDxU" name="17">
+          <segment>
+              <source>17</source>
+              <target>17</target>
+          </segment>
+      </unit>
+      <unit id="TslZn8I" name="18">
+          <segment>
+              <source>18</source>
+              <target>18</target>
+          </segment>
+      </unit>
+      <unit id="lADxshy" name="19">
+          <segment>
+              <source>19</source>
+              <target>19</target>
+          </segment>
+      </unit>
+      <unit id="qST5V0I" name="label.deadline">
+          <segment>
+              <source>label.deadline</source>
+              <target>label.deadline</target>
+          </segment>
+      </unit>
+      <unit id="XaKOhGf" name="label.typedate">
+          <segment>
+              <source>label.typedate</source>
+              <target>label.typedate</target>
+          </segment>
+      </unit>
+      <unit id="qfUVZr1" name="E">
+          <segment>
+              <source>E</source>
+              <target>Etudiant</target>
+          </segment>
+      </unit>
+      <unit id="XGLgkbj" name="P">
+          <segment>
+              <source>P</source>
+              <target>Personnel</target>
+          </segment>
+      </unit>
+      <unit id="rLcFIjF" name="type.stage">
+          <segment>
+              <source>type.stage</source>
+              <target>Stage</target>
+          </segment>
+      </unit>
+      <unit id="Rj5Nz06" name="type.soutenance">
+          <segment>
+              <source>type.soutenance</source>
+              <target>Soutenance</target>
+          </segment>
+      </unit>
+      <unit id="fx213z." name="type.reunion">
+          <segment>
+              <source>type.reunion</source>
+              <target>Réunion ou Conseil</target>
+          </segment>
+      </unit>
+      <unit id="GxuC8rZ" name="type.projet">
+          <segment>
+              <source>type.projet</source>
+              <target>Projets</target>
+          </segment>
+      </unit>
+      <unit id="WvrwPr2" name="type.commission">
+          <segment>
+              <source>type.commission</source>
+              <target>Commission ou Jury</target>
+          </segment>
+      </unit>
+      <unit id="PAfMs44" name="type.autre">
+          <segment>
+              <source>type.autre</source>
+              <target>Autre</target>
+          </segment>
+      </unit>
+      <unit id="gH0TA96" name="type.rentree">
+          <segment>
+              <source>type.rentree</source>
+              <target>type.rentree</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

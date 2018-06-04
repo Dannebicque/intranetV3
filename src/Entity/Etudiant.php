@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EtudiantRepository")
  */
-class Etudiant extends Utilisateur
+class Etudiant extends Utilisateur implements \Serializable
 {
     /**
      * @ORM\Id()
@@ -83,7 +83,7 @@ class Etudiant extends Utilisateur
     private $scolarites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="destinataire")
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="etudiant")
      */
     private $notifications;
 
@@ -316,7 +316,7 @@ class Etudiant extends Utilisateur
     {
         if (!$this->etudiantDemandeur->contains($etudiantDemandeur)) {
             $this->etudiantDemandeur[] = $etudiantDemandeur;
-            $etudiantDemandeur->setEtudiantDemand�e($this);
+            $etudiantDemandeur->setEtudiantDemande($this);
         }
 
         return $this;
@@ -327,8 +327,8 @@ class Etudiant extends Utilisateur
         if ($this->etudiantDemandeur->contains($etudiantDemandeur)) {
             $this->etudiantDemandeur->removeElement($etudiantDemandeur);
             // set the owning side to null (unless already changed)
-            if ($etudiantDemandeur->getEtudiantDemand�e() === $this) {
-                $etudiantDemandeur->setEtudiantDemand�e(null);
+            if ($etudiantDemandeur->getEtudiantDemande() === $this) {
+                $etudiantDemandeur->setEtudiantDemande(null);
             }
         }
 
@@ -378,7 +378,7 @@ class Etudiant extends Utilisateur
     {
         if (!$this->notifications->contains($notification)) {
             $this->notifications[] = $notification;
-            $notification->setDestinataire($this);
+            $notification->setEtudiant($this);
         }
 
         return $this;
@@ -389,13 +389,49 @@ class Etudiant extends Utilisateur
         if ($this->notifications->contains($notification)) {
             $this->notifications->removeElement($notification);
             // set the owning side to null (unless already changed)
-            if ($notification->getDestinataire() === $this) {
-                $notification->setDestinataire(null);
+            if ($notification->getEtudiant() === $this) {
+                $notification->setEtudiant(null);
             }
         }
 
         return $this;
     }
 
+    /**
+     * String representation of object
+     * @link  http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        // Ajouté pour le problème de connexion avec le usernametoken
+        return serialize(array(
+            $this->id,
+            $this->password,
+            $this->username
+        ));
+    }
+
+    /**
+     * Constructs the object
+     * @link  http://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param string $serialized <p>
+     *                           The string representation of the object.
+     *                           </p>
+     *
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        // Ajouté pour le problème de connexion avec le usernametoken
+        list(
+            $this->id,
+            $this->password,
+            $this->username
+            ) = unserialize($serialized);
+    }
 
 }

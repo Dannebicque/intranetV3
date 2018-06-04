@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">Opération à 30 jours ...</h4>
+            <div class="card-header-actions" style="">
+                <span>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-yellow"> FM</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-brown"> DA</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-cyan"> PG</a>
+                        <a href="#" class="btn btn-sm btn-flat btn btn-pink"> MM</a>
+                </span>
+            </div>
+        </header>
+        <div class="card-body">
+            <table class="table table-bordered" id="calendar">
+                <thead>
+                <tr>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                    <th>Samedi</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set ind = 0 %}
+                {% for i in 1..5 %}
+                    <tr style="height: 160px">
+                        {% for j in 1..6 %}
+                            <td data-date="{{ calendrier[ind] is defined ? calendrier[ind]|date('d/m/Y') : 'euh' }}"
+                                style="
+                                {% if calendrier[ind] is defined and calendrier[ind]|date('d/m/Y') == 'now'|date('d/m/Y') %}
+                                        background-color: lightyellow;
+                                {% endif %}
+                                        width:20%"
+                            >
+                                <span class="badge badge-default pull-right">{{ calendrier[ind] is defined ? calendrier[ind]|date('d') : 'euh' }}</span>
+                            </td>
+                            {% set ind = ind + 1 %}
+                            {% if j == 6 %}
+                                {% set ind = ind + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+

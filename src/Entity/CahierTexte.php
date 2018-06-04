@@ -27,11 +27,6 @@ class CahierTexte extends BaseEntity
     private $dateRetour;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="cahierTextes")
-     */
-    private $semestre;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="cahierTextes")
      */
     private $personnel;
@@ -41,9 +36,20 @@ class CahierTexte extends BaseEntity
      */
     private $fichiers;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="cahierTextes")
+     */
+    private $semestre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
+     */
+    private $matiere;
+
     public function __construct()
     {
         $this->fichiers = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -82,18 +88,6 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
-
-        return $this;
-    }
-
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
@@ -128,6 +122,30 @@ class CahierTexte extends BaseEntity
         if ($this->fichiers->contains($fichier)) {
             $this->fichiers->removeElement($fichier);
         }
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    public function getMatiere(): ?Matiere
+    {
+        return $this->matiere;
+    }
+
+    public function setMatiere(?Matiere $matiere): self
+    {
+        $this->matiere = $matiere;
 
         return $this;
     }

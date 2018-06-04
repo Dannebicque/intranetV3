@@ -20,7 +20,19 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
+
+            <a href="{{ path('administration_absences_semestre_liste_print', {semestre:semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.imprimer_pdf'|trans }}"><i class="ti-printer"></i></a>
+            <a href="{{ path('administration_absences_semestre_liste_csv', {semestre:semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.save_csv'|trans }}"><i class="ti-save"></i></a>
+            <a href="{{ path('administration_absences_semestre_liste_excel', {semestre:semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.save_xls'|trans }}"><i class="fa fa-table"></i></a>
+
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
@@ -34,7 +46,8 @@
             <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
                 <thead>
                 <tr>
-                    <th>Etudiant</th> {# todo: absence a la demi-journée ou au module ... faire une option par année ? semestre ? #}
+                    <th>Etudiant
+                    </th> {# todo: absence a la demi-journée ou au module ... faire une option par année ? semestre ? #}
                     <th>Nb cours manqués</th>
                     <th>Total durée</th>
                     <th>Nb non justifiées</th>
@@ -46,9 +59,13 @@
                 {% for etudiant in absences.etudiants %}
                     <tr>
                         <td>{{ etudiant.display }}</td>
-                        <td>{{ absences.statistiques[etudiant.id].nbCoursManques }}</td>
+                        <td>
+                            <span class="{{ absences.statistiques[etudiant.id].nbCoursManques|badge }}">{{ absences.statistiques[etudiant.id].nbCoursManques }}</span>
+                        </td>
                         <td>{{ absences.statistiques[etudiant.id].totalDuree|localizeddate('none', 'short', app.request.getLocale()) }}</td>
-                        <td>{{ absences.statistiques[etudiant.id].nbNonJustifie }}</td>
+                        <td>
+                            <span class="{{ absences.statistiques[etudiant.id].nbNonJustifie|badge }}">{{ absences.statistiques[etudiant.id].nbNonJustifie }}</span>
+                        </td>
                         <td>{{ absences.statistiques[etudiant.id].nbJustifie }}</td>
                         <td>
                             <a href="{{ path('user_profil', {type: 'etudiant', 'slug': etudiant.slug}) }}"
@@ -62,3 +79,4 @@
         </div>
     </div>
 {% endblock %}
+

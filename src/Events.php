@@ -19,5 +19,7 @@ class Events
      *
      * @var string
      */
-    const USER_REGISTERED = 'user.registered';
+    const NOTE_ADDED = 'note.added';
+    const ABSENCE_ADDED = 'absence.added';
+    const CARNET_ADDED = 'carnet.added';
 }

@@ -20,7 +20,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
@@ -29,5 +30,42 @@
 {% endblock %}
 
 {% block content %}
+    <div class="card">
+        <h4 class="card-title">Selectionnez un étudiant</h4>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="justifier_etudiant" class="form-control-label required">Choisir l'étudiant</label>
+                <!--suppress Annotator -->
+                <select id="justifier_etudiant" name="justifier_etudiant" required="required"
+                        class="form-control" data-provide="selectpicker" data-live-search="true">
+                    <option value="">Choisir</option>
+                    {% for etudiant in semestre.etudiants %}
+                        <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
 
+    <div class="card">
+        <h4 class="card-title">Selectionnez un étudiant</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" id="tableJustifier" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Module</th>
+                    <th>Justifier</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="5">Selectionner un étudiant</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

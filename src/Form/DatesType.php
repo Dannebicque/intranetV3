@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Date;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class DatesType extends AbstractType
 {
@@ -22,11 +24,12 @@ class DatesType extends AbstractType
         $this->formation = $options['formation'];
 
         $builder
-            ->add('titre', TextType::class, [
+            ->add('libelle', TextType::class, [
                 'label' => 'label.titre_date',
             ])
             ->add('texte', TextType::class, [
-                'label' => 'label.texte_date',
+                'label'    => 'label.texte_date',
+                'required' => false
             ])
             ->add('dateDebut', DateType::class, ['widget' => 'single_text', 'label' => 'label.date_debut'])
             ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_debut'])
@@ -35,11 +38,31 @@ class DatesType extends AbstractType
             ->add('lieu', TextType::class, [
                 'label' => 'label.lieu_date',
             ])
-            ->add('allday', TextType::class, [
-                'label' => 'label.allday',
+            ->add('allday', ChoiceType::class, [
+                'label'                     => 'label.allday',
+                'choices'                   => ['choice.oui' => true, 'choice.non' => true],
+                'choice_translation_domain' => 'form',
+                'expanded'                  => true,
             ])
-            ->add('qui', TextType::class, [
-                'label' => 'label.qui_concerne',
+            ->add('qui', ChoiceType::class, [
+                'label'    => 'label.qui_concerne',
+                'expanded' => true,
+                'multiple' => false,
+                'choices'  => [Date::QUI_ETUDIANT => Date::QUI_ETUDIANT, Date::QUI_PERSONNEL => Date::QUI_PERSONNEL]
+            ])
+            ->add('type', ChoiceType::class, [
+                'label'    => 'label.typedate',
+                'expanded' => true,
+                'multiple' => false,
+                'choices'  => [
+                    Date::TYPE_STAGE      => Date::TYPE_STAGE,
+                    Date::TYPE_SOUTENANCE => Date::TYPE_SOUTENANCE,
+                    Date::TYPE_REUNION    => Date::TYPE_REUNION,
+                    Date::TYPE_PROJET     => Date::TYPE_PROJET,
+                    Date::TYPE_COMMISSION => Date::TYPE_COMMISSION,
+                    Date::TYPE_AUTRE      => Date::TYPE_AUTRE,
+                    Date::TYPE_RENTREE    => Date::TYPE_RENTREE
+                ]
             ])
             ->add('semestres', EntityType::class, array(
                 'class'         => Semestre::class,

@@ -22,7 +22,7 @@ class Ue extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $numero_ue = 1;
+    private $numeroUe = 1;
 
     /**
      * @var float
@@ -36,37 +36,37 @@ class Ue extends BaseEntity
      *
      * @ORM\Column(type="float")
      */
-    private $nb_ects = 1;
+    private $nbEcts = 1;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $code_apogee;
+    private $codeApogee;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_version;
+    private $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_departement;
-
-    /**
-     * @var Semestre
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
-     */
-    private $semestre;
+    private $codeDepartement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ue")
      */
     private $matieres;
 
-    public function __construct()
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="ues")
+     */
+    private $semestre;
+
+    public function __construct(Semestre $semestre)
     {
         $this->matieres = new ArrayCollection();
+        $this->semestre = $semestre;
     }
 
     /**
@@ -74,15 +74,15 @@ class Ue extends BaseEntity
      */
     public function getCodeApogee()
     {
-        return $this->code_apogee;
+        return $this->codeApogee;
     }
 
     /**
-     * @param mixed $code_apogee
+     * @param mixed $codeApogee
      */
-    public function setCodeApogee($code_apogee): void
+    public function setCodeApogee($codeApogee): void
     {
-        $this->code_apogee = $code_apogee;
+        $this->codeApogee = $codeApogee;
     }
 
     /**
@@ -90,15 +90,15 @@ class Ue extends BaseEntity
      */
     public function getCodeVersion()
     {
-        return $this->code_version;
+        return $this->codeVersion;
     }
 
     /**
-     * @param mixed $code_version
+     * @param mixed $codeVersion
      */
-    public function setCodeVersion($code_version): void
+    public function setCodeVersion($codeVersion): void
     {
-        $this->code_version = $code_version;
+        $this->codeVersion = $codeVersion;
     }
 
     /**
@@ -106,32 +106,17 @@ class Ue extends BaseEntity
      */
     public function getCodeDepartement()
     {
-        return $this->code_departement;
+        return $this->codeDepartement;
     }
 
     /**
-     * @param mixed $code_departement
+     * @param mixed $codeDepartement
      */
-    public function setCodeDepartement($code_departement): void
+    public function setCodeDepartement($codeDepartement): void
     {
-        $this->code_departement = $code_departement;
+        $this->codeDepartement = $codeDepartement;
     }
 
-    /**
-     * @return Semestre
-     */
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    /**
-     * @param Semestre $semestre
-     */
-    public function setSemestre(Semestre $semestre): void
-    {
-        $this->semestre = $semestre;
-    }
 
     /**
      * @return mixed
@@ -154,15 +139,15 @@ class Ue extends BaseEntity
      */
     public function getNumeroUe(): int
     {
-        return $this->numero_ue;
+        return $this->numeroUe;
     }
 
     /**
-     * @param int $numero_ue
+     * @param int $numeroUe
      */
-    public function setNumeroUe(int $numero_ue): void
+    public function setNumeroUe(int $numeroUe): void
     {
-        $this->numero_ue = $numero_ue;
+        $this->numeroUe = $numeroUe;
     }
 
     /**
@@ -186,15 +171,15 @@ class Ue extends BaseEntity
      */
     public function getNbEcts(): float
     {
-        return $this->nb_ects;
+        return $this->nbEcts;
     }
 
     /**
-     * @param float $nb_ects
+     * @param float $nbEcts
      */
-    public function setNbEcts(float $nb_ects): void
+    public function setNbEcts(float $nbEcts): void
     {
-        $this->nb_ects = $nb_ects;
+        $this->nbEcts = $nbEcts;
     }
 
     /**
@@ -236,6 +221,18 @@ class Ue extends BaseEntity
                 $matiere->setUe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
 
         return $this;
     }

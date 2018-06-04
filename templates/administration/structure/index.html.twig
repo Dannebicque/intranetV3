@@ -99,6 +99,30 @@
                             </div>
                         </div>
 
+                        {% for ue in semestre.ues %}
+                            <div class="row gap-y ue_{{ semestre.id }} deroulant">
+                                <div class="col-md-5"></div>
+                                <div class="col-md-5">{{ ue.libelle }} | {{ ue.codeApogee }}</div>
+                                <div class="col-md-2">
+                                    <a href="{{ path('administration_structure_ue_show', {'id': ue.id}) }}"
+                                       class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                                class="ti-eye"></i></a>
+
+                                    <a href="{{ path('administration_structure_ue_edit', {'id': ue.id}) }}"
+                                       class="btn btn-warning btn-outline btn-square"><i class="ti-pencil"
+                                                                                         data-provide="tooltip"
+                                                                                         data-placement="bottom"
+                                                                                         title="{{ 'atitle.modifier'|trans }}"></i></a>
+                                    <a href="{{ path('administration_structure_ue_delete', {id: ue.id}) }}"
+                                       data-csrf="{{ csrf_token('delete' ~ ue.id) }}"
+                                       class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i
+                                                class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                                title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                                </div>
+                            </div>
+
+                        {% endfor %}
                         <div class="row gap-y deroulant" id="ue_new_{{ semestre.id }}">
                             <div class="col-md-4"></div>
 
@@ -109,29 +133,6 @@
                                     semestre {{ semestre.libelle }}</button>
                             </div>
                         </div>
-                        {#
-                                                        {% for u in t.ue if u.semestre==semestre and u.option==NULL %}
-
-                                                            <tr class="UE_{{ semestre.id }} deroulant">
-                                                                <td>&nbsp;</td>
-                                                                <td>&nbsp;</td>
-                                                                <td>&nbsp;</td>
-                                                                <td>&nbsp;</td>
-                                                                <td colspan="2">{{ u.numeroue }} | {{ u.nomue }}
-                                                                    | {{ u.codeetape }}</td>
-                                                                <td>
-                                                                    <a href="{{ path('da_kernel_administration_structure_modif_ue',{id:u.id}) }}"
-                                                                       class="btn btn-warning" rel="tooltip" data-placement="left"
-                                                                       title=" Modifier "><i class="fa fa-pencil"></i></a>
-
-                                                                    <a href="#modalConfirm" data-toggle="modal" id="UE-{{ u.id }}"
-                                                                       class="btn  btn-danger supprimer" rel="tooltip"
-                                                                       data-placement="right" title="Supprimer l'UE"><i
-                                                                                class="fa fa-times"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        {% endfor %}
-
                                                         {# options #}
                         {#
                                 {% for opt in t.options if opt.semestre==semestre %}

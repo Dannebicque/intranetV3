@@ -43,3 +43,17 @@ $(document).on('click', '.message-read', function (e) {
 
   $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: 1}));
 })
+
+$(document).on('click', '#marquerNotificationsRead', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  $.ajax({
+    url: Routing.generate('notification_marquer_lu'),
+    success: function (e) {
+
+      $('.notification').removeClass('media-new')
+    }
+  })
+})
+

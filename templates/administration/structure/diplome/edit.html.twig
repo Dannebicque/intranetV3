@@ -6,7 +6,7 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-edit.html.twig', {elt:'structure_diplome', id: diplome.id}) }}
+        {{ include('composants/adm-buttons-edit.html.twig', {elt:'structure_diplome', id: diplome.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
     </div>
 {% endblock %}
 

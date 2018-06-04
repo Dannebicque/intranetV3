@@ -1238,30 +1238,9 @@
       </segment>
     </unit>
     <unit id="KTcBPyG" name="update">
-      <notes>
-          <note category="file-source" priority="1">templates/administration/hrs/edit.html.twig:18</note>
-        <note category="file-source" priority="1">templates/administration/matiere/edit.html.twig:18</note>
-          <note category="file-source" priority="1">templates/administration/actualite/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/date/edit.html.twig:18</note>
-        <note category="file-source" priority="1">templates/administration/document/edit.html.twig:18</note>
-          <note category="file-source" priority="1">templates/administration/borne/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/type_document/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/article/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/ppn/edit.html.twig:18</note>
-        <note category="file-source" priority="1">templates/administration/structure/diplome/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/structure/formation/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/structure/annee/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/structure/ue/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/structure/semestre/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/administration/personnel/edit.html.twig:18</note>
-        <note category="file-source" priority="1">templates/super-administration/ufr/edit.html.twig:18</note>
-        <note category="file-source" priority="1">templates/super-administration/type_hrs/edit.html.twig:20</note>
-        <note category="file-source" priority="1">templates/super-administration/site/edit.html.twig:17</note>
-        <note category="file-source" priority="1">templates/super-administration/type_diplome/edit.html.twig:18</note>
-      </notes>
       <segment>
         <source>update</source>
-        <target>Modifier</target>
+          <target>Actualiser</target>
       </segment>
     </unit>
     <unit id="DtiM0c8" name="adm.matiere.new.heading">
@@ -4552,7 +4531,7 @@
       <unit id="tYrlfM1" name="fullscreen">
           <segment>
               <source>fullscreen</source>
-              <target>Fullscreen</target>
+              <target>Mode plein écran</target>
           </segment>
       </unit>
       <unit id="Zi9ravp" name="structure.de.la.formation.heading">
@@ -4637,6 +4616,222 @@
           <segment>
               <source>application.vos.stages.heading</source>
               <target>application.vos.stages.heading</target>
+          </segment>
+      </unit>
+      <unit id="Y.5RNI5" name="marquer.tout.comme.lu">
+          <segment>
+              <source>marquer.tout.comme.lu</source>
+              <target>Marquer tout comme lu</target>
+          </segment>
+      </unit>
+      <unit id="j4.aCWQ" name="lire.toutes.les.notifications">
+          <segment>
+              <source>lire.toutes.les.notifications</source>
+              <target>Lire toutes les notifications</target>
+          </segment>
+      </unit>
+      <unit id="iD.p7Q8" name="notification.heading">
+          <segment>
+              <source>notification.heading</source>
+              <target>Notifications</target>
+          </segment>
+      </unit>
+      <unit id="r5U7efi" name="carnet.added">
+          <segment>
+              <source>carnet.added</source>
+              <target>Nouveau travail à rendre</target>
+          </segment>
+      </unit>
+      <unit id="eSMqodH" name="sauvegarder.csv">
+          <segment>
+              <source>sauvegarder.csv</source>
+              <target>sauvegarder.csv</target>
+          </segment>
+      </unit>
+      <unit id="kpcCPpA" name="sauvegarder.cls">
+          <segment>
+              <source>sauvegarder.cls</source>
+              <target>sauvegarder.cls</target>
+          </segment>
+      </unit>
+      <unit id="VTvMZKD" name="atitle.imprimer_pdf">
+          <segment>
+              <source>atitle.imprimer_pdf</source>
+              <target>atitle.imprimer_pdf</target>
+          </segment>
+      </unit>
+      <unit id="Yrx94lC" name="atitle.save_csv">
+          <segment>
+              <source>atitle.save_csv</source>
+              <target>atitle.save_csv</target>
+          </segment>
+      </unit>
+      <unit id="c3wRyXd" name="atitle.save_xls">
+          <segment>
+              <source>atitle.save_xls</source>
+              <target>atitle.save_xls</target>
+          </segment>
+      </unit>
+      <unit id="9.Tojv_" name="adm.competences">
+          <segment>
+              <source>adm.competences</source>
+              <target>adm.competences</target>
+          </segment>
+      </unit>
+      <unit id="g7m.v5Z" name="adm.gerer.les.competences">
+          <segment>
+              <source>adm.gerer.les.competences</source>
+              <target>adm.gerer.les.competences</target>
+          </segment>
+      </unit>
+      <unit id="IG.IBXe" name="adm.analyser.competences">
+          <segment>
+              <source>adm.analyser.competences</source>
+              <target>adm.analyser.competences</target>
+          </segment>
+      </unit>
+      <unit id="OTZyRZ4" name="adm.competence.index.heading">
+          <segment>
+              <source>adm.competence.index.heading</source>
+              <target>adm.competence.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="sA0TbFu" name="table.code">
+          <segment>
+              <source>table.code</source>
+              <target>table.code</target>
+          </segment>
+      </unit>
+      <unit id="uN3JiTu" name="message.666">
+          <segment>
+              <source>message.666</source>
+              <target>Il semblerait que tu essaies d'accéder à des endroits non autorisés.</target>
+          </segment>
+      </unit>
+      <unit id="9tPrHXS" name="titre.666">
+          <segment>
+              <source>titre.666</source>
+              <target>Hey Hey, Petit Malin ...</target>
+          </segment>
+      </unit>
+      <unit id="u.E97nf" name="report.problem">
+          <segment>
+              <source>report.problem</source>
+              <target>Report problem</target>
+          </segment>
+      </unit>
+      <unit id="juZKEFt" name="retour.666">
+          <segment>
+              <source>retour.666</source>
+              <target>Retourner sur le bon chemin</target>
+          </segment>
+      </unit>
+      <unit id="D7e52Zf" name="titre.500">
+          <segment>
+              <source>titre.500</source>
+              <target>Internal server error</target>
+          </segment>
+      </unit>
+      <unit id="L94aaaX" name="message.500">
+          <segment>
+              <source>message.500</source>
+              <target>Looks like we have an internal issue, please try again in couple of minutes.</target>
+          </segment>
+      </unit>
+      <unit id=".1bab79" name="return.home">
+          <segment>
+              <source>return.home</source>
+              <target>Return home</target>
+          </segment>
+      </unit>
+      <unit id="DaT9Aks" name="titre.404">
+          <segment>
+              <source>titre.404</source>
+              <target>Page not found!</target>
+          </segment>
+      </unit>
+      <unit id=".bTe5UN" name="message.404">
+          <segment>
+              <source>message.404</source>
+              <target>Seems you're looking for something that doesn't exist.</target>
+          </segment>
+      </unit>
+      <unit id="CF5MkYs" name="sans.objet">
+          <segment>
+              <source>sans.objet</source>
+              <target>sans.objet</target>
+          </segment>
+      </unit>
+      <unit id="UroHAgP" name="adm.trello_tache.index.heading">
+          <segment>
+              <source>adm.trello_tache.index.heading</source>
+              <target>adm.trello_tache.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="Tyklssl" name="table.deadline">
+          <segment>
+              <source>table.deadline</source>
+              <target>table.deadline</target>
+          </segment>
+      </unit>
+      <unit id="9pj4gtw" name="table.membres">
+          <segment>
+              <source>table.membres</source>
+              <target>table.membres</target>
+          </segment>
+      </unit>
+      <unit id="Ia1yK6F" name="adm.trello_tache.new.heading">
+          <segment>
+              <source>adm.trello_tache.new.heading</source>
+              <target>adm.trello_tache.new.heading</target>
+          </segment>
+      </unit>
+      <unit id="eBYIVfJ" name="table.dateDebut">
+          <segment>
+              <source>table.dateDebut</source>
+              <target>table.dateDebut</target>
+          </segment>
+      </unit>
+      <unit id="Lg84Xx4" name="table.heureDebut">
+          <segment>
+              <source>table.heureDebut</source>
+              <target>table.heureDebut</target>
+          </segment>
+      </unit>
+      <unit id="Dzh1vQ2" name="table.lieu">
+          <segment>
+              <source>table.lieu</source>
+              <target>table.lieu</target>
+          </segment>
+      </unit>
+      <unit id="mZirDiY" name="atitle.dupliquer">
+          <segment>
+              <source>atitle.dupliquer</source>
+              <target>atitle.dupliquer</target>
+          </segment>
+      </unit>
+      <unit id="afwY1gn" name="table.date_evenement">
+          <segment>
+              <source>table.date_evenement</source>
+              <target>table.date_evenement</target>
+          </segment>
+      </unit>
+      <unit id="ixE4DZO" name="table.heure_event">
+          <segment>
+              <source>table.heure_event</source>
+              <target>table.heure_event</target>
+          </segment>
+      </unit>
+      <unit id="GMkDxbS" name="table.type_event">
+          <segment>
+              <source>table.type_event</source>
+              <target>table.type_event</target>
+          </segment>
+      </unit>
+      <unit id="bBljpfn" name="table.au">
+          <segment>
+              <source>table.au</source>
+              <target>table.au</target>
           </segment>
       </unit>
   </file>

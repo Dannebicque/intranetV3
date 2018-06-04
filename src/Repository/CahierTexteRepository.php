@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CahierTexte;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -24,6 +25,16 @@ class CahierTexteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.personnel = :personnel')
             ->setParameter('personnel', $getId)
+            ->orderBy('c.dateRetour', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemestre(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.semestre = :semestre')
+            ->setParameter('semestre', $semestre->getId())
             ->orderBy('c.dateRetour', 'DESC')
             ->getQuery()
             ->getResult();

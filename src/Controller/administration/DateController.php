@@ -121,4 +121,39 @@ class DateController extends BaseController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_date_duplicate", methods="GET")
+     * @param Date $date
+     *
+     * @return Response
+     */
+    public function duplicate(Date $date): Response
+    {
+        $newDate = clone $date;
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newDate);
+        $em->flush();
+
+        return $this->redirectToRoute('administration_date_edit', ['id' => $newDate->getId()]);
+
+    }
+
+    /**
+     * @Route("/{id}", name="administration_date_delete", methods="DELETE")
+     */
+    public function delete(Request $request, Date $date): Response
+    {
+        $id = $date->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($date);
+            $em->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
 }

@@ -5817,5 +5817,35 @@
               <target></target>
           </segment>
       </unit>
+      <unit id="0">
+          <segment>
+              <source>titre.500</source>
+              <target>Internal server error</target>
+          </segment>
+      </unit>
+      <unit id="1">
+          <segment>
+              <source>message.500</source>
+              <target>Looks like we have an internal issue, please try again in couple of minutes.</target>
+          </segment>
+      </unit>
+      <unit id="2">
+          <segment>
+              <source>return.home</source>
+              <target>Return home</target>
+          </segment>
+      </unit>
+      <unit id="3">
+          <segment>
+              <source>titre.404</source>
+              <target>Page not found!</target>
+          </segment>
+      </unit>
+      <unit id="4">
+          <segment>
+              <source>message.404</source>
+              <target>Seems you're looking for something that doesn't exist.</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

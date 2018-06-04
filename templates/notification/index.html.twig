@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'notification.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'notification.heading'|trans }}
+        </h4>
+        {# todo: finaliser mise en page et gérer les "a lire" des "lu" #}
+        <div class="card-body">
+            <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                {% for notification in notifications %}
+                    <li class="timeline-block">
+                        <div class="timeline-point timeline-point-{{ notification.color }}">
+                            <span class="badge badge-ring badge-{{ notification.color }}"></span>
+                        </div>
+                        <div class="timeline-content">
+                            <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
+                            <p><a href="{{ notification.url }}"><i
+                                            class="{{ notification.icone }}"></i> {{ notification.type|trans }}</a></p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+{% endblock %}

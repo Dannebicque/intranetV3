@@ -9,10 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Notification extends BaseEntity
 {
+    public const ETUDIANT = 'e';
+    public const PERSONNEL = 'p';
+
+    public const TABICONE = array('carnet.added' => 'ti-bookmark-alt');
+    public const TABCOLOR = array('carnet.added' => 'warning');
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")
      */
-    private $destinataire;
+    private $etudiant;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -29,14 +35,24 @@ class Notification extends BaseEntity
      */
     private $lu = false;
 
-    public function getDestinataire(): ?Etudiant
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $typeUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="notifications")
+     */
+    private $personnel;
+
+    public function getEtudiant(): ?Etudiant
     {
-        return $this->destinataire;
+        return $this->etudiant;
     }
 
-    public function setDestinataire(?Etudiant $destinataire): self
+    public function setEtudiant(?Etudiant $etudiant): self
     {
-        $this->destinataire = $destinataire;
+        $this->etudiant = $etudiant;
 
         return $this;
     }
@@ -75,5 +91,47 @@ class Notification extends BaseEntity
         $this->lu = $lu;
 
         return $this;
+    }
+
+    public function getTypeUser(): ?string
+    {
+        return $this->typeUser;
+    }
+
+    public function setTypeUser(string $typeUser): self
+    {
+        $this->typeUser = $typeUser;
+
+        return $this;
+    }
+
+    public function getDateTexte()
+    {
+        //calculer la date à partir de maintenant
+        return 'just now,,,';
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): self
+    {
+        $this->personnel = $personnel;
+
+        return $this;
+    }
+
+    public function icone()
+    {
+
+        return Notification::TABICONE[$this->type];
+    }
+
+    public function color()
+    {
+
+        return Notification::TABCOLOR[$this->type];
     }
 }

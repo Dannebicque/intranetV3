@@ -15,6 +15,15 @@ class Constantes
     public const ROLE_DDE = 'role.dde';
     public const ROLE_ASS = 'role.ass';
 
+    public const  TIMEBEFORE_NOW = 'now';
+    public const  TIMEBEFORE_MINUTE = '{num} minute ago';
+    public const  TIMEBEFORE_MINUTES = '{num} minutes ago';
+    public const  TIMEBEFORE_HOUR = '{num} hour ago';
+    public const  TIMEBEFORE_HOURS = '{num} hours ago';
+    public const  TIMEBEFORE_YESTERDAY = 'yesterday';
+    public const  TIMEBEFORE_FORMAT = '%e %b';
+    public const  TIMEBEFORE_FORMAT_YEAR = '%e %b, %Y';
+
     public static function getRoleList(): array
     {
         return array(

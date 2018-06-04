@@ -130,10 +130,16 @@ class Diplome extends BaseEntity
      */
     private $ppns;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Competence", mappedBy="diplome")
+     */
+    private $competences;
+
     public function __construct()
     {
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
+        $this->competences = new ArrayCollection();
     }
 
     public function getCodeApogee(): ?string
@@ -468,5 +474,36 @@ class Diplome extends BaseEntity
         if (method_exists($this, $method)) {
             $this->$method($value);
         }
+    }
+
+    /**
+     * @return Collection|Competence[]
+     */
+    public function getCompetences(): Collection
+    {
+        return $this->competences;
+    }
+
+    public function addCompetence(Competence $competence): self
+    {
+        if (!$this->competences->contains($competence)) {
+            $this->competences[] = $competence;
+            $competence->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompetence(Competence $competence): self
+    {
+        if ($this->competences->contains($competence)) {
+            $this->competences->removeElement($competence);
+            // set the owning side to null (unless already changed)
+            if ($competence->getDiplome() === $this) {
+                $competence->setDiplome(null);
+            }
+        }
+
+        return $this;
     }
 }

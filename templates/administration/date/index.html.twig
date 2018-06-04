@@ -19,7 +19,10 @@
                 <tr>
                     <th>{{ 'table.id'|trans }}</th>
                     <th>{{ 'table.titre'|trans }}</th>
-                    <th>{{ 'table.texte'|trans }}</th>
+                    <th>{{ 'table.dateDebut'|trans }}</th>
+                    <th>{{ 'table.heureDebut'|trans }}</th>
+                    <th>{{ 'table.lieu'|trans }}</th>
+                    <th>{{ 'table.semestres'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -27,9 +30,15 @@
                 {% for date in dates %}
                     <tr>
                         <td>{{ date.id }}</td>
-                        <td>{{ date.titre }}</td>
-                        <td>{{ date.texte }}</td>
+                        <td>{{ date.libelle }}</td>
+                        <td>{{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+                        <td>{{ date.heureDebut ? date.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ date.lieu }}</td>
+                        <td>Semestre</td>
                         <td>
+                            <a href="{{ path('administration_date_duplicate', {'id': date.id}) }}"
+                               class="btn btn-success btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="fa fa-copy"></i></a>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt:'date', id:date.id}) }}
                         </td>
                     </tr>

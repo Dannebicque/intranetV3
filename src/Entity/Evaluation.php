@@ -17,12 +17,12 @@ class Evaluation extends BaseEntity
     private $matiere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="evaluations_auteur")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAuteur")
      */
     private $personnel_auteur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="evaluations_autorise")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAutorise")
      */
     private $personnel_autorise;
 

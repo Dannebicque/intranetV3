@@ -30,13 +30,13 @@ class Personnel extends Utilisateur // implements SerializerInterface
      * @ORM\Column(type="string", length=10,nullable=true)
      *
      */
-    protected $poste_interne;
+    protected $posteInterne;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
      *
      */
-    protected $tel_bureau;
+    protected $telBureau;
 
     /**
      * @ORM\Column(type="text",nullable=true)
@@ -72,7 +72,7 @@ class Personnel extends Utilisateur // implements SerializerInterface
      * @ORM\Column(type="integer",nullable=true)
      *
      */
-    protected $numero_harpege;
+    protected $numeroHarpege;
 
     /**
      * @ORM\Column(type="string",length=10,nullable=true)
@@ -99,12 +99,12 @@ class Personnel extends Utilisateur // implements SerializerInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnel_auteur")
      */
-    private $evaluations_auteur;
+    private $evaluationsAuteur;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnel_autorise")
      */
-    private $evaluations_autorise;
+    private $evaluationsAutorise;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ModificationNote", mappedBy="personnel")
@@ -126,16 +126,29 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     private $cahierTextes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="personnel")
+     * @ORM\OrderBy({"created" = "DESC"})
+     */
+    private $notifications;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\TrelloTache", mappedBy="personnels")
+     */
+    private $trelloTaches;
+
 
 
     public function __construct()
     {
         $this->hrs = new ArrayCollection();
         $this->previsionnels = new ArrayCollection();
-        $this->evaluations_auteur = new ArrayCollection();
-        $this->evaluations_autorise = new ArrayCollection();
+        $this->evaluationsAuteur = new ArrayCollection();
+        $this->evaluationsAutorise = new ArrayCollection();
         $this->modificationNotes = new ArrayCollection();
         $this->cahierTextes = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->trelloTaches = new ArrayCollection();
         //$this->personnelFormations = new ArrayCollection();
     }
 
@@ -167,15 +180,15 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     public function getPosteInterne()
     {
-        return $this->poste_interne;
+        return $this->posteInterne;
     }
 
     /**
-     * @param mixed $poste_interne
+     * @param mixed $posteInterne
      */
-    public function setPosteInterne($poste_interne): void
+    public function setPosteInterne($posteInterne): void
     {
-        $this->poste_interne = $poste_interne;
+        $this->posteInterne = $posteInterne;
     }
 
     /**
@@ -183,15 +196,15 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     public function getTelBureau()
     {
-        return $this->tel_bureau;
+        return $this->telBureau;
     }
 
     /**
-     * @param mixed $tel_bureau
+     * @param mixed $telBureau
      */
-    public function setTelBureau($tel_bureau): void
+    public function setTelBureau($telBureau): void
     {
-        $this->tel_bureau = $tel_bureau;
+        $this->telBureau = $telBureau;
     }
 
     /**
@@ -279,15 +292,15 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     public function getNumeroHarpege()
     {
-        return $this->numero_harpege;
+        return $this->numeroHarpege;
     }
 
     /**
-     * @param mixed $numero_harpege
+     * @param mixed $numeroHarpege
      */
-    public function setNumeroHarpege($numero_harpege): void
+    public function setNumeroHarpege($numeroHarpege): void
     {
-        $this->numero_harpege = $numero_harpege;
+        $this->numeroHarpege = $numeroHarpege;
     }
 
     /**
@@ -389,13 +402,13 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     public function getEvaluationsAuteur(): Collection
     {
-        return $this->evaluations_auteur;
+        return $this->evaluationsAuteur;
     }
 
     public function addEvaluationsAuteur(Evaluation $evaluationsAuteur): self
     {
-        if (!$this->evaluations_auteur->contains($evaluationsAuteur)) {
-            $this->evaluations_auteur[] = $evaluationsAuteur;
+        if (!$this->evaluationsAuteur->contains($evaluationsAuteur)) {
+            $this->evaluationsAuteur[] = $evaluationsAuteur;
             $evaluationsAuteur->setPersonnelAuteur($this);
         }
 
@@ -404,8 +417,8 @@ class Personnel extends Utilisateur // implements SerializerInterface
 
     public function removeEvaluationsAuteur(Evaluation $evaluationsAuteur): self
     {
-        if ($this->evaluations_auteur->contains($evaluationsAuteur)) {
-            $this->evaluations_auteur->removeElement($evaluationsAuteur);
+        if ($this->evaluationsAuteur->contains($evaluationsAuteur)) {
+            $this->evaluationsAuteur->removeElement($evaluationsAuteur);
             // set the owning side to null (unless already changed)
             if ($evaluationsAuteur->getPersonnelAuteur() === $this) {
                 $evaluationsAuteur->setPersonnelAuteur(null);
@@ -420,13 +433,13 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     public function getEvaluationsAutorise(): Collection
     {
-        return $this->evaluations_autorise;
+        return $this->evaluationsAutorise;
     }
 
     public function addEvaluationsAutorise(Evaluation $evaluationsAutorise): self
     {
-        if (!$this->evaluations_autorise->contains($evaluationsAutorise)) {
-            $this->evaluations_autorise[] = $evaluationsAutorise;
+        if (!$this->evaluationsAutorise->contains($evaluationsAutorise)) {
+            $this->evaluationsAutorise[] = $evaluationsAutorise;
             $evaluationsAutorise->addPersonnelAutorise($this);
         }
 
@@ -435,8 +448,8 @@ class Personnel extends Utilisateur // implements SerializerInterface
 
     public function removeEvaluationsAutorise(Evaluation $evaluationsAutorise): self
     {
-        if ($this->evaluations_autorise->contains($evaluationsAutorise)) {
-            $this->evaluations_autorise->removeElement($evaluationsAutorise);
+        if ($this->evaluationsAutorise->contains($evaluationsAutorise)) {
+            $this->evaluationsAutorise->removeElement($evaluationsAutorise);
             $evaluationsAutorise->removePersonnelAutorise($this);
         }
 
@@ -512,6 +525,65 @@ class Personnel extends Utilisateur // implements SerializerInterface
             if ($cahierTexte->getPersonnel() === $this) {
                 $cahierTexte->setPersonnel(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            // set the owning side to null (unless already changed)
+            if ($notification->getPersonnel() === $this) {
+                $notification->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrelloTache[]
+     */
+    public function getTrelloTaches(): Collection
+    {
+        return $this->trelloTaches;
+    }
+
+    public function addTrelloTach(TrelloTache $trelloTach): self
+    {
+        if (!$this->trelloTaches->contains($trelloTach)) {
+            $this->trelloTaches[] = $trelloTach;
+            $trelloTach->addPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrelloTach(TrelloTache $trelloTach): self
+    {
+        if ($this->trelloTaches->contains($trelloTach)) {
+            $this->trelloTaches->removeElement($trelloTach);
+            $trelloTach->removePersonnel($this);
         }
 
         return $this;

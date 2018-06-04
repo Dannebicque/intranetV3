@@ -30,13 +30,14 @@ class UeType extends AbstractType
             ->add('code_version', TextType::class, ['label' => 'label.code_version'])
             ->add('code_departement', TextType::class, ['label' => 'label.code_departement'])
             ->add('semestre', EntityType::class, [
-                'class' => Semestre::class,
-                'required' => false,
-                'choice_label' => 'display',
+                'class'         => Semestre::class,
+                'required'      => true,
+                'choice_label'  => 'display',
                 'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
-                'label' => 'label.semestre'
+                'label'         => 'label.semestre',
+                'expanded'      => true
 
             ])
         ;

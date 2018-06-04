@@ -6,7 +6,7 @@
 
 {%block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-new.html.twig', {elt: 'structure_formation'}) }}
+        {{ include('composants/adm-buttons-new.html.twig', {elt: 'structure_formation', retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
     </div>
 {% endblock %}
 

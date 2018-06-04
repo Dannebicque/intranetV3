@@ -28,12 +28,47 @@ class DateRepository extends ServiceEntityRepository
             ->leftJoin('d.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
-            ->andWhere('p.formation = :formation')
+            ->where('p.formation = :formation')
             ->setParameter('formation', $formation)
-            ->orderBy('d.date_debut', 'DESC')
+            ->orderBy('d.dateDebut', 'DESC')
             ->setMaxResults($nbResult)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByFormationPlanning($formation, $annee)
+    {
+        $datedebut = new \DateTime($annee . '-09-01');
+        $annee2 = $annee + 1;
+        $datefin = new \DateTime($annee2 . '-08-31');
+
+        $query = $this->createQueryBuilder('d')
+            ->leftJoin('d.semestres', 's')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
+            ->where('p.formation = :formation')
+            ->andWhere('d.dateDebut >= :datedebut')
+            ->andWhere('d.dateDebut <= :datefin')
+            ->setParameter('formation', $formation)
+            ->setParameter('datedebut', $datedebut)
+            ->setParameter('datefin', $datefin)
+            ->orderBy('d.dateDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $tab = array();
+
+        /** @var Date $event */
+        foreach ($query as $event) {
+            $key = $event->getDateDebut()->format('Y-m-d');
+            if (!array_key_exists($key, $tab)) {
+                $tab[$key] = array();
+            }
+            $tab[$key][] = $event;
+            //si sur plusieurs jours, faire une boucle pour remplir le tableau
+        }
+
+        return $tab;
     }
 
 

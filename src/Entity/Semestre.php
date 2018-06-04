@@ -219,6 +219,11 @@ class Semestre extends BaseEntity
      */
     private $cahierTextes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ue", mappedBy="semestre")
+     */
+    private $ues;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -228,6 +233,7 @@ class Semestre extends BaseEntity
         $this->options = new ArrayCollection();
         $this->bornes = new ArrayCollection();
         $this->cahierTextes = new ArrayCollection();
+        $this->ues = new ArrayCollection();
     }
 
     /**
@@ -631,7 +637,7 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @return mixed
+     * @return Etudiant[]
      */
     public function getEtudiants()
     {
@@ -870,6 +876,37 @@ class Semestre extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($cahierTexte->getSemestre() === $this) {
                 $cahierTexte->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ue[]
+     */
+    public function getUes(): Collection
+    {
+        return $this->ues;
+    }
+
+    public function addUe(Ue $ue): self
+    {
+        if (!$this->ues->contains($ue)) {
+            $this->ues[] = $ue;
+            $ue->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUe(Ue $ue): self
+    {
+        if ($this->ues->contains($ue)) {
+            $this->ues->removeElement($ue);
+            // set the owning side to null (unless already changed)
+            if ($ue->getSemestre() === $this) {
+                $ue->setSemestre(null);
             }
         }
 

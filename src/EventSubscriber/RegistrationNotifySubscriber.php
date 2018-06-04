@@ -2,10 +2,15 @@
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
 
-use App\Entity\User;
+use App\Entity\Etudiant;
+use App\Entity\Notification;
+use App\Entity\Semestre;
 use App\Events;
+use App\Repository\EtudiantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur
@@ -13,39 +18,67 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  */
 class RegistrationNotifySubscriber implements EventSubscriberInterface
 {
-    /* private $mailer;
-     private $sender;
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
-     public function __construct(\Swift_Mailer $mailer, $sender)
-     {
-         // On injecte notre expediteur et la classe pour envoyer des mails
-         $this->mailer = $mailer;
-         $this->sender = $sender;
-     }
- */
+    /** @var RouterInterface */
+    private $router;
+
+    /**
+     * @var EtudiantRepository
+     */
+    private $etudiantRepository;
+
+    /**
+     * RegistrationNotifySubscriber constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        RouterInterface $router,
+        EtudiantRepository $etudiantRepository
+    ) {
+        $this->entityManager = $entityManager;
+        $this->router = $router;
+        $this->etudiantRepository = $etudiantRepository;
+    }
+
+
     public static function getSubscribedEvents(): array
     {
         return [
             // le nom de l'event et le nom de la fonction qui sera déclenché
             //Events::USER_REGISTERED => 'onUserRegistrated',
+            Events::NOTE_ADDED => 'onNoteAdded',
+            Events::ABSENCE_ADDED => 'onAbsenceAdded',
+            Events::CARNET_ADDED => 'onCarnetAdded',
         ];
     }
-    /*
-        public function onUserRegistrated(GenericEvent $event): void
-        {
-            /** @var User $user */
-    /*   $user = $event->getSubject();
 
-       $subject = "Bienvenue";
-       $body = "Bienvenue mon ami.e sur ce tutorial";
+    public function onCarnetAdded(GenericEvent $event): void
+    {
+        $cahier = $event->getSubject();
+        /** @var Etudiant $etudiant */
+        foreach ($cahier->getSemestre()->getEtudiants() as $etudiant) {
+            $notif = new Notification();
+            $notif->setEtudiant($etudiant);
+            $notif->setTypeUser(Notification::ETUDIANT);
+            $notif->setType(Events::CARNET_ADDED);
+            $notif->setUrl($this->router->generate('application_etudiant_carnet_show', ['id' => $cahier->getId()]));
+            $this->entityManager->persist($notif);
+        }
 
-       $message = (new \Swift_Message())
-           ->setSubject($subject)
-           ->setTo($user->getEmail())
-           ->setFrom($this->sender)
-           ->setBody($body, 'text/html')
-       ;
+        $this->entityManager->flush();
+    }
 
-       $this->mailer->send($message);
-    }*/
+    public function onNoteAdded(GenericEvent $event): void
+    {
+
+    }
+
+    public function onAbsenceAdded(GenericEvent $event): void
+    {
+
+    }
 }

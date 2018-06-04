@@ -4,10 +4,13 @@ namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
 use App\Entity\CahierTexte;
+use App\Events;
 use App\Form\CahierTexteType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\CahierTexteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,7 +59,7 @@ class CarnetController extends BaseController
     /**
      * @Route("/new", name="application_personnel_carnet_new", methods="GET|POST")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
         $cahierTexte = new CahierTexte();
         $cahierTexte->setPersonnel($this->getUser());
@@ -68,6 +71,10 @@ class CarnetController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($cahierTexte);
             $em->flush();
+
+            //On déclenche l'event
+            $event = new GenericEvent($cahierTexte);
+            $eventDispatcher->dispatch(Events::CARNET_ADDED, $event);
 
             return $this->redirectToRoute('application_index', ['onglet' => 'carnet']);
         }

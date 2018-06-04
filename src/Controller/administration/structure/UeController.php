@@ -3,6 +3,7 @@
 namespace App\Controller\administration\structure;
 
 use App\Entity\Diplome;
+use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
 use App\Repository\UeRepository;
@@ -26,6 +27,7 @@ class UeController extends Controller
      */
     public function index(UeRepository $ueRepository): Response
     {
+        //todo: page sans sens...
         return $this->render('administration/structure/ue/index.html.twig', ['ues' => $ueRepository->findAll()]);
     }
 
@@ -56,17 +58,16 @@ class UeController extends Controller
     }
 
     /**
-     * @Route("/new/{diplome}", name="administration_structure_ue_new", methods="GET|POST")
+     * @Route("/new/{semestre}", name="administration_structure_ue_new", methods="GET|POST")
      * @param Request $request
-     * @param Diplome $diplome
      *
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request, Diplome $diplome): Response
+    public function create(Request $request, Semestre $semestre): Response
     {
-        $ue = new Ue();
-        $form = $this->createForm(UeType::class, $ue, ['diplome' => $diplome]);
+        $ue = new Ue($semestre);
+        $form = $this->createForm(UeType::class, $ue, ['diplome' => $semestre->getAnnee()->getDiplome()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
