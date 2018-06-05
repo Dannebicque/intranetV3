@@ -4834,5 +4834,35 @@
               <target>table.au</target>
           </segment>
       </unit>
+      <unit id="aJeZjfq" name="password_lost">
+          <segment>
+              <source>password_lost</source>
+              <target>Recover password</target>
+          </segment>
+      </unit>
+      <unit id="Vahn3TJ" name="email.address">
+          <segment>
+              <source>email.address</source>
+              <target>Email address</target>
+          </segment>
+      </unit>
+      <unit id="Ab4wu0o" name="reset">
+          <segment>
+              <source>reset</source>
+              <target>Reset</target>
+          </segment>
+      </unit>
+      <unit id="DAMFhpR" name="lock">
+          <segment>
+              <source>lock</source>
+              <target>lock</target>
+          </segment>
+      </unit>
+      <unit id="Y6FfBVj" name="actualite.liste.heading">
+          <segment>
+              <source>actualite.liste.heading</source>
+              <target>actualite.liste.heading</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

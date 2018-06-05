@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'actualite.liste.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'actualite.liste.heading'|trans }}</h4>
+        <div class="card-body">
+            {% for actualite in actualites %}
+                {{ actualite.titre }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

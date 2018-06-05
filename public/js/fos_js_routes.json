@@ -1,0 +1,127 @@
+{
+  "base_url": "",
+  "routes": {
+    "typedocument_ajax": {
+      "tokens": [
+        [
+          "text",
+          "\/document\/ajax\/typedocument"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale"
+        ]
+      ],
+      "defaults": {
+        "_locale": null
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "document_ajax": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "typedocument"
+        ],
+        [
+          "text",
+          "\/document\/ajax\/document"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale"
+        ]
+      ],
+      "defaults": {
+        "_locale": null
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "user_profil": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "slug"
+        ],
+        [
+          "text",
+          "\/user"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale"
+        ]
+      ],
+      "defaults": {
+        "_locale": null
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "api_etudiants_semestre": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre"
+        ],
+        [
+          "text",
+          "\/api\/user\/etudiants"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "api_enseignants_type": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "type"
+        ],
+        [
+          "text",
+          "\/api\/user\/enseignants"
+        ]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    }
+  },
+  "prefix": "",
+  "host": "localhost",
+  "scheme": "http"
+}

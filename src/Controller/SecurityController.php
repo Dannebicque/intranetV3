@@ -52,6 +52,22 @@ class SecurityController extends Controller
     }
 
     /**
+     * @Route("/password-lost", name="security_password_lost")
+     */
+    public function passwordLost(Request $request): Response
+    {
+        $submittedToken = $request->request->get('token');
+
+        if ($request->isMethod('POST') && $this->isCsrfTokenValid('password-lost', $submittedToken)) {
+
+            //todo: password-lost : token + mail
+            return $this->render('security/passwordLostConfirm.html.twig');
+        }
+
+        return $this->render('security/passwordLost.html.twig');
+    }
+
+    /**
      * @Route("/lock", name="security_lock")
      * @param Request $request
      *

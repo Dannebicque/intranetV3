@@ -10,6 +10,7 @@
                 <div class="col-md-10 col-lg-8 align-self-end">
                     <img src="{{ asset('assets/logo/logo-light-lg.png') }}" alt="Logo Intranet">
                     <br><br><br>
+                    {# todo: citation aléatoire ... #}
                     <h4 class="text-white">The admin is the best admin framework available online.</h4>
                     <p class="text-white">Credibly transition sticky users after backward-compatible web services. Compellingly strategize team building interfaces.</p>
                     <br><br>
@@ -25,7 +26,7 @@
                 <div>
                     <img class="avatar avatar-xxl" src="../assets/img/avatar/2.jpg" alt="...">
                     <br><br>
-                    <h5 class="lead">{{ user_data.user.display }}</h5>
+                    <h5 class="lead">{{ user_data.user.displayPr }}</h5>
                     <small>{{ 'saisir.password.lock'|trans }}</small>
                 </div>
 
@@ -41,7 +42,8 @@
                     <button class="btn btn-bold btn-block btn-primary" type="submit">{{ 'security.login.connexion'|trans }}</button>
                 </form>
 
-                <p class="text-center text-muted fs-13 mt-20">{{ 'vous.netes.pas'|trans }} {{ user_data.user.display }} ? <a class="text-primary fw-500" href="#">{{ 'connectez.vous'|trans }}</a></p>
+                <p class="text-center text-muted fs-13 mt-20">{{ 'vous.netes.pas'|trans }} {{ user_data.user.displayPr }}
+                    ? <a class="text-primary fw-500" href="#">{{ 'connectez.vous'|trans }}</a></p>
             </div>
         </div>
     </div>

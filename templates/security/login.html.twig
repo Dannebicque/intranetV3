@@ -33,7 +33,8 @@
                     <label class="custom-control-label">{{ 'security.login.remenber-me'|trans }}</label>
                 </div>
 
-                <a class="text-muted hover-primary fs-13" href="#">{{ 'security.login.forgot-password'|trans }}</a>
+                <a class="text-muted hover-primary fs-13"
+                   href="{{ path('security_password_lost') }}">{{ 'security.login.forgot-password'|trans }}</a>
             </div>
 
             <div class="form-group">

@@ -21,7 +21,7 @@ node_modules/
 package-lock.json
 public/index.php
 
-public/sources/assets/vendor/
+
 public/upload/
 symfony.lock
 translations/VichUploaderBundle.fr.xlf
