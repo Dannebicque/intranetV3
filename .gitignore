@@ -17,7 +17,6 @@
 bin/
 composer.lock
 
-gruntfile.js
 node_modules/
 package-lock.json
 public/index.php
