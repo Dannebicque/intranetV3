@@ -3,16 +3,24 @@
 namespace App\Form;
 
 use App\Entity\Annee;
+use App\Entity\Diplome;
+use App\Repository\DiplomeRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AnneeType extends AbstractType
 {
+    protected $formation;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->formation = $options['formation'];
+
         $builder
             ->add('libelle', TextType::class, [
                 'label' => 'label.libelle'
@@ -20,38 +28,48 @@ class AnneeType extends AbstractType
             ->add('libelle_long', TextType::class, [
                 'label' => 'label.libelle_long'
             ])
-            ->add('code_apogee', TextType::class, [
+            ->add('diplome', EntityType::class, [
+                'class'         => Diplome::class,
+                'required'      => true,
+                'choice_label'  => 'libelle',
+                'expanded'      => true,
+                'query_builder' => function (DiplomeRepository $diplomeRepository) {
+                    return $diplomeRepository->findByFormationBuilder($this->formation);
+                },
+                'label'         => 'label.diplome'
+            ])
+            ->add('codeApogee', TextType::class, [
                 'label' => 'label.code_apogee'
             ])
-            ->add('code_version', TextType::class, [
+            ->add('codeVersion', TextType::class, [
                 'label' => 'label.code_version'
             ])
-            ->add('code_departement', TextType::class, [
+            ->add('codeDepartement', TextType::class, [
                 'label' => 'label.code_departement'
             ])
             ->add('ordre', TextType::class, [
                 'label' => 'label.ordre'
             ])
-            ->add('couleur_cm', TextType::class, [
+            ->add('couleurCm', ColorType::class, [
                 'label' => 'label.couleur_cm',
                 'required' =>false
             ])
-            ->add('couleur_td', TextType::class, [
+            ->add('couleurTd', ColorType::class, [
                 'label' => 'label.couleur_td',
                 'required' =>false
             ])
-            ->add('couleur_tp', TextType::class, [
+            ->add('couleurTp', ColorType::class, [
                 'label' => 'label.couleur_tp',
                 'required' =>false
             ])
-            ->add('couleur_texte', TextType::class, [
+            ->add('couleurTexte', ColorType::class, [
                 'label' => 'label.couleur_texte',
                 'required' =>false
             ])
 
-            ->add('opt_alternance', ChoiceType::class, [
+            ->add('optAlternance', ChoiceType::class, [
                 'label' => 'label.opt_alternance',
-                'choices' => ['choice.oui' => true, 'choice.non' => true],
+                'choices' => ['choice.oui' => true, 'choice.non' => false],
                 'choice_translation_domain' => 'form',
                 'expanded' => true,
             ])
@@ -67,7 +85,8 @@ class AnneeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Annee::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
+            'formation' => null
         ]);
     }
 }

@@ -449,9 +449,9 @@ class Formation extends BaseEntity
     }
 
     /**
-     * @param Personnel $respri
+     * @param Personnel|null $respri
      */
-    public function setRespri(Personnel $respri): void
+    public function setRespri($respri): void
     {
         $this->respri = $respri;
     }

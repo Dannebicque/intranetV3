@@ -23,12 +23,6 @@ class UeType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('numero_ue', ChoiceType::class, ['choices' => range(1, 20),'label' => 'label.numero_ue'])
-            ->add('coefficient', TextType::class, ['label' => 'label.libelle'])
-            ->add('nb_ects', TextType::class, ['label' => 'label.nb_ects'])
-            ->add('code_apogee', TextType::class, ['label' => 'label.code_apogee'])
-            ->add('code_version', TextType::class, ['label' => 'label.code_version'])
-            ->add('code_departement', TextType::class, ['label' => 'label.code_departement'])
             ->add('semestre', EntityType::class, [
                 'class'         => Semestre::class,
                 'required'      => true,
@@ -40,6 +34,13 @@ class UeType extends AbstractType
                 'expanded'      => true
 
             ])
+            ->add('numero_ue', ChoiceType::class, ['choices' => range(1, 20),'label' => 'label.numero_ue'])
+            ->add('coefficient', TextType::class, ['label' => 'label.libelle'])
+            ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
+            ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
+            ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
+            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement'])
+
         ;
     }
 

@@ -20,66 +20,66 @@ class Matiere extends BaseEntity
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $code_apogee;
+    private $codeApogee;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_version;
+    private $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code_departement;
+    private $codeDepartement;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=20)
      */
-    private $code_matiere;
+    private $codeMatiere;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $cm_ppn = 0;
+    private $cmPpn = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $td_ppn = 0;
+    private $tdPpn = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $tp_ppn = 0;
+    private $tpPpn = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $cm_formation = 0;
+    private $cmFormation = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $td_formation = 0;
+    private $tdFormation = 0;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $tp_formation = 0;
+    private $tpFormation = 0;
 
     /**
      * @var string
@@ -93,7 +93,7 @@ class Matiere extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $nb_notes = 2;
+    private $nbNotes = 2;
 
     /**
      * @var float
@@ -114,21 +114,21 @@ class Matiere extends BaseEntity
      *
      * @ORM\Column(type="float")
      */
-    private $nb_ects = 1;
+    private $nbEcts = 1;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $objectifs_module;
+    private $objectifsModule;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $competences_visees;
+    private $competencesVisees;
 
     /**
      * @var string
@@ -142,7 +142,7 @@ class Matiere extends BaseEntity
      *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $pre_requis;
+    private $preRequis;
 
     /**
      * @var string
@@ -163,7 +163,7 @@ class Matiere extends BaseEntity
      *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $mots_cles;
+    private $motsCles;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ue", inversedBy="matieres")
@@ -195,6 +195,11 @@ class Matiere extends BaseEntity
      */
     private $evaluations;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $suspendu = false;
+
 
 
     public function __construct()
@@ -209,15 +214,15 @@ class Matiere extends BaseEntity
      */
     public function getCodeApogee()
     {
-        return $this->code_apogee;
+        return $this->codeApogee;
     }
 
     /**
-     * @param mixed $code_apogee
+     * @param mixed $codeApogee
      */
-    public function setCodeApogee($code_apogee): void
+    public function setCodeApogee($codeApogee): void
     {
-        $this->code_apogee = $code_apogee;
+        $this->codeApogee = $codeApogee;
     }
 
     /**
@@ -225,15 +230,15 @@ class Matiere extends BaseEntity
      */
     public function getCodeVersion()
     {
-        return $this->code_version;
+        return $this->codeVersion;
     }
 
     /**
-     * @param mixed $code_version
+     * @param mixed $codeVersion
      */
-    public function setCodeVersion($code_version): void
+    public function setCodeVersion($codeVersion): void
     {
-        $this->code_version = $code_version;
+        $this->codeVersion = $codeVersion;
     }
 
     /**
@@ -241,15 +246,15 @@ class Matiere extends BaseEntity
      */
     public function getCodeDepartement()
     {
-        return $this->code_departement;
+        return $this->codeDepartement;
     }
 
     /**
-     * @param mixed $code_departement
+     * @param mixed $codeDepartement
      */
-    public function setCodeDepartement($code_departement): void
+    public function setCodeDepartement($codeDepartement): void
     {
-        $this->code_departement = $code_departement;
+        $this->codeDepartement = $codeDepartement;
     }
 
     /**
@@ -273,15 +278,15 @@ class Matiere extends BaseEntity
      */
     public function getCodeMatiere(): ?string
     {
-        return $this->code_matiere;
+        return $this->codeMatiere;
     }
 
     /**
-     * @param string $code_matiere
+     * @param string $codeMatiere
      */
-    public function setCodeMatiere(string $code_matiere): void
+    public function setCodeMatiere(string $codeMatiere): void
     {
-        $this->code_matiere = $code_matiere;
+        $this->codeMatiere = $codeMatiere;
     }
 
     /**
@@ -289,15 +294,15 @@ class Matiere extends BaseEntity
      */
     public function getCmPpn(): float
     {
-        return $this->cm_ppn;
+        return $this->cmPpn;
     }
 
     /**
-     * @param float $cm_ppn
+     * @param float $cmPpn
      */
-    public function setCmPpn(float $cm_ppn): void
+    public function setCmPpn(float $cmPpn): void
     {
-        $this->cm_ppn = $cm_ppn;
+        $this->cmPpn = $cmPpn;
     }
 
     /**
@@ -305,15 +310,15 @@ class Matiere extends BaseEntity
      */
     public function getTdPpn(): float
     {
-        return $this->td_ppn;
+        return $this->tdPpn;
     }
 
     /**
-     * @param float $td_ppn
+     * @param float $tdPpn
      */
-    public function setTdPpn(float $td_ppn): void
+    public function setTdPpn(float $tdPpn): void
     {
-        $this->td_ppn = $td_ppn;
+        $this->tdPpn = $tdPpn;
     }
 
     /**
@@ -321,15 +326,15 @@ class Matiere extends BaseEntity
      */
     public function getTpPpn(): float
     {
-        return $this->tp_ppn;
+        return $this->tpPpn;
     }
 
     /**
-     * @param float $tp_ppn
+     * @param float $tpPpn
      */
-    public function setTpPpn(float $tp_ppn): void
+    public function setTpPpn(float $tpPpn): void
     {
-        $this->tp_ppn = $tp_ppn;
+        $this->tpPpn = $tpPpn;
     }
 
     /**
@@ -337,15 +342,15 @@ class Matiere extends BaseEntity
      */
     public function getCmFormation(): float
     {
-        return $this->cm_formation;
+        return $this->cmFormation;
     }
 
     /**
-     * @param float $cm_formation
+     * @param float $cmFormation
      */
-    public function setCmFormation(float $cm_formation): void
+    public function setCmFormation(float $cmFormation): void
     {
-        $this->cm_formation = $cm_formation;
+        $this->cmFormation = $cmFormation;
     }
 
     /**
@@ -353,15 +358,15 @@ class Matiere extends BaseEntity
      */
     public function getTdFormation(): float
     {
-        return $this->td_formation;
+        return $this->tdFormation;
     }
 
     /**
-     * @param float $td_formation
+     * @param float $tdFormation
      */
-    public function setTdFormation(float $td_formation): void
+    public function setTdFormation(float $tdFormation): void
     {
-        $this->td_formation = $td_formation;
+        $this->tdFormation = $tdFormation;
     }
 
     /**
@@ -369,15 +374,15 @@ class Matiere extends BaseEntity
      */
     public function getTpFormation(): float
     {
-        return $this->tp_formation;
+        return $this->tpFormation;
     }
 
     /**
-     * @param float $tp_formation
+     * @param float $tpFormation
      */
-    public function setTpFormation(float $tp_formation): void
+    public function setTpFormation(float $tpFormation): void
     {
-        $this->tp_formation = $tp_formation;
+        $this->tpFormation = $tpFormation;
     }
 
     /**
@@ -401,15 +406,15 @@ class Matiere extends BaseEntity
      */
     public function getNbNotes(): int
     {
-        return $this->nb_notes;
+        return $this->nbNotes;
     }
 
     /**
-     * @param int $nb_notes
+     * @param int $nbNotes
      */
-    public function setNbNotes(int $nb_notes): void
+    public function setNbNotes(int $nbNotes): void
     {
-        $this->nb_notes = $nb_notes;
+        $this->nbNotes = $nbNotes;
     }
 
     /**
@@ -449,15 +454,15 @@ class Matiere extends BaseEntity
      */
     public function getNbEcts(): float
     {
-        return $this->nb_ects;
+        return $this->nbEcts;
     }
 
     /**
-     * @param float $nb_ects
+     * @param float $nbEcts
      */
-    public function setNbEcts(float $nb_ects): void
+    public function setNbEcts(float $nbEcts): void
     {
-        $this->nb_ects = $nb_ects;
+        $this->nbEcts = $nbEcts;
     }
 
 
@@ -466,15 +471,15 @@ class Matiere extends BaseEntity
      */
     public function getObjectifsModule(): ?string
     {
-        return $this->objectifs_module;
+        return $this->objectifsModule;
     }
 
     /**
-     * @param string $objectifs_module
+     * @param string $objectifsModule
      */
-    public function setObjectifsModule(string $objectifs_module): void
+    public function setObjectifsModule(string $objectifsModule): void
     {
-        $this->objectifs_module = $objectifs_module;
+        $this->objectifsModule = $objectifsModule;
     }
 
     /**
@@ -482,15 +487,15 @@ class Matiere extends BaseEntity
      */
     public function getCompetencesVisees(): ?string
     {
-        return $this->competences_visees;
+        return $this->competencesVisees;
     }
 
     /**
-     * @param string $competences_visees
+     * @param string $competencesVisees
      */
-    public function setCompetencesVisees(string $competences_visees): void
+    public function setCompetencesVisees(string $competencesVisees): void
     {
-        $this->competences_visees = $competences_visees;
+        $this->competencesVisees = $competencesVisees;
     }
 
     /**
@@ -514,15 +519,15 @@ class Matiere extends BaseEntity
      */
     public function getPreRequis(): ?string
     {
-        return $this->pre_requis;
+        return $this->preRequis;
     }
 
     /**
-     * @param string $pre_requis
+     * @param string $preRequis
      */
-    public function setPreRequis(string $pre_requis): void
+    public function setPreRequis(string $preRequis): void
     {
-        $this->pre_requis = $pre_requis;
+        $this->preRequis = $preRequis;
     }
 
     /**
@@ -562,15 +567,15 @@ class Matiere extends BaseEntity
      */
     public function getMotsCles(): ?string
     {
-        return $this->mots_cles;
+        return $this->motsCles;
     }
 
     /**
-     * @param string $mots_cles
+     * @param string $motsCles
      */
-    public function setMotsCles(string $mots_cles): void
+    public function setMotsCles(string $motsCles): void
     {
-        $this->mots_cles = $mots_cles;
+        $this->motsCles = $motsCles;
     }
 
     public function getSemestre(): ?Semestre
@@ -712,11 +717,23 @@ class Matiere extends BaseEntity
 
     public function getEqTdFormation():float
     {
-        return $this->cm_formation*1.5 + $this->td_formation + $this->tp_formation;
+        return $this->cmFormation*1.5 + $this->tdFormation + $this->tpFormation;
     }
 
     public function getEtuFormation():float
     {
-        return $this->cm_formation + $this->td_formation + $this->tp_formation;
+        return $this->cmFormation + $this->tdFormation + $this->tpFormation;
+    }
+
+    public function getSuspendu(): ?bool
+    {
+        return $this->suspendu;
+    }
+
+    public function setSuspendu(bool $suspendu): self
+    {
+        $this->suspendu = $suspendu;
+
+        return $this;
     }
 }

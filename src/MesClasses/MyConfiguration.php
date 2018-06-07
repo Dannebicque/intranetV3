@@ -128,9 +128,9 @@ class MyConfiguration
         } elseif ($value === 'true') {
             return true;
         } elseif (0 === strpos($value, 'pers')) {
-            $pers = $this->personnelRepository->find(substr($value, 4, strlen($value)));
-
-            return $pers;
+            return $this->personnelRepository->find(substr($value, 4, strlen($value)));
+        } elseif (empty($value)) {
+            return null;
         } else {
             return $value;
         }

@@ -3,6 +3,7 @@
 namespace App\Controller\administration\structure;
 
 use App\Entity\Annee;
+use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,16 +59,17 @@ class AnneeController extends Controller
     }
 
     /**
-     * @Route({"fr":"/nouveau", "en":"/new"}, name="administration_structure_annee_new", methods="GET|POST")
+     * @Route({"fr":"/nouveau/{diplome}", "en":"/new/{diplome}"}, name="administration_structure_annee_new", methods="GET|POST")
      * @param Request $request
      *
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(Request $request, Diplome $diplome): Response
     {
         $annee = new Annee();
-        $form = $this->createForm(AnneeType::class, $annee);
+        $annee->setDiplome($diplome);
+        $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -105,7 +107,7 @@ class AnneeController extends Controller
      */
     public function edit(Request $request, Annee $annee): Response
     {
-        $form = $this->createForm(AnneeType::class, $annee);
+        $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

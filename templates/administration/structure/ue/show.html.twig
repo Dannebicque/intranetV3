@@ -26,6 +26,10 @@
                 <td>{{ ue.libelle }}</td>
             </tr>
             <tr>
+                <th>{{ 'table.semestre'|trans }}</th>
+                <td>{{ ue.semestre ? ue.semestre.libelle : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'table.numero_ue'|trans }}</th>
                 <td>{{ ue.numeroUe }}</td>
             </tr>
@@ -37,14 +41,7 @@
                 <th>{{ 'table.nb_ects'|trans }}</th>
                 <td>{{ ue.nbEcts }}</td>
             </tr>
-            <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ ue.created ? ue.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ ue.updated ? ue.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-            </tr>
+
             <tr>
                 <th>{{ 'table.code_apogee'|trans }}</th>
                 <td>{{ ue.codeApogee }}</td>
@@ -56,6 +53,14 @@
             <tr>
                 <th>{{ 'table.code_departement'|trans }}</th>
                 <td>{{ ue.codeDepartement }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ ue.created ? ue.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ ue.updated ? ue.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
             </tr>
         </tbody>
     </table>

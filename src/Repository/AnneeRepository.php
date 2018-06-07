@@ -19,6 +19,13 @@ class AnneeRepository extends ServiceEntityRepository
         parent::__construct($registry, Annee::class);
     }
 
+    public function findByDiplomeBuilder($diplome)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.diplome = :diplome')
+            ->setParameter('diplome', $diplome);
+    }
+
 //    /**
 //     * @return Annee[] Returns an array of Annee objects
 //     */

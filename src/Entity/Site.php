@@ -27,9 +27,15 @@ class Site extends BaseEntity
      */
     private $ufrs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="site")
+     */
+    private $salles;
+
     public function __construct()
     {
         $this->ufrs = new ArrayCollection();
+        $this->salles = new ArrayCollection();
     }
 
     /**
@@ -83,6 +89,37 @@ class Site extends BaseEntity
         if ($this->ufrs->contains($ufr)) {
             $this->ufrs->removeElement($ufr);
             $ufr->removeSite($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Salle[]
+     */
+    public function getSalles(): Collection
+    {
+        return $this->salles;
+    }
+
+    public function addSalle(Salle $salle): self
+    {
+        if (!$this->salles->contains($salle)) {
+            $this->salles[] = $salle;
+            $salle->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalle(Salle $salle): self
+    {
+        if ($this->salles->contains($salle)) {
+            $this->salles->removeElement($salle);
+            // set the owning side to null (unless already changed)
+            if ($salle->getSite() === $this) {
+                $salle->setSite(null);
+            }
         }
 
         return $this;

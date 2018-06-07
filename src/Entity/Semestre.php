@@ -287,7 +287,7 @@ class Semestre extends BaseEntity
     /**
      * @return Annee
      */
-    public function getAnnee(): Annee
+    public function getAnnee(): ?Annee
     {
         return $this->annee;
     }
@@ -319,7 +319,7 @@ class Semestre extends BaseEntity
     /**
      * @return string
      */
-    public function getCouleur(): string
+    public function getCouleur(): ?string
     {
         return $this->couleur;
     }
@@ -335,7 +335,7 @@ class Semestre extends BaseEntity
     /**
      * @return int
      */
-    public function getOrdreAnnee(): int
+    public function getOrdreAnnee(): ?int
     {
         return $this->ordreAnnee;
     }
@@ -351,7 +351,7 @@ class Semestre extends BaseEntity
     /**
      * @return int
      */
-    public function getOrdreLmd(): int
+    public function getOrdreLmd(): ?int
     {
         return $this->ordreLmd;
     }
@@ -501,9 +501,9 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Personnel $optDestMailReleve
+     * @param Personnel|null $optDestMailReleve
      */
-    public function setOptDestMailReleve(Personnel $optDestMailReleve): void
+    public function setOptDestMailReleve($optDestMailReleve): void
     {
         $this->optDestMailReleve = $optDestMailReleve;
     }
@@ -517,9 +517,9 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Personnel $optDestMailModifNote
+     * @param Personnel|null $optDestMailModifNote
      */
-    public function setOptDestMailModifNote(Personnel $optDestMailModifNote): void
+    public function setOptDestMailModifNote( $optDestMailModifNote): void
     {
         $this->optDestMailModifNote = $optDestMailModifNote;
     }
@@ -597,9 +597,9 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Personnel $optDestMailAbsenceResp
+     * @param Personnel|null $optDestMailAbsenceResp
      */
-    public function setOptDestMailAbsenceResp(Personnel $optDestMailAbsenceResp): void
+    public function setOptDestMailAbsenceResp($optDestMailAbsenceResp): void
     {
         $this->optDestMailAbsenceResp = $optDestMailAbsenceResp;
     }

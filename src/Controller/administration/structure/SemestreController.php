@@ -2,6 +2,7 @@
 
 namespace App\Controller\administration\structure;
 
+use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
@@ -63,10 +64,11 @@ class SemestreController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request, Diplome $diplome): Response
+    public function create(Request $request, Annee $annee): Response
     {
         $semestre = new Semestre();
-        $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $diplome->getId()]);
+        $semestre->setAnnee($annee);
+        $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $annee->getDiplome()->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

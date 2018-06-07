@@ -33,7 +33,7 @@
                 </div>
             </div>
             {% for diplome in user_data.diplomes %}
-                <div class="row gap-y ">
+                <div class="row gap-y lignehover">
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-9">{{ diplome.typediplome.sigle }}
                         | {{ diplome.libelle }} | {{ diplome.codeApogee }}</div>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 {% for annee in user_data.annees if annee.diplome==diplome %}
-                    <div class="row gap-y dip_{{ diplome.id }}">
+                    <div class="row gap-y dip_{{ diplome.id }} lignehover">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeApogee }}</div>
                         <div class="col-md-2">
@@ -77,7 +77,7 @@
                     </div>
                     {% for semestre in user_data.semestres if semestre.annee.id == annee.id %}
 
-                        <div class="row gap-y dip_semestre_{{ diplome.id }} semestre_{{ annee.id }} deroulant">
+                        <div class="row gap-y dip_semestre_{{ diplome.id }} semestre_{{ annee.id }} lignehover">
                             <div class="col-md-3"></div>
                             <div class="col-md-7">{{ semestre.libelle }} | {{ semestre.codeApogee }}</div>
                             <div class="col-md-2">
@@ -100,9 +100,9 @@
                         </div>
 
                         {% for ue in semestre.ues %}
-                            <div class="row gap-y ue_{{ semestre.id }} deroulant">
-                                <div class="col-md-5"></div>
-                                <div class="col-md-5">{{ ue.libelle }} | {{ ue.codeApogee }}</div>
+                            <div class="row gap-y ue_{{ semestre.id }} lignehover">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-6">{{ ue.libelle }} | {{ ue.codeApogee }}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path('administration_structure_ue_show', {'id': ue.id}) }}"
                                        class="btn btn-info btn-outline btn-square" data-provide="tooltip"
@@ -123,14 +123,14 @@
                             </div>
 
                         {% endfor %}
-                        <div class="row gap-y deroulant" id="ue_new_{{ semestre.id }}">
+                        <div class="row gap-y lignehover" id="ue_new_{{ semestre.id }}">
                             <div class="col-md-4"></div>
 
                             <div class="col-md-8">
-                                <button class="btn btn-success addUe btn-block" title="Ajouter une UE"
+                                <a href="{{ path('administration_structure_ue_new', {semestre: semestre.id}) }}" class="btn btn-success addUe btn-block" title="Ajouter une UE"
                                         data-semestre="{{ semestre.id }}"><i
                                             class="fa fa-plus-circle"></i> Ajouter une UE au
-                                    semestre {{ semestre.libelle }}</button>
+                                    semestre {{ semestre.libelle }}</a>
                             </div>
                         </div>
                                                         {# options #}
@@ -200,18 +200,18 @@
                      </tr>#}
                     {% endfor %}
 
-                    <div class="row gap-y deroulant" id="semestre_new_{{ annee.id }}">
+                    <div class="row gap-y lignehover" id="semestre_new_{{ annee.id }}">
                         <div class="col-md-3"></div>
                         <div class="col-md-9">
-                            <button class="btn btn-success btn-block addSemestre" title="Ajouter un semestre"
+                            <a href="{{ path('administration_structure_semestre_new', {annee: annee.id}) }}" class="btn btn-success btn-block addSemestre" title="Ajouter un semestre"
                                     data-annee="{{ annee.id }}"><i class="fa fa-plus-circle"></i> Ajouter un semestre à
                                 l'année {{ annee.libelle }}
-                            </button>
+                            </a>
                             //sous forme d'une modale ? ou d'une zone qui s'ouvre dans le tableau ?
                         </div>
                     </div>
                 {% endfor %}
-                <div id="dip_new_{{ diplome.id }}" class="row gap-y ">
+                <div id="dip_new_{{ diplome.id }}" class="row gap-y lignehover">
                     <div class="col-md-2">&nbsp;</div>
                     <div class="col-md-10"><a
                                 href="{{ path('administration_structure_annee_new',{diplome:diplome.id}) }}"
@@ -220,7 +220,7 @@
                             une nouvelle année au diplome {{ diplome.libelle }}</a></div>
                 </div>
             {% endfor %}
-            <div class="row gap-y">
+            <div class="row gap-y lignehover">
                 <div class="col-md-1"></div>
                 <div class="col-md-11">
                     <a href="{{ path('administration_structure_diplome_new') }}"

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.salle.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-index.html.twig', {elt:'salle'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+    <h4 class="card-title">{{ 'adm.salle.index.heading'|trans }}</h4>
+    <div class="card-body">
+    <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Capacite</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for salle in salles %}
+            <tr>
+                <td>{{ salle.id }}</td>
+                <td>{{ salle.libelle }}</td>
+                <td>{{ salle.capacite }}</td>
+                <td>{{ salle.type }}</td>
+                <td>
+                    <a href="{{ path('salle_show', {'id': salle.id}) }}">show</a>
+                    <a href="{{ path('salle_edit', {'id': salle.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('sa_salle_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('sa_salle_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('sa_salle_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('sa_salle_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

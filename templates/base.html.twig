@@ -38,17 +38,17 @@
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
     <header class="sidebar-header">
         <span class="logo text-center">
-          <a href="{{ path('default_index') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
+          <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
                                                      alt="logo"></a>
         </span>
     </header>
 
     <nav class="sidebar-navigation ps-container ps-theme-default" data-ps-id="9edea121-7e34-6d68-3caa-50294dffdd48">
-
         <ul class="menu">
+            {% block sidebar_menu %}
 
             <li class="menu-item active" id="menu-dashboard">
-                <a class="menu-link" href="{{ path('default_index') }}">
+                <a class="menu-link" href="{{ path('default_homepage') }}">
                     <span class="material-icons">dashboard</span>
                     <span class="title">{{ 'menu.dashboard'|trans }}</span>
                 </a>
@@ -96,15 +96,11 @@
                 </a>
             </li>
 
-            <li class="menu-item" id="menu-super-administration">
-                <a class="menu-link" href="{{ path('super-administration_index') }}">
-                    <span class="material-icons">build</span>
-                    <span class="title">{{ 'menu.superadministration'|trans }}</span>
-                </a>
-            </li>
-            {% endif %}
 
+            {% endif %}
+            {% endblock %}
         </ul>
+
         <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 0;">
             <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
         </div>
@@ -134,7 +130,7 @@
         <div class="dropdown d-none d-md-block">
             <span class="topbar-btn" data-toggle="dropdown"><i class="ti-layout-grid3-alt"></i></span>
             <div class="dropdown-menu dropdown-grid">
-                <a class="dropdown-item" href="{{ path('default_index') }}">
+                <a class="dropdown-item" href="{{ path('default_homepage') }}">
                     <span data-i8-icon="home"></span>
                     <span class="title">Dashboard</span>
                 </a>

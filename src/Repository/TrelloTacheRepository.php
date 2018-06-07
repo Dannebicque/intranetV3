@@ -25,9 +25,31 @@ class TrelloTacheRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.formation = :formation')
             ->setParameter('formation', $formation->getId())
-            ->orderBy('a.asc', 'DESC')
+            ->orderBy('a.deadline', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByFormationTaches($getId)
+    {
+        $query = $this->createQueryBuilder('t') //prendre la période de 30 jours
+            ->orderBy('t.deadline', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $tab = array();
+
+        /** @var TrelloTache $event */
+        foreach ($query as $event) {
+            $key = $event->getDeadline()->format('Y-m-d');
+            if (!array_key_exists($key, $tab)) {
+                $tab[$key] = array();
+            }
+            $tab[$key][] = $event;
+            //si sur plusieurs jours, faire une boucle pour remplir le tableau
+        }
+
+        return $tab;
     }
 
 //    /**

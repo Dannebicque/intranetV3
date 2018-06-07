@@ -20,7 +20,7 @@ class Annee extends BaseEntity
      *
      * @ORM\Column(name="ordre", type="integer")
      */
-    private $ordre;
+    private $ordre = 1;
 
     /**
      * @var string
@@ -170,7 +170,7 @@ class Annee extends BaseEntity
     /**
      * @return int
      */
-    public function getOrdre(): int
+    public function getOrdre(): ?int
     {
         return $this->ordre;
     }

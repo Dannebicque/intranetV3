@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Annee;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
+use App\Repository\AnneeRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -25,24 +27,34 @@ class SemestreType extends AbstractType
             ->add('libelle', TextType::class, [
                 'label' => 'label.libelle'
             ])
-            ->add('code_apogee', TextType::class, [
+            ->add('annee', EntityType::class, [
+                'class'         => Annee::class,
+                'required'      => true,
+                'choice_label'  => 'libelle',
+                'expanded'      => true,
+                'query_builder' => function (AnneeRepository $anneeRepository) {
+                    return $anneeRepository->findByDiplomeBuilder($this->diplome);
+                },
+                'label'         => 'label.annee'
+            ])
+            ->add('codeApogee', TextType::class, [
                 'label' => 'label.code_apogee'
             ])
-            ->add('code_version', TextType::class, [
+            ->add('codeVersion', TextType::class, [
                 'label' => 'label.code_version'
             ])
-            ->add('code_departement', TextType::class, [
+            ->add('codeDepartement', TextType::class, [
                 'label' => 'label.code_departement'
             ])
             ->add('couleur', ColorType::class, [
                 'label' => 'label.couleur'
             ])
-            ->add('ordre_annee', ChoiceType::class, [
+            ->add('ordreAnnee', ChoiceType::class, [
                 'label'    => 'label.ordre_annee',
                 'choices'  => [1 => 1, 2 => 2],
                 'expanded' => true
             ])
-            ->add('ordre_lmd', ChoiceType::class, [
+            ->add('ordreLmd', ChoiceType::class, [
                 'label'   => 'label.ordre_lmd',
                 'choices' => range(1, 16)
             ])
@@ -53,79 +65,79 @@ class SemestreType extends AbstractType
                     'expanded'                  => true,
                     'label'                     => 'label.actif'
                 ])
-            ->add('nb_groupes_td', ChoiceType::class, [
+            ->add('nbGroupesTd', ChoiceType::class, [
                 'label'   => 'label.ordre_lmd',
                 'choices' => range(1, 10)
             ])
-            ->add('nb_groupes_TP', ChoiceType::class, [
+            ->add('nbGroupesTP', ChoiceType::class, [
                 'label'   => 'label.ordre_lmd',
                 'choices' => range(1, 20)
             ])
-            ->add('opt_mail_releve', ChoiceType::class,
+            ->add('optMailReleve', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_mail_releve'
                 ])
-            ->add('opt_destinataire_mail_releve', EntityType::class, [
+            ->add('optDestMailReleve', EntityType::class, [
                 'class'        => Personnel::class,
                 'choice_label' => 'display',
                 'label'        => 'label.opt_destinataire_mail_releve'
             ])
-            ->add('opt_evaluation_modifiable', ChoiceType::class,
+            ->add('optEvaluationModifiable', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_evaluation_modifiable'
                 ])
-            ->add('opt_mail_modification_note', ChoiceType::class,
+            ->add('optMailModificationNote', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_mail_modification_note'
                 ])
-            ->add('opt_destinataire_mail_modification_note', EntityType::class, [
+            ->add('optDestMailReleve', EntityType::class, [
                 'class'        => Personnel::class,
                 'choice_label' => 'display',
                 'label'        => 'label.opt_destinataire_mail_modification_note'
             ])
-            ->add('opt_evaluation_visible', ChoiceType::class,
+            ->add('optEvaluationVisible', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_evaluation_visible'
                 ])
-            ->add('opt_penalite_absence', ChoiceType::class,
+            ->add('optPenaliteAbsence', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_penalite_absence'
                 ])
-            ->add('opt_mail_absence_responsable', ChoiceType::class,
+            ->add('optMailAbsenceResp', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_mail_absence_responsable'
                 ])
-            ->add('opt_destinataire_mail_absence_responsable', EntityType::class, [
+            ->add('optDestMailAbsenceResp', EntityType::class, [
                 'class'        => Personnel::class,
                 'choice_label' => 'display',
                 'label'        => 'label.opt_destinataire_mail_absence_responsable'
             ])
-            ->add('opt_mail_absence_etudiant', ChoiceType::class,
+            ->add('optMailAbsenceEtudiant', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',
                     'expanded'                  => true,
                     'label'                     => 'label.opt_mail_absence_etudiant'
                 ])
-            ->add('opt_point_penalite_absence', ChoiceType::class,
+            ->add('optPenaliteAbsence', ChoiceType::class,
                 [
                     'choices'                   => ['choice.oui' => true, 'choice.non' => true],
                     'choice_translation_domain' => 'form',

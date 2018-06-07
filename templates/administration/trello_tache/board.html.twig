@@ -37,7 +37,12 @@
                                 {% endif %}
                                         width:20%"
                             >
-                                <span class="badge badge-default pull-right">{{ calendrier[ind] is defined ? calendrier[ind]|date('d') : 'euh' }}</span>
+                                <span class="badge badge-default pull-right">{{ calendrier[ind] is defined ? calendrier[ind]|date('d-M') : 'euh' }}</span>
+                                {% if calendrier[ind] is defined  and taches[calendrier[ind]|date('Y-m-d')] is defined %}
+                                    {% for event in taches[calendrier[ind]|date('Y-m-d')] %}
+                                        {{ event.libelle }}
+                                    {% endfor %}
+                                {% endif %}
                             </td>
                             {% set ind = ind + 1 %}
                             {% if j == 6 %}

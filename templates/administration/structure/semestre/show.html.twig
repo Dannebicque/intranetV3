@@ -26,12 +26,8 @@
                 <td>{{ semestre.libelle }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ semestre.created ? semestre.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ semestre.updated ? semestre.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <th>{{ 'table.annee'|trans }}</th>
+                <td>{{ semestre.annee ? semestre.annee.libelle : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.code_apogee'|trans }}</th>
@@ -126,6 +122,14 @@
             <tr>
                 <th>{{ 'semestre.semestre_decale'|trans }}</th>
                 <td>{{ semestre.decale ? semestre.decale.display : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ semestre.created ? semestre.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ semestre.updated ? semestre.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
             </tr>
         </tbody>
     </table>

@@ -23,7 +23,9 @@ class TrelloTacheController extends BaseController
     public function index(TrelloTacheRepository $trelloTacheRepository): Response
     {
         return $this->render('administration/trello_tache/index.html.twig',
-            ['trello_taches' => $trelloTacheRepository->findAll()]);
+            [
+                'trello_taches' => $trelloTacheRepository->findAll()
+            ]);
     }
 
     /**
@@ -56,7 +58,7 @@ class TrelloTacheController extends BaseController
         dump($tab);
 
         return $this->render('administration/trello_tache/board.html.twig', [
-            'trello_taches' => $trelloTacheRepository->findAll(),
+            'taches' => $trelloTacheRepository->findByFormationTaches($this->dataUserSession->getFormation()->getId()),
             'calendrier'    => $tab
         ]);
     }

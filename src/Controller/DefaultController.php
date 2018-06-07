@@ -17,13 +17,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends BaseController
 {
     /**
-     * @Route("/", name="default_index")
+     * @Route("/", name="default_homepage")
      */
     public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository)
     {
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 2),
             'dates'      => $dateRepository->findByFormation($this->dataUserSession->getFormation(), 2)
+        ]);
+    }
+
+    /**
+     * @Route("/super-administration/", name="super_admin_homepage")
+     */
+    public function superAdminHomepage()
+    {
+        return $this->render('default/super_admin_homepage.html.twig', [
+
+        ]);
+    }
+
+    /**
+     * @Route("/administratif/", name="administratif_homepage")
+     */
+    public function administratifHomepage()
+    {
+        return $this->render('default/administratif_homepage.html.twig', [
+
         ]);
     }
 }

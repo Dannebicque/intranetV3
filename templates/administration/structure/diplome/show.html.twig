@@ -22,10 +22,6 @@
                 <td>{{ diplome.id }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.formation'|trans }}</th>
-                <td>{{ diplome.formation ? diplome.formation.libelle : 'non.defini'|trans }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'table.type_diplome'|trans }}</th>
                 <td>{{ diplome.typeDiplome ? diplome.typeDiplome.libelle : 'non.defini'|trans }}</td>
             </tr>
@@ -33,7 +29,10 @@
                 <th>{{ 'table.libelle'|trans }}</th>
                 <td>{{ diplome.libelle }}</td>
             </tr>
-
+            <tr>
+                <th>{{ 'table.formation'|trans }}</th>
+                <td>{{ diplome.formation ? diplome.formation.libelle : 'non.defini'|trans }}</td>
+            </tr>
             <tr>
                 <th>{{ 'table.responsable_diplome'|trans }}</th>
                 <td>{{ diplome.responsableDiplome ? diplome.responsableDiplome.display : 'non.defini'|trans }}</td>

@@ -2,6 +2,7 @@
 
 namespace App\Controller\administration\structure;
 
+use App\Controller\BaseController;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\MesClasses\DataUserSession;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"administration/organization/diploma"}
  *)
  */
-class DiplomeController extends Controller
+class DiplomeController extends BaseController
 {
     /**
      * @Route("/", name="administration_structure_diplome_index", methods="GET")
@@ -66,6 +67,7 @@ class DiplomeController extends Controller
     public function create(Request $request): Response
     {
         $diplome = new Diplome();
+        $diplome->setFormation($this->dataUserSession->getFormation());
         $form = $this->createForm(DiplomeType::class, $diplome);
         $form->handleRequest($request);
 

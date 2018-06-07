@@ -49,14 +49,14 @@ class DiplomeType extends AbstractType
             ])
             ->add('opt_dilpome_decale', ChoiceType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
+                    'choices' => ['choice.oui' => true, 'choice.non' => false],
                     'expanded' => true,
                     'choice_translation_domain' => 'form',
                     'label'   => 'label.opt_dilpome_decale'
                 ])
             ->add('opt_suppr_absence', ChoiceType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
+                    'choices' => ['choice.oui' => true, 'choice.non' => false],
                     'expanded' => true,
                     'label'   => 'label.opt_suppr_absence',
                     'choice_translation_domain' => 'form'
@@ -71,7 +71,7 @@ class DiplomeType extends AbstractType
                 ])
             ->add('opt_anonymat', ChoiceType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
+                    'choices' => ['choice.oui' => true, 'choice.non' => false],
                     'expanded' => true,
                     'label'   => 'label.opt_anonymat',
                     'choice_translation_domain' => 'form'
@@ -79,14 +79,14 @@ class DiplomeType extends AbstractType
                 ])
             ->add('opt_commentaires_releve', ChoiceType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
+                    'choices' => ['choice.oui' => true, 'choice.non' => false],
                     'choice_translation_domain' => 'form',
                     'expanded' => true,
                     'label'   => 'label.opt_commentaires_releve'
                 ])
             ->add('opt_espace_perso_visible', ChoiceType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
+                    'choices' => ['choice.oui' => true, 'choice.non' => false],
                     'expanded' => true,
                     'label'   => 'label.opt_espace_perso_visible',
                     'choice_translation_domain' => 'form'
@@ -98,7 +98,6 @@ class DiplomeType extends AbstractType
             ->add('code_celcat_departement', TextType::class,[
                 'label' => 'label.code_celcat_departement'
             ])
-//todo: ajouter formation
 
         ;
     }

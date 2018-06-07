@@ -22,3 +22,7 @@ a .btn-round {
 .preloader {
     opacity: 0.7;
 }
+
+.lignehover:hover {
+    background-color: #f5f6fa;
+}
