@@ -465,7 +465,7 @@ class Diplome extends BaseEntity
         return $this;
     }
 
-    public function update($name, $value)
+    public function update($name, $value): void
     {
         $t = explode('_', $name);
         $name = $t[0];

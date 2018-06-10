@@ -38,7 +38,6 @@ class Absence extends BaseEntity
      */
     private $justifie = false;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", fetch="EAGER")
      */

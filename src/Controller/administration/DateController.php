@@ -5,9 +5,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Date;
 use App\Form\DatesType;
-use App\MesClasses\DataUserSession;
 use App\Repository\DateRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,7 +57,6 @@ class DateController extends BaseController
     /**
      * @Route("/new", name="administration_date_new", methods="GET|POST")
      * @param Request         $request
-     * @param DataUserSession $dataUserSession
      *
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
@@ -141,6 +138,10 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_date_delete", methods="DELETE")
+     * @param Request $request
+     * @param Date    $date
+     *
+     * @return Response
      */
     public function delete(Request $request, Date $date): Response
     {

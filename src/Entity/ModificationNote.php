@@ -24,12 +24,12 @@ class ModificationNote extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private $ancienne_note;
+    private $ancienneNote;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nouvelle_note;
+    private $nouvelleNote;
 
     public function getNote(): ?Note
     {
@@ -57,24 +57,24 @@ class ModificationNote extends BaseEntity
 
     public function getAncienneNote(): ?float
     {
-        return $this->ancienne_note;
+        return $this->ancienneNote;
     }
 
-    public function setAncienneNote(float $ancienne_note): self
+    public function setAncienneNote(float $ancienneNote): self
     {
-        $this->ancienne_note = $ancienne_note;
+        $this->ancienneNote = $ancienneNote;
 
         return $this;
     }
 
     public function getNouvelleNote(): ?float
     {
-        return $this->nouvelle_note;
+        return $this->nouvelleNote;
     }
 
-    public function setNouvelleNote(float $nouvelle_note): self
+    public function setNouvelleNote(float $nouvelleNote): self
     {
-        $this->nouvelle_note = $nouvelle_note;
+        $this->nouvelleNote = $nouvelleNote;
 
         return $this;
     }

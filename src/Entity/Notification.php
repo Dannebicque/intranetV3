@@ -105,10 +105,10 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    public function getDateTexte()
+    public function getDateTexte(): string
     {
-        //calculer la date à partir de maintenant
-        return 'just now,,,';
+        //todo: calculer la date à partir de maintenant
+        return 'just now,,,'; //app de twig ?
     }
 
     public function getPersonnel(): ?Personnel
@@ -126,12 +126,12 @@ class Notification extends BaseEntity
     public function icone()
     {
 
-        return Notification::TABICONE[$this->type];
+        return self::TABICONE[$this->type];
     }
 
     public function color()
     {
 
-        return Notification::TABCOLOR[$this->type];
+        return self::TABCOLOR[$this->type];
     }
 }

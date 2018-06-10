@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Formation;
 use App\Entity\Personnel;
 use App\Entity\Site;
+use App\Form\Type\YesNoType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -54,53 +55,38 @@ class FormationType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'label.description'
             ])
-            ->add('opt_update_celcat', ChoiceType::class,
+            ->add('opt_update_celcat', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
                     'label'   => 'label.opt_update_celcat'
                 ])
-            ->add('opt_agence', ChoiceType::class,
+            ->add('opt_agence', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_agence'
                 ])
-            ->add('opt_materiel', ChoiceType::class,
+            ->add('opt_materiel', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_materiel'
                 ])
-            ->add('opt_edt', ChoiceType::class,
+            ->add('opt_edt', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_edt'
                 ])
-            ->add('opt_stage', ChoiceType::class,
+            ->add('opt_stage', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_stage'
                 ])
-            ->add('opt_synthese', ChoiceType::class,
+            ->add('opt_synthese', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_synthese'
                 ])
-            ->add('opt_messagerie', ChoiceType::class,
+            ->add('opt_messagerie', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => true],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_messagerie'
                 ])
             ->add('respri', EntityType::class,[

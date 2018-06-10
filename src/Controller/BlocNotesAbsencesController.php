@@ -6,7 +6,6 @@ use App\MesClasses\DataUserSession;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyPrevisionnel;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BlocNotesAbsencesController extends Controller
@@ -31,6 +30,8 @@ class BlocNotesAbsencesController extends Controller
    }
 
     /**
+     * @param MyEtudiant $myEtudiant
+     *
      * @return Response
      */
     public function etudiant(MyEtudiant $myEtudiant) :Response

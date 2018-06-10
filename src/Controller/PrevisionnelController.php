@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\MesClasses\MyPrevisionnel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class PrevisionnelController

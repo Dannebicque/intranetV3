@@ -53,6 +53,9 @@ class SecurityController extends Controller
 
     /**
      * @Route("/password-lost", name="security_password_lost")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function passwordLost(Request $request): Response
     {
@@ -80,7 +83,7 @@ class SecurityController extends Controller
             $isPasswordValid = $this->encoder->isPasswordValid($this->getUser(), $credential);
 
             if ($isPasswordValid) {
-                return new RedirectResponse($this->generateUrl('default_index'));
+                return new RedirectResponse($this->generateUrl('default_homepage')); //todo: gérer selon le rôle...
             }
 
             throw new CustomUserMessageAuthenticationException('Invalid username or password');

@@ -8,7 +8,6 @@ use App\Entity\Semestre;
 use App\MesClasses\MyAbsences;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class AbsenceController
@@ -23,8 +22,10 @@ class AbsenceController extends BaseController
      * @Route("/semestre/etudiant/{etudiant}", name="administration_absences_liste_absence_etudiant",
      *                                         options={"expose":true})
      * @param Etudiant $etudiant
+     *
+     * @return Response
      */
-    public function listeAbsenceEtudiant(Etudiant $etudiant)
+    public function listeAbsenceEtudiant(Etudiant $etudiant): Response
     {
         return new Response('ok', 200);
     }
@@ -35,7 +36,7 @@ class AbsenceController extends BaseController
      * @param Semestre   $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Exception
      */
     public function liste(MyAbsences $myAbsences, Semestre $semestre): Response
     {

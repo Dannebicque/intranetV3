@@ -28,37 +28,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('u.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('m.ue', 'ASC')
-            ->orderBy('m.code_matiere', 'ASC')
+            ->orderBy('m.codeMatiere', 'ASC')
             ->getQuery()
             ->getResult();
     }
-
-//    /**
-//     * @return Matiere[] Returns an array of Matiere objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Matiere
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

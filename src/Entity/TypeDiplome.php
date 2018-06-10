@@ -29,21 +29,21 @@ class TypeDiplome extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $nb_semestres = 2;
+    private $nbSemestres = 2;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $niveau_entree = 0;
+    private $niveauEntree = 0;
 
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
-    private $niveau_sortie = 2;
+    private $niveauSortie = 2;
 
     /**
      * @return mixed
@@ -82,15 +82,15 @@ class TypeDiplome extends BaseEntity
      */
     public function getNbSemestres(): int
     {
-        return $this->nb_semestres;
+        return $this->nbSemestres;
     }
 
     /**
-     * @param int $nb_semestres
+     * @param int $nbSemestres
      */
-    public function setNbSemestres(int $nb_semestres): void
+    public function setNbSemestres(int $nbSemestres): void
     {
-        $this->nb_semestres = $nb_semestres;
+        $this->nbSemestres = $nbSemestres;
     }
 
     /**
@@ -98,15 +98,15 @@ class TypeDiplome extends BaseEntity
      */
     public function getNiveauEntree(): int
     {
-        return $this->niveau_entree;
+        return $this->niveauEntree;
     }
 
     /**
-     * @param int $niveau_entree
+     * @param int $niveauEntree
      */
-    public function setNiveauEntree(int $niveau_entree): void
+    public function setNiveauEntree(int $niveauEntree): void
     {
-        $this->niveau_entree = $niveau_entree;
+        $this->niveauEntree = $niveauEntree;
     }
 
     /**
@@ -114,15 +114,15 @@ class TypeDiplome extends BaseEntity
      */
     public function getNiveauSortie(): int
     {
-        return $this->niveau_sortie;
+        return $this->niveauSortie;
     }
 
     /**
-     * @param int $niveau_sortie
+     * @param int $niveauSortie
      */
-    public function setNiveauSortie(int $niveau_sortie): void
+    public function setNiveauSortie(int $niveauSortie): void
     {
-        $this->niveau_sortie = $niveau_sortie;
+        $this->niveauSortie = $niveauSortie;
     }
 
 

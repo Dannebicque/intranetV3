@@ -2,12 +2,11 @@
 
 namespace App\Controller\administration\structure;
 
-use App\Entity\Diplome;
+use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
 use App\Repository\UeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"administration/organization/teaching-unit"}
  *)
  */
-class UeController extends Controller
+class UeController extends BaseController
 {
     /**
      * @Route("/", name="administration_structure_ue_index", methods="GET")
@@ -36,6 +35,7 @@ class UeController extends Controller
     */
     public function help(): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/ue/help.html.twig');
     }
 
@@ -44,6 +44,7 @@ class UeController extends Controller
     */
     public function save(): Response
     {
+        //todo: comment l'exploiter...
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
@@ -53,35 +54,42 @@ class UeController extends Controller
     */
     public function imprimer(): Response
     {
+        //todo: comment l'exploiter...
         //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
 
     /**
      * @Route("/new/{semestre}", name="administration_structure_ue_new", methods="GET|POST")
-     * @param Request $request
+     * @param Request  $request
+     *
+     * @param Semestre $semestre
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(Request $request, Semestre $semestre): Response
     {
-        $ue = new Ue($semestre);
-        $form = $this->createForm(UeType::class, $ue, ['diplome' => $semestre->getAnnee()->getDiplome()]);
-        $form->handleRequest($request);
+        if ($semestre->getAnnee() !== null) {
+            $ue = new Ue($semestre);
+            $form = $this->createForm(UeType::class, $ue, ['diplome' => $semestre->getAnnee()->getDiplome()]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($ue);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($ue);
+                $em->flush();
 
-            return $this->redirectToRoute('administration_structure_ue_index');
+                return $this->redirectToRoute('administration_structure_index');
+            }
+
+            return $this->render('administration/structure/ue/new.html.twig', [
+                'ue'   => $ue,
+                'form' => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/structure/ue/new.html.twig', [
-            'ue' => $ue,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
+
     }
 
     /**

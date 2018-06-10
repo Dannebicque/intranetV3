@@ -7,8 +7,7 @@ use App\Entity\Actualite;
 use App\Form\ActualiteType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\ActualiteRepository;
-use Doctrine\ORM\AbstractQuery;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +19,9 @@ class ActualiteController extends BaseController
 {
     /**
      * @Route("/", name="administration_actualite_index", methods="GET")
+     * @param ActualiteRepository $actualiteRepository
+     *
+     * @return Response
      */
     public function index(ActualiteRepository $actualiteRepository): Response
     {
@@ -29,6 +31,10 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/save", name="administration_actualite_save", methods="GET")
+     * @param Csv                 $csv
+     * @param ActualiteRepository $actualiteRepository
+     *
+     * @return Response
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function save(Csv $csv, ActualiteRepository $actualiteRepository): Response
@@ -50,6 +56,9 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/new", name="administration_actualite_new", methods="GET|POST")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -73,6 +82,9 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_actualite_show", methods="GET")
+     * @param Actualite $actualite
+     *
+     * @return Response
      */
     public function show(Actualite $actualite): Response
     {
@@ -81,6 +93,10 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_actualite_edit", methods="GET|POST")
+     * @param Request   $request
+     * @param Actualite $actualite
+     *
+     * @return Response
      */
     public function edit(Request $request, Actualite $actualite): Response
     {
@@ -101,6 +117,10 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_actualite_delete", methods="DELETE")
+     * @param Request   $request
+     * @param Actualite $actualite
+     *
+     * @return Response
      */
     public function delete(Request $request, Actualite $actualite): Response
     {

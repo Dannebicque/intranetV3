@@ -34,7 +34,7 @@ class AfterLoginRedirect implements AuthenticationSuccessHandlerInterface
      *
      * @return RedirectResponse
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
     {
         $roles = $token->getRoles();
 
@@ -42,10 +42,10 @@ class AfterLoginRedirect implements AuthenticationSuccessHandlerInterface
             return $role->getRole();
         }, $roles);
 
-        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
+        if (\in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
             $redirection = new RedirectResponse($this->router->generate('super_admin_homepage'));
-        } else if (in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
+        } else if (\in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
             // c'est un administratif : on le rediriger vers l'espace administration
             $redirection = new RedirectResponse($this->router->generate('administratif_homepage'));
 

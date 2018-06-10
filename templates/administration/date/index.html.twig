@@ -34,7 +34,7 @@
                         <td>{{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
                         <td>{{ date.heureDebut ? date.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
                         <td>{{ date.lieu }}</td>
-                        <td>Semestre</td>
+                        <td>{% for semestre in date.semestres %}{{ semestre.libelle }} {% endfor %}</td>
                         <td>
                             <a href="{{ path('administration_date_duplicate', {'id': date.id}) }}"
                                class="btn btn-success btn-outline btn-square" data-provide="tooltip"
@@ -44,7 +44,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="7">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

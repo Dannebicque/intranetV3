@@ -25,6 +25,7 @@ class FormationController extends Controller
      */
     public function index(FormationRepository $formationRepository): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/formation/index.html.twig', ['formations' => $formationRepository->findAll()]);
     }
 
@@ -33,6 +34,7 @@ class FormationController extends Controller
     */
     public function help(): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/formation/help.html.twig');
     }
 
@@ -41,6 +43,7 @@ class FormationController extends Controller
     */
     public function save(): Response
     {
+        //todo: comment l'exploiter...
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
@@ -50,6 +53,7 @@ class FormationController extends Controller
     */
     public function imprimer(): Response
     {
+        //todo: comment l'exploiter...
         //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
@@ -72,7 +76,7 @@ class FormationController extends Controller
             $em->persist($formation);
             $em->flush();
 
-            return $this->redirectToRoute('administration_structure_formation_index');
+            return $this->redirectToRoute('administration_structure_index');
         }
 
         return $this->render('administration/structure/formation/new.html.twig', [

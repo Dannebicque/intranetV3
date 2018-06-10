@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,8 +29,10 @@ class MessagerieController extends Controller
     /**
      * @param $filtre
      * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose":true})
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function filtre($filtre)
+    public function filtre($filtre): JsonResponse
     {
         $t = array();
 

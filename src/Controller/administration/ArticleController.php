@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -122,6 +121,10 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_article_delete", methods="DELETE")
+     * @param Request $request
+     * @param Article $article
+     *
+     * @return Response
      */
     public function delete(Request $request, Article $article): Response
     {

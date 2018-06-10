@@ -10,7 +10,6 @@ namespace App\MesClasses\Csv;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
@@ -34,7 +33,7 @@ class Csv
      * @throws \Symfony\Component\Serializer\Exception\RuntimeException
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
-    public function export(string $filename, array $data, array $groups)
+    public function export(string $filename, array $data, array $groups): void
     {
         $this->filename = $filename;
 

@@ -37,7 +37,8 @@ class MyAbsences
     /**
      * MyAbsences constructor.
      *
-     * @param $absenceRepository
+     * @param AbsenceRepository  $absenceRepository
+     * @param EtudiantRepository $etudiantRepository
      */
     public function __construct(AbsenceRepository $absenceRepository, EtudiantRepository $etudiantRepository)
     {
@@ -80,10 +81,9 @@ class MyAbsences
      *
      * @param          $anneeCourante
      *
-     * @return array
      * @throws \Exception
      */
-    public function getAbsencesSemestre(Semestre $semestre, $anneeCourante)
+    public function getAbsencesSemestre(Semestre $semestre, $anneeCourante): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
         $this->absences = $this->absenceRepository->findBySemestre($semestre, $anneeCourante);
@@ -102,7 +102,11 @@ class MyAbsences
             $etuId = $absence->getEtudiant() ? $absence->getEtudiant()->getId() : null;
             if ($etuId !== null && array_key_exists($etuId, $this->statistiques)) {
                 $this->statistiques[$etuId]['nbCoursManques']++;
-                $this->statistiques[$etuId]['totalDuree']->add(new \DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
+
+                if ($absence->getDuree() !== null) {
+                    $this->statistiques[$etuId]['totalDuree']->add(new \DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
+                }
+
                 $absence->isJustifie() ? $this->statistiques[$etuId]['nbJustifie']++ : $this->statistiques[$etuId]['nbNonJustifie']++;
             }
         }

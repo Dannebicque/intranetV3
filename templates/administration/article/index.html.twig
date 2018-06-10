@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                 {% for article in articles %}
-                    <tr>
+                    <tr id="ligne_{{ article.id }}">
                         <td>{{ article.id }}</td>
                         <td>{{ article.titre }}</td>
                         <td>{{ article.texte }}</td>

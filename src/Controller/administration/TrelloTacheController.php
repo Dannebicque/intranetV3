@@ -7,7 +7,6 @@ use App\Entity\TrelloTache;
 use App\Form\TrelloTacheType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\TrelloTacheRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +18,9 @@ class TrelloTacheController extends BaseController
 {
     /**
      * @Route("/", name="administration_trello_tache_index", methods="GET")
+     * @param TrelloTacheRepository $trelloTacheRepository
+     *
+     * @return Response
      */
     public function index(TrelloTacheRepository $trelloTacheRepository): Response
     {
@@ -30,6 +32,10 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/board", name="administration_trello_tache_board", methods="GET")
+     * @param TrelloTacheRepository $trelloTacheRepository
+     *
+     * @return Response
+     * @throws \Exception
      */
     public function board(TrelloTacheRepository $trelloTacheRepository)
     {
@@ -66,6 +72,10 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/save", name="administration_trello_tache_save", methods="GET")
+     * @param Csv                   $csv
+     * @param TrelloTacheRepository $trello_tacheRepository
+     *
+     * @return Response
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function save(Csv $csv, TrelloTacheRepository $trello_tacheRepository): Response
@@ -87,6 +97,9 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/new", name="administration_trello_tache_new", methods="GET|POST")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -111,6 +124,9 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_trello_tache_show", methods="GET")
+     * @param TrelloTache $trelloTache
+     *
+     * @return Response
      */
     public function show(TrelloTache $trelloTache): Response
     {
@@ -119,6 +135,10 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_trello_tache_edit", methods="GET|POST")
+     * @param Request     $request
+     * @param TrelloTache $trelloTache
+     *
+     * @return Response
      */
     public function edit(Request $request, TrelloTache $trelloTache): Response
     {
@@ -140,6 +160,10 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_trello_tache_delete", methods="DELETE")
+     * @param Request     $request
+     * @param TrelloTache $trelloTache
+     *
+     * @return Response
      */
     public function delete(Request $request, TrelloTache $trelloTache): Response
     {

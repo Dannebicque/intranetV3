@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class DefaultController
@@ -18,6 +17,10 @@ class DefaultController extends BaseController
 {
     /**
      * @Route("/", name="default_homepage")
+     * @param ActualiteRepository $actualiteRepository
+     * @param DateRepository      $dateRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository)
     {

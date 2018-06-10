@@ -19,7 +19,7 @@ class Events
      *
      * @var string
      */
-    const NOTE_ADDED = 'note.added';
-    const ABSENCE_ADDED = 'absence.added';
-    const CARNET_ADDED = 'carnet.added';
+    public const NOTE_ADDED = 'note.added';
+    public const ABSENCE_ADDED = 'absence.added';
+    public const CARNET_ADDED = 'carnet.added';
 }

@@ -8,8 +8,6 @@
 
 namespace App\MesClasses;
 
-
-use App\Entity\Formation;
 use App\Repository\AnneeRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\FormationRepository;
@@ -52,10 +50,12 @@ class MyConfiguration
     /**
      * MyConfiguration constructor.
      *
-     * @param FormationRepository $formationRepository
-     * @param DiplomeRepository   $diplomeRepository
-     * @param AnneeRepository     $anneeRepository
-     * @param SemestreRepository  $semestreRepository
+     * @param FormationRepository    $formationRepository
+     * @param DiplomeRepository      $diplomeRepository
+     * @param AnneeRepository        $anneeRepository
+     * @param SemestreRepository     $semestreRepository
+     * @param PersonnelRepository    $personnelRepository
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         FormationRepository $formationRepository,
@@ -125,18 +125,24 @@ class MyConfiguration
     {
         if ($value === 'false') {
             return false;
-        } elseif ($value === 'true') {
-            return true;
-        } elseif (0 === strpos($value, 'pers')) {
-            return $this->personnelRepository->find(substr($value, 4, strlen($value)));
-        } elseif (empty($value)) {
-            return null;
-        } else {
-            return $value;
         }
+
+        if ($value === 'true') {
+            return true;
+        }
+
+        if (0 === strpos($value, 'pers')) {
+            return $this->personnelRepository->find(substr($value, 4, \strlen($value)));
+        }
+
+        if (empty($value)) {
+            return null;
+        }
+
+        return $value;
     }
 
-    private function updateDiplome($id, $name, $value)
+    private function updateDiplome($id, $name, $value): bool
     {
         $diplome = $this->diplomeRepository->find($id);
         if ($diplome) {
@@ -149,7 +155,7 @@ class MyConfiguration
         return false;
     }
 
-    private function updateAnnee($id, $name, $value)
+    private function updateAnnee($id, $name, $value): bool
     {
         $annee = $this->anneeRepository->find($id);
         if ($annee) {
@@ -162,7 +168,7 @@ class MyConfiguration
         return false;
     }
 
-    private function updateSemestre($id, $name, $value)
+    private function updateSemestre($id, $name, $value): bool
     {
         $semestre = $this->semestreRepository->find($id);
         if ($semestre) {

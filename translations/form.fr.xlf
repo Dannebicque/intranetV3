@@ -1754,7 +1754,7 @@
       </notes>
       <segment>
         <source>Day</source>
-        <target>Day</target>
+          <target>Jour</target>
       </segment>
     </unit>
     <unit id="8AY7gIc" name="Hour">
@@ -1801,7 +1801,7 @@
       </notes>
       <segment>
         <source>choice.femme</source>
-        <target></target>
+          <target>Femme</target>
       </segment>
     </unit>
     <unit id="MNiQFb_" name="choice.homme">
@@ -1812,7 +1812,7 @@
       </notes>
       <segment>
         <source>choice.homme</source>
-        <target></target>
+          <target>Homme</target>
       </segment>
     </unit>
     <unit id="YBStdvr" name="label.nom">
@@ -1823,7 +1823,7 @@
       </notes>
       <segment>
         <source>label.nom</source>
-        <target></target>
+          <target>Nom</target>
       </segment>
     </unit>
     <unit id="94qpMaC" name="label.prenom">
@@ -1834,7 +1834,7 @@
       </notes>
       <segment>
         <source>label.prenom</source>
-        <target></target>
+          <target>Prénom</target>
       </segment>
     </unit>
     <unit id="050_398" name="label.mail_univ">
@@ -1845,7 +1845,7 @@
       </notes>
       <segment>
         <source>label.mail_univ</source>
-        <target></target>
+          <target>Email université (ou professionnel)</target>
       </segment>
     </unit>
     <unit id="_5of8La" name="label.site_univ">
@@ -1856,7 +1856,7 @@
       </notes>
       <segment>
         <source>label.site_univ</source>
-        <target></target>
+          <target>Site web université</target>
       </segment>
     </unit>
     <unit id="nTToy6N" name="label.mail_perso">
@@ -1867,7 +1867,7 @@
       </notes>
       <segment>
         <source>label.mail_perso</source>
-        <target></target>
+          <target>Email personnel</target>
       </segment>
     </unit>
     <unit id="rVYExl3" name="label.site_perso">
@@ -1878,7 +1878,7 @@
       </notes>
       <segment>
         <source>label.site_perso</source>
-        <target></target>
+          <target>Site web personnel</target>
       </segment>
     </unit>
     <unit id="tP3kBZ_" name="label.sexe">
@@ -1889,7 +1889,7 @@
       </notes>
       <segment>
         <source>label.sexe</source>
-        <target></target>
+          <target>Sexe</target>
       </segment>
     </unit>
     <unit id="j4jB84y" name="label.date_naissance">
@@ -1900,7 +1900,7 @@
       </notes>
       <segment>
         <source>label.date_naissance</source>
-        <target></target>
+          <target>Date de naissance</target>
       </segment>
     </unit>
     <unit id="R9C_2Hh" name="label.numero_harpege">
@@ -1911,7 +1911,7 @@
       </notes>
       <segment>
         <source>label.numero_harpege</source>
-        <target></target>
+          <target>Numéro Harpège/administratif</target>
       </segment>
     </unit>
     <unit id="CLGOhVB" name="label.initiales">
@@ -1922,7 +1922,7 @@
       </notes>
       <segment>
         <source>label.initiales</source>
-        <target></target>
+          <target>Initiales</target>
       </segment>
     </unit>
     <unit id="E2wzjl2" name="label.statut">
@@ -1933,7 +1933,7 @@
       </notes>
       <segment>
         <source>label.statut</source>
-        <target></target>
+          <target>Statut</target>
       </segment>
     </unit>
     <unit id="5dXVx_l" name="label.poste_interne">
@@ -1944,7 +1944,7 @@
       </notes>
       <segment>
         <source>label.poste_interne</source>
-        <target></target>
+          <target>Numéro de poste interne</target>
       </segment>
     </unit>
     <unit id="37dZZVc" name="label.tel_bureau">
@@ -1955,7 +1955,7 @@
       </notes>
       <segment>
         <source>label.tel_bureau</source>
-        <target></target>
+          <target>Téléphone Bureau</target>
       </segment>
     </unit>
     <unit id="OWAdLSm" name="label.tel1">
@@ -1966,7 +1966,7 @@
       </notes>
       <segment>
         <source>label.tel1</source>
-        <target></target>
+          <target>Téléphone</target>
       </segment>
     </unit>
     <unit id="UU1Oqhv" name="label.tel2">
@@ -1977,7 +1977,7 @@
       </notes>
       <segment>
         <source>label.tel2</source>
-        <target></target>
+          <target>Autre téléphone</target>
       </segment>
     </unit>
     <unit id="UI0STLl" name="label.responsabilites">
@@ -1988,7 +1988,7 @@
       </notes>
       <segment>
         <source>label.responsabilites</source>
-        <target></target>
+          <target>Responsabilités</target>
       </segment>
     </unit>
     <unit id="uHUU5is" name="label.domaines">
@@ -1999,7 +1999,7 @@
       </notes>
       <segment>
         <source>label.domaines</source>
-        <target></target>
+          <target>Domaines de compétences</target>
       </segment>
     </unit>
     <unit id="YpltcPM" name="label.remarque">
@@ -2010,7 +2010,7 @@
       </notes>
       <segment>
         <source>label.remarque</source>
-        <target></target>
+          <target>Remarque</target>
       </segment>
     </unit>
     <unit id="7dMOMxQ" name="label.signature">
@@ -2021,7 +2021,7 @@
       </notes>
       <segment>
         <source>label.signature</source>
-        <target></target>
+          <target>Signature</target>
       </segment>
     </unit>
     <unit id=".a7QVgp" name="label.entreprise">
@@ -2032,7 +2032,7 @@
       </notes>
       <segment>
         <source>label.entreprise</source>
-        <target></target>
+          <target>Entreprise</target>
       </segment>
     </unit>
     <unit id="9pFl1q0" name="label.bureau1">
@@ -2043,7 +2043,7 @@
       </notes>
       <segment>
         <source>label.bureau1</source>
-        <target></target>
+          <target>Bureau</target>
       </segment>
     </unit>
     <unit id="Pn2TSk_" name="label.bureau2">
@@ -2054,7 +2054,7 @@
       </notes>
       <segment>
         <source>label.bureau2</source>
-        <target></target>
+          <target>Autre bureau</target>
       </segment>
     </unit>
     <unit id="x7vVhiW" name="label.cv">
@@ -2065,7 +2065,7 @@
       </notes>
       <segment>
         <source>label.cv</source>
-        <target></target>
+          <target>CV</target>
       </segment>
     </unit>
     <unit id="F_My2fP" name="label.photo">
@@ -2076,7 +2076,7 @@
       </notes>
       <segment>
         <source>label.photo</source>
-        <target></target>
+          <target>Photo</target>
       </segment>
     </unit>
     <unit id="rGCDn7t" name="adresseParentale">
@@ -2086,7 +2086,7 @@
       </notes>
       <segment>
         <source>adresseParentale</source>
-        <target></target>
+          <target>Adresse parentale</target>
       </segment>
     </unit>
     <unit id="GStp0_n" name="adresse">
@@ -2097,7 +2097,7 @@
       </notes>
       <segment>
         <source>adresse</source>
-        <target></target>
+          <target>Adresse</target>
       </segment>
     </unit>
     <unit id="FveKfWM" name="username">
@@ -2107,7 +2107,7 @@
       </notes>
       <segment>
         <source>username</source>
-        <target></target>
+          <target>Login</target>
       </segment>
     </unit>
     <unit id="iBpPnJD" name="annee_bac">
@@ -2117,7 +2117,7 @@
       </notes>
       <segment>
         <source>annee_bac</source>
-        <target></target>
+          <target>Année d'obtention du bac</target>
       </segment>
     </unit>
     <unit id="JopssP2" name="bac">
@@ -2127,7 +2127,7 @@
       </notes>
       <segment>
         <source>bac</source>
-        <target></target>
+          <target>Bac obtenu</target>
       </segment>
     </unit>
     <unit id="N_KDGO." name="num_ine">
@@ -2137,7 +2137,7 @@
       </notes>
       <segment>
         <source>num_ine</source>
-        <target></target>
+          <target>Numéro INE étudiant</target>
       </segment>
     </unit>
     <unit id="z19k6u9" name="num_etudiant">
@@ -2147,7 +2147,7 @@
       </notes>
       <segment>
         <source>num_etudiant</source>
-        <target></target>
+          <target>Numéro étudiant</target>
       </segment>
     </unit>
     <unit id="4jaDP7s" name="semestre">
@@ -2157,7 +2157,7 @@
       </notes>
       <segment>
         <source>semestre</source>
-        <target></target>
+          <target>Semestre</target>
       </segment>
     </unit>
     <unit id="LYVRPWU" name="label.dateRetour">
@@ -2358,5 +2358,23 @@
         <target>label.annee</target>
       </segment>
     </unit>
+      <unit id="haOas0X" name="Yes">
+          <segment>
+              <source>Yes</source>
+              <target>Yes</target>
+          </segment>
+      </unit>
+      <unit id="HqRCoTS" name="No">
+          <segment>
+              <source>No</source>
+              <target>No</target>
+          </segment>
+      </unit>
+      <unit id="sDzhR7b" name="label.suspendu">
+          <segment>
+              <source>label.suspendu</source>
+              <target>label.suspendu</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

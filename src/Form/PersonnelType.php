@@ -35,7 +35,7 @@ class PersonnelType extends AbstractType
             ->add('initiales', TextType::class, ['label' => 'label.initiales'])
             ->add('statut', ChoiceType::class, [
                 'label'                     => 'label.statut',
-                'choices'                   => ['choice.oui' => true, 'choice.non' => true],
+                'choices'                   => ['choice.oui' => true, 'choice.non' => false],
                 'choice_translation_domain' => 'form',
                 'expanded'                  => true
             ])

@@ -26,7 +26,7 @@ class TypeDocument extends BaseEntity
     private $formation;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="type_document")
+     * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="typeDocument")
      */
     private $documents;
 

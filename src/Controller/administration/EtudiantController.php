@@ -7,7 +7,6 @@ use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class EtudiantController

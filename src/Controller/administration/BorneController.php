@@ -6,8 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Form\BorneType;
 use App\Repository\BorneRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +19,9 @@ class BorneController extends BaseController
 {
     /**
      * @Route("/", name="administration_borne_index", methods="GET")
+     * @param BorneRepository $borneRepository
+     *
+     * @return Response
      */
     public function index(BorneRepository $borneRepository): Response
     {
@@ -29,6 +30,9 @@ class BorneController extends BaseController
 
     /**
      * @Route("/new", name="administration_borne_new", methods="GET|POST")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -53,6 +57,9 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_show", methods="GET")
+     * @param Borne $borne
+     *
+     * @return Response
      */
     public function show(Borne $borne): Response
     {
@@ -61,6 +68,10 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_borne_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Borne   $borne
+     *
+     * @return Response
      */
     public function edit(Request $request, Borne $borne): Response
     {
@@ -82,6 +93,10 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
+     * @param Request $request
+     * @param Borne   $borne
+     *
+     * @return Response
      */
     public function delete(Request $request, Borne $borne): Response
     {

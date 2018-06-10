@@ -27,6 +27,7 @@ class SemestreController extends Controller
      */
     public function index(SemestreRepository $semestreRepository): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/semestre/index.html.twig', ['semestres' => $semestreRepository->findAll()]);
     }
 
@@ -35,6 +36,7 @@ class SemestreController extends Controller
     */
     public function help(): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/semestre/help.html.twig');
     }
 
@@ -43,6 +45,7 @@ class SemestreController extends Controller
     */
     public function save(): Response
     {
+        //todo: comment l'exploiter...
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
@@ -52,6 +55,7 @@ class SemestreController extends Controller
     */
     public function imprimer(): Response
     {
+        //todo: comment l'exploiter...
         //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
@@ -59,30 +63,33 @@ class SemestreController extends Controller
     /**
      * @Route("/new/{annee}", name="administration_structure_semestre_new", methods="GET|POST")
      * @param Request $request
-     * @param Diplome $diplome
+     * @param Annee   $annee
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(Request $request, Annee $annee): Response
     {
-        $semestre = new Semestre();
-        $semestre->setAnnee($annee);
-        $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $annee->getDiplome()->getId()]);
-        $form->handleRequest($request);
+        if ($annee->getDiplome() !== null) {
+            $semestre = new Semestre();
+            $semestre->setAnnee($annee);
+            $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $annee->getDiplome()->getId()]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($semestre);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($semestre);
+                $em->flush();
 
-            return $this->redirectToRoute('administration_structure_semestre_index');
+                return $this->redirectToRoute('administration_structure_index');
+            }
+
+            return $this->render('administration/structure/semestre/new.html.twig', [
+                'semestre' => $semestre,
+                'form'     => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/structure/semestre/new.html.twig', [
-            'semestre' => $semestre,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -106,7 +113,7 @@ class SemestreController extends Controller
      */
     public function edit(Request $request, Semestre $semestre): Response
     {
-        if ($semestre->getAnnee()->getDiplome() !== null) {
+        if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
             $form = $this->createForm(SemestreType::class, $semestre,
                 ['diplome' => $semestre->getAnnee()->getDiplome()->getId()]);
             $form->handleRequest($request);
@@ -123,7 +130,7 @@ class SemestreController extends Controller
             ]);
         }
 
-        return $this->render('erreur/404.html.twig');
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**

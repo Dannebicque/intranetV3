@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
+use App\Form\Type\YesNoType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,19 +48,14 @@ class DiplomeType extends AbstractType
             ->add('opt_nb_jours_saisie', TextType::class,[
                 'label' => 'label.opt_nb_jours_saisie'
             ])
-            ->add('opt_dilpome_decale', ChoiceType::class,
+            ->add('opt_dilpome_decale', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => false],
-                    'expanded' => true,
-                    'choice_translation_domain' => 'form',
+
                     'label'   => 'label.opt_dilpome_decale'
                 ])
-            ->add('opt_suppr_absence', ChoiceType::class,
+            ->add('opt_suppr_absence', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => false],
-                    'expanded' => true,
-                    'label'   => 'label.opt_suppr_absence',
-                    'choice_translation_domain' => 'form'
+                    'label' => 'label.opt_suppr_absence'
                 ])
             ->add('opt_methode_calcul', ChoiceType::class,
                 [
@@ -69,27 +65,19 @@ class DiplomeType extends AbstractType
                     'choice_translation_domain' => 'form'
 
                 ])
-            ->add('opt_anonymat', ChoiceType::class,
+            ->add('opt_anonymat', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => false],
-                    'expanded' => true,
-                    'label'   => 'label.opt_anonymat',
-                    'choice_translation_domain' => 'form'
-
+                    'label' => 'label.opt_anonymat'
                 ])
-            ->add('opt_commentaires_releve', ChoiceType::class,
+            ->add('opt_commentaires_releve', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => false],
-                    'choice_translation_domain' => 'form',
-                    'expanded' => true,
+
                     'label'   => 'label.opt_commentaires_releve'
                 ])
-            ->add('opt_espace_perso_visible', ChoiceType::class,
+            ->add('opt_espace_perso_visible', YesNoType::class,
                 [
-                    'choices' => ['choice.oui' => true, 'choice.non' => false],
-                    'expanded' => true,
+
                     'label'   => 'label.opt_espace_perso_visible',
-                    'choice_translation_domain' => 'form'
 
                 ])
             ->add('volume_horaire', TextType::class,[

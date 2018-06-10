@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\TypeHrs;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,11 +16,8 @@ class TypeHrsType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('incluService', ChoiceType::class, [
-                'label'                     => 'label.incluService',
-                'choices'                   => ['choice.oui' => true, 'choice.non' => true],
-                'choice_translation_domain' => 'form',
-                'expanded'                  => true
+            ->add('incluService', YesNoType::class, [
+                'label' => 'label.incluService'
             ])
             ->add('type', ChoiceType::class, [
                 'label'                     => 'label.typehrs',

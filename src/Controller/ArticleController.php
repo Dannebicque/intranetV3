@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class ArticleController
@@ -22,9 +21,9 @@ class ArticleController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categorie(ArticleRepository $articleRepository,  $categorie)
+    public function categorie(ArticleRepository $articleRepository, $categorie): Response
     {
-        $articles = $articleRepository->FindByTypeFormation($categorie, $this->dataUserSession->getFormation());
+        $articles = $articleRepository->findByTypeFormation($categorie, $this->dataUserSession->getFormation());
 
         return $this->render('article/articles.html.twig', [
             'articles' => $articles
@@ -33,11 +32,13 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/show/{slug}", name="article_read_more")
-     * @param Article $article
+     * @param ArticleRepository $articleRepository
+     * @param                   $slug
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(ArticleRepository $articleRepository, $slug)
+    public function show(ArticleRepository $articleRepository, $slug): Response
     {
         $article = $articleRepository->findOneBySlug($slug);
 

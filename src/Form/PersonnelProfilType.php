@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Personnel;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -11,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PersonnelProfilType extends AbstractType
 {
@@ -33,11 +33,8 @@ class PersonnelProfilType extends AbstractType
             ->add('date_naissance', DateType::class, ['label' => 'label.date_naissance'])
             ->add('numero_harpege', TextType::class, ['label' => 'label.numero_harpege'])
             ->add('initiales', TextType::class, ['label' => 'label.initiales'])
-            ->add('statut', ChoiceType::class, [
+            ->add('statut', YesNoType::class, [
                 'label'                     => 'label.statut',
-                'choices'                   => ['choice.oui' => true, 'choice.non' => true],
-                'choice_translation_domain' => 'form',
-                'expanded'                  => true
             ])
             ->add('poste_interne', TextType::class, ['label' => 'label.poste_interne'])
             ->add('tel_bureau', TextType::class, ['label' => 'label.tel_bureau'])
@@ -51,8 +48,13 @@ class PersonnelProfilType extends AbstractType
             ->add('bureau1', TextType::class, ['label' => 'label.bureau1'])
             ->add('bureau2', TextType::class, ['label' => 'label.bureau2'])
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
-            ->add('cv', VichFileType::class, ['label' => 'label.cv'])
-            ->add('photo', VichImageType::class, ['label' => 'label.photo']);
+            ->add('cvFile', VichFileType::class, [
+                'label'          => 'label.cv',
+                'required'       => false,
+                'download_label' => 'label.apercu',
+                'allow_delete'   => false
+            ])//->add('photo', VichImageType::class, ['label' => 'label.photo'])
+        ;
     }
 
     /**

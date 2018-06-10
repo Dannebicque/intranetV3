@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Actualite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\AbstractQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

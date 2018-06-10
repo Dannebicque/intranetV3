@@ -279,7 +279,7 @@ class Annee extends BaseEntity
         $this->optAlternance = $optAlternance;
     }
 
-    public function update($name, $value)
+    public function update($name, $value): void
     {
         $t = explode('_', $name);
         $name = $t[0];

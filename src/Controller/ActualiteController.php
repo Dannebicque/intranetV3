@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\ActualiteRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class ActualiteController
@@ -15,6 +14,9 @@ class ActualiteController extends BaseController
 {
     /**
      * @Route("/anciennes", name="actualite_liste")
+     * @param ActualiteRepository $actualiteRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function liste(ActualiteRepository $actualiteRepository)
     {

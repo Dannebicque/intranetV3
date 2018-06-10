@@ -637,7 +637,7 @@
       </notes>
       <segment>
         <source>profil.etudiant.heading</source>
-        <target>Profil de l'étudiant</target>
+          <target>Profil de l'étudiant %etudiant%</target>
       </segment>
     </unit>
     <unit id="sub7le2" name="mon.profil.heading">
@@ -4855,7 +4855,7 @@
     <unit id="DAMFhpR" name="lock">
       <segment>
         <source>lock</source>
-        <target>lock</target>
+          <target>Vérrouiller</target>
       </segment>
     </unit>
     <unit id="Y6FfBVj" name="actualite.liste.heading">
@@ -4906,5 +4906,59 @@
         <target>table.annee</target>
       </segment>
     </unit>
+      <unit id="_mfj2.0" name="table.nb_documents">
+          <segment>
+              <source>table.nb_documents</source>
+              <target>table.nb_documents</target>
+          </segment>
+      </unit>
+      <unit id="HmQRKl." name="voir.le.fichier">
+          <segment>
+              <source>voir.le.fichier</source>
+              <target>Voir le fichier</target>
+          </segment>
+      </unit>
+      <unit id="xfF9JxC" name=".new.heading">
+          <segment>
+              <source>.new.heading</source>
+              <target>.new.heading</target>
+          </segment>
+      </unit>
+      <unit id="G9gGgJ5" name=".show.heading">
+          <segment>
+              <source>.show.heading</source>
+              <target>.show.heading</target>
+          </segment>
+      </unit>
+      <unit id="W1fYrqx" name="tab.stages">
+          <segment>
+              <source>tab.stages</source>
+              <target>Stages</target>
+          </segment>
+      </unit>
+      <unit id="LkucwkK" name="friends">
+          <segment>
+              <source>friends</source>
+              <target>Amis</target>
+          </segment>
+      </unit>
+      <unit id="__vJoSM" name="choice.oui">
+          <segment>
+              <source>choice.oui</source>
+              <target>choice.oui</target>
+          </segment>
+      </unit>
+      <unit id="Fdhx4Ah" name="choice.non">
+          <segment>
+              <source>choice.non</source>
+              <target>choice.non</target>
+          </segment>
+      </unit>
+      <unit id="DTr_4kV" name="bloc.previsionnel.personnel.heading">
+          <segment>
+              <source>bloc.previsionnel.personnel.heading</source>
+              <target>bloc.previsionnel.personnel.heading</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

@@ -6,8 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelFormationRepository;
-use App\Repository\PersonnelRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

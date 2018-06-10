@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\SemestreRepository;
-use Doctrine\DBAL\Types\FloatType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

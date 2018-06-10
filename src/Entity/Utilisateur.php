@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
  * @ORM\MappedSuperclass
- *
+ * @Vich\Uploadable
  */
 abstract class Utilisateur implements UserInterface
 {
@@ -34,7 +35,7 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=75)
      *
      */
-    protected $type_user;
+    protected $typeUser;
 
     /**
      * @ORM\Column(type="string", length=75)
@@ -52,25 +53,25 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=255)
      *
      */
-    protected $mail_univ;
+    protected $mailUniv;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      *
      */
-    protected $site_univ;
+    protected $siteUniv;
 
     /**
      * @ORM\Column( type="string", length=255,nullable=true)
      *
      */
-    protected $mail_perso;
+    protected $mailPerso;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      *
      */
-    protected $site_perso;
+    protected $sitePerso;
 
     /**
      * @ORM\Column(name="sexe", type="string", length=1, options={"default":"M"})
@@ -82,7 +83,7 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="date",nullable=true)
      *
      */
-    protected $date_naissance;
+    protected $dateNaissance;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
@@ -122,7 +123,6 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     *
      */
     protected $photo;
 
@@ -207,15 +207,15 @@ abstract class Utilisateur implements UserInterface
      */
     public function getTypeUser()
     {
-        return $this->type_user;
+        return $this->typeUser;
     }
 
     /**
-     * @param mixed $type_user
+     * @param mixed $typeUser
      */
-    public function setTypeUser($type_user): void
+    public function setTypeUser($typeUser): void
     {
-        $this->type_user = $type_user;
+        $this->typeUser = $typeUser;
     }
 
     /**
@@ -255,15 +255,15 @@ abstract class Utilisateur implements UserInterface
      */
     public function getMailUniv()
     {
-        return $this->mail_univ;
+        return $this->mailUniv;
     }
 
     /**
-     * @param mixed $mail_univ
+     * @param mixed $mailUniv
      */
-    public function setMailUniv($mail_univ): void
+    public function setMailUniv($mailUniv): void
     {
-        $this->mail_univ = $mail_univ;
+        $this->mailUniv = $mailUniv;
     }
 
     /**
@@ -271,15 +271,15 @@ abstract class Utilisateur implements UserInterface
      */
     public function getSiteUniv()
     {
-        return $this->site_univ;
+        return $this->siteUniv;
     }
 
     /**
-     * @param mixed $site_univ
+     * @param mixed $siteUniv
      */
-    public function setSiteUniv($site_univ): void
+    public function setSiteUniv($siteUniv): void
     {
-        $this->site_univ = $site_univ;
+        $this->siteUniv = $siteUniv;
     }
 
     /**
@@ -287,15 +287,15 @@ abstract class Utilisateur implements UserInterface
      */
     public function getMailPerso()
     {
-        return $this->mail_perso;
+        return $this->mailPerso;
     }
 
     /**
-     * @param mixed $mail_perso
+     * @param mixed $mailPerso
      */
-    public function setMailPerso($mail_perso): void
+    public function setMailPerso($mailPerso): void
     {
-        $this->mail_perso = $mail_perso;
+        $this->mailPerso = $mailPerso;
     }
 
     /**
@@ -303,15 +303,15 @@ abstract class Utilisateur implements UserInterface
      */
     public function getSitePerso()
     {
-        return $this->site_perso;
+        return $this->sitePerso;
     }
 
     /**
-     * @param mixed $site_perso
+     * @param mixed $sitePerso
      */
-    public function setSitePerso($site_perso): void
+    public function setSitePerso($sitePerso): void
     {
-        $this->site_perso = $site_perso;
+        $this->sitePerso = $sitePerso;
     }
 
     /**
@@ -335,15 +335,15 @@ abstract class Utilisateur implements UserInterface
      */
     public function getDateNaissance()
     {
-        return $this->date_naissance;
+        return $this->dateNaissance;
     }
 
     /**
-     * @param mixed $date_naissance
+     * @param mixed $dateNaissance
      */
-    public function setDateNaissance($date_naissance): void
+    public function setDateNaissance($dateNaissance): void
     {
-        $this->date_naissance = $date_naissance;
+        $this->dateNaissance = $dateNaissance;
     }
 
     /**

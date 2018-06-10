@@ -19,6 +19,9 @@ class SalleController extends Controller
 {
     /**
      * @Route("/", name="sa_salle_index", methods="GET")
+     * @param SalleRepository $salleRepository
+     *
+     * @return Response
      */
     public function index(SalleRepository $salleRepository): Response
     {
@@ -53,6 +56,9 @@ class SalleController extends Controller
 
     /**
      * @Route("/new", name="sa_salle_new", methods="GET|POST")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -76,6 +82,9 @@ class SalleController extends Controller
 
     /**
      * @Route("/{id}", name="sa_salle_show", methods="GET")
+     * @param Salle $salle
+     *
+     * @return Response
      */
     public function show(Salle $salle): Response
     {
@@ -84,6 +93,10 @@ class SalleController extends Controller
 
     /**
      * @Route("/{id}/edit", name="sa_salle_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Salle   $salle
+     *
+     * @return Response
      */
     public function edit(Request $request, Salle $salle): Response
     {
@@ -104,6 +117,10 @@ class SalleController extends Controller
 
     /**
      * @Route("/{id}", name="sa_salle_delete", methods="DELETE")
+     * @param Request $request
+     * @param Salle   $salle
+     *
+     * @return Response
      */
     public function delete(Request $request, Salle $salle): Response
     {

@@ -20,7 +20,7 @@ class AppExtension extends AbstractExtension
         );
     }
 
-    public function badge($number)
+    public function badge($number): ?string
     {
         if ($number >= 5 && $number < 10) {
             return 'badge badge-warning';
@@ -42,7 +42,6 @@ class AppExtension extends AbstractExtension
      */
     public function telFormat($number): ?string
     {
-        $str = '';
         str_replace(['.', '-', ' '], '', $number);
         if (\strlen($number) === 10) {
             $str = chunk_split($number, 2, ' ');
@@ -58,7 +57,7 @@ class AppExtension extends AbstractExtension
      *
      * @return mixed|string
      */
-    function timeAgo($time)
+    public function timeAgo($time)
     {
         $time = strtotime($time->format('Y-m-d H:i:s'));
         $now = time(); // current time
@@ -69,11 +68,11 @@ class AppExtension extends AbstractExtension
             return Constantes::TIMEBEFORE_NOW;
         } elseif ($diff < 3600) // it happened X minutes ago
         {
-            return str_replace('{num}', ($out = round($diff / 60)),
+            return str_replace('{num}', $out = round($diff / 60),
                 $out == 1 ? Constantes::TIMEBEFORE_MINUTE : Constantes::TIMEBEFORE_MINUTES);
         } elseif ($diff < 3600 * 24) // it happened X hours ago
         {
-            return str_replace('{num}', ($out = round($diff / 3600)),
+            return str_replace('{num}', $out = round($diff / 3600),
                 $out == 1 ? Constantes::TIMEBEFORE_HOUR : Constantes::TIMEBEFORE_HOURS);
         } elseif ($diff < 3600 * 24 * 2) // it happened yesterday
         {

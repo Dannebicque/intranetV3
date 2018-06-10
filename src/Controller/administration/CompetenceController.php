@@ -8,7 +8,6 @@ use App\Entity\Diplome;
 use App\Form\CompetenceType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\CompetenceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,6 +60,10 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/save", name="administration_competence_save", methods="GET")
+     * @param Csv                  $csv
+     * @param CompetenceRepository $competenceRepository
+     *
+     * @return Response
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function save(Csv $csv, CompetenceRepository $competenceRepository): Response
@@ -93,6 +96,10 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_competence_edit", methods="GET|POST")
+     * @param Request    $request
+     * @param Competence $competence
+     *
+     * @return Response
      */
     public function edit(Request $request, Competence $competence): Response
     {

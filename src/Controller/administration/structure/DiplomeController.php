@@ -7,7 +7,6 @@ use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\MesClasses\DataUserSession;
 use App\Repository\DiplomeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +27,7 @@ class DiplomeController extends BaseController
      */
     public function index(DataUserSession $dataUserSession, DiplomeRepository $diplomeRepository): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/diplome/index.html.twig', ['diplomes' => $diplomeRepository->findByFormation($dataUserSession->getFormation()->getId())]);
     }
 
@@ -36,6 +36,7 @@ class DiplomeController extends BaseController
     */
     public function help(): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/diplome/help.html.twig');
     }
 
@@ -44,6 +45,7 @@ class DiplomeController extends BaseController
     */
     public function save(): Response
     {
+        //todo: comment l'exploiter...
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
@@ -53,6 +55,7 @@ class DiplomeController extends BaseController
     */
     public function imprimer(): Response
     {
+        //todo: comment l'exploiter...
         //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
@@ -76,7 +79,7 @@ class DiplomeController extends BaseController
             $em->persist($diplome);
             $em->flush();
 
-            return $this->redirectToRoute('administration_structure_diplome_index');
+            return $this->redirectToRoute('administration_structure_index');
         }
 
         return $this->render('administration/structure/diplome/new.html.twig', [
@@ -123,6 +126,7 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_structure_diplome_delete", methods="DELETE")
+     * @param Diplome $id
      */
     public function delete(Diplome $id): void
     {

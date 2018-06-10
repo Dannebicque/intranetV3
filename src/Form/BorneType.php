@@ -4,10 +4,10 @@ namespace App\Form;
 
 use App\Entity\Borne;
 use App\Entity\Semestre;
+use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,7 +18,7 @@ class BorneType extends AbstractType
 {
     private $formation;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formation = $options['formation'];
 
@@ -43,11 +43,8 @@ class BorneType extends AbstractType
             ->add('dateFinPublication', DateTimeType::class, [
                 'label' => 'label.dateFinPublication',
             ])
-            ->add('visible', ChoiceType::class,
+            ->add('visible', YesNoType::class,
                 [
-                    'choices'                   => ['choice.oui' => true, 'choice.non' => true],
-                    'expanded'                  => true,
-                    'choice_translation_domain' => 'form',
                     'label'                     => 'label.visible'
                 ])
             ->add('semestres', EntityType::class, array(
@@ -63,7 +60,7 @@ class BorneType extends AbstractType
             ));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Borne::class,

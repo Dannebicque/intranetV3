@@ -37,7 +37,7 @@ class HrsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('h')
             ->where('h.personnel = :user')
             ->andWhere('h.annee = :annee')
-            ->setParameter('user', $getUser)
+            ->setParameter('formation', $formation)
             ->setParameter('annee', $annee)
             ->orderBy('h.typeHrs', 'ASC')
             ->orderBy('h.semestre', 'ASC')

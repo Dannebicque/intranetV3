@@ -606,7 +606,7 @@ class Formation extends BaseEntity
         return $this;
     }
 
-    public function update($name, $value)
+    public function update($name, $value): void
     {
 
         $name[0] = \chr(\ord($name[0]) - 32);

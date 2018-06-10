@@ -16,6 +16,9 @@ class ApplicationController extends Controller
 {
     /**
      * @Route("/{onglet}", name="application_index")
+     * @param string $onglet
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index($onglet = 'messagerie')
     {

@@ -116,6 +116,10 @@ class DocumentController extends Controller
 
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
+     * @param Request  $request
+     * @param Document $document
+     *
+     * @return Response
      */
     public function delete(Request $request, Document $document): Response
     {

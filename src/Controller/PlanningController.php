@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\MesClasses\Calendrier;
 use App\Repository\DateRepository;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PlanningController extends BaseController
 {
     /**
      * @Route("/planning/{annee}", name="planning")
+     * @param DateRepository $dateRepository
+     * @param int            $annee
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(DateRepository $dateRepository, int $annee)
     {

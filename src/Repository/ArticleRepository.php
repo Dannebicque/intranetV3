@@ -19,7 +19,13 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function FindByTypeFormation($type, $formation)
+    /**
+     * @param $type
+     * @param $formation
+     *
+     * @return mixed
+     */
+    public function findByTypeFormation($type, $formation)
     {
         return $this->createQueryBuilder('a')
             ->where('a.type = :type')
@@ -30,6 +36,12 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param $slug
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneBySlug($slug)
     {
         return $this->createQueryBuilder('a')
@@ -39,33 +51,4 @@ class ArticleRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
-
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -22,7 +22,7 @@ abstract class Calendrier
     private static $tabJoursFeries = array();
 
 
-    public static function joursFeries($year)
+    public static function joursFeries($year): void
     {
         $year1 = $year + 1; //second "semestre"
 
@@ -51,7 +51,10 @@ abstract class Calendrier
         ); //lundi de pentecote
     }
 
-    public static function calculPlanning($year)
+    /**
+     * @param $year
+     */
+    public static function calculPlanning($year): void
     {
         self::joursFeries($year);
         $bonMois = 9;

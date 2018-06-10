@@ -20,6 +20,7 @@
                 <tr>
                     <th>{{ 'table.id'|trans }}</th>
                     <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.nb_documents'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -28,6 +29,7 @@
                     <tr>
                         <td>{{ type_document.id }}</td>
                         <td>{{ type_document.libelle }}</td>
+                        <td>{{ type_document.documents|length }}</td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt:'type_document', id:type_document.id}) }}
                         </td>

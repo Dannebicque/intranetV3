@@ -5,11 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonnelRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Personnel extends Utilisateur // implements SerializerInterface
 {
@@ -87,6 +90,20 @@ class Personnel extends Utilisateur // implements SerializerInterface
     protected $cv;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     */
+    private $cvName;
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="cv", fileNameProperty="cvName")
+     */
+    private $cvFile;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="personnel")
      */
     private $hrs;
@@ -97,12 +114,12 @@ class Personnel extends Utilisateur // implements SerializerInterface
     private $previsionnels;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnel_auteur")
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnelAuteur")
      */
     private $evaluationsAuteur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnel_autorise")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnelAutorise")
      */
     private $evaluationsAutorise;
 
@@ -320,19 +337,44 @@ class Personnel extends Utilisateur // implements SerializerInterface
     }
 
     /**
-     * @return mixed
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $cv
      */
-    public function getCv()
+    public function setCvFile(?File $cv = null): void
     {
-        return $this->cv;
+        $this->cvFile = $cv;
+
+        if (null !== $cv) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            parent::setUpdatedValue();
+        }
+    }
+
+    public function getCvFile(): ?File
+    {
+        return $this->cvFile;
     }
 
     /**
-     * @param mixed $cv
+     * @return string
      */
-    public function setCv($cv): void
+    public function getCvName(): ?string
     {
-        $this->cv = $cv;
+        return $this->cvName;
+    }
+
+    /**
+     * @param string $cvName
+     */
+    public function setCvName(string $cvName): void
+    {
+        $this->cvName = $cvName;
     }
 
     /**

@@ -4,10 +4,10 @@ namespace App\Form;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
+use App\Form\Type\YesNoType;
 use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -66,12 +66,8 @@ class AnneeType extends AbstractType
                 'label' => 'label.couleur_texte',
                 'required' =>false
             ])
-
-            ->add('optAlternance', ChoiceType::class, [
-                'label' => 'label.opt_alternance',
-                'choices' => ['choice.oui' => true, 'choice.non' => false],
-                'choice_translation_domain' => 'form',
-                'expanded' => true,
+            ->add('optAlternance', YesNoType::class, [
+                'label' => 'label.opt_alternance'
             ])
         ;
     }

@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block content %}
+    {# todo: préciser l'année de validité. Permettre une duplication de ligne ou d'année. Ligne (ou modal) pour ajouter rapidement une nouvelle entrée ? #}
     <div class="card">
         <h4 class="card-title">{{ 'adm.hrs.index.heading'|trans }}</h4>
         <div class="card-body">
@@ -30,16 +31,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                {# todo: Ajouter une ligne pour ajouter rapidement une prime #}
                 {% for hr in hrs %}
-                    <tr>
+                    <tr id="ligne_{{ hr.id }}">
                         <td>{{ hr.libelle }}</td>
                         <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
                         <td>{{ hr.personnel ? hr.personnel.display : 'non.defini'|trans }}</td>
                         <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
                         <td>{{ hr.nbHeuresTd }}</td>
                         <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'hrs', id:hr.id}) }}
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'hrs', id:hr.id, modal:true}) }}
                         </td>
                     </tr>
                 {% else %}

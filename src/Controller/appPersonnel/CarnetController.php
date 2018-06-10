@@ -14,7 +14,6 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class CarnetController
@@ -28,6 +27,9 @@ class CarnetController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_carnet_index", methods="GET")
+     * @param CahierTexteRepository $cahierRepository
+     *
+     * @return Response
      */
     public function index(CahierTexteRepository $cahierRepository): Response
     {
@@ -37,6 +39,10 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/save", name="application_personnel_carnet_save", methods="GET")
+     * @param Csv                   $csv
+     * @param CahierTexteRepository $cahierRepository
+     *
+     * @return Response
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
     public function save(Csv $csv, CahierTexteRepository $cahierRepository): Response
@@ -58,6 +64,10 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/new", name="application_personnel_carnet_new", methods="GET|POST")
+     * @param Request                  $request
+     * @param EventDispatcherInterface $eventDispatcher
+     *
+     * @return Response
      */
     public function create(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
@@ -87,6 +97,9 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_show", methods="GET")
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Response
      */
     public function show(CahierTexte $cahierTexte): Response
     {
@@ -95,6 +108,10 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_carnet_edit", methods="GET|POST")
+     * @param Request     $request
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Response
      */
     public function edit(Request $request, CahierTexte $cahierTexte): Response
     {
@@ -116,6 +133,10 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_delete", methods="DELETE")
+     * @param Request     $request
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Response
      */
     public function delete(Request $request, CahierTexte $cahierTexte): Response
     {

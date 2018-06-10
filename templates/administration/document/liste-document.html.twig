@@ -4,6 +4,7 @@
         <th>#</th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>{{ 'table.type_fichier'|trans }}</th>
+        <th>{{ 'table.type_document'|trans }}</th>
         <th>{{ 'table.updated'|trans }}</th>
         <th>{{ 'table.fichier'|trans }}</th>
         <th>{{ 'table.actions'|trans }}</th>
@@ -15,8 +16,10 @@
             <td>{{ document.id }}</td>
             <td>{{ document.libelle }}</td>
             <td>{{ document.typeFichier }}</td>
+            <td>{{ document.typeDocument ? document.typeDocument.libelle : 'non.defini'|trans }}</td>
             <td>{{ document.updated ? document.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-            <td><a href="{{ asset('upload/documents/'~document.documentName) }}" target="_blank">Voir le fichier</a></td>
+            <td><a href="{{ asset('upload/documents/'~document.documentName) }}"
+                   target="_blank">{{ 'voir.le.fichier'|trans }}</a></td>
             <td>
                 {{ include('composants/adm-buttons-table-index.html.twig', {elt:'document', id:document.id}) }}
             </td>

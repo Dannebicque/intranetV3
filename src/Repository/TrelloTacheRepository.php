@@ -30,7 +30,7 @@ class TrelloTacheRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByFormationTaches($getId)
+    public function findByFormationTaches($getId): array
     {
         $query = $this->createQueryBuilder('t') //prendre la période de 30 jours
             ->orderBy('t.deadline', 'ASC')
@@ -41,43 +41,16 @@ class TrelloTacheRepository extends ServiceEntityRepository
 
         /** @var TrelloTache $event */
         foreach ($query as $event) {
-            $key = $event->getDeadline()->format('Y-m-d');
-            if (!array_key_exists($key, $tab)) {
-                $tab[$key] = array();
+            if ($event->getDeadline() !== null) {
+                $key = $event->getDeadline()->format('Y-m-d');
+                if (!array_key_exists($key, $tab)) {
+                    $tab[$key] = array();
+                }
+                $tab[$key][] = $event;
+                //si sur plusieurs jours, faire une boucle pour remplir le tableau
             }
-            $tab[$key][] = $event;
-            //si sur plusieurs jours, faire une boucle pour remplir le tableau
         }
 
         return $tab;
     }
-
-//    /**
-//     * @return TrelloTache[] Returns an array of TrelloTache objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?TrelloTache
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

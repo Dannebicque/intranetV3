@@ -403,7 +403,7 @@ class Etudiant extends Utilisateur implements \Serializable
      * @return string the string representation of the object or null
      * @since 5.1.0
      */
-    public function serialize()
+    public function serialize(): string
     {
         // Ajouté pour le problème de connexion avec le usernametoken
         return serialize(array(
@@ -424,7 +424,7 @@ class Etudiant extends Utilisateur implements \Serializable
      * @return void
      * @since 5.1.0
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken
         list(

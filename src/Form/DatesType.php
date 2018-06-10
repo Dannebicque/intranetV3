@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Date;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Entity\Semestre;
@@ -13,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Choice;
 
 class DatesType extends AbstractType
 {
@@ -38,11 +38,8 @@ class DatesType extends AbstractType
             ->add('lieu', TextType::class, [
                 'label' => 'label.lieu_date',
             ])
-            ->add('allday', ChoiceType::class, [
-                'label'                     => 'label.allday',
-                'choices'                   => ['choice.oui' => true, 'choice.non' => true],
-                'choice_translation_domain' => 'form',
-                'expanded'                  => true,
+            ->add('allday', YesNoType::class, [
+                'label' => 'label.allday'
             ])
             ->add('qui', ChoiceType::class, [
                 'label'    => 'label.qui_concerne',

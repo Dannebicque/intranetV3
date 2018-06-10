@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Annee;
 use App\Entity\Date;
 use App\Entity\Diplome;
-use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -36,7 +35,7 @@ class DateRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByFormationPlanning($formation, $annee)
+    public function findByFormationPlanning($formation, $annee): array
     {
         $datedebut = new \DateTime($annee . '-09-01');
         $annee2 = $annee + 1;
@@ -60,12 +59,14 @@ class DateRepository extends ServiceEntityRepository
 
         /** @var Date $event */
         foreach ($query as $event) {
-            $key = $event->getDateDebut()->format('Y-m-d');
-            if (!array_key_exists($key, $tab)) {
-                $tab[$key] = array();
+            if ($event->getDateDebut() !== null) {
+                $key = $event->getDateDebut()->format('Y-m-d');
+                if (!array_key_exists($key, $tab)) {
+                    $tab[$key] = array();
+                }
+                $tab[$key][] = $event;
+                //si sur plusieurs jours, faire une boucle pour remplir le tableau
             }
-            $tab[$key][] = $event;
-            //si sur plusieurs jours, faire une boucle pour remplir le tableau
         }
 
         return $tab;

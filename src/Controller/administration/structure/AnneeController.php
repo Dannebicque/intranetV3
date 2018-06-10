@@ -26,6 +26,7 @@ class AnneeController extends Controller
      */
     public function index(AnneeRepository $anneeRepository): Response
     {
+        //todo: comment l'exploiter...
         //filtrer par formation ou diplome ?
         return $this->render('administration/structure/annee/index.html.twig', ['annees' => $anneeRepository->findAll()]);
     }
@@ -35,6 +36,7 @@ class AnneeController extends Controller
     */
     public function help(): Response
     {
+        //todo: comment l'exploiter...
         return $this->render('administration/structure/annee/help.html.twig');
     }
 
@@ -44,6 +46,7 @@ class AnneeController extends Controller
      */
     public function save(): Response
     {
+        //todo: comment l'exploiter...
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
@@ -54,36 +57,43 @@ class AnneeController extends Controller
      */
     public function imprimer(): Response
     {
+        //todo: comment l'exploiter...
         //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
 
     /**
-     * @Route({"fr":"/nouveau/{diplome}", "en":"/new/{diplome}"}, name="administration_structure_annee_new", methods="GET|POST")
+     * @Route({"fr":"/nouveau/{diplome}", "en":"/new/{diplome}"}, name="administration_structure_annee_new",
+     *                                    methods="GET|POST")
      * @param Request $request
      *
-     * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @param Diplome $diplome
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function create(Request $request, Diplome $diplome): Response
+    public function create(Request $request, Diplome $diplome)
     {
-        $annee = new Annee();
-        $annee->setDiplome($diplome);
-        $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()->getId()]);
-        $form->handleRequest($request);
+        if ($diplome->getFormation() !== null) {
+            $annee = new Annee();
+            $annee->setDiplome($diplome);
+            $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()->getId()]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($annee);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($annee);
+                $em->flush();
 
-            return $this->redirectToRoute('administration_structure_annee_index');
+                return $this->redirectToRoute('administration_structure_index');
+            }
+
+            return $this->render('administration/structure/annee/new.html.twig', [
+                'annee' => $annee,
+                'form'  => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/structure/annee/new.html.twig', [
-            'annee' => $annee,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -107,19 +117,24 @@ class AnneeController extends Controller
      */
     public function edit(Request $request, Annee $annee): Response
     {
-        $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()->getId()]);
-        $form->handleRequest($request);
+        if ($annee->getDiplome() !== null && $annee->getDiplome()->getFormation() !== null) {
+            $form = $this->createForm(AnneeType::class, $annee,
+                ['formation' => $annee->getDiplome()->getFormation()->getId()]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('administration_structure_annee_edit', ['id' => $annee->getId()]);
+                return $this->redirectToRoute('administration_structure_annee_edit', ['id' => $annee->getId()]);
+            }
+
+            return $this->render('administration/structure/annee/edit.html.twig', [
+                'annee' => $annee,
+                'form'  => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/structure/annee/edit.html.twig', [
-            'annee' => $annee,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**

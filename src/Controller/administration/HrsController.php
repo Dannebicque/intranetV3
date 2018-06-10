@@ -4,13 +4,8 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Hrs;
-use App\Entity\Matiere;
-use App\Entity\Personnel;
-use App\Entity\Semestre;
 use App\Form\HrsType;
-use App\MesClasses\MyPrevisionnel;
 use App\Repository\HrsRepository;
-use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +21,9 @@ class HrsController extends BaseController
 {
     /**
      * @Route("/index", name="administration_hrs_index", methods="GET")
+     * @param HrsRepository $hrsRepository
+     *
+     * @return Response
      */
     public function index(HrsRepository $hrsRepository)
     {
@@ -118,6 +116,10 @@ class HrsController extends BaseController
 
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_hrs_delete", methods="DELETE")
+     * @param Request $request
+     * @param Hrs     $hrs
+     *
+     * @return Response
      */
     public function delete(Request $request, Hrs $hrs): Response
     {

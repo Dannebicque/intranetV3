@@ -145,6 +145,10 @@ class DataUserSession
      */
     public function getNotifications()
     {
-        return $this->getUser()->getNotifications();
+        if ($this->getUser() !== null) {
+            return $this->getUser()->getNotifications();
+        }
+
+        return null;
     }
 }

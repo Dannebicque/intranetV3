@@ -52,11 +52,13 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/semestre/{semestre}", name="administration_previsionnel_semestre", options={"expose":true})
-     * @param MatiereRepository $matiereRepository
+     *
+     * @param MyPrevisionnel $myPrevisionnel
+     * @param Semestre       $semestre
      *
      * @return Response
      */
-    public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre)
+    public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre): Response
     {
         $myPrevisionnel->getPrevisionnelSemestre($semestre, $this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
 
@@ -73,7 +75,7 @@ class PrevisionnelController extends BaseController
      *
      * @return Response
      */
-    public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel)
+    public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel): Response
     {
         $myPrevisionnel->setPersonnel($personnel);
         $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
@@ -112,6 +114,10 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_previsionnel_delete", methods="DELETE")
+     * @param Request      $request
+     * @param Previsionnel $previsionnel
+     *
+     * @return Response
      */
     public function delete(Request $request, Previsionnel $previsionnel): Response
     {

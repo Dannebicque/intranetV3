@@ -639,7 +639,7 @@ class Semestre extends BaseEntity
     /**
      * @return Etudiant[]
      */
-    public function getEtudiants()
+    public function getEtudiants(): array
     {
         return $this->etudiants;
     }
@@ -839,7 +839,7 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    public function update($name, $value)
+    public function update($name, $value): void
     {
         $t = explode('_', $name);
         $name = $t[0];

@@ -291,7 +291,7 @@ class MyPrevisionnel
 
     }
 
-    public function getPrevisionnelSemestre(Semestre $semestre, $annee)
+    public function getPrevisionnelSemestre(Semestre $semestre, $annee): void
     {
         $this->semestre = $semestre;
         $this->previsionnels = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);

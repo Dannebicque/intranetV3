@@ -15,24 +15,24 @@ abstract class CsvWrite
     public const FORMAT_STRING = 'string';
     public const ECHAPPEMENT = '"';
 
-    public static function writeField($value, $key = '')
+    public static function writeField($value, $key = ''): string
     {
         $field = '';
         $field .= $key;
 
         dump($value);
         dump($key);
-        echo gettype($value) . ' ';
+        echo \gettype($value) . ' ';
 
-        if (\gettype($value) === self::FORMAT_STRING) {
+        if (\is_string($value)) {
             $field .= self::ECHAPPEMENT . $value . self::ECHAPPEMENT;
         } /* if ($data instanceof \DateTimeImmutable || $data instanceof \DateTime) {
             return $data;
         }*/
 
-        elseif (is_object($value)) {
-            echo get_class($value);
-            if (get_class($value) === self::FORMAT_DATETIME) {
+        elseif (\is_object($value)) {
+            echo \get_class($value);
+            if (\get_class($value) === self::FORMAT_DATETIME) {
                 $field .= $value->format('d-m-Y');
             }
         } else {

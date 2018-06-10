@@ -14,8 +14,6 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\MatiereRepository;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Response;
 
 class MyEvaluations
 {
@@ -57,7 +55,6 @@ class MyEvaluations
 
     /**
      * @return Matiere[]
-     * @throws \Doctrine\ORM\ORMException
      */
     public function getMatieresSemestre(): array
     {
@@ -66,7 +63,6 @@ class MyEvaluations
 
     /**
      * @return array
-     * @throws \Doctrine\ORM\ORMException
      */
     public function getEvaluationsSemestre(): array
     {
@@ -74,12 +70,14 @@ class MyEvaluations
         $tab = array();
         /** @var Evaluation $eval */
         foreach ($evaluations as $eval) {
-            $matiereId = $eval->getMatiere()->getId();
-            if (!array_key_exists($matiereId, $tab)) {
-                $tab[$matiereId] = array();
-            }
+            if ($eval->getMatiere() !== null) {
+                $matiereId = $eval->getMatiere()->getId();
+                if (!array_key_exists($matiereId, $tab)) {
+                    $tab[$matiereId] = array();
+                }
 
-            $tab[$matiereId][] = $eval;
+                $tab[$matiereId][] = $eval;
+            }
         }
 
         return $tab;

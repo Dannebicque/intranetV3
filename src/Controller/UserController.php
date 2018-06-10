@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Favori;
 use App\Entity\Personnel;
+use App\Form\EtudiantProfilType;
+use App\Form\PersonnelProfilType;
 use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
 use App\Repository\PersonnelRepository;
@@ -26,8 +28,6 @@ class UserController extends Controller
      */
     public function monProfil()
     {
-        $user = $this->getUser();
-
         return $this->render('user/mon-profil.html.twig', [
             'user' => $this->getUser()
         ]);
@@ -75,16 +75,24 @@ class UserController extends Controller
      */
     public function settings()
     {
+        $user = $this->getUser();
+        if (is_a($user, Personnel::class)) {
+            $form = $this->createForm(PersonnelProfilType::class, $user);
+        } else {
+            $form = $this->createForm(EtudiantProfilType::class, $user);
+        }
+
         return $this->render('user/settings.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
     /**
+     * @param FavoriRepository   $favoriRepository
      * @param EtudiantRepository $etudiantRepository
      * @param Request            $request
      *
      * @return Response
-     * @throws \InvalidArgumentException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @Route("/add-favori", name="user_add_favori", options={"expose":true})
      */
@@ -104,7 +112,9 @@ class UserController extends Controller
             $em->flush();
 
             return new Response('ok', Response::HTTP_OK);
-        } elseif ($user && $action === 'false') {
+        }
+
+        if ($user && $action === 'false') {
             $fav = $favoriRepository->findBy(array(
                 'etudiantDemandeur' => $this->getUser()->getId(),
                 'etudiantDemande'   => $user->getId()

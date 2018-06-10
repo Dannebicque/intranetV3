@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Entity\Etudiant;
 use App\Entity\Notification;
-use App\Entity\Semestre;
 use App\Events;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +32,8 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
      * RegistrationNotifySubscriber constructor.
      *
      * @param EntityManagerInterface $entityManager
+     * @param RouterInterface        $router
+     * @param EtudiantRepository     $etudiantRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,

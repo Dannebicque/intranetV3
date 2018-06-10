@@ -19,17 +19,17 @@ class Evaluation extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAuteur")
      */
-    private $personnel_auteur;
+    private $personnelAuteur;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAutorise")
      */
-    private $personnel_autorise;
+    private $personnelAutorise;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_evaluation;
+    private $dateEvaluation;
 
     /**
      * @ORM\Column(type="integer")
@@ -63,7 +63,7 @@ class Evaluation extends BaseEntity
 
     public function __construct()
     {
-        $this->personnel_autorise = new ArrayCollection();
+        $this->personnelAutorise = new ArrayCollection();
         $this->notes = new ArrayCollection();
     }
 
@@ -81,12 +81,12 @@ class Evaluation extends BaseEntity
 
     public function getPersonnelAuteur(): ?Personnel
     {
-        return $this->personnel_auteur;
+        return $this->personnelAuteur;
     }
 
-    public function setPersonnelAuteur(?Personnel $personnel_auteur): self
+    public function setPersonnelAuteur(?Personnel $personnelAuteur): self
     {
-        $this->personnel_auteur = $personnel_auteur;
+        $this->personnelAuteur = $personnelAuteur;
 
         return $this;
     }
@@ -96,13 +96,13 @@ class Evaluation extends BaseEntity
      */
     public function getPersonnelAutorise(): Collection
     {
-        return $this->personnel_autorise;
+        return $this->personnelAutorise;
     }
 
     public function addPersonnelAutorise(Personnel $personnelAutorise): self
     {
-        if (!$this->personnel_autorise->contains($personnelAutorise)) {
-            $this->personnel_autorise[] = $personnelAutorise;
+        if (!$this->personnelAutorise->contains($personnelAutorise)) {
+            $this->personnelAutorise[] = $personnelAutorise;
         }
 
         return $this;
@@ -110,8 +110,8 @@ class Evaluation extends BaseEntity
 
     public function removePersonnelAutorise(Personnel $personnelAutorise): self
     {
-        if ($this->personnel_autorise->contains($personnelAutorise)) {
-            $this->personnel_autorise->removeElement($personnelAutorise);
+        if ($this->personnelAutorise->contains($personnelAutorise)) {
+            $this->personnelAutorise->removeElement($personnelAutorise);
         }
 
         return $this;
@@ -119,12 +119,12 @@ class Evaluation extends BaseEntity
 
     public function getDateEvaluation(): ?\DateTimeInterface
     {
-        return $this->date_evaluation;
+        return $this->dateEvaluation;
     }
 
-    public function setDateEvaluation(\DateTimeInterface $date_evaluation): self
+    public function setDateEvaluation(\DateTimeInterface $dateEvaluation): self
     {
-        $this->date_evaluation = $date_evaluation;
+        $this->dateEvaluation = $dateEvaluation;
 
         return $this;
     }

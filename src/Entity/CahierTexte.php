@@ -49,7 +49,6 @@ class CahierTexte extends BaseEntity
     public function __construct()
     {
         $this->fichiers = new ArrayCollection();
-        $this->semestres = new ArrayCollection();
     }
 
     public function getLibelle(): ?string

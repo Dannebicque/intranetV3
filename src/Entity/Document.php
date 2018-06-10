@@ -28,14 +28,14 @@ class Document extends BaseEntity
      *
      * @ORM\Column(type="string", length=50)
      */
-    private $type_fichier;
+    private $typeFichier;
 
     /**
      * @var TypeDocument
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", fetch="EAGER", inversedBy="documents")
      */
-    private $type_document;
+    private $typeDocument;
 
     /**
      * @var string
@@ -89,12 +89,12 @@ class Document extends BaseEntity
 
     public function getTypeFichier(): ?string
     {
-        return $this->type_fichier;
+        return $this->typeFichier;
     }
 
-    public function setTypeFichier(string $type_fichier): self
+    public function setTypeFichier(string $typeFichier): self
     {
-        $this->type_fichier = $type_fichier;
+        $this->typeFichier = $typeFichier;
 
         return $this;
     }
@@ -104,17 +104,17 @@ class Document extends BaseEntity
      */
     public function getTypeDocument(): ?TypeDocument
     {
-        return $this->type_document;
+        return $this->typeDocument;
     }
 
     /**
-     * @param TypeDocument $type_document
+     * @param TypeDocument $typeDocument
      *
      * @return Document
      */
-    public function setTypeDocument(TypeDocument $type_document): self
+    public function setTypeDocument(TypeDocument $typeDocument): self
     {
-        $this->type_document = $type_document;
+        $this->typeDocument = $typeDocument;
 
         return $this;
     }
