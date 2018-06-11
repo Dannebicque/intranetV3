@@ -2,11 +2,15 @@
 
 namespace App\Controller\appPersonnel;
 
+use App\Controller\BaseController;
+use App\Entity\Evaluation;
 use App\Entity\Matiere;
+use App\Form\EvaluationType;
+use App\MesClasses\MyEvaluations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class NotesController
@@ -16,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *)
  * @IsGranted("ROLE_PERMANENT")
  */
-class NoteController extends Controller
+class NoteController extends BaseController
 {
     /**
      * @Route("/{matiere}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
@@ -24,20 +28,61 @@ class NoteController extends Controller
      *
      * @return Response
      */
-    public function index(Matiere $matiere) :Response
+    public function index(MyEvaluations $myEvaluations, Matiere $matiere): Response
     {
+        $myEvaluations->setMatiere($matiere);
+        $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getFormation()->getAnneeCourante());
+
         return $this->render('appPersonnel/note/index.html.twig', [
-            'matiere' => $matiere
+            'matiere'     => $matiere,
+            'evaluations' => $myEvaluations,
+            'indexEval'   => 0 //todo à prendre en parametre
         ]);
     }
 
     /**
-     * @Route("/saisie/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
+     * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
      */
-    public function saisie()
+    public function saisie(Request $request, Matiere $matiere)
     {
-        return $this->render('appPersonnel/note/saisie.html.twig', [
+        $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
+        $form = $this->createForm(EvaluationType::class, $evaluation,
+            ['formation' => $this->dataUserSession->getFormation()]);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($evaluation);
+            $em->flush();
+
+            return $this->redirectToRoute('application_personnel_note_saisie_2',
+                ['evaluation' => $evaluation->getId()]);
+        }
+
+        return $this->render('appPersonnel/note/saisie.html.twig', [
+            'matiere' => $matiere,
+            'form'    => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/saisie/etape-2/{evaluation}", name="application_personnel_note_saisie_2",
+     *                                        requirements={"matiere"="\d+"})
+     */
+    public function saisie2(Request $request, Evaluation $evaluation)
+    {
+        return $this->render('appPersonnel/note/saisie_2.html.twig', [
+            'evaluation' => $evaluation,
+        ]);
+    }
+
+    /**
+     * @Route("/import/{matiere}", name="application_personnel_note_import", requirements={"matiere"="\d+"})
+     */
+    public function import(Matiere $matiere)
+    {
+        return $this->render('appPersonnel/note/import.html.twig', [
+            'matiere' => $matiere,
         ]);
     }
 

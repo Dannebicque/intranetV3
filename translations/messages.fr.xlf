@@ -637,7 +637,7 @@
       </notes>
       <segment>
         <source>profil.etudiant.heading</source>
-          <target>Profil de l'étudiant %etudiant%</target>
+        <target>Profil de l'étudiant %etudiant%</target>
       </segment>
     </unit>
     <unit id="sub7le2" name="mon.profil.heading">
@@ -4855,7 +4855,7 @@
     <unit id="DAMFhpR" name="lock">
       <segment>
         <source>lock</source>
-          <target>Vérrouiller</target>
+        <target>Vérrouiller</target>
       </segment>
     </unit>
     <unit id="Y6FfBVj" name="actualite.liste.heading">
@@ -4906,59 +4906,197 @@
         <target>table.annee</target>
       </segment>
     </unit>
-      <unit id="_mfj2.0" name="table.nb_documents">
-          <segment>
-              <source>table.nb_documents</source>
-              <target>table.nb_documents</target>
-          </segment>
-      </unit>
-      <unit id="HmQRKl." name="voir.le.fichier">
-          <segment>
-              <source>voir.le.fichier</source>
-              <target>Voir le fichier</target>
-          </segment>
-      </unit>
-      <unit id="xfF9JxC" name=".new.heading">
-          <segment>
-              <source>.new.heading</source>
-              <target>.new.heading</target>
-          </segment>
-      </unit>
-      <unit id="G9gGgJ5" name=".show.heading">
-          <segment>
-              <source>.show.heading</source>
-              <target>.show.heading</target>
-          </segment>
-      </unit>
-      <unit id="W1fYrqx" name="tab.stages">
-          <segment>
-              <source>tab.stages</source>
-              <target>Stages</target>
-          </segment>
-      </unit>
-      <unit id="LkucwkK" name="friends">
-          <segment>
-              <source>friends</source>
-              <target>Amis</target>
-          </segment>
-      </unit>
-      <unit id="__vJoSM" name="choice.oui">
-          <segment>
-              <source>choice.oui</source>
-              <target>choice.oui</target>
-          </segment>
-      </unit>
-      <unit id="Fdhx4Ah" name="choice.non">
-          <segment>
-              <source>choice.non</source>
-              <target>choice.non</target>
-          </segment>
-      </unit>
-      <unit id="DTr_4kV" name="bloc.previsionnel.personnel.heading">
-          <segment>
-              <source>bloc.previsionnel.personnel.heading</source>
-              <target>bloc.previsionnel.personnel.heading</target>
-          </segment>
-      </unit>
+    <unit id="_mfj2.0" name="table.nb_documents">
+      <segment>
+        <source>table.nb_documents</source>
+        <target>table.nb_documents</target>
+      </segment>
+    </unit>
+    <unit id="HmQRKl." name="voir.le.fichier">
+      <segment>
+        <source>voir.le.fichier</source>
+        <target>Voir le fichier</target>
+      </segment>
+    </unit>
+    <unit id="xfF9JxC" name=".new.heading">
+      <segment>
+        <source>.new.heading</source>
+        <target>.new.heading</target>
+      </segment>
+    </unit>
+    <unit id="G9gGgJ5" name=".show.heading">
+      <segment>
+        <source>.show.heading</source>
+        <target>.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="W1fYrqx" name="tab.stages">
+      <segment>
+        <source>tab.stages</source>
+        <target>Stages</target>
+      </segment>
+    </unit>
+    <unit id="LkucwkK" name="friends">
+      <segment>
+        <source>friends</source>
+        <target>Amis</target>
+      </segment>
+    </unit>
+    <unit id="__vJoSM" name="choice.oui">
+      <segment>
+        <source>choice.oui</source>
+        <target>choice.oui</target>
+      </segment>
+    </unit>
+    <unit id="Fdhx4Ah" name="choice.non">
+      <segment>
+        <source>choice.non</source>
+        <target>choice.non</target>
+      </segment>
+    </unit>
+    <unit id="DTr_4kV" name="bloc.previsionnel.personnel.heading">
+      <segment>
+        <source>bloc.previsionnel.personnel.heading</source>
+        <target>bloc.previsionnel.personnel.heading</target>
+      </segment>
+    </unit>
+    <unit id="iE8IfxX" name="detail.note">
+      <segment>
+        <source>detail.note</source>
+        <target>detail.note</target>
+      </segment>
+    </unit>
+    <unit id="0BqqOMB" name="coefficient.de.matiere">
+      <segment>
+        <source>coefficient.de.matiere</source>
+        <target>Coefficient du module</target>
+      </segment>
+    </unit>
+    <unit id="0XWP8sy" name="nb.note.matiere">
+      <segment>
+        <source>nb.note.matiere</source>
+        <target>Nombre de note du module</target>
+      </segment>
+    </unit>
+    <unit id="CdxQcM2" name="situation.par.rapport.promo">
+      <segment>
+        <source>situation.par.rapport.promo</source>
+        <target>Votre situation par rapport à la promo</target>
+      </segment>
+    </unit>
+    <unit id="Vc8RFTM" name="note.minimale">
+      <segment>
+        <source>note.minimale</source>
+        <target>Note minimale</target>
+      </segment>
+    </unit>
+    <unit id="CkNy4x2" name="note.maximale">
+      <segment>
+        <source>note.maximale</source>
+        <target>Note maximale</target>
+      </segment>
+    </unit>
+    <unit id="dL.FqJ6" name="moyenne.promo">
+      <segment>
+        <source>moyenne.promo</source>
+        <target>Moyenne de la promotion</target>
+      </segment>
+    </unit>
+    <unit id="hazIE8o" name="ue">
+      <segment>
+        <source>ue</source>
+        <target>ue</target>
+      </segment>
+    </unit>
+    <unit id="qi8n41O" name="vous">
+      <segment>
+        <source>vous</source>
+        <target>vous</target>
+      </segment>
+    </unit>
+    <unit id="Kkr3l_w" name="rang">
+      <segment>
+        <source>rang</source>
+        <target>rang</target>
+      </segment>
+    </unit>
+    <unit id="0o_ykG2" name="commentaire">
+      <segment>
+        <source>commentaire</source>
+        <target>commentaire</target>
+      </segment>
+    </unit>
+    <unit id="7ny9f59" name="note.saisie.manuelle">
+      <segment>
+        <source>note.saisie.manuelle</source>
+        <target>Saisir manuellement</target>
+      </segment>
+    </unit>
+    <unit id="uG6_lV8" name="note.import">
+      <segment>
+        <source>note.import</source>
+        <target>Importer les notes (Excel ou csv)</target>
+      </segment>
+    </unit>
+    <unit id="ALhQEXN" name="adm.type.groupes.index.titre">
+      <segment>
+        <source>adm.type.groupes.index.titre</source>
+        <target>adm.type.groupes.index.titre</target>
+      </segment>
+    </unit>
+    <unit id="Jh0SKQP" name="adm.type_groupe.modification.heading">
+      <segment>
+        <source>adm.type_groupe.modification.heading</source>
+        <target>adm.type_groupe.modification.heading</target>
+      </segment>
+    </unit>
+    <unit id="xRVlL2N" name="adm.groupe.modification.heading">
+      <segment>
+        <source>adm.groupe.modification.heading</source>
+        <target>adm.groupe.modification.heading</target>
+      </segment>
+    </unit>
+    <unit id="lRFM2Mc" name="label.libelle">
+      <segment>
+        <source>label.libelle</source>
+        <target>label.libelle</target>
+      </segment>
+    </unit>
+    <unit id=".UaO6lm" name="label.codeApogee">
+      <segment>
+        <source>label.codeApogee</source>
+        <target>label.codeApogee</target>
+      </segment>
+    </unit>
+    <unit id="9yJvckA" name="label.semestre">
+      <segment>
+        <source>label.semestre</source>
+        <target>label.semestre</target>
+      </segment>
+    </unit>
+    <unit id="SR2nN6z" name="label.typeGroupe">
+      <segment>
+        <source>label.typeGroupe</source>
+        <target>label.typeGroupe</target>
+      </segment>
+    </unit>
+    <unit id="rX1_XdE" name="atitle.retour_groupe">
+      <segment>
+        <source>atitle.retour_groupe</source>
+        <target>atitle.retour_groupe</target>
+      </segment>
+    </unit>
+    <unit id="Jz9GC2y" name="adm.type_groupe.new.heading">
+      <segment>
+        <source>adm.type_groupe.new.heading</source>
+        <target>adm.type_groupe.new.heading</target>
+      </segment>
+    </unit>
+    <unit id="fvUKzpT" name="coefficient">
+      <segment>
+        <source>coefficient</source>
+        <target>coefficient</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

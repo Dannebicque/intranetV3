@@ -125,7 +125,7 @@ class AnneeController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('administration_structure_annee_edit', ['id' => $annee->getId()]);
+                return $this->redirectToRoute('administration_structure_index');
             }
 
             return $this->render('administration/structure/annee/edit.html.twig', [
@@ -135,6 +135,23 @@ class AnneeController extends Controller
         }
 
         return $this->redirectToRoute('erreur_666');
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_structure_annee_duplicate", methods="GET|POST")
+     * @param Annee $annee
+     *
+     * @return Response
+     */
+    public function duplicate(Annee $annee): Response
+    {
+        $newAnnee = clone $annee;
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newAnnee);
+        $em->flush();
+
+        return $this->redirectToRoute('administration_structure_annee_edit', ['id' => $newAnnee->getId()]);
     }
 
     /**

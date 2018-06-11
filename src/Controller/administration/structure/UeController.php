@@ -19,18 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class UeController extends BaseController
 {
     /**
-     * @Route("/", name="administration_structure_ue_index", methods="GET")
-     * @param UeRepository $ueRepository
-     *
-     * @return Response
-     */
-    public function index(UeRepository $ueRepository): Response
-    {
-        //todo: page sans sens...
-        return $this->render('administration/structure/ue/index.html.twig', ['ues' => $ueRepository->findAll()]);
-    }
-
-    /**
     * @Route("/help", name="administration_structure_ue_help", methods="GET")
     */
     public function help(): Response
@@ -121,7 +109,7 @@ class UeController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('administration_structure_ue_edit', ['id' => $ue->getId()]);
+                return $this->redirectToRoute('administration_structure_index');
             }
 
             return $this->render('administration/structure/ue/edit.html.twig', [
@@ -130,6 +118,23 @@ class UeController extends BaseController
             ]);
         }
         return $this->render('erreur/404.html.twig');
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_structure_ue_duplicate", methods="GET|POST")
+     * @param Ue $ue
+     *
+     * @return Response
+     */
+    public function duplicate(Ue $ue): Response
+    {
+        $newUe = clone $ue;
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newUe);
+        $em->flush();
+
+        return $this->redirectToRoute('administration_structure_ue_edit', ['id' => $newUe->getId()]);
     }
 
     /**

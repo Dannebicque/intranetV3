@@ -115,13 +115,30 @@ class DiplomeController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('administration_structure_diplome_edit', ['id' => $diplome->getId()]);
+            return $this->redirectToRoute('administration_structure_index');
         }
 
         return $this->render('administration/structure/diplome/edit.html.twig', [
             'diplome' => $diplome,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_structure_diplome_duplicate", methods="GET|POST")
+     * @param Diplome $diplome
+     *
+     * @return Response
+     */
+    public function duplicate(Diplome $diplome): Response
+    {
+        $newDiplome = clone $diplome;
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newDiplome);
+        $em->flush();
+
+        return $this->redirectToRoute('administration_structure_diplome_edit', ['id' => $newDiplome->getId()]);
     }
 
     /**

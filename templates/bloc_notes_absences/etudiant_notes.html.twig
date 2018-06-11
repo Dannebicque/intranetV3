@@ -8,6 +8,7 @@
                 <th>{{ 'date'|trans }}</th>
                 <th>{{ 'com_eval'|trans }}</th>
                 <th>{{ 'note'|trans }}</th>
+                <th>{{ 'coefficient'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
             </tr>
             </thead>
@@ -18,9 +19,36 @@
                     <td>{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                     <td>{{ note.evaluation.commentaire }}</td>
                     <td>{{ note.note|number_format(2) }}</td>
-                    <td><a href="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
-                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="ti-info"></i></a></td>
+                    <td>{{ note.evaluation.coefficient|number_format(2) }}</td>
+                    <td>
+                        <button data-provide="modaler tooltip"
+                                data-url="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
+                                class="btn btn-info btn-outline btn-square btn-xs"
+                                data-placement="bottom"
+                                title="{{ 'atitle.details'|trans }}"
+                                data-title="{{ 'detail.note'|trans }}"
+                        >
+                            <i class="ti-info"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>--> {{ note.evaluation.matiere.codeMatiere }}</td>
+                    <td>{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ note.evaluation.commentaire }}</td>
+                    <td>{{ note.note|number_format(2) }}</td>
+                    <td>{{ note.evaluation.coefficient|number_format(2) }}</td>
+                    <td>
+                        <button data-provide="modaler tooltip"
+                                data-url="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
+                                class="btn btn-info btn-outline btn-square btn-xs"
+                                data-placement="bottom"
+                                title="{{ 'atitle.details'|trans }}"
+                                data-title="{{ 'detail.note'|trans }}"
+                        >
+                            <i class="ti-info"></i>
+                        </button>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

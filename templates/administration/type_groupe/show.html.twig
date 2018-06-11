@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeGroupe{% endblock %}
+
+{% block body %}
+    <h1>TypeGroupe</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ type_groupe.id }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ type_groupe.created ? type_groupe.created|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ type_groupe.updated ? type_groupe.updated|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ type_groupe.libelle }}</td>
+        </tr>
+        <tr>
+            <th>CodeApogee</th>
+            <td>{{ type_groupe.codeApogee }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ type_groupe.type }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_groupe_index') }}">back to list</a>
+
+    <a href="{{ path('type_groupe_edit', {'id': type_groupe.id}) }}">edit</a>
+
+    {{ include('type_groupe/_delete_form.html.twig') }}
+{% endblock %}

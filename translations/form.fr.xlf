@@ -1754,7 +1754,7 @@
       </notes>
       <segment>
         <source>Day</source>
-          <target>Jour</target>
+        <target>Jour</target>
       </segment>
     </unit>
     <unit id="8AY7gIc" name="Hour">
@@ -1801,7 +1801,7 @@
       </notes>
       <segment>
         <source>choice.femme</source>
-          <target>Femme</target>
+        <target>Femme</target>
       </segment>
     </unit>
     <unit id="MNiQFb_" name="choice.homme">
@@ -1812,7 +1812,7 @@
       </notes>
       <segment>
         <source>choice.homme</source>
-          <target>Homme</target>
+        <target>Homme</target>
       </segment>
     </unit>
     <unit id="YBStdvr" name="label.nom">
@@ -1823,7 +1823,7 @@
       </notes>
       <segment>
         <source>label.nom</source>
-          <target>Nom</target>
+        <target>Nom</target>
       </segment>
     </unit>
     <unit id="94qpMaC" name="label.prenom">
@@ -1834,7 +1834,7 @@
       </notes>
       <segment>
         <source>label.prenom</source>
-          <target>Prénom</target>
+        <target>Prénom</target>
       </segment>
     </unit>
     <unit id="050_398" name="label.mail_univ">
@@ -1845,7 +1845,7 @@
       </notes>
       <segment>
         <source>label.mail_univ</source>
-          <target>Email université (ou professionnel)</target>
+        <target>Email université (ou professionnel)</target>
       </segment>
     </unit>
     <unit id="_5of8La" name="label.site_univ">
@@ -1856,7 +1856,7 @@
       </notes>
       <segment>
         <source>label.site_univ</source>
-          <target>Site web université</target>
+        <target>Site web université</target>
       </segment>
     </unit>
     <unit id="nTToy6N" name="label.mail_perso">
@@ -1867,7 +1867,7 @@
       </notes>
       <segment>
         <source>label.mail_perso</source>
-          <target>Email personnel</target>
+        <target>Email personnel</target>
       </segment>
     </unit>
     <unit id="rVYExl3" name="label.site_perso">
@@ -1878,7 +1878,7 @@
       </notes>
       <segment>
         <source>label.site_perso</source>
-          <target>Site web personnel</target>
+        <target>Site web personnel</target>
       </segment>
     </unit>
     <unit id="tP3kBZ_" name="label.sexe">
@@ -1889,7 +1889,7 @@
       </notes>
       <segment>
         <source>label.sexe</source>
-          <target>Sexe</target>
+        <target>Sexe</target>
       </segment>
     </unit>
     <unit id="j4jB84y" name="label.date_naissance">
@@ -1900,7 +1900,7 @@
       </notes>
       <segment>
         <source>label.date_naissance</source>
-          <target>Date de naissance</target>
+        <target>Date de naissance</target>
       </segment>
     </unit>
     <unit id="R9C_2Hh" name="label.numero_harpege">
@@ -1911,7 +1911,7 @@
       </notes>
       <segment>
         <source>label.numero_harpege</source>
-          <target>Numéro Harpège/administratif</target>
+        <target>Numéro Harpège/administratif</target>
       </segment>
     </unit>
     <unit id="CLGOhVB" name="label.initiales">
@@ -1922,7 +1922,7 @@
       </notes>
       <segment>
         <source>label.initiales</source>
-          <target>Initiales</target>
+        <target>Initiales</target>
       </segment>
     </unit>
     <unit id="E2wzjl2" name="label.statut">
@@ -1933,7 +1933,7 @@
       </notes>
       <segment>
         <source>label.statut</source>
-          <target>Statut</target>
+        <target>Statut</target>
       </segment>
     </unit>
     <unit id="5dXVx_l" name="label.poste_interne">
@@ -1944,7 +1944,7 @@
       </notes>
       <segment>
         <source>label.poste_interne</source>
-          <target>Numéro de poste interne</target>
+        <target>Numéro de poste interne</target>
       </segment>
     </unit>
     <unit id="37dZZVc" name="label.tel_bureau">
@@ -1955,7 +1955,7 @@
       </notes>
       <segment>
         <source>label.tel_bureau</source>
-          <target>Téléphone Bureau</target>
+        <target>Téléphone Bureau</target>
       </segment>
     </unit>
     <unit id="OWAdLSm" name="label.tel1">
@@ -1966,7 +1966,7 @@
       </notes>
       <segment>
         <source>label.tel1</source>
-          <target>Téléphone</target>
+        <target>Téléphone</target>
       </segment>
     </unit>
     <unit id="UU1Oqhv" name="label.tel2">
@@ -1977,7 +1977,7 @@
       </notes>
       <segment>
         <source>label.tel2</source>
-          <target>Autre téléphone</target>
+        <target>Autre téléphone</target>
       </segment>
     </unit>
     <unit id="UI0STLl" name="label.responsabilites">
@@ -1988,7 +1988,7 @@
       </notes>
       <segment>
         <source>label.responsabilites</source>
-          <target>Responsabilités</target>
+        <target>Responsabilités</target>
       </segment>
     </unit>
     <unit id="uHUU5is" name="label.domaines">
@@ -1999,7 +1999,7 @@
       </notes>
       <segment>
         <source>label.domaines</source>
-          <target>Domaines de compétences</target>
+        <target>Domaines de compétences</target>
       </segment>
     </unit>
     <unit id="YpltcPM" name="label.remarque">
@@ -2010,7 +2010,7 @@
       </notes>
       <segment>
         <source>label.remarque</source>
-          <target>Remarque</target>
+        <target>Remarque</target>
       </segment>
     </unit>
     <unit id="7dMOMxQ" name="label.signature">
@@ -2021,7 +2021,7 @@
       </notes>
       <segment>
         <source>label.signature</source>
-          <target>Signature</target>
+        <target>Signature</target>
       </segment>
     </unit>
     <unit id=".a7QVgp" name="label.entreprise">
@@ -2032,7 +2032,7 @@
       </notes>
       <segment>
         <source>label.entreprise</source>
-          <target>Entreprise</target>
+        <target>Entreprise</target>
       </segment>
     </unit>
     <unit id="9pFl1q0" name="label.bureau1">
@@ -2043,7 +2043,7 @@
       </notes>
       <segment>
         <source>label.bureau1</source>
-          <target>Bureau</target>
+        <target>Bureau</target>
       </segment>
     </unit>
     <unit id="Pn2TSk_" name="label.bureau2">
@@ -2054,7 +2054,7 @@
       </notes>
       <segment>
         <source>label.bureau2</source>
-          <target>Autre bureau</target>
+        <target>Autre bureau</target>
       </segment>
     </unit>
     <unit id="x7vVhiW" name="label.cv">
@@ -2065,7 +2065,7 @@
       </notes>
       <segment>
         <source>label.cv</source>
-          <target>CV</target>
+        <target>CV</target>
       </segment>
     </unit>
     <unit id="F_My2fP" name="label.photo">
@@ -2076,7 +2076,7 @@
       </notes>
       <segment>
         <source>label.photo</source>
-          <target>Photo</target>
+        <target>Photo</target>
       </segment>
     </unit>
     <unit id="rGCDn7t" name="adresseParentale">
@@ -2086,7 +2086,7 @@
       </notes>
       <segment>
         <source>adresseParentale</source>
-          <target>Adresse parentale</target>
+        <target>Adresse parentale</target>
       </segment>
     </unit>
     <unit id="GStp0_n" name="adresse">
@@ -2097,7 +2097,7 @@
       </notes>
       <segment>
         <source>adresse</source>
-          <target>Adresse</target>
+        <target>Adresse</target>
       </segment>
     </unit>
     <unit id="FveKfWM" name="username">
@@ -2107,7 +2107,7 @@
       </notes>
       <segment>
         <source>username</source>
-          <target>Login</target>
+        <target>Login</target>
       </segment>
     </unit>
     <unit id="iBpPnJD" name="annee_bac">
@@ -2117,7 +2117,7 @@
       </notes>
       <segment>
         <source>annee_bac</source>
-          <target>Année d'obtention du bac</target>
+        <target>Année d'obtention du bac</target>
       </segment>
     </unit>
     <unit id="JopssP2" name="bac">
@@ -2127,7 +2127,7 @@
       </notes>
       <segment>
         <source>bac</source>
-          <target>Bac obtenu</target>
+        <target>Bac obtenu</target>
       </segment>
     </unit>
     <unit id="N_KDGO." name="num_ine">
@@ -2137,7 +2137,7 @@
       </notes>
       <segment>
         <source>num_ine</source>
-          <target>Numéro INE étudiant</target>
+        <target>Numéro INE étudiant</target>
       </segment>
     </unit>
     <unit id="z19k6u9" name="num_etudiant">
@@ -2147,7 +2147,7 @@
       </notes>
       <segment>
         <source>num_etudiant</source>
-          <target>Numéro étudiant</target>
+        <target>Numéro étudiant</target>
       </segment>
     </unit>
     <unit id="4jaDP7s" name="semestre">
@@ -2157,7 +2157,7 @@
       </notes>
       <segment>
         <source>semestre</source>
-          <target>Semestre</target>
+        <target>Semestre</target>
       </segment>
     </unit>
     <unit id="LYVRPWU" name="label.dateRetour">
@@ -2358,23 +2358,119 @@
         <target>label.annee</target>
       </segment>
     </unit>
-      <unit id="haOas0X" name="Yes">
-          <segment>
-              <source>Yes</source>
-              <target>Yes</target>
-          </segment>
-      </unit>
-      <unit id="HqRCoTS" name="No">
-          <segment>
-              <source>No</source>
-              <target>No</target>
-          </segment>
-      </unit>
-      <unit id="sDzhR7b" name="label.suspendu">
-          <segment>
-              <source>label.suspendu</source>
-              <target>label.suspendu</target>
-          </segment>
-      </unit>
+    <unit id="haOas0X" name="Yes">
+      <segment>
+        <source>Yes</source>
+        <target>Yes</target>
+      </segment>
+    </unit>
+    <unit id="HqRCoTS" name="No">
+      <segment>
+        <source>No</source>
+        <target>No</target>
+      </segment>
+    </unit>
+    <unit id="sDzhR7b" name="label.suspendu">
+      <segment>
+        <source>label.suspendu</source>
+        <target>label.suspendu</target>
+      </segment>
+    </unit>
+    <unit id="u4eerfb" name="Date evaluation">
+      <segment>
+        <source>Date evaluation</source>
+        <target>Date evaluation</target>
+      </segment>
+    </unit>
+    <unit id="hBH1q7T" name="Visible">
+      <segment>
+        <source>Visible</source>
+        <target>Visible</target>
+      </segment>
+    </unit>
+    <unit id="DnMP2rJ" name="Modifiable">
+      <segment>
+        <source>Modifiable</source>
+        <target>Modifiable</target>
+      </segment>
+    </unit>
+    <unit id="mrbuLIN" name="Coefficient">
+      <segment>
+        <source>Coefficient</source>
+        <target>Coefficient</target>
+      </segment>
+    </unit>
+    <unit id="SNPoFla" name="Commentaire">
+      <segment>
+        <source>Commentaire</source>
+        <target>Commentaire</target>
+      </segment>
+    </unit>
+    <unit id="ZvM1TBf" name="label.evaluation_matiere">
+      <segment>
+        <source>label.evaluation_matiere</source>
+        <target>label.evaluation_matiere</target>
+      </segment>
+    </unit>
+    <unit id="6YnQLlQ" name="label.evaluation_personnelAutorise">
+      <segment>
+        <source>label.evaluation_personnelAutorise</source>
+        <target>label.evaluation_personnelAutorise</target>
+      </segment>
+    </unit>
+    <unit id="AOFrd.j" name="label.date_evaluation">
+      <segment>
+        <source>label.date_evaluation</source>
+        <target>label.date_evaluation</target>
+      </segment>
+    </unit>
+    <unit id="VASC2yW" name="Coefficient de l'évaluation par rapport aux autres évaluations du module.">
+      <segment>
+        <source>Coefficient de l'évaluation par rapport aux autres évaluations du module.</source>
+        <target>Coefficient de l'évaluation par rapport aux autres évaluations du module.</target>
+      </segment>
+    </unit>
+    <unit id="hbKqWbu" name="help.coefficient">
+      <segment>
+        <source>help.coefficient</source>
+        <target>Coefficient de l'évaluation par rapport aux autres évaluations du module.</target>
+      </segment>
+    </unit>
+    <unit id="Le2viVt" name="help.personnelAutorise">
+      <segment>
+        <source>help.personnelAutorise</source>
+        <target>help.personnelAutorise</target>
+      </segment>
+    </unit>
+    <unit id=".UaO6lm" name="label.codeApogee">
+      <segment>
+        <source>label.codeApogee</source>
+        <target>label.codeApogee</target>
+      </segment>
+    </unit>
+    <unit id="UzinMEm" name="label.type_groupe">
+      <segment>
+        <source>label.type_groupe</source>
+        <target>label.type_groupe</target>
+      </segment>
+    </unit>
+    <unit id="tQOcMl1" name="cm">
+      <segment>
+        <source>cm</source>
+        <target>cm</target>
+      </segment>
+    </unit>
+    <unit id="MPyeM1b" name="td">
+      <segment>
+        <source>td</source>
+        <target>td</target>
+      </segment>
+    </unit>
+    <unit id="Or2AclD" name="tp">
+      <segment>
+        <source>tp</source>
+        <target>tp</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -27,7 +27,7 @@ class Evaluation extends BaseEntity
     private $personnelAutorise;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateEvaluation;
 
@@ -39,12 +39,12 @@ class Evaluation extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $visible;
+    private $visible = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $modifiable;
+    private $modifiable = false;
 
     /**
      * @ORM\Column(type="float")
@@ -61,10 +61,32 @@ class Evaluation extends BaseEntity
      */
     private $notes;
 
-    public function __construct()
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="enfants")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="parent")
+     */
+    private $enfants;
+
+    public function __construct(Personnel $personnel, Matiere $matiere, Formation $formation)
     {
+        $this->matiere = $matiere;
+        $this->personnelAuteur = $personnel;
+        $this->anneeuniversitaire = $formation->getAnneeCourante();
+        if ($matiere->getUe() !== null && $matiere->getUe()->getSemestre() !== null) {
+            $this->setModifiable($matiere->getUe()->getSemestre()->isOptEvaluationModifiable());
+            $this->setVisible($matiere->getUe()->getSemestre()->isOptEvaluationVisible());
+        }
+
+        $this->dateEvaluation = new \DateTime('now');
+
         $this->personnelAutorise = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->enfants = new ArrayCollection();
+        $this->evaluations = new ArrayCollection();
     }
 
     public function getMatiere(): ?Matiere
@@ -216,6 +238,49 @@ class Evaluation extends BaseEntity
                 $note->setEvaluation(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Evaluation[]
+     */
+    public function getEnfants(): Collection
+    {
+        return $this->enfants;
+    }
+
+    public function addEnfant(Evaluation $enfant): self
+    {
+        if (!$this->enfants->contains($enfant)) {
+            $this->enfants[] = $enfant;
+            $enfant->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnfant(Evaluation $enfant): self
+    {
+        if ($this->enfants->contains($enfant)) {
+            $this->enfants->removeElement($enfant);
+            // set the owning side to null (unless already changed)
+            if ($enfant->getParent() === $this) {
+                $enfant->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getParent(): ?Evaluation
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?Evaluation $parent): self
+    {
+        $this->parent = $parent;
 
         return $this;
     }

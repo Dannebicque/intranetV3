@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe{% endblock %}
+
+{% block body %}
+    <h1>Groupe</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ groupe.id }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ groupe.created ? groupe.created|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ groupe.updated ? groupe.updated|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ groupe.libelle }}</td>
+        </tr>
+        <tr>
+            <th>CodeApogee</th>
+            <td>{{ groupe.codeApogee }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('groupe_index') }}">back to list</a>
+
+    <a href="{{ path('groupe_edit', {'id': groupe.id}) }}">edit</a>
+
+    {{ include('groupe/_delete_form.html.twig') }}
+{% endblock %}

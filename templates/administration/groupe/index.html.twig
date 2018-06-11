@@ -1,7 +1,125 @@
 {% extends 'base.html.twig' %}
 
-{% block header %}Hello {{ controller_name }}!{% endblock %}
+{% block header %}{{ 'adm.type.groupes.index.titre'|trans }}{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            {% for semestre in user_data.semestres %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %}active show{% endif %}" data-toggle="tab"
+                       href="#semestre{{ semestre.id }}" role="tab">{{ semestre.libelle }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
+    <div class="tab-content">
+        {% for semestre in user_data.semestres %}
+            <div class="tab-pane {% if loop.first %} active show{% endif %}"
+                 id="semestre{{ semestre.id }}" role="tabpanel">
+                <div class="card">
+                    <h4 class="card-title">Groupes du semestre {{ semestre.libelle }}</h4>
+                    <div class="card-body">
 
+                        <ul class="nav nav-pills nav-actions-visible flex-column">
+                            {% for typeGroupe in semestre.typeGroupes %}
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{{ path('administration_type_groupe_show', {id:typeGroupe.id}) }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom"
+                                       title="{{ 'atitle.details'|trans }}">{{ typeGroupe.libelle }}
+                                        | {{ typeGroupe.type }}</a>
+                                    <a class="nav-action"
+                                       href="{{ path('administration_groupe_new', {typeGroupe:typeGroupe.id, semestre:semestre.id}) }}"
+                                       data-title="Ajouter un groupe dans ce groupe"><span class="ti-plus"></span></a>
+                                    <a class="nav-action"
+                                       href="{{ path('administration_type_groupe_duplicate', {id:typeGroupe.id}) }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
+                                                class="ti-layers"></span></a>
+                                    <a class="nav-action"
+                                       href="{{ path('administration_type_groupe_edit', {id:typeGroupe.id}) }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
+                                                class="ti-pencil"></span></a>
+                                    <a class="nav-action supprimer"
+                                       href="{{ path('administration_type_groupe_delete', {id:typeGroupe.id}) }}"
+                                       data-csrf="{{ csrf_token('delete' ~ typeGroupe.id) }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
+                                                class="ti-close"></span></a>
+                                </li>
+                                <li>
+                                    <ul class="nav nav-pills nav-actions-visible flex-column" style="margin-left: 50px">
+                                        {% for groupe in typeGroupe.groupes %}
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
+                                                   data-provide="tooltip"
+                                                   data-placement="bottom"
+                                                   title="{{ 'atitle.details'|trans }}">{{ groupe.libelle }}
+                                                    | {{ groupe.codeApogee }}</a>
+                                                <a class="nav-action"
+                                                   href="{{ path('administration_groupe_duplicate', {id:groupe.id}) }}"
+                                                   data-provide="tooltip"
+                                                   data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
+                                                            class="ti-layers"></span></a>
+                                                <a class="nav-action"
+                                                   href="{{ path('administration_groupe_edit', {id:groupe.id}) }}"
+                                                   data-provide="tooltip"
+                                                   data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
+                                                            class="ti-pencil"></span></a>
+                                                <a class="nav-action supprimer"
+                                                   href="{{ path('administration_groupe_delete', {id:groupe.id}) }}"
+                                                   data-csrf="{{ csrf_token('delete' ~ groupe.id) }}"
+                                                   data-provide="tooltip"
+                                                   data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
+                                                            class="ti-close"></span></a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_groupe_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_groupe_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('administration_type_groupe_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('administration_groupe_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
 {% endblock %}

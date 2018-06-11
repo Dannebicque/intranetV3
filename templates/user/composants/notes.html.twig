@@ -1,1 +1,55 @@
 {{ include('bloc_notes_absences/etudiant_notes.html.twig', {notes:notes}) }}
+
+<div class="card">
+    <h4 class="card-title">Situation par semestre</h4>
+    <div class="card-body">
+        <canvas class="mx-auto" id="chart-radar" width="360" height="360"></canvas>
+    </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    new Chart($("#chart-radar"), {
+      type: 'radar',
+
+      // Data
+      //
+      data: {
+        labels: ["Mx101", "Mx102", "Mx201", "Mx203", "Mx202", "Mx204", "Moyenne"],
+        datasets: [
+          {
+            label: "S1",
+            backgroundColor: "rgba(51,202,185,0.7)",
+            borderColor: "rgba(0,0,0,0)",
+            pointBackgroundColor: "rgba(51,202,185,0.7)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(51,202,185,0.7)",
+            data: [10, 9, 19, 8, 15, 16, 8.5]
+          },
+          {
+            label: "S2",
+            backgroundColor: "rgba(72,176,247,0.7)",
+            borderColor: "rgba(0,0,0,0)",
+            pointBackgroundColor: "rgba(72,176,247,0.7)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(72,176,247,0.7)",
+            data: [12, 10, 14, 9, 13, 12.5, 4]
+          }
+        ]
+      },
+
+      // Options
+      //
+      options: {
+        responsive: false,
+        legend: {
+          display: true
+        }
+      }
+    });
+
+  })
+</script>

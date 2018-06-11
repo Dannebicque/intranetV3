@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SemestreRepository")
@@ -224,6 +225,11 @@ class Semestre extends BaseEntity
      */
     private $ues;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
+     */
+    private $typeGroupes;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -234,6 +240,7 @@ class Semestre extends BaseEntity
         $this->bornes = new ArrayCollection();
         $this->cahierTextes = new ArrayCollection();
         $this->ues = new ArrayCollection();
+        $this->typeGroupes = new ArrayCollection();
     }
 
     /**
@@ -639,7 +646,7 @@ class Semestre extends BaseEntity
     /**
      * @return Etudiant[]
      */
-    public function getEtudiants(): array
+    public function getEtudiants(): PersistentCollection
     {
         return $this->etudiants;
     }
@@ -907,6 +914,37 @@ class Semestre extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($ue->getSemestre() === $this) {
                 $ue->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TypeGroupe[]
+     */
+    public function getTypeGroupes(): Collection
+    {
+        return $this->typeGroupes;
+    }
+
+    public function addTypeGroupe(TypeGroupe $typeGroupe): self
+    {
+        if (!$this->typeGroupes->contains($typeGroupe)) {
+            $this->typeGroupes[] = $typeGroupe;
+            $typeGroupe->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeGroupe(TypeGroupe $typeGroupe): self
+    {
+        if ($this->typeGroupes->contains($typeGroupe)) {
+            $this->typeGroupes->removeElement($typeGroupe);
+            // set the owning side to null (unless already changed)
+            if ($typeGroupe->getSemestre() === $this) {
+                $typeGroupe->setSemestre(null);
             }
         }
 

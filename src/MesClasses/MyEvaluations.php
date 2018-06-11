@@ -22,10 +22,26 @@ class MyEvaluations
      */
     private $semestre;
 
+    /** @var Matiere */
+    private $matiere;
+
+    /**
+     * @var Evaluation[]
+     */
+    private $evaluations = [];
+
+    /**
+     * @var array
+     */
+    private $statistiques = [];
+
     /**
      * @var MatiereRepository
      */
     private $matiereRepository;
+
+    /** @var MyEvaluation */
+    private $myEvaluation;
 
     /**
      * @var EvaluationRepository
@@ -38,10 +54,15 @@ class MyEvaluations
      * @param MatiereRepository    $matiereRepository
      * @param EvaluationRepository $evaluationRespository
      */
-    public function __construct(MatiereRepository $matiereRepository, EvaluationRepository $evaluationRespository)
+    public function __construct(
+        MyEvaluation $myEvaluation,
+        MatiereRepository $matiereRepository,
+        EvaluationRepository $evaluationRespository
+    )
     {
         $this->matiereRepository = $matiereRepository;
         $this->evaluationRespository = $evaluationRespository;
+        $this->myEvaluation = $myEvaluation;
     }
 
 
@@ -51,6 +72,14 @@ class MyEvaluations
     public function setSemestre($semestre): void
     {
         $this->semestre = $semestre;
+    }
+
+    /**
+     * @param Matiere $matiere
+     */
+    public function setMatiere(Matiere $matiere): void
+    {
+        $this->matiere = $matiere;
     }
 
     /**
@@ -83,4 +112,23 @@ class MyEvaluations
         return $tab;
     }
 
+    /**
+     * @param $annee
+     */
+    public function getEvaluationsMatiere($annee)
+    {
+        $this->evaluations = $this->evaluationRespository->findByMatiere($this->matiere, $annee);
+
+        foreach ($this->getEvaluations() as $evaluation) {
+            $this->statistiques[$evaluation->getId()] = $this->myEvaluation->setEvaluation($evaluation)->getSynthese();
+        }
+    }
+
+    /**
+     * @return Evaluation[]
+     */
+    public function getEvaluations(): array
+    {
+        return $this->evaluations;
+    }
 }

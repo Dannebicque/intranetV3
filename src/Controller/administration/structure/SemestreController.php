@@ -121,7 +121,7 @@ class SemestreController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('administration_structure_semestre_edit', ['id' => $semestre->getId()]);
+                return $this->redirectToRoute('administration_structure_index');
             }
 
             return $this->render('administration/structure/semestre/edit.html.twig', [
@@ -131,6 +131,23 @@ class SemestreController extends Controller
         }
 
         return $this->redirectToRoute('erreur_666');
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_structure_semestre_duplicate", methods="GET|POST")
+     * @param Semestre $semestre
+     *
+     * @return Response
+     */
+    public function duplicate(Semestre $semestre): Response
+    {
+        $newSemestre = clone $semestre;
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newSemestre);
+        $em->flush();
+
+        return $this->redirectToRoute('administration_structure_semestre_edit', ['id' => $newSemestre->getId()]);
     }
 
     /**

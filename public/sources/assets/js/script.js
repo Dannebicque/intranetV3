@@ -29,7 +29,7 @@ app.config({
   |
   */
 
-  provide: ['datatables', 'quill', 'momentjs'],
+  provide: ['datatables', 'quill', 'momentjs', 'chartjs'],
 
   /*
   |--------------------------------------------------------------------------
@@ -173,6 +173,7 @@ $(document).on('click', '.supprimer', function (e) {
     }
   })
 });
+
 
 
 /*

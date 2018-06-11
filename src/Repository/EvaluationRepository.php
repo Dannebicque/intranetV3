@@ -29,7 +29,20 @@ class EvaluationRepository extends ServiceEntityRepository
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->where('u.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('e.date_evaluation', 'ASC')
+            ->orderBy('e.dateEvaluation', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMatiere(Matiere $matiere, $annee)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
+            ->where('m.id = :matiere')
+            ->andWhere('e.anneeuniversitaire = :annee')
+            ->setParameter('matiere', $matiere->getId())
+            ->setParameter('annee', $annee)
+            ->orderBy('e.dateEvaluation', 'ASC')
             ->getQuery()
             ->getResult();
     }

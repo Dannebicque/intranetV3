@@ -3,6 +3,7 @@
 namespace App\Controller\appEtudiant;
 
 use App\Entity\Note;
+use App\MesClasses\MyEvaluation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,16 +14,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @Route({"fr":"application/etudiant/note",
  *         "en":"application/student/mark"}
  *)
- * @IsGranted("ROLE_ETUDIANT")
  */
 class NoteController extends Controller
 {
     /**
-     * @param Note $note
+     * @param MyEvaluation $myEvaluation
+     * @param Note         $note
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/details/{id}", name="app_etudiant_note_detail")
+     *
      */
-    public function details(Note $note)
+    public function details(MyEvaluation $myEvaluation, Note $note)
     {
+        $myEvaluation->setEvaluation($note->getEvaluation())->calculStatistiquesGlobales();
 
+        return $this->render('appEtudiant/note/detail.html.twig', [
+            'statistiques' => $myEvaluation->getStatistiques(),
+            'classement'   => $myEvaluation->classement($note->getEtudiant()),
+            'note'         => $note
+        ]);
     }
 }
