@@ -24,6 +24,11 @@ class Ufr extends BaseEntity
      */
     private $sites;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
+     */
+    private $responsable;
+
     public function __construct()
     {
         $this->sites = new ArrayCollection();
@@ -67,6 +72,18 @@ class Ufr extends BaseEntity
         if ($this->sites->contains($site)) {
             $this->sites->removeElement($site);
         }
+
+        return $this;
+    }
+
+    public function getResponsable(): ?Personnel
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Personnel $responsable): self
+    {
+        $this->responsable = $responsable;
 
         return $this;
     }

@@ -26,6 +26,9 @@ class DiplomeType extends AbstractType
             ->add('libelle', TextType::class,[
                 'label' => 'label.libelle'
             ])
+            ->add('sigle', TextType::class, [
+                'label' => 'label.sigle'
+            ])
             ->add('responsable_diplome', EntityType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Annee;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
@@ -18,6 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SemestreType extends AbstractType
 {
+    /** @var Diplome */
     protected $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -55,6 +57,24 @@ class SemestreType extends AbstractType
                 'choices'  => [1 => 1, 2 => 2],
                 'expanded' => true
             ])
+            ->add('moisDebut', ChoiceType::class, [
+                'label'    => 'label.mois_debut',
+                'choices'  => [
+                    "Janvier"   => 1,
+                    "Février"   => 2,
+                    "Mars"      => 3,
+                    "Avril"     => 4,
+                    "Mai"       => 5,
+                    "Juin"      => 6,
+                    "Juillet"   => 7,
+                    "Août"      => 8,
+                    "Septembre" => 9,
+                    "Octobre"   => 10,
+                    "Novembre"  => 11,
+                    "Décembre"  => 12
+                ],
+                'expanded' => false
+            ])
             ->add('ordreLmd', ChoiceType::class, [
                 'label'   => 'label.ordre_lmd',
                 'choices' => range(1, 16)
@@ -79,7 +99,8 @@ class SemestreType extends AbstractType
             ->add('optDestMailReleve', EntityType::class, [
                 'class'        => Personnel::class,
                 'choice_label' => 'display',
-                'label'        => 'label.opt_destinataire_mail_releve'
+                'label'        => 'label.opt_destinataire_mail_releve',
+                'required'     => false
             ])
             ->add('optEvaluationModifiable', YesNoType::class,
                 [
@@ -91,10 +112,11 @@ class SemestreType extends AbstractType
 
                     'label'                     => 'label.opt_mail_modification_note'
                 ])
-            ->add('optDestMailReleve', EntityType::class, [
+            ->add('optDestMailModifNote', EntityType::class, [
                 'class'        => Personnel::class,
                 'choice_label' => 'display',
-                'label'        => 'label.opt_destinataire_mail_modification_note'
+                'label'        => 'label.opt_destinataire_mail_modification_note',
+                'required'     => false
             ])
             ->add('optEvaluationVisible', YesNoType::class,
                 [
@@ -106,6 +128,11 @@ class SemestreType extends AbstractType
 
                     'label'                     => 'label.opt_penalite_absence'
                 ])
+            ->add('optPointPenaliteAbsence', TextType::class,
+                [
+                    'label'    => 'label.opt_point_penalite_absence',
+                    'required' => false,
+                ])
             ->add('optMailAbsenceResp', YesNoType::class,
                 [
 
@@ -114,7 +141,8 @@ class SemestreType extends AbstractType
             ->add('optDestMailAbsenceResp', EntityType::class, [
                 'class'        => Personnel::class,
                 'choice_label' => 'display',
-                'label'        => 'label.opt_destinataire_mail_absence_responsable'
+                'label'        => 'label.opt_destinataire_mail_absence_responsable',
+                'required'     => false
             ])
             ->add('optMailAbsenceEtudiant', YesNoType::class,
                 [
@@ -143,8 +171,9 @@ class SemestreType extends AbstractType
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label'         => 'label.semestre_suivant'
-            ])
-            ->add('decale', EntityType::class, [
+            ]);
+        if ($this->diplome->isOptDilpomeDecale()) {
+            $builder->add('decale', EntityType::class, [
                 'class'         => Semestre::class,
                 'required'      => false,
                 'choice_label'  => 'display',
@@ -153,6 +182,8 @@ class SemestreType extends AbstractType
                 },
                 'label'         => 'label.semestre_decale'
             ]);
+        }
+
     }
 
     /**

@@ -32,4 +32,15 @@ class RattrapageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByEtudiant(Etudiant $etudiant)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.etudiant = :etudiant')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->orderBy('r.created', 'DESC')
+            ->orderBy('r.dateEval', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

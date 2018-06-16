@@ -30,10 +30,18 @@
             {{ render(controller(
                 'App\\Controller\\appPersonnel\\QuizzController::index'
             )) }}
+
         {% endif %}
     {% else %}
-        {{ render(controller(
-            'App\\Controller\\MessagerieController::index'
-        )) }}
+        {% if onglet == 'rattrapage' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\RattrapageController::index'
+            )) }}
+        {% else %}
+            {{ render(controller(
+                'App\\Controller\\MessagerieController::index'
+            )) }}
+        {% endif %}
+
     {% endif %}
 {% endblock %}

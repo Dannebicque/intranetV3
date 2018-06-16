@@ -24,7 +24,7 @@ class UeController extends BaseController
     public function help(): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/ue/help.html.twig');
+        return $this->render('structure/ue/help.html.twig');
     }
 
     /**
@@ -70,7 +70,7 @@ class UeController extends BaseController
                 return $this->redirectToRoute('administration_structure_index');
             }
 
-            return $this->render('administration/structure/ue/new.html.twig', [
+            return $this->render('structure/ue/new.html.twig', [
                 'ue'   => $ue,
                 'form' => $form->createView(),
             ]);
@@ -88,7 +88,7 @@ class UeController extends BaseController
      */
     public function show(Ue $ue): Response
     {
-        return $this->render('administration/structure/ue/show.html.twig', ['ue' => $ue]);
+        return $this->render('structure/ue/show.html.twig', ['ue' => $ue]);
     }
 
     /**
@@ -112,7 +112,7 @@ class UeController extends BaseController
                 return $this->redirectToRoute('administration_structure_index');
             }
 
-            return $this->render('administration/structure/ue/edit.html.twig', [
+            return $this->render('structure/ue/edit.html.twig', [
                 'ue'   => $ue,
                 'form' => $form->createView(),
             ]);

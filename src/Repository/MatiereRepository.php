@@ -25,12 +25,7 @@ class MatiereRepository extends ServiceEntityRepository
 
     public function findBySemestre(Semestre $semestre)
     {
-        return $this->createQueryBuilder('m')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
-            ->where('u.semestre = :semestre')
-            ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.ue', 'ASC')
-            ->orderBy('m.codeMatiere', 'ASC')
+        return $this->findBySemestreBuilder($semestre->getId())
             ->getQuery()
             ->getResult();
     }
@@ -43,8 +38,18 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.formation = :formation')
-            ->setParameter('formation', $formation->getId())
+            ->setParameter('formation', $formation->getId())//todo: id necessaire ?
             ->orderBy('m.codeMatiere', 'ASC')
             ->orderBy('m.libelle', 'ASC');
+    }
+
+    public function findBySemestreBuilder(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
+            ->where('u.semestre = :semestre')
+            ->setParameter('semestre', $semestre->getId())
+            ->orderBy('m.ue', 'ASC')
+            ->orderBy('m.codeMatiere', 'ASC');
     }
 }

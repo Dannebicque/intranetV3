@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
     {{ 'adm.ufr.index.heading'|trans }}
@@ -20,6 +20,7 @@
                 <tr>
                     <th>{{ 'table.id'|trans }}</th>
                     <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.responsable_site'|trans }}</th>
                     <th>{{ 'table.updated'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
@@ -29,6 +30,7 @@
                     <tr>
                         <td>{{ ufr.id }}</td>
                         <td>{{ ufr.libelle }}</td>
+                        <td>{{ ufr.responsable ? ufr.responsable.displayPr : 'non.defini'|trans }}</td>
                         <td>{{ ufr.updated ? ufr.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                         <td>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'ufr', id:ufr.id}) }}

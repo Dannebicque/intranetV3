@@ -2269,7 +2269,7 @@
       </notes>
       <segment>
         <source>ufr</source>
-        <target>UFR</target>
+          <target>UFR / Composante</target>
       </segment>
     </unit>
     <unit id="Z5A0KET" name="sites-geographiques">
@@ -3296,7 +3296,7 @@
       </notes>
       <segment>
         <source>type_hrs</source>
-        <target>Type de HRS</target>
+          <target>Type de HRS/Prime</target>
       </segment>
     </unit>
     <unit id="SrApjpN" name="table.maximum">
@@ -4537,7 +4537,7 @@
     <unit id="Zi9ravp" name="structure.de.la.formation.heading">
       <segment>
         <source>structure.de.la.formation.heading</source>
-        <target>structure.de.la.formation.heading</target>
+          <target>Structure de la formation %formation%</target>
       </segment>
     </unit>
     <unit id="JUrCMGz" name="applications.heading">
@@ -4891,13 +4891,13 @@
     <unit id="Ft2hvcm" name="salle">
       <segment>
         <source>salle</source>
-        <target>salle</target>
+          <target>Salles</target>
       </segment>
     </unit>
     <unit id="6Qil2.S" name="aucune.notification">
       <segment>
         <source>aucune.notification</source>
-        <target>aucune.notification</target>
+          <target>Aucune notification</target>
       </segment>
     </unit>
     <unit id="1Qa9q_g" name="table.annee">
@@ -5092,11 +5092,199 @@
         <target>adm.type_groupe.new.heading</target>
       </segment>
     </unit>
+      <unit id="oFpu7lZ" name="menu.rattrapage">
+          <segment>
+              <source>menu.rattrapage</source>
+              <target>menu.rattrapage</target>
+          </segment>
+      </unit>
+      <unit id="Ub1KEhR" name="Date eval">
+          <segment>
+              <source>Date eval</source>
+              <target>Date eval</target>
+          </segment>
+      </unit>
+      <unit id="ifaDJWD" name="Year">
+          <segment>
+              <source>Year</source>
+              <target>Year</target>
+          </segment>
+      </unit>
+      <unit id="MQylA_8" name="Month">
+          <segment>
+              <source>Month</source>
+              <target>Month</target>
+          </segment>
+      </unit>
+      <unit id="jyNk4Ru" name="Day">
+          <segment>
+              <source>Day</source>
+              <target>Day</target>
+          </segment>
+      </unit>
+      <unit id="Vv_UAOk" name="Heure">
+          <segment>
+              <source>Heure</source>
+              <target>Heure</target>
+          </segment>
+      </unit>
+      <unit id="8AY7gIc" name="Hour">
+          <segment>
+              <source>Hour</source>
+              <target>Hour</target>
+          </segment>
+      </unit>
+      <unit id="S3hmW_x" name="Minute">
+          <segment>
+              <source>Minute</source>
+              <target>Minute</target>
+          </segment>
+      </unit>
+      <unit id="RoiEu7W" name="Duree">
+          <segment>
+              <source>Duree</source>
+              <target>Duree</target>
+          </segment>
+      </unit>
+      <unit id="d0gg3l0" name="label.matiere">
+          <segment>
+              <source>label.matiere</source>
+              <target>label.matiere</target>
+          </segment>
+      </unit>
+      <unit id="AOFrd.j" name="label.date_evaluation">
+          <segment>
+              <source>label.date_evaluation</source>
+              <target>label.date_evaluation</target>
+          </segment>
+      </unit>
+      <unit id="cQLLpbB" name="label.heure_evaluation">
+          <segment>
+              <source>label.heure_evaluation</source>
+              <target>label.heure_evaluation</target>
+          </segment>
+      </unit>
+      <unit id="iZ30WBj" name="label.duree_evaluation">
+          <segment>
+              <source>label.duree_evaluation</source>
+              <target>label.duree_evaluation</target>
+          </segment>
+      </unit>
+      <unit id="_CEixxq" name="en.attente">
+          <segment>
+              <source>en.attente</source>
+              <target>En attente</target>
+          </segment>
+      </unit>
+      <unit id="4dDjazl" name="acceptee">
+          <segment>
+              <source>acceptee</source>
+              <target>Acceptée</target>
+          </segment>
+      </unit>
+      <unit id="_eOmGYb" name="refusee">
+          <segment>
+              <source>refusee</source>
+              <target>Refusée</target>
+          </segment>
+      </unit>
+      <unit id="fSmIyed" name="erreur">
+          <segment>
+              <source>erreur</source>
+              <target>Erreur</target>
+          </segment>
+      </unit>
     <unit id="fvUKzpT" name="coefficient">
       <segment>
         <source>coefficient</source>
         <target>coefficient</target>
       </segment>
     </unit>
+      <unit id="PgNGC8a" name="table.responsable_site">
+          <segment>
+              <source>table.responsable_site</source>
+              <target>table.responsable_site</target>
+          </segment>
+      </unit>
+      <unit id="y_YrNjO" name="sa_configuration.heading">
+          <segment>
+              <source>sa_configuration.heading</source>
+              <target>Configuration</target>
+          </segment>
+      </unit>
+      <unit id="_zssdxs" name="exporter.xls">
+          <segment>
+              <source>exporter.xls</source>
+              <target>Exporter (xls)</target>
+          </segment>
+      </unit>
+      <unit id="SiQjEts" name="exporter.pdf">
+          <segment>
+              <source>exporter.pdf</source>
+              <target>Exporter (pdf)</target>
+          </segment>
+      </unit>
+      <unit id="opwHR3p" name="assistant.creation.formation">
+          <segment>
+              <source>assistant.creation.formation</source>
+              <target>Assistant création d'une formation</target>
+          </segment>
+      </unit>
+      <unit id="JmrUowU" name="creation.formation.manuellement">
+          <segment>
+              <source>creation.formation.manuellement</source>
+              <target>Création d'une nouvelle formation manuellement</target>
+          </segment>
+      </unit>
+      <unit id="g8O9KdA" name="structure.index.heading">
+          <segment>
+              <source>structure.index.heading</source>
+              <target><![CDATA[Gestion de la structure de la <strong>formation %formation%</strong>]]></target>
+          </segment>
+      </unit>
+      <unit id="HjSuf6z" name="menu.scolarite">
+          <segment>
+              <source>menu.scolarite</source>
+              <target>menu.scolarite</target>
+          </segment>
+      </unit>
+      <unit id="Hpet_Xt" name="menu.rh">
+          <segment>
+              <source>menu.rh</source>
+              <target>menu.rh</target>
+          </segment>
+      </unit>
+      <unit id="AjKwMAG" name="atitle.retour_super_administration">
+          <segment>
+              <source>atitle.retour_super_administration</source>
+              <target>atitle.retour_super_administration</target>
+          </segment>
+      </unit>
+      <unit id="1ZBO4hO" name="ajouter.annee.diplome">
+          <segment>
+              <source>ajouter.annee.diplome</source>
+              <target>Ajouter une nouvelle année au diplome %libelle%
+              </target>
+          </segment>
+      </unit>
+      <unit id="jvMpUV6" name="ajouter.diplome.formation">
+          <segment>
+              <source>ajouter.diplome.formation</source>
+              <target>Ajouter un nouveau diplôme à la formation %libelle%
+              </target>
+          </segment>
+      </unit>
+      <unit id="DIT8dAv" name="sadm.gestion.rh.heading">
+          <segment>
+              <source>sadm.gestion.rh.heading</source>
+              <target>sadm.gestion.rh.heading</target>
+          </segment>
+      </unit>
+      <unit id="CauJBi_" name="table.formations">
+          <segment>
+              <source>table.formations</source>
+              <target>table.formations</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

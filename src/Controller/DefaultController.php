@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
+use App\Repository\FormationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -33,10 +34,10 @@ class DefaultController extends BaseController
     /**
      * @Route("/super-administration/", name="super_admin_homepage")
      */
-    public function superAdminHomepage()
+    public function superAdminHomepage(FormationRepository $formationRepository)
     {
-        return $this->render('default/super_admin_homepage.html.twig', [
-
+        return $this->render('super-administration/super_admin_homepage.html.twig', [
+            'formations' => $formationRepository->findAll()
         ]);
     }
 

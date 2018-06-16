@@ -34,12 +34,6 @@ class Semestre extends BaseEntity
     private $codeDepartement;
 
     /**
-     * @var Annee
-     * @ORM\ManyToOne(targetEntity="App\Entity\Annee")
-     */
-    private $annee;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -229,6 +223,16 @@ class Semestre extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
      */
     private $typeGroupes;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $moisDebut;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres")
+     */
+    private $annee;
 
     public function __construct()
     {
@@ -947,6 +951,18 @@ class Semestre extends BaseEntity
                 $typeGroupe->setSemestre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMoisDebut(): ?int
+    {
+        return $this->moisDebut;
+    }
+
+    public function setMoisDebut(int $moisDebut): self
+    {
+        $this->moisDebut = $moisDebut;
 
         return $this;
     }

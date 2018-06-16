@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
     {{ 'adm.ufr.show.heading'|trans }}
@@ -24,6 +24,10 @@
                 <tr>
                     <th>{{ 'table.libelle'|trans }}</th>
                     <td>{{ ufr.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.responsable_site'|trans }}</th>
+                    <td>{{ ufr.responsable ? ufr.responsable.displayPr : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.sites'|trans }}</th>

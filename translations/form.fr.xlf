@@ -2472,5 +2472,107 @@
         <target>tp</target>
       </segment>
     </unit>
+      <unit id="j8glzMf" name="label.responsable_site">
+          <segment>
+              <source>label.responsable_site</source>
+              <target>label.responsable_site</target>
+          </segment>
+      </unit>
+      <unit id="qbEf6oP" name="label.mois_debut">
+          <segment>
+              <source>label.mois_debut</source>
+              <target>label.mois_debut</target>
+          </segment>
+      </unit>
+      <unit id="5snQ2.h" name="Janvier">
+          <segment>
+              <source>Janvier</source>
+              <target>Janvier</target>
+          </segment>
+      </unit>
+      <unit id="RjsgLgb" name="Février">
+          <segment>
+              <source>Février</source>
+              <target>Février</target>
+          </segment>
+      </unit>
+      <unit id="oKbKCRx" name="Mars">
+          <segment>
+              <source>Mars</source>
+              <target>Mars</target>
+          </segment>
+      </unit>
+      <unit id="ZgGkM4P" name="Avril">
+          <segment>
+              <source>Avril</source>
+              <target>Avril</target>
+          </segment>
+      </unit>
+      <unit id="13tr0Ih" name="Mai">
+          <segment>
+              <source>Mai</source>
+              <target>Mai</target>
+          </segment>
+      </unit>
+      <unit id="SghM8SA" name="Juin">
+          <segment>
+              <source>Juin</source>
+              <target>Juin</target>
+          </segment>
+      </unit>
+      <unit id="bPsX5S8" name="Juillet">
+          <segment>
+              <source>Juillet</source>
+              <target>Juillet</target>
+          </segment>
+      </unit>
+      <unit id="fhhjI4q" name="Août">
+          <segment>
+              <source>Août</source>
+              <target>Août</target>
+          </segment>
+      </unit>
+      <unit id="rksIJ7J" name="Septembre">
+          <segment>
+              <source>Septembre</source>
+              <target>Septembre</target>
+          </segment>
+      </unit>
+      <unit id="jDJoU5F" name="Octobre">
+          <segment>
+              <source>Octobre</source>
+              <target>Octobre</target>
+          </segment>
+      </unit>
+      <unit id="p62vZ_a" name="Novembre">
+          <segment>
+              <source>Novembre</source>
+              <target>Novembre</target>
+          </segment>
+      </unit>
+      <unit id="ThI0lZz" name="Décembre">
+          <segment>
+              <source>Décembre</source>
+              <target>Décembre</target>
+          </segment>
+      </unit>
+      <unit id="OzpDeKu" name="label.nbGroupesTd">
+          <segment>
+              <source>label.nbGroupesTd</source>
+              <target>label.nbGroupesTd</target>
+          </segment>
+      </unit>
+      <unit id="dLCEysP" name="label.nbGroupesTP">
+          <segment>
+              <source>label.nbGroupesTP</source>
+              <target>label.nbGroupesTP</target>
+          </segment>
+      </unit>
+      <unit id="9co490i" name="20">
+          <segment>
+              <source>20</source>
+              <target>20</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

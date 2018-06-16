@@ -28,7 +28,7 @@ class SemestreController extends Controller
     public function index(SemestreRepository $semestreRepository): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/semestre/index.html.twig', ['semestres' => $semestreRepository->findAll()]);
+        return $this->render('structure/semestre/index.html.twig', ['semestres' => $semestreRepository->findAll()]);
     }
 
     /**
@@ -37,7 +37,7 @@ class SemestreController extends Controller
     public function help(): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/semestre/help.html.twig');
+        return $this->render('structure/semestre/help.html.twig');
     }
 
     /**
@@ -83,7 +83,7 @@ class SemestreController extends Controller
                 return $this->redirectToRoute('administration_structure_index');
             }
 
-            return $this->render('administration/structure/semestre/new.html.twig', [
+            return $this->render('structure/semestre/new.html.twig', [
                 'semestre' => $semestre,
                 'form'     => $form->createView(),
             ]);
@@ -100,7 +100,7 @@ class SemestreController extends Controller
      */
     public function show(Semestre $semestre): Response
     {
-        return $this->render('administration/structure/semestre/show.html.twig', ['semestre' => $semestre]);
+        return $this->render('structure/semestre/show.html.twig', ['semestre' => $semestre]);
     }
 
     /**
@@ -124,7 +124,7 @@ class SemestreController extends Controller
                 return $this->redirectToRoute('administration_structure_index');
             }
 
-            return $this->render('administration/structure/semestre/edit.html.twig', [
+            return $this->render('structure/semestre/edit.html.twig', [
                 'semestre' => $semestre,
                 'form'     => $form->createView(),
             ]);

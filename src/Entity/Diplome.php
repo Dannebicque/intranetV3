@@ -114,11 +114,7 @@ class Diplome extends BaseEntity
      */
     private $codeCelcatDepartement = 0;
 
-    /**
-     * @var Formation
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation")
-     */
-    private $formation;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="diplome")
@@ -135,11 +131,27 @@ class Diplome extends BaseEntity
      */
     private $competences;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="diplomes")
+     */
+    private $formation;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Annee", mappedBy="diplome")
+     */
+    private $annees;
+
+    /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $sigle;
+
     public function __construct()
     {
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
         $this->competences = new ArrayCollection();
+        $this->annees = new ArrayCollection();
     }
 
     public function getCodeApogee(): ?string
@@ -176,23 +188,6 @@ class Diplome extends BaseEntity
         $this->codeDepartement = $codeDepartement;
 
         return $this;
-    }
-
-
-    /**
-     * @return Formation
-     */
-    public function getFormation(): ?Formation
-    {
-        return $this->formation;
-    }
-
-    /**
-     * @param Formation $formation
-     */
-    public function setFormation(Formation $formation): void
-    {
-        $this->formation = $formation;
     }
 
     /**
@@ -503,6 +498,61 @@ class Diplome extends BaseEntity
                 $competence->setDiplome(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFormation(): ?Formation
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(?Formation $formation): self
+    {
+        $this->formation = $formation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Annee[]
+     */
+    public function getAnnees(): Collection
+    {
+        return $this->annees;
+    }
+
+    public function addAnnee(Annee $annee): self
+    {
+        if (!$this->annees->contains($annee)) {
+            $this->annees[] = $annee;
+            $annee->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnee(Annee $annee): self
+    {
+        if ($this->annees->contains($annee)) {
+            $this->annees->removeElement($annee);
+            // set the owning side to null (unless already changed)
+            if ($annee->getDiplome() === $this) {
+                $annee->setDiplome(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSigle(): ?string
+    {
+        return $this->sigle;
+    }
+
+    public function setSigle(string $sigle): self
+    {
+        $this->sigle = $sigle;
 
         return $this;
     }

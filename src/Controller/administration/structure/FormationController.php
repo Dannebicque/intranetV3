@@ -26,7 +26,7 @@ class FormationController extends Controller
     public function index(FormationRepository $formationRepository): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/formation/index.html.twig', ['formations' => $formationRepository->findAll()]);
+        return $this->render('structure/formation/index.html.twig', ['formations' => $formationRepository->findAll()]);
     }
 
     /**
@@ -35,7 +35,7 @@ class FormationController extends Controller
     public function help(): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/formation/help.html.twig');
+        return $this->render('structure/formation/help.html.twig');
     }
 
     /**
@@ -59,33 +59,6 @@ class FormationController extends Controller
     }
 
     /**
-     * @Route("/new", name="administration_structure_formation_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
-     */
-    public function create(Request $request): Response
-    {
-        $formation = new Formation();
-        $form = $this->createForm(FormationType::class, $formation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($formation);
-            $em->flush();
-
-            return $this->redirectToRoute('administration_structure_index');
-        }
-
-        return $this->render('administration/structure/formation/new.html.twig', [
-            'formation' => $formation,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/{id}", name="administration_structure_formation_show", methods="GET")
      * @param Formation $formation
      *
@@ -93,7 +66,7 @@ class FormationController extends Controller
      */
     public function show(Formation $formation): Response
     {
-        return $this->render('administration/structure/formation/show.html.twig', ['formation' => $formation]);
+        return $this->render('structure/formation/show.html.twig', ['formation' => $formation]);
     }
 
     /**
@@ -115,7 +88,7 @@ class FormationController extends Controller
             return $this->redirectToRoute('administration_structure_formation_edit', ['id' => $formation->getId()]);
         }
 
-        return $this->render('administration/structure/formation/edit.html.twig', [
+        return $this->render('structure/formation/edit.html.twig', [
             'formation' => $formation,
             'form' => $form->createView(),
         ]);

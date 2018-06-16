@@ -73,7 +73,7 @@ class UserController extends Controller
     /**
      * @Route("/settings", name="user_settings")
      */
-    public function settings()
+    public function settings(Request $request)
     {
         $user = $this->getUser();
         if (is_a($user, Personnel::class)) {

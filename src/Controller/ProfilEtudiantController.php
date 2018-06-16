@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\MesClasses\Calendrier;
 use App\Repository\ScolariteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @Route({"fr":"etudiant",
  *         "en":"student"})
  */
-class ProfilEtudiantController extends Controller
+class ProfilEtudiantController extends BaseController
 {
     /**
      * @Route("/profil/{slug}/timeline", name="profil_etudiant_timeline")
@@ -85,8 +87,16 @@ class ProfilEtudiantController extends Controller
      */
     public function absences(Etudiant $etudiant): Response
     {
+
+        Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire(), 2, Constantes::DUREE_SEMESTRE);
+
         return $this->render('user/composants/absences.html.twig', [
-            'absences' => $etudiant->getAbsences()
+            'tabPlanning' => Calendrier::getTabPlanning(),
+            'tabJour'     => array('', 'L', 'M', 'M', 'J', 'V', 'S', 'D'),
+            'tabFerie'    => Calendrier::getTabJoursFeries(),
+            'tabFinMois'  => Calendrier::getTabFinMois(),
+            'annee'       => $this->dataUserSession->getAnneeUniversitaire(),
+            'absences'    => $etudiant->getAbsences()
         ]);
     }
 

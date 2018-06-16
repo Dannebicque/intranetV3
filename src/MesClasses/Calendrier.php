@@ -54,11 +54,15 @@ abstract class Calendrier
     /**
      * @param $year
      */
-    public static function calculPlanning($year): void
+    public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
     {
         self::joursFeries($year);
-        $bonMois = 9;
-        for ($mois = 1; $mois <= 12; $mois++) {
+
+        if ($nbMois < 12 && $bonMois > 1 && $bonMois < 9) {
+            $year++;
+        }
+
+        for ($mois = 1; $mois <= $nbMois; $mois++) {
 
             if ($bonMois > 12) {
                 $bonMois -= 12;
@@ -96,6 +100,7 @@ abstract class Calendrier
      */
     public static function getTabJoursFeries(): array
     {
+        dump(self::$tabJoursFeries);
         return self::$tabJoursFeries;
     }
 

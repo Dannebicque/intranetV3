@@ -1,0 +1,80 @@
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.structure.semestre.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'structure_semestre', retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.structure.semestre.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <th>{{ 'table.code_apogee'|trans }}</th>
+                    <th>{{ 'table.code_version'|trans }}</th>
+                    <th>{{ 'table.code_departement'|trans }}</th>
+                    <th>{{ 'table.actif'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for semestre in semestres %}
+                    <tr>
+                        <td>{{ semestre.id }}</td>
+                        <td>{{ semestre.libelle }}</td>
+                        <td>{{ semestre.updated ? semestre.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ semestre.codeApogee }}</td>
+                        <td>{{ semestre.codeVersion }}</td>
+                        <td>{{ semestre.codeDepartement }}</td>
+                        <td>{{ semestre.actif ? 'Yes'|trans : 'No'|trans }}</td>
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'structure_semestre', id:semestre.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_structure_semestre_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_structure_semestre_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('administration_structure_semestre_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('administration_structure_semestre_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
+{% endblock %}

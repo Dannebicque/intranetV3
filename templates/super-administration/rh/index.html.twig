@@ -1,0 +1,35 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.gestion.rh.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.creer_nouveau'|trans }}"><i class="ti-plus"></i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.gestion.rh.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" id="datatableRh">
+                <thead>
+                <tr>
+                    <th>{{ 'table.numero_harpege'|trans }}</th>
+                    <th>{{ 'table.nom'|trans }}</th>
+                    <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.formations'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+{% endblock %}

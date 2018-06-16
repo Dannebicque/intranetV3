@@ -3,7 +3,7 @@ security:
         App\Entity\Utilisateur: bcrypt
 
     role_hierarchy:
-        - ROLE_SUPER_ADMIN:ROLE_PERMANENT
+        #- ROLE_SUPER_ADMIN:ROLE_PERMANENT
 
     providers:
         chain_provider:

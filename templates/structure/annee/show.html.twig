@@ -1,0 +1,85 @@
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.structure.annee.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_annee', id: annee.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.structure.annee.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ annee.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle'|trans }}</th>
+                <td>{{ annee.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle_long'|trans }}</th>
+                <td>{{ annee.libelleLong }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.diplome'|trans }}</th>
+                <td>{{ annee.diplome ? annee.diplome.libelle : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.ordre'|trans }}</th>
+                <td>{{ annee.ordre }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ annee.created ? annee.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ annee.updated ? annee.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.code_apogee'|trans }}</th>
+                <td>{{ annee.codeApogee }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.code_version'|trans }}</th>
+                <td>{{ annee.codeVersion }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.code_departement'|trans }}</th>
+                <td>{{ annee.codeDepartement }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.opt_alternance'|trans }}</th>
+                <td>{{ annee.optAlternance ? 'Yes'|trans : 'No'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.couleur_cm'|trans }}</th>
+                <td>{{ annee.couleurCm }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.couleur_td'|trans }}</th>
+                <td>{{ annee.couleurTd }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.couleur_tp'|trans }}</th>
+                <td>{{ annee.couleurTp }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.couleur_texte'|trans }}</th>
+                <td>{{ annee.couleurTexte }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

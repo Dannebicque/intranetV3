@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -80,11 +82,19 @@ class Annee extends BaseEntity
     private $optAlternance = false;
 
     /**
-     * @var Diplome
-     * @ORM\ManyToOne(targetEntity="App\Entity\Diplome")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="annees")
      */
     private $diplome;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="annee")
+     */
+    private $semestres;
+
+    public function __construct()
+    {
+        $this->semestres = new ArrayCollection();
+    }
 
 
     /**
@@ -133,22 +143,6 @@ class Annee extends BaseEntity
     public function setCodeDepartement($codeDepartement): void
     {
         $this->codeDepartement = $codeDepartement;
-    }
-
-    /**
-     * @return Diplome
-     */
-    public function getDiplome(): ?Diplome
-    {
-        return $this->diplome;
-    }
-
-    /**
-     * @param Diplome $diplome
-     */
-    public function setDiplome(Diplome $diplome): void
-    {
-        $this->diplome = $diplome;
     }
 
     /**
@@ -289,5 +283,48 @@ class Annee extends BaseEntity
         if (method_exists($this, $method)) {
             $this->$method($value);
         }
+    }
+
+    public function getDiplome(): ?Diplome
+    {
+        return $this->diplome;
+    }
+
+    public function setDiplome(?Diplome $diplome): self
+    {
+        $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Semestre[]
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres[] = $semestre;
+            $semestre->setAnnee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        if ($this->semestres->contains($semestre)) {
+            $this->semestres->removeElement($semestre);
+            // set the owning side to null (unless already changed)
+            if ($semestre->getAnnee() === $this) {
+                $semestre->setAnnee(null);
+            }
+        }
+
+        return $this;
     }
 }

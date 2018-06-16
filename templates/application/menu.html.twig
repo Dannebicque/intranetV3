@@ -45,6 +45,12 @@
             </li>
 
             <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'rattrapage' %}active{% endif %}"
+                   href="{{ path('application_etudiant_rattrapage_index') }}"
+                   role="tab">{{ 'menu.rattrapage'|trans }}</a>
+            </li>
+
+            <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
                    href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>

@@ -19,6 +19,7 @@ use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Récupère les données d'une session utilisateur
@@ -68,6 +69,8 @@ class DataUserSession
     /** @var NotificationRepository */
     protected $notificationRepository;
 
+    protected $security;
+
     public function __construct(
         SemestreRepository $semestreRepository,
         AnneeRepository $anneeRepository,
@@ -75,7 +78,8 @@ class DataUserSession
         PersonnelRepository $personnelRepository,
         FormationRepository $formationRepository,
         NotificationRepository $notificationRepository,
-        TokenStorageInterface $user
+        TokenStorageInterface $user,
+        Security $security
     ) {
         $this->semestreRepository = $semestreRepository;
         $this->anneeRepository = $anneeRepository;
@@ -85,10 +89,14 @@ class DataUserSession
         $this->notificationRepository = $notificationRepository;
 
         $this->user = $user;
+        $this->security = $security;
+
+        //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
         $this->semestres = $semestreRepository->findAll(); //todo à filter selon la formation
         $this->diplomes = $diplomeRepository->findAll(); //todo à filter selon la formation
         $this->annees = $anneeRepository->findAll(); //todo à filter selon la formation
         $this->formation = $formationRepository->find(1); //todo: récuéprer selon le user et la formation choisie
+        //}
     }
 
     /**
@@ -116,17 +124,9 @@ class DataUserSession
     }
 
     /**
-     * @return \App\Entity\Personnel|\App\Entity\Etudiant|null
-     */
-    public function getUser()
-    {
-        return $this->user->getToken()->getUser();
-    }
-
-    /**
      * @return Formation
      */
-    public function getFormation(): Formation
+    public function getFormation(): ?Formation
     {
         return $this->formation;
     }
@@ -150,5 +150,18 @@ class DataUserSession
         }
 
         return null;
+    }
+
+    /**
+     * @return \App\Entity\Personnel|\App\Entity\Etudiant|null
+     */
+    public function getUser()
+    {
+        return $this->user->getToken()->getUser();
+    }
+
+    public function getAnneeUniversitaire()
+    {
+        return $this->formation->getAnneeCourante();
     }
 }

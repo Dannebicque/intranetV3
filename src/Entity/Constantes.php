@@ -23,6 +23,7 @@ class Constantes
     public const  TIMEBEFORE_YESTERDAY = 'yesterday';
     public const  TIMEBEFORE_FORMAT = '%e %b';
     public const  TIMEBEFORE_FORMAT_YEAR = '%e %b, %Y';
+    public const DUREE_SEMESTRE = 5;
 
     public static function getRoleList(): array
     {

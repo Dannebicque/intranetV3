@@ -15,11 +15,24 @@
             <span class="title">{{ 'menu.dashboard'|trans }}</span>
         </a>
     </li>
-    <li class="menu-item" id="menu-super-administration">
-        <a class="menu-link" href="{{ path('super-administration_index') }}">
-            <span class="material-icons">build</span>
-            <span class="title">{{ 'menu.superadministration'|trans }}</span>
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('sa_scolarite_index') }}">
+            <span class="material-icons">perm_identity</span>
+            <span class="title">{{ 'menu.scolarite'|trans }}</span>
         </a>
     </li>
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('sa_rh_index') }}">
+            <span class="material-icons">supervisor_account</span>
+            <span class="title">{{ 'menu.rh'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('sa_previsionnel_index') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.previsionnel'|trans }}</span>
+        </a>
+    </li>
+
 {% endblock %}
 

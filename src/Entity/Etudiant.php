@@ -87,6 +87,9 @@ class Etudiant extends Utilisateur implements \Serializable
      */
     private $notifications;
 
+    //todo: ajouter boursier, contrat pro, demandeur d'emploi
+    //todo: gestion de l'alternance.
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Personnel;
 use App\Entity\Site;
 use App\Entity\Ufr;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,14 +17,20 @@ class UfrType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('sites', EntityType::class, [
-                'class' => Site::class,
-                'label' => 'label.sites',
-                'choice_label' => 'libelle',
-                'expanded' => true,
-                'multiple' => true
+            ->add('responsable', EntityType::class, [
+                'class'        => Personnel::class,
+                'label'        => 'label.responsable_site',
+                'choice_label' => 'displayPr',
+                'expanded'     => false,
+                'multiple'     => false
             ])
-        ;
+            ->add('sites', EntityType::class, [
+                'class'        => Site::class,
+                'label'        => 'label.sites',
+                'choice_label' => 'libelle',
+                'expanded'     => true,
+                'multiple'     => true
+            ]);
     }
 
     /**
@@ -34,7 +41,7 @@ class UfrType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Ufr::class,
+            'data_class'         => Ufr::class,
             'translation_domain' => 'form'
 
         ]);

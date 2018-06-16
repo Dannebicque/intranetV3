@@ -1,0 +1,99 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'super-admin.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title"><strong>{{ 'formations.heading'|trans }}</strong></h4>
+            <div class="card-header-actions">
+                <a class="btn btn-sm btn-primary btn-square btn-round"
+                   title="{{ 'creation.formation.manuellement'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   href="{{ path('sa_formation_new') }}"
+                >
+                    <i class="ti ti-plus"></i>
+                </a>
+                <a class="btn btn-sm btn-primary btn-square btn-round"
+                   title="{{ 'assistant.creation.formation'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   href="{{ path('sa_formation_new') }}"
+                >
+                    <i class="ti ti-wand"></i>
+                </a>
+                <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i
+                                    class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
+                            </a>
+                            <a href="#" class="dropdown-item"><i class="ti-printer"></i>{{ 'exporter.pdf'|trans }}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="card-body">
+            <div class="row gap-y">
+                {% for formation in formations %}
+                    <div class="col-md-4 col-sm-12">
+                        <div class="btn-group btn-block">
+                            <button class="btn btn-primary btn-block dropdown-toggle"
+                                    data-toggle="dropdown"> {{ formation.libelle }}</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   href="{{ path('sa_structure_index', {formation:formation.id}) }}">Structure</a>
+                                <a class="dropdown-item" href="#">Etudiants</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                {#<div class="col-md-2"><a href="{{ path('administration_semestre_index', {id:1}) }}"
+                                         class="btn btn-block btn-primary">
+                        MMI
+                    </a></div>
+                <div class="col-md-2"><a href="/administration/etudiants/semestre/3/"
+                                         class="btn btn-block btn-primary">
+                        TC
+                    </a></div>#}
+            </div>
+        </div>
+    </div>
+
+    <div class="card"><h4 class="card-title"><strong>{{ 'sa_configuration.heading'|trans }}</strong></h4>
+        <div class="card-body">
+            <div class="row gap-y">
+                <div class="col-md-4 col-sm-12"><a href="{{ path('sa_ufr_index') }}"
+                                                   class="btn btn-block btn-primary"> {{ 'ufr'|trans }}
+                    </a></div>
+                <div class="col-md-4 col-sm-12"><a href="{{ path('sa_site_index') }}"
+                                                   class="btn btn-block btn-primary"> {{ 'sites-geographiques'|trans }}
+                    </a></div>
+
+                <div class="col-md-4 col-sm-12">
+                    <a href="{{ path('sa_type_diplome_index') }}"
+                       class="btn btn-block btn-primary"> {{ 'type_diplome'|trans }}</a>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <a href="{{ path('sa_type_hrs_index') }}"
+                       class="btn btn-block btn-primary"> {{ 'type_hrs'|trans }}</a>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <a href="{{ path('sa_salle_index') }}" class="btn btn-block btn-primary"> {{ 'salle'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

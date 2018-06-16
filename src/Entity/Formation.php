@@ -176,12 +176,20 @@ class Formation extends BaseEntity
      */
     private $trelloTaches;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="formation")
+     */
+    private $diplomes;
+
     public function __construct()
     {
+        $this->anneeCourante = date('Y');
+        $this->optAnneePrevisionnel = date('Y');
         $this->typeDocuments = new ArrayCollection();
         $this->personnelFormations = new ArrayCollection();
         $this->actualites = new ArrayCollection();
         $this->trelloTaches = new ArrayCollection();
+        $this->diplomes = new ArrayCollection();
     }
 
     /**
@@ -644,6 +652,37 @@ class Formation extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($trelloTach->getFormation() === $this) {
                 $trelloTach->setFormation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Diplome[]
+     */
+    public function getDiplomes(): Collection
+    {
+        return $this->diplomes;
+    }
+
+    public function addDiplome(Diplome $diplome): self
+    {
+        if (!$this->diplomes->contains($diplome)) {
+            $this->diplomes[] = $diplome;
+            $diplome->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiplome(Diplome $diplome): self
+    {
+        if ($this->diplomes->contains($diplome)) {
+            $this->diplomes->removeElement($diplome);
+            // set the owning side to null (unless already changed)
+            if ($diplome->getFormation() === $this) {
+                $diplome->setFormation(null);
             }
         }
 

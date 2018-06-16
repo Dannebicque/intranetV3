@@ -31,3 +31,7 @@ services:
     redirect.after.login:
         class: App\Listener\AfterLoginRedirect
         arguments: ['@router']
+
+    my.router:
+        class: App\MesClasses\MyRoute
+        arguments: ['@router']

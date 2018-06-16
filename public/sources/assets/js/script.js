@@ -538,6 +538,24 @@ app.ready(function () {
     })
   });
 
+//var table = $('#datatableRh').DataTable({});
+//table.clear(); //effacer le datatable
+//table.destroy(); //supprimer le datatable
+
+  $('#datatableRh').DataTable({
+    "processing": true,
+    "serverSide": true,
+    "ajax": Routing.generate('api_all_personnel'),
+    "sAjaxDataProp": "data",
+    "pageLength": 25,
+    "columns": [
+      {"data": "numero_harpege"},
+      {"data": "nom"},
+      {"data": "prenom"},
+      {"data": "formations"},
+      {"data": "profil"}]
+  });
+
 
   var table = $('#datatableEtudiants').DataTable({});
   table.clear(); //effacer le datatable

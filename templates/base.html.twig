@@ -6,7 +6,7 @@
     <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
     <meta name="keywords" content="blank, starter">
 
-    <title>Intranet - {{  block('header')|striptags  }}</title>
+    <title>Intranet - {{ block('header')|striptags }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
@@ -39,7 +39,7 @@
     <header class="sidebar-header">
         <span class="logo text-center">
           <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
-                                                     alt="logo"></a>
+                                                        alt="logo"></a>
         </span>
     </header>
 
@@ -47,57 +47,57 @@
         <ul class="menu">
             {% block sidebar_menu %}
 
-            <li class="menu-item active" id="menu-dashboard">
-                <a class="menu-link" href="{{ path('default_homepage') }}">
-                    <span class="material-icons">dashboard</span>
-                    <span class="title">{{ 'menu.dashboard'|trans }}</span>
-                </a>
-            </li>
+                <li class="menu-item active" id="menu-dashboard">
+                    <a class="menu-link" href="{{ path('default_homepage') }}">
+                        <span class="material-icons">dashboard</span>
+                        <span class="title">{{ 'menu.dashboard'|trans }}</span>
+                    </a>
+                </li>
 
-            <li class="menu-item" id="menu-trombinoscope">
-                <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                    <span class="material-icons">group</span>
-                    <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
-                </a>
-            </li>
+                <li class="menu-item" id="menu-trombinoscope">
+                    <a class="menu-link" href="{{ path('trombinoscope_index') }}">
+                        <span class="material-icons">group</span>
+                        <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
+                    </a>
+                </li>
 
-            <li class="menu-item" id="menu-agenda">
-                <a class="menu-link" href="{{ path('agenda_index') }}">
-                    <span class="material-icons">perm_contact_calendar</span>
-                    <span class="title">{{ 'menu.agenda'|trans }}</span>
-                </a>
-            </li>
+                <li class="menu-item" id="menu-agenda">
+                    <a class="menu-link" href="{{ path('agenda_index') }}">
+                        <span class="material-icons">perm_contact_calendar</span>
+                        <span class="title">{{ 'menu.agenda'|trans }}</span>
+                    </a>
+                </li>
 
-            <li class="menu-item" id="menu-application">
-                <a class="menu-link" href="{{ path('application_index') }}">
-                    <span class="material-icons">apps</span>
-                    <span class="title">{{ 'menu.applications'|trans }}</span>
-                </a>
-            </li>
+                <li class="menu-item" id="menu-application">
+                    <a class="menu-link" href="{{ path('application_index') }}">
+                        <span class="material-icons">apps</span>
+                        <span class="title">{{ 'menu.applications'|trans }}</span>
+                    </a>
+                </li>
 
-            <li class="menu-item" id="menu-document">
-                <a class="menu-link" href="{{ path('document_index') }}">
-                    <span class="material-icons">folder</span>
-                    <span class="title">{{ 'menu.documents'|trans }}</span>
-                </a>
-            </li>
+                <li class="menu-item" id="menu-document">
+                    <a class="menu-link" href="{{ path('document_index') }}">
+                        <span class="material-icons">folder</span>
+                        <span class="title">{{ 'menu.documents'|trans }}</span>
+                    </a>
+                </li>
 
-            <li class="menu-item" id="menu-informations">
-                <a class="menu-link" href="{{ path('informations_index') }}">
-                    <span class="material-icons">insert_drive_file</span>
-                    <span class="title">{{ 'menu.informations'|trans }}</span>
-                </a>
-            </li>
-            {% if is_granted('ROLE_PERMANENT') %} {# todo: tester permanent +formation + admin #}
-            <li class="menu-item" id="menu-administration">
-                <a class="menu-link" href="{{ path('administration_index') }}">
-                    <span class="material-icons">build</span>
-                    <span class="title">{{ 'menu.administration'|trans }}</span>
-                </a>
-            </li>
+                <li class="menu-item" id="menu-informations">
+                    <a class="menu-link" href="{{ path('informations_index') }}">
+                        <span class="material-icons">insert_drive_file</span>
+                        <span class="title">{{ 'menu.informations'|trans }}</span>
+                    </a>
+                </li>
+                {% if is_granted('ROLE_PERMANENT') %} {# todo: tester permanent +formation + admin #}
+                    <li class="menu-item" id="menu-administration">
+                        <a class="menu-link" href="{{ path('administration_index') }}">
+                            <span class="material-icons">build</span>
+                            <span class="title">{{ 'menu.administration'|trans }}</span>
+                        </a>
+                    </li>
 
 
-            {% endif %}
+                {% endif %}
             {% endblock %}
         </ul>
 
@@ -183,51 +183,50 @@
     </div>
 
     <div class="topbar-right">
-
-            <ul class="topbar-btns">
-                <li class="dropdown">
+        <ul class="topbar-btns">
+            <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown"><img class="avatar"
                                                                          src="{{ asset('assets/avatar/1.jpg') }}"
                                                                          alt="Votre avatar"></span>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
-                        <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
-                            Paramètres</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="ti-lock"></i> Lock</a>
-                        <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="ti-power-off"></i>
-                            Logout</a>
-                    </div>
-                </li>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
+                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
+                        Paramètres</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="ti-lock"></i> Lock</a>
+                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="ti-power-off"></i>
+                        Logout</a>
+                </div>
+            </li>
 
-                <!-- Change language -->
-                <li class="dropdown">
+            <!-- Change language -->
+            <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown"><img class="icon"
                                                                          src="{{ asset('sources/assets/img/flag/en.png') }}"
                                                                          alt="fr"></span>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item active" href="#"><img class="icon"
-                                                                      src="{{ asset('sources/assets/img/flag/en.png') }}"
-                                                                      alt="en"></a>
-                        <a class="dropdown-item" href="#"><img class="icon"
-                                                               src="{{ asset('sources/assets/img/flag/de.png') }}"
-                                                               alt="..."></a>
-                        <a class="dropdown-item" href="#"><img class="icon"
-                                                               src="{{ asset('sources/assets/img/flag/es.png') }}"
-                                                               alt="..."></a>
-                    </div>
-                </li>
-                <!-- END Change language -->
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item active" href="#"><img class="icon"
+                                                                  src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                  alt="en"></a>
+                    <a class="dropdown-item" href="#"><img class="icon"
+                                                           src="{{ asset('sources/assets/img/flag/de.png') }}"
+                                                           alt="..."></a>
+                    <a class="dropdown-item" href="#"><img class="icon"
+                                                           src="{{ asset('sources/assets/img/flag/es.png') }}"
+                                                           alt="..."></a>
+                </div>
+            </li>
+            <!-- END Change language -->
 
-                <!-- Notifications -->
-                <li class="dropdown d-none d-md-block">
-                    <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i></span>
-                    <div class="dropdown-menu dropdown-menu-right">
+            <!-- Notifications -->
+            <li class="dropdown d-none d-md-block">
+                <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i></span>
+                <div class="dropdown-menu dropdown-menu-right">
 
-                        <div class="media-list media-list-hover media-list-divided media-list-xs">
-                            {% for notification in user_data.notifications %}
-                                <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
-                                   href="{{ notification.url }}">
+                    <div class="media-list media-list-hover media-list-divided media-list-xs">
+                        {% for notification in user_data.notifications %}
+                            <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
+                               href="{{ notification.url }}">
                                     <span class="avatar bg-{{ notification.color }}"><i
                                                 class="{{ notification.icone }}"></i></span>
                                 <div class="media-body">
@@ -235,33 +234,33 @@
                                     <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
                                 </div>
                             </a>
-                            {% else %}
-                                {{ 'aucune.notification'|trans }}
-                            {% endfor %}
-                        </div>
-
-                        <div class="dropdown-footer">
-                            <div class="left">
-                                <a href="{{ path('notification_index') }}">{{ 'lire.toutes.les.notifications'|trans }}</a>
-                            </div>
-
-                            <div class="right">
-                                <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
-                                   id="marquerNotificationsRead"><i
-                                            class="fa fa-circle-o"></i></a>
-                                <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}"><i
-                                            class="fa fa-repeat"></i></a>
-                                {#
-                                                                <a href="#" data-provide="tooltip" title="Settings"><i class="fa fa-gear"></i></a>
-                                #}
-                            </div>
-                        </div>
-
+                        {% else %}
+                            {{ 'aucune.notification'|trans }}
+                        {% endfor %}
                     </div>
-                </li>
-                <!-- END Notifications -->
 
-                {% if user_data.formation.optMessagerie == true %}
+                    <div class="dropdown-footer">
+                        <div class="left">
+                            <a href="{{ path('notification_index') }}">{{ 'lire.toutes.les.notifications'|trans }}</a>
+                        </div>
+
+                        <div class="right">
+                            <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
+                               id="marquerNotificationsRead"><i
+                                        class="fa fa-circle-o"></i></a>
+                            <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}"><i
+                                        class="fa fa-repeat"></i></a>
+                            {#
+                                                            <a href="#" data-provide="tooltip" title="Settings"><i class="fa fa-gear"></i></a>
+                            #}
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <!-- END Notifications -->
+
+            {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.formation.optMessagerie == true) %}
                 <!-- Messages -->
                 <li class="dropdown d-none d-md-block">
                     <span class="topbar-btn" data-toggle="dropdown"><i class="ti-email"></i></span>
@@ -367,9 +366,8 @@
                     </div>
                 </li>
                 <!-- END Messages -->
-                {% endif %}
-
-            </ul>
+            {% endif %}
+        </ul>
     </div>
 </header>
 <!-- END Topbar -->

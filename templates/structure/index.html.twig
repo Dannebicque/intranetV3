@@ -1,0 +1,260 @@
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% set baseurl = 'sa' %}
+{% else %}
+    {% set baseurl = 'administration_structure' %}
+{% endif %}
+
+{% block header %}
+    {{ 'structure.de.la.formation.heading'|trans({ '%formation%': formation.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}"><i
+                            class="material-icons">dashboard</i></a>
+            {% else %}
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'structure.de.la.formation.heading'|trans({ '%formation%': formation.libelle}) }}</h4>
+        <div class="card-body">
+
+            <div class="row gap-y ">
+                <div class="col-md-10">{{ formation.libelle }}</div>
+                <div class="col-md-2">
+                    <a href="{{ path(baseurl ~ '_formation_show', {'id': formation.id}) }}"
+                       class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="ti-eye"></i></a>
+
+                    <a href="{{ path(baseurl ~ '_formation_edit', {'id': formation.id}) }}"
+                       class="btn btn-warning btn-outline btn-square btn-xs"><i class="ti-pencil"
+                                                                                data-provide="tooltip"
+                                                                                data-placement="bottom"
+                                                                                title="{{ 'atitle.modifier'|trans }}"></i></a>
+                </div>
+            </div>
+            {% for diplome in formation.diplomes %}
+                <div class="row gap-y lignehover">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-9">{{ diplome.typediplome.sigle }}
+                        | {{ diplome.libelle }} | {{ diplome.codeApogee }}</div>
+                    <div class="col-md-2">
+                        <a href="{{ path(baseurl ~ '_diplome_duplicate', {'id': diplome.id}) }}"
+                           class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
+                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="ti-layers"></i></a>
+                        <a href="{{ path(baseurl ~ '_diplome_show', {'id': diplome.id}) }}"
+                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="ti-eye"></i></a>
+
+                        <a href="{{ path(baseurl ~ '_diplome_edit', {'id': diplome.id}) }}"
+                           class="btn btn-warning btn-outline btn-square btn-xs"><i class="ti-pencil"
+                                                                                    data-provide="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="{{ 'atitle.modifier'|trans }}"></i></a>
+                        <a href="{{ path(baseurl ~ '_diplome_delete', {id: diplome.id}) }}"
+                           data-csrf="{{ csrf_token('delete' ~ diplome.id) }}"
+                           class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
+                                    class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                    title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                    </div>
+                </div>
+                {% for annee in diplome.annees %}
+                    <div class="row gap-y dip_{{ diplome.id }} lignehover">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeApogee }}</div>
+                        <div class="col-md-2">
+                            <a href="{{ path(baseurl ~ '_annee_duplicate', {'id': annee.id}) }}"
+                               class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="ti-layers"></i></a>
+                            <a href="{{ path(baseurl ~ '_annee_show', {'id': annee.id}) }}"
+                               class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="ti-eye"></i></a>
+
+                            <a href="{{ path(baseurl ~ '_annee_edit', {'id': annee.id}) }}"
+                               class="btn btn-warning btn-outline btn-square btn-xs"><i class="ti-pencil"
+                                                                                        data-provide="tooltip"
+                                                                                        data-placement="bottom"
+                                                                                        title="{{ 'atitle.modifier'|trans }}"></i></a>
+                            <a href="{{ path(baseurl ~ '_annee_delete', {id: annee.id}) }}"
+                               data-csrf="{{ csrf_token('delete' ~ annee.id) }}"
+                               class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
+                                        class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                        title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                        </div>
+                    </div>
+                    {% for semestre in annee.semestres %}
+
+                        <div class="row gap-y dip_semestre_{{ diplome.id }} semestre_{{ annee.id }} lignehover">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-7">{{ semestre.libelle }} | {{ semestre.codeApogee }}</div>
+                            <div class="col-md-2">
+                                <a href="{{ path(baseurl ~ '_semestre_duplicate', {'id': semestre.id}) }}"
+                                   class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
+                                   data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                            class="ti-layers"></i></a>
+                                <a href="{{ path(baseurl ~ '_semestre_show', {'id': semestre.id}) }}"
+                                   class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                                   data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                            class="ti-eye"></i></a>
+
+                                <a href="{{ path(baseurl ~ '_semestre_edit', {'id': semestre.id}) }}"
+                                   class="btn btn-warning btn-outline btn-square btn-xs"><i class="ti-pencil"
+                                                                                            data-provide="tooltip"
+                                                                                            data-placement="bottom"
+                                                                                            title="{{ 'atitle.modifier'|trans }}"></i></a>
+                                <a href="{{ path(baseurl ~ '_semestre_delete', {id: semestre.id}) }}"
+                                   data-csrf="{{ csrf_token('delete' ~ semestre.id) }}"
+                                   class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
+                                            class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                            title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                            </div>
+                        </div>
+
+                        {% for ue in semestre.ues %}
+                            <div class="row gap-y ue_{{ semestre.id }} lignehover">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeApogee }}</div>
+                                <div class="col-md-2">
+                                    <a href="{{ path(baseurl ~ '_ue_duplicate', {'id': ue.id}) }}"
+                                       class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                                class="ti-layers"></i></a>
+                                    <a href="{{ path(baseurl ~ '_ue_show', {'id': ue.id}) }}"
+                                       class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                                class="ti-eye"></i></a>
+
+                                    <a href="{{ path(baseurl ~ '_ue_edit', {'id': ue.id}) }}"
+                                       class="btn btn-warning btn-outline btn-square btn-xs"><i class="ti-pencil"
+                                                                                                data-provide="tooltip"
+                                                                                                data-placement="bottom"
+                                                                                                title="{{ 'atitle.modifier'|trans }}"></i></a>
+                                    <a href="{{ path(baseurl ~ '_ue_delete', {id: ue.id}) }}"
+                                       data-csrf="{{ csrf_token('delete' ~ ue.id) }}"
+                                       class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
+                                                class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                                title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                        <div class="row gap-y lignehover" id="ue_new_{{ semestre.id }}">
+                            <div class="col-md-4"></div>
+
+                            <div class="col-md-8">
+                                <a href="{{ path(baseurl ~ '_ue_new', {semestre: semestre.id}) }}"
+                                   class="btn btn-success addUe btn-block" title="Ajouter une UE"
+                                   data-semestre="{{ semestre.id }}"><i
+                                            class="fa fa-plus-circle"></i> Ajouter une UE au
+                                    semestre {{ semestre.libelle }}</a>
+                            </div>
+                        </div>
+                                                        {# options #}
+                        {#
+                                {% for opt in t.options if opt.semestre==semestre %}
+
+                                    <tr class="UE_{{ semestre.id }} deroulant">
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="2">{{ opt.nomoption }}</td>
+                                        <td>
+                                            <a href="{{ path('da_kernel_administration_structure_modif_option',{id:opt.id}) }}"
+                                               class="btn btn-warning" rel="tooltip"
+                                               data-placement="left" title=" Modifier "><i
+                                                        class="fa fa-pencil"></i></a>
+
+                                            <a href="#modalConfirm" data-toggle="modal" id="OPT-{{ opt.id }}"
+                                               class="btn  btn-danger supprimer" rel="tooltip"
+                                               data-placement="right" title="Supprimer l'option"><i
+                                                        class="fa fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% for u in t.ue if u.option==opt %}
+
+                                        <tr class="UE_{{ semestre.id }} deroulant">
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td colspan="2">{{ u.numeroue }} | {{ u.nomue }}
+                                                | {{ u.codeetape }}</td>
+                                            <td>
+                                                <a href="{{ path('da_kernel_administration_structure_modif_ue',{id:u.id}) }}"
+                                                   class="btn btn-warning" rel="tooltip" data-placement="left"
+                                                   title=" Modifier "><i class="fa fa-pencil"></i></a>
+
+                                                <a href="#modalConfirm" data-toggle="modal" id="UE-{{ u.id }}"
+                                                   class="btn btn-danger supprimer" rel="tooltip"
+                                                   data-placement="right" title="Supprimer l'UE"><i
+                                                            class="fa fa-times"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+
+                                <tr class="deroulant" id="option_new_{{ semestre.id }}">
+                                    <td colspan="4" class="ligneajouter">Ajouter un parcours</td>
+                                    <td>
+                                        <input type="text" class="form-control" placeholder="Code Apogée"
+                                               id="codeApogeeOption-{{ semestre.id }}"/>
+    #}
+                        {#<a href="{{ path('da_kernel_administration_structure_add_option',{semestre:semestre.id}) }}" class="btn btn-block btn-large btn-primary">Ajouter un parcours au semestre</a>#}
+                        {# </td>
+                         <td>
+                             <input type="text" class="form-control"
+                                    placeholder="Libellé du parcours"
+                                    id="libelleOption-{{ semestre.id }}"/>
+                         </td>
+                         <td>
+                             <button class="btn btn-success addParcours" title="Ajouter un parcours"
+                                     data-semestre="{{ semestre.id }}"><i
+                                         class="fa fa-plus-circle"></i></button>
+                         </td>
+
+                     </tr>#}
+                    {% endfor %}
+
+                    <div class="row gap-y lignehover" id="semestre_new_{{ annee.id }}">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <a href="{{ path(baseurl ~ '_semestre_new', {annee: annee.id}) }}"
+                               class="btn btn-success btn-block addSemestre" title="Ajouter un semestre"
+                               data-annee="{{ annee.id }}"><i class="fa fa-plus-circle"></i> Ajouter un semestre à
+                                l'année {{ annee.libelle }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div id="dip_new_{{ diplome.id }}" class="row gap-y lignehover">
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-10"><a
+                                href="{{ path(baseurl ~ '_annee_new',{diplome:diplome.id}) }}"
+                                class="btn btn-block btn-success" data-iddip="{{ diplome.id }}"><i
+                                    class="fa fa-plus-circle"></i> {{ 'ajouter.annee.diplome'|trans({'%libelle%':diplome.libelle}) }}
+                        </a></div>
+                </div>
+            {% endfor %}
+            <div class="row gap-y lignehover">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    <a href="{{ path(baseurl ~ '_diplome_new') }}"
+                       class="btn btn-block btn-success "><i
+                                class="fa fa-plus-circle"></i> {{ 'ajouter.diplome.formation'|trans({'%libelle%':{{ formation.libelle }}}) }}
+                    </a></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

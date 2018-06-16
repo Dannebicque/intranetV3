@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Personnel;
 use App\Entity\PersonnelFormation;
+use App\Entity\Semestre;
+use App\MesClasses\MyRoute;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -21,7 +23,7 @@ class PersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Personnel::class);
     }
 
-    public function findByType($type)
+    public function findByType($type, $formation)
     {
         return $this->createQueryBuilder('p')
             ->where('p.type_user = :type')
@@ -80,5 +82,51 @@ class PersonnelRepository extends ServiceEntityRepository
             ->setParameter('formation', $formation)
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC');
+    }
+
+    public function findBySemestreBuilder(Semestre $semestre)
+    {
+        if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
+            return $this->findByFormationBuilder($semestre->getAnnee()->getDiplome()->getFormation());
+        }
+
+        return null;
+    }
+
+    public function getAllPersonnel($data, $page = 0, $max = null, $getResult = true)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
+        //$order = isset($data['query']) && $data['query'] ? $data['query'] : null;
+
+        $qb
+            ->select('u')
+            ->from(Personnel::class, 'u');
+        // ->andWhere('u.visible = :visible')
+        // ->andWhere('u.anneesortie = :anneesortie')
+
+        /*switch ($order[0]['column']) {
+            case 0:
+                //todo: mettre les tris.
+                break;
+        }*/
+
+        if ($query) {
+            $qb
+                ->andWhere('u.nom like :query')
+                ->orWhere('u.prenom like :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($max) {
+            $preparedQuery = $qb->getQuery()
+                ->setMaxResults($max)
+                ->setFirstResult($page * $max);
+        } else {
+            $preparedQuery = $qb->getQuery();
+        }
+
+        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
+
     }
 }

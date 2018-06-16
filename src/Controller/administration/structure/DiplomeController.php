@@ -28,7 +28,8 @@ class DiplomeController extends BaseController
     public function index(DataUserSession $dataUserSession, DiplomeRepository $diplomeRepository): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/diplome/index.html.twig', ['diplomes' => $diplomeRepository->findByFormation($dataUserSession->getFormation()->getId())]);
+        return $this->render('structure/diplome/index.html.twig',
+            ['diplomes' => $diplomeRepository->findByFormation($dataUserSession->getFormation()->getId())]);
     }
 
     /**
@@ -37,7 +38,7 @@ class DiplomeController extends BaseController
     public function help(): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/diplome/help.html.twig');
+        return $this->render('structure/diplome/help.html.twig');
     }
 
     /**
@@ -82,7 +83,7 @@ class DiplomeController extends BaseController
             return $this->redirectToRoute('administration_structure_index');
         }
 
-        return $this->render('administration/structure/diplome/new.html.twig', [
+        return $this->render('structure/diplome/new.html.twig', [
             'diplome' => $diplome,
             'form' => $form->createView(),
         ]);
@@ -96,7 +97,7 @@ class DiplomeController extends BaseController
      */
     public function show(Diplome $diplome): Response
     {
-        return $this->render('administration/structure/diplome/show.html.twig', ['diplome' => $diplome]);
+        return $this->render('structure/diplome/show.html.twig', ['diplome' => $diplome]);
     }
 
     /**
@@ -118,7 +119,7 @@ class DiplomeController extends BaseController
             return $this->redirectToRoute('administration_structure_index');
         }
 
-        return $this->render('administration/structure/diplome/edit.html.twig', [
+        return $this->render('structure/diplome/edit.html.twig', [
             'diplome' => $diplome,
             'form' => $form->createView(),
         ]);

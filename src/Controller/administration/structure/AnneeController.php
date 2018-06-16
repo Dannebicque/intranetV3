@@ -28,7 +28,7 @@ class AnneeController extends Controller
     {
         //todo: comment l'exploiter...
         //filtrer par formation ou diplome ?
-        return $this->render('administration/structure/annee/index.html.twig', ['annees' => $anneeRepository->findAll()]);
+        return $this->render('structure/annee/index.html.twig', ['annees' => $anneeRepository->findAll()]);
     }
 
     /**
@@ -37,7 +37,7 @@ class AnneeController extends Controller
     public function help(): Response
     {
         //todo: comment l'exploiter...
-        return $this->render('administration/structure/annee/help.html.twig');
+        return $this->render('structure/annee/help.html.twig');
     }
 
     /**
@@ -87,7 +87,7 @@ class AnneeController extends Controller
                 return $this->redirectToRoute('administration_structure_index');
             }
 
-            return $this->render('administration/structure/annee/new.html.twig', [
+            return $this->render('structure/annee/new.html.twig', [
                 'annee' => $annee,
                 'form'  => $form->createView(),
             ]);
@@ -104,7 +104,7 @@ class AnneeController extends Controller
      */
     public function show(Annee $annee): Response
     {
-        return $this->render('administration/structure/annee/show.html.twig', ['annee' => $annee]);
+        return $this->render('structure/annee/show.html.twig', ['annee' => $annee]);
     }
 
     /**
@@ -128,7 +128,7 @@ class AnneeController extends Controller
                 return $this->redirectToRoute('administration_structure_index');
             }
 
-            return $this->render('administration/structure/annee/edit.html.twig', [
+            return $this->render('structure/annee/edit.html.twig', [
                 'annee' => $annee,
                 'form'  => $form->createView(),
             ]);

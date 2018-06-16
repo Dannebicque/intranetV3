@@ -33,7 +33,7 @@ class UeType extends AbstractType
                 'expanded'      => true
 
             ])
-            ->add('numero_ue', ChoiceType::class, ['choices' => range(1, 20),'label' => 'label.numero_ue'])
+            ->add('numero_ue', ChoiceType::class, ['choices' => range(0, 20), 'label' => 'label.numero_ue'])
             ->add('coefficient', TextType::class, ['label' => 'label.libelle'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
             ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
