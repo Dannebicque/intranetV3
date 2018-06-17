@@ -50,9 +50,10 @@ class UeController extends BaseController
 
     /**
      * @Route("/new/{semestre}", name="sa_ue_new", methods="GET|POST")
-     * @param Request  $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
-     * @param Semestre $semestre
+     * @param Semestre               $semestre
      *
      * @return Response
      */
@@ -94,11 +95,11 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ue_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Ue      $ue
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Ue                     $ue
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Ue $ue): Response
     {
@@ -125,7 +126,8 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_ue_duplicate", methods="GET|POST")
-     * @param Ue $ue
+     * @param EntityManagerInterface $entityManager
+     * @param Ue                     $ue
      *
      * @return Response
      */

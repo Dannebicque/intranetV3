@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class ApplicationController
@@ -20,7 +20,7 @@ class ApplicationController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index($onglet = 'messagerie')
+    public function index($onglet = 'messagerie'): Response
     {
         return $this->render('application/index.html.twig', [
             'onglet' => $onglet

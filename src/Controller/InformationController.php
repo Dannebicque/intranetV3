@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class InformationController
@@ -16,7 +16,7 @@ class InformationController extends BaseController
     /**
      * @Route("/", name="informations_index")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('informations/index.html.twig', [
         ]);

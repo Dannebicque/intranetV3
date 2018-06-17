@@ -2,13 +2,13 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,8 +63,9 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/new/{annee}", name="sa_semestre_new", methods="GET|POST")
-     * @param Request $request
-     * @param Annee   $annee
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Annee                  $annee
      *
      * @return Response
      */
@@ -106,11 +107,11 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_semestre_edit", methods="GET|POST")
-     * @param Request  $request
-     * @param Semestre $semestre
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Semestre               $semestre
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Semestre $semestre): Response
     {
@@ -137,7 +138,8 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_semestre_duplicate", methods="GET|POST")
-     * @param Semestre $semestre
+     * @param EntityManagerInterface $entityManager
+     * @param Semestre               $semestre
      *
      * @return Response
      */

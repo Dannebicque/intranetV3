@@ -6,7 +6,7 @@ use App\Controller\BaseController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AgendaController
+ * Class UserApiController
  * @package App\Controller
  * @Route("/api/user")
  */

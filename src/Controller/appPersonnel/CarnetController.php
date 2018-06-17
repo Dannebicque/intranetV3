@@ -65,6 +65,7 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/new", name="application_personnel_carnet_new", methods="GET|POST")
+     * @param EntityManagerInterface   $entityManager
      * @param Request                  $request
      * @param EventDispatcherInterface $eventDispatcher
      *
@@ -112,8 +113,9 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_carnet_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param CahierTexte $cahierTexte
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param CahierTexte            $cahierTexte
      *
      * @return Response
      */
@@ -137,8 +139,9 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_delete", methods="DELETE")
-     * @param Request     $request
-     * @param CahierTexte $cahierTexte
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param CahierTexte            $cahierTexte
      *
      * @return Response
      */

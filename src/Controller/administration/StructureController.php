@@ -2,8 +2,8 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class StructureController
@@ -19,7 +19,7 @@ class StructureController extends BaseController
      */
     public function index()
     {
-        return $this->render('administration/structure/index.html.twig', [
+        return $this->render('structure/index.html.twig', [
         ]);
     }
 }

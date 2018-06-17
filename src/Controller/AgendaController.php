@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class AgendaController
@@ -20,7 +19,6 @@ class AgendaController extends BaseController
     public function index()
     {
         return $this->render('agenda/index.html.twig', [
-            'controller_name' => 'AgendaController',
         ]);
     }
 }

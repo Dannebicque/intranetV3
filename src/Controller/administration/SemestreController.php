@@ -2,6 +2,7 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Semestre;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

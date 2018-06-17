@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class AgendaController
@@ -16,7 +16,7 @@ class TrombinoscopeController extends BaseController
     /**
      * @Route("/", name="trombinoscope_index")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('trombinoscope/index.html.twig', [
         ]);

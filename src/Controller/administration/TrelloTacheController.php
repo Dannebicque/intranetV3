@@ -38,7 +38,7 @@ class TrelloTacheController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function board(TrelloTacheRepository $trelloTacheRepository)
+    public function board(TrelloTacheRepository $trelloTacheRepository): Response
     {
         $jourDuJour = date('N');
         $dateDuJour = new \DateTimeImmutable();
@@ -62,8 +62,8 @@ class TrelloTacheController extends BaseController
         sort($tab);
 
         return $this->render('administration/trello_tache/board.html.twig', [
-            'taches' => $trelloTacheRepository->findByFormationTaches($this->dataUserSession->getFormation()->getId()),
-            'calendrier'    => $tab
+            'taches'     => $trelloTacheRepository->findByFormationTaches($this->dataUserSession->getFormationId()),
+            'calendrier' => $tab
         ]);
     }
 
@@ -95,7 +95,8 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/new", name="administration_trello_tache_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
      */
@@ -132,8 +133,9 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_trello_tache_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param TrelloTache $trelloTache
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param TrelloTache            $trelloTache
      *
      * @return Response
      */
@@ -157,8 +159,9 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_trello_tache_delete", methods="DELETE")
-     * @param Request     $request
-     * @param TrelloTache $trelloTache
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param TrelloTache            $trelloTache
      *
      * @return Response
      */

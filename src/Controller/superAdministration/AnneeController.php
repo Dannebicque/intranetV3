@@ -2,12 +2,12 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,9 +66,10 @@ class AnneeController extends BaseController
     /**
      * @Route({"fr":"/nouveau/{diplome}", "en":"/new/{diplome}"}, name="sa_annee_new",
      *                                    methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
-     * @param Diplome $diplome
+     * @param Diplome                $diplome
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -110,11 +111,11 @@ class AnneeController extends BaseController
 
     /**
      * @Route({"fr":"/{id}/modifier", "en":"/{id}/edit"}, name="sa_annee_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Annee   $annee
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Annee                  $annee
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Annee $annee): Response
     {
@@ -141,7 +142,8 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_annee_duplicate", methods="GET|POST")
-     * @param Annee $annee
+     * @param EntityManagerInterface $entityManager
+     * @param Annee                  $annee
      *
      * @return Response
      */

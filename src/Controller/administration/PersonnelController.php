@@ -26,7 +26,8 @@ class PersonnelController extends BaseController
      */
     public function index(PersonnelFormationRepository $personnelRepository): Response
     {
-        return $this->render('administration/personnel/index.html.twig', ['personnels' => $personnelRepository->findByType('permanent', $this->dataUserSession->getFormation()->getId())]);
+        return $this->render('administration/personnel/index.html.twig',
+            ['personnels' => $personnelRepository->findByType('permanent', $this->dataUserSession->getFormationId())]);
     }
 
     /**
@@ -66,10 +67,10 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/create", name="administration_personnel_create", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -103,11 +104,11 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_personnel_edit", methods="GET|POST", options={"expose":true})
-     * @param Request   $request
-     * @param Personnel $personnel
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Personnel              $personnel
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Personnel $personnel): Response
     {

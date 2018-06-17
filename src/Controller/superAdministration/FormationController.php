@@ -2,12 +2,10 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Formation;
 use App\Form\FormationType;
-use App\MesClasses\Manager\FormationManager;
-use App\Repository\FormationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,10 +58,10 @@ class FormationController extends BaseController
 
     /**
      * @Route("/new", name="sa_formation_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -97,11 +95,11 @@ class FormationController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_formation_edit", methods="GET|POST")
-     * @param Request   $request
-     * @param Formation $formation
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Formation              $formation
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Formation $formation): Response
     {

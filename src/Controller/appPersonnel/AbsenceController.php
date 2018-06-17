@@ -5,12 +5,10 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Matiere;
-use App\MesClasses\DataUserSession;
 use App\MesClasses\MyAbsences;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class AbsenceController

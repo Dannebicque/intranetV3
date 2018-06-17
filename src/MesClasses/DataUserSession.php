@@ -161,9 +161,14 @@ class DataUserSession
         return $this->user->getToken()->getUser();
     }
 
-    public function getAnneeUniversitaire()
+    public function getAnneeUniversitaire(): ?int
     {
         return $this->formation->getAnneeCourante();
+    }
+
+    public function getAnneePrevisionnel(): ?int
+    {
+        return $this->formation->getOptAnneePrevisionnel();
     }
 
     /**
@@ -183,7 +188,7 @@ class DataUserSession
      *
      * @return bool
      */
-    public function isGoodFormation($role)
+    public function isGoodFormation($role): bool
     {
         if ($this->getUser() !== null && $this->getUser()->getTypeUser() !== 'etudiant') {
 

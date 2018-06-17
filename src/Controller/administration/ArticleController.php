@@ -57,10 +57,10 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/new", name="administration_article_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -95,11 +95,11 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_article_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Article $article
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Article                $article
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Article $article): Response
     {
@@ -121,8 +121,9 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_article_delete", methods="DELETE")
-     * @param Request $request
-     * @param Article $article
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Article                $article
      *
      * @return Response
      */

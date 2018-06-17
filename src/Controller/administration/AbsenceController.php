@@ -40,7 +40,7 @@ class AbsenceController extends BaseController
      */
     public function liste(MyAbsences $myAbsences, Semestre $semestre): Response
     {
-        $myAbsences->getAbsencesSemestre($semestre, $this->dataUserSession->getFormation()->getAnneeCourante());
+        $myAbsences->getAbsencesSemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
@@ -91,7 +91,7 @@ class AbsenceController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function csv(Semestre $semestre): Response
+    public function exportCsv(Semestre $semestre): Response
     {
 
     }

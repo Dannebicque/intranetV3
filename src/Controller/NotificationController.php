@@ -25,7 +25,7 @@ class NotificationController extends BaseController
     /**
      * @Route("/", name="notification_index")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('notification/index.html.twig', [
             'notifications' => $this->getUser()->getNotifications(),
@@ -34,8 +34,11 @@ class NotificationController extends BaseController
 
     /**
      * @Route("/marquer", name="notification_marquer_lu", options={"expose":true})
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return Response
      */
-    public function marquerCommeLu(EntityManagerInterface $entityManager)
+    public function marquerCommeLu(EntityManagerInterface $entityManager): Response
     {
         //vérifier si c'est le bon user ?
         $notifications = $this->getUser()->getNotifications(); //todo: améliorer en récupérant uniquement les nom lu.
@@ -46,7 +49,7 @@ class NotificationController extends BaseController
             $entityManager->persist($notif);
 
         }
-        $en->flush();
+        $entityManager->flush();
 
         return new Response('ok', 200);
 

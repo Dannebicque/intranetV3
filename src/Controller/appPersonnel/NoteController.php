@@ -25,14 +25,15 @@ class NoteController extends BaseController
 {
     /**
      * @Route("/{matiere}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
-     * @param Matiere $matiere
+     * @param MyEvaluations $myEvaluations
+     * @param Matiere       $matiere
      *
      * @return Response
      */
     public function index(MyEvaluations $myEvaluations, Matiere $matiere): Response
     {
         $myEvaluations->setMatiere($matiere);
-        $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getFormation()->getAnneeCourante());
+        $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('appPersonnel/note/index.html.twig', [
             'matiere'     => $matiere,
@@ -43,6 +44,11 @@ class NoteController extends BaseController
 
     /**
      * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Matiere                $matiere
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function saisie(EntityManagerInterface $entityManager, Request $request, Matiere $matiere)
     {
@@ -68,6 +74,10 @@ class NoteController extends BaseController
     /**
      * @Route("/saisie/etape-2/{evaluation}", name="application_personnel_note_saisie_2",
      *                                        requirements={"matiere"="\d+"})
+     * @param Request    $request
+     * @param Evaluation $evaluation
+     *
+     * @return Response
      */
     public function saisie2(Request $request, Evaluation $evaluation)
     {
@@ -78,6 +88,9 @@ class NoteController extends BaseController
 
     /**
      * @Route("/import/{matiere}", name="application_personnel_note_import", requirements={"matiere"="\d+"})
+     * @param Matiere $matiere
+     *
+     * @return Response
      */
     public function import(Matiere $matiere)
     {

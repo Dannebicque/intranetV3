@@ -24,8 +24,8 @@ class PrevisionnelController extends BaseController
     public function index(MyPrevisionnel $myPrevisionnel): Response
     {
         $myPrevisionnel->setPersonnel($this->getUser());
-        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
-        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
+        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('previsionnel/index.html.twig', [
             'previsionnel' => $myPrevisionnel,

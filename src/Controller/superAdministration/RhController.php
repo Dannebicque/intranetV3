@@ -2,13 +2,13 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class RhController extends BaseController
 {
@@ -24,10 +24,10 @@ class RhController extends BaseController
 
     /**
      * @Route("/create", name="sa_rh_add_personnel", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {

@@ -7,7 +7,6 @@ use App\Entity\Ppn;
 use App\Form\PpnType;
 use App\Repository\PpnRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,10 +57,10 @@ class PpnController extends BaseController
 
     /**
      * @Route("/new", name="administration_ppn_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -95,11 +94,11 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_ppn_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Ppn     $ppn
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Ppn                    $ppn
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Ppn $ppn): Response
     {

@@ -2,11 +2,11 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\MesClasses\MyEvaluations;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class NoteController
@@ -30,8 +30,8 @@ class NoteController extends BaseController
         $myEvaluations->setSemestre($semestre);
 
         return $this->render('administration/notes/index.html.twig', [
-            'semestre' => $semestre,
-            'matieres' => $myEvaluations->getMatieresSemestre(),
+            'semestre'    => $semestre,
+            'matieres'    => $myEvaluations->getMatieresSemestre(),
             'evaluations' => $myEvaluations->getEvaluationsSemestre(),
         ]);
     }

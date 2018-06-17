@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +26,10 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/new", name="administration_type_groupe_new", methods="GET|POST")
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     *
+     * @return Response
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -50,6 +53,9 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_groupe_show", methods="GET")
+     * @param TypeGroupe $typeGroupe
+     *
+     * @return Response
      */
     public function show(TypeGroupe $typeGroupe): Response
     {
@@ -58,6 +64,11 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_groupe_edit", methods="GET|POST")
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param TypeGroupe             $typeGroupe
+     *
+     * @return Response
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, TypeGroupe $typeGroupe): Response
     {
@@ -79,7 +90,8 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_type_groupe_duplicate", methods="GET|POST")
-     * @param TypeGroupe $typeGroupe
+     * @param EntityManagerInterface $entityManager
+     * @param TypeGroupe             $typeGroupe
      *
      * @return Response
      */
@@ -95,6 +107,11 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_groupe_delete", methods="DELETE")
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param TypeGroupe             $typeGroupe
+     *
+     * @return Response
      */
     public function delete(EntityManagerInterface $entityManager, Request $request, TypeGroupe $typeGroupe): Response
     {

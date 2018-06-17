@@ -57,7 +57,8 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/new", name="administration_actualite_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
      */
@@ -93,8 +94,9 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_actualite_edit", methods="GET|POST")
-     * @param Request   $request
-     * @param Actualite $actualite
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Actualite              $actualite
      *
      * @return Response
      */
@@ -117,8 +119,9 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_actualite_delete", methods="DELETE")
-     * @param Request   $request
-     * @param Actualite $actualite
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Actualite              $actualite
      *
      * @return Response
      */

@@ -45,7 +45,7 @@ class PrevisionnelController extends BaseController
      */
     public function matiere(MyPrevisionnel $myPrevisionnel, Matiere $matiere) :Response
     {
-        $myPrevisionnel->getPrevisionnelMatiere($matiere, $this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+        $myPrevisionnel->getPrevisionnelMatiere($matiere, $this->dataUserSession->getAnneePrevisionnel());
         return $this->render('administration/previsionnel/matiere.html.twig', [
             'previsionnel' => $myPrevisionnel
         ]);
@@ -61,7 +61,7 @@ class PrevisionnelController extends BaseController
      */
     public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre): Response
     {
-        $myPrevisionnel->getPrevisionnelSemestre($semestre, $this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+        $myPrevisionnel->getPrevisionnelSemestre($semestre, $this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('administration/previsionnel/semestre.html.twig', [
             'previsionnel' => $myPrevisionnel
@@ -79,8 +79,8 @@ class PrevisionnelController extends BaseController
     public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel): Response
     {
         $myPrevisionnel->setPersonnel($personnel);
-        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
-        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
+        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('administration/previsionnel/personnel.html.twig', [
             'previsionnel' => $myPrevisionnel
@@ -115,8 +115,9 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_previsionnel_delete", methods="DELETE")
-     * @param Request      $request
-     * @param Previsionnel $previsionnel
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Previsionnel           $previsionnel
      *
      * @return Response
      */

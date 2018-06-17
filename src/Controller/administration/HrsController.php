@@ -26,7 +26,7 @@ class HrsController extends BaseController
      *
      * @return Response
      */
-    public function index(HrsRepository $hrsRepository)
+    public function index(HrsRepository $hrsRepository): Response
     {
         return $this->render('administration/hrs/index.html.twig', [
             'hrs' => $hrsRepository->findAll() //todo: filtrer par formation
@@ -35,11 +35,11 @@ class HrsController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_hrs_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Hrs     $hrs
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Hrs                    $hrs
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Hrs $hrs): Response
     {
@@ -59,10 +59,10 @@ class HrsController extends BaseController
     }
 
 
-
     /**
      * @Route("/new", name="administration_hrs_new", methods="GET|POST", options={"expose": true})
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -120,8 +120,9 @@ class HrsController extends BaseController
 
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_hrs_delete", methods="DELETE")
-     * @param Request $request
-     * @param Hrs     $hrs
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Hrs                    $hrs
      *
      * @return Response
      */

@@ -2,16 +2,12 @@
 
 namespace App\Controller;
 
-use App\MesClasses\DataUserSession;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyPrevisionnel;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BlocNotesAbsencesController extends BaseController
 {
-
-
     /**
      * @param MyPrevisionnel $myPrevisionnel
      *

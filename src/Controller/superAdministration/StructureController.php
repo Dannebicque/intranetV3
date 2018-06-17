@@ -2,9 +2,9 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Formation;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class StructureController
@@ -17,6 +17,9 @@ class StructureController extends BaseController
 {
     /**
      * @Route("/{formation}", name="sa_structure_index")
+     * @param Formation $formation
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Formation $formation)
     {

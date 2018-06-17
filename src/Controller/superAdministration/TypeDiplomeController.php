@@ -2,11 +2,11 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\TypeDiplome;
 use App\Form\TypeDiplomeType;
 use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,8 +30,8 @@ class TypeDiplomeController extends BaseController
     }
 
     /**
-    * @Route("/save", name="sa_type_diplome_save", methods="GET")
-    */
+     * @Route("/save", name="sa_type_diplome_save", methods="GET")
+     */
     public function save(): Response
     {
         //save en csv
@@ -39,8 +39,8 @@ class TypeDiplomeController extends BaseController
     }
 
     /**
-    * @Route("/imprimer", name="sa_type_diplome_print", methods="GET")
-    */
+     * @Route("/imprimer", name="sa_type_diplome_print", methods="GET")
+     */
     public function imprimer(): Response
     {
         //print (pdf)
@@ -49,10 +49,10 @@ class TypeDiplomeController extends BaseController
 
     /**
      * @Route("/new", name="sa_type_diplome_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -69,7 +69,7 @@ class TypeDiplomeController extends BaseController
 
         return $this->render('super-administration/type_diplome/new.html.twig', [
             'type_diplome' => $typeDiplome,
-            'form' => $form->createView(),
+            'form'         => $form->createView(),
         ]);
     }
 
@@ -86,11 +86,11 @@ class TypeDiplomeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_type_diplome_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param TypeDiplome $typeDiplome
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param TypeDiplome            $typeDiplome
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, TypeDiplome $typeDiplome): Response
     {
@@ -105,7 +105,7 @@ class TypeDiplomeController extends BaseController
 
         return $this->render('super-administration/type_diplome/edit.html.twig', [
             'type_diplome' => $typeDiplome,
-            'form' => $form->createView(),
+            'form'         => $form->createView(),
         ]);
     }
 

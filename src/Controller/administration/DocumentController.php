@@ -5,10 +5,8 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Document;
 use App\Form\DocumentType;
-use App\MesClasses\DataUserSession;
 use App\Repository\DocumentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,10 +49,10 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/new", name="administration_document_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -91,11 +89,11 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_document_edit", methods="GET|POST")
-     * @param Request  $request
-     * @param Document $document
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Document               $document
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Document $document): Response
     {
@@ -117,8 +115,9 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
-     * @param Request  $request
-     * @param Document $document
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Document               $document
      *
      * @return Response
      */

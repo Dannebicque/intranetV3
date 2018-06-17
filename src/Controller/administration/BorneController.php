@@ -31,7 +31,8 @@ class BorneController extends BaseController
 
     /**
      * @Route("/new", name="administration_borne_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
      */
@@ -68,8 +69,9 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_borne_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Borne   $borne
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Borne                  $borne
      *
      * @return Response
      */
@@ -93,8 +95,9 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
-     * @param Request $request
-     * @param Borne   $borne
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Borne                  $borne
      *
      * @return Response
      */

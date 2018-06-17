@@ -2,11 +2,11 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\Form\MatiereType;
 use App\Repository\MatiereRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,16 +30,16 @@ class MatiereController extends BaseController
     }
 
     /**
-    * @Route("/help", name="administration_matiere_help", methods="GET")
-    */
+     * @Route("/help", name="administration_matiere_help", methods="GET")
+     */
     public function help(): Response
     {
         return $this->render('administration/matiere/help.html.twig');
     }
 
     /**
-    * @Route("/save", name="administration_matiere_save", methods="GET")
-    */
+     * @Route("/save", name="administration_matiere_save", methods="GET")
+     */
     public function save(): Response
     {
         //save en csv
@@ -47,8 +47,8 @@ class MatiereController extends BaseController
     }
 
     /**
-    * @Route("/imprimer", name="administration_matiere_print", methods="GET")
-    */
+     * @Route("/imprimer", name="administration_matiere_print", methods="GET")
+     */
     public function imprimer(): Response
     {
         //print (pdf)
@@ -57,10 +57,10 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/new", name="administration_matiere_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -77,7 +77,7 @@ class MatiereController extends BaseController
 
         return $this->render('administration/matiere/new.html.twig', [
             'matiere' => $matiere,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 
@@ -94,11 +94,11 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_matiere_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Matiere $matiere
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Matiere                $matiere
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Matiere $matiere): Response
     {
@@ -113,7 +113,7 @@ class MatiereController extends BaseController
 
         return $this->render('administration/matiere/edit.html.twig', [
             'matiere' => $matiere,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 

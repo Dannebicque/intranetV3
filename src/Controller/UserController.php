@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class UserController
@@ -27,7 +26,7 @@ class UserController extends BaseController
      * @Route("/mon-profil", name="user_mon_profil")
      * @throws \LogicException
      */
-    public function monProfil()
+    public function monProfil(): Response
     {
         return $this->render('user/mon-profil.html.twig', [
             'user' => $this->getUser()
@@ -89,9 +88,10 @@ class UserController extends BaseController
     }
 
     /**
-     * @param FavoriRepository   $favoriRepository
-     * @param EtudiantRepository $etudiantRepository
-     * @param Request            $request
+     * @param EntityManagerInterface $entityManager
+     * @param FavoriRepository       $favoriRepository
+     * @param EtudiantRepository     $etudiantRepository
+     * @param Request                $request
      *
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException

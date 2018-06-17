@@ -34,8 +34,9 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/new/{diplome}", name="administration_competence_new", methods="GET|POST")
-     * @param Request $request
-     * @param Diplome $diplome
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Diplome                $diplome
      *
      * @return Response
      */
@@ -96,8 +97,9 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_competence_edit", methods="GET|POST")
-     * @param Request    $request
-     * @param Competence $competence
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Competence             $competence
      *
      * @return Response
      */

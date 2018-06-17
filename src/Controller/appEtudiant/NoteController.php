@@ -2,11 +2,11 @@
 
 namespace App\Controller\appEtudiant;
 
+use App\Controller\BaseController;
 use App\Entity\Note;
 use App\MesClasses\MyEvaluation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class NotesController
@@ -25,7 +25,7 @@ class NoteController extends BaseController
      * @Route("/details/{id}", name="app_etudiant_note_detail")
      *
      */
-    public function details(MyEvaluation $myEvaluation, Note $note)
+    public function details(MyEvaluation $myEvaluation, Note $note): Response
     {
         $myEvaluation->setEvaluation($note->getEvaluation())->calculStatistiquesGlobales();
 

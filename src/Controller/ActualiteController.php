@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ActualiteRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,7 +19,7 @@ class ActualiteController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function liste(ActualiteRepository $actualiteRepository)
+    public function liste(ActualiteRepository $actualiteRepository): Response
     {
         return $this->render('actualite/liste.html.twig', [
             'actualites' => $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 0)

@@ -5,7 +5,6 @@ namespace App\Controller\api;
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\MesClasses\DataUserSession;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

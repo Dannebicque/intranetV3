@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\HelpRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class HelpController
@@ -18,7 +17,7 @@ class HelpController extends BaseController
     /**
      * @Route("/", name="help_index")
      */
-    public function index()
+    public function index(): Response
     {
         return $this->render('help/index.html.twig', [
         ]);

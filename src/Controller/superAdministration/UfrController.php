@@ -2,11 +2,11 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Ufr;
 use App\Form\UfrType;
 use App\Repository\UfrRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,10 +55,10 @@ class UfrController extends BaseController
 
     /**
      * @Route("/new", name="sa_ufr_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -74,7 +74,7 @@ class UfrController extends BaseController
         }
 
         return $this->render('super-administration/ufr/new.html.twig', [
-            'ufr' => $ufr,
+            'ufr'  => $ufr,
             'form' => $form->createView(),
         ]);
     }
@@ -92,11 +92,11 @@ class UfrController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ufr_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Ufr     $ufr
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Ufr                    $ufr
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Ufr $ufr): Response
     {
@@ -110,7 +110,7 @@ class UfrController extends BaseController
         }
 
         return $this->render('super-administration/ufr/edit.html.twig', [
-            'ufr' => $ufr,
+            'ufr'  => $ufr,
             'form' => $form->createView(),
         ]);
     }

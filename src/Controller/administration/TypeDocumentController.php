@@ -5,10 +5,8 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\TypeDocument;
 use App\Form\TypeDocumentType;
-use App\MesClasses\DataUserSession;
 use App\Repository\TypeDocumentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,10 +56,10 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/new", name="administration_type_document_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -95,11 +93,11 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_document_edit", methods="GET|POST")
-     * @param Request      $request
-     * @param TypeDocument $typeDocument
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param TypeDocument           $typeDocument
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, TypeDocument $typeDocument): Response
     {

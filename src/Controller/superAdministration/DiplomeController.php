@@ -30,7 +30,7 @@ class DiplomeController extends BaseController
     {
         //todo: comment l'exploiter...
         return $this->render('structure/diplome/index.html.twig',
-            ['diplomes' => $diplomeRepository->findByFormation($this->dataUserSession->getFormation()->getId())]);
+            ['diplomes' => $diplomeRepository->findByFormation($this->dataUserSession->getFormationId())]);
     }
 
     /**
@@ -64,10 +64,10 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/new", name="sa_diplome_new", methods="GET|POST")
-     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -102,11 +102,11 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_diplome_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Diplome $diplome
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Diplome                $diplome
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Diplome $diplome): Response
     {
@@ -127,7 +127,8 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_diplome_duplicate", methods="GET|POST")
-     * @param Diplome $diplome
+     * @param EntityManagerInterface $entityManager
+     * @param Diplome                $diplome
      *
      * @return Response
      */

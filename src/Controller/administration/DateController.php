@@ -57,10 +57,10 @@ class DateController extends BaseController
 
     /**
      * @Route("/new", name="administration_date_new", methods="GET|POST")
-     * @param Request         $request
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -95,11 +95,11 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_date_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Date    $date
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Date                   $date
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function edit(EntityManagerInterface $entityManager, Request $request, Date $date): Response
     {
@@ -121,7 +121,8 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_date_duplicate", methods="GET")
-     * @param Date $date
+     * @param EntityManagerInterface $entityManager
+     * @param Date                   $date
      *
      * @return Response
      */
@@ -137,8 +138,9 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_date_delete", methods="DELETE")
-     * @param Request $request
-     * @param Date    $date
+     * @param EntityManagerInterface $entityManager
+     * @param Request                $request
+     * @param Date                   $date
      *
      * @return Response
      */

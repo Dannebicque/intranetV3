@@ -2,8 +2,8 @@
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PrevisionnelController extends BaseController
 {

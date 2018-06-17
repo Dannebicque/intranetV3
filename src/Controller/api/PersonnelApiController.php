@@ -37,7 +37,6 @@ class PersonnelApiController extends BaseController
 
     /**
      * @Route("/enseignants/{type}", name="api_enseignants_type", options={"expose":true})
-     * @param PersonnelFormationRepository $personnelRepository
      * @param                              $type
      *
      * @return Response
@@ -65,7 +64,6 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param PersonnelRepository $personnelRepository
      * @param SerializerInterface $serialize
      * @param                     $needle
      *
@@ -88,15 +86,13 @@ class PersonnelApiController extends BaseController
     }
 
     /**
+     * @param EntityManagerInterface       $entityManager
      * @param PersonnelFormationRepository $personnelFormationRepository
      * @param                              $slug
      *
      * @return Response
-     * @throws \LogicException
-     * @throws \InvalidArgumentException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @Route("/personnel/formation/add/{slug}", name="api_personnel_add_to_formation", options={"expose":true})
-     *
      */
     public function addPersonnelToFormation(
         EntityManagerInterface $entityManager,
@@ -125,11 +121,11 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param MyPersonnel $myPersonnel
+     * @param Request     $request
      *
      * @return Response
      * @Route("/all", name="api_all_personnel", options={"expose":true})
-     * @throws \InvalidArgumentException
      */
     public function getAllPersonnel(MyPersonnel $myPersonnel, Request $request): Response
     {

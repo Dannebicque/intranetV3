@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Repository\DocumentRepository;
 use App\Repository\TypeDocumentRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class DocumentController
@@ -43,7 +41,6 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @param Request            $request
      * @param DocumentRepository $documentRepository
      *
      * @param                    $typedocument
@@ -51,7 +48,7 @@ class DocumentController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/ajax/document/{typedocument}", name="document_ajax", options={"expose": true})
      */
-    public function documents(Request $request, DocumentRepository $documentRepository, $typedocument): Response
+    public function documents(DocumentRepository $documentRepository, $typedocument): Response
     {
         $documents = $documentRepository->findByTypeDocument($typedocument);
 
