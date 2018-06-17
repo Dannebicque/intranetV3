@@ -22,10 +22,11 @@ class MatiereType extends AbstractType
         $this->semestre = $options['semestre'];
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
             ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
             ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
             ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement'])
-            ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
+
             ->add('suspendu', YesNoType::class, [
                 'label' => 'label.suspendu'
             ])
@@ -35,7 +36,7 @@ class MatiereType extends AbstractType
             ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
             ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
-            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire'])
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false])
             ->add('nbNotes', TextType::class, ['label' => 'label.nb_notes'])
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
@@ -56,7 +57,7 @@ class MatiereType extends AbstractType
                 'choice_label' => 'libelle'
             ])
             ->add('parcours', EntityType::class, [
-                'label'        => 'label.libelle',
+                'label'        => 'label.parcours',
                 'class'        => Parcour::class,
                 'choice_label' => 'parcours',
                 'required'     => false

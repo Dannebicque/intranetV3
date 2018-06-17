@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
-class Personnel extends Utilisateur // implements SerializerInterface
+class Personnel extends Utilisateur implements \Serializable // implements SerializerInterface
 {
     /**
      * @ORM\Id()
@@ -84,15 +84,9 @@ class Personnel extends Utilisateur // implements SerializerInterface
     protected $initiales;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     *
-     */
-    protected $cv;
-
-    /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $cvName;
 
@@ -136,7 +130,7 @@ class Personnel extends Utilisateur // implements SerializerInterface
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHeuresService;
+    private $nbHeuresService = 192;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="personnel")
@@ -154,8 +148,6 @@ class Personnel extends Utilisateur // implements SerializerInterface
      */
     private $trelloTaches;
 
-
-
     public function __construct()
     {
         $this->hrs = new ArrayCollection();
@@ -166,7 +158,7 @@ class Personnel extends Utilisateur // implements SerializerInterface
         $this->cahierTextes = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->trelloTaches = new ArrayCollection();
-        //$this->personnelFormations = new ArrayCollection();
+        $this->personnelFormations = new ArrayCollection();
     }
 
     public function getId()
@@ -534,7 +526,7 @@ class Personnel extends Utilisateur // implements SerializerInterface
         return $this->nbHeuresService;
     }
 
-    public function setNbHeuresService(float $nbHeuresService): self
+    public function setNbHeuresService(float $nbHeuresService = 192): self
     {
         $this->nbHeuresService = $nbHeuresService;
 
@@ -631,34 +623,71 @@ class Personnel extends Utilisateur // implements SerializerInterface
         return $this;
     }
 
-//    /**
-//     * @return Collection|PersonnelFormation[]
-//     */
-//    public function getPersonnelFormations(): Collection
-//    {
-//        return $this->personnelFormations;
-//    }
-//
-//    public function addPersonnelFormation(PersonnelFormation $personnelFormation): self
-//    {
-//        if (!$this->personnelFormations->contains($personnelFormation)) {
-//            $this->personnelFormations[] = $personnelFormation;
-//            $personnelFormation->setPersonnel($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removePersonnelFormation(PersonnelFormation $personnelFormation): self
-//    {
-//        if ($this->personnelFormations->contains($personnelFormation)) {
-//            $this->personnelFormations->removeElement($personnelFormation);
-//            // set the owning side to null (unless already changed)
-//            if ($personnelFormation->getPersonnel() === $this) {
-//                $personnelFormation->setPersonnel(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
+    /**
+     * String representation of object
+     * @link  http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize(): string
+    {
+        // Ajouté pour le problème de connexion avec le usernametoken
+        return serialize(array(
+            $this->id,
+            $this->password,
+            $this->username
+        ));
+    }
+
+    /**
+     * Constructs the object
+     * @link  http://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param string $serialized <p>
+     *                           The string representation of the object.
+     *                           </p>
+     *
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized): void
+    {
+        // Ajouté pour le problème de connexion avec le usernametoken
+        list(
+            $this->id,
+            $this->password,
+            $this->username
+            ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|PersonnelFormation[]
+     */
+    public function getPersonnelFormations(): Collection
+    {
+        return $this->personnelFormations;
+    }
+
+    public function addPersonnelFormation(PersonnelFormation $personnelFormation): self
+    {
+        if (!$this->personnelFormations->contains($personnelFormation)) {
+            $this->personnelFormations[] = $personnelFormation;
+            $personnelFormation->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonnelFormation(PersonnelFormation $personnelFormation): self
+    {
+        if ($this->personnelFormations->contains($personnelFormation)) {
+            $this->personnelFormations->removeElement($personnelFormation);
+            // set the owning side to null (unless already changed)
+            if ($personnelFormation->getPersonnel() === $this) {
+                $personnelFormation->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
 }

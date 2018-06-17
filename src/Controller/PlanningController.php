@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlanningController extends BaseController
 {
     /**
-     * @Route("/planning/{annee}", name="planning")
+     * @Route("/planning/{annee}", name="planning_index")
      * @param DateRepository $dateRepository
      * @param int            $annee
      *

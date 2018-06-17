@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/traineeship/manage"}
  *)
  */
-class StageGestionController extends Controller
+class StageGestionController extends BaseController
 {
     /**
      * @Route("/", name="administration_stage_gestion_index")

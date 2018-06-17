@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Date;
 use App\Form\DatesType;
 use App\Repository\DateRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,17 +62,16 @@ class DateController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $date = new Date();
         $form = $this->createForm(DatesType::class, $date,
-            ['formation' => $this->dataUserSession->getFormation()->getId()]);
+            ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($date);
-            $em->flush();
+            $entityManager->persist($date);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_date_index');
         }
@@ -101,14 +101,14 @@ class DateController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Date $date): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Date $date): Response
     {
         $form = $this->createForm(DatesType::class, $date,
-            ['formation' => $this->dataUserSession->getFormation()->getId()]);
+            ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_date_edit', ['id' => $date->getId()]);
         }
@@ -125,12 +125,11 @@ class DateController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(Date $date): Response
+    public function duplicate(EntityManagerInterface $entityManager, Date $date): Response
     {
         $newDate = clone $date;
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newDate);
-        $em->flush();
+        $entityManager->persist($newDate);
+        $entityManager->flush();
 
         return $this->redirectToRoute('administration_date_edit', ['id' => $newDate->getId()]);
 
@@ -143,14 +142,13 @@ class DateController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, Date $date): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, Date $date): Response
     {
         $id = $date->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($date);
-            $em->flush();
+            $entityManager->remove($date);
+            $entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

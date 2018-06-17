@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "_locale": "fr|en"})
  *
  */
-class MessagerieController extends Controller
+class MessagerieController extends BaseController
 {
     /**
      * @Route("/", name="messagerie_index")

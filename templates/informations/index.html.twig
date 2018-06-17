@@ -22,7 +22,15 @@
                 </li>
             {% endif %}
         </ul>
+        <div class="buttons">
+
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
     </div>
+
+
 {% endblock %}
 
 {% block content %}

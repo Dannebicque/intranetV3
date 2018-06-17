@@ -5,6 +5,7 @@ namespace App\Controller\superAdministration;
 use App\Entity\TypeHrs;
 use App\Form\TypeHrsType;
 use App\Repository\TypeHrsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *      requirements={
  *         "_locale": "fr|en"})
  */
-class TypeHrsController extends Controller
+class TypeHrsController extends BaseController
 {
     /**
      * @Route("/", name="sa_type_hrs_index", methods="GET")
@@ -61,16 +62,15 @@ class TypeHrsController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $typeHr = new TypeHrs();
         $form = $this->createForm(TypeHrsType::class, $typeHr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($typeHr);
-            $em->flush();
+            $entityManager->persist($typeHr);
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_type_hrs_index');
         }
@@ -100,13 +100,13 @@ class TypeHrsController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, TypeHrs $typeHr): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, TypeHrs $typeHr): Response
     {
         $form = $this->createForm(TypeHrsType::class, $typeHr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_type_hrs_edit', ['id' => $typeHr->getId()]);
         }

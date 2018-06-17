@@ -7,6 +7,7 @@ use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEvaluations;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class NoteController extends BaseController
     /**
      * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
      */
-    public function saisie(Request $request, Matiere $matiere)
+    public function saisie(EntityManagerInterface $entityManager, Request $request, Matiere $matiere)
     {
         $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
         $form = $this->createForm(EvaluationType::class, $evaluation,
@@ -51,9 +52,8 @@ class NoteController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($evaluation);
-            $em->flush();
+            $entityManager->persist($evaluation);
+            $entityManager->flush();
 
             return $this->redirectToRoute('application_personnel_note_saisie_2',
                 ['evaluation' => $evaluation->getId()]);

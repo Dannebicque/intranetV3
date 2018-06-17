@@ -2,9 +2,11 @@
 
 namespace App\Controller\administration;
 
+use App\Controller\BaseController;
 use App\Entity\Ppn;
 use App\Form\PpnType;
 use App\Repository\PpnRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"administration/educational-program"}
  *)
  */
-class PpnController extends Controller
+class PpnController extends BaseController
 {
     /**
      * @Route("/", name="administration_ppn_index", methods="GET")
@@ -29,16 +31,16 @@ class PpnController extends Controller
     }
 
     /**
-    * @Route("/help", name="administration_ppn_help", methods="GET")
-    */
+     * @Route("/help", name="administration_ppn_help", methods="GET")
+     */
     public function help(): Response
     {
         return $this->render('administration/ppn/help.html.twig');
     }
 
     /**
-    * @Route("/save", name="administration_ppn_save", methods="GET")
-    */
+     * @Route("/save", name="administration_ppn_save", methods="GET")
+     */
     public function save(): Response
     {
         //save en csv
@@ -46,8 +48,8 @@ class PpnController extends Controller
     }
 
     /**
-    * @Route("/imprimer", name="administration_ppn_print", methods="GET")
-    */
+     * @Route("/imprimer", name="administration_ppn_print", methods="GET")
+     */
     public function imprimer(): Response
     {
         //print (pdf)
@@ -61,22 +63,21 @@ class PpnController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $ppn = new Ppn();
-        $form = $this->createForm(PpnType::class, $ppn);
+        $form = $this->createForm(PpnType::class, $ppn, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($ppn);
-            $em->flush();
+            $entityManager->persist($ppn);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_ppn_index');
         }
 
         return $this->render('administration/ppn/new.html.twig', [
-            'ppn' => $ppn,
+            'ppn'  => $ppn,
             'form' => $form->createView(),
         ]);
     }
@@ -100,19 +101,19 @@ class PpnController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Ppn $ppn): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Ppn $ppn): Response
     {
-        $form = $this->createForm(PpnType::class, $ppn);
+        $form = $this->createForm(PpnType::class, $ppn, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_ppn_edit', ['id' => $ppn->getId()]);
         }
 
         return $this->render('administration/ppn/edit.html.twig', [
-            'ppn' => $ppn,
+            'ppn'  => $ppn,
             'form' => $form->createView(),
         ]);
     }

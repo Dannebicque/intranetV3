@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/statistical"}
  *)
  */
-class StatistiqueController extends Controller
+class StatistiqueController extends BaseController
 {
     /**
      * @Route("/", name="administration_statistique_index")

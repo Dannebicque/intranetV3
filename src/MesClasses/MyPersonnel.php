@@ -35,7 +35,6 @@ class MyPersonnel
 
 
     /**
-     * @param $getId
      * @param $filters
      * @param $start
      * @param $length

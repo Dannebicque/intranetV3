@@ -7,6 +7,7 @@ use App\Entity\TrelloTache;
 use App\Form\TrelloTacheType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\TrelloTacheRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,8 +44,6 @@ class TrelloTacheController extends BaseController
         $dateDuJour = new \DateTimeImmutable();
         $dp = $dateDuJour;
 
-        dump($dateDuJour);
-        dump($jourDuJour);
         $tab = array();
         for ($i = $jourDuJour - 1; $i > 0; $i--) {
             $tab[$i] = $dp->sub(new \DateInterval('P1D'));
@@ -61,7 +60,6 @@ class TrelloTacheController extends BaseController
         }
 
         sort($tab);
-        dump($tab);
 
         return $this->render('administration/trello_tache/board.html.twig', [
             'taches' => $trelloTacheRepository->findByFormationTaches($this->dataUserSession->getFormation()->getId()),
@@ -101,17 +99,16 @@ class TrelloTacheController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $trelloTache = new TrelloTache($this->dataUserSession->getFormation());
         $form = $this->createForm(TrelloTacheType::class, $trelloTache,
-            array('formation' => $this->dataUserSession->getFormation()->getId()));
+            array('formation' => $this->dataUserSession->getFormation()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($trelloTache);
-            $em->flush();
+            $entityManager->persist($trelloTache);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_trello_tache_index');
         }
@@ -140,14 +137,14 @@ class TrelloTacheController extends BaseController
      *
      * @return Response
      */
-    public function edit(Request $request, TrelloTache $trelloTache): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, TrelloTache $trelloTache): Response
     {
         $form = $this->createForm(TrelloTacheType::class, $trelloTache,
-            array('formation' => $this->dataUserSession->getFormation()->getId()));
+            array('formation' => $this->dataUserSession->getFormation()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_trello_tache_edit', ['id' => $trelloTache->getId()]);
         }
@@ -165,12 +162,11 @@ class TrelloTacheController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, TrelloTache $trelloTache): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, TrelloTache $trelloTache): Response
     {
         if ($this->isCsrfTokenValid('delete' . $trelloTache->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($trelloTache);
-            $em->flush();
+            $entityManager->remove($trelloTache);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('administration_trello_tache_index');

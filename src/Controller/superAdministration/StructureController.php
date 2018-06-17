@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"super-administration/organization"}
  *)
  */
-class StructureController extends Controller
+class StructureController extends BaseController
 {
     /**
      * @Route("/{formation}", name="sa_structure_index")

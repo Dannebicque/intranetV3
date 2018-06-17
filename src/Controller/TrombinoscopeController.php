@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route({"fr":"trombinoscope",
  *         "en":"who-s-who"})
  */
-class TrombinoscopeController extends Controller
+class TrombinoscopeController extends BaseController
 {
     /**
      * @Route("/", name="trombinoscope_index")

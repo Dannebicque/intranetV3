@@ -5,7 +5,7 @@ namespace App\Controller\superAdministration;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ScolariteController extends Controller
+class ScolariteController extends BaseController
 {
     /**
      * @Route("/scolarite", name="sa_scolarite_index")

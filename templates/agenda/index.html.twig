@@ -1,13 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    Agenda / Emploi du temps
+    {{ 'agenda.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('planning_index',{annee:user_data.formation.anneecourante}) }}"
+               class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.planning_annuel'|trans }}"><i class="ti-agenda"></i></a>
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
 
     <div class="card">
-        <h4 class="card-title">Card title</h4>
+        <h4 class="card-title">{{ 'agenda.heading'|trans }}</h4>
 
         <div class="card-body">
 

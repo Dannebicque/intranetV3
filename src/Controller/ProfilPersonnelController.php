@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @Route({"fr":"personnel",
  *         "en":"teacher"})
  */
-class ProfilPersonnelController extends Controller
+class ProfilPersonnelController extends BaseController
 {
     /**
      * @Route("/profil/{slug}/timeline", name="profil_personnel_timeline")

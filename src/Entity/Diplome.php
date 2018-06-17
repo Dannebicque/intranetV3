@@ -154,6 +154,18 @@ class Diplome extends BaseEntity
         $this->annees = new ArrayCollection();
     }
 
+    /**
+     * @return null|string
+     */
+    public function getDisplay(): ?string
+    {
+        if ($this->getTypeDiplome() !== null) {
+            return $this->getTypeDiplome()->getSigle() . ' ' . $this->libelle;
+        }
+
+        return $this->libelle;
+    }
+
     public function getCodeApogee(): ?string
     {
         return $this->codeApogee;

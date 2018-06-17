@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={
  *         "_locale": "fr|en"})
  */
-class DocumentController extends Controller
+class DocumentController extends BaseController
 {
     /**
      * @Route("/", name="document_index")

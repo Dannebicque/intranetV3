@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/semester"}
  *)
  */
-class SemestreController extends Controller
+class SemestreController extends BaseController
 {
     /**
      * @Route("/{semestre}", name="administration_semestre_index")

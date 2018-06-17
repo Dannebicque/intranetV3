@@ -5,6 +5,7 @@ namespace App\Controller\superAdministration;
 use App\Entity\Site;
 use App\Form\SiteType;
 use App\Repository\SiteRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *      requirements={
  *         "_locale": "fr|en"})
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
      * @Route("/", name="sa_site_index", methods="GET")
@@ -61,16 +62,15 @@ class SiteController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $site = new Site();
         $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($site);
-            $em->flush();
+            $entityManager->persist($site);
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_site_index');
         }
@@ -100,13 +100,13 @@ class SiteController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Site $site): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Site $site): Response
     {
         $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_site_edit', ['id' => $site->getId()]);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\appPersonnel;
 
+use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Matiere;
 use App\MesClasses\DataUserSession;
@@ -19,15 +20,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *)
  * @IsGranted("ROLE_PERMANENT")
  */
-class AbsenceController extends Controller
+class AbsenceController extends BaseController
 {
     private $myAbsences;
-    private $dataUserSession;
 
-    public function __construct(MyAbsences $myAbsences, DataUserSession $dataUserSession)
+    public function __construct(MyAbsences $myAbsences)
     {
         $this->myAbsences = $myAbsences;
-        $this->dataUserSession = $dataUserSession;
     }
 
     /**
@@ -38,9 +37,9 @@ class AbsenceController extends Controller
      */
     public function index(Matiere $matiere): Response
     {
-       return $this->render('appPersonnel/absence/index.html.twig', [
+        return $this->render('appPersonnel/absence/index.html.twig', [
             'matiere' => $matiere
-       ]);
+        ]);
     }
 
     /**
@@ -52,8 +51,9 @@ class AbsenceController extends Controller
     public function voir(Matiere $matiere): Response
     {
         return $this->render('appPersonnel/absence/voir.html.twig', [
-            'matiere' => $matiere,
-            'absences' => $this->myAbsences->getAbsencesMatiere($matiere, $this->dataUserSession->getFormation()->getAnneeCourante())
+            'matiere'  => $matiere,
+            'absences' => $this->myAbsences->getAbsencesMatiere($matiere,
+                $this->dataUserSession->getAnneeUniversitaire())
         ]);
     }
 

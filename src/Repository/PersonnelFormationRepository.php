@@ -25,13 +25,13 @@ class PersonnelFormationRepository extends ServiceEntityRepository
      * @param $type
      * @param $formation
      *
-     * @return ArrayCollection
+     * @return array
      */
-    public function findByType($type, $formation): ArrayCollection
+    public function findByType($type, $formation): array
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
-            ->where('p.type_user = :type')
+            ->where('p.typeUser = :type')
             ->andWhere('f.formation = :formation')
             ->setParameter('type', $type)
             ->setParameter('formation', $formation)

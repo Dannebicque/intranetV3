@@ -8,6 +8,7 @@ use App\Entity\Diplome;
 use App\Form\CompetenceType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\CompetenceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,16 +39,15 @@ class CompetenceController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request, Diplome $diplome = null): Response
+    public function create(EntityManagerInterface $entityManager, Request $request, Diplome $diplome = null): Response
     {
         $competence = new Competence($diplome);
         $form = $this->createForm(CompetenceType::class, $competence);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($competence);
-            $em->flush();
+            $entityManager->persist($competence);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_competence_index');
         }
@@ -101,13 +101,13 @@ class CompetenceController extends BaseController
      *
      * @return Response
      */
-    public function edit(Request $request, Competence $competence): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Competence $competence): Response
     {
         $form = $this->createForm(CompetenceType::class, $competence);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_competence_edit', ['id' => $competence->getId()]);
         }

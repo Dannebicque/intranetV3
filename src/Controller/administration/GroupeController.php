@@ -5,6 +5,7 @@ namespace App\Controller\administration;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Form\GroupeType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/group"}
  *)
  */
-class GroupeController extends Controller
+class GroupeController extends BaseController
 {
     /**
      * @Route("/", name="administration_groupe_index")
@@ -31,16 +32,15 @@ class GroupeController extends Controller
     /**
      * @Route("/new/{semestre}", name="administration_groupe_new", methods="GET|POST")
      */
-    public function new(Request $request, Semestre $semestre): Response
+    public function create(EntityManagerInterface $entityManager, Request $request, Semestre $semestre): Response
     {
         $groupe = new Groupe();
-        $form = $this->createForm(GroupeType::class, $groupe, ['semestre' => $semestre->getId()]);
+        $form = $this->createForm(GroupeType::class, $groupe, ['semestre' => $semestre]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($groupe);
-            $em->flush();
+            $entityManager->persist($groupe);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -62,15 +62,15 @@ class GroupeController extends Controller
     /**
      * @Route("/{id}/edit", name="administration_groupe_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Groupe $groupe): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Groupe $groupe): Response
     {
         if ($groupe->getTypeGroupe() !== null && $groupe->getTypeGroupe()->getSemestre() !== null) {
             $form = $this->createForm(GroupeType::class, $groupe,
-                ['semestre' => $groupe->getTypeGroupe()->getSemestre()->getId()]);
+                ['semestre' => $groupe->getTypeGroupe()->getSemestre()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $entityManager->flush();
 
                 return $this->redirectToRoute('administration_groupe_index');
             }
@@ -87,13 +87,12 @@ class GroupeController extends Controller
     /**
      * @Route("/{id}/duplicate", name="administration_groupe_duplicate", methods="GET|POST")
      */
-    public function duplicate(Groupe $groupe): Response
+    public function duplicate(EntityManagerInterface $entityManager, Groupe $groupe): Response
     {
         $newGroupe = clone $groupe;
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newGroupe);
-        $em->flush();
+        $entityManager->persist($newGroupe);
+        $entityManager->flush();
 
         return $this->redirectToRoute('administration_groupe_edit', ['id' => $newGroupe->getId()]);
     }
@@ -101,12 +100,11 @@ class GroupeController extends Controller
     /**
      * @Route("/{id}", name="administration_groupe_delete", methods="DELETE")
      */
-    public function delete(Request $request, Groupe $groupe): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, Groupe $groupe): Response
     {
         if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($groupe);
-            $em->flush();
+            $entityManager->remove($groupe);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('administration_groupe_index');

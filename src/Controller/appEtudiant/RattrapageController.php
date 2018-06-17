@@ -5,6 +5,7 @@ namespace App\Controller\appEtudiant;
 use App\Entity\Rattrapage;
 use App\Form\RattrapageType;
 use App\Repository\RattrapageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,12 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @package App\Controller\appEtudiant
  * todo: role étudiant
  */
-class RattrapageController extends Controller
+class RattrapageController extends BaseController
 {
     /**
      * @Route("/rattrapage", name="application_etudiant_rattrapage_index")
      */
-    public function index(RattrapageRepository $rattrapageRepository, Request $request)
+    public function index(
+        EntityManagerInterface $entityManager,
+        RattrapageRepository $rattrapageRepository,
+        Request $request
+    )
     {
         $rattrapage = new Rattrapage($this->getUser());
         $form = $this->createForm(RattrapageType::class, $rattrapage,
@@ -30,9 +35,8 @@ class RattrapageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($rattrapage);
-            $em->flush();
+            $entityManager->persist($rattrapage);
+            $entityManager->flush();
 
             return $this->redirectToRoute('application_index', ['onglet' => 'rattrapage']);
         }

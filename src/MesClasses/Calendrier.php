@@ -100,7 +100,6 @@ abstract class Calendrier
      */
     public static function getTabJoursFeries(): array
     {
-        dump(self::$tabJoursFeries);
         return self::$tabJoursFeries;
     }
 

@@ -5,6 +5,7 @@ namespace App\Controller\superAdministration;
 use App\Entity\TypeDiplome;
 use App\Form\TypeDiplomeType;
 use App\Repository\TypeDiplomeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *      requirements={
  *         "_locale": "fr|en"})
  */
-class TypeDiplomeController extends Controller
+class TypeDiplomeController extends BaseController
 {
     /**
      * @Route("/", name="sa_type_diplome_index", methods="GET")
@@ -53,16 +54,15 @@ class TypeDiplomeController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $typeDiplome = new TypeDiplome();
         $form = $this->createForm(TypeDiplomeType::class, $typeDiplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($typeDiplome);
-            $em->flush();
+            $entityManager->persist($typeDiplome);
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_type_diplome_index');
         }
@@ -92,13 +92,13 @@ class TypeDiplomeController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, TypeDiplome $typeDiplome): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, TypeDiplome $typeDiplome): Response
     {
         $form = $this->createForm(TypeDiplomeType::class, $typeDiplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_type_diplome_edit', ['id' => $typeDiplome->getId()]);
         }

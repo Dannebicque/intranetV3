@@ -764,7 +764,7 @@
       </notes>
       <segment>
         <source>label.annee_sortie</source>
-        <target>Année de sortie</target>
+          <target>Année de publication</target>
       </segment>
     </unit>
     <unit id="utzR9HY" name="label.diplome">
@@ -2572,6 +2572,48 @@
           <segment>
               <source>20</source>
               <target>20</target>
+          </segment>
+      </unit>
+      <unit id="5tg4tOt" name="choice.mcf">
+          <segment>
+              <source>choice.mcf</source>
+              <target>choice.mcf</target>
+          </segment>
+      </unit>
+      <unit id="f.dmV00" name="choice.pr">
+          <segment>
+              <source>choice.pr</source>
+              <target>choice.pr</target>
+          </segment>
+      </unit>
+      <unit id="E_m7NU2" name="choice.prag">
+          <segment>
+              <source>choice.prag</source>
+              <target>choice.prag</target>
+          </segment>
+      </unit>
+      <unit id="CRu8YtD" name="choice.prce">
+          <segment>
+              <source>choice.prce</source>
+              <target>choice.prce</target>
+          </segment>
+      </unit>
+      <unit id="rA25S_j" name="choice.vacataire">
+          <segment>
+              <source>choice.vacataire</source>
+              <target>choice.vacataire</target>
+          </segment>
+      </unit>
+      <unit id="G0AF8Mk" name="label.nbHeuresService">
+          <segment>
+              <source>label.nbHeuresService</source>
+              <target>label.nbHeuresService</target>
+          </segment>
+      </unit>
+      <unit id="LDhDPrF" name="label.username">
+          <segment>
+              <source>label.username</source>
+              <target>label.username</target>
           </segment>
       </unit>
   </file>

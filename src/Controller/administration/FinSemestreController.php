@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/end-semester"}
  *)
  */
-class FinSemestreController extends Controller
+class FinSemestreController extends BaseController
 {
     /**
      * @Route("/{semestre}", name="administration_fin_semestre_index")

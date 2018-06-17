@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/cohort"}
  *)
  */
-class CohorteController extends Controller
+class CohorteController extends BaseController
 {
     /**
      * @Route("/", name="administration_cohorte_index")

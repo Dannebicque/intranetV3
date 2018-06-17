@@ -17,7 +17,7 @@
             <div class="tab-content">
                 {% for semestre in user_data.semestres %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="sem{{ semestre.id }}">
-                        <h3>Vos Modules au semestre {{ semestre.display }}</h3>
+                        <h3>{{ 'vos.modules.du.semestre'|trans({'%semestre%':semestre.display}) }}</h3>
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -100,25 +100,25 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div tabindex="-1" class="modal-content">
                         <header class="modal-header"><h5
-                                    class="modal-title">Choisir le document et le format</h5>
+                                    class="modal-title">{{ 'choisir.document.et.format'|trans }}</h5>
                             <button type="button" data-dismiss="modal" class="close">×</button>
                         </header>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <h4>Type de document</h4>
+                                    <h4>{{ 'type.document'|trans }}</h4>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios"
                                                id="exampleRadios1" value="option1" checked>
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Emargement
+                                            {{ 'emargement'|trans }}
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exampleRadios"
                                                id="exampleRadios1" value="option1">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Evaluation
+                                            {{ 'evaluation'|trans }}
                                         </label>
                                     </div>
                                 </div>
@@ -129,28 +129,28 @@
                                         <input class="form-check-input" type="radio" name="exportFormat"
                                                id="exampleRadios1" value="option1">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Csv (;)
+                                            {{ 'csv.point-virgule'|trans }}
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exportFormat"
                                                id="exampleRadios1" value="option1">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Csv (,)
+                                            {{ 'csv.virgule'|trans }}
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exportFormat"
                                                id="exampleRadios1" value="option1">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            Excel (xlsx)
+                                            {{ 'excel'|trans }}
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exportFormat"
                                                id="exampleRadios1" value="option1" checked>
                                         <label class="form-check-label" for="exampleRadios1">
-                                            PDF
+                                            {{ 'pdf'|trans }}
                                         </label>
                                     </div>
                                 </div>
@@ -161,21 +161,21 @@
                                         <input class="form-check-input" type="radio" name="exportFiltre"
                                                id="exampleRadios1" value="option1">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            CM
+                                            {{ 'cm'|trans }}
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exportFiltre"
                                                id="exampleRadios1" value="option1">
                                         <label class="form-check-label" for="exampleRadios1">
-                                            TD
+                                            {{ 'td'|trans }}
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="exportFiltre"
                                                id="exampleRadios1" value="option1" checked>
                                         <label class="form-check-label" for="exampleRadios1">
-                                            TP
+                                            {{ 'tp'|trans }}
                                         </label>
                                     </div>
                                     {# todo: tous les groupes de groupes #}
@@ -183,7 +183,8 @@
                             </div>
                         </div>
                         <footer class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal">{{ 'fermer'|trans }}</button>
                         </footer>
                     </div>
                 </div>

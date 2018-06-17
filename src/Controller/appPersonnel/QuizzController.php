@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *)
  * @IsGranted("ROLE_PERMANENT")
  */
-class QuizzController extends Controller
+class QuizzController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_quizz_index")

@@ -5,6 +5,7 @@ namespace App\Controller\superAdministration;
 use App\Entity\Ufr;
 use App\Form\UfrType;
 use App\Repository\UfrRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *      requirements={
  *         "_locale": "fr|en"})
  */
-class UfrController extends Controller
+class UfrController extends BaseController
 {
     /**
      * @Route("/", name="sa_ufr_index", methods="GET")
@@ -59,16 +60,15 @@ class UfrController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $ufr = new Ufr();
         $form = $this->createForm(UfrType::class, $ufr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($ufr);
-            $em->flush();
+            $entityManager->persist($ufr);
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_ufr_index');
         }
@@ -98,13 +98,13 @@ class UfrController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Ufr $ufr): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Ufr $ufr): Response
     {
         $form = $this->createForm(UfrType::class, $ufr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_ufr_edit', ['id' => $ufr->getId()]);
         }

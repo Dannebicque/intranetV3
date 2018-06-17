@@ -5,10 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
 abstract class Utilisateur implements UserInterface
@@ -22,14 +24,14 @@ abstract class Utilisateur implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $password;
+    protected $password = '';
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $slug;
+    protected $slug;//todo: passer le champs en index
 
     /**
      * @ORM\Column(type="string", length=75)
@@ -53,7 +55,7 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="string", length=255)
      *
      */
-    protected $mailUniv;
+    protected $mailUniv; //todo: passer le champs en index
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
@@ -122,9 +124,19 @@ abstract class Utilisateur implements UserInterface
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
      */
-    protected $photo;
+    private $photoName = 'noimage.png';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="photo", fileNameProperty="photoName")
+     * @
+     */
+    private $photoFile;
 
     /**
      * @var string
@@ -176,6 +188,14 @@ abstract class Utilisateur implements UserInterface
     public function setCreatedValue(): void
     {
         $this->created = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function generateSlug()
+    {
+        $this->slug = strtolower($this->prenom) . '.' . strtolower($this->nom);//todo: améliorer la création du slug et vérifier les doublons.
     }
 
     /**
@@ -443,22 +463,6 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * @param mixed $photo
-     */
-    public function setPhoto($photo): void
-    {
-        $this->photo = $photo;
-    }
-
-    /**
      * @return string
      */
     public function getPassword(): string
@@ -489,7 +493,7 @@ abstract class Utilisateur implements UserInterface
     /**
      * @return mixed
      */
-    public function getUsername() : string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -544,5 +548,46 @@ abstract class Utilisateur implements UserInterface
     public function getDisplay(): string
     {
         return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $cv
+     */
+    public function setPhotoFile(?File $photo = null): void
+    {
+        $this->photoFile = $photo;
+
+        if (null !== $photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdatedValue();
+        }
+    }
+
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoName(): ?string
+    {
+        return $this->photoName;
+    }
+
+    /**
+     * @param string $cvName
+     */
+    public function setPhotoName(string $photoName): void
+    {
+        $this->photoName = $photoName;
     }
 }

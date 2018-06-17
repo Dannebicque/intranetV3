@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/mark"}
  *)
  */
-class NoteController extends Controller
+class NoteController extends BaseController
 {
     /**
      * @Route("/semestre/{semestre}", name="administration_notes_semestre_index")

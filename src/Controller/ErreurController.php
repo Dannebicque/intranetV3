@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ErreurController extends Controller
+class ErreurController extends BaseController
 {
     /**
      * @Route("/404", name="erreur_404")

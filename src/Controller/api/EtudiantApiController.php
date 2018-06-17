@@ -58,14 +58,13 @@ class EtudiantApiController extends BaseController
     }
 
     /**
-     * @param DataUserSession $dataUserSession
      * @param Request         $request
      *
      * @return Response
      * @Route("/formation", name="api_etudiant_formation", options={"expose":true})
      * @throws \InvalidArgumentException
      */
-    public function getEtudiantsByFormation(DataUserSession $dataUserSession, Request $request): Response
+    public function getEtudiantsByFormation(Request $request): Response
     {
         $length = $request->get('length');
         $length = $length && ($length !== -1) ? $length : 0;
@@ -79,15 +78,15 @@ class EtudiantApiController extends BaseController
         ];
 
         $users = $this->etudiantRepository->getArrayEtudiantsByFormation(
-            $dataUserSession->getFormation()->getId(), $filters, $start, $length
+            $this->dataUserSession->getFormationId(), $filters, $start, $length
         );
 
         $output = [
             'draw'            => 1,
             'data'            => $users,
-            'recordsFiltered' => \count($this->etudiantRepository->getEtudiantsByFormation($dataUserSession->getFormation()->getId(),
+            'recordsFiltered' => \count($this->etudiantRepository->getEtudiantsByFormation($this->dataUserSession->getFormationId(),
                 $filters, 0, false)),
-            'recordsTotal'    => \count($this->etudiantRepository->getEtudiantsByFormation($dataUserSession->getFormation()->getId(),
+            'recordsTotal'    => \count($this->etudiantRepository->getEtudiantsByFormation($this->dataUserSession->getFormationId(),
                 [], 0, false))
         ];
 

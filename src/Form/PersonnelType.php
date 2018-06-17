@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Personnel;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,43 +21,51 @@ class PersonnelType extends AbstractType
         $builder
             ->add('nom', TextType::class, ['label' => 'label.nom'])
             ->add('prenom', TextType::class, ['label' => 'label.prenom'])
+            ->add('photoFile', VichFileType::class, ['label' => 'label.photo', 'required' => false])
+            ->add('username', TextType::class, ['label' => 'label.username'])
             ->add('mail_univ', TextType::class, ['label' => 'label.mail_univ'])
-            ->add('site_univ', TextType::class, ['label' => 'label.site_univ'])
-            ->add('mail_perso', TextType::class, ['label' => 'label.mail_perso'])
-            ->add('site_perso', TextType::class, ['label' => 'label.site_perso'])
+            ->add('site_univ', TextType::class, ['label' => 'label.site_univ', 'required' => false])
+            ->add('mail_perso', TextType::class, ['label' => 'label.mail_perso', 'required' => false])
+            ->add('site_perso', TextType::class, ['label' => 'label.site_perso', 'required' => false])
             ->add('sexe', ChoiceType::class, [
                 'label'                     => 'label.sexe',
                 'choices'                   => ['choice.femme' => 'F', 'choice.homme' => 'H'],
                 'choice_translation_domain' => 'form',
                 'expanded'                  => true
             ])
-            ->add('date_naissance', DateType::class, ['label' => 'label.date_naissance'])
-            ->add('numero_harpege', TextType::class, ['label' => 'label.numero_harpege'])
-            ->add('initiales', TextType::class, ['label' => 'label.initiales'])
+            ->add('date_naissance', BirthdayType::class, ['label' => 'label.date_naissance'])
+            ->add('numero_harpege', TextType::class, ['label' => 'label.numero_harpege', 'required' => false])
+            ->add('initiales', TextType::class, ['label' => 'label.initiales', 'required' => false])
             ->add('statut', ChoiceType::class, [
                 'label'                     => 'label.statut',
-                'choices'                   => ['choice.oui' => true, 'choice.non' => false],
+                'choices'                   => [
+                    'choice.mcf'       => 'MCF',
+                    'choice.pr'        => 'PU',
+                    'choice.prag'      => 'PRAG',
+                    'choice.prce'      => 'PRCE',
+                    'choice.vacataire' => 'PRO'
+                ],
                 'choice_translation_domain' => 'form',
                 'expanded'                  => true
             ])
-            ->add('poste_interne', TextType::class, ['label' => 'label.poste_interne'])
-            ->add('tel_bureau', TextType::class, ['label' => 'label.tel_bureau'])
-            ->add('tel1', TextType::class, ['label' => 'label.tel1'])
-            ->add('tel2', TextType::class, ['label' => 'label.tel2'])
-
-            ->add('responsabilites', TextareaType::class, ['label' => 'label.responsabilites'])
-            ->add('domaines', TextareaType::class, ['label' => 'label.domaines'])
-            ->add('remarque', TextareaType::class, ['label' => 'label.remarque'])
-            ->add('signature', TextareaType::class, ['label' => 'label.signature'])
-
-            ->add('entreprise', TextType::class, ['label' => 'label.entreprise'])
-            ->add('bureau1', TextType::class, ['label' => 'label.bureau1'])
-            ->add('bureau2', TextType::class, ['label' => 'label.bureau2'])
-            ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
-
-            ->add('cv', VichFileType::class, ['label' => 'label.cv'])
-
-            ->add('photo', VichImageType::class, ['label' => 'label.photo']);
+            ->add('nbHeuresService', TextType::class, ['label' => 'label.nbHeuresService'])
+            ->add('poste_interne', TextType::class, ['label' => 'label.poste_interne', 'required' => false])
+            ->add('tel_bureau', TextType::class, ['label' => 'label.tel_bureau', 'required' => false])
+            ->add('tel1', TextType::class, ['label' => 'label.tel1', 'required' => false])
+            ->add('tel2', TextType::class, ['label' => 'label.tel2', 'required' => false])
+            ->add('responsabilites', TextareaType::class, ['label' => 'label.responsabilites', 'required' => false])
+            ->add('domaines', TextareaType::class, ['label' => 'label.domaines', 'required' => false])
+            ->add('remarque', TextareaType::class, ['label' => 'label.remarque', 'required' => false])
+            ->add('signature', TextareaType::class, ['label' => 'label.signature', 'required' => false])
+            ->add('entreprise', TextType::class, ['label' => 'label.entreprise', 'required' => false])
+            ->add('bureau1', TextType::class, ['label' => 'label.bureau1', 'required' => false])
+            ->add('bureau2', TextType::class, ['label' => 'label.bureau2', 'required' => false])
+            ->add('adresse', AdresseType::class, ['label' => 'label.adresse', 'required' => false])
+            ->add('cvFile', VichFileType::class, [
+                'label'    => 'label.cv',
+                'required' => false
+            ])//->add('photo', VichImageType::class, ['label' => 'label.photo'])
+        ;
     }
 
     /**

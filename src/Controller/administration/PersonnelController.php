@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelFormationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,16 +71,15 @@ class PersonnelController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($personnel);
-            $em->flush();
+            $entityManager->persist($personnel);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_personnel_index');
         }
@@ -109,13 +109,13 @@ class PersonnelController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Personnel $personnel): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Personnel $personnel): Response
     {
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_personnel_edit', ['id' => $personnel->getId()]);
         }

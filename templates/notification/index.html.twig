@@ -4,6 +4,16 @@
     {{ 'notification.heading'|trans }}
 {% endblock %}
 
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="card">
         <h4 class="card-title">
@@ -11,20 +21,26 @@
         </h4>
         {# todo: finaliser mise en page et gérer les "a lire" des "lu" #}
         <div class="card-body">
-            <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
-                {% for notification in notifications %}
-                    <li class="timeline-block">
-                        <div class="timeline-point timeline-point-{{ notification.color }}">
-                            <span class="badge badge-ring badge-{{ notification.color }}"></span>
-                        </div>
-                        <div class="timeline-content">
-                            <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
-                            <p><a href="{{ notification.url }}"><i
-                                            class="{{ notification.icone }}"></i> {{ notification.type|trans }}</a></p>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ol>
+            {% if notifications|length > 0 %}
+                <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                    {% for notification in notifications %}
+                        <li class="timeline-block">
+                            <div class="timeline-point timeline-point-{{ notification.color }}">
+                                <span class="badge badge-ring badge-{{ notification.color }}"></span>
+                            </div>
+                            <div class="timeline-content">
+                                <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
+                                <p><a href="{{ notification.url }}"><i
+                                                class="{{ notification.icone }}"></i> {{ notification.type|trans }}</a></p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <div class="alert alert-info">
+                    {{ 'aucune.notification'|trans }}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -9,6 +9,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\MesClasses\MyPrevisionnel;
 use App\Repository\MatiereRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -119,14 +120,17 @@ class PrevisionnelController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, Previsionnel $previsionnel): Response
+    public function delete(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        Previsionnel $previsionnel
+    ): Response
     {
         $id = $previsionnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($previsionnel);
-            $em->flush();
+            $entityManager->remove($previsionnel);
+            $entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

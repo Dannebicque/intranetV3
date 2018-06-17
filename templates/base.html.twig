@@ -36,7 +36,7 @@
 
 <!-- Sidebar -->
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
-    <header class="sidebar-header">
+    <header class="sidebar-header" style="background-color: {{ user_data.formation.couleur }}">
         <span class="logo text-center">
           <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
                                                         alt="logo"></a>
@@ -88,7 +88,7 @@
                         <span class="title">{{ 'menu.informations'|trans }}</span>
                     </a>
                 </li>
-                {% if is_granted('ROLE_PERMANENT') %} {# todo: tester permanent +formation + admin #}
+                {% if user_data.isGoodFormation('ROLE_CDD') %}
                     <li class="menu-item" id="menu-administration">
                         <a class="menu-link" href="{{ path('administration_index') }}">
                             <span class="material-icons">build</span>
@@ -186,7 +186,7 @@
         <ul class="topbar-btns">
             <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown"><img class="avatar"
-                                                                         src="{{ asset('assets/avatar/1.jpg') }}"
+                                                                         src="{{ asset('upload/photo/'~user_data.user.photoName) }}"
                                                                          alt="Votre avatar"></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>

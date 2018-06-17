@@ -8,6 +8,7 @@ use App\Form\ActualiteType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\ActualiteRepository;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,16 +61,15 @@ class ActualiteController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $actualite = new Actualite($this->dataUserSession->getFormation());
         $form = $this->createForm(ActualiteType::class, $actualite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($actualite);
-            $em->flush();
+            $entityManager->persist($actualite);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_actualite_index');
         }
@@ -98,13 +98,13 @@ class ActualiteController extends BaseController
      *
      * @return Response
      */
-    public function edit(Request $request, Actualite $actualite): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Actualite $actualite): Response
     {
         $form = $this->createForm(ActualiteType::class, $actualite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_actualite_edit', ['id' => $actualite->getId()]);
         }
@@ -122,14 +122,13 @@ class ActualiteController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, Actualite $actualite): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, Actualite $actualite): Response
     {
         $id = $actualite->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($actualite);
-            $em->flush();
+            $entityManager->remove($actualite);
+            $entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

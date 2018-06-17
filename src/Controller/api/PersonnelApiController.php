@@ -7,6 +7,7 @@ use App\Entity\PersonnelFormation;
 use App\MesClasses\MyPersonnel;
 use App\Repository\PersonnelFormationRepository;
 use App\Repository\PersonnelRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +45,7 @@ class PersonnelApiController extends BaseController
     public function getEnseignantsByType($type): Response
     {
         $personnels = $this->personnelRepository->findByType($type,
-            $this->dataUserSession->getFormation()->getId()); //todo: fitlrer type et formation
+            $this->dataUserSession->getFormationId()); //todo: fitlrer type et formation
         $pers = array();
 
         /** @var PersonnelFormation $p */
@@ -98,20 +99,20 @@ class PersonnelApiController extends BaseController
      *
      */
     public function addPersonnelToFormation(
+        EntityManagerInterface $entityManager,
         PersonnelFormationRepository $personnelFormationRepository,
         $slug
     ): Response {
         $personnel = $this->personnelRepository->findOneBySlug($slug);
         if ($personnel !== null) {
             $existe = $personnelFormationRepository->findOneBy([
-                'formation' => $this->dataUserSession->getFormation()->getId(),
+                'formation' => $this->dataUserSession->getFormationId(),
                 'personnel' => $personnel->getId()
             ]);
             if ($existe === null) {
                 $pf = new PersonnelFormation($personnel, $this->dataUserSession->getFormation());
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($pf);
-                $em->flush();
+                $entityManager->persist($pf);
+                $entityManager->flush();
 
                 return new Response('', Response::HTTP_OK);
             }
@@ -156,7 +157,6 @@ class PersonnelApiController extends BaseController
                 [], 0, false))
         ];
 
-        //return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
         return $this->json($output, Response::HTTP_OK);
     }
 }

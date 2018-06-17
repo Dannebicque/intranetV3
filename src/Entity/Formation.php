@@ -619,11 +619,8 @@ class Formation extends BaseEntity
 
         $name[0] = \chr(\ord($name[0]) - 32);
         $method = 'set' . $name;
-        dump($method);
         if (method_exists($this, $method)) {
-            echo 'ok';
             $this->$method($value);
-            //dump($this->$method2());
         }
     }
 

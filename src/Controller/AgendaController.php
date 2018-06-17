@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={
  *         "_locale": "fr|en"})
  */
-class AgendaController extends Controller
+class AgendaController extends BaseController
 {
     /**
      * @Route("/", name="agenda_index")

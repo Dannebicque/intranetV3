@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Hrs;
 use App\Form\HrsType;
 use App\Repository\HrsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,13 +41,13 @@ class HrsController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Hrs $hrs): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Hrs $hrs): Response
     {
         $form = $this->createForm(HrsType::class, $hrs, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_hrs_edit', ['id' => $hrs->getId()]);
         }
@@ -65,26 +66,29 @@ class HrsController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function ajout(Request $request)
+    public function ajout(EntityManagerInterface $entityManager, Request $request)
     {
-        $hrs = new Hrs($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
-        $form = $this->createForm(HrsType::class, $hrs, [
-            'formation' => $this->dataUserSession->getFormation()
-        ]);
-        $form->handleRequest($request);
+        if ($this->dataUserSession->getFormation() !== null) {
+            $hrs = new Hrs($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
+            $form = $this->createForm(HrsType::class, $hrs, [
+                'formation' => $this->dataUserSession->getFormation()
+            ]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($hrs);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($hrs);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('administration_hrs_index');
+                return $this->redirectToRoute('administration_hrs_index');
+            }
+
+            return $this->render('administration/hrs/new.html.twig', [
+                'hrs'  => $hrs,
+                'form' => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/hrs/new.html.twig', [
-            'hrs' => $hrs,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -121,14 +125,13 @@ class HrsController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, Hrs $hrs): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, Hrs $hrs): Response
     {
         $id = $hrs->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($hrs);
-            $em->flush();
+            $entityManager->remove($hrs);
+            $entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

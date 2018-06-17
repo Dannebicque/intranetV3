@@ -8,14 +8,9 @@ use App\MesClasses\MyPrevisionnel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class BlocNotesAbsencesController extends Controller
+class BlocNotesAbsencesController extends BaseController
 {
-    private $dataUserSession;
 
-    public function __construct(DataUserSession $dataUserSession)
-    {
-        $this->dataUserSession = $dataUserSession;
-    }
 
     /**
      * @param MyPrevisionnel $myPrevisionnel

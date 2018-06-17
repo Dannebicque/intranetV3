@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @Route({"fr":"aide",
  *         "en":"help"})
  */
-class HelpController extends Controller
+class HelpController extends BaseController
 {
     /**
      * @Route("/", name="help_index")

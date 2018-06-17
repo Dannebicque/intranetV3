@@ -11,6 +11,7 @@ namespace App\MesClasses;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Formation;
+use App\Entity\PersonnelFormation;
 use App\Entity\Semestre;
 use App\Repository\AnneeRepository;
 use App\Repository\DiplomeRepository;
@@ -163,5 +164,42 @@ class DataUserSession
     public function getAnneeUniversitaire()
     {
         return $this->formation->getAnneeCourante();
+    }
+
+    /**
+     * @return null
+     */
+    public function getFormationId()
+    {
+        if ($this->formation !== null) {
+            return $this->formation->getId();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $role
+     *
+     * @return bool
+     */
+    public function isGoodFormation($role)
+    {
+        if ($this->getUser() !== null && $this->getUser()->getTypeUser() !== 'etudiant') {
+
+            $autorize = false;
+
+            /** @var PersonnelFormation $rf */
+            foreach ($this->getUser()->getPersonnelFormations() as $rf) {
+                if ($rf->getRole() === $role && $rf->getFormation() !== null && $rf->getFormation()->getId() === $this->formation->getId()) {
+                    $autorize = true;
+                }
+            }
+
+            return $autorize;
+        }
+
+        return false;
+
     }
 }

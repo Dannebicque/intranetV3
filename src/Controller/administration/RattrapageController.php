@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/picking-up"}
  *)
  */
-class RattrapageController extends Controller
+class RattrapageController extends BaseController
 {
     /**
      * @Route("/semestre/{semestre}", name="administration_rattrapage_semestre_index")

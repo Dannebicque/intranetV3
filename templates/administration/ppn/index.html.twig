@@ -31,7 +31,7 @@
                                     <td>{{ ppn.id }}</td>
                                     <td>{{ ppn.libelle }}</td>
                                     <td>{{ ppn.annee }}</td>
-                                    <td>{{ ppn.diplome ? ppn.diplome.libelle : 'non.defini'|trans }}</td>
+                <td>{{ ppn.diplome ? ppn.diplome.display : 'non.defini'|trans }}</td>
                                     <td>{{ ppn.updated ? ppn.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                                 <td>
                     {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'ppn', id:ppn.id}) }}

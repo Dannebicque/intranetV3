@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *)
  * @IsGranted("ROLE_PERMANENT")
  */
-class StageController extends Controller
+class StageController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_stage_index")

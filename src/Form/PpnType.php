@@ -23,13 +23,12 @@ class PpnType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('annee', TextType::class, ['label' => 'label.annee_sortie'])
             ->add('diplome', EntityType::class,[
-                    'class' => Diplome::class,
-                    'required' => false,
-                    'choice_label' => 'libelle',
+                    'class'         => Diplome::class,
+                    'choice_label'  => 'display',
                     'query_builder' => function (DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByFormationBuilder($this->formation);
                     },
-                    'label' => 'label.diplome'
+                    'label'         => 'label.diplome'
                 ]
                 )
         ;

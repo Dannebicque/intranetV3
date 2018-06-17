@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @Route({"fr":"informations",
  *         "en":"information"})
  */
-class InformationController extends Controller
+class InformationController extends BaseController
 {
     /**
      * @Route("/", name="informations_index")

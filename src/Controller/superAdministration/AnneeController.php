@@ -6,6 +6,7 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"super-administration/organization/year"}
  *)
  */
-class AnneeController extends Controller
+class AnneeController extends BaseController
 {
     /**
      * @Route({"fr":"/", "en":"/"}, name="sa_annee_index", methods="GET")
@@ -71,21 +72,20 @@ class AnneeController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function create(Request $request, Diplome $diplome)
+    public function create(EntityManagerInterface $entityManager, Request $request, Diplome $diplome)
     {
         if ($diplome->getFormation() !== null) {
             $annee = new Annee();
             $annee->setDiplome($diplome);
-            $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()->getId()]);
+            $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($annee);
-                $em->flush();
+                $entityManager->persist($annee);
+                $entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
-                    ['formation' => $annee->getDiplome()->getFormation()->getId()]);
+                    ['formation' => $diplome->getFormation()->getId()]);
             }
 
             return $this->render('structure/annee/new.html.twig', [
@@ -116,7 +116,7 @@ class AnneeController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Annee $annee): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Annee $annee): Response
     {
         if ($annee->getDiplome() !== null && $annee->getDiplome()->getFormation() !== null) {
             $form = $this->createForm(AnneeType::class, $annee,
@@ -124,7 +124,7 @@ class AnneeController extends Controller
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $annee->getDiplome()->getFormation()->getId()]);
@@ -145,13 +145,12 @@ class AnneeController extends Controller
      *
      * @return Response
      */
-    public function duplicate(Annee $annee): Response
+    public function duplicate(EntityManagerInterface $entityManager, Annee $annee): Response
     {
         $newAnnee = clone $annee;
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newAnnee);
-        $em->flush();
+        $entityManager->persist($newAnnee);
+        $entityManager->flush();
 
         return $this->redirectToRoute('sa_annee_edit', ['id' => $newAnnee->getId()]);
     }

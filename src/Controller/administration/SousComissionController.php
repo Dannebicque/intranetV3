@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/subcommittee"}
  *)
  */
-class SousComissionController extends Controller
+class SousComissionController extends BaseController
 {
     /**
      * @Route("/{semestre}", name="administration_sous_comission_index")

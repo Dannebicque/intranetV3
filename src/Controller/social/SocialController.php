@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={
  *         "_locale": "fr|en"})
  */
-class SocialController extends Controller
+class SocialController extends BaseController
 {
     /**
      * @Route("/", name="social_index")

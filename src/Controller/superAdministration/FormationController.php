@@ -6,6 +6,7 @@ use App\Entity\Formation;
 use App\Form\FormationType;
 use App\MesClasses\Manager\FormationManager;
 use App\Repository\FormationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"super-administration/training"}
  *)
  */
-class FormationController extends Controller
+class FormationController extends BaseController
 {
 
     /**
@@ -64,16 +65,15 @@ class FormationController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $formation = new Formation();
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($formation);
-            $em->flush();
+            $entityManager->persist($formation);
+            $entityManager->flush();
 
             return $this->redirectToRoute('super_admin_homepage');
         }
@@ -103,9 +103,21 @@ class FormationController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Formation $formation): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Formation $formation): Response
     {
+        $form = $this->createForm(FormationType::class, $formation);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('super_admin_homepage');
+        }
+
+        return $this->render('structure/formation/new.html.twig', [
+            'formation' => $formation,
+            'form'      => $form->createView(),
+        ]);
     }
 
     /**

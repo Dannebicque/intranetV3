@@ -7,6 +7,7 @@ use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\MesClasses\DataUserSession;
 use App\Repository\DiplomeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,11 +26,11 @@ class DiplomeController extends BaseController
      *
      * @return Response
      */
-    public function index(DataUserSession $dataUserSession, DiplomeRepository $diplomeRepository): Response
+    public function index(DiplomeRepository $diplomeRepository): Response
     {
         //todo: comment l'exploiter...
         return $this->render('structure/diplome/index.html.twig',
-            ['diplomes' => $diplomeRepository->findByFormation($dataUserSession->getFormation()->getId())]);
+            ['diplomes' => $diplomeRepository->findByFormation($this->dataUserSession->getFormation()->getId())]);
     }
 
     /**
@@ -68,7 +69,7 @@ class DiplomeController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $diplome = new Diplome();
         $diplome->setFormation($this->dataUserSession->getFormation());
@@ -76,9 +77,8 @@ class DiplomeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($diplome);
-            $em->flush();
+            $entityManager->persist($diplome);
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
         }
@@ -108,13 +108,13 @@ class DiplomeController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Diplome $diplome): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Diplome $diplome): Response
     {
         $form = $this->createForm(DiplomeType::class, $diplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
         }
@@ -131,13 +131,12 @@ class DiplomeController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(Diplome $diplome): Response
+    public function duplicate(EntityManagerInterface $entityManager, Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newDiplome);
-        $em->flush();
+        $entityManager->persist($newDiplome);
+        $entityManager->flush();
 
         return $this->redirectToRoute('sa_diplome_edit', ['id' => $newDiplome->getId()]);
     }

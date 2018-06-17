@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={
  *         "_locale": "fr|en"})
  */
-class ApplicationController extends Controller
+class ApplicationController extends BaseController
 {
     /**
      * @Route("/{onglet}", name="application_index")

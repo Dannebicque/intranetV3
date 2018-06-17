@@ -1111,9 +1111,6 @@
       </segment>
     </unit>
     <unit id="tQOcMl1" name="cm">
-      <notes>
-        <note category="file-source" priority="1">templates/trombinoscope/index.html.twig:35</note>
-      </notes>
       <segment>
         <source>cm</source>
         <target>CM</target>
@@ -4897,7 +4894,7 @@
     <unit id="6Qil2.S" name="aucune.notification">
       <segment>
         <source>aucune.notification</source>
-          <target>Aucune notification</target>
+          <target>Aucune notification.</target>
       </segment>
     </unit>
     <unit id="1Qa9q_g" name="table.annee">
@@ -5284,6 +5281,120 @@
           <segment>
               <source>table.formations</source>
               <target>table.formations</target>
+          </segment>
+      </unit>
+      <unit id="3sT3LOl" name="sadm.personnel.new.heading">
+          <segment>
+              <source>sadm.personnel.new.heading</source>
+              <target>sadm.personnel.new.heading</target>
+          </segment>
+      </unit>
+      <unit id="bo.MwKM" name="default.heading">
+          <segment>
+              <source>default.heading</source>
+              <target><![CDATA[Intranet du département <strong>%formation%</strong>]]></target>
+          </segment>
+      </unit>
+      <unit id="_LQr0W4" name="voir.anciennes.actualites">
+          <segment>
+              <source>voir.anciennes.actualites</source>
+              <target>Voir les anciennes actualités</target>
+          </segment>
+      </unit>
+      <unit id=".q54UWG" name="vos.modules.du.semestre">
+          <segment>
+              <source>vos.modules.du.semestre</source>
+              <target>Vos Modules au semestre %semestre%</target>
+          </segment>
+      </unit>
+      <unit id="YV6tYhC" name="choisir.document.et.format">
+          <segment>
+              <source>choisir.document.et.format</source>
+              <target>Choisir le document et le format</target>
+          </segment>
+      </unit>
+      <unit id="sSQ4TnH" name="type.document">
+          <segment>
+              <source>type.document</source>
+              <target>Type de document</target>
+          </segment>
+      </unit>
+      <unit id="MTK28YG" name="emargement">
+          <segment>
+              <source>emargement</source>
+              <target>Emargement</target>
+          </segment>
+      </unit>
+      <unit id="7_d7IB3" name="evaluation">
+          <segment>
+              <source>evaluation</source>
+              <target>Evaluation</target>
+          </segment>
+      </unit>
+      <unit id="n.sMAvM" name="csv.point-virgule">
+          <segment>
+              <source>csv.point-virgule</source>
+              <target>Csv (;)</target>
+          </segment>
+      </unit>
+      <unit id="8yn6tvu" name="csv.virgule">
+          <segment>
+              <source>csv.virgule</source>
+              <target>Csv (,)</target>
+          </segment>
+      </unit>
+      <unit id="_roeAK_" name="excel">
+          <segment>
+              <source>excel</source>
+              <target>Excel (xlsx)</target>
+          </segment>
+      </unit>
+      <unit id="w1sh1so" name="pdf">
+          <segment>
+              <source>pdf</source>
+              <target>PDF</target>
+          </segment>
+      </unit>
+      <unit id="2TK41PI" name="fermer">
+          <segment>
+              <source>fermer</source>
+              <target>Fermer</target>
+          </segment>
+      </unit>
+      <unit id="0SfynI3" name="pas.encore.actualite">
+          <segment>
+              <source>pas.encore.actualite</source>
+              <target>Pas encore d'actualité</target>
+          </segment>
+      </unit>
+      <unit id="ywe_5Rg" name="pas.encore.date">
+          <segment>
+              <source>pas.encore.date</source>
+              <target>pas.encore.date</target>
+          </segment>
+      </unit>
+      <unit id="T3ZP3kD" name="agenda.heading">
+          <segment>
+              <source>agenda.heading</source>
+              <target>Agenda / Emploi du temps</target>
+          </segment>
+      </unit>
+      <unit id="XjiwNPg" name="atitle.planning_annuel">
+          <segment>
+              <source>atitle.planning_annuel</source>
+              <target>atitle.planning_annuel</target>
+          </segment>
+      </unit>
+      <unit id="gyk2f0e" name="planning.annuel.heading">
+          <segment>
+              <source>planning.annuel.heading</source>
+              <target>planning.annuel.heading</target>
+          </segment>
+      </unit>
+      <unit id="0">
+          <segment>
+              <source>administration.heading</source>
+              <target>Administration</target>
           </segment>
       </unit>
   </file>

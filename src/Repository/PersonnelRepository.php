@@ -26,7 +26,7 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findByType($type, $formation)
     {
         return $this->createQueryBuilder('p')
-            ->where('p.type_user = :type')
+            ->where('p.typeUser = :type')
             ->setParameter('type', $type)
             ->getQuery()
             ->getResult();
@@ -36,15 +36,15 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @param $needle
      *
-     * @return ArrayCollection
+     * @return array
      */
-    public function search($needle): ArrayCollection
+    public function search($needle): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.nom LIKE :needle')
             ->orWhere('p.prenom LIKE :needle')
             ->orWhere('p.username LIKE :needle')
-            ->orWhere('p.mail_univ LIKE :needle')
+            ->orWhere('p.mailUniv LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')

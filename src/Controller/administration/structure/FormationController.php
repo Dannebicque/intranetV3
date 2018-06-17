@@ -5,6 +5,7 @@ namespace App\Controller\administration\structure;
 use App\Entity\Formation;
 use App\Form\FormationType;
 use App\Repository\FormationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *         "en":"administration/organization/training"}
  *)
  */
-class FormationController extends Controller
+class FormationController extends BaseController
 {
     /**
      * @Route("/", name="administration_structure_formation_index", methods="GET")
@@ -77,13 +78,13 @@ class FormationController extends Controller
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Formation $formation): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Formation $formation): Response
     {
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_structure_formation_edit', ['id' => $formation->getId()]);
         }

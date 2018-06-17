@@ -5,6 +5,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,17 +28,16 @@ class TypeGroupeController extends BaseController
     /**
      * @Route("/new", name="administration_type_groupe_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $typeGroupe = new TypeGroupe();
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
-            ['formation' => $this->dataUserSession->getFormation()->getId()]);
+            ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($typeGroupe);
-            $em->flush();
+            $entityManager->persist($typeGroupe);
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -59,14 +59,14 @@ class TypeGroupeController extends BaseController
     /**
      * @Route("/{id}/edit", name="administration_type_groupe_edit", methods="GET|POST")
      */
-    public function edit(Request $request, TypeGroupe $typeGroupe): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, TypeGroupe $typeGroupe): Response
     {
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
-            ['formation' => $this->dataUserSession->getFormation()->getId()]);
+            ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -83,13 +83,12 @@ class TypeGroupeController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(TypeGroupe $typeGroupe): Response
+    public function duplicate(EntityManagerInterface $entityManager, TypeGroupe $typeGroupe): Response
     {
         $newTypeGroupe = clone $typeGroupe;
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newTypeGroupe);
-        $em->flush();
+        $entityManager->persist($newTypeGroupe);
+        $entityManager->flush();
 
         return $this->redirectToRoute('administration_type_groupe_edit', ['id' => $newTypeGroupe->getId()]);
     }
@@ -97,12 +96,11 @@ class TypeGroupeController extends BaseController
     /**
      * @Route("/{id}", name="administration_type_groupe_delete", methods="DELETE")
      */
-    public function delete(Request $request, TypeGroupe $typeGroupe): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, TypeGroupe $typeGroupe): Response
     {
         if ($this->isCsrfTokenValid('delete' . $typeGroupe->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($typeGroupe);
-            $em->flush();
+            $entityManager->remove($typeGroupe);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('administration_groupe_index');

@@ -7,6 +7,7 @@ use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
 use App\Repository\UeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,7 +56,7 @@ class UeController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request, Semestre $semestre): Response
+    public function create(EntityManagerInterface $entityManager, Request $request, Semestre $semestre): Response
     {
         if ($semestre->getAnnee() !== null) {
             $ue = new Ue($semestre);
@@ -63,9 +64,8 @@ class UeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($ue);
-                $em->flush();
+                $entityManager->persist($ue);
+                $entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]);
@@ -100,7 +100,7 @@ class UeController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(Request $request, Ue $ue): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Ue $ue): Response
     {
         if ($ue->getDiplome() !== null) {
 
@@ -108,7 +108,7 @@ class UeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]);
@@ -129,13 +129,12 @@ class UeController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(Ue $ue): Response
+    public function duplicate(EntityManagerInterface $entityManager, Ue $ue): Response
     {
         $newUe = clone $ue;
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newUe);
-        $em->flush();
+        $entityManager->persist($newUe);
+        $entityManager->flush();
 
         return $this->redirectToRoute('sa_ue_edit', ['id' => $newUe->getId()]);
     }

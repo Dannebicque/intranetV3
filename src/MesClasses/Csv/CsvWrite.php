@@ -20,9 +20,6 @@ abstract class CsvWrite
         $field = '';
         $field .= $key;
 
-        dump($value);
-        dump($key);
-        echo \gettype($value) . ' ';
 
         if (\is_string($value)) {
             $field .= self::ECHAPPEMENT . $value . self::ECHAPPEMENT;
@@ -31,7 +28,6 @@ abstract class CsvWrite
         }*/
 
         elseif (\is_object($value)) {
-            echo \get_class($value);
             if (\get_class($value) === self::FORMAT_DATETIME) {
                 $field .= $value->format('d-m-Y');
             }

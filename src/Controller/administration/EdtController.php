@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/timetable"}
  *)
  */
-class EdtController extends Controller
+class EdtController extends BaseController
 {
     /**
      * @Route("/", name="administration_edt_index")

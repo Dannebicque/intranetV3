@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/organization"}
  *)
  */
-class StructureController extends Controller
+class StructureController extends BaseController
 {
     /**
      * @Route("/", name="administration_structure_index")

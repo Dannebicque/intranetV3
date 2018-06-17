@@ -5,6 +5,7 @@ namespace App\Controller\superAdministration;
 use App\Entity\Salle;
 use App\Form\SalleType;
 use App\Repository\SalleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *      requirements={
  *         "_locale": "fr|en"})
  */
-class SalleController extends Controller
+class SalleController extends BaseController
 {
     /**
      * @Route("/", name="sa_salle_index", methods="GET")
@@ -60,16 +61,15 @@ class SalleController extends Controller
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $salle = new Salle();
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($salle);
-            $em->flush();
+            $entityManager->persist($salle);
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_salle_index');
         }
@@ -98,13 +98,13 @@ class SalleController extends Controller
      *
      * @return Response
      */
-    public function edit(Request $request, Salle $salle): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Salle $salle): Response
     {
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('sa_salle_edit', ['id' => $salle->getId()]);
         }
@@ -122,12 +122,11 @@ class SalleController extends Controller
      *
      * @return Response
      */
-    public function delete(Request $request, Salle $salle): Response
+    public function delete(EntityManagerInterface $entityManager, Request $request, Salle $salle): Response
     {
         if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($salle);
-            $em->flush();
+            $entityManager->remove($salle);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('sa_salle_index');

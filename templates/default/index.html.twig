@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    Intranet du département <strong>{{ user_data.formation.libelle }}</strong>
+    {{ 'default.heading'|trans({'%formation%':user_data.formation.libelle})|raw }}
 {% endblock %}
 
 {% block content %}
@@ -21,8 +21,11 @@
                                     <p>{{ actualite.titre }} : {{ actualite.texte }}</p>
                                 </div>
                             </li>
+                        {% else %}
+                            <li class="alert alert-info">{{ 'pas.encore.actualite'|trans }}</li>
                         {% endfor %}
-                        <a href="{{ path('actualite_liste') }}" class="pull-right">Voir les anciennes actualités</a>
+                        <a href="{{ path('actualite_liste') }}"
+                           class="pull-right">{{ 'voir.anciennes.actualites'|trans }}</a>
                     </ol>
                 </div>
             </div>
@@ -33,6 +36,8 @@
                 <div class="card-body">
                     {% for date in dates %}
 
+                    {% else %}
+                        <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
                     {% endfor %}
                 </div>
             </div>

@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"application/student/mark"}
  *)
  */
-class NoteController extends Controller
+class NoteController extends BaseController
 {
     /**
      * @param MyEvaluation $myEvaluation

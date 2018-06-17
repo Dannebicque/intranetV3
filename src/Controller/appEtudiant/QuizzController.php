@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *)
  * @IsGranted("ROLE_ETUDIANT")
  */
-class QuizzController extends Controller
+class QuizzController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_quizz_index")

@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={
  *         "_locale": "fr|en"})
  */
-class FaqController extends Controller
+class FaqController extends BaseController
 {
     /**
      * @Route("/", name="faq_index")

@@ -33,6 +33,11 @@ class PersonnelFormation
      */
     private $annee;
 
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $role = 'ROLE_PERMANENT';
+
     public function __construct(Personnel $personnel, Formation $formation)
     {
         $this->formation = $formation;
@@ -77,6 +82,18 @@ class PersonnelFormation
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }

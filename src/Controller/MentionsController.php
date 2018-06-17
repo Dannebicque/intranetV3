@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *     requirements={
  *         "_locale": "fr|en"})
  */
-class MentionsController extends Controller
+class MentionsController extends BaseController
 {
     /**
      * @Route("/", name="mentions_index")

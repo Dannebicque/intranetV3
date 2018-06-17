@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "en":"administration/absences-committee"}
  *)
  */
-class CommissionAbsenceController extends Controller
+class CommissionAbsenceController extends BaseController
 {
     /**
      * @Route("/semestre/{semestre}", name="administration_commission_absences_semestre_index")

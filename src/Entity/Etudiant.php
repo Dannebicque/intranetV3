@@ -434,7 +434,7 @@ class Etudiant extends Utilisateur implements \Serializable
             $this->id,
             $this->password,
             $this->username
-            ) = unserialize($serialized);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
 }

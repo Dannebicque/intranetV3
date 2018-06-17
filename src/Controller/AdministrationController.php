@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *         "_locale": "fr|en"})
  *
  */
-class AdministrationController extends Controller
+class AdministrationController extends BaseController
 {
     /**
      * @Route("/", name="administration_index")

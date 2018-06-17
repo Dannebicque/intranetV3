@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *)
  * @IsGranted("ROLE_ETUDIANT")
  */
-class StageController extends Controller
+class StageController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_stage_index")

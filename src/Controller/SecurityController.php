@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
  *     requirements={"_locale": "fr|en"},
  *     defaults={"_locale":"fr"})
  */
-class SecurityController extends Controller
+class SecurityController extends BaseController
 {
     private $encoder;
 
