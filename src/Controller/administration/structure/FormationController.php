@@ -2,11 +2,11 @@
 
 namespace App\Controller\administration\structure;
 
+use App\Controller\BaseController;
 use App\Entity\Formation;
 use App\Form\FormationType;
 use App\Repository\FormationRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,8 +31,8 @@ class FormationController extends BaseController
     }
 
     /**
-    * @Route("/help", name="administration_structure_formation_help", methods="GET")
-    */
+     * @Route("/help", name="administration_structure_formation_help", methods="GET")
+     */
     public function help(): Response
     {
         //todo: comment l'exploiter...
@@ -40,8 +40,8 @@ class FormationController extends BaseController
     }
 
     /**
-    * @Route("/save", name="administration_structure_formation_save", methods="GET")
-    */
+     * @Route("/save", name="administration_structure_formation_save", methods="GET")
+     */
     public function save(): Response
     {
         //todo: comment l'exploiter...
@@ -50,8 +50,8 @@ class FormationController extends BaseController
     }
 
     /**
-    * @Route("/imprimer", name="administration_structure_formation_print", methods="GET")
-    */
+     * @Route("/imprimer", name="administration_structure_formation_print", methods="GET")
+     */
     public function imprimer(): Response
     {
         //todo: comment l'exploiter...
@@ -91,7 +91,7 @@ class FormationController extends BaseController
 
         return $this->render('structure/formation/edit.html.twig', [
             'formation' => $formation,
-            'form' => $form->createView(),
+            'form'      => $form->createView(),
         ]);
     }
 

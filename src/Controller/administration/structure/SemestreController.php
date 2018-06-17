@@ -2,13 +2,13 @@
 
 namespace App\Controller\administration\structure;
 
+use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,8 +33,8 @@ class SemestreController extends BaseController
     }
 
     /**
-    * @Route("/help", name="administration_structure_semestre_help", methods="GET")
-    */
+     * @Route("/help", name="administration_structure_semestre_help", methods="GET")
+     */
     public function help(): Response
     {
         //todo: comment l'exploiter...
@@ -42,8 +42,8 @@ class SemestreController extends BaseController
     }
 
     /**
-    * @Route("/save", name="administration_structure_semestre_save", methods="GET")
-    */
+     * @Route("/save", name="administration_structure_semestre_save", methods="GET")
+     */
     public function save(): Response
     {
         //todo: comment l'exploiter...
@@ -52,8 +52,8 @@ class SemestreController extends BaseController
     }
 
     /**
-    * @Route("/imprimer", name="administration_structure_semestre_print", methods="GET")
-    */
+     * @Route("/imprimer", name="administration_structure_semestre_print", methods="GET")
+     */
     public function imprimer(): Response
     {
         //todo: comment l'exploiter...

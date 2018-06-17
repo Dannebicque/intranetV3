@@ -2,12 +2,12 @@
 
 namespace App\Controller\administration\structure;
 
+use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,8 +33,8 @@ class AnneeController extends BaseController
     }
 
     /**
-    * @Route({"fr":"/aide", "en":"/help"}, name="administration_structure_annee_help", methods="GET")
-    */
+     * @Route({"fr":"/aide", "en":"/help"}, name="administration_structure_annee_help", methods="GET")
+     */
     public function help(): Response
     {
         //todo: comment l'exploiter...

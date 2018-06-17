@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
-use App\Repository\UeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
