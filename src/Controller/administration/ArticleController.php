@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Article;
+use App\Entity\Constantes;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,16 +30,16 @@ class ArticleController extends BaseController
     }
 
     /**
-    * @Route("/help", name="administration_article_help", methods="GET")
-    */
+     * @Route("/help", name="administration_article_help", methods="GET")
+     */
     public function help(): Response
     {
         return $this->render('administration/article/help.html.twig');
     }
 
     /**
-    * @Route("/save", name="administration_article_save", methods="GET")
-    */
+     * @Route("/save", name="administration_article_save", methods="GET")
+     */
     public function save(): Response
     {
         //save en csv
@@ -46,8 +47,8 @@ class ArticleController extends BaseController
     }
 
     /**
-    * @Route("/imprimer", name="administration_article_print", methods="GET")
-    */
+     * @Route("/imprimer", name="administration_article_print", methods="GET")
+     */
     public function imprimer(): Response
     {
         //print (pdf)
@@ -56,7 +57,7 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/new", name="administration_article_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -70,13 +71,14 @@ class ArticleController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($article);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.add.success.flash');
 
             return $this->redirectToRoute('administration_article_index');
         }
 
         return $this->render('administration/article/new.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 
@@ -93,8 +95,8 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_article_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Article                $article
+     * @param Request $request
+     * @param Article $article
      *
      * @return Response
      */
@@ -106,20 +108,21 @@ class ArticleController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.edit.success.flash');
 
             return $this->redirectToRoute('administration_article_edit', ['id' => $article->getId()]);
         }
 
         return $this->render('administration/article/edit.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}", name="administration_article_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Article                $article
+     * @param Request $request
+     * @param Article $article
      *
      * @return Response
      */
@@ -130,9 +133,11 @@ class ArticleController extends BaseController
 
             $this->entityManager->remove($article);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

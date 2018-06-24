@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
@@ -65,6 +66,9 @@ class EtudiantController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.import.success.flash');
+
         }
 
         return $this->render('administration/etudiant/import.html.twig', [

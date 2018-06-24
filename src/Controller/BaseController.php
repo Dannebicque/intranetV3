@@ -12,6 +12,7 @@ use App\MesClasses\DataUserSession;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class BaseController
@@ -27,6 +28,9 @@ class BaseController extends Controller
 
     /** @var EntityManagerInterface */
     protected $entityManager;
+
+    /** @var TranslatorInterface */
+    protected $translator;
 
     /**
      * @param DataUserSession $dataUserSession
@@ -52,5 +56,15 @@ class BaseController extends Controller
     public function setEntityManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    public function addFlashBag($niveau, $cleTraduction)
+    {
+        $this->flashBag->add($niveau, $this->translator->trans($cleTraduction));
     }
 }

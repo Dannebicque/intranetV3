@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Actualite;
+use App\Entity\Constantes;
 use App\Form\ActualiteType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\ActualiteRepository;
@@ -69,6 +70,7 @@ class ActualiteController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($actualite);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.add.success.flash');
 
             return $this->redirectToRoute('administration_actualite_index');
         }
@@ -104,6 +106,7 @@ class ActualiteController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.edit.success.flash');
 
             return $this->redirectToRoute('administration_actualite_edit', ['id' => $actualite->getId()]);
         }
@@ -128,10 +131,12 @@ class ActualiteController extends BaseController
 
             $this->entityManager->remove($actualite);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
 
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.delete.error.flash');
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 

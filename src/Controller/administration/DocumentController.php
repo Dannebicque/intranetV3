@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Document;
 use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
@@ -64,6 +65,7 @@ class DocumentController extends BaseController
             $document->setTypeFichier('PDF');
             $this->entityManager->persist($document);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.add.success.flash');
 
             return $this->redirectToRoute('administration_document_index');
         }
@@ -100,6 +102,7 @@ class DocumentController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.edit.success.flash');
 
             return $this->redirectToRoute('administration_document_edit', ['id' => $document->getId()]);
         }
@@ -124,9 +127,11 @@ class DocumentController extends BaseController
 
             $this->entityManager->remove($document);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

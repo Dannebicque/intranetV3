@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
@@ -64,6 +65,7 @@ class UeController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->persist($ue);
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.add.success.flash');
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]);
@@ -106,6 +108,7 @@ class UeController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.edit.success.flash');
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]);

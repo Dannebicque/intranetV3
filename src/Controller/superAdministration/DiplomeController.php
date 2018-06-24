@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\MesClasses\DataUserSession;
@@ -77,6 +78,7 @@ class DiplomeController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($diplome);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.add.success.flash');
 
             return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
         }
@@ -112,6 +114,7 @@ class DiplomeController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.edit.success.flash');
 
             return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
         }
@@ -134,6 +137,7 @@ class DiplomeController extends BaseController
 
         $this->entityManager->persist($newDiplome);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_diplome_edit', ['id' => $newDiplome->getId()]);
     }

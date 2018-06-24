@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Ppn;
 use App\Form\PpnType;
 use App\Repository\PpnRepository;
@@ -69,6 +70,7 @@ class PpnController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($ppn);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.add.success.flash');
 
             return $this->redirectToRoute('administration_ppn_index');
         }
@@ -104,8 +106,9 @@ class PpnController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.edit.success.flash');
 
-            return $this->redirectToRoute('administration_ppn_edit', ['id' => $ppn->getId()]);
+            return $this->redirectToRoute('administration_ppn_index');
         }
 
         return $this->render('administration/ppn/edit.html.twig', [
@@ -119,6 +122,6 @@ class PpnController extends BaseController
      */
     public function delete(): void
     {
-
+        //todo: comment gérer les matièrs ?
     }
 }

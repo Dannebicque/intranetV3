@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +40,7 @@ class TypeGroupeController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeGroupe);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.add.success.flash');
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -75,6 +77,7 @@ class TypeGroupeController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.edit.success.flash');
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -97,6 +100,7 @@ class TypeGroupeController extends BaseController
 
         $this->entityManager->persist($newTypeGroupe);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_type_groupe_edit', ['id' => $newTypeGroupe->getId()]);
     }
@@ -110,6 +114,9 @@ class TypeGroupeController extends BaseController
      */
     public function delete(Request $request, TypeGroupe $typeGroupe): Response
     {
+
+        //todo: gérer la suppression en cascade.
+
         if ($this->isCsrfTokenValid('delete' . $typeGroupe->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();

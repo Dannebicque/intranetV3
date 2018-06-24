@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelFormationRepository;
@@ -79,6 +80,7 @@ class PersonnelController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($personnel);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.add.success.flash');
 
             return $this->redirectToRoute('administration_personnel_index');
         }
@@ -114,6 +116,7 @@ class PersonnelController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.edit.success.flash');
 
             return $this->redirectToRoute('administration_personnel_edit', ['id' => $personnel->getId()]);
         }
@@ -129,6 +132,6 @@ class PersonnelController extends BaseController
      */
     public function delete(): void
     {
-
+        //todo: supprimer d'une formation. Même procédé que classiquement
     }
 }

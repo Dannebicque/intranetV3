@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Help;
 use App\Form\HelpType;
 use App\Repository\HelpRepository;
@@ -69,6 +70,7 @@ class HelpController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($help);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'help.add.success.flash');
 
             return $this->redirectToRoute('sa_help_index');
         }
@@ -105,6 +107,7 @@ class HelpController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'help.edit.success.flash');
 
             return $this->redirectToRoute('sa_help_edit', ['id' => $help->getId()]);
         }
@@ -129,9 +132,11 @@ class HelpController extends BaseController
 
             $this->entityManager->remove($help);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'help.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'help.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

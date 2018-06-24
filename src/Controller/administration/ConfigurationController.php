@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\MesClasses\MyConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +42,14 @@ class ConfigurationController extends BaseController
         $name = $request->request->get('name');
         $value = $request->request->get('value');
 
-        return $myConfiguration->updateOption($type, $id, $name, $value) ? new Response('',
-            Response::HTTP_OK) : new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
+        if ($myConfiguration->updateOption($type, $id, $name, $value)) {
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.save.success.flash');
+
+            return new Response('', Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.save.error.flash');
+
+        return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

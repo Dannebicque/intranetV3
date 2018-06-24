@@ -48,7 +48,7 @@ class HrsController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Modification effectuée avec succès');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.edit.success.flash');
 
             return $this->redirectToRoute('administration_hrs_index');
         }
@@ -78,7 +78,7 @@ class HrsController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->persist($hrs);
                 $this->entityManager->flush();
-                $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Ajout effectué avec succès');
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.add.success.flash');
 
                 return $this->redirectToRoute('administration_hrs_index');
             }
@@ -103,8 +103,9 @@ class HrsController extends BaseController
         $newHrs = clone $hrs;
         $this->entityManager->persist($newHrs);
         $this->entityManager->flush();
-        $this->flashBag->add(Constantes::FLASHBAG_SUCCESS,
-            'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.duplicate.success.flash');
+
+        //'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.'
 
 
         return $this->redirectToRoute('administration_hrs_edit', ['id' => $newHrs->getId()]);
@@ -152,9 +153,12 @@ class HrsController extends BaseController
 
             $this->entityManager->remove($hrs);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

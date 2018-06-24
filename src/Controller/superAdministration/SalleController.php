@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Salle;
 use App\Form\SalleType;
 use App\Repository\SalleRepository;
@@ -69,6 +70,7 @@ class SalleController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($salle);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.add.success.flash');
 
             return $this->redirectToRoute('sa_salle_index');
         }
@@ -104,6 +106,7 @@ class SalleController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.edit.success.flash');
 
             return $this->redirectToRoute('sa_salle_edit', ['id' => $salle->getId()]);
         }
@@ -126,7 +129,11 @@ class SalleController extends BaseController
         if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($salle);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.delete.success.flash');
+
         }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.delete.error.flash');
 
         return $this->redirectToRoute('sa_salle_index');
     }

@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Site;
 use App\Form\SiteType;
 use App\Repository\SiteRepository;
@@ -69,6 +70,7 @@ class SiteController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($site);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'site.add.success.flash');
 
             return $this->redirectToRoute('sa_site_index');
         }
@@ -104,6 +106,7 @@ class SiteController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'site.edit.success.flash');
 
             return $this->redirectToRoute('sa_site_edit', ['id' => $site->getId()]);
         }

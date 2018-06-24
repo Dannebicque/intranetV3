@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Date;
 use App\Form\DatesType;
 use App\Repository\DateRepository;
@@ -70,6 +71,7 @@ class DateController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($date);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.add.success.flash');
 
             return $this->redirectToRoute('administration_date_index');
         }
@@ -106,6 +108,7 @@ class DateController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.edit.success.flash');
 
             return $this->redirectToRoute('administration_date_edit', ['id' => $date->getId()]);
         }
@@ -127,6 +130,7 @@ class DateController extends BaseController
         $newDate = clone $date;
         $this->entityManager->persist($newDate);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_date_edit', ['id' => $newDate->getId()]);
 
@@ -146,9 +150,12 @@ class DateController extends BaseController
 
             $this->entityManager->remove($date);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

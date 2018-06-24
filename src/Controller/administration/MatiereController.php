@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Matiere;
 use App\Form\MatiereType;
 use App\Repository\MatiereRepository;
@@ -69,6 +70,7 @@ class MatiereController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($matiere);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
 
             return $this->redirectToRoute('administration_matiere_index');
         }
@@ -104,8 +106,9 @@ class MatiereController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.edit.success.flash');
 
-            return $this->redirectToRoute('administration_matiere_edit', ['id' => $matiere->getId()]);
+            return $this->redirectToRoute('administration_matiere_index');
         }
 
         return $this->render('administration/matiere/edit.html.twig', [

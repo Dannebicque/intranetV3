@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\TypeDiplome;
 use App\Form\TypeDiplomeType;
 use App\Repository\TypeDiplomeRepository;
@@ -61,6 +62,7 @@ class TypeDiplomeController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeDiplome);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_diplome.add.success.flash');
 
             return $this->redirectToRoute('sa_type_diplome_index');
         }
@@ -96,6 +98,7 @@ class TypeDiplomeController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_diplome.edit.success.flash');
 
             return $this->redirectToRoute('sa_type_diplome_edit', ['id' => $typeDiplome->getId()]);
         }

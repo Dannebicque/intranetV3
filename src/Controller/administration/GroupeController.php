@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Form\GroupeType;
@@ -44,6 +45,7 @@ class GroupeController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($groupe);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.add.success.flash');
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -81,6 +83,7 @@ class GroupeController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.edit.success.flash');
 
                 return $this->redirectToRoute('administration_groupe_index');
             }
@@ -106,25 +109,34 @@ class GroupeController extends BaseController
 
         $this->entityManager->persist($newGroupe);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_groupe_edit', ['id' => $newGroupe->getId()]);
     }
 
     /**
-     * @Route("/{id}", name="administration_groupe_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Groupe                 $groupe
+     * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_hrs_delete", methods="DELETE")
+     * @param Request $request
+     * @param Groupe  $groupe
      *
      * @return Response
      */
     public function delete(Request $request, Groupe $groupe): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
+    {//todo: tester delete cascade
+
+        $id = $groupe->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+
             $this->entityManager->remove($groupe);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.delete.success.flash');
+
+            return $this->json($id, Response::HTTP_OK);
         }
 
-        return $this->redirectToRoute('administration_groupe_index');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

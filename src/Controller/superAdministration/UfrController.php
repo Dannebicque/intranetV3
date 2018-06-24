@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Ufr;
 use App\Form\UfrType;
 use App\Repository\UfrRepository;
@@ -67,6 +68,7 @@ class UfrController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($ufr);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ufr.add.success.flash');
 
             return $this->redirectToRoute('sa_ufr_index');
         }
@@ -102,7 +104,9 @@ class UfrController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ufr.edit.success.flash');
 
+//todo: peut être essager de gérer le falshabag avec une notification et un log, à la détecion d'un event ?
             return $this->redirectToRoute('sa_ufr_edit', ['id' => $ufr->getId()]);
         }
 

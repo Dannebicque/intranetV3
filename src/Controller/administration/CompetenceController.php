@@ -34,8 +34,8 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/new/{diplome}", name="administration_competence_new", methods="GET|POST")
-     * @param Request                $request
-     * @param Diplome                $diplome
+     * @param Request $request
+     * @param Diplome $diplome
      *
      * @return Response
      */
@@ -48,7 +48,8 @@ class CompetenceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($competence);
             $this->entityManager->flush();
-            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Compétence créé avec succès');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.add.success.flash');
+
             return $this->redirectToRoute('administration_competence_index');
         }
 
@@ -106,8 +107,7 @@ class CompetenceController extends BaseController
         $this->entityManager->persist($newCompetence);
         $this->entityManager->flush();
 
-        $this->flashBag->add(Constantes::FLASHBAG_SUCCESS,
-            'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_competence_edit', ['id' => $newCompetence->getId()]);
 
@@ -115,8 +115,8 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_competence_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Competence             $competence
+     * @param Request    $request
+     * @param Competence $competence
      *
      * @return Response
      */
@@ -128,7 +128,7 @@ class CompetenceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
-            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Modifications enregistrées.');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.edit.success.flash');
 
             return $this->redirectToRoute('administration_competence_index');
         }
@@ -140,7 +140,7 @@ class CompetenceController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_competence_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
      * @param Request    $request
      * @param Competence $competence
      *
@@ -148,7 +148,18 @@ class CompetenceController extends BaseController
      */
     public function delete(Request $request, Competence $competence): Response
     {
+        $id = $competence->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+//todo: vérifier le cascade delete s'il y a des enfants ...
+            $this->entityManager->remove($competence);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.delete.success.flash');
 
+            return $this->json($id, Response::HTTP_OK);
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

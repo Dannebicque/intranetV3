@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\TypeHrs;
 use App\Form\TypeHrsType;
 use App\Repository\TypeHrsRepository;
@@ -69,6 +70,7 @@ class TypeHrsController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeHr);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_hrs.add.success.flash');
 
             return $this->redirectToRoute('sa_type_hrs_index');
         }
@@ -104,6 +106,7 @@ class TypeHrsController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_hrs.edit.success.flash');
 
             return $this->redirectToRoute('sa_type_hrs_edit', ['id' => $typeHr->getId()]);
         }

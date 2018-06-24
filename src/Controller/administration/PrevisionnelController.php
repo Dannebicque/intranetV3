@@ -120,12 +120,12 @@ class PrevisionnelController extends BaseController
                     }
                 }
                 $this->entityManager->flush();
-                $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Ajout du prévisionnel réussi');
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.success.flash');
 
                 return $this->redirectToRoute('administration_previsionnel_new');
             }
 
-            $this->flashBag->add(Constantes::FLASHBAG_ERROR, 'Erreur lors de la création du prévisionnel');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.error.flash');
 
             return $this->redirectToRoute('administration_previsionnel_new');
         }
@@ -186,9 +186,11 @@ class PrevisionnelController extends BaseController
 
             $this->entityManager->remove($previsionnel);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

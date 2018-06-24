@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,7 @@ class RhController extends BaseController
             $personnel->setTypeUser('permanent');
             $this->entityManager->persist($personnel);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'rh.add.success.flash');
 
             return $this->redirectToRoute('sa_rh_index');
         }

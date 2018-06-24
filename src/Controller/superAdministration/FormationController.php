@@ -3,6 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Formation;
 use App\Form\FormationType;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,6 +71,7 @@ class FormationController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($formation);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'formation.add.success.flash');
 
             return $this->redirectToRoute('super_admin_homepage');
         }
@@ -105,6 +107,7 @@ class FormationController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'formation.edit.success.flash');
 
             return $this->redirectToRoute('super_admin_homepage');
         }

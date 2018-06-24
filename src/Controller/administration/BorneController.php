@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Borne;
+use App\Entity\Constantes;
 use App\Form\BorneType;
 use App\Repository\BorneRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +45,7 @@ class BorneController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($borne);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.add.success.flash');
 
             return $this->redirectToRoute('administration_borne_index');
         }
@@ -80,6 +82,7 @@ class BorneController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.edit.success.flash');
 
             return $this->redirectToRoute('administration_borne_edit', ['id' => $borne->getId()]);
         }
@@ -104,9 +107,11 @@ class BorneController extends BaseController
 
             $this->entityManager->remove($borne);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

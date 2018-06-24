@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\TypeDocument;
 use App\Form\TypeDocumentType;
 use App\Repository\TypeDocumentRepository;
@@ -24,7 +25,8 @@ class TypeDocumentController extends BaseController
      */
     public function index(TypeDocumentRepository $typeDocumentRepository): Response
     {
-        return $this->render('administration/type_document/index.html.twig', ['type_documents' => $typeDocumentRepository->findAll()]);
+        return $this->render('administration/type_document/index.html.twig',
+            ['type_documents' => $typeDocumentRepository->findAll()]);
     }
 
     /**
@@ -55,7 +57,7 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/new", name="administration_type_document_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -68,6 +70,7 @@ class TypeDocumentController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeDocument);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.add.success.flash');
 
             return $this->redirectToRoute('administration_type_document_index');
         }
@@ -91,8 +94,8 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_document_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param TypeDocument           $typeDocument
+     * @param Request      $request
+     * @param TypeDocument $typeDocument
      *
      * @return Response
      */
@@ -103,6 +106,7 @@ class TypeDocumentController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.edit.success.flash');
 
             return $this->redirectToRoute('administration_type_document_edit', ['id' => $typeDocument->getId()]);
         }
@@ -118,6 +122,6 @@ class TypeDocumentController extends BaseController
      */
     public function delete(): void
     {
-
+//todo: supprimer les documents?
     }
 }

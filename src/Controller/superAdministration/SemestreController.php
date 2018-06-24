@@ -4,6 +4,7 @@ namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Annee;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
@@ -78,6 +79,7 @@ class SemestreController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->persist($semestre);
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.add.success.flash');
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $annee->getDiplome()->getFormation()->getId()]);
@@ -119,6 +121,7 @@ class SemestreController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.edit.success.flash');
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $semestre->getAnnee()->getDiplome()->getFormation()->getId()]);
@@ -145,6 +148,7 @@ class SemestreController extends BaseController
 
         $this->entityManager->persist($newSemestre);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_semestre_edit', ['id' => $newSemestre->getId()]);
     }

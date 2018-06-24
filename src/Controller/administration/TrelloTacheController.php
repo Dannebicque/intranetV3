@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\TrelloTache;
 use App\Form\TrelloTacheType;
 use App\MesClasses\Csv\Csv;
@@ -108,6 +109,7 @@ class TrelloTacheController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($trelloTache);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'trello.add.success.flash');
 
             return $this->redirectToRoute('administration_trello_tache_index');
         }
@@ -144,6 +146,7 @@ class TrelloTacheController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'trello.edit.success.flash');
 
             return $this->redirectToRoute('administration_trello_tache_edit', ['id' => $trelloTache->getId()]);
         }
@@ -166,7 +169,10 @@ class TrelloTacheController extends BaseController
         if ($this->isCsrfTokenValid('delete' . $trelloTache->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($trelloTache);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'trello.delete.success.flash');
+
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'trello.delete.error.flash');
 
         return $this->redirectToRoute('administration_trello_tache_index');
     }
