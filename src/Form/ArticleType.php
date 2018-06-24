@@ -13,10 +13,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ArticleType
+ * @package App\Form
+ */
 class ArticleType extends AbstractType
 {
     private $formation;
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formation = $options['formation'];
@@ -27,6 +35,7 @@ class ArticleType extends AbstractType
             ])
             ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
+                'attr'  => ['data-provide' => 'quill', 'rows' => 20]
             ])
             ->add('type', ChoiceType::class, [
                 'choices'                   => ['choice.ri'            => 'ri',
@@ -39,7 +48,7 @@ class ArticleType extends AbstractType
             ])
             ->add('semestres', EntityType::class, array(
                 'class'         => Semestre::class,
-                'label'         => 'label.semestres_date',
+                'label'         => 'label.semestres_article',
                 'choice_label'  => 'libelle',
                 'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByFormationBuilder($this->formation);

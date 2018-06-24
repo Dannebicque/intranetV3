@@ -9,7 +9,6 @@ use App\Form\PersonnelProfilType;
 use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
 use App\Repository\PersonnelRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -88,7 +87,6 @@ class UserController extends BaseController
     }
 
     /**
-     * @param EntityManagerInterface $entityManager
      * @param FavoriRepository       $favoriRepository
      * @param EtudiantRepository     $etudiantRepository
      * @param Request                $request
@@ -98,7 +96,6 @@ class UserController extends BaseController
      * @Route("/add-favori", name="user_add_favori", options={"expose":true})
      */
     public function addFavori(
-        EntityManagerInterface $entityManager,
         FavoriRepository $favoriRepository,
         EtudiantRepository $etudiantRepository,
         Request $request
@@ -109,8 +106,8 @@ class UserController extends BaseController
         if ($user && $action === 'true') {
             $fav = new Favori($this->getUser(), $user);
 
-            $entityManager->persist($fav);
-            $entityManager->flush();
+            $this->entityManager->persist($fav);
+            $this->entityManager->flush();
 
             return new Response('ok', Response::HTTP_OK);
         }
@@ -121,9 +118,9 @@ class UserController extends BaseController
                 'etudiantDemande'   => $user->getId()
             ));
             foreach ($fav as $f) {
-                $entityManager->remove($f);
+                $this->entityManager->remove($f);
             }
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return new Response('ok', Response::HTTP_OK);
 

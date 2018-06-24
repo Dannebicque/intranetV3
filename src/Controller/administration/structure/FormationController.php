@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Formation;
 use App\Form\FormationType;
 use App\Repository\FormationRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -78,13 +77,13 @@ class FormationController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Formation $formation): Response
+    public function edit(Request $request, Formation $formation): Response
     {
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_structure_formation_edit', ['id' => $formation->getId()]);
         }

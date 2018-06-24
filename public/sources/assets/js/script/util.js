@@ -2,6 +2,8 @@ function readUrlMenu($url) {
   if ($url !== '/' && $url !== '/index.php/') {
     var $elt = $url.split('/');
     var $firstElt = 0;
+    console.log($elt);
+
     if ($elt[1] === 'index.php') {
       if ($elt.length > 1) {
         $firstElt = 2;

@@ -7,7 +7,6 @@ use App\Entity\PersonnelFormation;
 use App\MesClasses\MyPersonnel;
 use App\Repository\PersonnelFormationRepository;
 use App\Repository\PersonnelRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -86,7 +85,6 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param EntityManagerInterface       $entityManager
      * @param PersonnelFormationRepository $personnelFormationRepository
      * @param                              $slug
      *
@@ -95,7 +93,6 @@ class PersonnelApiController extends BaseController
      * @Route("/personnel/formation/add/{slug}", name="api_personnel_add_to_formation", options={"expose":true})
      */
     public function addPersonnelToFormation(
-        EntityManagerInterface $entityManager,
         PersonnelFormationRepository $personnelFormationRepository,
         $slug
     ): Response {
@@ -107,8 +104,8 @@ class PersonnelApiController extends BaseController
             ]);
             if ($existe === null) {
                 $pf = new PersonnelFormation($personnel, $this->dataUserSession->getFormation());
-                $entityManager->persist($pf);
-                $entityManager->flush();
+                $this->entityManager->persist($pf);
+                $this->entityManager->flush();
 
                 return new Response('', Response::HTTP_OK);
             }

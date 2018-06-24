@@ -45,11 +45,19 @@ class TypeHrs extends BaseEntity
     }
 
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return TypeHrs
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -65,6 +73,11 @@ class TypeHrs extends BaseEntity
         return $this->hrs;
     }
 
+    /**
+     * @param Hrs $hr
+     *
+     * @return TypeHrs
+     */
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -75,6 +88,11 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Hrs $hr
+     *
+     * @return TypeHrs
+     */
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -88,11 +106,19 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getIncluService(): ?bool
     {
         return $this->incluService;
     }
 
+    /**
+     * @param bool $incluService
+     *
+     * @return TypeHrs
+     */
     public function setIncluService(bool $incluService): self
     {
         $this->incluService = $incluService;
@@ -100,11 +126,19 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getMaximum(): ?float
     {
         return $this->maximum;
     }
 
+    /**
+     * @param float $maximum
+     *
+     * @return TypeHrs
+     */
     public function setMaximum(float $maximum): self
     {
         $this->maximum = $maximum;

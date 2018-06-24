@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\Form\MatiereType;
 use App\Repository\MatiereRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,20 +56,19 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/new", name="administration_matiere_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $matiere = new Matiere();
         $form = $this->createForm(MatiereType::class, $matiere);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($matiere);
-            $entityManager->flush();
+            $this->entityManager->persist($matiere);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_matiere_index');
         }
@@ -94,19 +92,18 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_matiere_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Matiere                $matiere
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Matiere $matiere): Response
+    public function edit(Request $request, Matiere $matiere): Response
     {
         $form = $this->createForm(MatiereType::class, $matiere);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_matiere_edit', ['id' => $matiere->getId()]);
         }

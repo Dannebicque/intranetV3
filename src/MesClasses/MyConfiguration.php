@@ -15,6 +15,10 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Class MyConfiguration
+ * @package App\MesClasses
+ */
 class MyConfiguration
 {
     /**
@@ -121,6 +125,11 @@ class MyConfiguration
         return false;
     }
 
+    /**
+     * @param $value
+     *
+     * @return \App\Entity\Personnel|bool|null
+     */
     private function transformeValue($value)
     {
         if ($value === 'false') {
@@ -142,6 +151,13 @@ class MyConfiguration
         return $value;
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $value
+     *
+     * @return bool
+     */
     private function updateDiplome($id, $name, $value): bool
     {
         $diplome = $this->diplomeRepository->find($id);
@@ -155,6 +171,13 @@ class MyConfiguration
         return false;
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $value
+     *
+     * @return bool
+     */
     private function updateAnnee($id, $name, $value): bool
     {
         $annee = $this->anneeRepository->find($id);
@@ -168,6 +191,13 @@ class MyConfiguration
         return false;
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $value
+     *
+     * @return bool
+     */
     private function updateSemestre($id, $name, $value): bool
     {
         $semestre = $this->semestreRepository->find($id);

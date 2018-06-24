@@ -13,6 +13,10 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 
+/**
+ * Class MyEvaluation
+ * @package App\MesClasses
+ */
 class MyEvaluation
 {
     /** @var Evaluation */
@@ -32,6 +36,8 @@ class MyEvaluation
     public function setEvaluation(Evaluation $evaluation): MyEvaluation
     {
         $this->evaluation = $evaluation;
+
+        $this->calculStatistiquesGlobales();
 
         return $this;
     }
@@ -55,10 +61,50 @@ class MyEvaluation
 
         arsort($this->classement);
 
-        $this->statistiques['min'] = min($t);
-        $this->statistiques['max'] = max($t);
-        $this->statistiques['moyenne'] = $moy / count($t);
-        $this->statistiques['rang'] = $this->classement;
+        $this->statistiques['min'] = count($t) > 0 ? min($t) : -0.01;
+        $this->statistiques['max'] = count($t) > 0 ? max($t) : -0.01;
+        $this->statistiques['moyenne'] = count($t) > 0 ? $moy / count($t) : -0.01;
+        $this->statistiques['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
+        $this->statistiques['rang'] = $this->classement;//todo: intéret ? On sauvegarde juste des notes ?
+    }
+
+    /**
+     * @param $donnees
+     *
+     * @return int|string
+     */
+    private function ecartType($donnees)
+    {
+        //0 - Nombre d’éléments dans le tableau
+        $population = count($donnees);
+        if ($population !== 0) {
+            //1 - somme du tableau
+            $somme_tableau = array_sum($donnees);
+            //2 - Calcul de la moyenne
+
+            $moyenne = $somme_tableau / $population;
+            //3 - écart pour chaque valeur
+            $ecart = [];
+            for ($i = 0; $i < $population; $i++) {
+                //écart entre la valeur et la moyenne
+                $ecart_donnee = $donnees[$i] - $moyenne;
+                //carré de l'écart
+                $ecart_donnee_carre = bcpow($ecart_donnee, 2, 2);
+                //Insertion dans le tableau
+                array_push($ecart, $ecart_donnee_carre);
+            }
+            //4 - somme des écarts
+            $somme_ecart = array_sum($ecart);
+            //5 - division de la somme des écarts par la population
+            $division = $somme_ecart / $population;
+            //6 - racine carrée de la division
+            $ecart_type = bcsqrt($division, 2);
+        } else {
+            $ecart_type = 0;
+        }
+
+        //7 - renvoi du résultat
+        return $ecart_type;
     }
 
     /**

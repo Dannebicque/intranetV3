@@ -4,7 +4,9 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Semestre;
+use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,15 +45,57 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @Route("/semestre/{semestre}", name="administration_etudiant_semestre_index")
-     * @param Semestre $semestre
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/ajouter", name="administration_etudiant_new", methods="GET|POST")
      */
-    public function semestre(Semestre $semestre): Response
+    public function create(): Response
     {
-        return $this->render('administration/etudiant/semestre.html.twig', [
-            'semestre' => $semestre
+        return $this->render('administration/etudiant/new.html.twig');
+    }
+
+    /**
+     * @Route("/import", name="administration_etudiant_import", methods="GET|POST")
+     */
+    public function import(Request $request): Response
+    {
+        $form = $this->createForm(ImportEtudiantType::class, null,
+            ['formation' => $this->dataUserSession->getFormation()]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+        }
+
+        return $this->render('administration/etudiant/import.html.twig', [
+            'form' => $form->createView(),
         ]);
+
+    }
+
+    /**
+     * @Route("/help", name="administration_all_etudiant_help", methods="GET")
+     */
+    public function help(): Response
+    {
+        return $this->render('administration/etudiant/help.html.twig');
+    }
+
+    /**
+     * @Route("/save", name="administration_all_etudiant_save", methods="GET")
+     */
+    public function save(): Response
+    {
+        //save en csv
+        return new Response('', Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/imprimer", name="administration_all_etudiant_print", methods="GET")
+     */
+    public function imprimer(): Response
+    {
+        //print (pdf)
+        return new Response('', Response::HTTP_OK);
     }
 }

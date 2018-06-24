@@ -5,7 +5,6 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Formation;
 use App\Form\FormationType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,20 +57,19 @@ class FormationController extends BaseController
 
     /**
      * @Route("/new", name="sa_formation_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $formation = new Formation();
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($formation);
-            $entityManager->flush();
+            $this->entityManager->persist($formation);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('super_admin_homepage');
         }
@@ -95,19 +93,18 @@ class FormationController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_formation_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Formation              $formation
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Formation $formation): Response
+    public function edit(Request $request, Formation $formation): Response
     {
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('super_admin_homepage');
         }

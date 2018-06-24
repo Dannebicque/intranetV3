@@ -51,11 +51,19 @@ class CahierTexte extends BaseEntity
         $this->fichiers = new ArrayCollection();
     }
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return CahierTexte
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -63,11 +71,19 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     *
+     * @return CahierTexte
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -75,11 +91,19 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateRetour(): ?\DateTimeInterface
     {
         return $this->dateRetour;
     }
 
+    /**
+     * @param \DateTimeInterface $dateRetour
+     *
+     * @return CahierTexte
+     */
     public function setDateRetour(\DateTimeInterface $dateRetour): self
     {
         $this->dateRetour = $dateRetour;
@@ -87,11 +111,19 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return CahierTexte
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -107,6 +139,11 @@ class CahierTexte extends BaseEntity
         return $this->fichiers;
     }
 
+    /**
+     * @param Fichier $fichier
+     *
+     * @return CahierTexte
+     */
     public function addFichier(Fichier $fichier): self
     {
         if (!$this->fichiers->contains($fichier)) {
@@ -116,6 +153,11 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Fichier $fichier
+     *
+     * @return CahierTexte
+     */
     public function removeFichier(Fichier $fichier): self
     {
         if ($this->fichiers->contains($fichier)) {
@@ -125,11 +167,19 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Semestre|null
+     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
+    /**
+     * @param Semestre|null $semestre
+     *
+     * @return CahierTexte
+     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -137,11 +187,19 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Matiere|null
+     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
+    /**
+     * @param Matiere|null $matiere
+     *
+     * @return CahierTexte
+     */
     public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;

@@ -8,15 +8,27 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Translation\TranslatorInterface;
 
 
+/**
+ * Class YesNoType
+ * @package App\Form\Type
+ */
 class YesNoType extends AbstractType
 {
     private $translator;
 
+    /**
+     * YesNoType constructor.
+     *
+     * @param TranslatorInterface $translator
+     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
@@ -30,6 +42,9 @@ class YesNoType extends AbstractType
         ));
     }
 
+    /**
+     * @return null|string
+     */
     public function getParent(): ?string
     {
         return ChoiceType::class;

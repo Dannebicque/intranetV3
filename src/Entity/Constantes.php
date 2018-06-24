@@ -9,6 +9,10 @@
 namespace App\Entity;
 
 
+/**
+ * Class Constantes
+ * @package App\Entity
+ */
 class Constantes
 {
     public const ROLE_CDD = 'role.cdd';
@@ -25,6 +29,18 @@ class Constantes
     public const  TIMEBEFORE_FORMAT_YEAR = '%e %b, %Y';
     public const DUREE_SEMESTRE = 5;
 
+    public const FLASHBAG_SUCCESS = 'success';
+    public const FLASHBAG_INFO = 'info';
+    public const FLASHBAG_NOTICE = 'warning';
+    public const FLASHBAG_ERROR = 'danger';
+    public const DUREE_COURS = 1.5;
+
+
+    public const NB_RESULTS_PER_PAGE = 2;
+
+    /**
+     * @return array
+     */
     public static function getRoleList(): array
     {
         return array(

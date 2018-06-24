@@ -1,0 +1,44 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.help.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'help', id: help.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.help.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ help.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.titre'|trans }}</th>
+                    <td>{{ help.titre }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.texte'|trans }}</th>
+                    <td>{{ help.texte|raw }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ help.created ? help.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ help.updated ? help.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

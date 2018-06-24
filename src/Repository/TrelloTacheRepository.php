@@ -15,11 +15,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TrelloTacheRepository extends ServiceEntityRepository
 {
+    /**
+     * TrelloTacheRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, TrelloTache::class);
     }
 
+    /**
+     * @param Formation $formation
+     *
+     * @return mixed
+     */
     public function findByFormation(Formation $formation)
     {
         return $this->createQueryBuilder('a')
@@ -30,6 +40,11 @@ class TrelloTacheRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $getId
+     *
+     * @return array
+     */
     public function findByFormationTaches($getId): array
     {
         $query = $this->createQueryBuilder('t') //prendre la période de 30 jours

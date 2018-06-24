@@ -5,6 +5,10 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class ScolariteController
+ * @package App\Controller\superAdministration
+ */
 class ScolariteController extends BaseController
 {
     /**

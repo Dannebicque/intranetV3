@@ -41,11 +41,19 @@ class Note extends BaseEntity
         $this->modificationNotes = new ArrayCollection();
     }
 
+    /**
+     * @return Evaluation|null
+     */
     public function getEvaluation(): ?Evaluation
     {
         return $this->evaluation;
     }
 
+    /**
+     * @param Evaluation|null $evaluation
+     *
+     * @return Note
+     */
     public function setEvaluation(?Evaluation $evaluation): self
     {
         $this->evaluation = $evaluation;
@@ -53,11 +61,19 @@ class Note extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Etudiant|null
+     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
+    /**
+     * @param Etudiant|null $etudiant
+     *
+     * @return Note
+     */
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
@@ -65,11 +81,19 @@ class Note extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNote(): ?float
     {
         return $this->note;
     }
 
+    /**
+     * @param float $note
+     *
+     * @return Note
+     */
     public function setNote(float $note): self
     {
         $this->note = $note;
@@ -77,11 +101,19 @@ class Note extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
 
+    /**
+     * @param string $commentaire
+     *
+     * @return Note
+     */
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;
@@ -97,6 +129,11 @@ class Note extends BaseEntity
         return $this->modificationNotes;
     }
 
+    /**
+     * @param ModificationNote $modificationNote
+     *
+     * @return Note
+     */
     public function addModificationNote(ModificationNote $modificationNote): self
     {
         if (!$this->modificationNotes->contains($modificationNote)) {
@@ -107,6 +144,11 @@ class Note extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param ModificationNote $modificationNote
+     *
+     * @return Note
+     */
     public function removeModificationNote(ModificationNote $modificationNote): self
     {
         if ($this->modificationNotes->contains($modificationNote)) {

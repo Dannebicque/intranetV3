@@ -40,11 +40,19 @@ class Adresse extends BaseEntity
      */
     private $pays = 'France';
 
+    /**
+     * @return null|string
+     */
     public function getAdresse1(): ?string
     {
         return $this->adresse1;
     }
 
+    /**
+     * @param string $adresse1
+     *
+     * @return Adresse
+     */
     public function setAdresse1(string $adresse1): self
     {
         $this->adresse1 = $adresse1;
@@ -52,11 +60,19 @@ class Adresse extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getAdresse2(): ?string
     {
         return trim($this->adresse2);
     }
 
+    /**
+     * @param $adresse2
+     *
+     * @return Adresse
+     */
     public function setAdresse2( $adresse2): self
     {
         $this->adresse2 = $adresse2;
@@ -64,11 +80,19 @@ class Adresse extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getAdresse3(): ?string
     {
         return trim($this->adresse3);
     }
 
+    /**
+     * @param $adresse3
+     *
+     * @return Adresse
+     */
     public function setAdresse3( $adresse3): self
     {
         $this->adresse3 = $adresse3;
@@ -76,11 +100,19 @@ class Adresse extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
     }
 
+    /**
+     * @param string $codePostal
+     *
+     * @return Adresse
+     */
     public function setCodePostal(string $codePostal): self
     {
         $this->codePostal = $codePostal;
@@ -88,11 +120,19 @@ class Adresse extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getVille(): ?string
     {
         return $this->ville;
     }
 
+    /**
+     * @param string $ville
+     *
+     * @return Adresse
+     */
     public function setVille(string $ville): self
     {
         $this->ville = $ville;
@@ -100,11 +140,19 @@ class Adresse extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getPays(): ?string
     {
         return $this->pays;
     }
 
+    /**
+     * @param string $pays
+     *
+     * @return Adresse
+     */
     public function setPays(string $pays): self
     {
         $this->pays = $pays;
@@ -112,6 +160,9 @@ class Adresse extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getDisplay(): ?string
     {
         $html = $this->getAdresse1();

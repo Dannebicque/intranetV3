@@ -46,6 +46,9 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
     }
 
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -57,6 +60,9 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param GenericEvent $event
+     */
     public function onCarnetAdded(GenericEvent $event): void
     {
         $cahier = $event->getSubject();
@@ -73,11 +79,17 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
+    /**
+     * @param GenericEvent $event
+     */
     public function onNoteAdded(GenericEvent $event): void
     {
 
     }
 
+    /**
+     * @param GenericEvent $event
+     */
     public function onAbsenceAdded(GenericEvent $event): void
     {
 

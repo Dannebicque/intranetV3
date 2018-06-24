@@ -8,7 +8,6 @@ use App\Events;
 use App\Form\CahierTexteType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\CahierTexteRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -65,14 +64,12 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/new", name="application_personnel_carnet_new", methods="GET|POST")
-     * @param EntityManagerInterface   $entityManager
      * @param Request                  $request
      * @param EventDispatcherInterface $eventDispatcher
      *
      * @return Response
      */
     public function create(
-        EntityManagerInterface $entityManager,
         Request $request,
         EventDispatcherInterface $eventDispatcher
     ): Response
@@ -84,8 +81,8 @@ class CarnetController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($cahierTexte);
-            $entityManager->flush();
+            $this->entityManager->persist($cahierTexte);
+            $this->entityManager->flush();
 
             //On déclenche l'event
             $event = new GenericEvent($cahierTexte);
@@ -113,20 +110,19 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_carnet_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param CahierTexte            $cahierTexte
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, CahierTexte $cahierTexte): Response
+    public function edit(Request $request, CahierTexte $cahierTexte): Response
     {
         $form = $this->createForm(CahierTexteType::class, $cahierTexte,
             ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('application_personnel_carnet_edit', ['id' => $cahierTexte->getId()]);
         }
@@ -139,19 +135,18 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param CahierTexte            $cahierTexte
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, CahierTexte $cahierTexte): Response
+    public function delete(Request $request, CahierTexte $cahierTexte): Response
     {
         $id = $cahierTexte->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $entityManager->remove($cahierTexte);
-            $entityManager->flush();
+            $this->entityManager->remove($cahierTexte);
+            $this->entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

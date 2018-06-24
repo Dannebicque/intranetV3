@@ -22,6 +22,11 @@ class AbsenceController extends BaseController
 {
     private $myAbsences;
 
+    /**
+     * AbsenceController constructor.
+     *
+     * @param MyAbsences $myAbsences
+     */
     public function __construct(MyAbsences $myAbsences)
     {
         $this->myAbsences = $myAbsences;

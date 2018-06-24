@@ -6,7 +6,16 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-index.html.twig', {elt:'previsionnel'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_previsionnel_import') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.import_previsionnel'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-import"></i></a>
+            <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
+        </div>
     </div>
 {% endblock %}
 
@@ -63,20 +72,8 @@
             </div>
         </div>
     </div>
-    {#    <div class="callout callout-success" role="alert">
-            <button type="button" class="close" data-dismiss="callout" aria-label="Close">
-                <span>&times;</span>
-            </button>
-            <h5>Well done!</h5>
-            <p>You successfully read this important alert message.</p>
-        </div>#}
 {% endblock %}
 
-{#{% block javascript %}
-<script>
-toastr.info('Are you the 6 fingered man?')
-</script>
-{% endblock %}#}
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[

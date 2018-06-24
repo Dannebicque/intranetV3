@@ -15,7 +15,57 @@
 {% endblock %}
 
 {% block content %}
-
+    <div class="card">
+        <h4 class="card-title">Paramètres</h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="absence-matiere">{{ 'matiere'|trans }}</label>
+                        <select class="form-control" id="absence-matiere" data-provide="selectpicker"
+                                data-live-search="true"></select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="absence-date">{{ 'date'|trans }}</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" data-provide="datepicker" id="absence-date">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="absence-heure">Heure</label>
+                        <select class="form-control" id="input-normal" id="absence-heure" data-provide="selectpicker"
+                                data-live-search="true">
+                            <option value="">{{ 'choisir.heure.debut'|trans }}</option>
+                            {% for i in 08..20 %}
+                                <option value="{{ i }}:00">{{ i }}:00</option>
+                                <option value="{{ i }}:30">{{ i }}:30</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="absence-groupe">{{ 'groupe'|trans }}</label>
+                        <select class="form-control" id="absence-groupe" data-provide="selectpicker"
+                                data-live-search="true"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h4 class="card-title">{{ 'etudiants.du.semestre'|trans }}</h4>
+        <div class="card-body">
+            <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block fabactions %}

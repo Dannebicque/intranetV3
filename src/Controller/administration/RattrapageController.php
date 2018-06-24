@@ -31,4 +31,30 @@ class RattrapageController extends BaseController
             'semestre'    => $semestre
         ]);
     }
+
+    /**
+     * @Route("/help", name="administration_rattrapage_help", methods="GET")
+     */
+    public function help(): Response
+    {
+        return $this->render('administration/rattrapage/help.html.twig');
+    }
+
+    /**
+     * @Route("/save", name="administration_rattrapage_save", methods="GET")
+     */
+    public function save(): Response
+    {
+        //save en csv
+        return new Response('', Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/imprimer", name="administration_rattrapage_print", methods="GET")
+     */
+    public function imprimer(): Response
+    {
+        //print (pdf)
+        return new Response('', Response::HTTP_OK);
+    }
 }

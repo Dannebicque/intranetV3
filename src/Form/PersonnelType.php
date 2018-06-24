@@ -14,8 +14,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
+/**
+ * Class PersonnelType
+ * @package App\Form
+ */
 class PersonnelType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

@@ -6,6 +6,10 @@ use App\Entity\Constantes;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
+/**
+ * Class AppExtension
+ * @package App\Twig
+ */
 class AppExtension extends AbstractExtension
 {
     /**
@@ -20,6 +24,11 @@ class AppExtension extends AbstractExtension
         );
     }
 
+    /**
+     * @param $number
+     *
+     * @return null|string
+     */
     public function badge($number): ?string
     {
         if ($number >= 5 && $number < 10) {

@@ -16,15 +16,32 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class HrsType
+ * @package App\Form
+ */
 class HrsType extends AbstractType
 {
     protected $formation;
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formation = $options['formation'];
 
         $builder
+            ->add('personnel', EntityType::class, [
+                'class'         => Personnel::class,
+                'required'      => true,
+                'choice_label'  => 'display',
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findByFormationBuilder($this->formation);
+                },
+                'label'         => 'label.personnel'
+            ])
             ->add('typeHrs', EntityType::class, [
                 'class' => TypeHrs::class,
                 'required' => true,
@@ -51,19 +68,14 @@ class HrsType extends AbstractType
                 },
                 'label' => 'label.diplome'
             ])
-            ->add('personnel', EntityType::class,[
-                'class' => Personnel::class,
-                'required' => true,
-                'choice_label' => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByFormationBuilder($this->formation);
-                },
-                'label' => 'label.personnel'
-            ])
+
 
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

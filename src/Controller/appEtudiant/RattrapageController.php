@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Rattrapage;
 use App\Form\RattrapageType;
 use App\Repository\RattrapageRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,14 +18,12 @@ class RattrapageController extends BaseController
 {
     /**
      * @Route("/rattrapage", name="application_etudiant_rattrapage_index")
-     * @param EntityManagerInterface $entityManager
      * @param RattrapageRepository   $rattrapageRepository
      * @param Request                $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function index(
-        EntityManagerInterface $entityManager,
         RattrapageRepository $rattrapageRepository,
         Request $request
     ) {
@@ -39,8 +36,8 @@ class RattrapageController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($rattrapage);
-            $entityManager->flush();
+            $this->entityManager->persist($rattrapage);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('application_index', ['onglet' => 'rattrapage']);
         }

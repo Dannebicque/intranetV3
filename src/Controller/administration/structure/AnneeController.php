@@ -7,7 +7,6 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,7 +71,7 @@ class AnneeController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request, Diplome $diplome)
+    public function create(Request $request, Diplome $diplome)
     {
         if ($diplome->getFormation() !== null) {
             $annee = new Annee();
@@ -81,8 +80,8 @@ class AnneeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($annee);
-                $entityManager->flush();
+                $this->entityManager->persist($annee);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('administration_structure_index');
             }
@@ -115,7 +114,7 @@ class AnneeController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Annee $annee): Response
+    public function edit(Request $request, Annee $annee): Response
     {
         if ($annee->getDiplome() !== null && $annee->getDiplome()->getFormation() !== null) {
             $form = $this->createForm(AnneeType::class, $annee,
@@ -123,7 +122,7 @@ class AnneeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('administration_structure_index');
             }
@@ -143,12 +142,12 @@ class AnneeController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, Annee $annee): Response
+    public function duplicate(Annee $annee): Response
     {
         $newAnnee = clone $annee;
 
-        $entityManager->persist($newAnnee);
-        $entityManager->flush();
+        $this->entityManager->persist($newAnnee);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('administration_structure_annee_edit', ['id' => $newAnnee->getId()]);
     }

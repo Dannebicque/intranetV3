@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Form\BorneType;
 use App\Repository\BorneRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,12 +30,11 @@ class BorneController extends BaseController
 
     /**
      * @Route("/new", name="administration_borne_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $borne = new Borne();
         $form = $this->createForm(BorneType::class, $borne,
@@ -44,8 +42,8 @@ class BorneController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($borne);
-            $entityManager->flush();
+            $this->entityManager->persist($borne);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_borne_index');
         }
@@ -69,20 +67,19 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_borne_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Borne                  $borne
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Borne $borne): Response
+    public function edit(Request $request, Borne $borne): Response
     {
         $form = $this->createForm(BorneType::class, $borne,
             ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_borne_edit', ['id' => $borne->getId()]);
         }
@@ -95,19 +92,18 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Borne                  $borne
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, Borne $borne): Response
+    public function delete(Request $request, Borne $borne): Response
     {
         $id = $borne->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $entityManager->remove($borne);
-            $entityManager->flush();
+            $this->entityManager->remove($borne);
+            $this->entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

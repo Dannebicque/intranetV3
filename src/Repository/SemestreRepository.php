@@ -16,11 +16,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class SemestreRepository extends ServiceEntityRepository
 {
+    /**
+     * SemestreRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Semestre::class);
     }
 
+    /**
+     * @param $formation
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findByFormationBuilder($formation)
     {
         return $this->createQueryBuilder('s')
@@ -30,6 +40,11 @@ class SemestreRepository extends ServiceEntityRepository
             ->setParameter('formation', $formation);
     }
 
+    /**
+     * @param $diplome
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findByDiplomeBuilder($diplome)
     {
         return $this->createQueryBuilder('s')
@@ -38,6 +53,11 @@ class SemestreRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome);
     }
 
+    /**
+     * @param $diplome
+     *
+     * @return mixed
+     */
     public function findByDiplome($diplome)
     {
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();

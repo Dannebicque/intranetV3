@@ -15,11 +15,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CahierTexteRepository extends ServiceEntityRepository
 {
+    /**
+     * CahierTexteRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, CahierTexte::class);
     }
 
+    /**
+     * @param $getId
+     *
+     * @return mixed
+     */
     public function findByPersonnel($getId)
     {
         return $this->createQueryBuilder('c')
@@ -30,6 +40,11 @@ class CahierTexteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return mixed
+     */
     public function findBySemestre(Semestre $semestre)
     {
         return $this->createQueryBuilder('c')

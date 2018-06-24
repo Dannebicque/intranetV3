@@ -36,17 +36,30 @@ class TrelloTache extends BaseEntity
      */
     private $formation;
 
+    /**
+     * TrelloTache constructor.
+     *
+     * @param Formation $formation
+     */
     public function __construct(Formation $formation)
     {
         $this->formation = $formation;
         $this->personnels = new ArrayCollection();
     }
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return TrelloTache
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -54,11 +67,19 @@ class TrelloTache extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDeadline(): ?\DateTimeInterface
     {
         return $this->deadline;
     }
 
+    /**
+     * @param \DateTimeInterface $deadline
+     *
+     * @return TrelloTache
+     */
     public function setDeadline(\DateTimeInterface $deadline): self
     {
         $this->deadline = $deadline;
@@ -74,6 +95,11 @@ class TrelloTache extends BaseEntity
         return $this->personnels;
     }
 
+    /**
+     * @param Personnel $personnel
+     *
+     * @return TrelloTache
+     */
     public function addPersonnel(Personnel $personnel): self
     {
         if (!$this->personnels->contains($personnel)) {
@@ -83,6 +109,11 @@ class TrelloTache extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Personnel $personnel
+     *
+     * @return TrelloTache
+     */
     public function removePersonnel(Personnel $personnel): self
     {
         if ($this->personnels->contains($personnel)) {
@@ -92,11 +123,19 @@ class TrelloTache extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     *
+     * @return TrelloTache
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -104,11 +143,19 @@ class TrelloTache extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Formation|null
+     */
     public function getFormation(): ?Formation
     {
         return $this->formation;
     }
 
+    /**
+     * @param Formation|null $formation
+     *
+     * @return TrelloTache
+     */
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;

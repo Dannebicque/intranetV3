@@ -4,11 +4,11 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Competence;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\CompetenceType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\CompetenceRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,22 +34,21 @@ class CompetenceController extends BaseController
 
     /**
      * @Route("/new/{diplome}", name="administration_competence_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Diplome                $diplome
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request, Diplome $diplome = null): Response
+    public function create(Request $request, Diplome $diplome = null): Response
     {
         $competence = new Competence($diplome);
-        $form = $this->createForm(CompetenceType::class, $competence);
+        $form = $this->createForm(CompetenceType::class, $competence, ['diplome' => $diplome]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($competence);
-            $entityManager->flush();
-
+            $this->entityManager->persist($competence);
+            $this->entityManager->flush();
+            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Compétence créé avec succès');
             return $this->redirectToRoute('administration_competence_index');
         }
 
@@ -96,22 +95,42 @@ class CompetenceController extends BaseController
     }
 
     /**
+     * @Route("/{id}/duplicate", name="administration_competence_duplicate", methods="GET")
+     * @param Competence $competence
+     *
+     * @return Response
+     */
+    public function duplicate(Competence $competence): Response
+    {
+        $newCompetence = clone $competence;
+        $this->entityManager->persist($newCompetence);
+        $this->entityManager->flush();
+
+        $this->flashBag->add(Constantes::FLASHBAG_SUCCESS,
+            'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.');
+
+        return $this->redirectToRoute('administration_competence_edit', ['id' => $newCompetence->getId()]);
+
+    }
+
+    /**
      * @Route("/{id}/edit", name="administration_competence_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Competence             $competence
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Competence $competence): Response
+    public function edit(Request $request, Competence $competence): Response
     {
-        $form = $this->createForm(CompetenceType::class, $competence);
+        $form = $this->createForm(CompetenceType::class, $competence, ['diplome' => $competence->getDiplome()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
-            return $this->redirectToRoute('administration_competence_edit', ['id' => $competence->getId()]);
+            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Modifications enregistrées.');
+
+            return $this->redirectToRoute('administration_competence_index');
         }
 
         return $this->render('administration/competence/edit.html.twig', [

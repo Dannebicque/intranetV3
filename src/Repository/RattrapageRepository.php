@@ -16,11 +16,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class RattrapageRepository extends ServiceEntityRepository
 {
+    /**
+     * RattrapageRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Rattrapage::class);
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return mixed
+     */
     public function findBySemestre(Semestre $semestre)
     {
         return $this->createQueryBuilder('r')
@@ -33,6 +43,11 @@ class RattrapageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Etudiant $etudiant
+     *
+     * @return mixed
+     */
     public function findByEtudiant(Etudiant $etudiant)
     {
         return $this->createQueryBuilder('r')

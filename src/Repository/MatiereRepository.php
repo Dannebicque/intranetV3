@@ -18,18 +18,33 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class MatiereRepository extends ServiceEntityRepository
 {
+    /**
+     * MatiereRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Matiere::class);
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return mixed
+     */
     public function findBySemestre(Semestre $semestre)
     {
-        return $this->findBySemestreBuilder($semestre->getId())
+        return $this->findBySemestreBuilder($semestre)
             ->getQuery()
             ->getResult();
     }
 
+    /**
+     * @param $formation
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findByFormationBuilder($formation)
     {
         return $this->createQueryBuilder('m')
@@ -43,6 +58,11 @@ class MatiereRepository extends ServiceEntityRepository
             ->orderBy('m.libelle', 'ASC');
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findBySemestreBuilder(Semestre $semestre)
     {
         return $this->createQueryBuilder('m')

@@ -44,11 +44,19 @@ class Hrs extends BaseEntity
      */
     private $annee;
 
+    /**
+     * @return float|null
+     */
     public function getNbHeuresTd(): ?float
     {
         return $this->nbHeuresTd;
     }
 
+    /**
+     * @param float $nbHeuresTd
+     *
+     * @return Hrs
+     */
     public function setNbHeuresTd(float $nbHeuresTd): self
     {
         $this->nbHeuresTd = $nbHeuresTd;
@@ -56,11 +64,19 @@ class Hrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Semestre|null
+     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
+    /**
+     * @param Semestre|null $semestre
+     *
+     * @return Hrs
+     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -68,11 +84,19 @@ class Hrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Diplome|null
+     */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
+    /**
+     * @param Diplome|null $diplome
+     *
+     * @return Hrs
+     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
@@ -80,11 +104,19 @@ class Hrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return Hrs
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -92,11 +124,19 @@ class Hrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return TypeHrs|null
+     */
     public function getTypeHrs(): ?TypeHrs
     {
         return $this->typeHrs;
     }
 
+    /**
+     * @param TypeHrs|null $typeHrs
+     *
+     * @return Hrs
+     */
     public function setTypeHrs(?TypeHrs $typeHrs): self
     {
         $this->typeHrs = $typeHrs;
@@ -120,11 +160,19 @@ class Hrs extends BaseEntity
         $this->libelle = $libelle;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAnnee(): ?int
     {
         return $this->annee;
     }
 
+    /**
+     * @param int $annee
+     *
+     * @return Hrs
+     */
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;
@@ -132,6 +180,11 @@ class Hrs extends BaseEntity
         return $this;
     }
 
+    /**
+     * Hrs constructor.
+     *
+     * @param $annee
+     */
     public function __construct($annee)
     {
         $this->annee = $annee;

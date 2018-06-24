@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'import.etudiant.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'import.etudiant.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                {{ 'message.danger.etudiant.import'|trans }}
+            </div>
+
+            {% form_theme form 'form/bootstrap_4_layout.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
+            <br>
+            <div class="alert alert-warning">
+                Le fichier doit être au format CSV (séparateur ;) et doit correspondre au formatage présenté ici
+                (télécharger un exmeple). Toutes les colonnes doivent être présente (l'ordre n'a pas d'importante si les
+                en-têtes sont présentes)
+            </div>{# todo: mettre un fichier de démonstration #}
+        </div>
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-plus"></i></a>
+            <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+

@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Ufr;
 use App\Form\UfrType;
 use App\Repository\UfrRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,20 +54,19 @@ class UfrController extends BaseController
 
     /**
      * @Route("/new", name="sa_ufr_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $ufr = new Ufr();
         $form = $this->createForm(UfrType::class, $ufr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($ufr);
-            $entityManager->flush();
+            $this->entityManager->persist($ufr);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_ufr_index');
         }
@@ -92,19 +90,18 @@ class UfrController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ufr_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Ufr                    $ufr
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Ufr $ufr): Response
+    public function edit(Request $request, Ufr $ufr): Response
     {
         $form = $this->createForm(UfrType::class, $ufr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_ufr_edit', ['id' => $ufr->getId()]);
         }

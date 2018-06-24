@@ -58,6 +58,11 @@ class Ufr extends BaseEntity
         return $this->sites;
     }
 
+    /**
+     * @param Site $site
+     *
+     * @return Ufr
+     */
     public function addSite(Site $site): self
     {
         if (!$this->sites->contains($site)) {
@@ -67,6 +72,11 @@ class Ufr extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Site $site
+     *
+     * @return Ufr
+     */
     public function removeSite(Site $site): self
     {
         if ($this->sites->contains($site)) {
@@ -76,11 +86,19 @@ class Ufr extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getResponsable(): ?Personnel
     {
         return $this->responsable;
     }
 
+    /**
+     * @param Personnel|null $responsable
+     *
+     * @return Ufr
+     */
     public function setResponsable(?Personnel $responsable): self
     {
         $this->responsable = $responsable;

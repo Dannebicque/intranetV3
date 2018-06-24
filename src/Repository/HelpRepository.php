@@ -14,6 +14,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class HelpRepository extends ServiceEntityRepository
 {
+    /**
+     * HelpRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Help::class);

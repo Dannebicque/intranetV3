@@ -39,6 +39,9 @@
                         <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
                         <td>{{ hr.nbHeuresTd }}</td>
                         <td>
+                            <a href="{{ path('administration_hrs_duplicate', {'id': hr.id}) }}"
+                               class="btn btn-success btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="fa fa-copy"></i></a>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'hrs', id:hr.id, modal:true}) }}
                         </td>
                     </tr>

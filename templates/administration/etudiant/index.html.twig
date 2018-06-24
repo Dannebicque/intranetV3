@@ -7,6 +7,12 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('administration_etudiant_import') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.import_etudiant'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-import"></i></a>
+            <a href="{{ path('administration_etudiant_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="ti-home"></i></a>
         </div>
@@ -17,7 +23,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.gestion.des.etudiants.formation'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-bordered table-striped" id="datatableEtudiants" data-provide="datatables">
+            <table class="table table-bordered table-striped" id="datatableEtudiants">
                 <thead>
                 <tr>
                     <th>{{ 'table.numetudiant'|trans }}</th>
@@ -30,4 +36,31 @@
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_all_etudiant_print'),
+            title: 'imprimer'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_all_etudiant_save'),
+            title: 'sauvegarder'|trans,
+            icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('administration_etudiant_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('administration_all_etudiant_help'),
+            title: 'aide'|trans,
+            icone: 'ti-help'
+        }
+    ]}) }}
 {% endblock %}

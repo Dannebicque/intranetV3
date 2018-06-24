@@ -14,6 +14,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class SiteRepository extends ServiceEntityRepository
 {
+    /**
+     * SiteRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Site::class);

@@ -29,11 +29,19 @@ class Salle extends BaseEntity
      */
     private $site;
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return Salle
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -41,11 +49,19 @@ class Salle extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getCapacite(): ?int
     {
         return $this->capacite;
     }
 
+    /**
+     * @param int $capacite
+     *
+     * @return Salle
+     */
     public function setCapacite(int $capacite): self
     {
         $this->capacite = $capacite;
@@ -53,11 +69,19 @@ class Salle extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return Salle
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -65,11 +89,19 @@ class Salle extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Site|null
+     */
     public function getSite(): ?Site
     {
         return $this->site;
     }
 
+    /**
+     * @param Site|null $site
+     *
+     * @return Salle
+     */
     public function setSite(?Site $site): self
     {
         $this->site = $site;

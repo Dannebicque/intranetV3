@@ -3,6 +3,7 @@ table.clear(); //effacer le datatable
 table.destroy(); //supprimer le datatable
 
 $('#datatableEtudiants').DataTable({
+  "language": langueFr,
   "processing": true,
   "serverSide": true,
   "ajax": Routing.generate('api_etudiant_formation'),

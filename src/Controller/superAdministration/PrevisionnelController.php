@@ -5,6 +5,10 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class PrevisionnelController
+ * @package App\Controller\superAdministration
+ */
 class PrevisionnelController extends BaseController
 {
     /**

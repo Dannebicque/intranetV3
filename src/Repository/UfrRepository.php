@@ -14,6 +14,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class UfrRepository extends ServiceEntityRepository
 {
+    /**
+     * UfrRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Ufr::class);

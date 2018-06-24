@@ -30,16 +30,29 @@ class Actualite extends BaseEntity
      */
     private $formation;
 
+    /**
+     * Actualite constructor.
+     *
+     * @param Formation $formation
+     */
     public function __construct(Formation $formation)
     {
         $this->formation = $formation;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTitre(): ?string
     {
         return $this->titre;
     }
 
+    /**
+     * @param string $titre
+     *
+     * @return Actualite
+     */
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
@@ -47,11 +60,19 @@ class Actualite extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
+    /**
+     * @param string $texte
+     *
+     * @return Actualite
+     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -59,11 +80,19 @@ class Actualite extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Formation|null
+     */
     public function getFormation(): ?Formation
     {
         return $this->formation;
     }
 
+    /**
+     * @param Formation|null $formation
+     *
+     * @return Actualite
+     */
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;

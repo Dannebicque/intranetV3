@@ -3,15 +3,18 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
+use App\Form\ImportPrevisionnelType;
 use App\MesClasses\MyPrevisionnel;
 use App\Repository\MatiereRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,7 +32,7 @@ class PrevisionnelController extends BaseController
      *
      * @return Response
      */
-    public function index(MatiereRepository $matiereRepository) :Response
+    public function index(MatiereRepository $matiereRepository): Response
     {
         return $this->render('administration/previsionnel/index.html.twig', [
             'matieres' => $matiereRepository->findAll()
@@ -43,9 +46,10 @@ class PrevisionnelController extends BaseController
      *
      * @return Response
      */
-    public function matiere(MyPrevisionnel $myPrevisionnel, Matiere $matiere) :Response
+    public function matiere(MyPrevisionnel $myPrevisionnel, Matiere $matiere): Response
     {
         $myPrevisionnel->getPrevisionnelMatiere($matiere, $this->dataUserSession->getAnneePrevisionnel());
+
         return $this->render('administration/previsionnel/matiere.html.twig', [
             'previsionnel' => $myPrevisionnel
         ]);
@@ -90,10 +94,63 @@ class PrevisionnelController extends BaseController
     /**
      * @Route("/new", name="administration_previsionnel_new", methods="GET|POST")
      */
-    public function ajout()
+    public function create(
+        PersonnelRepository $personnelRepository,
+        MatiereRepository $matiereRepository,
+        Request $request
+    )
     {
+        if ($request->isMethod('POST')) {
+            $matiere = $matiereRepository->find($request->request->get('previsionnel_matiere'));
+
+            $annee = $request->request->get('previsionnel_annee_previsionnel') !== '' ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
+
+            if ($matiere !== null) {
+                for ($i = 1; $i <= $request->request->get('nbLignes'); $i++) {
+                    $personnel = $personnelRepository->find($request->request->get('intervenant_' . $i));
+                    if ($personnel !== null) {
+                        $previsionnel = new Previsionnel($matiere, $personnel, $annee);
+                        $previsionnel->setNbHCm($request->request->get('cm_' . $i));
+                        $previsionnel->setNbHTd($request->request->get('td_' . $i));
+                        $previsionnel->setNbHTp($request->request->get('tp_' . $i));
+                        $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
+                        $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
+                        $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
+                        $this->entityManager->persist($previsionnel);
+                    }
+                }
+                $this->entityManager->flush();
+                $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Ajout du prévisionnel réussi');
+
+                return $this->redirectToRoute('administration_previsionnel_new');
+            }
+
+            $this->flashBag->add(Constantes::FLASHBAG_ERROR, 'Erreur lors de la création du prévisionnel');
+
+            return $this->redirectToRoute('administration_previsionnel_new');
+        }
+
         return $this->render('administration/previsionnel/new.html.twig', [
-            'controller_name' => 'PrevisionnelController',
+        ]);
+    }
+
+    /**
+     * @Route("/import", name="administration_previsionnel_import", methods="GET|POST")
+     */
+    public function import(Request $request)
+    {
+        $form = $this->createForm(ImportPrevisionnelType::class, null,
+            ['formation' => $this->dataUserSession->getFormation()]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+        }
+
+        return $this->render('administration/previsionnel/import.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -115,23 +172,20 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_previsionnel_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Previsionnel           $previsionnel
      *
      * @return Response
      */
     public function delete(
-        EntityManagerInterface $entityManager,
         Request $request,
         Previsionnel $previsionnel
-    ): Response
-    {
+    ): Response {
         $id = $previsionnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $entityManager->remove($previsionnel);
-            $entityManager->flush();
+            $this->entityManager->remove($previsionnel);
+            $this->entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

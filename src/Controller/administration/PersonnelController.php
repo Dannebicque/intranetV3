@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelFormationRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,20 +66,19 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/create", name="administration_personnel_create", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($personnel);
-            $entityManager->flush();
+            $this->entityManager->persist($personnel);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_personnel_index');
         }
@@ -104,19 +102,18 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_personnel_edit", methods="GET|POST", options={"expose":true})
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Personnel              $personnel
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Personnel $personnel): Response
+    public function edit(Request $request, Personnel $personnel): Response
     {
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_personnel_edit', ['id' => $personnel->getId()]);
         }

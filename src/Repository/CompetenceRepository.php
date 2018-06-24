@@ -14,12 +14,34 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CompetenceRepository extends ServiceEntityRepository
 {
+    /**
+     * CompetenceRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Competence::class);
     }
 
+    /**
+     * @param $getFormation
+     * @param $int
+     */
     public function findByFormation($getFormation, $int)
     {
+    }
+
+    /**
+     * @param $diplome
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findByDiplomeBuilder($diplome)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.diplome = :diplome')
+            ->setParameter('diplome', $diplome)
+            ->orderBy('c.libelle', 'ASC');
     }
 }

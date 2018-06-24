@@ -45,11 +45,19 @@ class Notification extends BaseEntity
      */
     private $personnel;
 
+    /**
+     * @return Etudiant|null
+     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
+    /**
+     * @param Etudiant|null $etudiant
+     *
+     * @return Notification
+     */
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
@@ -57,11 +65,19 @@ class Notification extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return Notification
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -69,11 +85,19 @@ class Notification extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return Notification
+     */
     public function setUrl(string $url): self
     {
         $this->url = $url;
@@ -81,11 +105,19 @@ class Notification extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getLu(): ?bool
     {
         return $this->lu;
     }
 
+    /**
+     * @param bool $lu
+     *
+     * @return Notification
+     */
     public function setLu(bool $lu): self
     {
         $this->lu = $lu;
@@ -93,11 +125,19 @@ class Notification extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTypeUser(): ?string
     {
         return $this->typeUser;
     }
 
+    /**
+     * @param string $typeUser
+     *
+     * @return Notification
+     */
     public function setTypeUser(string $typeUser): self
     {
         $this->typeUser = $typeUser;
@@ -105,17 +145,28 @@ class Notification extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getDateTexte(): string
     {
         //todo: calculer la date à partir de maintenant
         return 'just now,,,'; //app de twig ?
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return Notification
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -123,12 +174,18 @@ class Notification extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function icone()
     {
 
         return self::TABICONE[$this->type];
     }
 
+    /**
+     * @return mixed
+     */
     public function color()
     {
 

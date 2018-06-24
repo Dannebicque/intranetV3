@@ -16,9 +16,9 @@
 
 {% block content %}
     <div class="card">
-        <div class="embed-responsive embed-responsive-16by9">
+        {#<div class="embed-responsive embed-responsive-16by9">
 
-        </div>
+        </div>#}
 
         <div class="card-body">
             <h4><a class="hover-primary" href="#">{{ article.titre }}</a></h4>
@@ -33,7 +33,7 @@
             <div class="flexbox align-items-center">
                 {% if article.personnel != null %}
                     <a class="text-primary fs-15"
-                       href="{{ path('user_profil', {slug: article.personnel.slug, type:'permanent'}) }}">{{ article.personnel.display }}</a>
+                       href="{{ path('user_profil', {slug: article.personnel.slug, type:'permanent'}) }}">{{ article.personnel.displayPr }}</a>
                 {% endif %}
                 <ul class="flexbox">
                     <li class="px-16 br-1 border-light">

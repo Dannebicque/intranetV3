@@ -14,11 +14,19 @@ class Courrier extends BaseEntity
      */
     private $texte;
 
+    /**
+     * @return null|string
+     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
+    /**
+     * @param string $texte
+     *
+     * @return Courrier
+     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;

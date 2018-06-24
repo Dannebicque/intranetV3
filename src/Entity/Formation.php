@@ -488,6 +488,11 @@ class Formation extends BaseEntity
         return $this->typeDocuments;
     }
 
+    /**
+     * @param TypeDocument $typeDocument
+     *
+     * @return Formation
+     */
     public function addTypeDocument(TypeDocument $typeDocument): self
     {
         if (!$this->typeDocuments->contains($typeDocument)) {
@@ -498,6 +503,11 @@ class Formation extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param TypeDocument $typeDocument
+     *
+     * @return Formation
+     */
     public function removeTypeDocument(TypeDocument $typeDocument): self
     {
         if ($this->typeDocuments->contains($typeDocument)) {
@@ -531,6 +541,9 @@ class Formation extends BaseEntity
         }
     }
 
+    /**
+     * @return null|File
+     */
     public function getLogoFile(): ?File
     {
         return $this->logoFile;
@@ -560,6 +573,11 @@ class Formation extends BaseEntity
         return $this->personnelFormations;
     }
 
+    /**
+     * @param PersonnelFormation $personnelFormation
+     *
+     * @return Formation
+     */
     public function addPersonnelFormation(PersonnelFormation $personnelFormation): self
     {
         if (!$this->personnelFormations->contains($personnelFormation)) {
@@ -570,6 +588,11 @@ class Formation extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param PersonnelFormation $personnelFormation
+     *
+     * @return Formation
+     */
     public function removePersonnelFormation(PersonnelFormation $personnelFormation): self
     {
         if ($this->personnelFormations->contains($personnelFormation)) {
@@ -591,6 +614,11 @@ class Formation extends BaseEntity
         return $this->actualites;
     }
 
+    /**
+     * @param Actualite $actualite
+     *
+     * @return Formation
+     */
     public function addActualite(Actualite $actualite): self
     {
         if (!$this->actualites->contains($actualite)) {
@@ -601,6 +629,11 @@ class Formation extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Actualite $actualite
+     *
+     * @return Formation
+     */
     public function removeActualite(Actualite $actualite): self
     {
         if ($this->actualites->contains($actualite)) {
@@ -614,6 +647,10 @@ class Formation extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function update($name, $value): void
     {
 
@@ -632,6 +669,11 @@ class Formation extends BaseEntity
         return $this->trelloTaches;
     }
 
+    /**
+     * @param TrelloTache $trelloTach
+     *
+     * @return Formation
+     */
     public function addTrelloTach(TrelloTache $trelloTach): self
     {
         if (!$this->trelloTaches->contains($trelloTach)) {
@@ -642,6 +684,11 @@ class Formation extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param TrelloTache $trelloTach
+     *
+     * @return Formation
+     */
     public function removeTrelloTach(TrelloTache $trelloTach): self
     {
         if ($this->trelloTaches->contains($trelloTach)) {
@@ -663,6 +710,11 @@ class Formation extends BaseEntity
         return $this->diplomes;
     }
 
+    /**
+     * @param Diplome $diplome
+     *
+     * @return Formation
+     */
     public function addDiplome(Diplome $diplome): self
     {
         if (!$this->diplomes->contains($diplome)) {
@@ -673,6 +725,11 @@ class Formation extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Diplome $diplome
+     *
+     * @return Formation
+     */
     public function removeDiplome(Diplome $diplome): self
     {
         if ($this->diplomes->contains($diplome)) {

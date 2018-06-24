@@ -54,11 +54,19 @@ class Site extends BaseEntity
         $this->libelle = $libelle;
     }
 
+    /**
+     * @return Adresse|null
+     */
     public function getAdresse(): ?Adresse
     {
         return $this->adresse;
     }
 
+    /**
+     * @param Adresse|null $adresse
+     *
+     * @return Site
+     */
     public function setAdresse(?Adresse $adresse): self
     {
         $this->adresse = $adresse;
@@ -74,6 +82,11 @@ class Site extends BaseEntity
         return $this->ufrs;
     }
 
+    /**
+     * @param Ufr $ufr
+     *
+     * @return Site
+     */
     public function addUfr(Ufr $ufr): self
     {
         if (!$this->ufrs->contains($ufr)) {
@@ -84,6 +97,11 @@ class Site extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Ufr $ufr
+     *
+     * @return Site
+     */
     public function removeUfr(Ufr $ufr): self
     {
         if ($this->ufrs->contains($ufr)) {
@@ -102,6 +120,11 @@ class Site extends BaseEntity
         return $this->salles;
     }
 
+    /**
+     * @param Salle $salle
+     *
+     * @return Site
+     */
     public function addSalle(Salle $salle): self
     {
         if (!$this->salles->contains($salle)) {
@@ -112,6 +135,11 @@ class Site extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Salle $salle
+     *
+     * @return Site
+     */
     public function removeSalle(Salle $salle): self
     {
         if ($this->salles->contains($salle)) {

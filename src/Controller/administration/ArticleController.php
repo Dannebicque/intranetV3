@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,12 +56,11 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/new", name="administration_article_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $article = new Article($this->getUser());
         $form = $this->createForm(ArticleType::class, $article,
@@ -70,8 +68,8 @@ class ArticleController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($article);
-            $entityManager->flush();
+            $this->entityManager->persist($article);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_article_index');
         }
@@ -95,20 +93,19 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_article_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Article                $article
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Article $article): Response
+    public function edit(Request $request, Article $article): Response
     {
         $form = $this->createForm(ArticleType::class, $article,
             ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_article_edit', ['id' => $article->getId()]);
         }
@@ -121,19 +118,18 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_article_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Article                $article
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, Article $article): Response
+    public function delete(Request $request, Article $article): Response
     {
         $id = $article->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $entityManager->remove($article);
-            $entityManager->flush();
+            $this->entityManager->remove($article);
+            $this->entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

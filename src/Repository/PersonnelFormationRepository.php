@@ -16,6 +16,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class PersonnelFormationRepository extends ServiceEntityRepository
 {
+    /**
+     * PersonnelFormationRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, PersonnelFormation::class);

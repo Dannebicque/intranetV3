@@ -12,18 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article extends BaseEntity
 {
-
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
-
-    /**
-     * @var integer
-     * @ORM\Column(type="integer")
-     */
-    private $nbLike = 0;
 
     /**
      * @ORM\Column(type="text")
@@ -39,11 +31,6 @@ class Article extends BaseEntity
      * @ORM\Column(type="string", length=20)
      */
     private $type;
-
-    //todo: remplacer par SINGLE_TABLE
-// @ORM\InheritanceType("SINGLE_TABLE")
-// @ORM\DiscriminatorColumn(name="class_type", type="string")
-// @ORM\DiscriminatorMap( {"article" = "Articles", "news" = "News", "ri" = "RI",  "c2i" = "C2I", "infos"= "Infos"} )
 
     /**
      * @var Formation
@@ -62,26 +49,21 @@ class Article extends BaseEntity
     private $personnel;
 
     /**
-     * @return int
+     * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", inversedBy="articleLikes")
      */
-    public function getNbLike(): int
-    {
-        return $this->nbLike;
-    }
+    private $likes;
+
 
     /**
-     * @param int $nbLike
+     * Article constructor.
+     *
+     * @param Personnel $personnel
      */
-    public function setNbLike(int $nbLike): void
-    {
-        $this->nbLike = $nbLike;
-    }
-
-
     public function __construct(Personnel $personnel)
     {
         $this->personnel = $personnel;
         $this->semestres = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     /**
@@ -100,11 +82,19 @@ class Article extends BaseEntity
         $this->formation = $formation;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTitre(): ?string
     {
         return $this->titre;
     }
 
+    /**
+     * @param string $titre
+     *
+     * @return Article
+     */
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
@@ -112,11 +102,19 @@ class Article extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
+    /**
+     * @param string $texte
+     *
+     * @return Article
+     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -124,6 +122,9 @@ class Article extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -140,16 +141,27 @@ class Article extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return bool|string
+     */
     public function getResume()
     {
         return substr($this->texte,0, 100); //todo: améliorer par rapport aux mots
     }
 
+    /**
+     * @return null|string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return Article
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -165,6 +177,11 @@ class Article extends BaseEntity
         return $this->semestres;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Article
+     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -174,6 +191,11 @@ class Article extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Article
+     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {
@@ -183,15 +205,60 @@ class Article extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return Article
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
 
         return $this;
     }
+
+    /**
+     * @return Collection|Etudiant[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @param Etudiant $like
+     *
+     * @return Article
+     */
+    public function addLike(Etudiant $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Etudiant $like
+     *
+     * @return Article
+     */
+    public function removeLike(Etudiant $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+        }
+
+        return $this;
+    }
+
 }

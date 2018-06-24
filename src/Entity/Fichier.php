@@ -43,11 +43,19 @@ class Fichier
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return Fichier
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -55,11 +63,19 @@ class Fichier
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getTaille(): ?float
     {
         return $this->taille;
     }
 
+    /**
+     * @param float $taille
+     *
+     * @return Fichier
+     */
     public function setTaille(float $taille): self
     {
         $this->taille = $taille;
@@ -75,6 +91,11 @@ class Fichier
         return $this->cahierTextes;
     }
 
+    /**
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Fichier
+     */
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -85,6 +106,11 @@ class Fichier
         return $this;
     }
 
+    /**
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Fichier
+     */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {

@@ -9,6 +9,10 @@
 namespace App\MesClasses\Mail;
 
 
+/**
+ * Class MyMailer
+ * @package App\MesClasses\Mail
+ */
 class MyMailer
 {
     /** @var \Swift_Mailer */

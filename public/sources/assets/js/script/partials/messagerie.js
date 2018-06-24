@@ -44,6 +44,13 @@ $(document).on('click', '.message-read', function (e) {
   $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: 1}));
 })
 
+$(document).on('click', '#message-new', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  $('#zone-messagerie').empty().load(Routing.generate('messagerie_new'));
+})
+
 $(document).on('click', '#marquerNotificationsRead', function (e) {
   e.preventDefault();
   e.stopPropagation();

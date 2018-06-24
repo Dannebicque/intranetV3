@@ -85,6 +85,11 @@ class Ppn extends BaseEntity
         return $this->matieres;
     }
 
+    /**
+     * @param Matiere $matiere
+     *
+     * @return Ppn
+     */
     public function addMatiere(Matiere $matiere): self
     {
         if (!$this->matieres->contains($matiere)) {
@@ -95,6 +100,11 @@ class Ppn extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Matiere $matiere
+     *
+     * @return Ppn
+     */
     public function removeMatiere(Matiere $matiere): self
     {
         if ($this->matieres->contains($matiere)) {
@@ -108,11 +118,19 @@ class Ppn extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Diplome|null
+     */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
+    /**
+     * @param Diplome|null $diplome
+     *
+     * @return Ppn
+     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;

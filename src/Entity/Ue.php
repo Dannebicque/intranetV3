@@ -63,6 +63,11 @@ class Ue extends BaseEntity
      */
     private $semestre;
 
+    /**
+     * Ue constructor.
+     *
+     * @param Semestre $semestre
+     */
     public function __construct(Semestre $semestre)
     {
         $this->matieres = new ArrayCollection();
@@ -202,6 +207,11 @@ class Ue extends BaseEntity
         return $this->matieres;
     }
 
+    /**
+     * @param Matiere $matiere
+     *
+     * @return Ue
+     */
     public function addMatiere(Matiere $matiere): self
     {
         if (!$this->matieres->contains($matiere)) {
@@ -212,6 +222,11 @@ class Ue extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Matiere $matiere
+     *
+     * @return Ue
+     */
     public function removeMatiere(Matiere $matiere): self
     {
         if ($this->matieres->contains($matiere)) {
@@ -225,11 +240,19 @@ class Ue extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Semestre|null
+     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
+    /**
+     * @param Semestre|null $semestre
+     *
+     * @return Ue
+     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;

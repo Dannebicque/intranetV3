@@ -14,6 +14,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class FavoriRepository extends ServiceEntityRepository
 {
+    /**
+     * FavoriRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Favori::class);

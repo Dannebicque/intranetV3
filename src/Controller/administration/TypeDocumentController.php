@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\TypeDocument;
 use App\Form\TypeDocumentType;
 use App\Repository\TypeDocumentRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,20 +55,19 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/new", name="administration_type_document_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $typeDocument = new TypeDocument($this->dataUserSession->getFormation());
         $form = $this->createForm(TypeDocumentType::class, $typeDocument);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($typeDocument);
-            $entityManager->flush();
+            $this->entityManager->persist($typeDocument);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_type_document_index');
         }
@@ -93,19 +91,18 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_document_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TypeDocument           $typeDocument
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, TypeDocument $typeDocument): Response
+    public function edit(Request $request, TypeDocument $typeDocument): Response
     {
         $form = $this->createForm(TypeDocumentType::class, $typeDocument);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_type_document_edit', ['id' => $typeDocument->getId()]);
         }

@@ -50,11 +50,19 @@ class Favori
         return $this->id;
     }
 
+    /**
+     * @return Etudiant|null
+     */
     public function getEtudiantDemandeur(): ?Etudiant
     {
         return $this->etudiantDemandeur;
     }
 
+    /**
+     * @param Etudiant|null $etudiantDemandeur
+     *
+     * @return Favori
+     */
     public function setEtudiantDemandeur(?Etudiant $etudiantDemandeur): self
     {
         $this->etudiantDemandeur = $etudiantDemandeur;
@@ -62,11 +70,19 @@ class Favori
         return $this;
     }
 
+    /**
+     * @return Etudiant|null
+     */
     public function getEtudiantDemande(): ?Etudiant
     {
         return $this->etudiantDemande;
     }
 
+    /**
+     * @param Etudiant|null $etudiantDemande
+     *
+     * @return Favori
+     */
     public function setEtudiantDemande(?Etudiant $etudiantDemande): self
     {
         $this->etudiantDemande = $etudiantDemande;
@@ -74,11 +90,19 @@ class Favori
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateAjout(): ?\DateTimeInterface
     {
         return $this->dateAjout;
     }
 
+    /**
+     * @param \DateTimeInterface $dateAjout
+     *
+     * @return Favori
+     */
     public function setDateAjout(\DateTimeInterface $dateAjout): self
     {
         $this->dateAjout = $dateAjout;

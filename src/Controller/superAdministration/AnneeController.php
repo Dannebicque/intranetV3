@@ -7,7 +7,6 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\AnneeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,14 +65,13 @@ class AnneeController extends BaseController
     /**
      * @Route({"fr":"/nouveau/{diplome}", "en":"/new/{diplome}"}, name="sa_annee_new",
      *                                    methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @param Diplome                $diplome
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request, Diplome $diplome)
+    public function create(Request $request, Diplome $diplome)
     {
         if ($diplome->getFormation() !== null) {
             $annee = new Annee();
@@ -82,8 +80,8 @@ class AnneeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($annee);
-                $entityManager->flush();
+                $this->entityManager->persist($annee);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $diplome->getFormation()->getId()]);
@@ -111,13 +109,12 @@ class AnneeController extends BaseController
 
     /**
      * @Route({"fr":"/{id}/modifier", "en":"/{id}/edit"}, name="sa_annee_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Annee                  $annee
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Annee $annee): Response
+    public function edit(Request $request, Annee $annee): Response
     {
         if ($annee->getDiplome() !== null && $annee->getDiplome()->getFormation() !== null) {
             $form = $this->createForm(AnneeType::class, $annee,
@@ -125,7 +122,7 @@ class AnneeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $annee->getDiplome()->getFormation()->getId()]);
@@ -142,17 +139,16 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_annee_duplicate", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Annee                  $annee
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, Annee $annee): Response
+    public function duplicate(Annee $annee): Response
     {
         $newAnnee = clone $annee;
 
-        $entityManager->persist($newAnnee);
-        $entityManager->flush();
+        $this->entityManager->persist($newAnnee);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('sa_annee_edit', ['id' => $newAnnee->getId()]);
     }

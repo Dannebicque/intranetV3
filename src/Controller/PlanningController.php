@@ -6,6 +6,10 @@ use App\MesClasses\Calendrier;
 use App\Repository\DateRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class PlanningController
+ * @package App\Controller
+ */
 class PlanningController extends BaseController
 {
     /**

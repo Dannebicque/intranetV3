@@ -15,10 +15,18 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class DatesType
+ * @package App\Form
+ */
 class DatesType extends AbstractType
 {
     private $formation;
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formation = $options['formation'];

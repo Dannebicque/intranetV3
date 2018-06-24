@@ -7,7 +7,6 @@ use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\MesClasses\DataUserSession;
 use App\Repository\DiplomeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,7 +68,7 @@ class DiplomeController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $diplome = new Diplome();
         $diplome->setFormation($this->dataUserSession->getFormation());
@@ -77,8 +76,8 @@ class DiplomeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($diplome);
-            $entityManager->flush();
+            $this->entityManager->persist($diplome);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_structure_index');
         }
@@ -108,13 +107,13 @@ class DiplomeController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Diplome $diplome): Response
+    public function edit(Request $request, Diplome $diplome): Response
     {
         $form = $this->createForm(DiplomeType::class, $diplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_structure_index');
         }
@@ -131,12 +130,12 @@ class DiplomeController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, Diplome $diplome): Response
+    public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
 
-        $entityManager->persist($newDiplome);
-        $entityManager->flush();
+        $this->entityManager->persist($newDiplome);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('administration_structure_diplome_edit', ['id' => $newDiplome->getId()]);
     }

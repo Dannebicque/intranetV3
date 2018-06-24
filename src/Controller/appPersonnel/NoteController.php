@@ -7,7 +7,6 @@ use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEvaluations;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,32 +42,53 @@ class NoteController extends BaseController
     }
 
     /**
+     * @Route("/evaluation/{evaluation}", name="application_personnel_evaluation_show",
+     *                                    requirements={"evaluation"="\d+"})
+     *
+     * @return Response
+     */
+    public function detailsEvaluation(Evaluation $evaluation): Response
+    {
+        return $this->render('appPersonnel/note/saisie_2.html.twig', [
+            'evaluation' => $evaluation,
+        ]);
+    }
+
+    /**
      * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Matiere                $matiere
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function saisie(EntityManagerInterface $entityManager, Request $request, Matiere $matiere)
+    public function saisie(Request $request, Matiere $matiere)
     {
-        $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
-        $form = $this->createForm(EvaluationType::class, $evaluation,
-            ['formation' => $this->dataUserSession->getFormation()]);
-        $form->handleRequest($request);
+        if ($matiere !== null && $matiere->getUe() !== null) {
+            $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
+            $form = $this->createForm(EvaluationType::class, $evaluation,
+                [
+                    'formation'       => $this->dataUserSession->getFormation(),
+                    'semestre'        => $matiere->getUe()->getSemestre(),
+                    'matiereDisabled' => true,
+                ]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($evaluation);
-            $entityManager->flush();
+            $form->handleRequest($request);
 
-            return $this->redirectToRoute('application_personnel_note_saisie_2',
-                ['evaluation' => $evaluation->getId()]);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($evaluation);
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('application_personnel_note_saisie_2',
+                    ['evaluation' => $evaluation->getId()]);
+            }
+
+            return $this->render('appPersonnel/note/saisie.html.twig', [
+                'matiere' => $matiere,
+                'form'    => $form->createView()
+            ]);
         }
 
-        return $this->render('appPersonnel/note/saisie.html.twig', [
-            'matiere' => $matiere,
-            'form'    => $form->createView()
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -79,7 +99,7 @@ class NoteController extends BaseController
      *
      * @return Response
      */
-    public function saisie2(Request $request, Evaluation $evaluation)
+    public function saisieNotes(Request $request, Evaluation $evaluation)
     {
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
@@ -92,12 +112,37 @@ class NoteController extends BaseController
      *
      * @return Response
      */
-    public function import(Matiere $matiere)
+    public function import(Request $request, Matiere $matiere)
     {
+        $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
+        $form = $this->createForm(EvaluationType::class, $evaluation,
+            [
+                'formation'       => $this->dataUserSession->getFormation(),
+                'semestre'        => $matiere->getUe()->getSemestre(),
+                'import'          => true,
+                'matiereDisabled' => true,
+            ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) { //&& $form->isValid()
+            //dump($request->files);
+            $this->entityManager->persist($evaluation);
+            $this->entityManager->flush();
+
+
+            //traitement de l'import des notes.
+
+            //return $this->redirectToRoute('application_personnel_note_confirme_import',
+            //    ['evaluation' => $evaluation->getId()]);
+        }
+
         return $this->render('appPersonnel/note/import.html.twig', [
             'matiere' => $matiere,
+            'form'    => $form->createView()
         ]);
     }
+
 
     /**
      * @Route("/aide", name="application_personnel_note_help", methods="GET")

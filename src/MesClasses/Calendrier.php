@@ -22,6 +22,9 @@ abstract class Calendrier
     private static $tabJoursFeries = array();
 
 
+    /**
+     * @param $year
+     */
     public static function joursFeries($year): void
     {
         $year1 = $year + 1; //second "semestre"

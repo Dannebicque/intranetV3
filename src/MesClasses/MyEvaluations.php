@@ -15,6 +15,10 @@ use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\MatiereRepository;
 
+/**
+ * Class MyEvaluations
+ * @package App\MesClasses
+ */
 class MyEvaluations
 {
     /**
@@ -120,7 +124,7 @@ class MyEvaluations
         $this->evaluations = $this->evaluationRespository->findByMatiere($this->matiere, $annee);
 
         foreach ($this->getEvaluations() as $evaluation) {
-            $this->statistiques[$evaluation->getId()] = $this->myEvaluation->setEvaluation($evaluation)->getSynthese();
+            $this->statistiques[$evaluation->getId()] = $this->myEvaluation->setEvaluation($evaluation);
         }
     }
 
@@ -131,4 +135,14 @@ class MyEvaluations
     {
         return $this->evaluations;
     }
+
+    /**
+     * @return array
+     */
+    public function getStatistiques(): array
+    {
+        return $this->statistiques;
+    }
+
+
 }

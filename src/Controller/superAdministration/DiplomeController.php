@@ -7,7 +7,6 @@ use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\MesClasses\DataUserSession;
 use App\Repository\DiplomeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,12 +63,11 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/new", name="sa_diplome_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $diplome = new Diplome();
         $diplome->setFormation($this->dataUserSession->getFormation());
@@ -77,8 +75,8 @@ class DiplomeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($diplome);
-            $entityManager->flush();
+            $this->entityManager->persist($diplome);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
         }
@@ -102,19 +100,18 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_diplome_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Diplome                $diplome
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Diplome $diplome): Response
+    public function edit(Request $request, Diplome $diplome): Response
     {
         $form = $this->createForm(DiplomeType::class, $diplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
         }
@@ -127,17 +124,16 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_diplome_duplicate", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Diplome                $diplome
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, Diplome $diplome): Response
+    public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
 
-        $entityManager->persist($newDiplome);
-        $entityManager->flush();
+        $this->entityManager->persist($newDiplome);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('sa_diplome_edit', ['id' => $newDiplome->getId()]);
     }

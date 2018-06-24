@@ -578,6 +578,9 @@ class Matiere extends BaseEntity
         $this->motsCles = $motsCles;
     }
 
+    /**
+     * @return Semestre|null
+     */
     public function getSemestre(): ?Semestre
     {
         if ($this->getUe() !== null && $this->getUe()->getSemestre() !== null) {
@@ -586,11 +589,19 @@ class Matiere extends BaseEntity
         return null;
     }
 
+    /**
+     * @return Ue|null
+     */
     public function getUe(): ?Ue
     {
         return $this->ue;
     }
 
+    /**
+     * @param Ue|null $ue
+     *
+     * @return Matiere
+     */
     public function setUe(?Ue $ue): self
     {
         $this->ue = $ue;
@@ -598,11 +609,19 @@ class Matiere extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Ppn|null
+     */
     public function getPpn(): ?Ppn
     {
         return $this->ppn;
     }
 
+    /**
+     * @param Ppn|null $ppn
+     *
+     * @return Matiere
+     */
     public function setPpn(?Ppn $ppn): self
     {
         $this->ppn = $ppn;
@@ -610,11 +629,19 @@ class Matiere extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Parcour|null
+     */
     public function getParcours(): ?Parcour
     {
         return $this->parcours;
     }
 
+    /**
+     * @param Parcour|null $parcours
+     *
+     * @return Matiere
+     */
     public function setParcours(?Parcour $parcours): self
     {
         $this->parcours = $parcours;
@@ -630,6 +657,11 @@ class Matiere extends BaseEntity
         return $this->previsionnels;
     }
 
+    /**
+     * @param Previsionnel $previsionnel
+     *
+     * @return Matiere
+     */
     public function addPrevisionnel(Previsionnel $previsionnel): self
     {
         if (!$this->previsionnels->contains($previsionnel)) {
@@ -640,6 +672,11 @@ class Matiere extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Previsionnel $previsionnel
+     *
+     * @return Matiere
+     */
     public function removePrevisionnel(Previsionnel $previsionnel): self
     {
         if ($this->previsionnels->contains($previsionnel)) {
@@ -661,6 +698,11 @@ class Matiere extends BaseEntity
         return $this->absences;
     }
 
+    /**
+     * @param Absence $absence
+     *
+     * @return Matiere
+     */
     public function addAbsence(Absence $absence): self
     {
         if (!$this->absences->contains($absence)) {
@@ -671,6 +713,11 @@ class Matiere extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Absence $absence
+     *
+     * @return Matiere
+     */
     public function removeAbsence(Absence $absence): self
     {
         if ($this->absences->contains($absence)) {
@@ -692,6 +739,11 @@ class Matiere extends BaseEntity
         return $this->evaluations;
     }
 
+    /**
+     * @param Evaluation $evaluation
+     *
+     * @return Matiere
+     */
     public function addEvaluation(Evaluation $evaluation): self
     {
         if (!$this->evaluations->contains($evaluation)) {
@@ -702,6 +754,11 @@ class Matiere extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Evaluation $evaluation
+     *
+     * @return Matiere
+     */
     public function removeEvaluation(Evaluation $evaluation): self
     {
         if ($this->evaluations->contains($evaluation)) {
@@ -715,21 +772,35 @@ class Matiere extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return float
+     */
     public function getEqTdFormation():float
     {
         return $this->cmFormation*1.5 + $this->tdFormation + $this->tpFormation;
     }
 
+    /**
+     * @return float
+     */
     public function getEtuFormation():float
     {
         return $this->cmFormation + $this->tdFormation + $this->tpFormation;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getSuspendu(): ?bool
     {
         return $this->suspendu;
     }
 
+    /**
+     * @param bool $suspendu
+     *
+     * @return Matiere
+     */
     public function setSuspendu(bool $suspendu): self
     {
         $this->suspendu = $suspendu;

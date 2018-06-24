@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -14,6 +15,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+    /**
+     * ArticleRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Article::class);
@@ -27,10 +33,7 @@ class ArticleRepository extends ServiceEntityRepository
      */
     public function findByTypeFormation($type, $formation)
     {
-        return $this->createQueryBuilder('a')
-            ->where('a.type = :type')
-            ->setParameter('type', $type)
-            ->orderBy('a.updated', 'DESC')
+        return $this->findByTypeFormationBuilder()
             ->getQuery()
             ->getResult();
     }
@@ -50,5 +53,22 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
             ;
+    }
+
+
+    /**
+     * @param $type
+     * @param $formation
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findByTypeFormationBuilder($type, $formation)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.type = :type')
+            ->andWhere('a.formation = :formation')
+            ->setParameter('type', $type)
+            ->setParameter('formation', $formation)
+            ->orderBy('a.updated', 'DESC');
     }
 }

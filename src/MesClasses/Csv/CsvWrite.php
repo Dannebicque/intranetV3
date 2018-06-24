@@ -9,12 +9,22 @@
 namespace App\MesClasses\Csv;
 
 
+/**
+ * Class CsvWrite
+ * @package App\MesClasses\Csv
+ */
 abstract class CsvWrite
 {
     public const FORMAT_DATETIME = 'DateTime';
     public const FORMAT_STRING = 'string';
     public const ECHAPPEMENT = '"';
 
+    /**
+     * @param        $value
+     * @param string $key
+     *
+     * @return string
+     */
     public static function writeField($value, $key = ''): string
     {
         $field = '';

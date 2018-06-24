@@ -5,11 +5,14 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class RhController
+ * @package App\Controller\superAdministration
+ */
 class RhController extends BaseController
 {
     /**
@@ -24,12 +27,11 @@ class RhController extends BaseController
 
     /**
      * @Route("/create", name="sa_rh_add_personnel", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel);
@@ -38,8 +40,8 @@ class RhController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $personnel->setRoles(['ROLE_PERMANENT']);
             $personnel->setTypeUser('permanent');
-            $entityManager->persist($personnel);
-            $entityManager->flush();
+            $this->entityManager->persist($personnel);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_rh_index');
         }

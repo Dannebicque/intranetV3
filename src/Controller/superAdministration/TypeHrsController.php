@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\TypeHrs;
 use App\Form\TypeHrsType;
 use App\Repository\TypeHrsRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,20 +56,19 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/new", name="sa_type_hrs_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $typeHr = new TypeHrs();
         $form = $this->createForm(TypeHrsType::class, $typeHr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($typeHr);
-            $entityManager->flush();
+            $this->entityManager->persist($typeHr);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_type_hrs_index');
         }
@@ -94,19 +92,18 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_type_hrs_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TypeHrs                $typeHr
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, TypeHrs $typeHr): Response
+    public function edit(Request $request, TypeHrs $typeHr): Response
     {
         $form = $this->createForm(TypeHrsType::class, $typeHr);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_type_hrs_edit', ['id' => $typeHr->getId()]);
         }

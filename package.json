@@ -1,5 +1,5 @@
 {
-  "name": "IntranetV3",
+  "name": "intranetv3",
   "banner_name": "IntranetV3",
   "description": "Some description about the project",
   "version": "0.0.1",
@@ -34,5 +34,20 @@
   },
   "dependencies": {
     "uglify-js": "^3.3.16"
+  },
+  "main": "gruntfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Dannebicque/intranetv3.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Dannebicque/intranetv3/issues"
   }
 }

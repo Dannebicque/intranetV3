@@ -18,6 +18,10 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+/**
+ * Class Csv
+ * @package App\MesClasses\Csv
+ */
 class Csv
 {
     public const DELIMITER = ';';

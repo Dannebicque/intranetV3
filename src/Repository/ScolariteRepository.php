@@ -14,6 +14,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ScolariteRepository extends ServiceEntityRepository
 {
+    /**
+     * ScolariteRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Scolarite::class);

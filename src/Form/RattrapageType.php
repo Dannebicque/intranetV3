@@ -15,10 +15,18 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class RattrapageType
+ * @package App\Form
+ */
 class RattrapageType extends AbstractType
 {
     private $semestre;
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->semestre = $options['semestre'];
@@ -51,6 +59,9 @@ class RattrapageType extends AbstractType
             ));
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

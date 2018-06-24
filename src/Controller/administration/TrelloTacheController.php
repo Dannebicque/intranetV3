@@ -7,7 +7,6 @@ use App\Entity\TrelloTache;
 use App\Form\TrelloTacheType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\TrelloTacheRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -95,12 +94,11 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/new", name="administration_trello_tache_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $trelloTache = new TrelloTache($this->dataUserSession->getFormation());
         $form = $this->createForm(TrelloTacheType::class, $trelloTache,
@@ -108,8 +106,8 @@ class TrelloTacheController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($trelloTache);
-            $entityManager->flush();
+            $this->entityManager->persist($trelloTache);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_trello_tache_index');
         }
@@ -133,20 +131,19 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_trello_tache_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TrelloTache            $trelloTache
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, TrelloTache $trelloTache): Response
+    public function edit(Request $request, TrelloTache $trelloTache): Response
     {
         $form = $this->createForm(TrelloTacheType::class, $trelloTache,
             array('formation' => $this->dataUserSession->getFormation()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_trello_tache_edit', ['id' => $trelloTache->getId()]);
         }
@@ -159,17 +156,16 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_trello_tache_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TrelloTache            $trelloTache
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, TrelloTache $trelloTache): Response
+    public function delete(Request $request, TrelloTache $trelloTache): Response
     {
         if ($this->isCsrfTokenValid('delete' . $trelloTache->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($trelloTache);
-            $entityManager->flush();
+            $this->entityManager->remove($trelloTache);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('administration_trello_tache_index');

@@ -72,6 +72,18 @@ class DataUserSession
 
     protected $security;
 
+    /**
+     * DataUserSession constructor.
+     *
+     * @param SemestreRepository     $semestreRepository
+     * @param AnneeRepository        $anneeRepository
+     * @param DiplomeRepository      $diplomeRepository
+     * @param PersonnelRepository    $personnelRepository
+     * @param FormationRepository    $formationRepository
+     * @param NotificationRepository $notificationRepository
+     * @param TokenStorageInterface  $user
+     * @param Security               $security
+     */
     public function __construct(
         SemestreRepository $semestreRepository,
         AnneeRepository $anneeRepository,
@@ -132,11 +144,19 @@ class DataUserSession
         return $this->formation;
     }
 
+    /**
+     * @param $diplome
+     *
+     * @return mixed
+     */
     public function semestresByDiplome($diplome)
     {
         return $this->semestreRepository->findByDiplome($diplome);
     }
 
+    /**
+     * @return mixed
+     */
     public function getPersonnels()
     {
         return $this->personnelRepository->findByFormation($this->formation->getId());
@@ -161,11 +181,17 @@ class DataUserSession
         return $this->user->getToken()->getUser();
     }
 
+    /**
+     * @return int|null
+     */
     public function getAnneeUniversitaire(): ?int
     {
         return $this->formation->getAnneeCourante();
     }
 
+    /**
+     * @return int|null
+     */
     public function getAnneePrevisionnel(): ?int
     {
         return $this->formation->getOptAnneePrevisionnel();

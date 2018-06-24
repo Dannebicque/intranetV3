@@ -311,3 +311,91 @@
             </div>
         </div>
     </div>
+    <div class="fab fab-fixed">
+        <a class="btn btn-float btn-primary" href="#dock-compose" title="{{ 'nouveau.message'|trans }}"
+           data-provide="tooltip" data-toggle="dock"><i class="ti-pencil"></i></a>
+    </div>
+
+    <div class="dock-list">
+
+        <!-- Dock - Compose an email -->
+        <div id="dock-compose" class="dock">
+            <header class="dock-header dock-header-inverse bg-info">
+                <div class="dock-title">
+                    <span><i class="fa fa-envelope"></i></span>
+                    <span>{{ 'nouveau.message'|trans }}</span>
+                </div>
+
+                <div class="dock-actions">
+                    <span title="Close" data-provide="tooltip" data-dock="close"></span>
+                    <span title="Maximize" data-provide="tooltip" data-dock="maximize"></span>
+                    <span title="Minimize" data-provide="tooltip" data-dock="minimize"></span>
+                    {#
+                                        <a title="Settings" data-provide="tooltip"><i class="ti-settings"></i></a>
+                    #}
+                </div>
+            </header>
+
+            <form class="dock-body">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-lg b-0 bb-1"
+                           placeholder="{{ 'message.to'|trans }}">
+                    <span class="input-group-append">
+                        <button class="btn btn-light" type="button" data-toggle="modal" data-target="#modalUsers"><i
+                                    class="fa fa-users"></i></button>
+                      </span>
+                </div>
+
+                <input class="form-control form-control-lg b-0 bb-1" type="text"
+                       placeholder="{{ 'message.subject'|trans }}">
+                <div class="quill-no-border">
+                    <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..."
+                         style="height: 206px"></div>
+                </div>
+                <div class="gap-items-2 text-right p-10 bg-lightest bt-1">
+                    <button class="btn btn-light" type="button" data-toggle="modal" data-target="#modalPj"><i
+                                class="fa fa-paperclip"></i></button>
+
+                    <button class="btn btn-secondary" type="button" data-dock="close">{{ 'annuler'|trans }}</button>
+                    <button class="btn btn-primary" type="submit">{{ 'envoyer'|trans }}</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="modalUsers" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div tabindex="-1" class="modal-content">
+                <header class="modal-header"><h5 class="modal-title">
+                        {{ 'liste.destinataires'|trans }}</h5>
+                    <button type="button" data-dismiss="modal" class="close">×</button>
+                </header>
+                <div class="modal-body"><p class="my-4"></p></div>
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'fermer'|trans }}</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">{{ 'valider'|trans }}</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalPj" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div tabindex="-1" class="modal-content">
+                <header class="modal-header"><h5 class="modal-title">
+                        {{ 'message.ajouter.piece.jointe'|trans }}</h5>
+                    <button type="button" data-dismiss="modal" class="close">×</button>
+                </header>
+                <div class="modal-body">
+                    <div data-provide="dropzone" data-url="path/to/file-uploader.php">
+
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'fermer'|trans }}</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">{{ 'valider'|trans }}</button>
+                </footer>
+            </div>
+        </div>
+    </div>

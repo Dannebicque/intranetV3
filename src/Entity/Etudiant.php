@@ -87,6 +87,26 @@ class Etudiant extends Utilisateur implements \Serializable
      */
     private $notifications;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="likes")
+     */
+    private $articleLikes;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $boursier;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $demandeurEmploi;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", inversedBy="etudiants")
+     */
+    private $groupes;
+
     //todo: ajouter boursier, contrat pro, demandeur d'emploi
     //todo: gestion de l'alternance.
 
@@ -99,8 +119,13 @@ class Etudiant extends Utilisateur implements \Serializable
         $this->etudiantDemandeur = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->articleLikes = new ArrayCollection();
+        $this->groupes = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
@@ -130,6 +155,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->notes;
     }
 
+    /**
+     * @param Note $note
+     *
+     * @return Etudiant
+     */
     public function addNote(Note $note): self
     {
         if (!$this->notes->contains($note)) {
@@ -140,6 +170,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Note $note
+     *
+     * @return Etudiant
+     */
     public function removeNote(Note $note): self
     {
         if ($this->notes->contains($note)) {
@@ -154,11 +189,19 @@ class Etudiant extends Utilisateur implements \Serializable
     }
 
 
+    /**
+     * @return null|string
+     */
     public function getNumEtudiant(): ?string
     {
         return $this->numEtudiant;
     }
 
+    /**
+     * @param string $numEtudiant
+     *
+     * @return Etudiant
+     */
     public function setNumEtudiant(string $numEtudiant): self
     {
         $this->numEtudiant = $numEtudiant;
@@ -166,11 +209,19 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getNumIne(): ?string
     {
         return $this->numIne;
     }
 
+    /**
+     * @param string $numIne
+     *
+     * @return Etudiant
+     */
     public function setNumIne(string $numIne): self
     {
         $this->numIne = $numIne;
@@ -178,11 +229,19 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getBac(): ?string
     {
         return $this->bac;
     }
 
+    /**
+     * @param null|string $bac
+     *
+     * @return Etudiant
+     */
     public function setBac(?string $bac): self
     {
         $this->bac = $bac;
@@ -190,11 +249,19 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAnneeBac(): ?int
     {
         return $this->anneeBac;
     }
 
+    /**
+     * @param int|null $anneeBac
+     *
+     * @return Etudiant
+     */
     public function setAnneeBac(?int $anneeBac): self
     {
         $this->anneeBac = $anneeBac;
@@ -210,6 +277,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->absences;
     }
 
+    /**
+     * @param Absence $absence
+     *
+     * @return Etudiant
+     */
     public function addAbsence(Absence $absence): self
     {
         if (!$this->absences->contains($absence)) {
@@ -220,6 +292,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Absence $absence
+     *
+     * @return Etudiant
+     */
     public function removeAbsence(Absence $absence): self
     {
         if ($this->absences->contains($absence)) {
@@ -233,11 +310,19 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @return Adresse|null
+     */
     public function getAdresseParentale(): ?Adresse
     {
         return $this->adresseParentale;
     }
 
+    /**
+     * @param Adresse|null $adresseParentale
+     *
+     * @return Etudiant
+     */
     public function setAdresseParentale(?Adresse $adresseParentale): self
     {
         $this->adresseParentale = $adresseParentale;
@@ -253,6 +338,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->rattrapages;
     }
 
+    /**
+     * @param Rattrapage $rattrapage
+     *
+     * @return Etudiant
+     */
     public function addRattrapage(Rattrapage $rattrapage): self
     {
         if (!$this->rattrapages->contains($rattrapage)) {
@@ -263,6 +353,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Rattrapage $rattrapage
+     *
+     * @return Etudiant
+     */
     public function removeRattrapage(Rattrapage $rattrapage): self
     {
         if ($this->rattrapages->contains($rattrapage)) {
@@ -284,6 +379,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->etudiantDemande;
     }
 
+    /**
+     * @param Favori $etudiantDemande
+     *
+     * @return Etudiant
+     */
     public function addEtudiantDemande(Favori $etudiantDemande): self
     {
         if (!$this->etudiantDemande->contains($etudiantDemande)) {
@@ -294,6 +394,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Favori $etudiantDemande
+     *
+     * @return Etudiant
+     */
     public function removeEtudiantDemande(Favori $etudiantDemande): self
     {
         if ($this->etudiantDemande->contains($etudiantDemande)) {
@@ -315,6 +420,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->etudiantDemandeur;
     }
 
+    /**
+     * @param Favori $etudiantDemandeur
+     *
+     * @return Etudiant
+     */
     public function addEtudiantDemandeur(Favori $etudiantDemandeur): self
     {
         if (!$this->etudiantDemandeur->contains($etudiantDemandeur)) {
@@ -325,6 +435,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Favori $etudiantDemandeur
+     *
+     * @return Etudiant
+     */
     public function removeEtudiantDemandeur(Favori $etudiantDemandeur): self
     {
         if ($this->etudiantDemandeur->contains($etudiantDemandeur)) {
@@ -346,6 +461,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->scolarites;
     }
 
+    /**
+     * @param Scolarite $scolarite
+     *
+     * @return Etudiant
+     */
     public function addScolarite(Scolarite $scolarite): self
     {
         if (!$this->scolarites->contains($scolarite)) {
@@ -356,6 +476,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Scolarite $scolarite
+     *
+     * @return Etudiant
+     */
     public function removeScolarite(Scolarite $scolarite): self
     {
         if ($this->scolarites->contains($scolarite)) {
@@ -377,6 +502,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this->notifications;
     }
 
+    /**
+     * @param Notification $notification
+     *
+     * @return Etudiant
+     */
     public function addNotification(Notification $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -387,6 +517,11 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @param Notification $notification
+     *
+     * @return Etudiant
+     */
     public function removeNotification(Notification $notification): self
     {
         if ($this->notifications->contains($notification)) {
@@ -435,6 +570,120 @@ class Etudiant extends Utilisateur implements \Serializable
             $this->password,
             $this->username
             ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticleLikes(): Collection
+    {
+        return $this->articleLikes;
+    }
+
+    /**
+     * @param Article $articleLike
+     *
+     * @return Etudiant
+     */
+    public function addArticleLike(Article $articleLike): self
+    {
+        if (!$this->articleLikes->contains($articleLike)) {
+            $this->articleLikes[] = $articleLike;
+            $articleLike->addLike($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Article $articleLike
+     *
+     * @return Etudiant
+     */
+    public function removeArticleLike(Article $articleLike): self
+    {
+        if ($this->articleLikes->contains($articleLike)) {
+            $this->articleLikes->removeElement($articleLike);
+            $articleLike->removeLike($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getBoursier(): ?bool
+    {
+        return $this->boursier;
+    }
+
+    /**
+     * @param bool $boursier
+     *
+     * @return Etudiant
+     */
+    public function setBoursier(bool $boursier): self
+    {
+        $this->boursier = $boursier;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getDemandeurEmploi(): ?bool
+    {
+        return $this->demandeurEmploi;
+    }
+
+    /**
+     * @param bool $demandeurEmploi
+     *
+     * @return Etudiant
+     */
+    public function setDemandeurEmploi(bool $demandeurEmploi): self
+    {
+        $this->demandeurEmploi = $demandeurEmploi;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Groupe[]
+     */
+    public function getGroupes(): Collection
+    {
+        return $this->groupes;
+    }
+
+    /**
+     * @param Groupe $groupe
+     *
+     * @return Etudiant
+     */
+    public function addGroupe(Groupe $groupe): self
+    {
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes[] = $groupe;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Groupe $groupe
+     *
+     * @return Etudiant
+     */
+    public function removeGroupe(Groupe $groupe): self
+    {
+        if ($this->groupes->contains($groupe)) {
+            $this->groupes->removeElement($groupe);
+        }
+
+        return $this;
     }
 
 }

@@ -75,11 +75,19 @@ class Document extends BaseEntity
         $this->semestres = new ArrayCollection();
     }
 
+    /**
+     * @return float|null
+     */
     public function getTaille(): ?float
     {
         return $this->taille;
     }
 
+    /**
+     * @param float $taille
+     *
+     * @return Document
+     */
     public function setTaille(float $taille): self
     {
         $this->taille = $taille;
@@ -87,11 +95,19 @@ class Document extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTypeFichier(): ?string
     {
         return $this->typeFichier;
     }
 
+    /**
+     * @param string $typeFichier
+     *
+     * @return Document
+     */
     public function setTypeFichier(string $typeFichier): self
     {
         $this->typeFichier = $typeFichier;
@@ -180,6 +196,9 @@ class Document extends BaseEntity
         }
     }
 
+    /**
+     * @return null|File
+     */
     public function getDocumentFile(): ?File
     {
         return $this->documentFile;
@@ -209,6 +228,11 @@ class Document extends BaseEntity
         return $this->semestres;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Document
+     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -218,6 +242,11 @@ class Document extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Document
+     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {

@@ -18,6 +18,10 @@ use App\Entity\Semestre;
 use App\Repository\HrsRepository;
 use App\Repository\PrevisionnelRepository;
 
+/**
+ * Class MyPrevisionnel
+ * @package App\MesClasses
+ */
 class MyPrevisionnel
 {
     /** @var Personnel */
@@ -58,6 +62,12 @@ class MyPrevisionnel
     /** @var Previsionnel[] */
     private $previsionnels;
 
+    /**
+     * MyPrevisionnel constructor.
+     *
+     * @param PrevisionnelRepository $previsionnelRepository
+     * @param HrsRepository          $hrsRepository
+     */
     public function __construct(PrevisionnelRepository $previsionnelRepository, HrsRepository $hrsRepository)
     {
         $this->previsionnelRepository = $previsionnelRepository;
@@ -130,11 +140,17 @@ class MyPrevisionnel
         return $this->totalTp;
     }
 
+    /**
+     * @return float
+     */
     public function getTotalService(): float
     {
         return $this->totalCm + $this->totalTd + $this->totalTp;
     }
 
+    /**
+     * @return float
+     */
     public function getTotalEtu(): float
     {
         return $this->totalEtuCm + $this->totalEtuTd + $this->totalEtuTp;
@@ -208,11 +224,20 @@ class MyPrevisionnel
         return $tot < 0 ? 0 : $tot;
     }
 
+    /**
+     * @return float
+     */
     public function getTotalHrsService() :float
     {
         return $this->totalHrs + $this->getTotalService();
     }
 
+    /**
+     * @param Personnel $personnel
+     * @param Formation $formation
+     *
+     * @return mixed
+     */
     public function getPrevisionnelEnseignantFormation(
         Personnel $personnel,
         Formation $formation
@@ -222,6 +247,12 @@ class MyPrevisionnel
         return $this->previsionnelRepository->findPrevisionnelEnseignantFormation($personnel, $formation);
     }
 
+    /**
+     * @param Personnel $personnel
+     * @param           $annee
+     *
+     * @return array
+     */
     public function getPrevisionnelEnseignantComplet(Personnel $personnel, $annee) :array
     {
 
@@ -291,6 +322,10 @@ class MyPrevisionnel
 
     }
 
+    /**
+     * @param Semestre $semestre
+     * @param          $annee
+     */
     public function getPrevisionnelSemestre(Semestre $semestre, $annee): void
     {
         $this->semestre = $semestre;

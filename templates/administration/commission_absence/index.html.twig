@@ -9,7 +9,7 @@
         {% for sem in user_data.semestres %}
             <a href="{{ path('administration_commission_absences_semestre_index', {semestre:sem.id}) }}"
                class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
-               title="Changer de semestre"
+               title="{{ 'atitle.changer.semestre'|trans }}"
                data-provide="tooltip"
                data-placement="bottom"
             >{{ sem.libelle }}</a>
@@ -27,6 +27,7 @@
         </div>
     </div>
 {% endblock %}
+
 {% block content %}
 
 {% endblock %}

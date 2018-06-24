@@ -178,11 +178,19 @@ class Absence extends BaseEntity
         $this->anneeuniversitaire = $anneeuniversitaire;
     }
 
+    /**
+     * @return Matiere|null
+     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
+    /**
+     * @param Matiere|null $matiere
+     *
+     * @return Absence
+     */
     public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;

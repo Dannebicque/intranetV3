@@ -6,6 +6,10 @@ use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyPrevisionnel;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class BlocNotesAbsencesController
+ * @package App\Controller
+ */
 class BlocNotesAbsencesController extends BaseController
 {
     /**

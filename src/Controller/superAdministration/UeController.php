@@ -6,8 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
-use App\Repository\UeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,14 +48,13 @@ class UeController extends BaseController
 
     /**
      * @Route("/new/{semestre}", name="sa_ue_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @param Semestre               $semestre
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request, Semestre $semestre): Response
+    public function create(Request $request, Semestre $semestre): Response
     {
         if ($semestre->getAnnee() !== null) {
             $ue = new Ue($semestre);
@@ -65,8 +62,8 @@ class UeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($ue);
-                $entityManager->flush();
+                $this->entityManager->persist($ue);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]);
@@ -95,13 +92,12 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ue_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Ue                     $ue
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Ue $ue): Response
+    public function edit(Request $request, Ue $ue): Response
     {
         if ($ue->getDiplome() !== null) {
 
@@ -109,7 +105,7 @@ class UeController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]);
@@ -126,17 +122,16 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_ue_duplicate", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Ue                     $ue
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, Ue $ue): Response
+    public function duplicate(Ue $ue): Response
     {
         $newUe = clone $ue;
 
-        $entityManager->persist($newUe);
-        $entityManager->flush();
+        $this->entityManager->persist($newUe);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('sa_ue_edit', ['id' => $newUe->getId()]);
     }

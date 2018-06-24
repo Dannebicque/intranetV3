@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Notification;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,11 +33,10 @@ class NotificationController extends BaseController
 
     /**
      * @Route("/marquer", name="notification_marquer_lu", options={"expose":true})
-     * @param EntityManagerInterface $entityManager
      *
      * @return Response
      */
-    public function marquerCommeLu(EntityManagerInterface $entityManager): Response
+    public function marquerCommeLu(): Response
     {
         //vérifier si c'est le bon user ?
         $notifications = $this->getUser()->getNotifications(); //todo: améliorer en récupérant uniquement les nom lu.
@@ -46,10 +44,10 @@ class NotificationController extends BaseController
         /** @var Notification $notif */
         foreach ($notifications as $notif) {
             $notif->setLu(true);
-            $entityManager->persist($notif);
+            $this->entityManager->persist($notif);
 
         }
-        $entityManager->flush();
+        $this->entityManager->flush();
 
         return new Response('ok', 200);
 

@@ -15,7 +15,6 @@
     <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
     <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
     <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
@@ -394,6 +393,20 @@
     </header>
 
     <div class="main-content" id="mainContent">
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="callout callout-{{ label }}" role="alert">
+                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                    <h5>{{ 'callout'~label|trans }}</h5>
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+
         {% block content %}
 
 
@@ -455,8 +468,9 @@
 <script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
 <script src="{{ asset('sources/assets/js/app.js') }}"></script>
 <script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script data-provide="sweetalert"></script>
+
+
 {#
 //https://github.com/CodeSeven/toastr
 #}

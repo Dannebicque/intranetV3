@@ -273,6 +273,10 @@ class Annee extends BaseEntity
         $this->optAlternance = $optAlternance;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function update($name, $value): void
     {
         $t = explode('_', $name);
@@ -285,11 +289,19 @@ class Annee extends BaseEntity
         }
     }
 
+    /**
+     * @return Diplome|null
+     */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
+    /**
+     * @param Diplome|null $diplome
+     *
+     * @return Annee
+     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
@@ -305,6 +317,11 @@ class Annee extends BaseEntity
         return $this->semestres;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Annee
+     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -315,6 +332,11 @@ class Annee extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Annee
+     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {

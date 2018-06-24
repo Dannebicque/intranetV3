@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Salle;
 use App\Form\SalleType;
 use App\Repository\SalleRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,20 +56,19 @@ class SalleController extends BaseController
 
     /**
      * @Route("/new", name="sa_salle_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $salle = new Salle();
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($salle);
-            $entityManager->flush();
+            $this->entityManager->persist($salle);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_salle_index');
         }
@@ -94,19 +92,18 @@ class SalleController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_salle_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Salle                  $salle
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Salle $salle): Response
+    public function edit(Request $request, Salle $salle): Response
     {
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_salle_edit', ['id' => $salle->getId()]);
         }
@@ -119,17 +116,16 @@ class SalleController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_salle_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Salle                  $salle
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, Salle $salle): Response
+    public function delete(Request $request, Salle $salle): Response
     {
         if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($salle);
-            $entityManager->flush();
+            $this->entityManager->remove($salle);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('sa_salle_index');

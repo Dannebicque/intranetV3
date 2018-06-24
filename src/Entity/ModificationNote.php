@@ -31,11 +31,19 @@ class ModificationNote extends BaseEntity
      */
     private $nouvelleNote;
 
+    /**
+     * @return Note|null
+     */
     public function getNote(): ?Note
     {
         return $this->note;
     }
 
+    /**
+     * @param Note|null $note
+     *
+     * @return ModificationNote
+     */
     public function setNote(?Note $note): self
     {
         $this->note = $note;
@@ -43,11 +51,19 @@ class ModificationNote extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return ModificationNote
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -55,11 +71,19 @@ class ModificationNote extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getAncienneNote(): ?float
     {
         return $this->ancienneNote;
     }
 
+    /**
+     * @param float $ancienneNote
+     *
+     * @return ModificationNote
+     */
     public function setAncienneNote(float $ancienneNote): self
     {
         $this->ancienneNote = $ancienneNote;
@@ -67,11 +91,19 @@ class ModificationNote extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNouvelleNote(): ?float
     {
         return $this->nouvelleNote;
     }
 
+    /**
+     * @param float $nouvelleNote
+     *
+     * @return ModificationNote
+     */
     public function setNouvelleNote(float $nouvelleNote): self
     {
         $this->nouvelleNote = $nouvelleNote;

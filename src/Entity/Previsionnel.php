@@ -7,17 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PrevisionnelRepository")
  */
-class Previsionnel
+class Previsionnel extends BaseEntity
 {
 
     public const DUREE_SEANCE = 1.5;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="previsionnels")
@@ -37,7 +31,7 @@ class Previsionnel
     /**
      * @ORM\Column(type="boolean")
      */
-    private $referent;
+    private $referent = false;
 
     /**
      * @ORM\Column(type="float")
@@ -69,16 +63,34 @@ class Previsionnel
      */
     private $nbGrTp;
 
-    public function getId()
+    /**
+     * Previsionnel constructor.
+     *
+     * @param $matiere
+     * @param $personnel
+     * @param $annee
+     */
+    public function __construct(Matiere $matiere, Personnel $personnel, $annee)
     {
-        return $this->id;
+        $this->matiere = $matiere;
+        $this->personnel = $personnel;
+        $this->annee = $annee;
     }
 
+
+    /**
+     * @return Matiere|null
+     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
+    /**
+     * @param Matiere|null $matiere
+     *
+     * @return Previsionnel
+     */
     public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;
@@ -86,11 +98,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return Previsionnel
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -98,11 +118,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAnnee(): ?int
     {
         return $this->annee;
     }
 
+    /**
+     * @param int $annee
+     *
+     * @return Previsionnel
+     */
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;
@@ -110,11 +138,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getReferent(): ?bool
     {
         return $this->referent;
     }
 
+    /**
+     * @param bool $referent
+     *
+     * @return Previsionnel
+     */
     public function setReferent(bool $referent): self
     {
         $this->referent = $referent;
@@ -122,11 +158,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNbHCm(): ?float
     {
         return $this->nbHCm;
     }
 
+    /**
+     * @param float $nbHCm
+     *
+     * @return Previsionnel
+     */
     public function setNbHCm(float $nbHCm): self
     {
         $this->nbHCm = $nbHCm;
@@ -134,11 +178,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNbHTd(): ?float
     {
         return $this->nbHTd;
     }
 
+    /**
+     * @param float $nbHTd
+     *
+     * @return Previsionnel
+     */
     public function setNbHTd(float $nbHTd): self
     {
         $this->nbHTd = $nbHTd;
@@ -146,11 +198,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNbHTp(): ?float
     {
         return $this->nbHTp;
     }
 
+    /**
+     * @param float $nbHTp
+     *
+     * @return Previsionnel
+     */
     public function setNbHTp(float $nbHTp): self
     {
         $this->nbHTp = $nbHTp;
@@ -158,11 +218,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getNbGrCm(): ?int
     {
         return $this->nbGrCm;
     }
 
+    /**
+     * @param int $nbGrCm
+     *
+     * @return Previsionnel
+     */
     public function setNbGrCm(int $nbGrCm): self
     {
         $this->nbGrCm = $nbGrCm;
@@ -170,11 +238,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getNbGrTd(): ?int
     {
         return $this->nbGrTd;
     }
 
+    /**
+     * @param int $nbGrTd
+     *
+     * @return Previsionnel
+     */
     public function setNbGrTd(int $nbGrTd): self
     {
         $this->nbGrTd = $nbGrTd;
@@ -182,11 +258,19 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getNbGrTp(): ?int
     {
         return $this->nbGrTp;
     }
 
+    /**
+     * @param int $nbGrTp
+     *
+     * @return Previsionnel
+     */
     public function setNbGrTp(int $nbGrTp): self
     {
         $this->nbGrTp = $nbGrTp;
@@ -194,6 +278,9 @@ class Previsionnel
         return $this;
     }
 
+    /**
+     * @return Semestre|null
+     */
     public function getSemestre() : ?Semestre
     {
         if ($this->getMatiere() !== null) {

@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Site;
 use App\Form\SiteType;
 use App\Repository\SiteRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,20 +56,19 @@ class SiteController extends BaseController
 
     /**
      * @Route("/new", name="sa_site_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $site = new Site();
         $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($site);
-            $entityManager->flush();
+            $this->entityManager->persist($site);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_site_index');
         }
@@ -94,19 +92,18 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_site_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Site                   $site
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Site $site): Response
+    public function edit(Request $request, Site $site): Response
     {
         $form = $this->createForm(SiteType::class, $site);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_site_edit', ['id' => $site->getId()]);
         }

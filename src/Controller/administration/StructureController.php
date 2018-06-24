@@ -20,6 +20,7 @@ class StructureController extends BaseController
     public function index()
     {
         return $this->render('structure/index.html.twig', [
+            'formation' => $this->dataUserSession->getFormation()
         ]);
     }
 }

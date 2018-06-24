@@ -26,7 +26,7 @@ class TypeGroupe extends BaseEntity
     private $libelle;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $codeApogee;
 
@@ -45,11 +45,19 @@ class TypeGroupe extends BaseEntity
         $this->groupes = new ArrayCollection();
     }
 
+    /**
+     * @return Semestre|null
+     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
+    /**
+     * @param Semestre|null $semestre
+     *
+     * @return TypeGroupe
+     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -57,11 +65,19 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return TypeGroupe
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -69,11 +85,19 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCodeApogee(): ?string
     {
         return $this->codeApogee;
     }
 
+    /**
+     * @param string $codeApogee
+     *
+     * @return TypeGroupe
+     */
     public function setCodeApogee(string $codeApogee): self
     {
         $this->codeApogee = $codeApogee;
@@ -81,11 +105,19 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return TypeGroupe
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -101,6 +133,11 @@ class TypeGroupe extends BaseEntity
         return $this->groupes;
     }
 
+    /**
+     * @param Groupe $groupe
+     *
+     * @return TypeGroupe
+     */
     public function addGroupe(Groupe $groupe): self
     {
         if (!$this->groupes->contains($groupe)) {
@@ -111,6 +148,11 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Groupe $groupe
+     *
+     * @return TypeGroupe
+     */
     public function removeGroupe(Groupe $groupe): self
     {
         if ($this->groupes->contains($groupe)) {

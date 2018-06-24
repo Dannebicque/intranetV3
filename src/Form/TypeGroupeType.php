@@ -12,24 +12,33 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class TypeGroupeType
+ * @package App\Form
+ */
 class TypeGroupeType extends AbstractType
 {
     private $formation;
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formation = $options['formation'];
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee'])
+            ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee', 'required' => false])
             ->add('type', ChoiceType::class, [
-                'choices' => [
+                'choices'            => [
                     TypeGroupe::TYPE_GROUPE_CM => 'CM',
                     TypeGroupe::TYPE_GROUPE_TD => 'TD',
                     TypeGroupe::TYPE_GROUPE_TP => 'TP'
                 ],
-                'label'   => 'label.type_groupe'
+                'label'              => 'label.type_groupe',
+                'translation_domain' => 'form'
             ])
             ->add('semestre', EntityType::class, array(
                 'class'         => Semestre::class,

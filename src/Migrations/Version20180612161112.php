@@ -10,6 +10,12 @@ use Doctrine\DBAL\Schema\Schema;
  */
 final class Version20180612161112 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -151,6 +157,12 @@ final class Version20180612161112 extends AbstractMigration
         $this->addSql('ALTER TABLE competence ADD CONSTRAINT FK_94D4687F727ACA70 FOREIGN KEY (parent_id) REFERENCES competence (id)');
     }
 
+    /**
+     * @param Schema $schema
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

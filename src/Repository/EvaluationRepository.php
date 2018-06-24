@@ -17,11 +17,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class EvaluationRepository extends ServiceEntityRepository
 {
+    /**
+     * EvaluationRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Evaluation::class);
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return mixed
+     */
     public function findBySemestre(Semestre $semestre)
     {
         return $this->createQueryBuilder('e')
@@ -34,6 +44,12 @@ class EvaluationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Matiere $matiere
+     * @param         $annee
+     *
+     * @return mixed
+     */
     public function findByMatiere(Matiere $matiere, $annee)
     {
         return $this->createQueryBuilder('e')

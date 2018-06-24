@@ -104,6 +104,9 @@ class Date extends BaseEntity
         $this->semestres = new ArrayCollection();
     }
 
+    /**
+     * @return array
+     */
     public static function getTypeList(): array
     {
         return array(
@@ -117,11 +120,19 @@ class Date extends BaseEntity
         );
     }
 
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return Date
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -129,11 +140,19 @@ class Date extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
+    /**
+     * @param string $texte
+     *
+     * @return Date
+     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -277,6 +296,11 @@ class Date extends BaseEntity
         return $this->semestres;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Date
+     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -286,6 +310,11 @@ class Date extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Date
+     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {
@@ -295,11 +324,19 @@ class Date extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return Date
+     */
     public function setType(string $type): self
     {
         $this->type = $type;

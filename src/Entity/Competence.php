@@ -36,17 +36,38 @@ class Competence extends BaseEntity
      */
     private $enfants;
 
+    /**
+     * Competence constructor.
+     *
+     * @param Diplome $diplome
+     */
     public function __construct(Diplome $diplome)
     {
         $this->diplome = $diplome;
         $this->enfants = new ArrayCollection();
     }
 
+    /**
+     * @return null|string
+     */
+    public function getDisplay(): ?string
+    {
+        return $this->code . ' ' . $this->libelle;
+    }
+
+    /**
+     * @return null|string
+     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
+    /**
+     * @param string $libelle
+     *
+     * @return Competence
+     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -54,11 +75,19 @@ class Competence extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * @param string $code
+     *
+     * @return Competence
+     */
     public function setCode(string $code): self
     {
         $this->code = $code;
@@ -66,11 +95,19 @@ class Competence extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Diplome|null
+     */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
+    /**
+     * @param Diplome|null $diplome
+     *
+     * @return Competence
+     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
@@ -86,6 +123,11 @@ class Competence extends BaseEntity
         return $this->enfants;
     }
 
+    /**
+     * @param Competence $enfant
+     *
+     * @return Competence
+     */
     public function addEnfant(Competence $enfant): self
     {
         if (!$this->enfants->contains($enfant)) {
@@ -96,6 +138,11 @@ class Competence extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Competence $enfant
+     *
+     * @return Competence
+     */
     public function removeEnfant(Competence $enfant): self
     {
         if ($this->enfants->contains($enfant)) {

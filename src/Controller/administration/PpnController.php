@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Ppn;
 use App\Form\PpnType;
 use App\Repository\PpnRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,20 +56,19 @@ class PpnController extends BaseController
 
     /**
      * @Route("/new", name="administration_ppn_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $ppn = new Ppn();
         $form = $this->createForm(PpnType::class, $ppn, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($ppn);
-            $entityManager->flush();
+            $this->entityManager->persist($ppn);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_ppn_index');
         }
@@ -94,19 +92,18 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_ppn_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Ppn                    $ppn
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Ppn $ppn): Response
+    public function edit(Request $request, Ppn $ppn): Response
     {
         $form = $this->createForm(PpnType::class, $ppn, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_ppn_edit', ['id' => $ppn->getId()]);
         }

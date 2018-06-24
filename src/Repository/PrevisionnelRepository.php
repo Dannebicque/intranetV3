@@ -21,11 +21,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class PrevisionnelRepository extends ServiceEntityRepository
 {
+    /**
+     * PrevisionnelRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Previsionnel::class);
     }
 
+    /**
+     * @param Personnel $personnel
+     * @param Formation $formation
+     *
+     * @return mixed
+     */
     public function findPrevisionnelEnseignantFormation(Personnel $personnel, Formation $formation)
     {
         return $this->createQueryBuilder('p')
@@ -62,6 +73,12 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Matiere $matiere
+     * @param         $annee
+     *
+     * @return mixed
+     */
     public function findPrevisionnelMatiere(Matiere $matiere, $annee)
     {
         return $this->createQueryBuilder('p')
@@ -76,6 +93,12 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Semestre $semestre
+     * @param          $annee
+     *
+     * @return mixed
+     */
     public function findPrevisionnelSemestre(Semestre $semestre, $annee)
     {
         return $this->createQueryBuilder('p')

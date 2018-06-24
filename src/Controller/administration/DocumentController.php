@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Document;
 use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,12 +48,11 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/new", name="administration_document_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document,
@@ -64,8 +62,8 @@ class DocumentController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $document->setTaille(10);
             $document->setTypeFichier('PDF');
-            $entityManager->persist($document);
-            $entityManager->flush();
+            $this->entityManager->persist($document);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_document_index');
         }
@@ -89,20 +87,19 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_document_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Document               $document
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Document $document): Response
+    public function edit(Request $request, Document $document): Response
     {
         $form = $this->createForm(DocumentType::class, $document,
             array('formation' => $this->dataUserSession->getFormation()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_document_edit', ['id' => $document->getId()]);
         }
@@ -115,19 +112,18 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Document               $document
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, Document $document): Response
+    public function delete(Request $request, Document $document): Response
     {
         $id = $document->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $entityManager->remove($document);
-            $entityManager->flush();
+            $this->entityManager->remove($document);
+            $this->entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

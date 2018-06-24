@@ -5,7 +5,6 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,12 +25,11 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/new", name="administration_type_groupe_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $typeGroupe = new TypeGroupe();
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
@@ -39,8 +37,8 @@ class TypeGroupeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($typeGroupe);
-            $entityManager->flush();
+            $this->entityManager->persist($typeGroupe);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -64,20 +62,19 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_groupe_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TypeGroupe             $typeGroupe
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, TypeGroupe $typeGroupe): Response
+    public function edit(Request $request, TypeGroupe $typeGroupe): Response
     {
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
             ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_groupe_index');
         }
@@ -90,34 +87,32 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_type_groupe_duplicate", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param TypeGroupe             $typeGroupe
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, TypeGroupe $typeGroupe): Response
+    public function duplicate(TypeGroupe $typeGroupe): Response
     {
         $newTypeGroupe = clone $typeGroupe;
 
-        $entityManager->persist($newTypeGroupe);
-        $entityManager->flush();
+        $this->entityManager->persist($newTypeGroupe);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('administration_type_groupe_edit', ['id' => $newTypeGroupe->getId()]);
     }
 
     /**
      * @Route("/{id}", name="administration_type_groupe_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TypeGroupe             $typeGroupe
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, TypeGroupe $typeGroupe): Response
+    public function delete(Request $request, TypeGroupe $typeGroupe): Response
     {
         if ($this->isCsrfTokenValid('delete' . $typeGroupe->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($typeGroupe);
-            $entityManager->flush();
+            $this->entityManager->remove($typeGroupe);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('administration_groupe_index');

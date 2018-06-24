@@ -166,11 +166,19 @@ class Diplome extends BaseEntity
         return $this->libelle;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCodeApogee(): ?string
     {
         return $this->codeApogee;
     }
 
+    /**
+     * @param string $codeApogee
+     *
+     * @return Diplome
+     */
     public function setCodeApogee(string $codeApogee): self
     {
         $this->codeApogee = $codeApogee;
@@ -178,11 +186,19 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCodeVersion(): ?string
     {
         return $this->codeVersion;
     }
 
+    /**
+     * @param string $codeVersion
+     *
+     * @return Diplome
+     */
     public function setCodeVersion(string $codeVersion): self
     {
         $this->codeVersion = $codeVersion;
@@ -190,11 +206,19 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCodeDepartement(): ?string
     {
         return $this->codeDepartement;
     }
 
+    /**
+     * @param string $codeDepartement
+     *
+     * @return Diplome
+     */
     public function setCodeDepartement(string $codeDepartement): self
     {
         $this->codeDepartement = $codeDepartement;
@@ -418,6 +442,11 @@ class Diplome extends BaseEntity
         return $this->hrs;
     }
 
+    /**
+     * @param Hrs $hr
+     *
+     * @return Diplome
+     */
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -428,6 +457,11 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Hrs $hr
+     *
+     * @return Diplome
+     */
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -449,6 +483,11 @@ class Diplome extends BaseEntity
         return $this->ppns;
     }
 
+    /**
+     * @param Ppn $ppn
+     *
+     * @return Diplome
+     */
     public function addPpn(Ppn $ppn): self
     {
         if (!$this->ppns->contains($ppn)) {
@@ -459,6 +498,11 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Ppn $ppn
+     *
+     * @return Diplome
+     */
     public function removePpn(Ppn $ppn): self
     {
         if ($this->ppns->contains($ppn)) {
@@ -472,6 +516,10 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function update($name, $value): void
     {
         $t = explode('_', $name);
@@ -491,6 +539,11 @@ class Diplome extends BaseEntity
         return $this->competences;
     }
 
+    /**
+     * @param Competence $competence
+     *
+     * @return Diplome
+     */
     public function addCompetence(Competence $competence): self
     {
         if (!$this->competences->contains($competence)) {
@@ -501,6 +554,11 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Competence $competence
+     *
+     * @return Diplome
+     */
     public function removeCompetence(Competence $competence): self
     {
         if ($this->competences->contains($competence)) {
@@ -514,11 +572,19 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return Formation|null
+     */
     public function getFormation(): ?Formation
     {
         return $this->formation;
     }
 
+    /**
+     * @param Formation|null $formation
+     *
+     * @return Diplome
+     */
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;
@@ -534,6 +600,11 @@ class Diplome extends BaseEntity
         return $this->annees;
     }
 
+    /**
+     * @param Annee $annee
+     *
+     * @return Diplome
+     */
     public function addAnnee(Annee $annee): self
     {
         if (!$this->annees->contains($annee)) {
@@ -544,6 +615,11 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Annee $annee
+     *
+     * @return Diplome
+     */
     public function removeAnnee(Annee $annee): self
     {
         if ($this->annees->contains($annee)) {
@@ -557,11 +633,19 @@ class Diplome extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getSigle(): ?string
     {
         return $this->sigle;
     }
 
+    /**
+     * @param string $sigle
+     *
+     * @return Diplome
+     */
     public function setSigle(string $sigle): self
     {
         $this->sigle = $sigle;

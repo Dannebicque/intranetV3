@@ -17,6 +17,10 @@ use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\Collection;
 
+/**
+ * Class MyEtudiant
+ * @package App\MesClasses
+ */
 class MyEtudiant
 {
     /** @var EtudiantRepository */

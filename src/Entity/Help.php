@@ -24,11 +24,19 @@ class Help extends BaseEntity
      */
     private $slug;
 
+    /**
+     * @return null|string
+     */
     public function getTitre(): ?string
     {
         return $this->titre;
     }
 
+    /**
+     * @param string $titre
+     *
+     * @return Help
+     */
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
@@ -36,11 +44,19 @@ class Help extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
+    /**
+     * @param string $texte
+     *
+     * @return Help
+     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -48,11 +64,19 @@ class Help extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     *
+     * @return Help
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;

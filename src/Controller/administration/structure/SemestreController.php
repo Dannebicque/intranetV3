@@ -4,11 +4,9 @@ namespace App\Controller\administration\structure;
 
 use App\Controller\BaseController;
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use App\Repository\SemestreRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,17 +66,17 @@ class SemestreController extends BaseController
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request, Annee $annee): Response
+    public function create(Request $request, Annee $annee): Response
     {
         if ($annee->getDiplome() !== null) {
             $semestre = new Semestre();
             $semestre->setAnnee($annee);
-            $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $annee->getDiplome()->getId()]);
+            $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $annee->getDiplome()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($semestre);
-                $entityManager->flush();
+                $this->entityManager->persist($semestre);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('administration_structure_index');
             }
@@ -111,15 +109,15 @@ class SemestreController extends BaseController
      * @return Response
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Semestre $semestre): Response
+    public function edit(Request $request, Semestre $semestre): Response
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
             $form = $this->createForm(SemestreType::class, $semestre,
-                ['diplome' => $semestre->getAnnee()->getDiplome()->getId()]);
+                ['diplome' => $semestre->getAnnee()->getDiplome()]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('administration_structure_index');
             }
@@ -139,12 +137,12 @@ class SemestreController extends BaseController
      *
      * @return Response
      */
-    public function duplicate(EntityManagerInterface $entityManager, Semestre $semestre): Response
+    public function duplicate(Semestre $semestre): Response
     {
         $newSemestre = clone $semestre;
 
-        $entityManager->persist($newSemestre);
-        $entityManager->flush();
+        $this->entityManager->persist($newSemestre);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('administration_structure_semestre_edit', ['id' => $newSemestre->getId()]);
     }

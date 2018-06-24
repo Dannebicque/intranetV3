@@ -9,6 +9,10 @@
 namespace App;
 
 
+/**
+ * Class Events
+ * @package App
+ */
 class Events
 {
     /**

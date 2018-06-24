@@ -684,6 +684,11 @@ class Semestre extends BaseEntity
         return $this->articles;
     }
 
+    /**
+     * @param Article $article
+     *
+     * @return Semestre
+     */
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -694,6 +699,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Article $article
+     *
+     * @return Semestre
+     */
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
@@ -712,6 +722,11 @@ class Semestre extends BaseEntity
         return $this->documents;
     }
 
+    /**
+     * @param Document $document
+     *
+     * @return Semestre
+     */
     public function addDocument(Document $document): self
     {
         if (!$this->documents->contains($document)) {
@@ -722,6 +737,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Document $document
+     *
+     * @return Semestre
+     */
     public function removeDocument(Document $document): self
     {
         if ($this->documents->contains($document)) {
@@ -740,6 +760,11 @@ class Semestre extends BaseEntity
         return $this->dates;
     }
 
+    /**
+     * @param Date $date
+     *
+     * @return Semestre
+     */
     public function addDate(Date $date): self
     {
         if (!$this->dates->contains($date)) {
@@ -750,6 +775,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Date $date
+     *
+     * @return Semestre
+     */
     public function removeDate(Date $date): self
     {
         if ($this->dates->contains($date)) {
@@ -768,6 +798,11 @@ class Semestre extends BaseEntity
         return $this->hrs;
     }
 
+    /**
+     * @param Hrs $hrs
+     *
+     * @return Semestre
+     */
     public function addHrs(Hrs $hrs): self
     {
         if (!$this->hrs->contains($hrs)) {
@@ -778,6 +813,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Hrs $hrs
+     *
+     * @return Semestre
+     */
     public function removeHrs(Hrs $hrs): self
     {
         if ($this->hrs->contains($hrs)) {
@@ -799,6 +839,11 @@ class Semestre extends BaseEntity
         return $this->options;
     }
 
+    /**
+     * @param Parcour $option
+     *
+     * @return Semestre
+     */
     public function addOption(Parcour $option): self
     {
         if (!$this->options->contains($option)) {
@@ -809,6 +854,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Parcour $option
+     *
+     * @return Semestre
+     */
     public function removeOption(Parcour $option): self
     {
         if ($this->options->contains($option)) {
@@ -830,6 +880,11 @@ class Semestre extends BaseEntity
         return $this->bornes;
     }
 
+    /**
+     * @param Borne $borne
+     *
+     * @return Semestre
+     */
     public function addBorne(Borne $borne): self
     {
         if (!$this->bornes->contains($borne)) {
@@ -840,6 +895,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Borne $borne
+     *
+     * @return Semestre
+     */
     public function removeBorne(Borne $borne): self
     {
         if ($this->bornes->contains($borne)) {
@@ -850,6 +910,10 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function update($name, $value): void
     {
         $t = explode('_', $name);
@@ -870,6 +934,11 @@ class Semestre extends BaseEntity
         return $this->cahierTextes;
     }
 
+    /**
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Semestre
+     */
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -880,6 +949,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Semestre
+     */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {
@@ -901,6 +975,11 @@ class Semestre extends BaseEntity
         return $this->ues;
     }
 
+    /**
+     * @param Ue $ue
+     *
+     * @return Semestre
+     */
     public function addUe(Ue $ue): self
     {
         if (!$this->ues->contains($ue)) {
@@ -911,6 +990,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Ue $ue
+     *
+     * @return Semestre
+     */
     public function removeUe(Ue $ue): self
     {
         if ($this->ues->contains($ue)) {
@@ -932,6 +1016,11 @@ class Semestre extends BaseEntity
         return $this->typeGroupes;
     }
 
+    /**
+     * @param TypeGroupe $typeGroupe
+     *
+     * @return Semestre
+     */
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if (!$this->typeGroupes->contains($typeGroupe)) {
@@ -942,6 +1031,11 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param TypeGroupe $typeGroupe
+     *
+     * @return Semestre
+     */
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if ($this->typeGroupes->contains($typeGroupe)) {
@@ -955,11 +1049,19 @@ class Semestre extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getMoisDebut(): ?int
     {
         return $this->moisDebut;
     }
 
+    /**
+     * @param int $moisDebut
+     *
+     * @return Semestre
+     */
     public function setMoisDebut(int $moisDebut): self
     {
         $this->moisDebut = $moisDebut;

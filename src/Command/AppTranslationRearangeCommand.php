@@ -11,6 +11,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class AppTranslationRearangeCommand
+ * @package App\Command
+ */
 class AppTranslationRearangeCommand extends Command
 {
     protected static $defaultName = 'app:translation-rearange';
@@ -23,6 +27,10 @@ class AppTranslationRearangeCommand extends Command
         ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
@@ -53,6 +61,11 @@ class AppTranslationRearangeCommand extends Command
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
     }
 
+    /**
+     * @param $keys
+     * @param $tab
+     * @param $value
+     */
     private function insertData($keys, &$tab, $value): void
     {
         if (array_key_exists($keys[0], $tab)) {

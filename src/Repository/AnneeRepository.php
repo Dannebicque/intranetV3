@@ -14,11 +14,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class AnneeRepository extends ServiceEntityRepository
 {
+    /**
+     * AnneeRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Annee::class);
     }
 
+    /**
+     * @param $diplome
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findByDiplomeBuilder($diplome)
     {
         return $this->createQueryBuilder('a')

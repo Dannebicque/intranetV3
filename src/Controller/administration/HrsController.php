@@ -3,12 +3,13 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Hrs;
 use App\Form\HrsType;
 use App\Repository\HrsRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -35,21 +36,21 @@ class HrsController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_hrs_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Hrs                    $hrs
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, Hrs $hrs): Response
+    public function edit(Request $request, Hrs $hrs): Response
     {
         $form = $this->createForm(HrsType::class, $hrs, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
+            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Modification effectuée avec succès');
 
-            return $this->redirectToRoute('administration_hrs_edit', ['id' => $hrs->getId()]);
+            return $this->redirectToRoute('administration_hrs_index');
         }
 
         return $this->render('administration/hrs/edit.html.twig', [
@@ -61,12 +62,11 @@ class HrsController extends BaseController
 
     /**
      * @Route("/new", name="administration_hrs_new", methods="GET|POST", options={"expose": true})
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function ajout(EntityManagerInterface $entityManager, Request $request)
+    public function ajout(Request $request)
     {
         if ($this->dataUserSession->getFormation() !== null) {
             $hrs = new Hrs($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
@@ -76,8 +76,9 @@ class HrsController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager->persist($hrs);
-                $entityManager->flush();
+                $this->entityManager->persist($hrs);
+                $this->entityManager->flush();
+                $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Ajout effectué avec succès');
 
                 return $this->redirectToRoute('administration_hrs_index');
             }
@@ -89,6 +90,25 @@ class HrsController extends BaseController
         }
 
         return $this->redirectToRoute('erreur_666');
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_hrs_duplicate", methods="GET")
+     * @param Hrs $hrs
+     *
+     * @return Response
+     */
+    public function duplicate(Hrs $hrs): Response
+    {
+        $newHrs = clone $hrs;
+        $this->entityManager->persist($newHrs);
+        $this->entityManager->flush();
+        $this->flashBag->add(Constantes::FLASHBAG_SUCCESS,
+            'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.');
+
+
+        return $this->redirectToRoute('administration_hrs_edit', ['id' => $newHrs->getId()]);
+
     }
 
     /**
@@ -120,19 +140,18 @@ class HrsController extends BaseController
 
     /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_hrs_delete", methods="DELETE")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param Hrs                    $hrs
      *
      * @return Response
      */
-    public function delete(EntityManagerInterface $entityManager, Request $request, Hrs $hrs): Response
+    public function delete(Request $request, Hrs $hrs): Response
     {
         $id = $hrs->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $entityManager->remove($hrs);
-            $entityManager->flush();
+            $this->entityManager->remove($hrs);
+            $this->entityManager->flush();
 
             return $this->json($id, Response::HTTP_OK);
         }

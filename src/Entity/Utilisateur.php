@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -156,6 +158,10 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $updated;
+
+    public function __construct()
+    {
+    }
 
     /**
      * @return mixed
@@ -535,16 +541,25 @@ abstract class Utilisateur implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     */
     public function setRoles(array $roles): void
     {
         $this->roles = json_encode($roles);
     }
 
+    /**
+     * @return string
+     */
     public function getDisplayPr(): string
     {
         return ucfirst($this->prenom). ' ' . mb_strtoupper($this->nom);
     }
 
+    /**
+     * @return string
+     */
     public function getDisplay(): string
     {
         return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
@@ -570,6 +585,9 @@ abstract class Utilisateur implements UserInterface
         }
     }
 
+    /**
+     * @return null|File
+     */
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;

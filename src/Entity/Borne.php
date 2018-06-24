@@ -56,11 +56,19 @@ class Borne extends BaseEntity
         $this->semestres = new ArrayCollection();
     }
 
+    /**
+     * @return null|string
+     */
     public function getIcone(): ?string
     {
         return $this->icone;
     }
 
+    /**
+     * @param string $icone
+     *
+     * @return Borne
+     */
     public function setIcone(string $icone): self
     {
         $this->icone = $icone;
@@ -68,11 +76,19 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getCouleur(): ?string
     {
         return $this->couleur;
     }
 
+    /**
+     * @param string $couleur
+     *
+     * @return Borne
+     */
     public function setCouleur(string $couleur): self
     {
         $this->couleur = $couleur;
@@ -80,11 +96,19 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
+    /**
+     * @param string $message
+     *
+     * @return Borne
+     */
     public function setMessage(string $message): self
     {
         $this->message = $message;
@@ -92,11 +116,19 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return Borne
+     */
     public function setUrl(string $url): self
     {
         $this->url = $url;
@@ -104,11 +136,19 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateDebutPublication(): ?\DateTimeInterface
     {
         return $this->dateDebutPublication;
     }
 
+    /**
+     * @param \DateTimeInterface $dateDebutPublication
+     *
+     * @return Borne
+     */
     public function setDateDebutPublication(\DateTimeInterface $dateDebutPublication): self
     {
         $this->dateDebutPublication = $dateDebutPublication;
@@ -116,11 +156,19 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateFinPublication(): ?\DateTimeInterface
     {
         return $this->dateFinPublication;
     }
 
+    /**
+     * @param \DateTimeInterface $dateFinPublication
+     *
+     * @return Borne
+     */
     public function setDateFinPublication(\DateTimeInterface $dateFinPublication): self
     {
         $this->dateFinPublication = $dateFinPublication;
@@ -128,11 +176,19 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getVisible(): ?bool
     {
         return $this->visible;
     }
 
+    /**
+     * @param bool $visible
+     *
+     * @return Borne
+     */
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
@@ -148,6 +204,11 @@ class Borne extends BaseEntity
         return $this->semestres;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Borne
+     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -157,6 +218,11 @@ class Borne extends BaseEntity
         return $this;
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return Borne
+     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {

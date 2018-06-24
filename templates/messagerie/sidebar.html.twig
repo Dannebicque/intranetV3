@@ -2,6 +2,12 @@
 <aside class=""
        style="background-color: white; margin-left: -30px;margin-top: -60px; padding-bottom: -30px; height: 100%; padding-left: 10px; padding-right: 10px">
     <div class="aside-body">
+        {% if is_granted('ROLE_PERMANENT') %}
+            <a href="#dock-compose" class="btn btn-primary" data-toggle="dock">
+                <i class="fa fa-plus"></i>
+                {{ 'nouveau.message'|trans }}
+            </a>
+        {% endif %}
         <ul class="nav nav-lg nav-pills flex-column">
             <li class="nav-item active">
                 <i class="fa fa-inbox"></i>

@@ -13,6 +13,10 @@ use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Class MyPersonnel
+ * @package App\MesClasses
+ */
 class MyPersonnel
 {
     /** @var PersonnelRepository */

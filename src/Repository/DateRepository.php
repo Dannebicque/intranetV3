@@ -16,11 +16,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class DateRepository extends ServiceEntityRepository
 {
+    /**
+     * DateRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Date::class);
     }
 
+    /**
+     * @param $formation
+     * @param $nbResult
+     *
+     * @return mixed
+     */
     public function findByFormation($formation, $nbResult)
     {
         return $this->createQueryBuilder('d')
@@ -35,6 +46,12 @@ class DateRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $formation
+     * @param $annee
+     *
+     * @return array
+     */
     public function findByFormationPlanning($formation, $annee): array
     {
         $datedebut = new \DateTime($annee . '-09-01');

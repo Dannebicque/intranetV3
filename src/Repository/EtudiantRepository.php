@@ -17,6 +17,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class EtudiantRepository extends ServiceEntityRepository
 {
+    /**
+     * EtudiantRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Etudiant::class);

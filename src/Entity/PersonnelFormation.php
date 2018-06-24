@@ -38,6 +38,12 @@ class PersonnelFormation
      */
     private $role = 'ROLE_PERMANENT';
 
+    /**
+     * PersonnelFormation constructor.
+     *
+     * @param Personnel $personnel
+     * @param Formation $formation
+     */
     public function __construct(Personnel $personnel, Formation $formation)
     {
         $this->formation = $formation;
@@ -50,11 +56,19 @@ class PersonnelFormation
         return $this->id;
     }
 
+    /**
+     * @return Personnel|null
+     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
+    /**
+     * @param Personnel|null $personnel
+     *
+     * @return PersonnelFormation
+     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -62,11 +76,19 @@ class PersonnelFormation
         return $this;
     }
 
+    /**
+     * @return Formation|null
+     */
     public function getFormation(): ?Formation
     {
         return $this->formation;
     }
 
+    /**
+     * @param Formation|null $formation
+     *
+     * @return PersonnelFormation
+     */
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;
@@ -74,11 +96,19 @@ class PersonnelFormation
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAnnee(): ?int
     {
         return $this->annee;
     }
 
+    /**
+     * @param int $annee
+     *
+     * @return PersonnelFormation
+     */
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;
@@ -86,11 +116,19 @@ class PersonnelFormation
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getRole(): ?string
     {
         return $this->role;
     }
 
+    /**
+     * @param string $role
+     *
+     * @return PersonnelFormation
+     */
     public function setRole(string $role): self
     {
         $this->role = $role;

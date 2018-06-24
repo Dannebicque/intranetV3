@@ -14,11 +14,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class HrsRepository extends ServiceEntityRepository
 {
+    /**
+     * HrsRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Hrs::class);
     }
 
+    /**
+     * @param $getUser
+     * @param $annee
+     *
+     * @return mixed
+     */
     public function findHrsEnseignant($getUser, $annee)
     {
         return $this->createQueryBuilder('h')
@@ -32,6 +43,12 @@ class HrsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $formation
+     * @param $annee
+     *
+     * @return mixed
+     */
     public function findHrsFormation($formation, $annee)
     {
         return $this->createQueryBuilder('h')

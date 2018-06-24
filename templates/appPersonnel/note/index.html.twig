@@ -42,6 +42,7 @@
     {% if matiere.nbNotes > 0 %}
         <div class="tab-content">
             {% for eval in evaluations.evaluations %}
+                {# feature: Par défaut afficher la synthèse selon le type choisi + promo, mais laisser la possibilité d'avoir la synthèse sur les autres type de groupe, en proposant des "boutons" sur le header comme pour le trombi #}
                 <div class="tab-pane {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active show{% endif %}"
                      id="eval{{ eval.id }}" role="tabpanel">
                     <div class="card">
@@ -51,21 +52,73 @@
                             <table class="table table-striped table-bordered">
                                 <tr>
                                     <th>Groupe</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <th>{{ groupe.libelle }}</th>
+                                    {% endfor %}
+                                    <th>Promo</th>
                                 </tr>
                                 <tr>
                                     <th>Min</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ groupe.libelle }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.min }}</td>
                                 </tr>
                                 <tr>
                                     <th>Max</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ groupe.libelle }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.max }}</td>
                                 </tr>
                                 <tr>
                                     <th>Moyenne</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ groupe.libelle }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.moyenne }}</td>
                                 </tr>
                                 <tr>
                                     <th>Ecart Type</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ groupe.libelle }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.ecart_type }}</td>
                                 </tr>
                                 <tr>
                                     <th>Actions</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>
+                                            <a href="{{ path('application_personnel_evaluation_show', {evaluation:eval.id}) }}"
+                                               class="btn btn-block btn-info">Voir/modifier</a>
+                                            <div class="btn-group  btn-block">
+                                                <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
+                                                        data-toggle="dropdown"><label><i class="ti-printer"></i></label>
+                                                    Exporter
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#">{{ 'exporter.pdf'|trans }}</a>
+                                                    <a class="dropdown-item" href="#">{{ 'exporter.xls'|trans }}</a>
+                                                    <a class="dropdown-item" href="#">{{ 'exporter.csv'|trans }}</a>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <div class="btn-group  btn-block">
+                                            <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown"><label><i class="ti-printer"></i></label>
+                                                Exporter
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">{{ 'exporter.pdf'|trans }}</a>
+                                                <a class="dropdown-item" href="#">{{ 'exporter.xls'|trans }}</a>
+                                                <a class="dropdown-item" href="#">{{ 'exporter.csv'|trans }}</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

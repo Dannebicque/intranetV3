@@ -17,11 +17,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class SemestreType
+ * @package App\Form
+ */
 class SemestreType extends AbstractType
 {
     /** @var Diplome */
     protected $diplome;
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->diplome = $options['diplome'];
@@ -53,13 +61,14 @@ class SemestreType extends AbstractType
                 'label' => 'label.couleur'
             ])
             ->add('ordreAnnee', ChoiceType::class, [
-                'label'    => 'label.ordre_annee',
-                'choices'  => [1 => 1, 2 => 2],
-                'expanded' => true
+                'label'              => 'label.ordre_annee',
+                'choices'            => [1 => 1, 2 => 2],
+                'expanded'           => true,
+                'translation_domain' => 'form'
             ])
             ->add('moisDebut', ChoiceType::class, [
-                'label'    => 'label.mois_debut',
-                'choices'  => [
+                'label'              => 'label.mois_debut',
+                'choices'            => [
                     "Janvier"   => 1,
                     "Février"   => 2,
                     "Mars"      => 3,
@@ -73,7 +82,8 @@ class SemestreType extends AbstractType
                     "Novembre"  => 11,
                     "Décembre"  => 12
                 ],
-                'expanded' => false
+                'expanded'           => false,
+                'translation_domain' => 'form'
             ])
             ->add('ordreLmd', ChoiceType::class, [
                 'label'   => 'label.ordre_lmd',

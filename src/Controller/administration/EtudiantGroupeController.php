@@ -25,6 +25,7 @@ class EtudiantGroupeController extends BaseController
     public function index(Semestre $semestre): Response
     {
         return $this->render('administration/etudiant_groupe/index.html.twig', [
+            'semestre' => $semestre
         ]);
     }
 }

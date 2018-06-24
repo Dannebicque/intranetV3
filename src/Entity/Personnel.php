@@ -161,6 +161,9 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         $this->personnelFormations = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
@@ -348,6 +351,9 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         }
     }
 
+    /**
+     * @return null|File
+     */
     public function getCvFile(): ?File
     {
         return $this->cvFile;
@@ -377,6 +383,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->hrs;
     }
 
+    /**
+     * @param Hrs $hr
+     *
+     * @return Personnel
+     */
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -387,6 +398,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param Hrs $hr
+     *
+     * @return Personnel
+     */
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -408,6 +424,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->previsionnels;
     }
 
+    /**
+     * @param Previsionnel $previsionnel
+     *
+     * @return Personnel
+     */
     public function addPrevisionnel(Previsionnel $previsionnel): self
     {
         if (!$this->previsionnels->contains($previsionnel)) {
@@ -418,6 +439,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param Previsionnel $previsionnel
+     *
+     * @return Personnel
+     */
     public function removePrevisionnel(Previsionnel $previsionnel): self
     {
         if ($this->previsionnels->contains($previsionnel)) {
@@ -439,6 +465,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->evaluationsAuteur;
     }
 
+    /**
+     * @param Evaluation $evaluationsAuteur
+     *
+     * @return Personnel
+     */
     public function addEvaluationsAuteur(Evaluation $evaluationsAuteur): self
     {
         if (!$this->evaluationsAuteur->contains($evaluationsAuteur)) {
@@ -449,6 +480,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param Evaluation $evaluationsAuteur
+     *
+     * @return Personnel
+     */
     public function removeEvaluationsAuteur(Evaluation $evaluationsAuteur): self
     {
         if ($this->evaluationsAuteur->contains($evaluationsAuteur)) {
@@ -470,6 +506,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->evaluationsAutorise;
     }
 
+    /**
+     * @param Evaluation $evaluationsAutorise
+     *
+     * @return Personnel
+     */
     public function addEvaluationsAutorise(Evaluation $evaluationsAutorise): self
     {
         if (!$this->evaluationsAutorise->contains($evaluationsAutorise)) {
@@ -480,6 +521,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param Evaluation $evaluationsAutorise
+     *
+     * @return Personnel
+     */
     public function removeEvaluationsAutorise(Evaluation $evaluationsAutorise): self
     {
         if ($this->evaluationsAutorise->contains($evaluationsAutorise)) {
@@ -498,6 +544,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->modificationNotes;
     }
 
+    /**
+     * @param ModificationNote $modificationNote
+     *
+     * @return Personnel
+     */
     public function addModificationNote(ModificationNote $modificationNote): self
     {
         if (!$this->modificationNotes->contains($modificationNote)) {
@@ -508,6 +559,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param ModificationNote $modificationNote
+     *
+     * @return Personnel
+     */
     public function removeModificationNote(ModificationNote $modificationNote): self
     {
         if ($this->modificationNotes->contains($modificationNote)) {
@@ -521,11 +577,19 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNbHeuresService(): ?float
     {
         return $this->nbHeuresService;
     }
 
+    /**
+     * @param float $nbHeuresService
+     *
+     * @return Personnel
+     */
     public function setNbHeuresService(float $nbHeuresService = 192): self
     {
         $this->nbHeuresService = $nbHeuresService;
@@ -541,6 +605,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->cahierTextes;
     }
 
+    /**
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Personnel
+     */
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -551,6 +620,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param CahierTexte $cahierTexte
+     *
+     * @return Personnel
+     */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {
@@ -572,6 +646,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->notifications;
     }
 
+    /**
+     * @param Notification $notification
+     *
+     * @return Personnel
+     */
     public function addNotification(Notification $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -582,6 +661,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param Notification $notification
+     *
+     * @return Personnel
+     */
     public function removeNotification(Notification $notification): self
     {
         if ($this->notifications->contains($notification)) {
@@ -603,6 +687,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->trelloTaches;
     }
 
+    /**
+     * @param TrelloTache $trelloTach
+     *
+     * @return Personnel
+     */
     public function addTrelloTach(TrelloTache $trelloTach): self
     {
         if (!$this->trelloTaches->contains($trelloTach)) {
@@ -613,6 +702,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param TrelloTache $trelloTach
+     *
+     * @return Personnel
+     */
     public function removeTrelloTach(TrelloTache $trelloTach): self
     {
         if ($this->trelloTaches->contains($trelloTach)) {
@@ -668,6 +762,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this->personnelFormations;
     }
 
+    /**
+     * @param PersonnelFormation $personnelFormation
+     *
+     * @return Personnel
+     */
     public function addPersonnelFormation(PersonnelFormation $personnelFormation): self
     {
         if (!$this->personnelFormations->contains($personnelFormation)) {
@@ -678,6 +777,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         return $this;
     }
 
+    /**
+     * @param PersonnelFormation $personnelFormation
+     *
+     * @return Personnel
+     */
     public function removePersonnelFormation(PersonnelFormation $personnelFormation): self
     {
         if ($this->personnelFormations->contains($personnelFormation)) {

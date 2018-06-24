@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    Gestion du <strong>semestre {{ semestre.libelle }}</strong>
+    {{ 'gestion.du.semestre.heading'|trans({'%libelle%':semestre.libelle})|raw }}
 {% endblock %}
 
 {% block headerright %}
@@ -9,7 +9,7 @@
         {% for sem in user_data.semestres %}
             <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
                class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
-               title="Changer de semestre"
+               title="{{ 'changer.de.semestre'|trans }}"
                data-provide="tooltip"
                data-placement="bottom"
             >{{ sem.libelle }}</a>
@@ -31,10 +31,10 @@
         <div class="col-md-6 sol-sm-12">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title">Gestion des <strong>Absences</strong></h4>
+                    <h4 class="card-title">{{ 'gestion.des.absences'|trans|raw }}</h4>
                     <div class="card-header-actions">
                         <a class="btn btn-sm btn-primary btn-square btn-round"
-                           title="Saisir des absences"
+                           title="{{ 'saisir.absences'|trans }}"
                            data-provide="tooltip"
                            data-placement="bottom"
                            href="{{ path('administration_absences_semestre_saisie',{semestre:semestre.id}) }}"
@@ -46,8 +46,12 @@
                                 <a data-toggle="dropdown" href="#"><i
                                             class="ti-more-alt rotate-90"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i class="ti-export"></i>Exporter (xls)</a>
-                                    <a href="#" class="dropdown-item"><i class="ti-printer"></i>Exporter (pdf)</a>
+                                    <a href="#" class="dropdown-item"><i
+                                                class="ti-export"></i>{{ 'exporter.xls'|trans }}</a>
+                                    <a href="#" class="dropdown-item"><i
+                                                class="ti-export"></i>{{ 'exporter.csv'|trans }}</a>
+                                    <a href="#" class="dropdown-item"><i
+                                                class="ti-printer"></i>{{ 'exporter.pdf'|trans }}</a>
                                 </div>
                             </li>
                         </ul>
@@ -56,26 +60,30 @@
                 <div class="card-body">
                     <a href="{{ path('administration_absences_semestre_liste',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        Afficher les absences</a>
+                        {{ 'afficher.les.absences'|trans }}</a>
                     <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        Justifier des absences</a>
+                        {{ 'justifier.les.absences'|trans }}</a>
                     <a href="{{ path('administration_commission_absences_semestre_index',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        Commission des absences</a>
+                        {{ 'commission.des.absences'|trans }}</a>
                 </div>
             </div>
         </div>
         <div class="col-md-6 sol-sm-12">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title">Gestion des <strong>Notes</strong></h4>
+                    <h4 class="card-title">{{ 'gestion.des.notes'|trans|raw }}</h4>
                     <ul class="card-controls">
                         <li class="dropdown">
                             <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item"><i class="ti-export"></i> Exporter (xls)</a>
-                                <a href="#" class="dropdown-item"><i class="ti-printer"></i> Exporter (pdf)</a>
+                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
+                                </a>
+                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.csv'|trans }}
+                                </a>
+                                <a href="#" class="dropdown-item"><i class="ti-printer"></i>{{ 'exporter.pdf'|trans }}
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a>
                             </div>
@@ -85,21 +93,21 @@
                 <div class="card-body">
                     <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        Afficher les notes
+                        {{ 'afficher.les.notes'|trans }}
                     </a>
                     <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        Demandes de rattrapages
+                        {{ 'demandes.rattrapages'|trans }}
                     </a>
                 </div>
             </div>
         </div>
         <div class="col-md-6 sol-sm-12">
             <div class="card">
-                <header class="card-header"><h4 class="card-title">Gestion des <strong>Etudiants</strong></h4>
+                <header class="card-header"><h4 class="card-title">{{ 'gestion.des.etudiants'|trans|raw }}</h4>
                     <div class="card-header-actions">
                         <button class="btn btn-sm btn-primary btn-square btn-round"
-                                title="Ajouter des étudiants"
+                                title="{{ 'Ajouter.des.etudiants'|trans }}"
                                 data-provide="tooltip"
                                 data-placement="bottom">
                             <i class="ti ti-plus"></i>
@@ -108,10 +116,13 @@
                             <li class="dropdown">
                                 <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i class="ti-export"></i>Exporter (xls)</a>
-                                    <a href="#" class="dropdown-item"><i class="ti-printer"></i>Exporter (pdf)</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a>
+                                    <a href="#" class="dropdown-item"><i
+                                                class="ti-export"></i>{{ 'exporter.xls'|trans }}</a>
+                                    <a href="#" class="dropdown-item"><i
+                                                class="ti-export"></i>{{ 'exporter.csv'|trans }}</a>
+                                    <a href="#" class="dropdown-item"><i
+                                                class="ti-printer"></i>{{ 'exporter.pdf'|trans }}</a>
+
                                 </div>
                             </li>
                         </ul>
@@ -119,33 +130,38 @@
                 </header>
                 <div class="card-body">
                     <a href="{{ path('administration_etudiant_semestre_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-primary"> Données des étudiants</a>
+                       class="btn btn-block btn-primary"> {{ 'donnees.des.etudiants'|trans }}</a>
                     <a href="{{ path('administration_etudiant_groupe_semestre_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-primary"> Groupes</a>
+                       class="btn btn-block btn-primary"> {{ 'groupes'|trans }}</a>
                 </div>
             </div>
         </div>
         <div class="col-md-6 sol-sm-12">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title"><strong>Fin</strong> de semestre</h4>
+                    <h4 class="card-title">{{ 'gerer.fin.semestre'|trans|raw }}</h4>
                     <ul class="card-controls">
                         <li class="dropdown">
                             <a data-toggle="dropdown" href="#" aria-expanded="false"><i
                                         class="ti-more-alt rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item"><i class="ti-export"></i> Exporter (xls)</a>
-                                <a href="#" class="dropdown-item"><i class="ti-printer"></i> Exporter (pdf)</a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a></div>
+                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
+                                </a>
+                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.csv'|trans }}
+                                </a>
+                                <a href="#" class="dropdown-item"><i class="ti-printer"></i>{{ 'exporter.pdf'|trans }}
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </header>
                 <div class="card-body">
                     <a href="{{ path('administration_sous_comission_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-warning"> Sous-commission</a>
+                       class="btn btn-block btn-primary">{{ 'simulation.sous-commission'|trans }}</a>
+                    <a href="{{ path('administration_sous_comission_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-warning"> {{ 'preparer.sous-commission'|trans }}</a>
                     <a href="{{ path('administration_fin_semestre_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-danger"> Changement de semestre</a>
+                       class="btn btn-block btn-danger"> {{ 'changement.semestre'|trans }}</a>
                 </div>
             </div>
         </div>

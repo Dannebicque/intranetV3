@@ -18,11 +18,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class PersonnelRepository extends ServiceEntityRepository
 {
+    /**
+     * PersonnelRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Personnel::class);
     }
 
+    /**
+     * @param $type
+     * @param $formation
+     *
+     * @return mixed
+     */
     public function findByType($type, $formation)
     {
         return $this->createQueryBuilder('p')
@@ -67,6 +78,11 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param $formation
+     *
+     * @return mixed
+     */
     public function findByFormation($formation)
     {
         return $this->findByFormationBuilder($formation)
@@ -74,6 +90,11 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $formation
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findByFormationBuilder($formation)
     {
         return $this->createQueryBuilder('p')
@@ -84,6 +105,11 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orderBy('p.prenom', 'ASC');
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return \Doctrine\ORM\QueryBuilder|null
+     */
     public function findBySemestreBuilder(Semestre $semestre)
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
@@ -93,6 +119,14 @@ class PersonnelRepository extends ServiceEntityRepository
         return null;
     }
 
+    /**
+     * @param      $data
+     * @param int  $page
+     * @param null $max
+     * @param bool $getResult
+     *
+     * @return \Doctrine\ORM\Query|mixed
+     */
     public function getAllPersonnel($data, $page = 0, $max = null, $getResult = true)
     {
         $qb = $this->_em->createQueryBuilder();

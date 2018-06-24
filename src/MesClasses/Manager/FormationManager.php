@@ -9,6 +9,10 @@
 namespace App\MesClasses\Manager;
 
 
+/**
+ * Class FormationManager
+ * @package App\MesClasses\Manager
+ */
 abstract class FormationManager
 {
     public static function edit()

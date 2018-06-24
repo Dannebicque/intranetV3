@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\TypeDiplome;
 use App\Form\TypeDiplomeType;
 use App\Repository\TypeDiplomeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,20 +48,19 @@ class TypeDiplomeController extends BaseController
 
     /**
      * @Route("/new", name="sa_type_diplome_new", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      *
      * @return Response
      */
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(Request $request): Response
     {
         $typeDiplome = new TypeDiplome();
         $form = $this->createForm(TypeDiplomeType::class, $typeDiplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($typeDiplome);
-            $entityManager->flush();
+            $this->entityManager->persist($typeDiplome);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_type_diplome_index');
         }
@@ -86,19 +84,18 @@ class TypeDiplomeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_type_diplome_edit", methods="GET|POST")
-     * @param EntityManagerInterface $entityManager
      * @param Request                $request
      * @param TypeDiplome            $typeDiplome
      *
      * @return Response
      */
-    public function edit(EntityManagerInterface $entityManager, Request $request, TypeDiplome $typeDiplome): Response
+    public function edit(Request $request, TypeDiplome $typeDiplome): Response
     {
         $form = $this->createForm(TypeDiplomeType::class, $typeDiplome);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_type_diplome_edit', ['id' => $typeDiplome->getId()]);
         }

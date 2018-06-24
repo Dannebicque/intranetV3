@@ -17,11 +17,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class AbsenceRepository extends ServiceEntityRepository
 {
+    /**
+     * AbsenceRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Absence::class);
     }
 
+    /**
+     * @param Matiere $matiere
+     * @param         $anneeCourante
+     *
+     * @return mixed
+     */
     public function getAbsencesMatiere(Matiere $matiere, $anneeCourante)
     {
         return $this->createQueryBuilder('m')
@@ -36,6 +47,12 @@ class AbsenceRepository extends ServiceEntityRepository
 
     }
 
+    /**
+     * @param Semestre $semestre
+     * @param          $anneeCourante
+     *
+     * @return mixed
+     */
     public function findBySemestre(Semestre $semestre, $anneeCourante)
     {
         return $this->createQueryBuilder('a')

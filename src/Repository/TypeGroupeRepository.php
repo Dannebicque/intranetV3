@@ -14,11 +14,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TypeGroupeRepository extends ServiceEntityRepository
 {
+    /**
+     * TypeGroupeRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, TypeGroupe::class);
     }
 
+    /**
+     * @param $semestre
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function findBySemestreBuilder($semestre)
     {
         return $this->createQueryBuilder('t')

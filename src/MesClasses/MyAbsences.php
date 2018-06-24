@@ -15,6 +15,10 @@ use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 
+/**
+ * Class MyAbsences
+ * @package App\MesClasses
+ */
 class MyAbsences
 {
     /** @var AbsenceRepository */
@@ -71,6 +75,12 @@ class MyAbsences
     }
 
 
+    /**
+     * @param $matiere
+     * @param $anneeCourante
+     *
+     * @return mixed
+     */
     public function getAbsencesMatiere($matiere, $anneeCourante)
     {
         return $this->absenceRepository->getAbsencesMatiere($matiere, $anneeCourante);

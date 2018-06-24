@@ -31,7 +31,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.nbLike'|trans }}</th>
-                <td>{{ article.nbLike }}</td>
+                <td>{{ article.likes|length }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.semestres'|trans }}</th>
+                <td>{% for semestre in articles.semestres %}{{ semestre.libelle }}, {% endfor %}</td>
             </tr>
             <tr>
                 <th>{{ 'table.auteur'|trans }}</th>
