@@ -57,16 +57,16 @@
                         <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
                             <thead>
                             <tr>
-                                <th>{{ 'table.code'|trans }}</th>
+                                <th colspan="2">{{ 'table.code'|trans }}</th>
                                 <th>{{ 'table.libelle'|trans }}</th>
                                 <th>{{ 'table.updated'|trans }}</th>
                                 <th>{{ 'table.actions'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for competence in competences %}
-                                <tr>
-                                    <td>{{ competence.code }}</td>
+                            {% for competence in competences if competence.parent == null %}
+                                <tr id="ligne_{{ competence.id }}">
+                                    <td colspan="2">{{ competence.code }}</td>
                                     <td>{{ competence.libelle }}</td>
                                     <td>{{ competence.updated ? competence.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                                     <td>
@@ -77,6 +77,21 @@
                                         {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'competence', id: competence.id}) }}
                                     </td>
                                 </tr>
+                                {% for comp in competence.enfants %}
+                                    <tr id="ligne_{{ comp.id }}">
+                                        <td>&nbsp;</td>
+                                        <td>{{ comp.code }}</td>
+                                        <td>{{ comp.libelle }}</td>
+                                        <td>{{ comp.updated ? comp.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                                        <td>
+                                            <a href="{{ path('administration_competence_duplicate', {'id': comp.id}) }}"
+                                               class="btn btn-success btn-outline btn-square" data-provide="tooltip"
+                                               data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                                        class="fa fa-copy"></i></a>
+                                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'competence', id: comp.id}) }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                             {% else %}
                                 <tr>
                                     <td colspan="4">{{ 'no.record.found'|trans }}</td>

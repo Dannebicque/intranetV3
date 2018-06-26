@@ -1,5 +1,6 @@
 {# feature: Gérer en Ajax la pagination et l'affichage d'un article précis. #}
 
+{% if pagination.data|length > 0 %}
 <div id="zone-pagination">
     {% for article in pagination.data %}
         {{ include('composants/un-article.html.twig', {article:article}) }}
@@ -8,3 +9,8 @@
 
     {{ include('composants/pagination.html.twig', {pagination:pagination}) }}
 </div>
+{% else %}
+    <div class="alert alert-info">
+        Pour le moment aucun article n'est disponible dans cette catégorie.
+    </div>
+{% endif %}

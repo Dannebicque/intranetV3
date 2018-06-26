@@ -43,7 +43,7 @@ class PersonnelApiController extends BaseController
     public function getEnseignantsByType($type): Response
     {
         $personnels = $this->personnelRepository->findByType($type,
-            $this->dataUserSession->getFormationId()); //todo: fitlrer type et formation
+            $this->dataUserSession->getFormationId());
         $pers = array();
 
         /** @var PersonnelFormation $p */

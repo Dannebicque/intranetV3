@@ -63,7 +63,9 @@ class ArticleController extends BaseController
     /**
      * @Route("/like/{slug}", name="article_like", options={"expose":true})
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
-     * @param ArticleRepository $articleRepository
+     * @param Article $article
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @IsGranted("ROLE_ETUDIANT")
      */
     public function like(Article $article)
@@ -72,6 +74,8 @@ class ArticleController extends BaseController
         //todo: gérer si déjà présent et dans ce cas supprimer
         $article->addLike($this->getUser());
         $this->entityManager->flush();
+
+        return $this->json(count($article->getLikes()), Response::HTTP_OK);
 
     }
 }

@@ -2669,5 +2669,17 @@
               <target>label.competence_parent</target>
           </segment>
       </unit>
+      <unit id="eeXPIN4" name="Adresse">
+          <segment>
+              <source>Adresse</source>
+              <target>Adresse</target>
+          </segment>
+      </unit>
+      <unit id="SMfclVY" name="Adresse parentale">
+          <segment>
+              <source>Adresse parentale</source>
+              <target>Adresse parentale</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

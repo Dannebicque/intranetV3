@@ -131,7 +131,7 @@ class DocumentController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'document.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

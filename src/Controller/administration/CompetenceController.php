@@ -48,7 +48,6 @@ class CompetenceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($competence);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.add.success.flash');
 
             return $this->redirectToRoute('administration_competence_index');
         }
@@ -107,8 +106,6 @@ class CompetenceController extends BaseController
         $this->entityManager->persist($newCompetence);
         $this->entityManager->flush();
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.duplicate.success.flash');
-
         return $this->redirectToRoute('administration_competence_edit', ['id' => $newCompetence->getId()]);
 
     }
@@ -128,8 +125,6 @@ class CompetenceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.edit.success.flash');
-
             return $this->redirectToRoute('administration_competence_index');
         }
 
@@ -140,7 +135,7 @@ class CompetenceController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_competence_delete", methods="DELETE")
      * @param Request    $request
      * @param Competence $competence
      *
@@ -153,11 +148,11 @@ class CompetenceController extends BaseController
 //todo: vérifier le cascade delete s'il y a des enfants ...
             $this->entityManager->remove($competence);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.delete.error.flash');
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'competence.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

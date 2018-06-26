@@ -54,6 +54,7 @@ $(document).on('click', '.supprimer', function (e) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
           swal("Error deleting!", "Please try again", "error");
+          //todo: gérer le callout
         }
       });
 

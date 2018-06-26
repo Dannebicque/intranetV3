@@ -40,6 +40,11 @@ class TypeGroupe extends BaseEntity
      */
     private $groupes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $defaut;
+
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
@@ -162,6 +167,18 @@ class TypeGroupe extends BaseEntity
                 $groupe->setTypeGroupe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDefaut(): ?bool
+    {
+        return $this->defaut;
+    }
+
+    public function setDefaut(bool $defaut): self
+    {
+        $this->defaut = $defaut;
 
         return $this;
     }

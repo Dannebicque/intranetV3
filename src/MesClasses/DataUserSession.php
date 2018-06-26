@@ -10,6 +10,7 @@ namespace App\MesClasses;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
+use App\Entity\Etudiant;
 use App\Entity\Formation;
 use App\Entity\PersonnelFormation;
 use App\Entity\Semestre;
@@ -216,7 +217,7 @@ class DataUserSession
      */
     public function isGoodFormation($role): bool
     {
-        if ($this->getUser() !== null && $this->getUser()->getTypeUser() !== 'etudiant') {
+        if ($this->getUser() !== null && !($this->getUser() instanceof Etudiant)) {
 
             $autorize = false;
 

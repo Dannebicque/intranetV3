@@ -44,6 +44,8 @@ class BaseController extends Controller
 
     /**
      * @param FlashBagInterface $flashBag
+     *
+     * @required
      */
     public function setFlashBag(FlashBagInterface $flashBag): void
     {
@@ -52,12 +54,18 @@ class BaseController extends Controller
 
     /**
      * @param EntityManagerInterface $entityManager
+     *
+     * @required
      */
     public function setEntityManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param TranslatorInterface $translator
+     * @required
+     */
     public function setTranslator(TranslatorInterface $translator)
     {
         $this->translator = $translator;

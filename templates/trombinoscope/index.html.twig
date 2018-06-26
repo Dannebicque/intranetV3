@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% set semestreActif = 0 %}
+
+
 {% block header %}
     {{ 'trombinoscope.heading'|trans }}
 {% endblock %}
@@ -27,32 +30,21 @@
 
 {% block content %}
 
-    <div class="card">
-        <header class="card-header">
-            <h4 class="card-title">Card title</h4>
-            <div class="card-header-actions" style="">
-                <span id="trombifiltre">
-                    {# todo: a gérer en fonction du semestre et des types de groupes disponibles #}
-                    <a href="#" class="btn btn-sm btn btn-info"> {{ 'cm'|trans }}</a>
-                    <a href="#" class="btn btn-sm btn-flat btn-info">{{ 'td'|trans }}</a>
-                    <a href="#" class="btn btn-sm btn-flat btn-info">{{ 'tp'|trans }}</a>
-                </span>
-                <ul class="card-controls">
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF</a>
-                            <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel</a>
-                            <a href="#" class="dropdown-item"><i class="fa fa-file-text-o"></i> CSV</a>
-                        </div>
-                    </li>
-                </ul>
 
-            </div>
-        </header>
-        <div class="card-body">
-            <div class="row" id="trombi">
-            </div>
-        </div>
+    <div id="trombi">
+        {% if user_data.semestres|length > 0 %}
+            {% for semestre in user_data.semestres %}
+                {% if loop.first %}
+                    {% set semestreActif = semestre.id %}
+                {% endif %}
+            {% endfor %}
+            {{ render(controller(
+                'App\\Controller\\TrombinoscopeController::trombiEtudiantSemestre', {'semestre':semestreActif}
+            )) }}
+        {% else %}
+            {{ render(controller(
+                'App\\Controller\\TrombinoscopeController::trombiPersonnel', {'type':'permanent'}
+            )) }}
+        {% endif %}
     </div>
 {% endblock %}

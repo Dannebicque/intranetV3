@@ -71,7 +71,6 @@ class DateController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($date);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.add.success.flash');
 
             return $this->redirectToRoute('administration_date_index');
         }
@@ -155,7 +154,7 @@ class DateController extends BaseController
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'date.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

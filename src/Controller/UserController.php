@@ -75,7 +75,7 @@ class UserController extends BaseController
     public function settings(Request $request)
     {
         $user = $this->getUser();
-        if (is_a($user, Personnel::class)) {
+        if ($user instanceof Personnel) {
             $form = $this->createForm(PersonnelProfilType::class, $user);
         } else {
             $form = $this->createForm(EtudiantProfilType::class, $user);

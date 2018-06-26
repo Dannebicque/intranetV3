@@ -4,21 +4,51 @@
     {{ 'settings.heading'|trans }}
 {% endblock %}
 
+{% block headeractions %}
+    <div class="header-action bg-white">
+        <nav class="nav">
+            <a class="nav-link active show"
+               href="#vosInformations" data-toggle="tab" role="tab"
+               id="profil-vosInformations">{{ 'tab.vosInformations'|trans }}</a>
+            <a class="nav-link" href="#vosParametres" data-toggle="tab" role="tab"
+               id="profil-vosParametres">{{ 'tab.vosParametres'|trans }}</a>
+
+        </nav>
+    </div>
+{% endblock %}
+
 {% block content %}
 
-    <div class="card">
-        <h4 class="card-title">Card title</h4>
+    <div class="tab-content">
+        <div class="tab-pane active show" id="vosInformations">
+            <div class="card">
+                <h4 class="card-title">Vos informations</h4>
 
-        <div class="card-body">
-            Choix de la formation par défaut (automatiquement logé)
-            Définition de la signature, de l'avatar
-            gestion de l'adresse (plutôt que dans apropos ?)
+                <div class="card-body">
+                    Choix de la formation par défaut (automatiquement logé)
+                    Définition de la signature, de l'avatar
+                    gestion de l'adresse (plutôt que dans apropos ?)
 
-            {% form_theme form 'form/bootstrap_4_layout.html.twig' %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
-            {{ form_end(form) }}
+                    {% form_theme form 'form/bootstrap_4_layout.html.twig' %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane active show" id="vosParametres">
+
+            <div class="card">
+                <h4 class="card-title">Vos informations</h4>
+
+                <div class="card-body">
+                    Choix de la formation par défaut (automatiquement logé)
+                    Définition de la signature, de l'avatar
+                    gestion de l'adresse (plutôt que dans apropos ?)
+                </div>
+            </div>
         </div>
     </div>
+
 {% endblock %}

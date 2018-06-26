@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
+use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,6 +22,33 @@ class TrombinoscopeController extends BaseController
     public function index(): Response
     {
         return $this->render('trombinoscope/index.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/etudiant/{semestre}/{typegroupe}", name="trombinoscope_etudiant_semestre", options={"expose":true})
+     * @param Semestre $semestre
+     */
+    public function trombiEtudiantSemestre(Semestre $semestre, TypeGroupe $typegroupe = null)
+    {
+        return $this->render('trombinoscope/trombiEtudiant.html.twig', [
+            'semestre'           => $semestre,
+            'selectedTypeGroupe' => $typegroupe
+
+        ]);
+    }
+
+    /**
+     * @Route("/personnel/{type}", name="trombinoscope_personnel", options={"expose":true})
+     */
+    public function trombiPersonnel(PersonnelRepository $personnelRepository, $type)
+    {
+        $personnels = $personnelRepository->findByType($type,
+            $this->dataUserSession->getFormationId());
+
+        return $this->render('trombinoscope/trombiPersonnel.html.twig', [
+            'personnels' => $personnels,
+            'type'       => $type
         ]);
     }
 }

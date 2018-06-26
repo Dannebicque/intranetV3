@@ -6575,5 +6575,35 @@
               <target>atitle.changer.semestre</target>
           </segment>
       </unit>
+      <unit id="LpW47cF" name="competence.add.success.flash">
+          <segment>
+              <source>competence.add.success.flash</source>
+              <target>competence.add.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="k2in0h4" name="notice">
+          <segment>
+              <source>notice</source>
+              <target>notice</target>
+          </segment>
+      </unit>
+      <unit id="jPAvEsl" name="tab.vosInformations">
+          <segment>
+              <source>tab.vosInformations</source>
+              <target>tab.vosInformations</target>
+          </segment>
+      </unit>
+      <unit id="zxW3Yvc" name="tab.vosParametres">
+          <segment>
+              <source>tab.vosParametres</source>
+              <target>tab.vosParametres</target>
+          </segment>
+      </unit>
+      <unit id="lPYB_Al" name="s.heading">
+          <segment>
+              <source>s.heading</source>
+              <target>s.heading</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

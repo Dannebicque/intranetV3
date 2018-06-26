@@ -111,7 +111,7 @@ class BorneController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'borne.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

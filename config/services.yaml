@@ -19,6 +19,19 @@ services:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
 
+#    App\Controller\BaseController:
+#        # ...
+#        calls:
+#            - method: setDataUserSession
+#              arguments:
+#                - '@App\MesClasses\DataUserSession'
+#            - method: setFlashBag
+#              arguments:
+#                - '@Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface'
+#            - method: setEntityManager
+#              arguments:
+#                - '@Doctrine\ORM\EntityManagerInterface'
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
@@ -28,6 +41,13 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+#    App\Listener\OrmListener:
+#        tags:
+#            - { name: doctrine.event_listener, event: postPersist }
+#            - { name: doctrine.event_listener, event: postUpdate }
+#            - { name: doctrine.event_listener, event: postRemove }
+
     redirect.after.login:
         class: App\Listener\AfterLoginRedirect
         arguments: ['@router']
+
