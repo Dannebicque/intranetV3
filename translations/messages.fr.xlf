@@ -6605,5 +6605,71 @@
               <target>s.heading</target>
           </segment>
       </unit>
+    <unit id="0">
+      <segment>
+        <source>contacter.sur.mail.univ</source>
+        <target>Contacter sur son mail universitaire</target>
+      </segment>
+    </unit>
+    <unit id="1">
+      <segment>
+        <source>consulter.espace.travail</source>
+        <target>Consulter son espace de travail/portefolio</target>
+      </segment>
+    </unit>
+    <unit id="2">
+      <segment>
+        <source>espace.travail</source>
+        <target>Espace Travail</target>
+      </segment>
+    </unit>
+    <unit id="3">
+      <segment>
+        <source>contacter</source>
+        <target>Contacter</target>
+      </segment>
+    </unit>
+    <unit id="4">
+      <segment>
+        <source>amis</source>
+        <target>Amis</target>
+      </segment>
+    </unit>
+    <unit id="5">
+      <segment>
+        <source>donnees.personnelles</source>
+        <target>Données personnelles</target>
+      </segment>
+    </unit>
+    <unit id="6">
+      <segment>
+        <source>vos.informations.identification</source>
+        <target>Vos informations d'identification</target>
+      </segment>
+    </unit>
+    <unit id="7">
+      <segment>
+        <source>prenom.nom</source>
+        <target>Prénom Nom</target>
+      </segment>
+    </unit>
+    <unit id="8">
+      <segment>
+        <source>mail.universite</source>
+        <target>Mail Université</target>
+      </segment>
+    </unit>
+    <unit id="9">
+      <segment>
+        <source>site.universite</source>
+        <target>Site université/pro</target>
+      </segment>
+    </unit>
+    <unit id="10">
+      <segment>
+        <source>site.personnel</source>
+        <target>Site personnel</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

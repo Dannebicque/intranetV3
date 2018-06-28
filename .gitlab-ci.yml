@@ -1,6 +1,15 @@
 # Select image from https://hub.docker.com/r/_/php/
 image: php:7.1
 
+services:
+  - mysql:latest
+
+variables:
+  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+  MYSQL_DATABASE: intranetv3
+  MYSQL_ROOT_PASSWORD: root
+  DATABASE_URL: mysql://root:root@mysql:3306/intranetv3
+
 before_script:
   - bash ci/docker_install.sh > /dev/null
   - curl -sS https://getcomposer.org/installer | php

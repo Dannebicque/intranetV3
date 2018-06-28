@@ -5,7 +5,6 @@
             <thead>
             <tr>
                 <th>{{ 'table.ordre'|trans }}</th>
-                <th>{{ 'table.diplome'|trans }}</th>
                 <th>{{ 'table.semestre'|trans }}</th>
                 <th>{{ 'table.decision'|trans }}</th>
                 <th>{{ 'table.proposition'|trans }}</th>
@@ -18,8 +17,7 @@
             {% for parcour in scolarite %}
                 <tr>
                     <td>{{ parcour.ordre }}</td>
-                    <td>{{ parcour.diplome ? parcour.diplome.libelle : 'non.defini'|trans }}</td>
-                    <td>{{ parcour.semestre ? parcour.semestre.libelle : 'non.defini'|trans }}</td>
+                    <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
                     <td>{{ parcour.decision }}</td>
                     <td>{{ parcour.proposition }}</td>
                     <td>{{ 'table.moyenneues'|trans }}</td>

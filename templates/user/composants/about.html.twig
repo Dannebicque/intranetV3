@@ -1,24 +1,34 @@
 <div class="card">
-    <h4 class="card-title">Vos informations d'identification</h4>
+    <h4 class="card-title">{{ 'vos.informations.identification'|trans }}</h4>
     <div class="card-body">
-        <p><strong>Prénom Nom :</strong> {{ user.display }}</p>
-        <p><strong>Mail Université :</strong> {{ user.mailuniv }}</p>
-        <p><strong>Site université/pro :</strong> {{ user.siteuniv }}</p>
+        <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+        <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance }}</p>
+        <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numeroEtudiant }}</p>
+        <p><strong>{{ 'mail.universite'|trans }} :</strong> <a href="mailto:{{ user.mailuniv }}"
+                                                               target="_blank">{{ user.mailuniv }}</a></p>
+        <p><strong>{{ 'site.universite'|trans }} :</strong> <a href="{{ user.siteUniv }}"
+                                                               target="_blank">{{ user.siteUniv }}</a></p>
+        <p><strong>{{ 'site.personnel'|trans }} :</strong> <a href="{{ user.sitePerso }}"
+                                                              target="_blank">{{ user.sitePerso }}</a></p>
     </div>
 </div>
-
+{% if is_granted('ROLE_PERMANENT') and (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE')) %}
 <div class="card">
-    <h4 class="card-title">Editez vos données personnelles</h4>
+    <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
     <div class="card-body">
         Détails des informations du candidat
     </div>
 </div>
+{% endif %}
 
-{% if is_granted ('ROLE_ETUDIANT') %}
+{% if user.typeUser == 'etudiant' %}
     <div class="card">
-        <h4 class="card-title">Votre parcours</h4>
+        <h4 class="card-title">{{ 'parcours.scolaire'|trans }}</h4>
         <div class="card-body">
-
+            <dl class="row">
+                <dt class="col-sm-3">Bac :</dt>
+                <dd class="col-sm-9">{{ user.bac }} obtenu en {{ user.anneeBac }}</dd>
+            </dl>
         </div>
     </div>
 {% endif %}
