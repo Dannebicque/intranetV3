@@ -1,0 +1,7 @@
+{% if adresse != null %}
+    <p>
+        {{ adresse.diplay }}
+    </p>
+{% else %}
+    <div class="alert alert-info">{{ 'aucune.adresse.fournie'|trans }}</div>
+{% endif %}

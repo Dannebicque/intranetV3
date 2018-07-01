@@ -76,7 +76,12 @@ class AnneeController extends BaseController
         if ($diplome->getFormation() !== null) {
             $annee = new Annee();
             $annee->setDiplome($diplome);
-            $form = $this->createForm(AnneeType::class, $annee, ['formation' => $diplome->getFormation()]);
+            $form = $this->createForm(AnneeType::class, $annee, [
+                'formation' => $diplome->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +123,12 @@ class AnneeController extends BaseController
     {
         if ($annee->getDiplome() !== null && $annee->getDiplome()->getFormation() !== null) {
             $form = $this->createForm(AnneeType::class, $annee,
-                ['formation' => $annee->getDiplome()->getFormation()->getId()]);
+                [
+                    'formation' => $annee->getDiplome()->getFormation()->getId(),
+                    'attr'      => [
+                        'data-provide' => 'validation'
+                    ]
+                ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

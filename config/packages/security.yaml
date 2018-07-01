@@ -51,7 +51,8 @@ security:
         # Les regles de securité
         # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
         # peuvent acceder à toutes les pages commençant par /admin
-        - { path: '^/[a-z]{2}/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/connexion', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/', roles: IS_AUTHENTICATED_FULLY }
         - { path: '^/administration', roles: ROLE_PERMANENT }
         - { path: '^/iut', roles: ROLE_IUT }

@@ -55,14 +55,18 @@ class UfrController extends BaseController
 
     /**
      * @Route("/new", name="sa_ufr_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
     public function create(Request $request): Response
     {
         $ufr = new Ufr();
-        $form = $this->createForm(UfrType::class, $ufr);
+        $form = $this->createForm(UfrType::class, $ufr, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -92,21 +96,24 @@ class UfrController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ufr_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Ufr                    $ufr
+     * @param Request $request
+     * @param Ufr     $ufr
      *
      * @return Response
      */
     public function edit(Request $request, Ufr $ufr): Response
     {
-        $form = $this->createForm(UfrType::class, $ufr);
+        $form = $this->createForm(UfrType::class, $ufr, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ufr.edit.success.flash');
 
-//todo: peut être essager de gérer le falshabag avec une notification et un log, à la détecion d'un event ?
             return $this->redirectToRoute('sa_ufr_edit', ['id' => $ufr->getId()]);
         }
 

@@ -57,7 +57,12 @@ class DocumentController extends BaseController
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document,
-            array('formation' => $this->dataUserSession->getFormation()));
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,7 +102,12 @@ class DocumentController extends BaseController
     public function edit(Request $request, Document $document): Response
     {
         $form = $this->createForm(DocumentType::class, $document,
-            array('formation' => $this->dataUserSession->getFormation()));
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

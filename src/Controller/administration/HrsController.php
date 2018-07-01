@@ -43,7 +43,12 @@ class HrsController extends BaseController
      */
     public function edit(Request $request, Hrs $hrs): Response
     {
-        $form = $this->createForm(HrsType::class, $hrs, ['formation' => $this->dataUserSession->getFormation()]);
+        $form = $this->createForm(HrsType::class, $hrs, [
+            'formation' => $this->dataUserSession->getFormation(),
+            'attr'      => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -71,7 +76,10 @@ class HrsController extends BaseController
         if ($this->dataUserSession->getFormation() !== null) {
             $hrs = new Hrs($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
             $form = $this->createForm(HrsType::class, $hrs, [
-                'formation' => $this->dataUserSession->getFormation()
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
             ]);
             $form->handleRequest($request);
 

@@ -103,7 +103,12 @@ class TrelloTacheController extends BaseController
     {
         $trelloTache = new TrelloTache($this->dataUserSession->getFormation());
         $form = $this->createForm(TrelloTacheType::class, $trelloTache,
-            array('formation' => $this->dataUserSession->getFormation()));
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -141,7 +146,12 @@ class TrelloTacheController extends BaseController
     public function edit(Request $request, TrelloTache $trelloTache): Response
     {
         $form = $this->createForm(TrelloTacheType::class, $trelloTache,
-            array('formation' => $this->dataUserSession->getFormation()));
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

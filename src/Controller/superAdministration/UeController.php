@@ -59,7 +59,12 @@ class UeController extends BaseController
     {
         if ($semestre->getAnnee() !== null) {
             $ue = new Ue($semestre);
-            $form = $this->createForm(UeType::class, $ue, ['diplome' => $semestre->getAnnee()->getDiplome()]);
+            $form = $this->createForm(UeType::class, $ue, [
+                'diplome' => $semestre->getAnnee()->getDiplome(),
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -103,7 +108,12 @@ class UeController extends BaseController
     {
         if ($ue->getDiplome() !== null) {
 
-            $form = $this->createForm(UeType::class, $ue, ['diplome' => $ue->getDiplome()->getId()]);
+            $form = $this->createForm(UeType::class, $ue, [
+                'diplome' => $ue->getDiplome(),
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

@@ -13,9 +13,6 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 /**
  * Class SecurityController
  * @package App\Controller
- * @Route("/{_locale}",
- *     requirements={"_locale": "fr|en"},
- *     defaults={"_locale":"fr"})
  */
 class SecurityController extends BaseController
 {
@@ -31,8 +28,9 @@ class SecurityController extends BaseController
         $this->encoder = $encoder;
     }
 
+
     /**
-     * @Route("/login", name="security_login")
+     * @Route({"fr":"/connexion", "en":"/login"}, name="security_login")
      * @param AuthenticationUtils $helper
      *
      * @return Response
@@ -48,7 +46,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * @Route("/logout", name="security_logout")
+     * @Route({"fr":"/deconnexion", "en":"/logout"}, name="security_logout")
      */
     public function logout(): void
     {
@@ -56,7 +54,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * @Route("/password-lost", name="security_password_lost")
+     * @Route({"fr":"/mot-de-passe-perdu", "en":"/password-lost"}, name="security_password_lost")
      * @param Request $request
      *
      * @return Response
@@ -75,7 +73,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * @Route("/lock", name="security_lock")
+     * @Route({"fr":"/verouiller", "en":"/lock"}, name="security_lock")
      * @param Request $request
      *
      * @return Response

@@ -65,7 +65,11 @@ class FormationController extends BaseController
     public function create(Request $request): Response
     {
         $formation = new Formation();
-        $form = $this->createForm(FormationType::class, $formation);
+        $form = $this->createForm(FormationType::class, $formation, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +106,11 @@ class FormationController extends BaseController
      */
     public function edit(Request $request, Formation $formation): Response
     {
-        $form = $this->createForm(FormationType::class, $formation);
+        $form = $this->createForm(FormationType::class, $formation, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

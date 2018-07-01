@@ -31,6 +31,9 @@ class RattrapageController extends BaseController
         $form = $this->createForm(RattrapageType::class, $rattrapage,
             [
                 'semestre' => $this->getUser()->getSemestre(),
+                'attr'     => [
+                    'data-provide' => 'validation'
+                ],
                 'action'   => $this->generateUrl('application_etudiant_rattrapage_index')
             ]);
         $form->handleRequest($request);

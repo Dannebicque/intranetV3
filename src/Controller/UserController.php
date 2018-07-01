@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Constantes;
 use App\Entity\Favori;
 use App\Entity\Personnel;
 use App\Form\EtudiantProfilType;
@@ -34,7 +35,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/{type}/{slug}", name="user_profil", options={"expose": true})
-     * @param EtudiantRepository $etudiantRepository
+     * @param EtudiantRepository  $etudiantRepository
      * @param PersonnelRepository $personnelRepository
      * @param                     $type
      * @param                     $slug
@@ -76,9 +77,31 @@ class UserController extends BaseController
     {
         $user = $this->getUser();
         if ($user instanceof Personnel) {
-            $form = $this->createForm(PersonnelProfilType::class, $user);
+            $form = $this->createForm(PersonnelProfilType::class, $user,
+                [
+                    'attr' => [
+                        'data-provide' => 'validation'
+                    ]
+                ]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
+            }
         } else {
-            $form = $this->createForm(EtudiantProfilType::class, $user);
+            $form = $this->createForm(EtudiantProfilType::class, $user, [
+                'attr' =>
+                    ['data-provide' => 'validation']
+            ]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
+            }
         }
 
         return $this->render('user/settings.html.twig', [
@@ -87,9 +110,9 @@ class UserController extends BaseController
     }
 
     /**
-     * @param FavoriRepository       $favoriRepository
-     * @param EtudiantRepository     $etudiantRepository
-     * @param Request                $request
+     * @param FavoriRepository   $favoriRepository
+     * @param EtudiantRepository $etudiantRepository
+     * @param Request            $request
      *
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException

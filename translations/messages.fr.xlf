@@ -1159,9 +1159,6 @@
       </segment>
     </unit>
     <unit id="zr82FnV" name="contacter">
-      <notes>
-        <note category="file-source" priority="1">templates/trombinoscope/blocTrombi.html.twig:15</note>
-      </notes>
       <segment>
         <source>contacter</source>
         <target>Contacter</target>
@@ -6605,71 +6602,149 @@
               <target>s.heading</target>
           </segment>
       </unit>
-    <unit id="0">
+      <unit id="USARB8W" name="contacter.sur.mail.univ">
       <segment>
         <source>contacter.sur.mail.univ</source>
         <target>Contacter sur son mail universitaire</target>
       </segment>
     </unit>
-    <unit id="1">
+      <unit id="LzvMj15" name="consulter.espace.travail">
       <segment>
         <source>consulter.espace.travail</source>
         <target>Consulter son espace de travail/portefolio</target>
       </segment>
     </unit>
-    <unit id="2">
+      <unit id="f1TiCfj" name="espace.travail">
       <segment>
         <source>espace.travail</source>
         <target>Espace Travail</target>
       </segment>
     </unit>
-    <unit id="3">
-      <segment>
-        <source>contacter</source>
-        <target>Contacter</target>
-      </segment>
-    </unit>
-    <unit id="4">
+      <unit id="4yZ9mxh" name="amis">
       <segment>
         <source>amis</source>
         <target>Amis</target>
       </segment>
     </unit>
-    <unit id="5">
+      <unit id="mPTchHn" name="donnees.personnelles">
       <segment>
         <source>donnees.personnelles</source>
         <target>Données personnelles</target>
       </segment>
     </unit>
-    <unit id="6">
+      <unit id="SID0cS4" name="vos.informations.identification">
       <segment>
         <source>vos.informations.identification</source>
         <target>Vos informations d'identification</target>
       </segment>
     </unit>
-    <unit id="7">
+      <unit id="Qv2ymo5" name="prenom.nom">
       <segment>
         <source>prenom.nom</source>
         <target>Prénom Nom</target>
       </segment>
     </unit>
-    <unit id="8">
+      <unit id="ppQ3oxI" name="mail.universite">
       <segment>
         <source>mail.universite</source>
         <target>Mail Université</target>
       </segment>
     </unit>
-    <unit id="9">
+      <unit id="u.PkeHr" name="site.universite">
       <segment>
         <source>site.universite</source>
         <target>Site université/pro</target>
       </segment>
     </unit>
-    <unit id="10">
+      <unit id="5C.oRsu" name="site.personnel">
       <segment>
         <source>site.personnel</source>
         <target>Site personnel</target>
       </segment>
-    </unit>
+      </unit>
+      <unit id="cz0cdCZ" name="Rechercher">
+          <segment>
+              <source>Rechercher</source>
+              <target>Rechercher</target>
+          </segment>
+      </unit>
+      <unit id="V0Jcbr7" name="date.naissance">
+          <segment>
+              <source>date.naissance</source>
+              <target>date.naissance</target>
+          </segment>
+      </unit>
+      <unit id="vOC08oQ" name="numero.etudiant">
+          <segment>
+              <source>numero.etudiant</source>
+              <target>numero.etudiant</target>
+          </segment>
+      </unit>
+      <unit id="83ExMj2" name="etudiants">
+          <segment>
+              <source>etudiants</source>
+              <target>etudiants</target>
+          </segment>
+      </unit>
+      <unit id="iY1KBMS" name="permanents">
+          <segment>
+              <source>permanents</source>
+              <target>permanents</target>
+          </segment>
+      </unit>
+      <unit id="P5J6SAk" name="autres">
+          <segment>
+              <source>autres</source>
+              <target>autres</target>
+          </segment>
+      </unit>
+      <unit id="MDu3wLg" name="parcours.scolaire">
+          <segment>
+              <source>parcours.scolaire</source>
+              <target>parcours.scolaire</target>
+          </segment>
+      </unit>
+      <unit id="r1QtS9k" name="aucune.adresse.fournie">
+          <segment>
+              <source>aucune.adresse.fournie</source>
+              <target>Aucune adresse fournie</target>
+          </segment>
+      </unit>
+      <unit id="83Bz_8M" name="adresse.de.letudiant">
+          <segment>
+              <source>adresse.de.letudiant</source>
+              <target>Adresse de l'étudiant</target>
+          </segment>
+      </unit>
+      <unit id="daq2ru3" name="adresse.parentale">
+          <segment>
+              <source>adresse.parentale</source>
+              <target>Adresse parentale</target>
+          </segment>
+      </unit>
+      <unit id="JopssP2" name="bac">
+          <segment>
+              <source>bac</source>
+              <target>Bac</target>
+          </segment>
+      </unit>
+      <unit id="mbPBxwX" name="obtenu.en">
+          <segment>
+              <source>obtenu.en</source>
+              <target>obtenu en</target>
+          </segment>
+      </unit>
+      <unit id="FCl8b9r" name="Tous.les.champs.obligatoires">
+          <segment>
+              <source>Tous.les.champs.obligatoires</source>
+              <target>Tous.les.champs.obligatoires</target>
+          </segment>
+      </unit>
+      <unit id="MBgykTk" name="donnees.update.success.flash">
+          <segment>
+              <source>donnees.update.success.flash</source>
+              <target>donnees.update.success.flash</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

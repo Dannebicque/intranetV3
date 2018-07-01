@@ -64,7 +64,11 @@ class SalleController extends BaseController
     public function create(Request $request): Response
     {
         $salle = new Salle();
-        $form = $this->createForm(SalleType::class, $salle);
+        $form = $this->createForm(SalleType::class, $salle, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +105,11 @@ class SalleController extends BaseController
      */
     public function edit(Request $request, Salle $salle): Response
     {
-        $form = $this->createForm(SalleType::class, $salle);
+        $form = $this->createForm(SalleType::class, $salle, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

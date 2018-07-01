@@ -74,7 +74,11 @@ class PersonnelController extends BaseController
     public function create(Request $request): Response
     {
         $personnel = new Personnel();
-        $form = $this->createForm(PersonnelType::class, $personnel);
+        $form = $this->createForm(PersonnelType::class, $personnel, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -111,7 +115,11 @@ class PersonnelController extends BaseController
      */
     public function edit(Request $request, Personnel $personnel): Response
     {
-        $form = $this->createForm(PersonnelType::class, $personnel);
+        $form = $this->createForm(PersonnelType::class, $personnel, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

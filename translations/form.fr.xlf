@@ -2681,5 +2681,11 @@
               <target>Adresse parentale</target>
           </segment>
       </unit>
+      <unit id="CrpCHLo" name="label.adresseParentale">
+          <segment>
+              <source>label.adresseParentale</source>
+              <target>label.adresseParentale</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

@@ -59,7 +59,12 @@ class EtudiantController extends BaseController
     public function import(Request $request): Response
     {
         $form = $this->createForm(ImportEtudiantType::class, null,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
 
         $form->handleRequest($request);
 

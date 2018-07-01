@@ -35,7 +35,11 @@ class RhController extends BaseController
     public function create(Request $request): Response
     {
         $personnel = new Personnel();
-        $form = $this->createForm(PersonnelType::class, $personnel);
+        $form = $this->createForm(PersonnelType::class, $personnel, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

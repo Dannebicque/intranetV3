@@ -34,7 +34,12 @@ class TypeGroupeController extends BaseController
     {
         $typeGroupe = new TypeGroupe();
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,7 +77,12 @@ class TypeGroupeController extends BaseController
     public function edit(Request $request, TypeGroupe $typeGroupe): Response
     {
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

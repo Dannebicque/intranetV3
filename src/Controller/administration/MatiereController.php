@@ -64,7 +64,11 @@ class MatiereController extends BaseController
     public function create(Request $request): Response
     {
         $matiere = new Matiere();
-        $form = $this->createForm(MatiereType::class, $matiere);
+        $form = $this->createForm(MatiereType::class, $matiere, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +105,11 @@ class MatiereController extends BaseController
      */
     public function edit(Request $request, Matiere $matiere): Response
     {
-        $form = $this->createForm(MatiereType::class, $matiere);
+        $form = $this->createForm(MatiereType::class, $matiere, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

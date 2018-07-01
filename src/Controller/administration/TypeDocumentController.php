@@ -64,7 +64,11 @@ class TypeDocumentController extends BaseController
     public function create(Request $request): Response
     {
         $typeDocument = new TypeDocument($this->dataUserSession->getFormation());
-        $form = $this->createForm(TypeDocumentType::class, $typeDocument);
+        $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +105,11 @@ class TypeDocumentController extends BaseController
      */
     public function edit(Request $request, TypeDocument $typeDocument): Response
     {
-        $form = $this->createForm(TypeDocumentType::class, $typeDocument);
+        $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

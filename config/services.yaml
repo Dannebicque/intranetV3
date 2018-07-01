@@ -51,3 +51,7 @@ services:
         class: App\Listener\AfterLoginRedirect
         arguments: ['@router']
 
+    #todo: ne fonctionne pas
+    App\Listener\AjaxProfiler:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }

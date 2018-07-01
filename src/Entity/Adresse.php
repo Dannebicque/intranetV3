@@ -41,6 +41,16 @@ class Adresse extends BaseEntity
     private $pays = 'France';
 
     /**
+     * Adresse constructor.
+     *
+     * @param $adresse1
+     */
+    public function __construct()
+    {
+        $this->pays = 'France';
+    }
+
+    /**
      * @return null|string
      */
     public function getAdresse1(): ?string
@@ -153,7 +163,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setPays(string $pays): self
+    public function setPays(?string $pays = 'France'): self
     {
         $this->pays = $pays;
 
@@ -179,4 +189,6 @@ class Adresse extends BaseEntity
 
         return $html;
     }
+
+
 }

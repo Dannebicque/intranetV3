@@ -6,6 +6,8 @@
     {% else %}
         {{- block('form_widget_simple') -}}
     {% endif %}
+    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+    <div class="invalid-feedback"></div>
 {%- endblock form_widget -%}
 
 {%- block form_widget_simple -%}
@@ -347,6 +349,9 @@
     {%- if form_method != method -%}
         <input type="hidden" name="_method" value="{{ method }}" />
     {%- endif -%}
+    <div class="alert alert-info">
+        {{ 'Tous.les.champs.obligatoires'|trans }}
+    </div>
 {%- endblock form_start -%}
 
 {%- block form_end -%}

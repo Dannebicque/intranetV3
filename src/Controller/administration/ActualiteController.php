@@ -64,7 +64,11 @@ class ActualiteController extends BaseController
     public function create(Request $request): Response
     {
         $actualite = new Actualite($this->dataUserSession->getFormation());
-        $form = $this->createForm(ActualiteType::class, $actualite);
+        $form = $this->createForm(ActualiteType::class, $actualite, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +105,11 @@ class ActualiteController extends BaseController
      */
     public function edit(Request $request, Actualite $actualite): Response
     {
-        $form = $this->createForm(ActualiteType::class, $actualite);
+        $form = $this->createForm(ActualiteType::class, $actualite, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

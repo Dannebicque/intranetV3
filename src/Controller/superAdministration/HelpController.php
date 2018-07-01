@@ -64,7 +64,11 @@ class HelpController extends BaseController
     public function create(Request $request): Response
     {
         $help = new Help();
-        $form = $this->createForm(HelpType::class, $help);
+        $form = $this->createForm(HelpType::class, $help, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +106,11 @@ class HelpController extends BaseController
     public function edit(Request $request, Help $help): Response
     {
         $form = $this->createForm(HelpType::class, $help,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'attr' => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

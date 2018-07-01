@@ -121,7 +121,7 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @var Adresse
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse")
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist"})
      */
     private $adresse;
 

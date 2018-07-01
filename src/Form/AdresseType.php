@@ -26,7 +26,7 @@ class AdresseType extends AbstractType
             ->add('adresse3', TextType::class, ['label' => 'label.adresse3', 'required' => false])
             ->add('code_postal', TextType::class, ['label' => 'label.code_postal'])
             ->add('ville', TextType::class, ['label' => 'label.ville'])
-            ->add('pays', TextType::class, ['label' => 'label.pays', 'required' => false])
+            ->add('pays', TextType::class, ['label' => 'label.pays', 'required' => false, 'data' => 'France'])
         ;
     }
 

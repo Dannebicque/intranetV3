@@ -77,7 +77,12 @@ class CarnetController extends BaseController
         $cahierTexte = new CahierTexte();
         $cahierTexte->setPersonnel($this->getUser());
         $form = $this->createForm(CahierTexteType::class, $cahierTexte,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +123,12 @@ class CarnetController extends BaseController
     public function edit(Request $request, CahierTexte $cahierTexte): Response
     {
         $form = $this->createForm(CahierTexteType::class, $cahierTexte,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

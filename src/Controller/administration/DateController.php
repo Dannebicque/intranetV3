@@ -65,7 +65,12 @@ class DateController extends BaseController
     {
         $date = new Date();
         $form = $this->createForm(DatesType::class, $date,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +107,12 @@ class DateController extends BaseController
     public function edit(Request $request, Date $date): Response
     {
         $form = $this->createForm(DatesType::class, $date,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

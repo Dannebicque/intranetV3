@@ -70,6 +70,9 @@ class NoteController extends BaseController
                     'formation'       => $this->dataUserSession->getFormation(),
                     'semestre'        => $matiere->getUe()->getSemestre(),
                     'matiereDisabled' => true,
+                    'attr'            => [
+                        'data-provide' => 'validation'
+                    ]
                 ]);
 
             $form->handleRequest($request);
@@ -121,6 +124,9 @@ class NoteController extends BaseController
                 'semestre'        => $matiere->getUe()->getSemestre(),
                 'import'          => true,
                 'matiereDisabled' => true,
+                'attr'            => [
+                    'data-provide' => 'validation'
+                ]
             ]);
 
         $form->handleRequest($request);

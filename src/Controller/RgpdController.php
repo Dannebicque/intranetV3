@@ -8,11 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class RgpdController
  * @package App\Controller
+ * @Route({"fr":"/mentions-legales/rgpd", "en":"/legal-mention/gpdr"})
  */
 class RgpdController extends Controller
 {
     /**
-     * @Route("/rgpd", name="rgpd")
+     * @Route("/", name="rgpd_index")
      */
     public function index()
     {

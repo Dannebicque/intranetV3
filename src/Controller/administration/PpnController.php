@@ -64,7 +64,12 @@ class PpnController extends BaseController
     public function create(Request $request): Response
     {
         $ppn = new Ppn();
-        $form = $this->createForm(PpnType::class, $ppn, ['formation' => $this->dataUserSession->getFormation()]);
+        $form = $this->createForm(PpnType::class, $ppn, [
+            'formation' => $this->dataUserSession->getFormation(),
+            'attr'      => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +106,12 @@ class PpnController extends BaseController
      */
     public function edit(Request $request, Ppn $ppn): Response
     {
-        $form = $this->createForm(PpnType::class, $ppn, ['formation' => $this->dataUserSession->getFormation()]);
+        $form = $this->createForm(PpnType::class, $ppn, [
+            'formation' => $this->dataUserSession->getFormation(),
+            'attr'      => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

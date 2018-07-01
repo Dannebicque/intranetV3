@@ -56,7 +56,11 @@ class TypeDiplomeController extends BaseController
     public function create(Request $request): Response
     {
         $typeDiplome = new TypeDiplome();
-        $form = $this->createForm(TypeDiplomeType::class, $typeDiplome);
+        $form = $this->createForm(TypeDiplomeType::class, $typeDiplome, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -93,7 +97,11 @@ class TypeDiplomeController extends BaseController
      */
     public function edit(Request $request, TypeDiplome $typeDiplome): Response
     {
-        $form = $this->createForm(TypeDiplomeType::class, $typeDiplome);
+        $form = $this->createForm(TypeDiplomeType::class, $typeDiplome, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

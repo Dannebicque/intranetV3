@@ -64,7 +64,11 @@ class SiteController extends BaseController
     public function create(Request $request): Response
     {
         $site = new Site();
-        $form = $this->createForm(SiteType::class, $site);
+        $form = $this->createForm(SiteType::class, $site, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +105,11 @@ class SiteController extends BaseController
      */
     public function edit(Request $request, Site $site): Response
     {
-        $form = $this->createForm(SiteType::class, $site);
+        $form = $this->createForm(SiteType::class, $site, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

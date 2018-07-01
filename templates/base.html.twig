@@ -167,18 +167,23 @@
                 </a>
             </div>
         </div>
-        <div class="topbar-divider d-none d-md-block"></div>
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="Rechercher" data-toggle="lookup"
+           data-target="#lookup-full"
+           data-original-title="{{ 'Rechercher'|trans }}">
+            <i class="material-icons">search</i>
+        </a>
+        {#<div class="topbar-divider d-none d-md-block"></div>#}
 
-        <div class="lookup d-none d-md-block topbar-search" id="theadmin-search">
-            <label for="searchbar"></label>
-            <input class="form-control w-300px" type="text" id="searchbar">
-            <div class="lookup-placeholder">
-                <i class="ti-search"></i>
-                <span data-provide="typing"
-                      data-type="<strong>Type</strong> Button|<strong>Type</strong> Slider|<strong>Type</strong> Layout|<strong>Type</strong> Modal|<strong>Try</strong> typing any keyword..."
-                      data-loop="false" data-type-speed="90" data-back-speed="50" data-show-cursor="false"></span>
-            </div>
-        </div>
+        {#<div class="lookup d-none d-md-block topbar-search" id="theadmin-search">#}
+        {#<label for="searchbar"></label>#}
+        {#<input class="form-control w-300px" type="text" id="searchbar">#}
+        {#<div class="lookup-placeholder">#}
+        {#<i class="ti-search"></i>#}
+        {#<span data-provide="typing"#}
+        {#data-type="<strong>Type</strong> Button|<strong>Type</strong> Slider|<strong>Type</strong> Layout|<strong>Type</strong> Modal|<strong>Try</strong> typing any keyword..."#}
+        {#data-loop="false" data-type-speed="90" data-back-speed="50" data-show-cursor="false"></span>#}
+        {#</div>#}
+        {#</div>#}
     </div>
 
     <div class="topbar-right">
@@ -449,6 +454,196 @@
 
 </main>
 <!-- END Main container -->
+
+<!-- Fullscreen search -->
+<div class="lookup-fullscreen" id="lookup-full">
+    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="ti-close"></i></span>
+
+    <div class="lookup-form">
+        <input type="text" placeholder="Search anything">
+    </div>
+
+    <div class="lookup-results scrollable">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }}</h5>
+
+                <div class="media-list media-list-divided media-list-hover">
+                    <a class="media media-new" href="#">
+                <span class="avatar status-success">
+                  <img src="../assets/img/avatar/1.jpg" alt="...">
+                </span>
+
+                        <div class="media-body">
+                            <p><strong>Maryam Amiri</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">23 min ago</time>
+                            </p>
+                            <p>Authoritatively exploit resource maximizing technologies before technically.</p>
+                        </div>
+                    </a>
+
+                    <a class="media media-new" href="#">
+                <span class="avatar status-warning">
+                  <img src="../assets/img/avatar/2.jpg" alt="...">
+                </span>
+
+                        <div class="media-body">
+                            <p><strong>Hossein Shams</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">48 min ago</time>
+                            </p>
+                            <p>Continually plagiarize efficient interfaces after bricks-and-clicks niches.</p>
+                        </div>
+                    </a>
+
+                    <a class="media" href="#">
+                <span class="avatar status-dark">
+                  <img src="../assets/img/avatar/3.jpg" alt="...">
+                </span>
+
+                        <div class="media-body">
+                            <p><strong>Helen Bennett</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">3 hours ago</time>
+                            </p>
+                            <p>Objectively underwhelm cross-unit web-readiness before sticky outsourcing.</p>
+                        </div>
+                    </a>
+
+                    <a class="media" href="#">
+                        <span class="avatar status-success bg-purple">FT</span>
+
+                        <div class="media-body">
+                            <p><strong>Fidel Tonn</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">21 hours ago</time>
+                            </p>
+                            <p>Interactively innovate transparent relationships with holistic infrastructures.</p>
+                        </div>
+                    </a>
+
+                    <a class="media" href="#">
+                <span class="avatar status-danger">
+                  <img src="../assets/img/avatar/4.jpg" alt="...">
+                </span>
+
+                        <div class="media-body">
+                            <p><strong>Freddie Arends</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">Yesterday</time>
+                            </p>
+                            <p>Collaboratively visualize corporate initiatives for web-enabled value.</p>
+                        </div>
+                    </a>
+
+                    <a class="media" href="#">
+                <span class="avatar status-success">
+                  <img src="../assets/img/avatar/5.jpg" alt="...">
+                </span>
+
+                        <div class="media-body">
+                            <p><strong>Garret Gloss</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">Yesterday</time>
+                            </p>
+                            <p>Competently plagiarize visionary outsourcing after turnkey outside.</p>
+                        </div>
+                    </a>
+
+                    <a class="media" href="#">
+                        <span class="avatar status-success bg-pink">EA</span>
+
+                        <div class="media-body">
+                            <p><strong>Ena Avelar</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">2 days ago</time>
+                            </p>
+                            <p>Holisticly restore resource maximizing mindshare before visionary.</p>
+                        </div>
+                    </a>
+
+                    <a class="media" href="#">
+                <span class="avatar status-warning">
+                  <img src="../assets/img/avatar/6.jpg" alt="...">
+                </span>
+
+                        <div class="media-body">
+                            <p><strong>Enoch Keach</strong>
+                                <time class="float-right" datetime="2018-07-14 20:00">2 days ago</time>
+                            </p>
+                            <p>Efficiently strategize resource sucking alignments after competitive.</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase fw-400">{{ 'permanents'|trans }}</h5>
+
+                <div class="media-list media-list-hover">
+                    <a class="media items-center" href="#">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/1.jpg" alt="...">
+                        <p>Maryam Amiri</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
+                        <p>Hossein Shams</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <span class="avatar avatar-sm bg-secondary">LB</span>
+                        <p>Luz Buchler</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/3.jpg" alt="...">
+                        <p>Tim Hank</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <span class="avatar avatar-sm bg-dark">KC</span>
+                        <p>Karla Cardinal</p>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase fw-400">{{ 'autres'|trans }}</h5>
+                {# ou dernier éléménts recherchés
+                #}
+                <div class="media-list media-list-hover">
+                    <a class="media items-center" href="#">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/1.jpg" alt="...">
+                        <p>Maryam Amiri</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
+                        <p>Hossein Shams</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <span class="avatar avatar-sm bg-secondary">LB</span>
+                        <p>Luz Buchler</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <img class="avatar avatar-sm" src="../assets/img/avatar/3.jpg" alt="...">
+                        <p>Tim Hank</p>
+                    </a>
+
+                    <a class="media items-center" href="#">
+                        <span class="avatar avatar-sm bg-dark">KC</span>
+                        <p>Karla Cardinal</p>
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- END Fullscreen search -->
 
 
 <!-- Global quickview -->

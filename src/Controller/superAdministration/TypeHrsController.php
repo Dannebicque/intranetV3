@@ -64,7 +64,11 @@ class TypeHrsController extends BaseController
     public function create(Request $request): Response
     {
         $typeHr = new TypeHrs();
-        $form = $this->createForm(TypeHrsType::class, $typeHr);
+        $form = $this->createForm(TypeHrsType::class, $typeHr, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -101,7 +105,11 @@ class TypeHrsController extends BaseController
      */
     public function edit(Request $request, TypeHrs $typeHr): Response
     {
-        $form = $this->createForm(TypeHrsType::class, $typeHr);
+        $form = $this->createForm(TypeHrsType::class, $typeHr, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

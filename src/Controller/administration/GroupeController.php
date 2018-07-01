@@ -39,7 +39,12 @@ class GroupeController extends BaseController
     public function create(Request $request, Semestre $semestre): Response
     {
         $groupe = new Groupe();
-        $form = $this->createForm(GroupeType::class, $groupe, ['semestre' => $semestre]);
+        $form = $this->createForm(GroupeType::class, $groupe, [
+            'semestre' => $semestre,
+            'attr'     => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -78,7 +83,12 @@ class GroupeController extends BaseController
     {
         if ($groupe->getTypeGroupe() !== null && $groupe->getTypeGroupe()->getSemestre() !== null) {
             $form = $this->createForm(GroupeType::class, $groupe,
-                ['semestre' => $groupe->getTypeGroupe()->getSemestre()]);
+                [
+                    'semestre' => $groupe->getTypeGroupe()->getSemestre(),
+                    'attr'     => [
+                        'data-provide' => 'validation'
+                    ]
+                ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

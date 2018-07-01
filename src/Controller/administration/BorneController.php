@@ -39,7 +39,12 @@ class BorneController extends BaseController
     {
         $borne = new Borne();
         $form = $this->createForm(BorneType::class, $borne,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,7 +82,12 @@ class BorneController extends BaseController
     public function edit(Request $request, Borne $borne): Response
     {
         $form = $this->createForm(BorneType::class, $borne,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

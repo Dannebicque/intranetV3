@@ -140,7 +140,12 @@ class PrevisionnelController extends BaseController
     public function import(Request $request)
     {
         $form = $this->createForm(ImportPrevisionnelType::class, null,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
 
         $form->handleRequest($request);
 

@@ -65,7 +65,12 @@ class ArticleController extends BaseController
     {
         $article = new Article($this->getUser());
         $form = $this->createForm(ArticleType::class, $article,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -103,7 +108,12 @@ class ArticleController extends BaseController
     public function edit(Request $request, Article $article): Response
     {
         $form = $this->createForm(ArticleType::class, $article,
-            ['formation' => $this->dataUserSession->getFormation()]);
+            [
+                'formation' => $this->dataUserSession->getFormation(),
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

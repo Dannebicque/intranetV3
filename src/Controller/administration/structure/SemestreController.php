@@ -71,7 +71,12 @@ class SemestreController extends BaseController
         if ($annee->getDiplome() !== null) {
             $semestre = new Semestre();
             $semestre->setAnnee($annee);
-            $form = $this->createForm(SemestreType::class, $semestre, ['diplome' => $annee->getDiplome()]);
+            $form = $this->createForm(SemestreType::class, $semestre, [
+                'diplome' => $annee->getDiplome(),
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -113,7 +118,12 @@ class SemestreController extends BaseController
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
             $form = $this->createForm(SemestreType::class, $semestre,
-                ['diplome' => $semestre->getAnnee()->getDiplome()]);
+                [
+                    'diplome' => $semestre->getAnnee()->getDiplome(),
+                    'attr'    => [
+                        'data-provide' => 'validation'
+                    ]
+                ]);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

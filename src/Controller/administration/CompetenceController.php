@@ -42,7 +42,12 @@ class CompetenceController extends BaseController
     public function create(Request $request, Diplome $diplome = null): Response
     {
         $competence = new Competence($diplome);
-        $form = $this->createForm(CompetenceType::class, $competence, ['diplome' => $diplome]);
+        $form = $this->createForm(CompetenceType::class, $competence, [
+            'diplome' => $diplome,
+            'attr'    => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -119,7 +124,12 @@ class CompetenceController extends BaseController
      */
     public function edit(Request $request, Competence $competence): Response
     {
-        $form = $this->createForm(CompetenceType::class, $competence, ['diplome' => $competence->getDiplome()]);
+        $form = $this->createForm(CompetenceType::class, $competence, [
+            'diplome' => $competence->getDiplome(),
+            'attr'    => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

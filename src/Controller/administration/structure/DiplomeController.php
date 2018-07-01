@@ -72,7 +72,11 @@ class DiplomeController extends BaseController
     {
         $diplome = new Diplome();
         $diplome->setFormation($this->dataUserSession->getFormation());
-        $form = $this->createForm(DiplomeType::class, $diplome);
+        $form = $this->createForm(DiplomeType::class, $diplome, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -109,7 +113,11 @@ class DiplomeController extends BaseController
      */
     public function edit(Request $request, Diplome $diplome): Response
     {
-        $form = $this->createForm(DiplomeType::class, $diplome);
+        $form = $this->createForm(DiplomeType::class, $diplome, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
