@@ -2,7 +2,7 @@
 image: php:7.1
 
 services:
-  - mysql:latest
+  - mariadb:latest
 
 variables:
   # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)

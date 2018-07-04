@@ -148,8 +148,19 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
      */
     private $trelloTaches;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="expediteur")
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinatairePersonnel", mappedBy="personnel")
+     */
+    private $messageDestinatairePersonnels;
+
     public function __construct()
     {
+        parent::__construct();
         $this->hrs = new ArrayCollection();
         $this->previsionnels = new ArrayCollection();
         $this->evaluationsAuteur = new ArrayCollection();
@@ -159,6 +170,8 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         $this->notifications = new ArrayCollection();
         $this->trelloTaches = new ArrayCollection();
         $this->personnelFormations = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->messageDestinatairePersonnels = new ArrayCollection();
     }
 
     /**
@@ -789,6 +802,68 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
             // set the owning side to null (unless already changed)
             if ($personnelFormation->getPersonnel() === $this) {
                 $personnelFormation->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setExpediteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getExpediteur() === $this) {
+                $message->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MessageDestinatairePersonnel[]
+     */
+    public function getMessageDestinatairePersonnels(): Collection
+    {
+        return $this->messageDestinatairePersonnels;
+    }
+
+    public function addMessageDestinatairePersonnel(MessageDestinatairePersonnel $messageDestinatairePersonnel): self
+    {
+        if (!$this->messageDestinatairePersonnels->contains($messageDestinatairePersonnel)) {
+            $this->messageDestinatairePersonnels[] = $messageDestinatairePersonnel;
+            $messageDestinatairePersonnel->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageDestinatairePersonnel(MessageDestinatairePersonnel $messageDestinatairePersonnel): self
+    {
+        if ($this->messageDestinatairePersonnels->contains($messageDestinatairePersonnel)) {
+            $this->messageDestinatairePersonnels->removeElement($messageDestinatairePersonnel);
+            // set the owning side to null (unless already changed)
+            if ($messageDestinatairePersonnel->getPersonnel() === $this) {
+                $messageDestinatairePersonnel->setPersonnel(null);
             }
         }
 

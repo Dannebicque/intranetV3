@@ -176,6 +176,27 @@ class PrevisionnelController extends BaseController
     }
 
     /**
+     * @Route({"fr":"/{id}/dupliquer", "en":"/{id}/duplicate"}, name="administration_previsionnel_duplicate",
+     *                                 methods="GET")
+     * @param Request      $request
+     * @param Previsionnel $previsionnel
+     *
+     * @return Response
+     */
+    public function duplicate(Previsionnel $previsionnel): Response
+    {
+        $newprevisionnel = clone $previsionnel;
+        $this->entityManager->persist($newprevisionnel);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate.success.flash');
+
+        /* todo: faire revenir sur la page à l'origine de la duplication. */
+
+        return $this->redirectToRoute('administration_previsionnel_index');
+
+    }
+
+    /**
      * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_previsionnel_delete", methods="DELETE")
      * @param Request                $request
      * @param Previsionnel           $previsionnel

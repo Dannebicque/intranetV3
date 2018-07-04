@@ -109,7 +109,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->andWhere('u.semestre = :semestre')
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.code_matiere', 'ASC')
+            ->orderBy('m.codeMatiere', 'ASC')
             ->getQuery()
             ->getResult();
     }

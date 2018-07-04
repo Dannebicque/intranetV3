@@ -12,11 +12,15 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Formation;
+use App\Entity\MessageDestinataireEtudiant;
+use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\PersonnelFormation;
 use App\Entity\Semestre;
 use App\Repository\AnneeRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\FormationRepository;
+use App\Repository\MessageDestinataireEtudiantRepository;
+use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
@@ -46,6 +50,9 @@ class DataUserSession
      */
     protected $annees;
 
+    /** @var MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[] */
+    protected $messages;
+
     /**
      * @var Formation
      */
@@ -55,6 +62,8 @@ class DataUserSession
 
     /** @var SemestreRepository */
     protected $semestreRepository;
+
+    protected $messagesRepository;
 
     /** @var AnneeRepository */
     protected $anneeRepository;
@@ -87,6 +96,8 @@ class DataUserSession
      */
     public function __construct(
         SemestreRepository $semestreRepository,
+        MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository,
+        MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository,
         AnneeRepository $anneeRepository,
         DiplomeRepository $diplomeRepository,
         PersonnelRepository $personnelRepository,
@@ -102,8 +113,15 @@ class DataUserSession
         $this->formationRepository = $formationRepository;
         $this->notificationRepository = $notificationRepository;
 
+
         $this->user = $user;
         $this->security = $security;
+
+        if ($this->user instanceof Etudiant) {
+            $this->messagesRepository = $messageDestinataireEtudiantRepository;
+        } else {
+            $this->messagesRepository = $messageDestinatairePersonnelRepository;
+        }
 
         //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
         $this->semestres = $semestreRepository->findAll(); //todo à filter selon la formation
@@ -233,5 +251,16 @@ class DataUserSession
 
         return false;
 
+    }
+
+    public function getMessages()
+    {
+        if ($this->getUser() instanceof Etudiant) {
+            $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+        } else {
+            $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+        }
+
+        return $this->messages;
     }
 }

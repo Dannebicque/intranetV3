@@ -172,18 +172,6 @@
            data-original-title="{{ 'Rechercher'|trans }}">
             <i class="material-icons">search</i>
         </a>
-        {#<div class="topbar-divider d-none d-md-block"></div>#}
-
-        {#<div class="lookup d-none d-md-block topbar-search" id="theadmin-search">#}
-        {#<label for="searchbar"></label>#}
-        {#<input class="form-control w-300px" type="text" id="searchbar">#}
-        {#<div class="lookup-placeholder">#}
-        {#<i class="ti-search"></i>#}
-        {#<span data-provide="typing"#}
-        {#data-type="<strong>Type</strong> Button|<strong>Type</strong> Slider|<strong>Type</strong> Layout|<strong>Type</strong> Modal|<strong>Try</strong> typing any keyword..."#}
-        {#data-loop="false" data-type-speed="90" data-back-speed="50" data-show-cursor="false"></span>#}
-        {#</div>#}
-        {#</div>#}
     </div>
 
     <div class="topbar-right">
@@ -272,98 +260,34 @@
 
                         <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
                              style="height: 290px">
-                            <a class="media media-new" href="{{ path('messagerie_message',{message:1}) }}">
+                            {% for message in user_data.messages %}
+                                <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
+                                   href="{{ path('messagerie_message',{message:message.message.id}) }}">
                   <span class="avatar status-success">
-                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
+                    <img src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
+                         alt="{{ message.message.expediteur.displayPr }}">
                   </span>
 
                                 <div class="media-body">
-                                    <p><strong>Maryam Amiri</strong>
-                                        <time class="float-right" datetime="2018-07-14 20:00">23 min ago</time>
+                                    <p><strong>{{ message.message.expediteur.displayPr }}</strong>
+                                        <time class="float-right"
+                                              datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago }}</time>
                                     </p>
-                                    <p class="text-truncate">Authoritatively exploit resource maximizing technologies
-                                        before technically.</p>
+                                    <p class="text-truncate">{{ message.message.sujet }}</p>
                                 </div>
                             </a>
-
-                            <a class="media media-new" href="{{ path('messagerie_message', {message:1}) }}">
-                  <span class="avatar status-warning">
-                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
-                  </span>
-
-                                <div class="media-body">
-                                    <p><strong>Hossein Shams</strong>
-                                        <time class="float-right" datetime="2018-07-14 20:00">48 min ago</time>
-                                    </p>
-                                    <p class="text-truncate">Continually plagiarize efficient interfaces after
-                                        bricks-and-clicks niches.</p>
-                                </div>
-                            </a>
-
-                            <a class="media" href=".{{ path('messagerie_message', {message:1}) }}">
-                  <span class="avatar status-dark">
-                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
-                  </span>
-
-                                <div class="media-body">
-                                    <p><strong>Helen Bennett</strong>
-                                        <time class="float-right" datetime="2018-07-14 20:00">3 hours ago</time>
-                                    </p>
-                                    <p class="text-truncate">Objectively underwhelm cross-unit web-readiness before
-                                        sticky outsourcing.</p>
-                                </div>
-                            </a>
-
-                            <a class="media" href="{{ path('messagerie_message', {message:1}) }}">
-                                <span class="avatar status-success bg-purple">FT</span>
-
-                                <div class="media-body">
-                                    <p><strong>Fidel Tonn</strong>
-                                        <time class="float-right" datetime="2018-07-14 20:00">21 hours ago</time>
-                                    </p>
-                                    <p class="text-truncate">Interactively innovate transparent relationships with
-                                        holistic infrastructures.</p>
-                                </div>
-                            </a>
-
-                            <a class="media" href="{{ path('messagerie_message', {message:1}) }}">
-                  <span class="avatar status-danger">
-                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
-                  </span>
-
-                                <div class="media-body">
-                                    <p><strong>Freddie Arends</strong>
-                                        <time class="float-right" datetime="2018-07-14 20:00">Yesterday</time>
-                                    </p>
-                                    <p class="text-truncate">Collaboratively visualize corporate initiatives for
-                                        web-enabled value.</p>
-                                </div>
-                            </a>
-
-                            <a class="media" href="{{ path('messagerie_message', {message:1}) }}">
-                  <span class="avatar status-success">
-                    <img src="{{ asset('assets/avatar/1.jpg') }}" alt="...">
-                  </span>
-
-                                <div class="media-body">
-                                    <p><strong>Freddie Arends</strong>
-                                        <time class="float-right" datetime="2018-07-14 20:00">Yesterday</time>
-                                    </p>
-                                    <p class="text-truncate">Interactively reinvent standards compliant supply chains
-                                        through next-generation bandwidth.</p>
-                                </div>
-                            </a>
+                            {% endfor %}
                         </div>
 
                         <div class="dropdown-footer">
                             <div class="left">
-                                <a href="{{ path('messagerie_index') }}">Read all messages</a>
+                                <a href="{{ path('messagerie_index') }}">{{ 'voir.tous.les.messages'|trans }}</a>
                             </div>
 
                             <div class="right">
                                 <a href="#" data-provide="tooltip" title="Mark all as read"><i
                                             class="fa fa-circle-o"></i></a>
-                                <a href="#" data-provide="tooltip" title="Settings"><i class="fa fa-gear"></i></a>
+                                {#<a href="#" data-provide="tooltip" title="Settings"><i class="fa fa-gear"></i></a>#}
                             </div>
                         </div>
 

@@ -6746,5 +6746,11 @@
               <target>donnees.update.success.flash</target>
           </segment>
       </unit>
+      <unit id="i6EoFNc" name="voir.tous.les.messages">
+          <segment>
+              <source>voir.tous.les.messages</source>
+              <target>voir.tous.les.messages</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

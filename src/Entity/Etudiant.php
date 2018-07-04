@@ -107,11 +107,18 @@ class Etudiant extends Utilisateur implements \Serializable
      */
     private $groupes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinataireEtudiant", mappedBy="etudiant")
+     */
+    private $messageDestinataireEtudiants;
+
     //todo: ajouter boursier, contrat pro, demandeur d'emploi
     //todo: gestion de l'alternance.
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->notes = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->rattrapages = new ArrayCollection();
@@ -121,6 +128,7 @@ class Etudiant extends Utilisateur implements \Serializable
         $this->notifications = new ArrayCollection();
         $this->articleLikes = new ArrayCollection();
         $this->groupes = new ArrayCollection();
+        $this->messageDestinataireEtudiants = new ArrayCollection();
     }
 
     /**
@@ -686,4 +694,34 @@ class Etudiant extends Utilisateur implements \Serializable
         return $this;
     }
 
+    /**
+     * @return Collection|MessageDestinataireEtudiant[]
+     */
+    public function getMessageDestinataireEtudiants(): Collection
+    {
+        return $this->messageDestinataireEtudiants;
+    }
+
+    public function addMessageDestinataireEtudiant(MessageDestinataireEtudiant $messageDestinataireEtudiant): self
+    {
+        if (!$this->messageDestinataireEtudiants->contains($messageDestinataireEtudiant)) {
+            $this->messageDestinataireEtudiants[] = $messageDestinataireEtudiant;
+            $messageDestinataireEtudiant->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageDestinataireEtudiant(MessageDestinataireEtudiant $messageDestinataireEtudiant): self
+    {
+        if ($this->messageDestinataireEtudiants->contains($messageDestinataireEtudiant)) {
+            $this->messageDestinataireEtudiants->removeElement($messageDestinataireEtudiant);
+            // set the owning side to null (unless already changed)
+            if ($messageDestinataireEtudiant->getEtudiant() === $this) {
+                $messageDestinataireEtudiant->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
 }
