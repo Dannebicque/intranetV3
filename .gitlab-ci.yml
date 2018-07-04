@@ -15,6 +15,10 @@ before_script:
   - curl -sS https://getcomposer.org/installer | php
   - php composer.phar install
 
+script:
+  - php bin/console doctrine:database:create
+
+
 test:app:
   script:
   - phpunit --configuration phpunit.xml
