@@ -120,9 +120,25 @@ class TypeHrsController extends BaseController
         }
 
         return $this->render('super-administration/type_hrs/edit.html.twig', [
-            'type_hr' => $typeHr,
-            'form'    => $form->createView(),
+            'type_hrs' => $typeHr,
+            'form'     => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="sa_type_hrs_duplicate", methods="GET|POST")
+     * @param TypeHrs $typeHrs
+     *
+     * @return Response
+     */
+    public function duplicate(TypeHrs $typeHrs): Response
+    {
+        $newTypeHrs = clone $typeHrs;
+
+        $this->entityManager->persist($newTypeHrs);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('sa_type_hrs_edit', ['id' => $newTypeHrs->getId()]);
     }
 
     /**

@@ -37,7 +37,7 @@
                 {% for typeGroupe in semestre.typeGroupes %}
                     <div class="col-sm-2">
                         <button data-typegroupe="{{ typeGroupe.id }}"
-                                class="btn btn-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id == typeGroupe.id %}btn-primary{% endif %}">{{ typeGroupe.libelle }}</button>
+                                class="btn btn-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id == typeGroupe.id %}btn-primary{% endif %} admChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                     </div>
                 {% else %}
                     <div class="col-md-12">

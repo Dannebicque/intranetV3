@@ -2121,7 +2121,8 @@ jQuery.fn.scrollToEnd = function () {
 
     provider.provide('datepicker', function () {
       var options = {
-        multidateSeparator: ', '
+        multidateSeparator: ', ',
+        dateFormat: 'yy-mm-dd'
       }
 
       options = $.extend(options, app.getDataOptions($(this)));

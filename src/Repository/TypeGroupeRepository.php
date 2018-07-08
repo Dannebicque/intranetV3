@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -29,11 +30,16 @@ class TypeGroupeRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findBySemestreBuilder($semestre)
+    public function findBySemestreBuilder(Semestre $semestre)
     {
         return $this->createQueryBuilder('t')
             ->where('t.semestre = :semestre')
             ->setParameter('semestre', $semestre);
+    }
+
+    public function findBySemestre(Semestre $semestre)
+    {
+        return $this->findBySemestreBuilder($semestre)->getQuery()->getResult();
     }
 
 }

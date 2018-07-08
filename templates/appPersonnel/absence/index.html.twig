@@ -16,21 +16,29 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">Paramètres</h4>
+        <h4 class="card-title">{{ 'parametres'|trans }}</h4>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="absence-matiere">{{ 'matiere'|trans }}</label>
                         <select class="form-control" id="absence-matiere" data-provide="selectpicker"
-                                data-live-search="true"></select>
+                                data-live-search="true">
+                            {% for mati in matieres %}
+                                <option value="{{ mati.id }}"
+                                        {% if mati.id == matiere.id %}selected{% endif %}>{{ mati.codeMatiere }}
+                                    | {{ mati.libelle }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="absence-date">{{ 'date'|trans }}</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" data-provide="datepicker" id="absence-date">
+                            <input type="text" class="form-control" data-provide="datepicker"
+                                   data-language="{{ app.request.getLocale() }}" id="absence-date"
+                                   value="{{ 'now'|date('d/m/Y') }}">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -40,11 +48,11 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="absence-heure">Heure</label>
-                        <select class="form-control" id="input-normal" id="absence-heure" data-provide="selectpicker"
+                        <select class="form-control" id="absence-heure" data-provide="selectpicker"
                                 data-live-search="true">
                             <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                             {% for i in 08..20 %}
-                                <option value="{{ i }}:00">{{ i }}:00</option>
+                                <option value="{{ i }}:00" {% if loop.first %}selected{% endif %}>{{ i }}:00</option>
                                 <option value="{{ i }}:30">{{ i }}:30</option>
                             {% endfor %}
                         </select>
@@ -53,8 +61,22 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="absence-groupe">{{ 'groupe'|trans }}</label>
-                        <select class="form-control" id="absence-groupe" data-provide="selectpicker"
-                                data-live-search="true"></select>
+                        <div class="row">
+                            {% for typeGroupe in typeGroupes %}
+                                <div class="col-sm-2">
+                                    <button data-typegroupe="{{ typeGroupe.id }}"
+                                            class="btn btn-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id == typeGroupe.id %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
+                                </div>
+                            {% else %}
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning">
+                                        Aucun groupe n'existe dans ce semestre. <a
+                                                href="{{ path('administration_groupe_index') }}">Veuillez
+                                            d'abord ajouter des types de groupe et des groupes.</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +84,7 @@
     </div>
     <div class="card">
         <h4 class="card-title">{{ 'etudiants.du.semestre'|trans }}</h4>
-        <div class="card-body">
+        <div class="card-body" id="listeEtudiantsAbsences">
             <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>
         </div>
     </div>

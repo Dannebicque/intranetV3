@@ -126,6 +126,22 @@ class SiteController extends BaseController
     }
 
     /**
+     * @Route("/{id}/duplicate", name="sa_site_duplicate", methods="GET|POST")
+     * @param Site $site
+     *
+     * @return Response
+     */
+    public function duplicate(Site $site): Response
+    {
+        $newSite = clone $site;
+
+        $this->entityManager->persist($newSite);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('sa_site_edit', ['id' => $newSite->getId()]);
+    }
+
+    /**
      * @Route("/{id}", name="sa_site_delete", methods="DELETE")
      */
     public function delete(): void

@@ -944,7 +944,7 @@
       </notes>
       <segment>
         <source>app.personnel.absence.voir</source>
-        <target>Voir</target>
+          <target>Voir les absences</target>
       </segment>
     </unit>
     <unit id="Y2yNuqw" name="atitle.retour_saisie">
@@ -6683,19 +6683,19 @@
       <unit id="83ExMj2" name="etudiants">
           <segment>
               <source>etudiants</source>
-              <target>etudiants</target>
+              <target>Etudiants</target>
           </segment>
       </unit>
       <unit id="iY1KBMS" name="permanents">
           <segment>
               <source>permanents</source>
-              <target>permanents</target>
+              <target>Permanents</target>
           </segment>
       </unit>
       <unit id="P5J6SAk" name="autres">
           <segment>
               <source>autres</source>
-              <target>autres</target>
+              <target>Autres</target>
           </segment>
       </unit>
       <unit id="MDu3wLg" name="parcours.scolaire">
@@ -6749,7 +6749,91 @@
       <unit id="i6EoFNc" name="voir.tous.les.messages">
           <segment>
               <source>voir.tous.les.messages</source>
-              <target>voir.tous.les.messages</target>
+              <target>Voir tous les messages</target>
+          </segment>
+      </unit>
+      <unit id="kQ9e2Ef" name="parametres">
+          <segment>
+              <source>parametres</source>
+              <target>Paramètres</target>
+          </segment>
+      </unit>
+      <unit id="IQ1Bluc" name="label.capacite">
+          <segment>
+              <source>label.capacite</source>
+              <target>label.capacite</target>
+          </segment>
+      </unit>
+      <unit id="YbzAVFu" name="label.typesalle">
+          <segment>
+              <source>label.typesalle</source>
+              <target>label.typesalle</target>
+          </segment>
+      </unit>
+      <unit id="X_zrZv." name="0">
+          <segment>
+              <source>0</source>
+              <target>0</target>
+          </segment>
+      </unit>
+      <unit id="a4ayc.8" name="1">
+          <segment>
+              <source>1</source>
+              <target>1</target>
+          </segment>
+      </unit>
+      <unit id="1HNeOiZ" name="2">
+          <segment>
+              <source>2</source>
+              <target>2</target>
+          </segment>
+      </unit>
+      <unit id="TgdAhWK" name="3">
+          <segment>
+              <source>3</source>
+              <target>3</target>
+          </segment>
+      </unit>
+      <unit id="ZZhOaXT" name="label.site">
+          <segment>
+              <source>label.site</source>
+              <target>label.site</target>
+          </segment>
+      </unit>
+      <unit id="kKYjA.f" name="amphi">
+          <segment>
+              <source>amphi</source>
+              <target>amphi</target>
+          </segment>
+      </unit>
+      <unit id="Bicbr0l" name="info">
+          <segment>
+              <source>info</source>
+              <target>info</target>
+          </segment>
+      </unit>
+      <unit id="EpABHLL" name="salle.add.success.flash">
+          <segment>
+              <source>salle.add.success.flash</source>
+              <target>salle.add.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
+          <segment>
+              <source>type_hrs.edit.success.flash</source>
+              <target>type_hrs.edit.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="vO5y5t9" name="non">
+          <segment>
+              <source>non</source>
+              <target>Non</target>
+          </segment>
+      </unit>
+      <unit id="OjRo_om" name="oui">
+          <segment>
+              <source>oui</source>
+              <target>Oui</target>
           </segment>
       </unit>
   </file>

@@ -126,6 +126,22 @@ class SalleController extends BaseController
     }
 
     /**
+     * @Route("/{id}/duplicate", name="sa_salle_duplicate", methods="GET|POST")
+     * @param Salle $salle
+     *
+     * @return Response
+     */
+    public function duplicate(Salle $salle): Response
+    {
+        $newSalle = clone $salle;
+
+        $this->entityManager->persist($newSalle);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('sa_salle_edit', ['id' => $newSalle->getId()]);
+    }
+
+    /**
      * @Route("/{id}", name="sa_salle_delete", methods="DELETE")
      * @param Request                $request
      * @param Salle                  $salle

@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Salle extends BaseEntity
 {
+    public const SALLE_TD = 'td';
+    public const SALLE_TP = 'tp';
+    public const SALLE_AMPHI = 'amphi';
+    public const SALLE_INFORMATIQUE = 'info';
+
     /**
      * @ORM\Column(type="string", length=30)
      */
@@ -17,7 +22,7 @@ class Salle extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private $capacite;
+    private $capacite = 0;
 
     /**
      * @ORM\Column(type="string", length=255)

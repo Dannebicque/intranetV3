@@ -71,3 +71,16 @@ $(document).on('click', '.supprimer', function (e) {
   })
 });
 
+function addCallout (label, message) {
+  var html = '<div class="callout callout-' + label + '" role="alert">\n' +
+    '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
+    '                        <span>&times;</span>\n' +
+    '                    </button>\n' +
+    '                    <h5>' + label + '</h5>\n' +
+    '                    <p>' + message + '</p>\n' +
+    '                </div>'
+
+  $('#mainContent').append(html).slideDown('slow')
+  $('.callout').delay(5000).slideUp('slow')
+}
+

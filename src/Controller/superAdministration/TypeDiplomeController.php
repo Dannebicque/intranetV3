@@ -118,6 +118,22 @@ class TypeDiplomeController extends BaseController
     }
 
     /**
+     * @Route("/{id}/duplicate", name="sa_type_diplome_duplicate", methods="GET|POST")
+     * @param TypeDiplome $typeDiplome
+     *
+     * @return Response
+     */
+    public function duplicate(TypeDiplome $typeDiplome): Response
+    {
+        $newTypeDiplome = clone $typeDiplome;
+
+        $this->entityManager->persist($newTypeDiplome);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('sa_type_diplome_edit', ['id' => $newTypeDiplome->getId()]);
+    }
+
+    /**
      * @Route("/{id}", name="sa_type_diplome_delete", methods="DELETE")
      */
     public function delete(): void

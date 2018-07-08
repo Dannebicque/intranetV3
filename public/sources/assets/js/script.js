@@ -177,6 +177,19 @@ $(document).on('click', '.supprimer', function (e) {
   })
 });
 
+function addCallout (label, message) {
+  var html = '<div class="callout callout-' + label + '" role="alert">\n' +
+    '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
+    '                        <span>&times;</span>\n' +
+    '                    </button>\n' +
+    '                    <h5>' + label + '</h5>\n' +
+    '                    <p>' + message + '</p>\n' +
+    '                </div>'
+
+  $('#mainContent').append(html).slideDown('slow')
+  $('.callout').delay(5000).slideUp('slow')
+}
+
 
 
 /** CSS **/
@@ -235,9 +248,9 @@ app.ready(function () {
   //require('./plugins/documents.js'
 
 
-  var idModal = 1;
+  var idModal = 1
 
-  function openModal(titre) {
+  function openModal (titre) {
 
 
     var html = '<div id="modal' + idModal + '" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">\n' +
@@ -253,18 +266,18 @@ app.ready(function () {
       '                            </footer>\n' +
       '                        </div>\n' +
       '                    </div>\n' +
-      '                </div>';
+      '                </div>'
 
 
   }
 
   $(document).on('click', '.page-link', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var zone = $('#zone-pagination');
-    zone.empty();
-    zone.load($(this).attr('href'));
-  });
+    e.preventDefault()
+    e.stopPropagation()
+    var zone = $('#zone-pagination')
+    zone.empty()
+    zone.load($(this).attr('href'))
+  })
 
   //require('./plugins/calendar');
 
@@ -279,17 +292,17 @@ app.ready(function () {
 
 
   $(document).on('click', '.changeprofil', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    $('.changeprofil').removeClass('active show');
-    $(this).addClass('active show');
-    $('#profilContent').empty().load($(this).attr('href'));
-  });
+    $('.changeprofil').removeClass('active show')
+    $(this).addClass('active show')
+    $('#profilContent').empty().load($(this).attr('href'))
+  })
 
   $(document).on('change', '.addfavori', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
     $.ajax({
       url: Routing.generate('user_add_favori.fr'),
@@ -299,26 +312,26 @@ app.ready(function () {
         'etat': $(this).prop('checked')
       }
     })
-  });
+  })
 
   $(document).on('click', '.afficheDocuments', function () {
-    $('#zone_document').empty().load(Routing.generate('document_ajax', {typedocument: $(this).data('type')}));
-    $('#boutonBack').show();
-  });
+    $('#zone_document').empty().load(Routing.generate('document_ajax', {typedocument: $(this).data('type')}))
+    $('#boutonBack').show()
+  })
 
   $(document).on('click', '#boutonBack', function () {
-    $('#zone_document').empty().load(Routing.generate('typedocument_ajax'));
-    $('#boutonBack').hide();
-  });
+    $('#zone_document').empty().load(Routing.generate('typedocument_ajax'))
+    $('#boutonBack').hide()
+  })
 
   $(document).on('click', '.semestretrombi', function (e) {
     //todo: comment gérer la locale ?
-    e.preventDefault();
+    e.preventDefault()
 
 
-    $('.semestretrombi').removeClass('active show');
-    $('.enseignanttrombi').removeClass('active show');
-    $(this).addClass('active show');
+    $('.semestretrombi').removeClass('active show')
+    $('.enseignanttrombi').removeClass('active show')
+    $(this).addClass('active show')
 
 
     /*$.ajax({
@@ -367,26 +380,26 @@ app.ready(function () {
         });
       }
     })*/
-    $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_etudiant_semestre.fr', {semestre: $(this).data('sem')})).slideDown();
-  });
+    $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_etudiant_semestre.fr', {semestre: $(this).data('sem')})).slideDown()
+  })
 
   $(document).on('click', '.changeTypeGroupe', function (e) {
     //todo: comment gérer la locale ?
-    e.preventDefault();
+    e.preventDefault()
 
     $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_etudiant_semestre.fr', {
       semestre: $(this).data('semestre'),
       typegroupe: $(this).data('typegroupe')
-    })).slideDown();
-  });
+    })).slideDown()
+  })
 
   $(document).on('click', '.enseignanttrombi', function (e) {
-    e.preventDefault();
+    e.preventDefault()
     //$('#trombifiltre').hide();
-    $('.semestretrombi').removeClass('active show');
-    $('.enseignanttrombi').removeClass('active show');
-    $(this).addClass('active show');
-    $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_personnel.fr', {type: $(this).data('type')})).slideDown();
+    $('.semestretrombi').removeClass('active show')
+    $('.enseignanttrombi').removeClass('active show')
+    $(this).addClass('active show')
+    $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_personnel.fr', {type: $(this).data('type')})).slideDown()
 
     //$('.card-title').html($(this).text());
     /*$.ajax({
@@ -429,80 +442,80 @@ app.ready(function () {
       }
     })*/
 
-  });
+  })
 
 
   $(document).on('keyup', '#login_urca', function () {
-    var $val = $(this).val();
-    console.log($val);
+    var $val = $(this).val()
+    console.log($val)
     if ($val.length > 2) {
       $.ajax({
         url: Routing.generate('api_personnel_recherche', {needle: $val}),
         dataType: 'json',
         success: function (data) {
-          $('#result').empty();
+          $('#result').empty()
           jQuery.each(data, function (index, pers) {
-            var html = "<tr>" +
-              "<td>" + pers.nom + "</td>" +
-              "<td>" + pers.prenom + "</td>" +
-              "<td>" + pers.username + "</td>" +
-              "<td>" + pers.mail_univ + "</td>" +
-              "<td><a href=\"#\" class=\"btn btn-success btn-outline btn-square addpersonnel\" data-provide=\"tooltip\" data-placement=\"bottom\" title=\"Ajouter à la formation\" data-slug=\"" + pers.slug + "\"><i class=\"ti-plus\"></i></a></td>" +
-              "</tr>";
-            $('#result').append(html);
-          });
+            var html = '<tr>' +
+              '<td>' + pers.nom + '</td>' +
+              '<td>' + pers.prenom + '</td>' +
+              '<td>' + pers.username + '</td>' +
+              '<td>' + pers.mail_univ + '</td>' +
+              '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la formation" data-slug="' + pers.slug + '"><i class="ti-plus"></i></a></td>' +
+              '</tr>'
+            $('#result').append(html)
+          })
         }
       })
     }
-  });
+  })
 
   $(document).on('click', '.addpersonnel', function () {
     $.ajax({
       url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug')}),
       dataType: 'json',
       success: function (data) {
-        $(this).remove();
+        $(this).remove()
       }
     })
-  });
+  })
 
   $(document).on('click', '.personnel_index_change', function () {
-    $('.personnel_index_change').removeClass('active show');
-    $(this).addClass('active show');
-    var table = $('#tableau').DataTable();
-    table.clear(); //effacer le datatable
-    table.destroy(); //supprimer le datatable
+    $('.personnel_index_change').removeClass('active show')
+    $(this).addClass('active show')
+    var table = $('#tableau').DataTable()
+    table.clear() //effacer le datatable
+    table.destroy() //supprimer le datatable
     $.ajax({
       url: Routing.generate('api_enseignants_type', {type: $(this).data('type')}),
       dataType: 'json',
       success: function (data) {
         jQuery.each(data, function (index, pers) {
           //ajouter les lignes
-          var html = "<tr>\n" +
-            "                        <td>" + pers.nom + "</td>\n" +
-            "                        <td>" + pers.prenom + "</td>\n" +
-            "                        <td>" + pers.posteInterne + "</td>\n" +
-            "                        <td>" + pers.telBureau + "</td>\n" +
-            "                        <td>" + pers.bureau1 + "</td>\n" +
-            "                        <td>" + pers.numeroHarpege + "</td>\n" +
-            "                        <td>" + pers.mailUniv + "</td>\n" +
-            "                        <td>\n" +
-            "<a href=\"" + Routing.generate('administration_personnel_show', {id: pers.id}) + "\" class=\"btn btn-info btn-outline btn-square\" data-provide=\"tooltip\"\n" +
-            "   data-placement=\"bottom\" title=\"Détails\"><i class=\"ti-eye\"></i></a>\n" +
-            "<a href=\"" + Routing.generate('administration_personnel_edit', {id: pers.id}) + "\"\n" +
-            "   class=\"btn btn-warning btn-outline btn-square\"><i class=\"ti-pencil\"\n" +
-            "                                                     data-provide=\"tooltip\"\n" +
-            "                                                     data-placement=\"bottom\"\n" +
-            "                                                     title=\"Modifier\"></i></a>\n" +
-            "<a href=\"" + Routing.generate('administration_personnel_delete', {id: pers.id}) + "\" class=\"btn btn-danger btn-outline btn-square supprimer\" data-id=\"id\"><i\n" +
-            "            class=\"ti-close\" data-provide=\"tooltip\" data-placement=\"bottom\"\n" +
-            "            title=\"Supprimer\"></i></a>"
+          var html = '<tr>\n' +
+            '                        <td>' + pers.nom + '</td>\n' +
+            '                        <td>' + pers.prenom + '</td>\n' +
+            '                        <td>' + pers.posteInterne + '</td>\n' +
+            '                        <td>' + pers.telBureau + '</td>\n' +
+            '                        <td>' + pers.bureau1 + '</td>\n' +
+            '                        <td>' + pers.numeroHarpege + '</td>\n' +
+            '                        <td>' + pers.mailUniv + '</td>\n' +
+            '                        <td>\n' +
+            '<a href="' + Routing.generate('administration_personnel_show', {id: pers.id}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
+            '   data-placement="bottom" title="Détails"><i class="ti-eye"></i></a>\n' +
+            '<a href="' + Routing.generate('administration_personnel_edit', {id: pers.id}) + '"\n' +
+            '   class="btn btn-warning btn-outline btn-square"><i class="ti-pencil"\n' +
+            '                                                     data-provide="tooltip"\n' +
+            '                                                     data-placement="bottom"\n' +
+            '                                                     title="Modifier"></i></a>\n' +
+            '<a href="' + Routing.generate('administration_personnel_delete', {id: pers.id}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i\n' +
+            '            class="ti-close" data-provide="tooltip" data-placement="bottom"\n' +
+            '            title="Supprimer"></i></a>'
           "                        </td>\n" +
           "                    </tr>";
-          $('#datatableau').append(html);
+          $('#datatableau').append(html)
         });
 
-        $('#tableau').DataTable({}); //regenerer le datatable avec les nouvelles data
+        $('#tableau').DataTable({}) //regenerer le datatable avec les nouvelles data
       }
     })
   });
@@ -512,82 +525,82 @@ app.ready(function () {
 //table.destroy(); //supprimer le datatable
 
   $('#datatableRh').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": Routing.generate('api_all_personnel'),
-    "sAjaxDataProp": "data",
-    "pageLength": 25,
-    "columns": [
-      {"data": "numero_harpege"},
-      {"data": "nom"},
-      {"data": "prenom"},
-      {"data": "formations"},
-      {"data": "profil"}]
-  });
+    'processing': true,
+    'serverSide': true,
+    'ajax': Routing.generate('api_all_personnel'),
+    'sAjaxDataProp': 'data',
+    'pageLength': 25,
+    'columns': [
+      {'data': 'numero_harpege'},
+      {'data': 'nom'},
+      {'data': 'prenom'},
+      {'data': 'formations'},
+      {'data': 'profil'}]
+  })
 
 
-  var table = $('#datatableEtudiants').DataTable({});
-  table.clear(); //effacer le datatable
-  table.destroy(); //supprimer le datatable
+  var table = $('#datatableEtudiants').DataTable({})
+  table.clear() //effacer le datatable
+  table.destroy() //supprimer le datatable
 
   $('#datatableEtudiants').DataTable({
-    "language": langueFr,
-    "processing": true,
-    "serverSide": true,
-    "ajax": Routing.generate('api_etudiant_formation'),
-    "sAjaxDataProp": "data",
+    'language': langueFr,
+    'processing': true,
+    'serverSide': true,
+    'ajax': Routing.generate('api_etudiant_formation'),
+    'sAjaxDataProp': 'data',
     //"pageLength": 25,
-    "columns": [
-      {"data": "numetudiant"},
-      {"data": "nom"},
-      {"data": "prenom"},
-      {"data": "semestre"},
-      {"data": "profil"}]
-  });
+    'columns': [
+      {'data': 'numetudiant'},
+      {'data': 'nom'},
+      {'data': 'prenom'},
+      {'data': 'semestre'},
+      {'data': 'profil'}]
+  })
 
 
   $(document).on('click', '.changeapplication', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    $('.changeapplication').removeClass('active show');
-    $(this).addClass('active show');
-    $('#mainContent').empty().load($(this).attr('href'));
+    $('.changeapplication').removeClass('active show')
+    $(this).addClass('active show')
+    $('#mainContent').empty().load($(this).attr('href'))
 
-  });
+  })
 
-  var nbLignePrevisionnel = 1;
+  var nbLignePrevisionnel = 1
 
   $(document).on('change', '#previSemestre', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_semestre.fr', {semestre: $(this).val()}));
-  });
+    e.preventDefault()
+    e.stopPropagation()
+    $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_semestre.fr', {semestre: $(this).val()}))
+  })
 
   $(document).on('change', '#previMatiere', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_matiere.fr', {matiere: $(this).val()}));
-  });
+    e.preventDefault()
+    e.stopPropagation()
+    $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_matiere.fr', {matiere: $(this).val()}))
+  })
 
   $(document).on('change', '#previPersonnel', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_personnel.fr', {personnel: $(this).val()}));
-  });
+    e.preventDefault()
+    e.stopPropagation()
+    $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_personnel.fr', {personnel: $(this).val()}))
+  })
 
   $(document).on('click', '.previsionnel_add_change', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $('.previsionnel_add_change').removeClass('active show');
-    $(this).addClass('active show');
-    $('#mainContent').empty().load($(this).attr('href'));
-  });
+    e.preventDefault()
+    e.stopPropagation()
+    $('.previsionnel_add_change').removeClass('active show')
+    $(this).addClass('active show')
+    $('#mainContent').empty().load($(this).attr('href'))
+  })
 
   $(document).on('click', '#addIntervenantPrevisionnel', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    nbLignePrevisionnel++;
+    e.preventDefault()
+    e.stopPropagation()
+    nbLignePrevisionnel++
 
     var html = '<tr>\n' +
       '                        <td>\n' +
@@ -609,111 +622,111 @@ app.ready(function () {
       '                        <td style="background-color: #FFC052"><input type="number" value="0" name="gr_tp_' + nbLignePrevisionnel + '" id="gr_tp_' + nbLignePrevisionnel + '"\n' +
       '                                                                     data-ligne="' + nbLignePrevisionnel + '" class="form-control chgtp"></td>\n' +
       '                        <td style="background-color: #FFC052" id="ind_tp_' + nbLignePrevisionnel + '">0</td>\n' +
-      '                    </tr>';
+      '                    </tr>'
 
-    $('#nbLigne').val(nbLignePrevisionnel);
-    $('#ligneAdd').before(html);
-  });
+    $('#nbLigne').val(nbLignePrevisionnel)
+    $('#ligneAdd').before(html)
+  })
 
   $(document).on('change', '.chgcm', function (e) {
-    var ligne = $(this).data('ligne');
-    var nbSeance = parseFloat($('#cm_' + ligne).val()) / 1.5;
-    $('#ind_cm_' + ligne).html(nbSeance.toFixed(2));
+    var ligne = $(this).data('ligne')
+    var nbSeance = parseFloat($('#cm_' + ligne).val()) / 1.5
+    $('#ind_cm_' + ligne).html(nbSeance.toFixed(2))
 
-    updateSynthesePrevisionnel();
-  });
+    updateSynthesePrevisionnel()
+  })
 
   $(document).on('change', '.chgtd', function (e) {
-    var ligne = $(this).data('ligne');
-    var nbSeance = parseFloat($('#td_' + ligne).val()) / 1.5;
-    $('#ind_td_' + ligne).html(nbSeance.toFixed(2));
+    var ligne = $(this).data('ligne')
+    var nbSeance = parseFloat($('#td_' + ligne).val()) / 1.5
+    $('#ind_td_' + ligne).html(nbSeance.toFixed(2))
 
-    updateSynthesePrevisionnel();
-  });
+    updateSynthesePrevisionnel()
+  })
 
   $(document).on('change', '.chgtp', function (e) {
-    var ligne = $(this).data('ligne');
-    var nbSeance = parseFloat($('#tp_' + ligne).val()) / 1.5;
-    $('#ind_tp_' + ligne).html(nbSeance.toFixed(2));
+    var ligne = $(this).data('ligne')
+    var nbSeance = parseFloat($('#tp_' + ligne).val()) / 1.5
+    $('#ind_tp_' + ligne).html(nbSeance.toFixed(2))
 
-    updateSynthesePrevisionnel();
-  });
+    updateSynthesePrevisionnel()
+  })
 
-  function updateSynthesePrevisionnel() {
-    var totalCm = 0;
-    var totalTd = 0;
-    var totalTp = 0;
-    var totalEqTd = 0;
-    var totalEtu = 0;
-    var totalMatiere = 0;
+  function updateSynthesePrevisionnel () {
+    var totalCm = 0
+    var totalTd = 0
+    var totalTp = 0
+    var totalEqTd = 0
+    var totalEtu = 0
+    var totalMatiere = 0
 
     for (var i = 1; i <= nbLignePrevisionnel; i++) {
-      totalCm = totalCm + parseFloat($('#cm_' + i).val()) * parseInt($('#gr_cm_' + i).val());
-      totalTd = totalTd + parseFloat($('#td_' + i).val()) * parseInt($('#gr_td_' + i).val());
-      totalTp = totalTp + parseFloat($('#tp_' + i).val()) * parseInt($('#gr_tp_' + i).val());
-      totalMatiere = totalMatiere + totalCm + totalTd + totalTp;
-      totalEtu = totalEtu + parseFloat($('#cm_' + i).val()) + parseFloat($('#td_' + i).val()) + parseFloat($('#tp_' + i).val());
+      totalCm = totalCm + parseFloat($('#cm_' + i).val()) * parseInt($('#gr_cm_' + i).val())
+      totalTd = totalTd + parseFloat($('#td_' + i).val()) * parseInt($('#gr_td_' + i).val())
+      totalTp = totalTp + parseFloat($('#tp_' + i).val()) * parseInt($('#gr_tp_' + i).val())
+      totalMatiere = totalMatiere + totalCm + totalTd + totalTp
+      totalEtu = totalEtu + parseFloat($('#cm_' + i).val()) + parseFloat($('#td_' + i).val()) + parseFloat($('#tp_' + i).val())
     }
 
 
-    $('#totalCm').html(totalCm.toFixed(2));
-    $('#totalTd').html(totalTd.toFixed(2));
-    $('#totalTp').html(totalTp.toFixed(2));
-    $('#totalEqTd').html(totalEqTd.toFixed(2));
-    $('#totalEtu').html(totalEtu.toFixed(2));
-    $('#totalMatiere').html(totalMatiere.toFixed(2));
+    $('#totalCm').html(totalCm.toFixed(2))
+    $('#totalTd').html(totalTd.toFixed(2))
+    $('#totalTp').html(totalTp.toFixed(2))
+    $('#totalEqTd').html(totalEqTd.toFixed(2))
+    $('#totalEtu').html(totalEtu.toFixed(2))
+    $('#totalMatiere').html(totalMatiere.toFixed(2))
   }
 
   $(document).on('change', '#previsionnel_semestre', function () {
-    var selectMatiere = $('#previsionnel_matiere');
-    if ($(this).val() == "") {
-      selectMatiere.empty();
-      selectMatiere.append($("<option></option>")
-        .attr("value", "")
-        .text("Choisir d'abord un semestre"));
+    var selectMatiere = $('#previsionnel_matiere')
+    if ($(this).val() == '') {
+      selectMatiere.empty()
+      selectMatiere.append($('<option></option>')
+        .attr('value', '')
+        .text('Choisir d\'abord un semestre'))
     } else {
       $.ajax({
         url: Routing.generate('api_matieres_semestre', {'semestre': $(this).val()}),
         success: function (data) {
 
-          selectMatiere.empty();
-          selectMatiere.append($("<option></option>")
-            .attr("value", "")
-            .text("Choisir une matière"));
+          selectMatiere.empty()
+          selectMatiere.append($('<option></option>')
+            .attr('value', '')
+            .text('Choisir une matière'))
           jQuery.each(data, function (index, matiere) {
 
-            selectMatiere.append($("<option></option>")
-              .attr("value", matiere.id)
-              .text(matiere.libelle));
-          });
+            selectMatiere.append($('<option></option>')
+              .attr('value', matiere.id)
+              .text(matiere.libelle))
+          })
         }
-      });
+      })
     }
-  });
+  })
 
   $(document).on('change', '#previsionnel_matiere', function () {
-    var volumeMatiere = $('#volumeMatiere');
-    if ($(this).val() == "") {
-      volumeMatiere.html("Choisir d'abord une matière");
+    var volumeMatiere = $('#volumeMatiere')
+    if ($(this).val() == '') {
+      volumeMatiere.html('Choisir d\'abord une matière')
     } else {
       $.ajax({
         url: Routing.generate('api_matiere', {'matiere': $(this).val()}),
         success: function (data) {
-          var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/formation => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
-          volumeMatiere.html(html);
+          var html = 'PPN Officiel => CM ' + data.cmFormation + ' heure(s); TD ' + data.tdFormation + ' heure(s); TP ' + data.tpFormation + ' heure(s); PPN Réalisé/formation => CM ' + data.cmPpn + ' heure(s); TD ' + data.tdPpn + ' heure(s); TP ' + data.tpPpn + ' heure(s);'
+          volumeMatiere.html(html)
         }
-      });
+      })
     }
-  });
+  })
 
   $(document).on('click', '.previsionnelModule', function () {
-    var modalPrevisionnel = $('#modalPrevisionnel');
+    var modalPrevisionnel = $('#modalPrevisionnel')
 
     $.ajax({
       url: Routing.generate('api_previsionnel_matiere', {'matiere': $(this).data('matiere')}),
       success: function (data) {
 
-        modalPrevisionnel.empty();
+        modalPrevisionnel.empty()
         var html = '<table class="table table-bordered table-condensed">\n' +
           '                    <thead>\n' +
           '                    <tr>\n' +
@@ -730,7 +743,7 @@ app.ready(function () {
           '                        <th class="previtp">1.5**</th>\n' +
           '                    </tr>\n' +
           '                    </thead>\n' +
-          '                    <tbody>\n';
+          '                    <tbody>\n'
 
         jQuery.each(data, function (index, matiere) {
           html = html +
@@ -749,34 +762,34 @@ app.ready(function () {
             '                            <td class="previtp">' + matiere.nbHTp + ' h</td>\n' +
             '                            <td class="previtp">' + matiere.nbGrTp + '</td>\n' +
             '                            <td class="previtp">' + matiere.nbSeanceTp + '</td>\n' +
-            '                        </tr>\n';
+            '                        </tr>\n'
 
-        });
+        })
         html = html + '                    </tbody>\n' +
-          '                </table>';
+          '                </table>'
 
-        modalPrevisionnel.append(html);
+        modalPrevisionnel.append(html)
       }
-    });
+    })
   })
 
   $(document).on('click', '.changeinformation', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log($(this).text());
-    $('#header-title').empty().append($(this).text());
-    $('.changeinformation').removeClass('active show');
-    $(this).addClass('active show');
-    $('#mainContent').empty().load($(this).attr('href'));
+    e.preventDefault()
+    e.stopPropagation()
+    console.log($(this).text())
+    $('#header-title').empty().append($(this).text())
+    $('.changeinformation').removeClass('active show')
+    $(this).addClass('active show')
+    $('#mainContent').empty().load($(this).attr('href'))
 
-  });
+  })
 
   $(document).on('change', '.changeOption', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    console.log($(this));
-    console.log();
+    console.log($(this))
+    console.log()
 
     $.ajax({
       url: Routing.generate('administration_configuration_change_option.fr'),
@@ -789,14 +802,14 @@ app.ready(function () {
       }
     })
 
-  });
+  })
 
   $(document).on('change', '.changeOptionSelect', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    console.log($(this));
-    console.log();
+    console.log($(this))
+    console.log()
 
     $.ajax({
       url: Routing.generate('administration_configuration_change_option.fr'),
@@ -809,31 +822,31 @@ app.ready(function () {
       }
     })
 
-  });
+  })
 
   $(document).on('click', '.messagerie-filtre', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': $(this).data('filtre')}));
-  });
+    e.preventDefault()
+    e.stopPropagation()
+    $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': $(this).data('filtre')}))
+  })
 
   $(document).on('click', '.message-read', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: $(this).data('message')}));
+    $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: $(this).data('message')}))
   })
 
   $(document).on('click', '#message-new', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    $('#zone-messagerie').empty().load(Routing.generate('messagerie_new'));
+    $('#zone-messagerie').empty().load(Routing.generate('messagerie_new'))
   })
 
   $(document).on('click', '#marquerNotificationsRead', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
     $.ajax({
       url: Routing.generate('notification_marquer_lu'),
@@ -847,36 +860,178 @@ app.ready(function () {
 
   var table = $('#tableJustifier').DataTable({
     retrieve: true
-  });
+  })
+
+  var tabsences = new Array()
 
   $(document).on('change', '#justifier_etudiant', function (e) {
     $.ajax({
       url: Routing.generate('administration_absences_liste_absence_etudiant.fr', {etudiant: $(this).val()}),
       //dataType: 'json',
       success: function (e) {
-        console.log('ok');
+        console.log('ok')
         //var table = $('#tableJustifier').DataTable({});
         // table.clear(); //effacer le datatable
         // table.destroy(); //supprimer le datatable
-        table.rows().remove();
+        table.rows().remove()
         jQuery.each(data, function (index, etudiant) {
-          table.row.add([1, 2, '<a href="" class="btn btn-danger supprimer"><i class="ti-close"></i></a>']).draw();
-        });
-
-
+          table.row.add([1, 2, '<a href="" class="btn btn-danger supprimer"><i class="ti-close"></i></a>']).draw()
+        })
       }
     })
-  });
+  })
+
+//Saisie des absences
+  $(document).on('click', '.absChangeTypeGroupe', function (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    $('#listeEtudiantsAbsences').load(Routing.generate('api_absence_liste_etudiant', {typegroupe: $(this).data('typegroupe')}))
+    var date = $('#absence-date')
+    var heure = $('#absence-heure')
+    updateAffichage(date.val(), heure.val())
+  })
+
+
+  function updateAffichage (date, heure) {
+    $.ajax({
+      type: 'GET',
+      url: Routing.generate('application_personnel_absence_get_ajax.fr', {matiere: $('#absence-matiere').val()}),
+      dataType: 'json',
+      success: function (data) {
+        tabsences = data
+      }
+    })
+    var t = date.split('/')
+    var ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
+
+
+    if (typeof tabsences[ddate] !== 'undefined') {
+      if (typeof tabsences[ddate][heure] !== 'undefined') {
+        for (var i = 0; i < tabsences[ddate][heure].length; i++) {
+          $('#' + tabsences[ddate][heure][i]).addClass('absent')
+        }
+      }
+    }
+
+  }
+
+  $(document).on('change', '#absence-matiere', function () {
+    var etudiants = $('.etudiant')
+    var date = $('#absence-date')
+    var heure = $('#absence-heure')
+    etudiants.removeClass('absent')
+    //etudiants.addClass('absence');
+    updateAffichage(date.val(), heure.val())
+  })
+
+  $(document).on('change', '#absence-date', function () {
+    var etudiants = $('.etudiant')
+    var date = $('#absence-date')
+    var heure = $('#absence-heure')
+    etudiants.removeClass('absent')
+    updateAffichage(date.val(), heure.val())
+  })
+
+  $(document).on('change', '#absence-heure', function () {
+    var etudiants = $('.etudiant')
+    var date = $('#absence-date')
+    var heure = $('#absence-heure')
+    etudiants.removeClass('absent')
+    updateAffichage(date.val(), heure.val())
+  })
+
+//marquage et enregistrement des absents
+  $(document).on('click', '.etudiant', function () {
+    if ($(this).hasClass('absent')) {
+
+      //supprimer absence
+      $(this).removeClass('absent')
+      //$(this).addClass('absence');
+      $.ajax({
+        type: 'POST',
+        url: Routing.generate('application_personnel_absence_saisie_ajax.fr', {
+          matiere: $('#absence-matiere').val(),
+          etudiant: $(this).attr('id')
+        }),
+        dataType: 'json',
+        data: {
+          date: $('#absence-date').val(),
+          heure: $('#absence-heure').val(),
+          action: 'suppr'
+        },
+        //affichage de l'erreur en cas de problème
+        error: function (msg, string) {
+          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'error')
+        },
+        success: function (data) {
+          tabsences = data
+          addCallout('La suppression a été effectuée avec succés !', 'success')
+        }
+      })
+    }
+    else {
+      //marquer comme absent
+      $(this).addClass('absent')
+      //$(this).removeClass('absence');
+      $.ajax({
+        type: 'POST',
+        url: Routing.generate('application_personnel_absence_saisie_ajax.fr', {
+          matiere: $('#absence-matiere').val(),
+          etudiant: $(this).attr('id')
+        }),
+        dataType: 'json',
+        data: {
+          date: $('#absence-date').val(),
+          heure: $('#absence-heure').val(),
+          action: 'saisie'
+        },
+        //affichage de l'erreur en cas de problème
+        error: function (msg, string) {
+          if (msg.responseText == 'out') {
+            addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'error')
+          } else {
+            addCallout('Erreur lors de l\'enregistrement.', 'error')
+          }
+        },
+        success: function (data) {
+          tabsences = data
+          console.log('ajout')
+          console.log(tabsences)
+          addCallout('Absence enregistrée avec succés !', 'success')
+
+        }
+      })
+    }
+  })
+
+  $('#liste-absences').dataTable({
+    'language': langueFr,
+    /*'createdRow': function (row, data, dataIndex) {
+      if (data[6] == 'non' || data[6] == 'no' || data[6] == 'No' || data[6] == 'Non')
+      {
+        $(row).addClass('bg-pale-error')
+      } else {
+        $(row).addClass('bg-pale-error')
+      }
+    }*/
+    'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+      if (aData[6] == 'non' || aData[6] == 'no' || aData[6] == 'No' || aData[6] == 'Non') {
+        $('td', nRow).css('background-color', '#fce3e3')
+      } else {
+        $('td', nRow).css('background-color', '#e3fcf2')
+      }
+    }
+  })
 
   $(document).on('click', '.articleLike', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var elt = $(this);
+    e.preventDefault()
+    e.stopPropagation()
+    var elt = $(this)
 
     $.ajax({
       url: Routing.generate('article_like.fr', {slug: $(this).data('article')}),
       success: function (data) {
-        elt.html('<i class="ti-heart text-danger fs-11"></i> ' + data);
+        elt.html('<i class="ti-heart text-danger fs-11"></i> ' + data)
       }
     })
   })

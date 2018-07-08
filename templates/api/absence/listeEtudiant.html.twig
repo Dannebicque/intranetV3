@@ -1,0 +1,50 @@
+{% if selectedTypeGroupe != null and selectedTypeGroupe.groupes|length >0 %}
+    <div class="tabs">
+        <ul class="nav nav-tabs">
+            {% for groupe in selectedTypeGroupe.groupes %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                       href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }})</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        {% for groupe in selectedTypeGroupe.groupes %}
+            <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
+                <div class="row">
+                    {% if groupe.etudiants|length >0 %}
+                        {% for etudiant in groupe.etudiants %}
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <div class="card card-trombi etudiant" id="{{ etudiant.id }}">
+                                    <div class="card-body text-center pt-1 pb-50">
+                                        <a href="{{ path('user_profil.fr', {type: 'etudiant', slug: etudiant.slug}) }}">
+                                            <img class="avatar avatar-xxl"
+                                                 src="{{ asset('etudiants/'~etudiant.photoName) }}">
+                                        </a>
+                                        <h5 class="mt-3">
+                                            <a class="hover-primary"
+                                               href="{{ path('user_profil.fr', {type: 'etudiant', slug: etudiant.slug}) }}">{{ etudiant.displayPr }}
+                                            </a>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-sm-12">
+                            <div class="alert alert-warning">
+                                Aucun étudiant dans ce groupe.
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning">
+        Aucun groupe dans ce type de groupe.
+    </div>
+{% endif %}

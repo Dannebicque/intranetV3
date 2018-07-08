@@ -11,11 +11,15 @@ namespace App\MesClasses;
 
 use App\Entity\Absence;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
 use App\Entity\Note;
+use App\Entity\Personnel;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class MyEtudiant
@@ -32,6 +36,9 @@ class MyEtudiant
     /** @var AbsenceRepository */
     private $absenceRepository;
 
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
     /** @var Etudiant */
     private $etudiant;
 
@@ -44,15 +51,18 @@ class MyEtudiant
     /**
      * MyEtudiant constructor.
      *
-     * @param EtudiantRepository $etudiantRepository
-     * @param NoteRepository     $noteRepository
-     * @param AbsenceRepository  $absenceRepository
+     * @param EntityManagerInterface $entityManager
+     * @param EtudiantRepository     $etudiantRepository
+     * @param NoteRepository         $noteRepository
+     * @param AbsenceRepository      $absenceRepository
      */
     public function __construct(
+        EntityManagerInterface $entityManager,
         EtudiantRepository $etudiantRepository,
         NoteRepository $noteRepository,
         AbsenceRepository $absenceRepository
     ) {
+        $this->entityManager = $entityManager;
         $this->etudiantRepository = $etudiantRepository;
         $this->noteRepository = $noteRepository;
         $this->absenceRepository = $absenceRepository;
@@ -98,5 +108,37 @@ class MyEtudiant
     {
         $this->notes = $this->etudiant->getNotes();
         $this->absences = $this->etudiant->getAbsences();
+    }
+
+    public function setIdEtudiant($id)
+    {
+        $this->etudiant = $this->etudiantRepository->find($id);
+    }
+
+    /**
+     * @param $date
+     * @param $heure
+     * @param $matiere
+     * @param $personnel
+     *
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function addAbsence($date, $heure, Matiere $matiere, Personnel $personnel, $annee)
+    {
+        $absence = new Absence();
+        $absence->setEtudiant($this->etudiant);
+        $absence->setPersonnel($personnel);
+        $absence->setDate($date);
+        $absence->setAnneeuniversitaire($annee);
+        $absence->setDuree(new \DateTime('01:30'));
+        $absence->setHeure($heure);
+        $absence->setMatiere($matiere);
+
+        $this->entityManager->persist($absence);
+        $this->entityManager->flush();
+
+        return true;
     }
 }
