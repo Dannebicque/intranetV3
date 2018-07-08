@@ -5,8 +5,12 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
+use App\Entity\Note;
 use App\Form\EvaluationType;
+use App\MesClasses\MyEtudiant;
+use App\MesClasses\MyEvaluation;
 use App\MesClasses\MyEvaluations;
+use App\Repository\NoteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,13 +27,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class NoteController extends BaseController
 {
     /**
-     * @Route("/{matiere}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
+     * @Route("/{matiere}/{index}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
      * @param MyEvaluations $myEvaluations
      * @param Matiere       $matiere
      *
      * @return Response
      */
-    public function index(MyEvaluations $myEvaluations, Matiere $matiere): Response
+    public function index(MyEvaluations $myEvaluations, Matiere $matiere, $indexEval = 0): Response
     {
         $myEvaluations->setMatiere($matiere);
         $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
@@ -37,7 +41,7 @@ class NoteController extends BaseController
         return $this->render('appPersonnel/note/index.html.twig', [
             'matiere'     => $matiere,
             'evaluations' => $myEvaluations,
-            'indexEval'   => 0 //todo à prendre en parametre
+            'indexEval'   => $indexEval
         ]);
     }
 
@@ -47,10 +51,13 @@ class NoteController extends BaseController
      *
      * @return Response
      */
-    public function detailsEvaluation(Evaluation $evaluation): Response
+    public function detailsEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
+        $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
+
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
+            'notes'      => $notes
         ]);
     }
 
@@ -102,11 +109,36 @@ class NoteController extends BaseController
      *
      * @return Response
      */
-    public function saisieNotes(Request $request, Evaluation $evaluation)
+    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation)
     {
+        $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
+            'notes'      => $notes
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("/sauvegarde/{evaluation}",
+     *     name="application_personnel_note_ajax_saisie",
+     *     methods={"POST"},
+     *     options={"expose":true})
+     */
+    public function enregistreNoteAction(MyEtudiant $myEtudiant, Request $request, Evaluation $evaluation)
+    {
+        //vérifier $this->get('request')->request->get('notes)['notes']
+        $tnote = $request->request->get('notes')['notes'];
+
+        $nbNotes = count($tnote);
+        for ($i = 0; $i < $nbNotes; $i++) {
+            $myEtudiant->setIdEtudiant($tnote[$i]['id']);
+            $myEtudiant->addNote($evaluation, $tnote[$i]);
+        }
+
+        return new Response();
     }
 
     /**

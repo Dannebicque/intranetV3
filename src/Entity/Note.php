@@ -36,6 +36,11 @@ class Note extends BaseEntity
      */
     private $modificationNotes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $absenceJustifie;
+
     public function __construct()
     {
         $this->modificationNotes = new ArrayCollection();
@@ -158,6 +163,18 @@ class Note extends BaseEntity
                 $modificationNote->setNote(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAbsenceJustifie(): ?bool
+    {
+        return $this->absenceJustifie;
+    }
+
+    public function setAbsenceJustifie(bool $absenceJustifie): self
+    {
+        $this->absenceJustifie = $absenceJustifie;
 
         return $this;
     }

@@ -8,7 +8,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('application_personnel_note_saisie') }}" class="btn btn-primary btn-float"
+            <a href="{{ path('application_personnel_note_index', {matiere: evaluation.matiere.id, index: evaluation.id}) }}"
+               class="btn btn-primary btn-float"
                data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_synthese'|trans }}"><i class="ti-arrow-left"></i></a>
         </div>
@@ -56,22 +57,30 @@
                             <tbody>
                             {% set tab=1 %}
                             {% for etudiant in groupe.etudiants %}
-                                <tr>
+                                <tr {% if not(notes[etudiant.id] is defined) or notes[etudiant.id].note == '-0.01' %}class="bg-pale-warning"{% endif %}>
                                     <td>{{ etudiant.nom|capitalize }} {{ etudiant.prenom|capitalize }}  </td>
                                     <td><input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
                                                id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
-                                               class="form-control noteetudiant groupe_{{ groupe.id }}" value="-0.01"/>
+                                               class="form-control noteetudiant groupe_{{ groupe.id }}"
+                                               value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
+                                        {# todo: verifier en js que la note est entre 0 et 20, validation. #}
                                     </td>
+                                    <td>Absent.</td>
                                     <td><input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
                                                class="form-control groupe_{{ groupe.id }}"/></td>
                                 </tr>
                                 {% set tab=tab+1 %}
+                            {% else %}
+                                <tr class="bg-warning">
+                                    <td colspan="3">{{ 'pas.etudiant.groupe'|trans }}</td>
+                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                         <br/>
                         <button class="btn btn-success btn-large btn-block savegroupe"
-                                id="groupe_{{ groupe.id }}">Enregistrer les notes de ce groupe
+                                id="groupe_{{ groupe.id }}" data-evaluation="{{ evaluation.id }}">Enregistrer les notes
+                            de ce groupe
                         </button>
                     </div>
                 {% endfor %}

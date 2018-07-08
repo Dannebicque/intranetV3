@@ -46,26 +46,43 @@ class MyEvaluation
     public function calculStatistiquesGlobales(): void
     {
         $this->notes = $this->evaluation->getNotes();
+        $tgroupes = array();
 
         $t = array();
-        $moy = 0;
+        $tEtudiant = array();
 
         /** @var Note $note */
         foreach ($this->notes as $note) {
             if ($note->getEtudiant() !== null) {
-                $t[] = $note->getNote();
+                $t[$note->getEtudiant()->getId()] = $note->getNote();
                 $this->classement[$note->getEtudiant()->getId()] = $note->getNote();
-                $moy += $note->getNote();
+            }
+        }
+
+        foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
+            $tgroupes[$groupe->getId()] = array();
+            foreach ($groupe->getEtudiants() as $etu) {
+                if (array_key_exists($etu->getId(), $t)) {
+                    $tgroupes[$groupe->getId()][$etu->getId()] = $t[$etu->getId()];
+                }
             }
         }
 
         arsort($this->classement);
 
-        $this->statistiques['min'] = count($t) > 0 ? min($t) : -0.01;
-        $this->statistiques['max'] = count($t) > 0 ? max($t) : -0.01;
-        $this->statistiques['moyenne'] = count($t) > 0 ? $moy / count($t) : -0.01;
-        $this->statistiques['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
-        $this->statistiques['rang'] = $this->classement;//todo: intéret ? On sauvegarde juste des notes ?
+        foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
+            $grid = $groupe->getId();
+            $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+        }
+
+        $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
+        $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
+        $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
+        $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
+        $this->statistiques['promo']['rang'] = $this->classement;//todo: intéret ? On sauvegarde juste des notes ?
     }
 
     /**
@@ -85,9 +102,9 @@ class MyEvaluation
             $moyenne = $somme_tableau / $population;
             //3 - écart pour chaque valeur
             $ecart = [];
-            for ($i = 0; $i < $population; $i++) {
+            foreach ($donnees as $key => $value) {
                 //écart entre la valeur et la moyenne
-                $ecart_donnee = $donnees[$i] - $moyenne;
+                $ecart_donnee = $value - $moyenne;
                 //carré de l'écart
                 $ecart_donnee_carre = bcpow($ecart_donnee, 2, 2);
                 //Insertion dans le tableau
@@ -137,5 +154,17 @@ class MyEvaluation
 
     public function getSynthese()
     {
+    }
+
+    public function getNotesTableau()
+    {
+        $this->notes = $this->evaluation->getNotes();
+
+        $tabEtudiant = array();
+        foreach ($this->notes as $note) {
+            $tabEtudiant[$note->getEtudiant()->getId()] = $note;
+        }
+
+        return $tabEtudiant;
     }
 }

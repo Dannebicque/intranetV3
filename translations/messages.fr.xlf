@@ -6836,5 +6836,11 @@
               <target>Oui</target>
           </segment>
       </unit>
+      <unit id="gF5205n" name="pas.etudiant.groupe">
+          <segment>
+              <source>pas.etudiant.groupe</source>
+              <target>pas.etudiant.groupe</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

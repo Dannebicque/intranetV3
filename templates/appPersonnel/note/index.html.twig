@@ -60,30 +60,30 @@
                                 <tr>
                                     <th>Min</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ groupe.libelle }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].min }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.min }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.min }}</td>
                                 </tr>
                                 <tr>
                                     <th>Max</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ groupe.libelle }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].max }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.max }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.max }}</td>
                                 </tr>
                                 <tr>
                                     <th>Moyenne</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ groupe.libelle }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].moyenne }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.moyenne }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.moyenne }}</td>
                                 </tr>
                                 <tr>
                                     <th>Ecart Type</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ groupe.libelle }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].ecart_type }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.ecart_type }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.ecart_type }}</td>
                                 </tr>
                                 <tr>
                                     <th>Actions</th>

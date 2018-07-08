@@ -28,4 +28,9 @@ abstract class Tools
 
         return new \DateTime($heure);
     }
+
+    public static function convertToFloat($note)
+    {
+        return str_replace(',', '.', $note);
+    }
 }

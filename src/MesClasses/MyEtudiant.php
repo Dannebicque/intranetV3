@@ -11,6 +11,7 @@ namespace App\MesClasses;
 
 use App\Entity\Absence;
 use App\Entity\Etudiant;
+use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Note;
 use App\Entity\Personnel;
@@ -139,6 +140,40 @@ class MyEtudiant
         $this->entityManager->persist($absence);
         $this->entityManager->flush();
 
+        //todo: gestion des mails ? ou sur un listener ? Ajout d'une notification pour l'étudiant également.
         return true;
+    }
+
+    public function addNote(Evaluation $evaluation, $data)
+    {
+        //on cherche si deja une note de présente
+        $note = $this->noteRepository->findBy(array(
+            'evaluation' => $evaluation->getId(),
+            'etudiant'   => $this->etudiant->getId()
+        ));
+
+        if (count($note) === 1) {
+            //update
+            $note[0]->setNote(Tools::convertToFloat($data['note']));
+            $note[0]->setCommentaire($data['commentaire']);
+            $this->entityManager->persist($note[0]);
+            $this->entityManager->flush();
+            //todo: ecrire dans la table de tracking
+        } elseif (count($note) === 0) {
+            //creation
+
+            $newnote = new Note();
+            $newnote->setEtudiant($this->etudiant);
+            $newnote->setEvaluation($evaluation);
+            $newnote->setNote(Tools::convertToFloat($data['note']));
+            $newnote->setCommentaire($data['commentaire']);
+
+            $this->entityManager->persist($newnote);
+            $this->entityManager->flush();
+            //todo: gestion des mails ? ou sur un listener ? Ajout d'une notification pour l'étudiant également.
+
+        }
+
+        return false;
     }
 }
