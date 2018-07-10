@@ -5613,7 +5613,7 @@
           </notes>
           <segment>
               <source>exporter.xls</source>
-              <target>Exporter (xls)</target>
+              <target>Exporter (xlsx)</target>
           </segment>
       </unit>
       <unit id="SiQjEts" name="exporter.pdf">
@@ -6425,7 +6425,7 @@
       <unit id="MbMtZg9" name="exporter.csv">
           <segment>
               <source>exporter.csv</source>
-              <target>exporter.csv</target>
+              <target>Exporter (csv)</target>
           </segment>
       </unit>
       <unit id="ruQIhH0" name="success">

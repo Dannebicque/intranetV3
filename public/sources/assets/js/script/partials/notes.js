@@ -25,9 +25,11 @@ $('.savegroupe').click(function () {
       },
       success: function (data) {
         addCallout('Les notes de <strong>ce groupe</strong> ont été enregistrées avec succés ! Vous pouvez les modifier !', 'success')
+        //feature: supprimer le "orange" sur les notes sauvegardées. Peut être récupérer en data les notes.
       },
       error: function () {
-        addCallout('Une erreur est survenu pendant l\'envoi... <br>Veuillez réessayer', 'error')
+        addCallout('Une erreur est survenue pendant l\'envoi... <br>Veuillez réessayer', 'danger')
+        //feature: être plus précis ?
       }
     })
 

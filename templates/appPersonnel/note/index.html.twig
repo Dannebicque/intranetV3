@@ -60,49 +60,52 @@
                                 <tr>
                                     <th>Min</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].min }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].min|number_format(2) }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.min }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.min|number_format(2) }}</td>
                                 </tr>
                                 <tr>
                                     <th>Max</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].max }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].max|number_format(2) }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.max }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.max|number_format(2) }}</td>
                                 </tr>
                                 <tr>
                                     <th>Moyenne</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].moyenne }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].moyenne|number_format(2) }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.moyenne }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.moyenne|number_format(2) }}</td>
                                 </tr>
                                 <tr>
                                     <th>Ecart Type</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].ecart_type }}</td>
+                                        <td>{{ evaluations.statistiques[eval.id].statistiques[groupe.id].ecart_type|number_format(2) }}</td>
                                     {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.ecart_type }}</td>
+                                    <td>{{ evaluations.statistiques[eval.id].statistiques.promo.ecart_type|number_format(2) }}</td>
                                 </tr>
                                 <tr>
                                     <th>Actions</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
                                         <td>
-                                            <a href="{{ path('application_personnel_evaluation_show', {evaluation:eval.id}) }}"
-                                               class="btn btn-block btn-info">Voir/modifier</a>
+
                                             <div class="btn-group  btn-block">
                                                 <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
                                                         data-toggle="dropdown"><label><i class="ti-printer"></i></label>
                                                     Exporter
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#">{{ 'exporter.pdf'|trans }}</a>
-                                                    <a class="dropdown-item" href="#">{{ 'exporter.xls'|trans }}</a>
-                                                    <a class="dropdown-item" href="#">{{ 'exporter.csv'|trans }}</a>
-
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('application_personnel_evaluation_export', {evaluation:eval.id, _format:'pdf'}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('application_personnel_evaluation_export', {evaluation:eval.id, _format:'xlsx'}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('application_personnel_evaluation_export', {evaluation:eval.id, _format:'csv'}) }}">{{ 'exporter.csv'|trans }}</a>
                                                 </div>
                                             </div>
+                                            <a href="{{ path('application_personnel_evaluation_show', {evaluation:eval.id}) }}"
+                                               class="btn btn-block btn-info">Voir/modifier</a>
                                         </td>
                                     {% endfor %}
                                     <td>
@@ -112,10 +115,12 @@
                                                 Exporter
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">{{ 'exporter.pdf'|trans }}</a>
-                                                <a class="dropdown-item" href="#">{{ 'exporter.xls'|trans }}</a>
-                                                <a class="dropdown-item" href="#">{{ 'exporter.csv'|trans }}</a>
-
+                                                <a class="dropdown-item"
+                                                   href="{{ path('application_personnel_evaluation_export', {evaluation:eval.id, _format:'pdf'}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('application_personnel_evaluation_export', {evaluation:eval.id, _format:'xlsx'}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('application_personnel_evaluation_export', {evaluation:eval.id, _format:'csv'}) }}">{{ 'exporter.csv'|trans }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -156,16 +161,6 @@
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('application_personnel_note_imprimer',{evaluation:matiere.id}),
-            title: 'imprimer'|trans,
-            icone : "ti-printer"},
-        {
-            type:'info',
-            href:path('application_personnel_note_save',{evaluation:matiere.id}),
-            title: 'sauvegarder'|trans,
-            icone: 'ti-save'
-        },
         {
             type:'info',
             href:path('application_personnel_note_help'),

@@ -33,7 +33,7 @@ class NoteController extends BaseController
      *
      * @return Response
      */
-    public function index(MyEvaluations $myEvaluations, Matiere $matiere, $indexEval = 0): Response
+    public function index(MyEvaluations $myEvaluations, Matiere $matiere, $index = 0): Response
     {
         $myEvaluations->setMatiere($matiere);
         $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
@@ -41,23 +41,7 @@ class NoteController extends BaseController
         return $this->render('appPersonnel/note/index.html.twig', [
             'matiere'     => $matiere,
             'evaluations' => $myEvaluations,
-            'indexEval'   => $indexEval
-        ]);
-    }
-
-    /**
-     * @Route("/evaluation/{evaluation}", name="application_personnel_evaluation_show",
-     *                                    requirements={"evaluation"="\d+"})
-     *
-     * @return Response
-     */
-    public function detailsEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
-    {
-        $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
-
-        return $this->render('appPersonnel/note/saisie_2.html.twig', [
-            'evaluation' => $evaluation,
-            'notes'      => $notes
+            'indexEval'   => $index
         ]);
     }
 
@@ -124,7 +108,7 @@ class NoteController extends BaseController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Route("/sauvegarde/{evaluation}",
      *     name="application_personnel_note_ajax_saisie",
-     *     methods={"POST"},
+     *     methods={"POST|GET"},
      *     options={"expose":true})
      */
     public function enregistreNoteAction(MyEtudiant $myEtudiant, Request $request, Evaluation $evaluation)
@@ -186,32 +170,6 @@ class NoteController extends BaseController
      * @Route("/aide", name="application_personnel_note_help", methods="GET")
      */
     public function help(): Response
-    {
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/save/{evaluation}", name="application_personnel_note_save", methods="GET")
-     */
-    public function save(): Response
-    {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/imprimer/{evaluation}", name="application_personnel_note_imprimer", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/{id}", name="application_personnel_Note_delete", methods="DELETE")
-     */
-    public function supprimer(): Response
     {
         return new Response('', Response::HTTP_OK);
     }

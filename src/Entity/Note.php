@@ -39,7 +39,7 @@ class Note extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $absenceJustifie;
+    private $absenceJustifie = false;
 
     public function __construct()
     {

@@ -101,7 +101,7 @@ $(document).on('click', '.etudiant', function () {
       },
       //affichage de l'erreur en cas de problème
       error: function (msg, string) {
-        addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'error')
+        addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'danger')
       },
       success: function (data) {
         tabsences = data
@@ -128,9 +128,9 @@ $(document).on('click', '.etudiant', function () {
       //affichage de l'erreur en cas de problème
       error: function (msg, string) {
         if (msg.responseText == 'out') {
-          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'error')
+          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'danger')
         } else {
-          addCallout('Erreur lors de l\'enregistrement.', 'error')
+          addCallout('Erreur lors de l\'enregistrement.', 'danger')
         }
       },
       success: function (data) {
