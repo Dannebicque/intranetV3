@@ -1,7 +1,7 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title"><strong>{{ 'service.previsionnel.heading'|trans }}</strong>
-            | {{ previsionnel.personnel.display }} | ({{ 'periode'|trans }}
+            | {{ user_data.formation.libelle }} | {{ previsionnel.personnel.display }} | ({{ 'periode'|trans }}
             : {{ user_data.formation.optAnneePrevisionnel }})</h4>
         <ul class="card-controls">
             <li class="dropdown">
@@ -42,6 +42,7 @@
     </div>
 </div>
 
+{# feature: Mettre des boutons reload pour raffraîchir les blocs #}
 {{ include('bloc_previsionnel/hrs.html.twig') }}
 
 {{ include('bloc_previsionnel/total.html.twig') }}

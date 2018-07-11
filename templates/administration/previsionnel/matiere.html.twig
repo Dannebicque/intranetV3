@@ -53,15 +53,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ previsionnel.nbHCm }} h</td>
-                            <td>{{ previsionnel.nbGrCm }}</td>
+                            <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                   data-name="NbHCm">{{ previsionnel.nbHCm }}</a> h
+                            </td>
+                            <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                   data-name="NbGrCm">{{ previsionnel.nbGrCm }}</a></td>
                             <td>{{ previsionnel.nbSeanceCm }}</td>
-                            <td class="previtd">{{ previsionnel.nbHTd }} h</td>
-                            <td class="previtd">{{ previsionnel.nbGrTd }}</td>
+                            <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbHTd">{{ previsionnel.nbHTd }}</a> h
+                            </td>
+                            <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbGrTd">{{ previsionnel.nbGrTd }}</a></td>
                             <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
 
-                            <td class="previtp">{{ previsionnel.nbHTp }} h</td>
-                            <td class="previtp">{{ previsionnel.nbGrTp }}</td>
+                            <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbHTp">{{ previsionnel.nbHTp }}</a> h
+                            </td>
+                            <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbGrTp">{{ previsionnel.nbGrTp }}</a></td>
                             <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
 
                             <td>{{ previsionnel.totalHCm }} h</td>
@@ -125,9 +134,9 @@
                     </tr>
                     <tr>
                         <td class="importantgros">Différence</td>
-                        <td class="importantgros  text-center">0</td>
-                        <td class="importantgros  text-center">0</td>
-                        <td class="importantgros  text-center">0</td>
+                        <td class="importantgros text-center">0</td>
+                        <td class="importantgros previtd text-center">0</td>
+                        <td class="importantgros previtp text-center">0</td>
                         <td class="importantgros text-center">-</td>
                     </tr>
                     </tbody>

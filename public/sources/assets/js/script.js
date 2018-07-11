@@ -279,6 +279,21 @@ app.ready(function () {
     zone.load($(this).attr('href'))
   })
 
+  $.fn.editable.defaults.mode = 'inline'
+  $.fn.editableform.buttons =
+    '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
+    '<i class="fa fa-fw fa-check"></i>' +
+    '</button>' +
+    '<button type="button" class="btn btn-default btn-sm editable-cancel">' +
+    '<i class="fa fa-fw fa-times"></i>' +
+    '</button>'
+  /*$('#username').editable({
+    type: 'text',
+    pk: 1,
+    url: '/post',
+    title: 'Enter username'
+  });*/
+
   //require('./plugins/calendar');
 
   /*
@@ -570,6 +585,14 @@ app.ready(function () {
   })
 
   var nbLignePrevisionnel = 1
+
+  $(document).ajaxComplete(function () {
+    $('.editPrevi').editable({
+      type: 'text',
+      url: Routing.generate('administration_previsionnel_edit.fr')
+      //todo: si success recalculer toute la ligne.
+    })
+  })
 
   $(document).on('change', '#previSemestre', function (e) {
     e.preventDefault()

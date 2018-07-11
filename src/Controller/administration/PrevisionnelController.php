@@ -10,8 +10,10 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Form\ImportPrevisionnelType;
 use App\MesClasses\MyPrevisionnel;
+use App\MesClasses\Tools;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -89,6 +91,21 @@ class PrevisionnelController extends BaseController
         return $this->render('administration/previsionnel/personnel.html.twig', [
             'previsionnel' => $myPrevisionnel
         ]);
+    }
+
+    /**
+     * @Route("/edit", name="administration_previsionnel_edit", options={"expose":true})
+     *
+     */
+    public function edit(MyPrevisionnel $myPrevisionnel, Request $request)
+    {
+        $id = $request->request->get('pk');
+        $name = $request->request->get('name');
+        $value = Tools::convertToFloat($request->request->get('value'));
+
+        $update = $myPrevisionnel->update($id, $name, $value);
+
+        return $update ? new JsonResponse('', 200) : new JsonResponse('erreur', 500);
     }
 
     /**

@@ -1,5 +1,13 @@
 var nbLignePrevisionnel = 1;
 
+$(document).ajaxComplete(function () {
+  $('.editPrevi').editable({
+    type: 'text',
+    url: Routing.generate('administration_previsionnel_edit.fr')
+    //todo: si success recalculer toute la ligne.
+  })
+})
+
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault();
   e.stopPropagation();

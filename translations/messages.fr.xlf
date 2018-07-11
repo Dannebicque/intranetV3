@@ -6842,5 +6842,11 @@
               <target>pas.etudiant.groupe</target>
           </segment>
       </unit>
+    <unit id="0">
+      <segment>
+        <source>heures.complementaires</source>
+        <target>Heures complémentaires</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

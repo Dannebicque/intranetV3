@@ -34,7 +34,8 @@
                     {% for previ in previsionnel.previsionnels %}
                         <tr>
                             <td colspan="5">
-                                {{ previ.matiere.codeMatiere }} | {{ previ.matiere.libelle }} | {{ previ.personnel.display }}
+                                {{ previ.matiere.codeMatiere }} | {{ previ.matiere.libelle }}
+                                | {{ previ.personnel.display }}
                             </td>
                             <td colspan="4">
                                 <a href="">Voir le service de la matière de {{ previ.matiere.codeMatiere }}</a>
@@ -57,15 +58,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ previ.nbHCm }} h</td>
-                            <td>{{ previ.nbGrCm }}</td>
+                            <td><a href="#" class="editPrevi" data-pk="{{ previ.id }}"
+                                   data-name="NbHCm">{{ previ.nbHCm }}</a> h
+                            </td>
+                            <td><a href="#" class="editPrevi" data-pk="{{ previ.id }}"
+                                   data-name="NbGrCm">{{ previ.nbGrCm }}</a></td>
                             <td>{{ previ.nbSeanceCm }}</td>
-                            <td class="previtd">{{ previ.nbHTd }} h</td>
-                            <td class="previtd">{{ previ.nbGrTd }}</td>
+                            <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previ.id }}"
+                                                   data-name="NbHTd">{{ previ.nbHTd }}</a> h
+                            </td>
+                            <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previ.id }}"
+                                                   data-name="NbGrTd">{{ previ.nbGrTd }}</a></td>
                             <td class="previtd">{{ previ.nbSeanceTd }}</td>
 
-                            <td class="previtp">{{ previ.nbHTp }} h</td>
-                            <td class="previtp">{{ previ.nbGrTp }}</td>
+                            <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previ.id }}"
+                                                   data-name="NbHTp">{{ previ.nbHTp }}</a> h
+                            </td>
+                            <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previ.id }}"
+                                                   data-name="NbGrTp">{{ previ.nbGrTp }}</a></td>
                             <td class="previtp">{{ previ.nbSeanceTp }}</td>
 
                             <td>{{ previ.totalHCm }} h</td>
@@ -120,8 +130,7 @@
                         <td class="previtp text-center">{{ previsionnel.totalEtuTp }}</td>
                         <td class="importantgros text-center">{{ previsionnel.totalEtu }}</td>
                     </tr>
-
-
+                    
                     </tbody>
                 </table>
                 <br>

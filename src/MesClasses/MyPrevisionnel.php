@@ -17,6 +17,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Repository\HrsRepository;
 use App\Repository\PrevisionnelRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class MyPrevisionnel
@@ -28,6 +29,9 @@ class MyPrevisionnel
     private $personnel;
 
     private $previsionnelRepository;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
     /** @var HrsRepository */
     private $hrsRepository;
@@ -68,10 +72,15 @@ class MyPrevisionnel
      * @param PrevisionnelRepository $previsionnelRepository
      * @param HrsRepository          $hrsRepository
      */
-    public function __construct(PrevisionnelRepository $previsionnelRepository, HrsRepository $hrsRepository)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        PrevisionnelRepository $previsionnelRepository,
+        HrsRepository $hrsRepository
+    )
     {
         $this->previsionnelRepository = $previsionnelRepository;
         $this->hrsRepository = $hrsRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -341,5 +350,24 @@ class MyPrevisionnel
             $this->totalEtuTd += $previ->getNbHTd();
             $this->totalEtuTp += $previ->getNbHTp();
         }
+    }
+
+    public function update($id, $name, $value)
+    {
+        $previ = $this->previsionnelRepository->find($id);
+        if ($previ) {
+            $method = 'set' . $name;
+            if (method_exists($previ, $method)) {
+                $previ->$method($value);
+                $this->entityManager->persist($previ);
+                $this->entityManager->flush();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        return false;
     }
 }
