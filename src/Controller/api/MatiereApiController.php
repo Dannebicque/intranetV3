@@ -84,4 +84,17 @@ class MatiereApiController extends BaseController
 
         return new JsonResponse($t);
     }
+
+    /**
+     * @Route("/document/export/{matiere}", name="api_export_document_matiere", options={"expose":true})
+     * @param Matiere $matiere
+     *
+     */
+    public function exportDocument(Matiere $matiere)
+    {
+        return $this->render('api/matiere/document/export.html.twig', [
+            'matiere'     => $matiere,
+            'typeGroupes' => $matiere->getUe()->getSemestre()->getTypeGroupes()
+        ]);
+    }
 }

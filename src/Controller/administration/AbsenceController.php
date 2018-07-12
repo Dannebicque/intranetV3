@@ -27,7 +27,17 @@ class AbsenceController extends BaseController
      */
     public function listeAbsenceEtudiant(Etudiant $etudiant): Response
     {
-        return new Response('ok', 200);
+        $tAbs = array();
+        foreach ($etudiant->getAbsences() as $abs) {
+            $t = array();
+            $t['date'] = $abs->getDate()->format('d/m/Y');
+            $t['heure'] = $abs->getHeure()->format('H:i');
+            $t['matiere'] = $abs->getMatiere()->getLibelle();
+            $t['justifie'] = $abs->isJustifie();
+            $tAbs[] = $t;
+        }
+
+        return $this->json($tAbs);
     }
 
     /**

@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-md-3">
+        <h4>{{ 'type.document'|trans }}</h4>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportTypeDocument"
+                   id="exportTypeDocument_1" value="{{ constant('App\\Entity\\Constantes::TYPEDOCUMENT_EMARGEMENT') }}"
+                   checked>
+            <label class="form-check-label" for="exportTypeDocument_1">
+                {{ 'emargement'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportTypeDocument"
+                   id="exportTypeDocument_2" value="{{ constant('App\\Entity\\Constantes::TYPEDOCUMENT_EVALUATION') }}">
+            <label class="form-check-label" for="exportTypeDocument_2">
+                {{ 'evaluation'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportTypeDocument"
+                   id="exportTypeDocument_3" value="{{ constant('App\\Entity\\Constantes::TYPEDOCUMENT_LISTE') }}">
+            <label class="form-check-label" for="exportTypeDocument_3">
+                {{ 'liste'|trans }}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <h4>{{ 'colonne.document'|trans }}</h4>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exportChamps"
+                   id="exportChamps_1" value="{{ constant('App\\Entity\\Constantes::CHAMPS_NOM_PRENOM') }}" checked
+                   disabled>
+            <label class="form-check-label" for="exportChamps_1">
+                {{ 'nom.prenom'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exportChamps" checked
+                   id="exportChamps_2" value="{{ constant('App\\Entity\\Constantes::CHAMPS_NUM_ETUDIANT') }}">
+            <label class="form-check-label" for="exportChamps_2">
+                {{ 'numero.etudiant'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exportChamps"
+                   id="exportChamps_3" value="{{ constant('App\\Entity\\Constantes::CHAMPS_BAC') }}">
+            <label class="form-check-label" for="exportChamps_3">
+                {{ 'bac'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exportChamps"
+                   id="exportChamps_4" value="{{ constant('App\\Entity\\Constantes::CHAMPS_MAIL_ETUDIANT') }}" checked>
+            <label class="form-check-label" for="exportChamps_4">
+                {{ 'mail.etudiant'|trans }}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <h4>{{ 'format.document'|trans }}</h4>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportFormat"
+                   id="exportFormat_1" value="{{ constant('App\\Entity\\Constantes::FORMAT_CSV_POINT_VIRGULE') }}">
+            <label class="form-check-label" for="exportFormat_1">
+                {{ 'csv.point-virgule'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportFormat"
+                   id="exportFormat_2" value="{{ constant('App\\Entity\\Constantes::FORMAT_CSV_VIRGULE') }}">
+            <label class="form-check-label" for="exportFormat_2">
+                {{ 'csv.virgule'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportFormat"
+                   id="exportFormat_3" value="{{ constant('App\\Entity\\Constantes::FORMAT_EXCEL') }}">
+            <label class="form-check-label" for="exportFormat_3">
+                {{ 'excel'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exportFormat"
+                   id="exportFormat_4" value="{{ constant('App\\Entity\\Constantes::FORMAT_PDF') }}" checked>
+            <label class="form-check-label" for="exportFormat_4">
+                {{ 'pdf'|trans }}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <h4>"Découpage"</h4>
+        {% for typeGroupe in typeGroupes %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="exportFiltre"
+                       id="typeGroupe_{{ typeGroupe.id }}" value="{{ typeGroupe.id }}"
+                       {% if typeGroupe.defaut %}checked{% endif %}>
+                <label class="form-check-label" for="typeGroupe_{{ typeGroupe.id }}">
+                    {{ typeGroupe.libelle }}
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    <br/>
+    <div class="col-md-12 col-sm-12">
+        <button class="btn btn-block btn-primary" id="btnGenereFichier"
+                data-matiere="{{ matiere.id }}">{{ 'generer.fichier'|trans }}</button>
+    </div>
+</div>

@@ -1,21 +1,41 @@
-var table = $('#tableJustifier').DataTable({
-  retrieve: true
-})
-
-var tabsences = new Array()
+var tabsences = [];
 
 $(document).on('change', '#justifier_etudiant', function (e) {
+  console.log('justifier_etudiant')
   $.ajax({
     url: Routing.generate('administration_absences_liste_absence_etudiant.fr', {etudiant: $(this).val()}),
     //dataType: 'json',
-    success: function (e) {
+    success: function (data) {
       console.log('ok')
-      //var table = $('#tableJustifier').DataTable({});
-      // table.clear(); //effacer le datatable
-      // table.destroy(); //supprimer le datatable
-      table.rows().remove()
+      console.log(data)
+      console.log(data.length)
+
+      var table = $('#tableJustifier').empty()
+      table.append('<thead>\n' +
+        '                <tr>\n' +
+        '                    <th>{{ \'table.date\'|trans }}</th>\n' +
+        '                    <th>{{ \'table.heure\'|trans }}</th>\n' +
+        '                    <th>{{ \'table.matiere\'|trans }}</th>\n' +
+        '                    <th>{{ \'table.justifier\'|trans }}</th>\n' +
+        '                    <th>{{ \'table.actions\'|trans }}</th>\n' +
+        '                </tr>\n' +
+        '                </thead>' +
+        '<tbody>')
+
       jQuery.each(data, function (index, etudiant) {
-        table.row.add([1, 2, '<a href="" class="btn btn-danger supprimer"><i class="ti-close"></i></a>']).draw()
+        console.log(etudiant)
+        var html = '<tr>\n' +
+          '                        <td>' + etudiant.date + '</td>\n' +
+          '                        <td>' + etudiant.heure + '</td>\n' +
+          '                        <td>' + etudiant.matiere + '</td>\n' +
+          '                        <td>' + etudiant.justifie + '</td>\n' +
+          '                        <td><a href="" class="btn btn-danger supprimer"><i class="ti-close"></i></a></td>\n' +
+          '                    </tr>'
+        table.append(html)
+      })
+      table.append('</tbody>')
+      table.dataTable({
+        'language': langueFr
       })
     }
   })

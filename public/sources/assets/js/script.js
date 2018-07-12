@@ -742,59 +742,82 @@ app.ready(function () {
     }
   })
 
-  $(document).on('click', '.previsionnelModule', function () {
-    var modalPrevisionnel = $('#modalPrevisionnel')
+  $(document).on('click', '#btnGenereFichier', function (e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    var selectedChamps = []
+    $('input:checkbox[name=exportChamps]:checked').each(function () {
+      selectedChamps.push($(this).val())
+    })
 
     $.ajax({
-      url: Routing.generate('api_previsionnel_matiere', {'matiere': $(this).data('matiere')}),
-      success: function (data) {
-
-        modalPrevisionnel.empty()
-        var html = '<table class="table table-bordered table-condensed">\n' +
-          '                    <thead>\n' +
-          '                    <tr>\n' +
-          '                        <th class="cm">NB h*</th>\n' +
-          '                        <th class="cm">NB Gr.</th>\n' +
-          '                        <th class="cm">1.5**</th>\n' +
-          '\n' +
-          '                        <th class="previtd">NB h/ Gr.*</th>\n' +
-          '                        <th class="previtd">NB Gr.</th>\n' +
-          '                        <th class="previtd">1.5**</th>\n' +
-          '\n' +
-          '                        <th class="previtp">NB h/ Gr.*</th>\n' +
-          '                        <th class="previtp">NB Gr.</th>\n' +
-          '                        <th class="previtp">1.5**</th>\n' +
-          '                    </tr>\n' +
-          '                    </thead>\n' +
-          '                    <tbody>\n'
-
-        jQuery.each(data, function (index, matiere) {
-          html = html +
-            '                        <tr>\n' +
-            '                            <td colspan="9">\n' +
-            '                                ' + matiere.personnel + '\n' +
-            '                            </td>\n' +
-            '                        </tr>\n' +
-            '                        <tr>\n' +
-            '                            <td>' + matiere.nbHCm + ' h</td>\n' +
-            '                            <td>' + matiere.nbGrCm + '</td>\n' +
-            '                            <td>' + matiere.nbSeanceCm + '</td>\n' +
-            '                            <td class="previtd">' + matiere.nbHTd + ' h</td>\n' +
-            '                            <td class="previtd">' + matiere.nbGrTd + '</td>\n' +
-            '                            <td class="previtd">' + matiere.nbSeanceTd + '</td>\n' +
-            '                            <td class="previtp">' + matiere.nbHTp + ' h</td>\n' +
-            '                            <td class="previtp">' + matiere.nbGrTp + '</td>\n' +
-            '                            <td class="previtp">' + matiere.nbSeanceTp + '</td>\n' +
-            '                        </tr>\n'
-
-        })
-        html = html + '                    </tbody>\n' +
-          '                </table>'
-
-        modalPrevisionnel.append(html)
+      url: Routing.generate('export_listing.fr'),
+      method: 'POST',
+      data: {
+        'matiere': $(this).data('matiere'),
+        'exportTypeDocument': $('input[type=radio][name=exportTypeDocument]:checked').val(),
+        'exportChamps': selectedChamps,
+        'exportFormat': $('input[type=radio][name=exportFormat]:checked').val(),
+        'exportFiltre': $('input[type=radio][name=exportFiltre]:checked').val()
       }
     })
   })
+
+
+// $(document).on('click', '.previsionnelModule', function () {
+//   var modalPrevisionnel = $('#modalPrevisionnel');
+//
+//   $.ajax({
+//     url: Routing.generate('api_previsionnel_matiere', {'matiere': $(this).data('matiere')}),
+//     success: function (data) {
+//
+//       modalPrevisionnel.empty();
+//       var html = '<table class="table table-bordered table-condensed">\n' +
+//         '                    <thead>\n' +
+//         '                    <tr>\n' +
+//         '                        <th class="cm">NB h*</th>\n' +
+//         '                        <th class="cm">NB Gr.</th>\n' +
+//         '                        <th class="cm">1.5**</th>\n' +
+//         '\n' +
+//         '                        <th class="previtd">NB h/ Gr.*</th>\n' +
+//         '                        <th class="previtd">NB Gr.</th>\n' +
+//         '                        <th class="previtd">1.5**</th>\n' +
+//         '\n' +
+//         '                        <th class="previtp">NB h/ Gr.*</th>\n' +
+//         '                        <th class="previtp">NB Gr.</th>\n' +
+//         '                        <th class="previtp">1.5**</th>\n' +
+//         '                    </tr>\n' +
+//         '                    </thead>\n' +
+//         '                    <tbody>\n';
+//
+//       jQuery.each(data, function (index, matiere) {
+//         html = html +
+//           '                        <tr>\n' +
+//           '                            <td colspan="9">\n' +
+//           '                                ' + matiere.personnel + '\n' +
+//           '                            </td>\n' +
+//           '                        </tr>\n' +
+//           '                        <tr>\n' +
+//           '                            <td>' + matiere.nbHCm + ' h</td>\n' +
+//           '                            <td>' + matiere.nbGrCm + '</td>\n' +
+//           '                            <td>' + matiere.nbSeanceCm + '</td>\n' +
+//           '                            <td class="previtd">' + matiere.nbHTd + ' h</td>\n' +
+//           '                            <td class="previtd">' + matiere.nbGrTd + '</td>\n' +
+//           '                            <td class="previtd">' + matiere.nbSeanceTd + '</td>\n' +
+//           '                            <td class="previtp">' + matiere.nbHTp + ' h</td>\n' +
+//           '                            <td class="previtp">' + matiere.nbGrTp + '</td>\n' +
+//           '                            <td class="previtp">' + matiere.nbSeanceTp + '</td>\n' +
+//           '                        </tr>\n';
+//
+//       });
+//       html = html + '                    </tbody>\n' +
+//         '                </table>';
+//
+//       modalPrevisionnel.append(html);
+//     }
+//   });
+// })
 
   $(document).on('click', '.changeinformation', function (e) {
     e.preventDefault()
@@ -881,24 +904,44 @@ app.ready(function () {
   })
 
 
-  var table = $('#tableJustifier').DataTable({
-    retrieve: true
-  })
-
-  var tabsences = new Array()
+  var tabsences = []
 
   $(document).on('change', '#justifier_etudiant', function (e) {
+    console.log('justifier_etudiant')
     $.ajax({
       url: Routing.generate('administration_absences_liste_absence_etudiant.fr', {etudiant: $(this).val()}),
       //dataType: 'json',
-      success: function (e) {
+      success: function (data) {
         console.log('ok')
-        //var table = $('#tableJustifier').DataTable({});
-        // table.clear(); //effacer le datatable
-        // table.destroy(); //supprimer le datatable
-        table.rows().remove()
+        console.log(data)
+        console.log(data.length)
+
+        var table = $('#tableJustifier').empty()
+        table.append('<thead>\n' +
+          '                <tr>\n' +
+          '                    <th>{{ \'table.date\'|trans }}</th>\n' +
+          '                    <th>{{ \'table.heure\'|trans }}</th>\n' +
+          '                    <th>{{ \'table.matiere\'|trans }}</th>\n' +
+          '                    <th>{{ \'table.justifier\'|trans }}</th>\n' +
+          '                    <th>{{ \'table.actions\'|trans }}</th>\n' +
+          '                </tr>\n' +
+          '                </thead>' +
+          '<tbody>')
+
         jQuery.each(data, function (index, etudiant) {
-          table.row.add([1, 2, '<a href="" class="btn btn-danger supprimer"><i class="ti-close"></i></a>']).draw()
+          console.log(etudiant)
+          var html = '<tr>\n' +
+            '                        <td>' + etudiant.date + '</td>\n' +
+            '                        <td>' + etudiant.heure + '</td>\n' +
+            '                        <td>' + etudiant.matiere + '</td>\n' +
+            '                        <td>' + etudiant.justifie + '</td>\n' +
+            '                        <td><a href="" class="btn btn-danger supprimer"><i class="ti-close"></i></a></td>\n' +
+            '                    </tr>'
+          table.append(html)
+        })
+        table.append('</tbody>')
+        table.dataTable({
+          'language': langueFr
         })
       }
     })

@@ -14,13 +14,23 @@
             </thead>
             <tbody>
             {% for absence in absences %}
-                <tr>
+                <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}">
                     <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : ''  }}</td>
                     <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : ''}}</td>
                     <td>{{ absence.matiere.codeMatiere }}</td>
                     <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
                     <td>{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
-                    <td>Infos</td>
+                    <td>
+                        <button data-provide="modaler tooltip"
+                                data-url="{{ path('app_etudiant_absence_detail', {'id': absence.id}) }}"
+                                class="btn btn-info btn-outline btn-square btn-xs"
+                                data-placement="bottom"
+                                title="{{ 'atitle.details'|trans }}"
+                                data-title="{{ 'detail.absence'|trans }}"
+                        >
+                            <i class="ti-info"></i>
+                        </button>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

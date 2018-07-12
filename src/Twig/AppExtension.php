@@ -21,7 +21,13 @@ class AppExtension extends AbstractExtension
             new TwigFilter('tel_format', array($this, 'telFormat')),
             new TwigFilter('time_ago', array($this, 'timeAgo')),
             new TwigFilter('badge', array($this, 'badge')),
+            new TwigFilter('escapetitle', array($this, 'escapetitle')),
         );
+    }
+
+    public function escapetitle($texte): ?string
+    {
+        return str_replace(array('<strong>', '</strong>'), '', $texte);
     }
 
     /**
@@ -42,6 +48,8 @@ class AppExtension extends AbstractExtension
         if ($number >= 20) {
             return 'badge badge-dark';
         }
+
+        return '';
     }
 
     /**

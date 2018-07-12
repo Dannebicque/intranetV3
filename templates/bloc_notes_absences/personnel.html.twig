@@ -33,17 +33,17 @@
                                 <tr>
                                     <td>{{ matiere.matiere.libelle }}</td>
                                     <td>
-                                        <a href="#"
-                                           class="btn btn-btn btn-block btn-primary-outline previsionnelModule"
-                                           title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom"
-                                           data-matiere="{{ matiere.id }}"
-                                           data-toggle="modal"
-                                           data-target="#modal1"
+                                        <button data-provide="modaler tooltip"
+                                                data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.matiere.id}) }}"
+                                                data-size="lg"
+                                                data-confirm-text="{{ 'fermer'|trans }}"
+                                                class="btn btn-block btn-primary-outline "
+                                                data-placement="bottom"
+                                                title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                                                data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
                                         >
                                             {{ 'voir'|trans }}
-                                        </a>
+                                        </button>
                                     </td>
                                     <td>
                                         <a href="{{ path('application_personnel_absence_index',{'matiere':matiere.matiere.id}) }}"
@@ -64,12 +64,14 @@
                                             {{ 'saisir.voir.modifier.notes'|trans }}
                                         </a></td>
                                     <td>
-                                        <button type="button"
-                                                class="btn btn-btn btn-block btn-primary-outline"
-                                                title="{{ 'export'|trans }}"
-                                                data-provide="tooltip"
+                                        <button data-provide="modaler tooltip"
+                                                data-url="{{ path('api_export_document_matiere', {'matiere': matiere.matiere.id}) }}"
+                                                data-size="lg"
+                                                data-confirm-text="{{ 'fermer'|trans }}"
+                                                class="btn btn-block btn-primary-outline "
                                                 data-placement="bottom"
-                                                data-toggle="modal" data-target="#modalExport"
+                                                title="{{ 'atitle.export'|trans }}"
+                                                data-title="{{ 'export.heading'|trans }}"
                                         >
                                             {{ 'choisir'|trans }}
                                         </button>
@@ -80,116 +82,6 @@
                         </table>
                     </div>
                 {% endfor %}
-            </div> <!---->
-
-            <div id="modal1" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div tabindex="-1" class="modal-content">
-                        <header class="modal-header"><h5 class="modal-title">
-                                {{ 'liste.intevernants.matiere'|trans }}</h5>
-                            <button type="button" data-dismiss="modal" class="close">×</button>
-                        </header>
-                        <div class="modal-body" id="modalPrevisionnel"><p class="my-4"></p></div>
-                        <footer class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">{{ 'fermer'|trans }}</button>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-
-            <div id="modalExport" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div tabindex="-1" class="modal-content">
-                        <header class="modal-header"><h5
-                                    class="modal-title">{{ 'choisir.document.et.format'|trans }}</h5>
-                            <button type="button" data-dismiss="modal" class="close">×</button>
-                        </header>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <h4>{{ 'type.document'|trans }}</h4>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios"
-                                               id="exampleRadios1" value="option1" checked>
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'emargement'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios"
-                                               id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'evaluation'|trans }}
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <h4>Format</h4>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFormat"
-                                               id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'csv.point-virgule'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFormat"
-                                               id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'csv.virgule'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFormat"
-                                               id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'excel'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFormat"
-                                               id="exampleRadios1" value="option1" checked>
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'pdf'|trans }}
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <h4>"Découpage"</h4>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFiltre"
-                                               id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'cm'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFiltre"
-                                               id="exampleRadios1" value="option1">
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'td'|trans }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exportFiltre"
-                                               id="exampleRadios1" value="option1" checked>
-                                        <label class="form-check-label" for="exampleRadios1">
-                                            {{ 'tp'|trans }}
-                                        </label>
-                                    </div>
-                                    {# todo: tous les groupes de groupes #}
-                                </div>
-                            </div>
-                        </div>
-                        <footer class="modal-footer">
-                            <button type="button" class="btn btn-primary"
-                                    data-dismiss="modal">{{ 'fermer'|trans }}</button>
-                        </footer>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

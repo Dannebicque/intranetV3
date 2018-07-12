@@ -35,6 +35,19 @@ class Constantes
     public const FLASHBAG_ERROR = 'danger';
     public const DUREE_COURS = 1.5;
 
+    public const TYPEDOCUMENT_EMARGEMENT = 'emargement';
+    public const TYPEDOCUMENT_EVALUATION = 'evaluation';
+    public const TYPEDOCUMENT_LISTE = 'liste';
+
+    public const CHAMPS_NOM_PRENOM = 'nom';
+    public const CHAMPS_NUM_ETUDIANT = 'num';
+    public const CHAMPS_BAC = 'bac';
+    public const CHAMPS_MAIL_ETUDIANT = 'mail';
+
+    public const FORMAT_CSV_POINT_VIRGULE = 'csv-pv';
+    public const FORMAT_CSV_VIRGULE = 'csv-v';
+    public const FORMAT_EXCEL = 'xlsx';
+    public const FORMAT_PDF = 'pdf';
 
     public const NB_RESULTS_PER_PAGE = 2;
 

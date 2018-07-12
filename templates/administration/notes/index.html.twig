@@ -38,6 +38,7 @@
                     <th>{{ 'table.matiere'|trans }}</th>
                     <th>{{ 'table.coefficient'|trans }}</th>
                     <th>{{ 'table.nb_notes'|trans }}</th>
+                    <th>{{ 'table.intervenants'|trans }}</th>
                     <th>{{ 'table.evaluations'|trans }}</th>
                 </tr>
                 </thead>
@@ -48,26 +49,46 @@
                         <td>{{ matiere.coefficient }}</td>
                         <td>{{ matiere.nbNotes }}</td>
                         <td>
+                            <button data-provide="modaler tooltip"
+                                    data-size="lg"
+                                    data-confirm-text="{{ 'fermer'|trans }}"
+                                    data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.id}) }}"
+                                    class="btn btn-info btn-outline btn-square btn-xs"
+                                    data-placement="bottom"
+                                    title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                                    data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                            >
+                                <i class="ti-user"></i>
+                            </button>
+                        </td>
+                        <td>
                             {% set nbEval = 0 %}
                             <div class="btn-toolbar">
 
 
                                 {% for evaluation in evaluations[matiere.id] %}
                                     <div class="btn-group mr-2">
-                                        <button class="btn btn-success">Eval
+                                        <a class="btn btn-success"
+                                           href=""
+                                           data-provide="tooltip"
+                                           data-placement="bottom"
+                                           title="{{ 'detail.evaluation'|trans }}">
+                                            Eval
                                             du {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}
                                             (#{{ evaluation.id }})
-                                        </button>
+                                        </a>
                                         <button class="btn btn-info btn-outline btn-square optAfficher"
                                                 data-id="{{ evaluation.id }}"
+                                                data-provide="tooltip"
                                                 data-placement="bottom"
-                                                title="Supprimer">
+                                                title="{{ 'afficher_masquer'|trans }}">
                                             <i class="fa fa-eye"></i>
                                         </button>
                                         <button class="btn btn-warning btn-outline btn-square optVerrouiller"
                                                 data-id="{{ evaluation.id }}"
+                                                data-provide="tooltip"
                                                 data-placement="bottom"
-                                                title="Supprimer">
+                                                title="{{ 'verouiller_deverouiller'|trans }}">
                                             <i class="fa fa-lock"></i>
                                         </button>
                                         <button class="btn btn-danger btn-outline btn-square supprimer"
@@ -80,7 +101,8 @@
                                     </div>
                                     {% set nbEval = nbEval + 1 %}
                                 {% endfor %}
-                                {% for i in nbEval..matiere.nbNotes-1 %}
+                                {% if nbEval < matiere.nbNotes %}
+                                    {% for i in nbEval..matiere.nbNotes %}
                                     <div class="btn-group">
                                         <button class="btn btn-label btn-primary"
                                                 data-provide="tooltip"
@@ -91,6 +113,7 @@
 
                                     </div>
                                 {% endfor %}
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

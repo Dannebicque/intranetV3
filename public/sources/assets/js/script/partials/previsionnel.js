@@ -156,56 +156,79 @@ $(document).on('change', '#previsionnel_matiere', function () {
   }
 });
 
-$(document).on('click', '.previsionnelModule', function () {
-  var modalPrevisionnel = $('#modalPrevisionnel');
+$(document).on('click', '#btnGenereFichier', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
+
+  var selectedChamps = []
+  $('input:checkbox[name=exportChamps]:checked').each(function () {
+    selectedChamps.push($(this).val())
+  })
 
   $.ajax({
-    url: Routing.generate('api_previsionnel_matiere', {'matiere': $(this).data('matiere')}),
-    success: function (data) {
-
-      modalPrevisionnel.empty();
-      var html = '<table class="table table-bordered table-condensed">\n' +
-        '                    <thead>\n' +
-        '                    <tr>\n' +
-        '                        <th class="cm">NB h*</th>\n' +
-        '                        <th class="cm">NB Gr.</th>\n' +
-        '                        <th class="cm">1.5**</th>\n' +
-        '\n' +
-        '                        <th class="previtd">NB h/ Gr.*</th>\n' +
-        '                        <th class="previtd">NB Gr.</th>\n' +
-        '                        <th class="previtd">1.5**</th>\n' +
-        '\n' +
-        '                        <th class="previtp">NB h/ Gr.*</th>\n' +
-        '                        <th class="previtp">NB Gr.</th>\n' +
-        '                        <th class="previtp">1.5**</th>\n' +
-        '                    </tr>\n' +
-        '                    </thead>\n' +
-        '                    <tbody>\n';
-
-      jQuery.each(data, function (index, matiere) {
-        html = html +
-          '                        <tr>\n' +
-          '                            <td colspan="9">\n' +
-          '                                ' + matiere.personnel + '\n' +
-          '                            </td>\n' +
-          '                        </tr>\n' +
-          '                        <tr>\n' +
-          '                            <td>' + matiere.nbHCm + ' h</td>\n' +
-          '                            <td>' + matiere.nbGrCm + '</td>\n' +
-          '                            <td>' + matiere.nbSeanceCm + '</td>\n' +
-          '                            <td class="previtd">' + matiere.nbHTd + ' h</td>\n' +
-          '                            <td class="previtd">' + matiere.nbGrTd + '</td>\n' +
-          '                            <td class="previtd">' + matiere.nbSeanceTd + '</td>\n' +
-          '                            <td class="previtp">' + matiere.nbHTp + ' h</td>\n' +
-          '                            <td class="previtp">' + matiere.nbGrTp + '</td>\n' +
-          '                            <td class="previtp">' + matiere.nbSeanceTp + '</td>\n' +
-          '                        </tr>\n';
-
-      });
-      html = html + '                    </tbody>\n' +
-        '                </table>';
-
-      modalPrevisionnel.append(html);
+    url: Routing.generate('export_listing.fr'),
+    method: 'POST',
+    data: {
+      'matiere': $(this).data('matiere'),
+      'exportTypeDocument': $('input[type=radio][name=exportTypeDocument]:checked').val(),
+      'exportChamps': selectedChamps,
+      'exportFormat': $('input[type=radio][name=exportFormat]:checked').val(),
+      'exportFiltre': $('input[type=radio][name=exportFiltre]:checked').val()
     }
-  });
-})
+  })
+});
+
+
+// $(document).on('click', '.previsionnelModule', function () {
+//   var modalPrevisionnel = $('#modalPrevisionnel');
+//
+//   $.ajax({
+//     url: Routing.generate('api_previsionnel_matiere', {'matiere': $(this).data('matiere')}),
+//     success: function (data) {
+//
+//       modalPrevisionnel.empty();
+//       var html = '<table class="table table-bordered table-condensed">\n' +
+//         '                    <thead>\n' +
+//         '                    <tr>\n' +
+//         '                        <th class="cm">NB h*</th>\n' +
+//         '                        <th class="cm">NB Gr.</th>\n' +
+//         '                        <th class="cm">1.5**</th>\n' +
+//         '\n' +
+//         '                        <th class="previtd">NB h/ Gr.*</th>\n' +
+//         '                        <th class="previtd">NB Gr.</th>\n' +
+//         '                        <th class="previtd">1.5**</th>\n' +
+//         '\n' +
+//         '                        <th class="previtp">NB h/ Gr.*</th>\n' +
+//         '                        <th class="previtp">NB Gr.</th>\n' +
+//         '                        <th class="previtp">1.5**</th>\n' +
+//         '                    </tr>\n' +
+//         '                    </thead>\n' +
+//         '                    <tbody>\n';
+//
+//       jQuery.each(data, function (index, matiere) {
+//         html = html +
+//           '                        <tr>\n' +
+//           '                            <td colspan="9">\n' +
+//           '                                ' + matiere.personnel + '\n' +
+//           '                            </td>\n' +
+//           '                        </tr>\n' +
+//           '                        <tr>\n' +
+//           '                            <td>' + matiere.nbHCm + ' h</td>\n' +
+//           '                            <td>' + matiere.nbGrCm + '</td>\n' +
+//           '                            <td>' + matiere.nbSeanceCm + '</td>\n' +
+//           '                            <td class="previtd">' + matiere.nbHTd + ' h</td>\n' +
+//           '                            <td class="previtd">' + matiere.nbGrTd + '</td>\n' +
+//           '                            <td class="previtd">' + matiere.nbSeanceTd + '</td>\n' +
+//           '                            <td class="previtp">' + matiere.nbHTp + ' h</td>\n' +
+//           '                            <td class="previtp">' + matiere.nbGrTp + '</td>\n' +
+//           '                            <td class="previtp">' + matiere.nbSeanceTp + '</td>\n' +
+//           '                        </tr>\n';
+//
+//       });
+//       html = html + '                    </tbody>\n' +
+//         '                </table>';
+//
+//       modalPrevisionnel.append(html);
+//     }
+//   });
+// })
