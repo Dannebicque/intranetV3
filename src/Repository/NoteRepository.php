@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Evaluation;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;

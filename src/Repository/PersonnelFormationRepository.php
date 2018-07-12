@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Personnel;
 use App\Entity\PersonnelFormation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

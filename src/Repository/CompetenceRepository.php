@@ -28,7 +28,7 @@ class CompetenceRepository extends ServiceEntityRepository
      * @param $getFormation
      * @param $int
      */
-    public function findByFormation($getFormation, $int)
+    public function findByFormation($getFormation, $int): void
     {
     }
 
@@ -37,7 +37,7 @@ class CompetenceRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByDiplomeBuilder($diplome)
+    public function findByDiplomeBuilder($diplome): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('c')
             ->where('c.diplome = :diplome')

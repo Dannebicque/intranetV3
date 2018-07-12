@@ -28,26 +28,6 @@ class AbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Matiere $matiere
-     * @param         $anneeCourante
-     *
-     * @return mixed
-     */
-    public function getAbsencesMatiere(Matiere $matiere, $anneeCourante)
-    {
-        return $this->createQueryBuilder('m')
-            ->where('m.matiere = :matiere')
-            ->andWhere('m.anneeuniversitaire = :annee')
-            ->setParameter('matiere', $matiere->getId())
-            ->setParameter('annee', $anneeCourante)
-            ->orderBy('m.date', 'DESC')
-            ->orderBy('m.heure', 'DESC')
-            ->getQuery()
-            ->getResult();
-
-    }
-
-    /**
      * @param Semestre $semestre
      * @param          $anneeCourante
      *
@@ -67,7 +47,13 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getAbsencesMatiereArray($matiere, $anneeCourante)
+    /**
+     * @param $matiere
+     * @param $anneeCourante
+     *
+     * @return array
+     */
+    public function getAbsencesMatiereArray($matiere, $anneeCourante): array
     {
 
         $absences = $this->getAbsencesMatiere($matiere, $anneeCourante);
@@ -76,8 +62,8 @@ class AbsenceRepository extends ServiceEntityRepository
         dump($absences);
         /** @var Absence $absence */
         foreach ($absences as $absence) {
-            $date = $absence->getDate()->format('Y-m-d');
-            $heure = $absence->getHeure()->format('H:i');
+            $date = $absence->getDate() !== null ? $absence->getDate()->format('Y-m-d') : '';
+            $heure = $absence->getHeure() !== null ? $absence->getHeure()->format('H:i') : '';
 
             if (!array_key_exists($date, $tab)) {
                 $tab[$date] = array();
@@ -89,10 +75,30 @@ class AbsenceRepository extends ServiceEntityRepository
                 echo 'heure';
             }
 
-            $tab[$date][$heure][] = $absence->getEtudiant()->getId();
+            $tab[$date][$heure][] = $absence->getEtudiant() !== null ? $absence->getEtudiant()->getId() : '';
         }
 
         return $tab;
+
+    }
+
+    /**
+     * @param Matiere $matiere
+     * @param         $anneeCourante
+     *
+     * @return mixed
+     */
+    public function getAbsencesMatiere(Matiere $matiere, $anneeCourante)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.matiere = :matiere')
+            ->andWhere('m.anneeuniversitaire = :annee')
+            ->setParameter('matiere', $matiere->getId())
+            ->setParameter('annee', $anneeCourante)
+            ->orderBy('m.date', 'DESC')
+            ->orderBy('m.heure', 'DESC')
+            ->getQuery()
+            ->getResult();
 
     }
 

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -62,7 +61,7 @@ class ArticleRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByTypeFormationBuilder($type, $formation)
+    public function findByTypeFormationBuilder($type, $formation): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->where('a.type = :type')

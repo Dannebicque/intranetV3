@@ -20,7 +20,6 @@ class DiplomeController extends BaseController
 {
     /**
      * @Route("/", name="administration_structure_diplome_index", methods="GET")
-     * @param DataUserSession   $dataUserSession
      * @param DiplomeRepository $diplomeRepository
      *
      * @return Response

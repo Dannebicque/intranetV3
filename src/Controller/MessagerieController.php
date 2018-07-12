@@ -4,12 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Etudiant;
 use App\Entity\Message;
-use App\Entity\MessageDestinataireEtudiant;
-use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\Personnel;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,10 +39,13 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @param $filtre
-     * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose":true})
+     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
+     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
+     * @param                                        $filtre
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose":true})
+     *
      */
     public function filtre(
         MessageDestinatairePersonnelRepository $messagePersonnelRepository,
@@ -102,7 +102,9 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/liste-messages/{page}", name="messagerie_liste_messages", options={"expose":true})
-     * @param $message
+     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
+     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
+     * @param int                                    $page
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

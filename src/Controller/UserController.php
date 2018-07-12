@@ -72,6 +72,9 @@ class UserController extends BaseController
 
     /**
      * @Route("/settings", name="user_settings")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function settings(Request $request)
     {

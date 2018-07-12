@@ -6938,5 +6938,11 @@
         <target>contacts.heading</target>
       </segment>
     </unit>
+    <unit id="izugDs." name="actualite.add.success.flash">
+      <segment>
+        <source>actualite.add.success.flash</source>
+        <target>actualite.add.success.flash</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

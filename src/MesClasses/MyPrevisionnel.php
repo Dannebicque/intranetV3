@@ -69,6 +69,7 @@ class MyPrevisionnel
     /**
      * MyPrevisionnel constructor.
      *
+     * @param EntityManagerInterface $entityManager
      * @param PrevisionnelRepository $previsionnelRepository
      * @param HrsRepository          $hrsRepository
      */
@@ -352,7 +353,7 @@ class MyPrevisionnel
         }
     }
 
-    public function update($id, $name, $value)
+    public function update($id, $name, $value): bool
     {
         $previ = $this->previsionnelRepository->find($id);
         if ($previ) {

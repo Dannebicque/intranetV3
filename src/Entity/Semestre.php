@@ -650,7 +650,7 @@ class Semestre extends BaseEntity
     /**
      * @return Etudiant[]
      */
-    public function getEtudiants(): PersistentCollection
+    public function getEtudiants(): array
     {
         return $this->etudiants;
     }

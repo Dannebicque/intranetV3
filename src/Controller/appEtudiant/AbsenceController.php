@@ -4,8 +4,6 @@ namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
 use App\Entity\Absence;
-use App\Entity\Note;
-use App\MesClasses\MyEvaluation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +19,9 @@ class AbsenceController extends BaseController
     /**
      *
      * @Route("/details/{id}", name="app_etudiant_absence_detail")
+     * @param Absence $absence
      *
+     * @return Response
      */
     public function details(Absence $absence): Response
     {

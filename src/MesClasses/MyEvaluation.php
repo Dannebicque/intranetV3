@@ -32,6 +32,8 @@ class MyEvaluation
 
     /**
      * @param Evaluation $evaluation
+     *
+     * @return MyEvaluation
      */
     public function setEvaluation(Evaluation $evaluation): MyEvaluation
     {
@@ -72,16 +74,16 @@ class MyEvaluation
 
         foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
             $grid = $groupe->getId();
-            $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['min'] = \count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['max'] = \count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['moyenne'] = \count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / \count($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['ecart_type'] = \count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
         }
 
-        $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
-        $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
-        $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
-        $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
+        $this->statistiques['promo']['min'] = \count($t) > 0 ? min($t) : -0.01;
+        $this->statistiques['promo']['max'] = \count($t) > 0 ? max($t) : -0.01;
+        $this->statistiques['promo']['moyenne'] = \count($t) > 0 ? array_sum($t) / \count($t) : -0.01;
+        $this->statistiques['promo']['ecart_type'] = \count($t) > 0 ? $this->ecartType($t) : -0.01;
         $this->statistiques['promo']['rang'] = $this->classement;//todo: intéret ? On sauvegarde juste des notes ?
     }
 
@@ -93,7 +95,7 @@ class MyEvaluation
     private function ecartType($donnees)
     {
         //0 - Nombre d’éléments dans le tableau
-        $population = count($donnees);
+        $population = \count($donnees);
         if ($population !== 0) {
             //1 - somme du tableau
             $somme_tableau = array_sum($donnees);
@@ -108,7 +110,7 @@ class MyEvaluation
                 //carré de l'écart
                 $ecart_donnee_carre = bcpow($ecart_donnee, 2, 2);
                 //Insertion dans le tableau
-                array_push($ecart, $ecart_donnee_carre);
+                $ecart[] = $ecart_donnee_carre;
             }
             //4 - somme des écarts
             $somme_ecart = array_sum($ecart);
@@ -137,7 +139,7 @@ class MyEvaluation
      *
      * @return int|null
      */
-    public function classement(Etudiant $etudiant)
+    public function classement(Etudiant $etudiant): ?int
     {
         $rangreel = 0;
         foreach ($this->classement as $key => $value) {
@@ -152,11 +154,11 @@ class MyEvaluation
         return null;
     }
 
-    public function getSynthese()
+    public function getSynthese(): void
     {
     }
 
-    public function getNotesTableau()
+    public function getNotesTableau(): array
     {
         $this->notes = $this->evaluation->getNotes();
 

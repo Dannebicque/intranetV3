@@ -30,9 +30,9 @@ class AbsenceController extends BaseController
         $tAbs = array();
         foreach ($etudiant->getAbsences() as $abs) {
             $t = array();
-            $t['date'] = $abs->getDate()->format('d/m/Y');
-            $t['heure'] = $abs->getHeure()->format('H:i');
-            $t['matiere'] = $abs->getMatiere()->getLibelle();
+            $t['date'] = $abs->getDate() !== null ? $abs->getDate()->format('d/m/Y') : '';
+            $t['heure'] = $abs->getHeure() !== null ? $abs->getHeure()->format('H:i') : '';
+            $t['matiere'] = $abs->getMatiere() !== null ? $abs->getMatiere()->getLibelle() : '';
             $t['justifie'] = $abs->isJustifie();
             $tAbs[] = $t;
         }
@@ -92,7 +92,7 @@ class AbsenceController extends BaseController
      */
     public function print(Semestre $semestre): Response
     {
-
+        return null;
     }
 
     /**
@@ -103,7 +103,7 @@ class AbsenceController extends BaseController
      */
     public function exportCsv(Semestre $semestre): Response
     {
-
+        return null;
     }
 
     /**

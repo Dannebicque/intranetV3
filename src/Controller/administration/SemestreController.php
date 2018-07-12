@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Semestre;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class SemestreController

@@ -19,7 +19,6 @@ use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -111,22 +110,22 @@ class MyEtudiant
         $this->absences = $this->etudiant->getAbsences();
     }
 
-    public function setIdEtudiant($id)
+    public function setIdEtudiant($id): void
     {
         $this->etudiant = $this->etudiantRepository->find($id);
     }
 
     /**
-     * @param $date
-     * @param $heure
-     * @param $matiere
-     * @param $personnel
+     * @param           $date
+     * @param           $heure
+     * @param Matiere   $matiere
+     * @param Personnel $personnel
      *
-     * @return bool
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @param           $annee
+     *
+     * @return void
      */
-    public function addAbsence($date, $heure, Matiere $matiere, Personnel $personnel, $annee)
+    public function addAbsence($date, $heure, Matiere $matiere, Personnel $personnel, $annee): void
     {
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
@@ -141,10 +140,10 @@ class MyEtudiant
         $this->entityManager->flush();
 
         //todo: gestion des mails ? ou sur un listener ? Ajout d'une notification pour l'étudiant également.
-        return true;
+
     }
 
-    public function addNote(Evaluation $evaluation, $data)
+    public function addNote(Evaluation $evaluation, $data): bool
     {
         //on cherche si deja une note de présente
         $note = $this->noteRepository->findBy(array(
@@ -152,14 +151,14 @@ class MyEtudiant
             'etudiant'   => $this->etudiant->getId()
         ));
 
-        if (count($note) === 1) {
+        if (\count($note) === 1) {
             //update
             $note[0]->setNote(Tools::convertToFloat($data['note']));
             $note[0]->setCommentaire($data['commentaire']);
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
             //todo: ecrire dans la table de tracking
-        } elseif (count($note) === 0) {
+        } elseif (\count($note) === 0) {
             //creation
 
             $newnote = new Note();

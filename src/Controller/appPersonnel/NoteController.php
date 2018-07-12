@@ -5,12 +5,10 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
-use App\Entity\Note;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluation;
 use App\MesClasses\MyEvaluations;
-use App\Repository\NoteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +28,8 @@ class NoteController extends BaseController
      * @Route("/{matiere}/{index}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
      * @param MyEvaluations $myEvaluations
      * @param Matiere       $matiere
+     *
+     * @param int           $index
      *
      * @return Response
      */
@@ -88,12 +88,12 @@ class NoteController extends BaseController
     /**
      * @Route("/saisie/etape-2/{evaluation}", name="application_personnel_note_saisie_2",
      *                                        requirements={"matiere"="\d+"})
-     * @param Request    $request
-     * @param Evaluation $evaluation
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
      *
      * @return Response
      */
-    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation)
+    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -103,7 +103,10 @@ class NoteController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param MyEtudiant $myEtudiant
+     * @param Request    $request
+     *
+     * @param Evaluation $evaluation
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Route("/sauvegarde/{evaluation}",
@@ -116,7 +119,7 @@ class NoteController extends BaseController
         //vérifier $this->get('request')->request->get('notes)['notes']
         $tnote = $request->request->get('notes')['notes'];
 
-        $nbNotes = count($tnote);
+        $nbNotes = \count($tnote);
         for ($i = 0; $i < $nbNotes; $i++) {
             $myEtudiant->setIdEtudiant($tnote[$i]['id']);
             $myEtudiant->addNote($evaluation, $tnote[$i]);
@@ -127,17 +130,18 @@ class NoteController extends BaseController
 
     /**
      * @Route("/import/{matiere}", name="application_personnel_note_import", requirements={"matiere"="\d+"})
+     * @param Request $request
      * @param Matiere $matiere
      *
      * @return Response
      */
-    public function import(Request $request, Matiere $matiere)
+    public function import(Request $request, Matiere $matiere): Response
     {
         $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
         $form = $this->createForm(EvaluationType::class, $evaluation,
             [
                 'formation'       => $this->dataUserSession->getFormation(),
-                'semestre'        => $matiere->getUe()->getSemestre(),
+                'semestre'        => $matiere->getUe() !== null ? $matiere->getUe()->getSemestre() : '',
                 'import'          => true,
                 'matiereDisabled' => true,
                 'attr'            => [

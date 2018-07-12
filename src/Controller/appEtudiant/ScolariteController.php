@@ -3,9 +3,7 @@
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
-use App\Entity\Note;
 use App\Entity\Scolarite;
-use App\MesClasses\MyEvaluation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,9 +18,10 @@ class ScolariteController extends BaseController
 {
     /**
      *
+     * @param Scolarite $scolarite
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/details/{id}", name="app_etudiant_scolarite_detail")
-     *
      */
     public function details(Scolarite $scolarite): Response
     {

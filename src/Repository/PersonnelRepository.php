@@ -5,9 +5,7 @@ namespace App\Repository;
 use App\Entity\Personnel;
 use App\Entity\PersonnelFormation;
 use App\Entity\Semestre;
-use App\MesClasses\MyRoute;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -95,7 +93,7 @@ class PersonnelRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByFormationBuilder($formation)
+    public function findByFormationBuilder($formation): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(PersonnelFormation::class, 'f', 'WITH', 'f.personnel = p.id')
@@ -110,7 +108,7 @@ class PersonnelRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder|null
      */
-    public function findBySemestreBuilder(Semestre $semestre)
+    public function findBySemestreBuilder(Semestre $semestre): ?\Doctrine\ORM\QueryBuilder
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
             return $this->findByFormationBuilder($semestre->getAnnee()->getDiplome()->getFormation());

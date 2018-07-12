@@ -29,7 +29,7 @@ class AnneeRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByDiplomeBuilder($diplome)
+    public function findByDiplomeBuilder($diplome): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->where('a.diplome = :diplome')

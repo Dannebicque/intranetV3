@@ -16,7 +16,6 @@ use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -95,7 +94,10 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/edit", name="administration_previsionnel_edit", options={"expose":true})
+     * @param MyPrevisionnel $myPrevisionnel
+     * @param Request        $request
      *
+     * @return JsonResponse
      */
     public function edit(MyPrevisionnel $myPrevisionnel, Request $request)
     {
@@ -110,6 +112,11 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/new", name="administration_previsionnel_new", methods="GET|POST")
+     * @param PersonnelRepository $personnelRepository
+     * @param MatiereRepository   $matiereRepository
+     * @param Request             $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function create(
         PersonnelRepository $personnelRepository,
@@ -153,6 +160,9 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/import", name="administration_previsionnel_import", methods="GET|POST")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function import(Request $request)
     {
@@ -195,7 +205,6 @@ class PrevisionnelController extends BaseController
     /**
      * @Route({"fr":"/{id}/dupliquer", "en":"/{id}/duplicate"}, name="administration_previsionnel_duplicate",
      *                                 methods="GET")
-     * @param Request      $request
      * @param Previsionnel $previsionnel
      *
      * @return Response

@@ -2711,5 +2711,23 @@
               <target>danger</target>
           </segment>
       </unit>
+      <unit id="toyggR8" name="Years">
+          <segment>
+              <source>Years</source>
+              <target>Years</target>
+          </segment>
+      </unit>
+      <unit id="Ccp1UbP" name="Months">
+          <segment>
+              <source>Months</source>
+              <target>Months</target>
+          </segment>
+      </unit>
+      <unit id="4IwKqPV" name="Days">
+          <segment>
+              <source>Days</source>
+              <target>Days</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

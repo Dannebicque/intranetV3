@@ -5,7 +5,6 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
-use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use App\Repository\SemestreRepository;

@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\MesClasses\MyPagination;
 use App\Repository\ArticleRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,8 +21,11 @@ class ArticleController extends BaseController
 {
     /**
      * @Route("/categorie/{categorie}/{page}", name="article_categorie", options={"expose":true})
+     * @param MyPagination      $myPagination
      * @param ArticleRepository $articleRepository
      * @param                   $categorie
+     *
+     * @param int               $page
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -46,11 +49,9 @@ class ArticleController extends BaseController
     /**
      * @Route("/show/{slug}", name="article_read_more")
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
-     * @param ArticleRepository $articleRepository
-     * @param                   $slug
+     * @param Article $article
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Article $article): Response
     {
@@ -68,14 +69,14 @@ class ArticleController extends BaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @IsGranted("ROLE_ETUDIANT")
      */
-    public function like(Article $article)
+    public function like(Article $article): JsonResponse
     {
         //todo: a tester en tant qu'étudiant. Comment gérer avec personnel et étudiant ? Une vraie entité?
         //todo: gérer si déjà présent et dans ce cas supprimer
         $article->addLike($this->getUser());
         $this->entityManager->flush();
 
-        return $this->json(count($article->getLikes()), Response::HTTP_OK);
+        return $this->json(\count($article->getLikes()), Response::HTTP_OK);
 
     }
 }

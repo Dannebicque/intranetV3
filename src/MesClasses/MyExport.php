@@ -12,7 +12,7 @@ namespace App\MesClasses;
 class MyExport
 {
 
-    public function genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $matiere)
+    public function genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $matiere): void
     {
     }
 }

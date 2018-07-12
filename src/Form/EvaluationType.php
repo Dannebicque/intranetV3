@@ -6,13 +6,11 @@ use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
-use App\Form\Type\YesNoType;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\TypeGroupeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -93,7 +91,7 @@ class EvaluationType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Evaluation::class,

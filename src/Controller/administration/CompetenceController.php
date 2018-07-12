@@ -39,7 +39,7 @@ class CompetenceController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request, Diplome $diplome = null): Response
+    public function create(Request $request, Diplome $diplome): Response
     {
         $competence = new Competence($diplome);
         $form = $this->createForm(CompetenceType::class, $competence, [

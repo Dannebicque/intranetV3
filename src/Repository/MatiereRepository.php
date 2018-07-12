@@ -45,7 +45,7 @@ class MatiereRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByFormationBuilder($formation)
+    public function findByFormationBuilder($formation): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
@@ -63,7 +63,7 @@ class MatiereRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findBySemestreBuilder(Semestre $semestre)
+    public function findBySemestreBuilder(Semestre $semestre): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')

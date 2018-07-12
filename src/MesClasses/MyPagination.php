@@ -44,14 +44,14 @@ class MyPagination
      * @param              $link
      * @param int          $page
      */
-    public function calculPagination(QueryBuilder $queryBuilder, $link, $page = 1)
+    public function calculPagination(QueryBuilder $queryBuilder, $link, $page = 1): void
     {
         $this->page = $page;
         $this->link = $link;
 
         $debut = $page * Constantes::NB_RESULTS_PER_PAGE - 2;
 
-        $this->nbMaxResult = count($queryBuilder->getQuery()->getArrayResult());
+        $this->nbMaxResult = \count($queryBuilder->getQuery()->getArrayResult());
         $this->data = $queryBuilder->setFirstResult($debut)
             ->setMaxResults(Constantes::NB_RESULTS_PER_PAGE)
             ->getQuery()
@@ -106,7 +106,7 @@ class MyPagination
     /**
      * @return string
      */
-    public function getPreviousLink()
+    public function getPreviousLink(): string
     {
         $args = $this->link['args'];
         $args['page'] = $this->page - 1;
@@ -125,7 +125,7 @@ class MyPagination
     /**
      * @return string
      */
-    public function getNextLink()
+    public function getNextLink(): string
     {
         $args = $this->link['args'];
         $args['page'] = $this->page + 1;
@@ -138,7 +138,7 @@ class MyPagination
      *
      * @return string
      */
-    public function getLinkPage($page)
+    public function getLinkPage($page): string
     {
         $args = $this->link['args'];
         $args['page'] = $page;

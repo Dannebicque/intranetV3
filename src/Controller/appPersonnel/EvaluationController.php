@@ -4,15 +4,8 @@ namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
-use App\Entity\Matiere;
-use App\Entity\Note;
-use App\Form\EvaluationType;
-use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluation;
-use App\MesClasses\MyEvaluations;
-use App\Repository\NoteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,6 +23,9 @@ class EvaluationController extends BaseController
      * @Route("/{evaluation}", name="application_personnel_evaluation_show",
      *                                    requirements={"evaluation"="\d+"})
      *
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
+     *
      * @return Response
      */
     public function detailsEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
@@ -46,12 +42,16 @@ class EvaluationController extends BaseController
      * @Route("export/{_format}/{evaluation}", name="application_personnel_evaluation_export",
      *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      *
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
+     *
      * @return Response
      */
     public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
+        return null;
 
     }
 }

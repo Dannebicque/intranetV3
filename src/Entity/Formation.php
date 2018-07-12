@@ -49,7 +49,7 @@ class Formation extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $anneeCourante = 0;
+    private $anneeCourante;
 
     /**
      * @var string
@@ -153,7 +153,7 @@ class Formation extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
-    private $optAnneePrevisionnel = 0;
+    private $optAnneePrevisionnel;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="formation")

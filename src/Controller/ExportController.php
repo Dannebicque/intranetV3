@@ -17,6 +17,9 @@ class ExportController extends Controller
 {
     /**
      * @Route("/listing", name="export_listing", options={"expose":true})
+     * @param MatiereRepository $matiereRepository
+     * @param MyExport          $myExport
+     * @param Request           $request
      */
     public function listing(MatiereRepository $matiereRepository, MyExport $myExport, Request $request)
     {

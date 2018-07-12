@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\MesClasses\Calendrier;
 use App\Repository\DateRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -19,7 +20,7 @@ class PlanningController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(DateRepository $dateRepository, int $annee)
+    public function index(DateRepository $dateRepository, int $annee): Response
     {
         Calendrier::calculPlanning($annee);
 

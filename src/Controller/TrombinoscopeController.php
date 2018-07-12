@@ -27,7 +27,11 @@ class TrombinoscopeController extends BaseController
 
     /**
      * @Route("/etudiant/{semestre}/{typegroupe}", name="trombinoscope_etudiant_semestre", options={"expose":true})
-     * @param Semestre $semestre
+     * @param Semestre        $semestre
+     *
+     * @param TypeGroupe|null $typegroupe
+     *
+     * @return Response
      */
     public function trombiEtudiantSemestre(Semestre $semestre, TypeGroupe $typegroupe = null)
     {
@@ -40,6 +44,10 @@ class TrombinoscopeController extends BaseController
 
     /**
      * @Route("/personnel/{type}", name="trombinoscope_personnel", options={"expose":true})
+     * @param PersonnelRepository $personnelRepository
+     * @param                     $type
+     *
+     * @return Response
      */
     public function trombiPersonnel(PersonnelRepository $personnelRepository, $type)
     {

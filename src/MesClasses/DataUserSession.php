@@ -85,14 +85,16 @@ class DataUserSession
     /**
      * DataUserSession constructor.
      *
-     * @param SemestreRepository     $semestreRepository
-     * @param AnneeRepository        $anneeRepository
-     * @param DiplomeRepository      $diplomeRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param FormationRepository    $formationRepository
-     * @param NotificationRepository $notificationRepository
-     * @param TokenStorageInterface  $user
-     * @param Security               $security
+     * @param SemestreRepository                     $semestreRepository
+     * @param MessageDestinataireEtudiantRepository  $messageDestinataireEtudiantRepository
+     * @param MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository
+     * @param AnneeRepository                        $anneeRepository
+     * @param DiplomeRepository                      $diplomeRepository
+     * @param PersonnelRepository                    $personnelRepository
+     * @param FormationRepository                    $formationRepository
+     * @param NotificationRepository                 $notificationRepository
+     * @param TokenStorageInterface                  $user
+     * @param Security                               $security
      */
     public function __construct(
         SemestreRepository $semestreRepository,

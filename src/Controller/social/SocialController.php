@@ -4,7 +4,6 @@ namespace App\Controller\social;
 
 use App\Controller\BaseController;
 use App\MesClasses\Excel\MyExcelWriter;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -19,7 +18,9 @@ class SocialController extends BaseController
 {
     /**
      * @Route("/", name="social_index")
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @param MyExcelWriter $myExcelWriter
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function index(MyExcelWriter $myExcelWriter)
     {

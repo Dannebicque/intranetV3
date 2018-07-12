@@ -55,7 +55,9 @@ abstract class Calendrier
     }
 
     /**
-     * @param $year
+     * @param     $year
+     * @param int $bonMois
+     * @param int $nbMois
      */
     public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
     {

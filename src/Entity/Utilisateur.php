@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -199,7 +197,7 @@ abstract class Utilisateur implements UserInterface
     /**
      * @ORM\PrePersist()
      */
-    public function generateSlug()
+    public function generateSlug(): void
     {
         $this->slug = strtolower($this->prenom) . '.' . strtolower($this->nom);//todo: améliorer la création du slug et vérifier les doublons.
     }
@@ -572,7 +570,7 @@ abstract class Utilisateur implements UserInterface
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $cv
+     * @param null|File $photo
      */
     public function setPhotoFile(?File $photo = null): void
     {
@@ -602,7 +600,7 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @param string $cvName
+     * @param string $photoName
      */
     public function setPhotoName(string $photoName): void
     {

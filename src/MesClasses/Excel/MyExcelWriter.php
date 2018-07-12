@@ -45,7 +45,7 @@ class MyExcelWriter
      * @param $cell
      * @param $value
      */
-    public function write($cell, $value)
+    public function write($cell, $value): void
     {
         $this->sheet->setCellValue($cell, $value);
 
@@ -56,7 +56,7 @@ class MyExcelWriter
      *
      * @return StreamedResponse
      */
-    public function saveXlsx($name)
+    public function saveXlsx($name): StreamedResponse
     {
         $writer = new Xlsx($this->spreadsheet);
 
@@ -78,7 +78,7 @@ class MyExcelWriter
      *
      * @return StreamedResponse
      */
-    public function saveCsv($name, $options = [])
+    public function saveCsv($name, array $options = []): StreamedResponse
     {
 
         $writer = new Csv($this->spreadsheet);

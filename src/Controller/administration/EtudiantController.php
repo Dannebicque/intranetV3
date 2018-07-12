@@ -4,7 +4,6 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Semestre;
 use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +54,9 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/import", name="administration_etudiant_import", methods="GET|POST")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function import(Request $request): Response
     {

@@ -17,4 +17,14 @@
             {{ include('composants/adm-form.html.twig') }}
         </div>
     </div>
+    <div class="input-group" data-provide="datepicker">
+        <div class="input-group-prepend">
+            <span class="input-group-text">From</span>
+        </div>
+        <input type="text" class="form-control">
+        <div class="input-group-prepend input-group-append">
+            <span class="input-group-text">To</span>
+        </div>
+        <input type="text" class="form-control">
+    </div>
 {% endblock %}

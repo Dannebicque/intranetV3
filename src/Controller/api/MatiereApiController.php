@@ -3,19 +3,12 @@
 namespace App\Controller\api;
 
 use App\Controller\BaseController;
-use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
-use App\Repository\EtudiantRepository;
 use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class MatiereApiController
@@ -89,6 +82,7 @@ class MatiereApiController extends BaseController
      * @Route("/document/export/{matiere}", name="api_export_document_matiere", options={"expose":true})
      * @param Matiere $matiere
      *
+     * @return Response
      */
     public function exportDocument(Matiere $matiere)
     {

@@ -760,11 +760,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     public function unserialize($serialized): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken
-        list(
+        [
             $this->id,
             $this->password,
             $this->username
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+        ] = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**

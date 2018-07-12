@@ -31,7 +31,7 @@ class SemestreRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByFormationBuilder($formation)
+    public function findByFormationBuilder($formation): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
@@ -45,7 +45,7 @@ class SemestreRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByDiplomeBuilder($diplome)
+    public function findByDiplomeBuilder($diplome): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')

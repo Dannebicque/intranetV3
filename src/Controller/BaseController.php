@@ -66,12 +66,12 @@ class BaseController extends Controller
      * @param TranslatorInterface $translator
      * @required
      */
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(TranslatorInterface $translator): void
     {
         $this->translator = $translator;
     }
 
-    public function addFlashBag($niveau, $cleTraduction)
+    public function addFlashBag($niveau, $cleTraduction): void
     {
         $this->flashBag->add($niveau, $this->translator->trans($cleTraduction));
     }

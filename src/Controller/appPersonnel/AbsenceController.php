@@ -41,7 +41,9 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/{matiere}", name="application_personnel_absence_index", requirements={"matiere"="\d+"})
-     * @param Matiere $matiere
+     * @param MatiereRepository    $matiereRepository
+     * @param TypeGroupeRepository $typeGroupeRepository
+     * @param Matiere              $matiere
      *
      * @return Response
      */
@@ -49,8 +51,7 @@ class AbsenceController extends BaseController
         MatiereRepository $matiereRepository,
         TypeGroupeRepository $typeGroupeRepository,
         Matiere $matiere
-    ): Response
-    {
+    ): Response {
         $semestre = $matiere->getSemestre();
 
         if ($semestre !== null) {
@@ -59,11 +60,11 @@ class AbsenceController extends BaseController
                 'matieres'    => $matiereRepository->findBySemestre($semestre),
                 'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre)
             ]);
-        } else {
-            return $this->redirectToRoute('erreur_666');
         }
-    }
 
+        return $this->redirectToRoute('erreur_666');
+
+    }
 
 
     /**
@@ -98,6 +99,7 @@ class AbsenceController extends BaseController
     public function save(Matiere $matiere): Response
     {
         //save en csv
+        return null;
     }
 
     /**
@@ -109,6 +111,7 @@ class AbsenceController extends BaseController
     public function imprimer(Matiere $matiere): Response
     {
         //print (pdf)
+        return null;
     }
 
     /**
@@ -119,13 +122,16 @@ class AbsenceController extends BaseController
      */
     public function supprimer(Absence $absence): Response
     {
-
+        return null;
     }
 
     /**
      * @Route("/ajax/absences/{matiere}", name="application_personnel_absence_get_ajax", methods="GET",
      *                                    options={"expose":true})
+     * @param AbsenceRepository $absenceRepository
+     * @param Matiere           $matiere
      *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function ajaxGetAbsencesMatiere(AbsenceRepository $absenceRepository, Matiere $matiere)
     {
@@ -138,7 +144,15 @@ class AbsenceController extends BaseController
     /**
      * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
      *                                             options={"expose":true})
+     * @param MyEtudiant        $myEtudiant
+     * @param AbsenceRepository $absenceRepository
+     * @param Request           $request
+     * @param Matiere           $matiere
+     * @param Etudiant          $etudiant
      *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function ajaxSaisie(
         MyEtudiant $myEtudiant,
@@ -157,11 +171,11 @@ class AbsenceController extends BaseController
             'anneeuniversitaire' => $this->dataUserSession->getAnneeUniversitaire()
         ));
 
-        if ($request->get('action') === 'saisie' && count($absence) === 0) {
+        if ($request->get('action') === 'saisie' && \count($absence) === 0) {
             //if ($this->saisieAutorise($connect->getFormation()->getPgNbjourssaisie(), $datesymfony)) {
             $myEtudiant->setEtudiant($etudiant);
 
-            $add = $myEtudiant->addAbsence(
+            $myEtudiant->addAbsence(
                 $date,
                 $heure,
                 $matiere,
@@ -177,7 +191,9 @@ class AbsenceController extends BaseController
             //}
             //saisie interdite
             //return new response('out', 500);
-        } elseif (count($absence) === 1) {
+        }
+
+        if (\count($absence) === 1) {
 
 
             //un tableau, donc une absence ?
@@ -190,9 +206,9 @@ class AbsenceController extends BaseController
 
             return $this->json($absences);
 
-        } else {
-            return new response('nok', 500);
         }
+
+        return new response('nok', 500);
     }
 
 }

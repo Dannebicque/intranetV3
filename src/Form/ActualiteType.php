@@ -27,6 +27,7 @@ class ActualiteType extends AbstractType
             ])
             ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
+                'attr'  => ['data-provide' => 'quill', 'rows' => 10]
             ]);
     }
 

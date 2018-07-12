@@ -55,6 +55,7 @@ class MyEvaluations
     /**
      * MyEvaluations constructor.
      *
+     * @param MyEvaluation         $myEvaluation
      * @param MatiereRepository    $matiereRepository
      * @param EvaluationRepository $evaluationRespository
      */
@@ -118,7 +119,7 @@ class MyEvaluations
     /**
      * @param $annee
      */
-    public function getEvaluationsMatiere($annee)
+    public function getEvaluationsMatiere($annee): void
     {
         $this->evaluations = $this->evaluationRespository->findByMatiere($this->matiere, $annee);
 

@@ -30,7 +30,7 @@ class TypeGroupeRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findBySemestreBuilder(Semestre $semestre)
+    public function findBySemestreBuilder(Semestre $semestre): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->where('t.semestre = :semestre')

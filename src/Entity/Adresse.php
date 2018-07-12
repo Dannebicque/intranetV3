@@ -43,11 +43,10 @@ class Adresse extends BaseEntity
     /**
      * Adresse constructor.
      *
-     * @param $adresse1
      */
     public function __construct()
     {
-        $this->pays = 'France';
+
     }
 
     /**
