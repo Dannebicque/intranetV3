@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ActualiteController
  * @package App\Controller
- * @Route("/acutalites")
+ * @Route("/actualites")
  */
 class ActualiteController extends BaseController
 {
