@@ -62,8 +62,7 @@ class MyEvaluations
         MyEvaluation $myEvaluation,
         MatiereRepository $matiereRepository,
         EvaluationRepository $evaluationRespository
-    )
-    {
+    ) {
         $this->matiereRepository = $matiereRepository;
         $this->evaluationRespository = $evaluationRespository;
         $this->myEvaluation = $myEvaluation;

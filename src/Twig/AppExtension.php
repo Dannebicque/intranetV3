@@ -18,16 +18,16 @@ class AppExtension extends AbstractExtension
     public function getFilters(): array
     {
         return array(
-            new TwigFilter('tel_format', array($this, 'telFormat')),
-            new TwigFilter('time_ago', array($this, 'timeAgo')),
-            new TwigFilter('badge', array($this, 'badge')),
-            new TwigFilter('escapetitle', array($this, 'escapetitle')),
+            new TwigFilter('tel_format', [$this, 'telFormat']),
+            new TwigFilter('time_ago', [$this, 'timeAgo']),
+            new TwigFilter('badge', [$this, 'badge']),
+            new TwigFilter('escapetitle', [$this, 'escapetitle']),
         );
     }
 
     public function escapetitle($texte): ?string
     {
-        return str_replace(array('<strong>', '</strong>'), '', $texte);
+        return str_replace(['<strong>', '</strong>'], '', $texte);
     }
 
     /**
@@ -80,22 +80,22 @@ class AppExtension extends AbstractExtension
         $now = time(); // current time
         $diff = $now - $time; // difference between the current and the provided dates
 
-        if ($diff < 60) // it happened now
-        {
+        if ($diff < 60) {
+            // it happened now
             return Constantes::TIMEBEFORE_NOW;
-        } elseif ($diff < 3600) // it happened X minutes ago
-        {
+        } elseif ($diff < 3600) {
+            // it happened X minutes ago
             return str_replace('{num}', $out = round($diff / 60),
                 $out == 1 ? Constantes::TIMEBEFORE_MINUTE : Constantes::TIMEBEFORE_MINUTES);
-        } elseif ($diff < 3600 * 24) // it happened X hours ago
-        {
+        } elseif ($diff < 3600 * 24) {
+            // it happened X hours ago
             return str_replace('{num}', $out = round($diff / 3600),
                 $out == 1 ? Constantes::TIMEBEFORE_HOUR : Constantes::TIMEBEFORE_HOURS);
-        } elseif ($diff < 3600 * 24 * 2) // it happened yesterday
-        {
+        } elseif ($diff < 3600 * 24 * 2) {
+            // it happened yesterday
             return Constantes::TIMEBEFORE_YESTERDAY;
-        } else // falling back on a usual date format as it happened later than yesterday
-        {
+        } else {
+            // falling back on a usual date format as it happened later than yesterday
             return strftime(date('Y',
                 $time) == date('Y') ? Constantes::TIMEBEFORE_FORMAT : Constantes::TIMEBEFORE_FORMAT_YEAR, $time);
         }

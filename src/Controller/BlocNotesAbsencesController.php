@@ -38,4 +38,11 @@ class BlocNotesAbsencesController extends BaseController
             'etudiant' => $myEtudiant,
         ]);
     }
+
+    public function mccSemestre(): Response
+    {
+        return $this->render('bloc_notes_absences/mcc.html.twig', [
+
+        ]);
+    }
 }

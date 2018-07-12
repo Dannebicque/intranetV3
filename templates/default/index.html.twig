@@ -52,7 +52,22 @@
                 'App\\Controller\\BlocNotesAbsencesController::etudiant'
             )) }}
 
-            {# todo: MCC #}
+            {{ render(controller(
+                'App\\Controller\\BlocNotesAbsencesController::mccSemestre'
+            )) }}
         {% endif %}
+
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'liens.utiles.heading'|trans }}</h4>
+                <div class="card-body"></div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'contacts.heading'|trans }}</h4>
+                <div class="card-body"></div>
+            </div>
+        </div>
     </div>
 {% endblock %}

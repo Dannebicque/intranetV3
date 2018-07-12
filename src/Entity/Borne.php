@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Borne extends BaseEntity
 {
+    public const ICONES = array('information' => 'fa fa-info-circle', 'danger' => 'fa fa-warning');
+
     /**
      * @ORM\Column(type="string", length=20)
      */

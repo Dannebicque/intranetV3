@@ -1581,7 +1581,7 @@
       </notes>
       <segment>
         <source>label.icone</source>
-        <target>label.icone</target>
+          <target>Icône</target>
       </segment>
     </unit>
     <unit id="51OQi14" name="label.message">
@@ -1590,7 +1590,7 @@
       </notes>
       <segment>
         <source>label.message</source>
-        <target>label.message</target>
+          <target>Message</target>
       </segment>
     </unit>
     <unit id="UJDm2vF" name="label.url">
@@ -1599,7 +1599,7 @@
       </notes>
       <segment>
         <source>label.url</source>
-        <target>label.url</target>
+          <target>URL</target>
       </segment>
     </unit>
     <unit id="yMsereO" name="label.dateDebutPublication">
@@ -1608,7 +1608,7 @@
       </notes>
       <segment>
         <source>label.dateDebutPublication</source>
-        <target>label.dateDebutPublication</target>
+          <target>Date de début de publication</target>
       </segment>
     </unit>
     <unit id="ifaDJWD" name="Year">
@@ -1617,7 +1617,7 @@
       </notes>
       <segment>
         <source>Year</source>
-        <target>Year</target>
+          <target>Année</target>
       </segment>
     </unit>
     <unit id="MQylA_8" name="Month">
@@ -1626,7 +1626,7 @@
       </notes>
       <segment>
         <source>Month</source>
-        <target>Month</target>
+          <target>Mois</target>
       </segment>
     </unit>
     <unit id="jyNk4Ru" name="Day">
@@ -1644,7 +1644,7 @@
       </notes>
       <segment>
         <source>Hour</source>
-        <target>Hour</target>
+          <target>Heure</target>
       </segment>
     </unit>
     <unit id="S3hmW_x" name="Minute">
@@ -1662,7 +1662,7 @@
       </notes>
       <segment>
         <source>label.dateFinPublication</source>
-        <target>label.dateFinPublication</target>
+          <target>Date de fin de publication</target>
       </segment>
     </unit>
     <unit id="CYpZwBz" name="label.visible">
@@ -1671,7 +1671,7 @@
       </notes>
       <segment>
         <source>label.visible</source>
-        <target>label.visible</target>
+          <target>Visible</target>
       </segment>
     </unit>
     <unit id="QduJnpH" name="choice.femme">
@@ -2685,6 +2685,30 @@
           <segment>
               <source>label.adresseParentale</source>
               <target>label.adresseParentale</target>
+          </segment>
+      </unit>
+      <unit id="PJaDAX_" name="value1">
+          <segment>
+              <source>value1</source>
+              <target>value1</target>
+          </segment>
+      </unit>
+      <unit id="BTfUgfc" name="value2">
+          <segment>
+              <source>value2</source>
+              <target>value2</target>
+          </segment>
+      </unit>
+      <unit id="3qcRGoQ" name="information">
+          <segment>
+              <source>information</source>
+              <target>information</target>
+          </segment>
+      </unit>
+      <unit id="Ej.WZqo" name="danger">
+          <segment>
+              <source>danger</source>
+              <target>danger</target>
           </segment>
       </unit>
   </file>

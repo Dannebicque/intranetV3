@@ -3,11 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Borne;
+use App\Entity\Constantes;
 use App\Entity\Semestre;
+use App\Form\Type\ChoiceIconType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,8 +35,14 @@ class BorneType extends AbstractType
 
 
         $builder
-            ->add('icone', TextType::class, [
-                'label' => 'label.icone',
+            ->add('icone', ChoiceType::class, [
+                'attr'        => ['data-provide' => 'selectpicker'],
+                'label'       => 'label.icone',
+                'choices'     => Borne::ICONES,
+                'choice_attr' => function ($choiceValue, $key, $value) {
+                    // adds a class like attending_yes, attending_no, etc
+                    return ['data-icon' => Borne::ICONES[$key] . ' mr-2'];
+                },
             ])
             ->add('couleur', TextType::class, [
                 'label' => 'label.couleur',

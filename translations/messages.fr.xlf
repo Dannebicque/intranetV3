@@ -1353,7 +1353,7 @@
       </notes>
       <segment>
         <source>update</source>
-        <target>Actualiser</target>
+        <target>Mettre à jour</target>
       </segment>
     </unit>
     <unit id="DtiM0c8" name="adm.matiere.new.heading">
@@ -6737,7 +6737,7 @@
     <unit id="FCl8b9r" name="Tous.les.champs.obligatoires">
       <segment>
         <source>Tous.les.champs.obligatoires</source>
-        <target>Tous.les.champs.obligatoires</target>
+        <target>Tous les champs avec un * sont obligatoires</target>
       </segment>
     </unit>
     <unit id="MBgykTk" name="donnees.update.success.flash">
@@ -6924,6 +6924,18 @@
       <segment>
         <source>format.document</source>
         <target>format.document</target>
+      </segment>
+    </unit>
+    <unit id="V1iX7gk" name="liens.utiles.heading">
+      <segment>
+        <source>liens.utiles.heading</source>
+        <target>liens.utiles.heading</target>
+      </segment>
+    </unit>
+    <unit id="t9RahJD" name="contacts.heading">
+      <segment>
+        <source>contacts.heading</source>
+        <target>contacts.heading</target>
       </segment>
     </unit>
   </file>
