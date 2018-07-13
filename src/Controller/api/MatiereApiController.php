@@ -43,6 +43,7 @@ class MatiereApiController extends BaseController
         $tmatieres = array();
         /** @var Matiere $m */
         foreach ($matieres as $m) {
+            $t = [];
             $t['id'] = $m->getId();
             $t['libelle'] = $m->getLibelle();
             $t['display'] = $m->getUe() ? $m->getUe()->getLibelle() : '-';
@@ -65,6 +66,7 @@ class MatiereApiController extends BaseController
         //return new Response($serializer->serialize($matiere, 'json'));
 
         //todo: sérializer
+        $t = [];
         $t['id'] = $matiere->getId();
         $t['libelle'] = $matiere->getLibelle();
         $t['display'] = $matiere->getUe() ? $matiere->getUe()->getLibelle() : '-';
@@ -84,7 +86,7 @@ class MatiereApiController extends BaseController
      *
      * @return Response
      */
-    public function exportDocument(Matiere $matiere)
+    public function exportDocument(Matiere $matiere): Response
     {
         return $this->render('api/matiere/document/export.html.twig', [
             'matiere'     => $matiere,

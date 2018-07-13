@@ -26,7 +26,31 @@
             <div class="tab-pane {% if loop.first %} active show{% endif %}"
                  id="semestre{{ semestre.id }}" role="tabpanel">
                 <div class="card">
-                    <h4 class="card-title">Groupes du semestre {{ semestre.libelle }}</h4>
+                    <header class="card-header">
+                        <h4 class="card-title">Groupes du semestre {{ semestre.libelle }}</h4>
+                        <div class="card-header-actions" style="">
+                            <span id="trombifiltre">
+                                <a href="{{ path('administration_type_groupe_new',{semestre:semestre.id}) }}"
+                                   class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
+                                   data-provide="tooltip"
+                                   data-placement="bottom"><i class="ti-plus"></i></a>
+
+                            </span>
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                                        <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i>
+                                            Excel</a>
+                                        <a href="#" class="dropdown-item"><i class="fa fa-file-text-o"></i> CSV</a>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </header>
+
                     <div class="card-body">
 
                         <ul class="nav nav-pills nav-actions-visible flex-column">
@@ -46,6 +70,11 @@
                                        data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
                                                 class="ti-layers"></span></a>
+                                    <a class="nav-action"
+                                       href="{{ path('administration_type_groupe_show', {id:typeGroupe.id}) }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
+                                                class="ti-eye"></span></a>
                                     <a class="nav-action"
                                        href="{{ path('administration_type_groupe_edit', {id:typeGroupe.id}) }}"
                                        data-provide="tooltip"
@@ -73,6 +102,11 @@
                                                    data-provide="tooltip"
                                                    data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
                                                             class="ti-layers"></span></a>
+                                                <a class="nav-action"
+                                                   href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
+                                                   data-provide="tooltip"
+                                                   data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
+                                                            class="ti-eye"></span></a>
                                                 <a class="nav-action"
                                                    href="{{ path('administration_groupe_edit', {id:groupe.id}) }}"
                                                    data-provide="tooltip"
@@ -108,12 +142,6 @@
             href:path('administration_groupe_save'),
             title: 'sauvegarder'|trans,
             icone: 'ti-save'
-        },
-        {
-            type:'info',
-            href:path('administration_type_groupe_new'),
-            title: 'ajouter'|trans,
-            icone: 'ti-plus'
         },
         {
             type:'info',

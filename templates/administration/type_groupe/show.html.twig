@@ -1,42 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TypeGroupe{% endblock %}
+{% block header %}
+    {{ 'adm.type_groupe.show.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>TypeGroupe</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'type_groupe', id: type_groupe.id}) }}
+    </div>
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ type_groupe.id }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ type_groupe.created ? type_groupe.created|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ type_groupe.updated ? type_groupe.updated|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Libelle</th>
-            <td>{{ type_groupe.libelle }}</td>
-        </tr>
-        <tr>
-            <th>CodeApogee</th>
-            <td>{{ type_groupe.codeApogee }}</td>
-        </tr>
-        <tr>
-            <th>Type</th>
-            <td>{{ type_groupe.type }}</td>
-        </tr>
-        </tbody>
-    </table>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_groupe.show.heading'|trans }}</h4>
+        <div class="card-body">
 
-    <a href="{{ path('type_groupe_index') }}">back to list</a>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ type_groupe.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code'|trans }}</th>
+                    <td>{{ type_groupe.codeApogee }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ type_groupe.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.semestre'|trans }}</th>
+                    <td>{{ type_groupe.semestre ? type_groupe.semestre.libelle : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ type_groupe.created ? type_groupe.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ type_groupe.updated ? type_groupe.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <a href="{{ path('type_groupe_edit', {'id': type_groupe.id}) }}">edit</a>
-
-    {{ include('type_groupe/_delete_form.html.twig') }}
+    {# toto: liste des compétences enfants + ajout #}
 {% endblock %}

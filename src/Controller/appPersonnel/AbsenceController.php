@@ -133,7 +133,10 @@ class AbsenceController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function ajaxGetAbsencesMatiere(AbsenceRepository $absenceRepository, Matiere $matiere)
+    public function ajaxGetAbsencesMatiere(
+        AbsenceRepository $absenceRepository,
+        Matiere $matiere
+    ): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $absences = $absenceRepository->getAbsencesMatiereArray($matiere,
             $this->dataUserSession->getAnneeUniversitaire());
@@ -151,8 +154,6 @@ class AbsenceController extends BaseController
      * @param Etudiant          $etudiant
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function ajaxSaisie(
         MyEtudiant $myEtudiant,

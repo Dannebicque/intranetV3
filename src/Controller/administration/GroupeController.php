@@ -125,7 +125,7 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_hrs_delete", methods="DELETE")
+     * @Route({"fr":"/{id}", "en":"/{id}"}, name="administration_groupe_delete", methods="DELETE")
      * @param Request $request
      * @param Groupe  $groupe
      *

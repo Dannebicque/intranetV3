@@ -76,7 +76,7 @@ class UserController extends BaseController
      *
      * @return Response
      */
-    public function settings(Request $request)
+    public function settings(Request $request): Response
     {
         $user = $this->getUser();
         if ($user instanceof Personnel) {

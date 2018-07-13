@@ -38,7 +38,7 @@ class Ppn extends BaseEntity
 
     public function __construct()
     {
-        $this->annee = date('Y');
+        $this->annee = (int)date('Y');
         $this->matieres = new ArrayCollection();
     }
 

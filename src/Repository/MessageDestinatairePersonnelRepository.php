@@ -12,8 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method MessageDestinatairePersonnel|null find($id, $lockMode = null, $lockVersion = null)
  * @method MessageDestinatairePersonnel|null findOneBy(array $criteria, array $orderBy = null)
  * @method MessageDestinatairePersonnel[]    findAll()
- * @method MessageDestinatairePersonnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset =
- *         null)
+ * @method MessageDestinatairePersonnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
 {
@@ -54,33 +53,4 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-//    /**
-//     * @return MessageDestinatairePersonnel[] Returns an array of MessageDestinatairePersonnel objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?MessageDestinatairePersonnel
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

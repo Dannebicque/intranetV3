@@ -33,7 +33,7 @@ class TrombinoscopeController extends BaseController
      *
      * @return Response
      */
-    public function trombiEtudiantSemestre(Semestre $semestre, TypeGroupe $typegroupe = null)
+    public function trombiEtudiantSemestre(Semestre $semestre, TypeGroupe $typegroupe = null): Response
     {
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
             'semestre'           => $semestre,
@@ -49,7 +49,7 @@ class TrombinoscopeController extends BaseController
      *
      * @return Response
      */
-    public function trombiPersonnel(PersonnelRepository $personnelRepository, $type)
+    public function trombiPersonnel(PersonnelRepository $personnelRepository, $type): Response
     {
         $personnels = $personnelRepository->findByType($type,
             $this->dataUserSession->getFormationId());

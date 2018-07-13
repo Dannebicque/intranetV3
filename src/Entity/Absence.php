@@ -62,7 +62,7 @@ class Absence extends BaseEntity
 
    public function __construct()
    {
-       $this->anneeuniversitaire= date('Y');
+       $this->anneeuniversitaire = (int)date('Y');
    }
 
     /**

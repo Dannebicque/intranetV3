@@ -860,39 +860,6 @@
       </segment>
     </unit>
     <unit id="Ri6ajiO" name="sauvegarder">
-      <notes>
-        <note category="file-source" priority="1">templates/previsionnel/index.html.twig:58</note>
-        <note category="file-source" priority="1">templates/appPersonnel/note/index.html.twig:113</note>
-        <note category="file-source" priority="1">templates/appPersonnel/absence/index.html.twig:77</note>
-        <note category="file-source" priority="1">templates/appPersonnel/absence/voir.html.twig:73</note>
-        <note category="file-source" priority="1">templates/appPersonnel/carnet/index.html.twig:55</note>
-        <note category="file-source" priority="1">templates/administration/hrs/index.html.twig:66</note>
-        <note category="file-source" priority="1">templates/administration/competence/index.html.twig:67</note>
-        <note category="file-source" priority="1">templates/administration/etudiant/index.html.twig:50</note>
-        <note category="file-source" priority="1">templates/administration/matiere/index.html.twig:110</note>
-        <note category="file-source" priority="1">templates/administration/previsionnel/index.html.twig:87</note>
-        <note category="file-source" priority="1">templates/administration/actualite/index.html.twig:57</note>
-        <note category="file-source" priority="1">templates/administration/trello_tache/index.html.twig:62</note>
-        <note category="file-source" priority="1">templates/administration/date/index.html.twig:65</note>
-        <note category="file-source" priority="1">templates/administration/document/index.html.twig:31</note>
-        <note category="file-source" priority="1">templates/administration/borne/index.html.twig:70</note>
-        <note category="file-source" priority="1">templates/administration/type_document/index.html.twig:57</note>
-        <note category="file-source" priority="1">templates/administration/article/index.html.twig:58</note>
-        <note category="file-source" priority="1">templates/administration/ppn/index.html.twig:60</note>
-        <note category="file-source" priority="1">templates/administration/personnel/index.html.twig:68</note>
-        <note category="file-source" priority="1">templates/administration/groupe/index.html.twig:109</note>
-        <note category="file-source" priority="1">templates/super-administration/ufr/index.html.twig:59</note>
-        <note category="file-source" priority="1">templates/super-administration/type_hrs/index.html.twig:60</note>
-        <note category="file-source" priority="1">templates/super-administration/salle/index.html.twig:60</note>
-        <note category="file-source" priority="1">templates/super-administration/site/index.html.twig:57</note>
-        <note category="file-source" priority="1">templates/super-administration/type_diplome/index.html.twig:63
-          </note>
-        <note category="file-source" priority="1">templates/structure/diplome/index.html.twig:69</note>
-        <note category="file-source" priority="1">templates/structure/formation/index.html.twig:63</note>
-        <note category="file-source" priority="1">templates/structure/annee/index.html.twig:77</note>
-        <note category="file-source" priority="1">templates/structure/ue/index.html.twig:66</note>
-        <note category="file-source" priority="1">templates/structure/semestre/index.html.twig:64</note>
-      </notes>
       <segment>
         <source>sauvegarder</source>
         <target>Sauvegarder</target>
@@ -6942,6 +6909,108 @@
       <segment>
         <source>actualite.add.success.flash</source>
         <target>actualite.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="VsJDXTO" name="groupe.delete.success.flash">
+      <segment>
+        <source>groupe.delete.success.flash</source>
+        <target>groupe.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="gC4OO5L" name="explication.volume.horaire">
+      <segment>
+        <source>explication.volume.horaire</source>
+        <target>Le volume horaire saisie correspond au nombre d'heure pour un groupe CM ou TD ou TP.</target>
+      </segment>
+    </unit>
+    <unit id="AwtaKbh" name="nb.seance.indicatif">
+      <segment>
+        <source>nb.seance.indicatif</source>
+        <target>Nb de séances de 1h30 donné à titre indicatif.</target>
+      </segment>
+    </unit>
+    <unit id="o1ZHmv9" name="choisir.intervenant">
+      <segment>
+        <source>choisir.intervenant</source>
+        <target>Choisir l'intervenant</target>
+      </segment>
+    </unit>
+    <unit id="SGKd261" name="ajouter.intervenant">
+      <segment>
+        <source>ajouter.intervenant</source>
+        <target>Ajouter un intervenant</target>
+      </segment>
+    </unit>
+    <unit id="H9gSgXg" name="synthese">
+      <segment>
+        <source>synthese</source>
+        <target>Synthèse</target>
+      </segment>
+    </unit>
+    <unit id="PoRo.kB" name="total.matiere">
+      <segment>
+        <source>total.matiere</source>
+        <target>Total Matière</target>
+      </segment>
+    </unit>
+    <unit id="owWfixZ" name="total.etudiant">
+      <segment>
+        <source>total.etudiant</source>
+        <target>Total Etudiant</target>
+      </segment>
+    </unit>
+    <unit id="0Cz0o8S" name="total.eq.td">
+      <segment>
+        <source>total.eq.td</source>
+        <target>Total Eq. TD</target>
+      </segment>
+    </unit>
+    <unit id="FamHqlY" name="total.tp">
+      <segment>
+        <source>total.tp</source>
+        <target>Total TP</target>
+      </segment>
+    </unit>
+    <unit id="UU4bVT4" name="total.td">
+      <segment>
+        <source>total.td</source>
+        <target>Total TD</target>
+      </segment>
+    </unit>
+    <unit id="UUWyoDL" name="total.cm">
+      <segment>
+        <source>total.cm</source>
+        <target>Total CM</target>
+      </segment>
+    </unit>
+    <unit id="PM6AS1p" name="nb.h.gr.">
+      <segment>
+        <source>nb.h.gr.</source>
+        <target>NB h/ Gr.</target>
+      </segment>
+    </unit>
+    <unit id="mTtj8gW" name="nb.gr.">
+      <segment>
+        <source>nb.gr.</source>
+        <target>NB Gr.</target>
+      </segment>
+    </unit>
+    <unit id="NKsbGiY" name="adm.type_groupe.show.heading">
+      <segment>
+        <source>adm.type_groupe.show.heading</source>
+        <target>adm.type_groupe.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="uVQJ5ei" name="adm.groupe.show.heading">
+      <segment>
+        <source>adm.groupe.show.heading</source>
+        <target>adm.groupe.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="5WwabuX" name="table.typeGroupe">
+      <segment>
+        <source>table.typeGroupe</source>
+        <target>table.typeGroupe</target>
       </segment>
     </unit>
   </file>

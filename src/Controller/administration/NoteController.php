@@ -23,7 +23,6 @@ class NoteController extends BaseController
      * @param Semestre      $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
      */
     public function index(MyEvaluations $myEvaluations, Semestre $semestre): Response
     {

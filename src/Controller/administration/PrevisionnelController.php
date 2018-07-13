@@ -99,7 +99,7 @@ class PrevisionnelController extends BaseController
      *
      * @return JsonResponse
      */
-    public function edit(MyPrevisionnel $myPrevisionnel, Request $request)
+    public function edit(MyPrevisionnel $myPrevisionnel, Request $request): JsonResponse
     {
         $id = $request->request->get('pk');
         $name = $request->request->get('name');
@@ -164,7 +164,7 @@ class PrevisionnelController extends BaseController
      *
      * @return Response
      */
-    public function import(Request $request)
+    public function import(Request $request): Response
     {
         $form = $this->createForm(ImportPrevisionnelType::class, null,
             [

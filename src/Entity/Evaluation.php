@@ -98,7 +98,6 @@ class Evaluation extends BaseEntity
         $this->personnelAutorise = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->enfants = new ArrayCollection();
-        $this->evaluations = new ArrayCollection();
     }
 
     /**
@@ -300,7 +299,7 @@ class Evaluation extends BaseEntity
     /**
      * @return Collection|Note[]
      */
-    public function getNotes(): Collection
+    public function getNotes(): array
     {
         return $this->notes;
     }

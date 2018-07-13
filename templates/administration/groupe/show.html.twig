@@ -1,38 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Groupe{% endblock %}
+{% block header %}
+    {{ 'adm.groupe.show.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>Groupe</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'groupe', id: groupe.id}) }}
+    </div>
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ groupe.id }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ groupe.created ? groupe.created|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ groupe.updated ? groupe.updated|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Libelle</th>
-            <td>{{ groupe.libelle }}</td>
-        </tr>
-        <tr>
-            <th>CodeApogee</th>
-            <td>{{ groupe.codeApogee }}</td>
-        </tr>
-        </tbody>
-    </table>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.groupe.show.heading'|trans }}</h4>
+        <div class="card-body">
 
-    <a href="{{ path('groupe_index') }}">back to list</a>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ groupe.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code'|trans }}</th>
+                    <td>{{ groupe.codeApogee }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ groupe.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.typeGroupe'|trans }}</th>
+                    <td>{{ groupe.typeGroupe ? groupe.typeGroupe.libelle : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ groupe.created ? groupe.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ groupe.updated ? groupe.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <a href="{{ path('groupe_edit', {'id': groupe.id}) }}">edit</a>
-
-    {{ include('groupe/_delete_form.html.twig') }}
 {% endblock %}

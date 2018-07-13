@@ -21,7 +21,7 @@ class ExportController extends Controller
      * @param MyExport          $myExport
      * @param Request           $request
      */
-    public function listing(MatiereRepository $matiereRepository, MyExport $myExport, Request $request)
+    public function listing(MatiereRepository $matiereRepository, MyExport $myExport, Request $request): void
     {
         $matiere = $request->request->get('matiere');
         if ($matiere !== 0) {

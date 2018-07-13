@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +26,16 @@ class TypeGroupeController extends BaseController
     }
 
     /**
-     * @Route("/new", name="administration_type_groupe_new", methods="GET|POST")
-     * @param Request                $request
+     * @Route("/new/{semestre}", name="administration_type_groupe_new", methods="GET|POST")
+     * @param Request  $request
+     *
+     * @param Semestre $semestre
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(Request $request, Semestre $semestre): Response
     {
-        $typeGroupe = new TypeGroupe();
+        $typeGroupe = new TypeGroupe($semestre);
         $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
             [
                 'formation' => $this->dataUserSession->getFormation(),

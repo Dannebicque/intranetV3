@@ -30,15 +30,6 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @Route("/nouveau", name="messagerie_new", options={"expose":true})
-     */
-    public function nouveau(): Response
-    {
-        return $this->render('messagerie/new.html.twig', [
-        ]);
-    }
-
-    /**
      * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
      * @param                                        $filtre

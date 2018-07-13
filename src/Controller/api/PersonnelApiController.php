@@ -48,6 +48,7 @@ class PersonnelApiController extends BaseController
 
         /** @var PersonnelFormation $p */
         foreach ($personnels as $p) {
+            $t = [];
             $t['nom'] = $p->getPersonnel() ? $p->getPersonnel()->getNom(): '';
             $t['prenom'] = $p->getPersonnel() ? $p->getPersonnel()->getPrenom(): '';
             $t['posteInterne'] = $p->getPersonnel() ? $p->getPersonnel()->getPosteInterne(): '';

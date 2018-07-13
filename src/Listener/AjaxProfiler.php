@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 class AjaxProfiler
 {
     //todo: ne fonctionne pas ?
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         $response = $event->getResponse();
 

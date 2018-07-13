@@ -44,6 +44,7 @@ class EtudiantApiController extends BaseController
         $etus = array();
         /** @var Etudiant $p */
         foreach ($etudiants as $p) {
+            $t = [];
             $t['nom'] = $p->getNom();
             $t['prenom'] = $p->getPrenom();
             $t['slug'] = $p->getSlug();

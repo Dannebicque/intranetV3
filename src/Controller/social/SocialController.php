@@ -22,7 +22,7 @@ class SocialController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function index(MyExcelWriter $myExcelWriter)
+    public function index(MyExcelWriter $myExcelWriter): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         $myExcelWriter->write('A1', 'Bonjour');
         $myExcelWriter->write('A2', 'Le monde');

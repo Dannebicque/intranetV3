@@ -48,7 +48,7 @@ class PersonnelFormation
     {
         $this->formation = $formation;
         $this->personnel = $personnel;
-        $this->annee = date('Y');
+        $this->annee = (int)date('Y');
     }
 
     public function getId()

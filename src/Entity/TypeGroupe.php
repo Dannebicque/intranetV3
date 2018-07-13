@@ -45,8 +45,9 @@ class TypeGroupe extends BaseEntity
      */
     private $defaut;
 
-    public function __construct()
+    public function __construct(Semestre $semestre)
     {
+        $this->semestre = $semestre;
         $this->groupes = new ArrayCollection();
     }
 

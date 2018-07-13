@@ -183,8 +183,8 @@ class Formation extends BaseEntity
 
     public function __construct()
     {
-        $this->anneeCourante = date('Y');
-        $this->optAnneePrevisionnel = date('Y');
+        $this->anneeCourante = (int)date('Y');
+        $this->optAnneePrevisionnel = (int)date('Y');
         $this->typeDocuments = new ArrayCollection();
         $this->personnelFormations = new ArrayCollection();
         $this->actualites = new ArrayCollection();
