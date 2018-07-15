@@ -298,22 +298,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @return Annee
-     */
-    public function getAnnee(): ?Annee
-    {
-        return $this->annee;
-    }
-
-    /**
-     * @param Annee $annee
-     */
-    public function setAnnee(Annee $annee): void
-    {
-        $this->annee = $annee;
-    }
-
-    /**
      * @return mixed
      */
     public function getLibelle()
@@ -532,7 +516,7 @@ class Semestre extends BaseEntity
     /**
      * @param Personnel|null $optDestMailModifNote
      */
-    public function setOptDestMailModifNote( $optDestMailModifNote): void
+    public function setOptDestMailModifNote($optDestMailModifNote): void
     {
         $this->optDestMailModifNote = $optDestMailModifNote;
     }
@@ -668,14 +652,29 @@ class Semestre extends BaseEntity
     /**
      * @return string
      */
-    public function display() :string
+    public function display(): string
     {
-        if ($this->getAnnee() !== null)
-        {
+        if ($this->getAnnee() !== null) {
             return $this->libelle . ' | ' . $this->getAnnee()->getLibelle();
         }
 
         return $this->libelle;
+    }
+
+    /**
+     * @return Annee
+     */
+    public function getAnnee(): ?Annee
+    {
+        return $this->annee;
+    }
+
+    /**
+     * @param Annee $annee
+     */
+    public function setAnnee(Annee $annee): void
+    {
+        $this->annee = $annee;
     }
 
     /**

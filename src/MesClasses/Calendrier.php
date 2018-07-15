@@ -21,6 +21,35 @@ abstract class Calendrier
     private static $tabFinMois = array();
     private static $tabJoursFeries = array();
 
+    /**
+     * @param     $year
+     * @param int $bonMois
+     * @param int $nbMois
+     */
+    public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
+    {
+        self::joursFeries($year);
+
+        if ($nbMois < 12 && $bonMois > 1 && $bonMois < 9) {
+            $year++;
+        }
+
+        for ($mois = 1; $mois <= $nbMois; $mois++) {
+
+            if ($bonMois > 12) {
+                $bonMois -= 12;
+                $year++;
+            }
+
+            self::$tabFinMois[$mois] = date('t', mktime(0, 0, 0, $bonMois, 1, $year));
+
+            for ($jour = 1; $jour <= self::$tabFinMois[$mois]; $jour++) {
+
+                self::$tabPlanning[$mois][$jour] = new \DateTime($year . '-' . $bonMois . '-' . $jour);
+            }
+            $bonMois++;
+        }
+    }
 
     /**
      * @param $year
@@ -52,36 +81,6 @@ abstract class Calendrier
             date('Y-m-d', $jeudiAscension), //jeudi ascension
             date('Y-m-d', $lundiPentecote)
         ); //lundi de pentecote
-    }
-
-    /**
-     * @param     $year
-     * @param int $bonMois
-     * @param int $nbMois
-     */
-    public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
-    {
-        self::joursFeries($year);
-
-        if ($nbMois < 12 && $bonMois > 1 && $bonMois < 9) {
-            $year++;
-        }
-
-        for ($mois = 1; $mois <= $nbMois; $mois++) {
-
-            if ($bonMois > 12) {
-                $bonMois -= 12;
-                $year++;
-            }
-
-            self::$tabFinMois[$mois] = date('t', mktime(0, 0, 0, $bonMois, 1, $year));
-
-            for ($jour = 1; $jour <= self::$tabFinMois[$mois]; $jour++) {
-
-                self::$tabPlanning[$mois][$jour] = new \DateTime($year . '-' . $bonMois . '-' . $jour);
-            }
-            $bonMois++;
-        }
     }
 
     /**

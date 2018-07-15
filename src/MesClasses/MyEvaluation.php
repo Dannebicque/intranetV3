@@ -84,7 +84,7 @@ class MyEvaluation
         $this->statistiques['promo']['max'] = \count($t) > 0 ? max($t) : -0.01;
         $this->statistiques['promo']['moyenne'] = \count($t) > 0 ? array_sum($t) / \count($t) : -0.01;
         $this->statistiques['promo']['ecart_type'] = \count($t) > 0 ? $this->ecartType($t) : -0.01;
-        $this->statistiques['promo']['rang'] = $this->classement;//todo: intéret ? On sauvegarde juste des notes ?
+        $this->statistiques['promo']['rang'] = $this->classement; //todo: intéret ? On sauvegarde juste des notes ?
     }
 
     /**

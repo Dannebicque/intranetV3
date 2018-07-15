@@ -157,7 +157,7 @@ class Article extends BaseEntity
      */
     public function getResume()
     {
-        return substr($this->texte,0, 100); //todo: améliorer par rapport aux mots
+        return substr($this->texte, 0, 100); //todo: améliorer par rapport aux mots
     }
 
     /**

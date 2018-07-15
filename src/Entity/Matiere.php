@@ -203,7 +203,6 @@ class Matiere extends BaseEntity
     private $suspendu = false;
 
 
-
     public function __construct()
     {
         $this->previsionnels = new ArrayCollection();
@@ -588,6 +587,7 @@ class Matiere extends BaseEntity
         if ($this->getUe() !== null && $this->getUe()->getSemestre() !== null) {
             return $this->getUe()->getSemestre();
         }
+
         return null;
     }
 
@@ -777,15 +777,15 @@ class Matiere extends BaseEntity
     /**
      * @return float
      */
-    public function getEqTdFormation():float
+    public function getEqTdFormation(): float
     {
-        return $this->cmFormation*1.5 + $this->tdFormation + $this->tpFormation;
+        return $this->cmFormation * 1.5 + $this->tdFormation + $this->tpFormation;
     }
 
     /**
      * @return float
      */
-    public function getEtuFormation():float
+    public function getEtuFormation(): float
     {
         return $this->cmFormation + $this->tdFormation + $this->tpFormation;
     }

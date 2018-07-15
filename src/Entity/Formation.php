@@ -522,6 +522,14 @@ class Formation extends BaseEntity
     }
 
     /**
+     * @return null|File
+     */
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -539,14 +547,6 @@ class Formation extends BaseEntity
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new \DateTime());
         }
-    }
-
-    /**
-     * @return null|File
-     */
-    public function getLogoFile(): ?File
-    {
-        return $this->logoFile;
     }
 
     /**

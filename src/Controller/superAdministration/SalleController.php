@@ -57,7 +57,7 @@ class SalleController extends BaseController
 
     /**
      * @Route("/new", name="sa_salle_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -98,8 +98,8 @@ class SalleController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_salle_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Salle                  $salle
+     * @param Request $request
+     * @param Salle   $salle
      *
      * @return Response
      */
@@ -143,14 +143,14 @@ class SalleController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_salle_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Salle                  $salle
+     * @param Request $request
+     * @param Salle   $salle
      *
      * @return Response
      */
     public function delete(Request $request, Salle $salle): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $salle->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($salle);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.delete.success.flash');

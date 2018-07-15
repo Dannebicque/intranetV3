@@ -179,15 +179,6 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new \DateTime();
-    }
-
-    /**
      * @ORM\PrePersist()
      */
     public function setCreatedValue(): void
@@ -200,7 +191,7 @@ abstract class Utilisateur implements UserInterface
      */
     public function generateSlug(): void
     {
-        $this->slug = strtolower($this->prenom) . '.' . strtolower($this->nom);//todo: améliorer la création du slug et vérifier les doublons.
+        $this->slug = strtolower($this->prenom) . '.' . strtolower($this->nom); //todo: améliorer la création du slug et vérifier les doublons.
     }
 
     /**
@@ -553,7 +544,7 @@ abstract class Utilisateur implements UserInterface
      */
     public function getDisplayPr(): string
     {
-        return ucfirst($this->prenom). ' ' . mb_strtoupper($this->nom);
+        return ucfirst($this->prenom) . ' ' . mb_strtoupper($this->nom);
     }
 
     /**
@@ -562,6 +553,14 @@ abstract class Utilisateur implements UserInterface
     public function getDisplay(): string
     {
         return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
     }
 
     /**
@@ -585,11 +584,12 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @return null|File
+     * @ORM\PreUpdate()
+     * @ORM\PrePersist()
      */
-    public function getPhotoFile(): ?File
+    public function setUpdatedValue(): void
     {
-        return $this->photoFile;
+        $this->updated = new \DateTime();
     }
 
     /**

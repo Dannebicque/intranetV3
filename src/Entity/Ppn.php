@@ -76,7 +76,6 @@ class Ppn extends BaseEntity
     }
 
 
-
     /**
      * @return Collection|Matiere[]
      */

@@ -29,7 +29,7 @@ before_install:
 
 install:
   - cp .env.dist .env
-#  - mysql -e 'create database testing;'
+  - mysql -e 'create database testing;'
   - composer install
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
