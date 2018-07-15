@@ -41,7 +41,7 @@ class AnneeType extends AbstractType
                 'required'      => true,
                 'choice_label'  => 'libelle',
                 'expanded'      => true,
-                'query_builder' => function (DiplomeRepository $diplomeRepository) {
+                'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByFormationBuilder($this->formation);
                 },
                 'label'         => 'label.diplome'
@@ -59,25 +59,24 @@ class AnneeType extends AbstractType
                 'label' => 'label.ordre'
             ])
             ->add('couleurCm', ColorType::class, [
-                'label' => 'label.couleur_cm',
-                'required' =>false
+                'label'    => 'label.couleur_cm',
+                'required' => false
             ])
             ->add('couleurTd', ColorType::class, [
-                'label' => 'label.couleur_td',
-                'required' =>false
+                'label'    => 'label.couleur_td',
+                'required' => false
             ])
             ->add('couleurTp', ColorType::class, [
-                'label' => 'label.couleur_tp',
-                'required' =>false
+                'label'    => 'label.couleur_tp',
+                'required' => false
             ])
             ->add('couleurTexte', ColorType::class, [
-                'label' => 'label.couleur_texte',
-                'required' =>false
+                'label'    => 'label.couleur_texte',
+                'required' => false
             ])
             ->add('optAlternance', YesNoType::class, [
                 'label' => 'label.opt_alternance'
-            ])
-        ;
+            ]);
     }
 
     /**
@@ -88,9 +87,9 @@ class AnneeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Annee::class,
+            'data_class'         => Annee::class,
             'translation_domain' => 'form',
-            'formation' => null
+            'formation'          => null
         ]);
     }
 }

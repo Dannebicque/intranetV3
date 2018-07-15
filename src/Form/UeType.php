@@ -34,7 +34,7 @@ class UeType extends AbstractType
                 'class'         => Semestre::class,
                 'required'      => true,
                 'choice_label'  => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
+                'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label'         => 'label.semestre',
@@ -46,9 +46,7 @@ class UeType extends AbstractType
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
             ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
             ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
-            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement'])
-
-        ;
+            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement']);
     }
 
     /**
@@ -59,8 +57,8 @@ class UeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Ue::class,
-            'diplome' => null,
+            'data_class'         => Ue::class,
+            'diplome'            => null,
             'translation_domain' => 'form'
 
         ]);

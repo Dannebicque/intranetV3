@@ -54,7 +54,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orWhere('p.prenom LIKE :needle')
             ->orWhere('p.username LIKE :needle')
             ->orWhere('p.mailUniv LIKE :needle')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')
             ->getQuery()

@@ -21,8 +21,7 @@ class TypeDocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class,['label' => 'label.libelle'])
-        ;
+            ->add('libelle', TextType::class, ['label' => 'label.libelle']);
     }
 
     /**
@@ -33,7 +32,7 @@ class TypeDocumentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => TypeDocument::class,
+            'data_class'         => TypeDocument::class,
             'translation_domain' => 'form'
 
         ]);

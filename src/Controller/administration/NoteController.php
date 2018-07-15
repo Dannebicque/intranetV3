@@ -5,6 +5,8 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\MesClasses\MyEvaluations;
+use App\MesClasses\MyExport;
+use App\Repository\NoteRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -36,12 +38,28 @@ class NoteController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_all_notes_export", methods="GET",
+     * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_notes_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function export(): Response
+    public function exportAllNotes(
+        MyExport $myExport,
+        NoteRepository $noteRepository,
+        Semestre $semestre,
+        $_format
+    ): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $notes = $noteRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $response = $myExport->genereFichierGenerique($_format, $notes, 'notes_' . $semestre->getLibelle(),
+            ['notes_administration', 'utilisateur', 'matiere'], [
+                'date',
+                'heure',
+                'duree',
+                'etudiant' => ['nom', 'prenom'],
+                'justifie',
+                'matiere' => ['libelle'],
+                'personnel' => ['nom', 'prenom']
+            ]);
+
+        return $response;
     }
 }

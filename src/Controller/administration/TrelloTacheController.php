@@ -53,8 +53,8 @@ class TrelloTacheController extends BaseController
         $dp = $dateDuJour;
         $end = 32 + $jourDuJour;
 
-        for ($i = $jourDuJour + 1; $i < $end; $i++) //le 32 dépend du jour de début ...
-        {
+        for ($i = $jourDuJour + 1; $i < $end; $i++) {
+            //le 32 dépend du jour de début ...
             $tab[$i] = $dp->add(new \DateInterval('P1D'));
             $dp = $tab[$i];
         }
@@ -95,7 +95,7 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/new", name="administration_trello_tache_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -138,8 +138,8 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_trello_tache_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param TrelloTache            $trelloTache
+     * @param Request     $request
+     * @param TrelloTache $trelloTache
      *
      * @return Response
      */
@@ -169,8 +169,8 @@ class TrelloTacheController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_trello_tache_delete", methods="DELETE")
-     * @param Request                $request
-     * @param TrelloTache            $trelloTache
+     * @param Request     $request
+     * @param TrelloTache $trelloTache
      *
      * @return Response
      */

@@ -37,7 +37,7 @@ class TrelloTacheType extends AbstractType
                 'class'         => Personnel::class,
                 'label'         => 'label.personnel',
                 'choice_label'  => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByFormationBuilder($this->formation);
                 },
                 'required'      => true,

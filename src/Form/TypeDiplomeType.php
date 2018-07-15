@@ -25,8 +25,7 @@ class TypeDiplomeType extends AbstractType
             ->add('sigle', TextType::class, ['label' => 'label.sigle'])
             ->add('nb_semestres', TextType::class, ['label' => 'label.nb_semestres'])
             ->add('niveau_entree', TextType::class, ['label' => 'label.niveau_entree'])
-            ->add('niveau_sortie', TextType::class, ['label' => 'label.niveau_sortie'])
-        ;
+            ->add('niveau_sortie', TextType::class, ['label' => 'label.niveau_sortie']);
     }
 
     /**
@@ -37,7 +36,7 @@ class TypeDiplomeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => TypeDiplome::class,
+            'data_class'         => TypeDiplome::class,
             'translation_domain' => 'form'
 
         ]);

@@ -23,8 +23,7 @@ class AppTranslationRearangeCommand extends Command
     {
         $this
             ->setDescription('Rearange the yml translation file')
-            ->addArgument('domain', InputArgument::OPTIONAL, 'Translation domain file to rearange')
-        ;
+            ->addArgument('domain', InputArgument::OPTIONAL, 'Translation domain file to rearange');
     }
 
     /**
@@ -45,14 +44,13 @@ class AppTranslationRearangeCommand extends Command
         $tab = array();
 
         foreach ($data as $key => $value) {
-           $t = explode('.', $key);
-           $nbkey = \count($t);
-           if ($nbkey === 1)
-           {
-               $tab[$t[0]] = $value;
-           } else {
-               $this->insertData($t, $tab, $value);
-           }
+            $t = explode('.', $key);
+            $nbkey = \count($t);
+            if ($nbkey === 1) {
+                $tab[$t[0]] = $value;
+            } else {
+                $this->insertData($t, $tab, $value);
+            }
         }
         $yaml = Yaml::dump($tab, 10);
 
@@ -69,8 +67,7 @@ class AppTranslationRearangeCommand extends Command
     private function insertData($keys, &$tab, $value): void
     {
         if (array_key_exists($keys[0], $tab)) {
-            if (! \is_array($tab[$keys[0]]))
-            {
+            if (!\is_array($tab[$keys[0]])) {
                 $temp = $tab[$keys[0]];
                 $tab[$keys[0]] = array();
                 $tab[$keys[0]][] = $temp;

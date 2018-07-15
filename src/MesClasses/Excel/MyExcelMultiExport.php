@@ -8,6 +8,7 @@
 
 namespace App\MesClasses\Excel;
 
+use App\MesClasses\MyAbsences;
 use App\MesClasses\MySerializer;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -15,7 +16,6 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
@@ -25,38 +25,29 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class MyExcelMultiExport
 {
-    /** @var Spreadsheet */
-    private $spreadsheet;
-
-    /** @var Worksheet */
-    private $sheet;
-
     /** @var MySerializer */
     private $serializer;
 
+    /** @var MyExcelWriter */
+    private $myExcelWriter;
 
-    public function __construct(MySerializer $mySerializer)
-    {
+    public function __construct(
+        MySerializer $mySerializer,
+        MyExcelWriter $myExcelWriter
+    ) {
         $this->serializer = $mySerializer;
 
-        $this->spreadsheet = new Spreadsheet();
-
-        try {
-            $this->sheet = $this->spreadsheet->getActiveSheet();
-        } catch (Exception $e) {
-            //pas de feuille?
-        }
     }
 
-    /**
-     * @param $cell
-     * @param $value
-     */
-    public function write($cell, $value): void
-    {
-        $this->sheet->setCellValue($cell, $value);
-
-    }
+//    /**
+//     * @param $cell
+//     * @param $value
+//     */
+//    public function write($cell, $value): void
+//    {
+//        $this->sheet->setCellValue($cell, $value);
+//
+//    }
 
     /**
      * @param $name
@@ -67,7 +58,7 @@ class MyExcelMultiExport
     public function saveXlsx($name): StreamedResponse
     {
         $this->pageSetup($name);
-        $writer = new Xlsx($this->spreadsheet);
+        $writer = new Xlsx(MyExcelWriter::getSpreadsheet());
 
         return new StreamedResponse(
             function () use ($writer) {
@@ -88,17 +79,17 @@ class MyExcelMultiExport
      */
     public function pageSetup($name)
     {
-        $this->spreadsheet->getProperties()->setTitle($name);
-        $this->spreadsheet->getActiveSheet()->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
-        $this->spreadsheet->getActiveSheet()->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
-        $this->spreadsheet->getActiveSheet()->setShowGridlines(true); //affichage de la grille
-        $this->spreadsheet->getActiveSheet()->setPrintGridlines(true); //affichage de la grille
-        $this->spreadsheet->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(1,
+        MyExcelWriter::getSpreadsheet()->getProperties()->setTitle($name);
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->setShowGridlines(true); //affichage de la grille
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->setPrintGridlines(true); //affichage de la grille
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(1,
             1);//ligne a répéter en haut
-        $this->spreadsheet->getActiveSheet()->getHeaderFooter()
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->getHeaderFooter()
             ->setOddHeader('&C&HDocument généré depuis l\'Intranet !');
-        $this->spreadsheet->getActiveSheet()->getHeaderFooter()
-            ->setOddFooter('&L&B' . $this->spreadsheet->getProperties()->getTitle() . '&RPage &P of &N');
+        MyExcelWriter::getSpreadsheet()->getActiveSheet()->getHeaderFooter()
+            ->setOddFooter('&L&B' . MyExcelWriter::getSpreadsheet()->getProperties()->getTitle() . '&RPage &P of &N');
     }
 
     /**
@@ -110,7 +101,7 @@ class MyExcelMultiExport
     public function saveCsv($name, array $options = []): StreamedResponse
     {
         $this->pageSetup($name);
-        $writer = new Csv($this->spreadsheet);
+        $writer = new Csv(MyExcelWriter::getSpreadsheet());
 
         return new StreamedResponse(
             function () use ($writer) {
@@ -135,7 +126,7 @@ class MyExcelMultiExport
     {
         $this->pageSetup($name);
 
-        $writer = new Dompdf($this->spreadsheet);
+        $writer = new Dompdf(MyExcelWriter::getSpreadsheet());
 
         return new StreamedResponse(
             function () use ($writer) {
@@ -160,6 +151,7 @@ class MyExcelMultiExport
         $dataJson = $this->serializer->serialize($data, $modele);
 
         $tabData = json_decode($dataJson, true);
+        //dump($tabData);
         //header
         $i = 1;
         $ligne = 1;
@@ -167,11 +159,11 @@ class MyExcelMultiExport
 
             if (\is_array($value)) {
                 foreach ($value as $col) {
-                    $this->sheet->setCellValueByColumnAndRow($i, $ligne, $col);
+                    MyExcelWriter::getSheet()->setCellValueByColumnAndRow($i, $ligne, $col);
                     $i++;
                 }
             } else {
-                $this->sheet->setCellValueByColumnAndRow($i, $ligne, $value);
+                MyExcelWriter::getSheet()->setCellValueByColumnAndRow($i, $ligne, $value);
                 $i++;
             }
         }
@@ -181,17 +173,46 @@ class MyExcelMultiExport
             foreach ($colonne as $key => $value) {
                 if (\is_array($value)) {
                     foreach ($value as $col) {
-                        $this->sheet->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
+                        MyExcelWriter::getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
                         $i++;
                     }
                 } else {
-                    $this->sheet->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
+                    MyExcelWriter::getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
                     $i++;
                 }
             }
 
             $i = 1;
             $ligne++;
+        }
+    }
+
+    /**
+     * @param $myAbsences
+     */
+    public function genereExcelAbsence(MyAbsences $myAbsences)
+    {
+        MyExcelWriter::writeHeader(['nom', 'prenom', 'nbCoursManques', 'totalDuree', 'nbNonJustifie', 'nbJustifie']);
+        $ligne = 2;//todo: en param ?
+        $colonne = 1;
+        foreach ($myAbsences->getEtudiants() as $etudiant) {
+            MyExcelWriter::writeCellXY($colonne, $ligne, $etudiant->getNom());
+            $colonne++;
+            MyExcelWriter::writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+            $colonne++;
+            MyExcelWriter::writeCellXY($colonne, $ligne,
+                $myAbsences->getStatistiques()[$etudiant->getId()]['nbCoursManques']);
+            $colonne++;
+            MyExcelWriter::writeCellXY($colonne, $ligne,
+                $myAbsences->getStatistiques()[$etudiant->getId()]['totalDuree']->format('H:i'));
+            $colonne++;
+            MyExcelWriter::writeCellXY($colonne, $ligne,
+                $myAbsences->getStatistiques()[$etudiant->getId()]['nbNonJustifie']);
+            $colonne++;
+            MyExcelWriter::writeCellXY($colonne, $ligne,
+                $myAbsences->getStatistiques()[$etudiant->getId()]['nbJustifie']);
+            $ligne++;
+            $colonne = 1;
         }
     }
 }

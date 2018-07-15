@@ -38,9 +38,10 @@ class ArticleType extends AbstractType
                 'attr'  => ['data-provide' => 'quill', 'rows' => 20]
             ])
             ->add('type', ChoiceType::class, [
-                'choices'                   => ['choice.ri'            => 'ri',
-                                                'choice.c2i'           => 'C2I',
-                                                'choice.info_pratique' => 'infos'
+                'choices'                   => [
+                    'choice.ri'            => 'ri',
+                    'choice.c2i'           => 'C2I',
+                    'choice.info_pratique' => 'infos'
                 ],
                 'expanded'                  => true,
                 'label'                     => 'label.type_article',
@@ -50,7 +51,7 @@ class ArticleType extends AbstractType
                 'class'         => Semestre::class,
                 'label'         => 'label.semestres_article',
                 'choice_label'  => 'libelle',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
+                'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByFormationBuilder($this->formation);
                 },
                 'required'      => true,

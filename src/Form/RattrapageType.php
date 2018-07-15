@@ -39,7 +39,7 @@ class RattrapageType extends AbstractType
                 'class'         => Matiere::class,
                 'label'         => 'label.matiere',
                 'choice_label'  => 'libelle',
-                'query_builder' => function (MatiereRepository $matiereRepository) {
+                'query_builder' => function(MatiereRepository $matiereRepository) {
                     return $matiereRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => false,
@@ -50,7 +50,7 @@ class RattrapageType extends AbstractType
                 'class'         => Personnel::class,
                 'label'         => 'label.personnel',
                 'choice_label'  => 'displayPr',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => false,

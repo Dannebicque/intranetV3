@@ -37,40 +37,37 @@ class HrsType extends AbstractType
                 'class'         => Personnel::class,
                 'required'      => true,
                 'choice_label'  => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByFormationBuilder($this->formation);
                 },
                 'label'         => 'label.personnel'
             ])
             ->add('typeHrs', EntityType::class, [
-                'class' => TypeHrs::class,
-                'required' => true,
+                'class'        => TypeHrs::class,
+                'required'     => true,
                 'choice_label' => 'libelle',
-                'label' => 'label.typehrs'
+                'label'        => 'label.typehrs'
             ])
             ->add('libelle', TextType::class, ['label' => 'labele.libelle'])
             ->add('nbHeuresTd', TextType::class, ['label' => 'labele.nbHeuresTd'])
-            ->add('semestre', EntityType::class,[
-                'class' => Semestre::class,
-                'required' => false,
-                'choice_label' => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
+            ->add('semestre', EntityType::class, [
+                'class'         => Semestre::class,
+                'required'      => false,
+                'choice_label'  => 'display',
+                'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByFormationBuilder($this->formation);
                 },
-                'label' => 'label.semestre'
+                'label'         => 'label.semestre'
             ])
-            ->add('diplome', EntityType::class,[
-                'class' => Diplome::class,
-                'required' => false,
-                'choice_label' => 'libelle',
-                'query_builder' => function (DiplomeRepository $diplomeRepository) {
+            ->add('diplome', EntityType::class, [
+                'class'         => Diplome::class,
+                'required'      => false,
+                'choice_label'  => 'libelle',
+                'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByFormationBuilder($this->formation);
                 },
-                'label' => 'label.diplome'
-            ])
-
-
-        ;
+                'label'         => 'label.diplome'
+            ]);
     }
 
     /**
@@ -79,8 +76,8 @@ class HrsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Hrs::class,
-            'formation' => null,
+            'data_class'         => Hrs::class,
+            'formation'          => null,
             'translation_domain' => 'form'
         ]);
     }

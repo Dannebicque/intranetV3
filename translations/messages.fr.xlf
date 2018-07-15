@@ -7456,5 +7456,11 @@
         <target></target>
       </segment>
     </unit>
+    <unit id="QppWdJM" name="synthese.des.parcours">
+      <segment>
+        <source>synthese.des.parcours</source>
+        <target>synthese.des.parcours</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

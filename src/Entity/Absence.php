@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
@@ -14,6 +16,7 @@ class Absence extends BaseEntity
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
+     * @Groups({"absences_administration"})
      */
     private $date;
 
@@ -21,6 +24,7 @@ class Absence extends BaseEntity
      * @var \DateTime
      *
      * @ORM\Column(name="heure", type="time")
+     * @Groups({"absences_administration"})
      */
     private $heure;
 
@@ -28,6 +32,7 @@ class Absence extends BaseEntity
      * @var \DateTime
      *
      * @ORM\Column(name="duree", type="time")
+     * @Groups({"absences_administration"})
      */
     private $duree;
 
@@ -35,11 +40,14 @@ class Absence extends BaseEntity
      * @var boolean
      *
      * @ORM\Column(name="justifie", type="boolean")
+     * @Groups({"absences_administration"})
      */
     private $justifie = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", fetch="EAGER")
+     * @MaxDepth(2)
+     * @Groups({"absences_administration"})
      */
     private $personnel;
 
@@ -52,11 +60,15 @@ class Absence extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="absences")
+     * @MaxDepth(2)
+     * @Groups({"absences_administration"})
      */
     private $matiere;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
+     * @MaxDepth(2)
+     * @Groups({"absences_administration"})
      */
     private $etudiant;
 

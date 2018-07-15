@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BorneRepository")
@@ -25,26 +26,31 @@ class Borne extends BaseEntity
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"bornes_administration"})
      */
     private $message;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"bornes_administration"})
      */
     private $url;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"bornes_administration"})
      */
     private $dateDebutPublication;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"bornes_administration"})
      */
     private $dateFinPublication;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"bornes_administration"})
      */
     private $visible;
 

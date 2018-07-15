@@ -31,7 +31,7 @@ class ImportPrevisionnelType extends AbstractType
             ->add('diplome', EntityType::class, [
                     'class'         => Diplome::class,
                     'choice_label'  => 'display',
-                    'query_builder' => function (DiplomeRepository $diplomeRepository) {
+                    'query_builder' => function(DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByFormationBuilder($this->formation);
                     },
                     'label'         => 'label.diplome'

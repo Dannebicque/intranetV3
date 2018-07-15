@@ -34,17 +34,18 @@ class DocumentType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('description', TextareaType::class, ['label' => 'label.description'])
             ->add('documentFile', VichFileType::class, [
-                'required' => false,
-                'label' => 'label.fichier',
+                'required'       => false,
+                'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
-                'allow_delete' => false])
+                'allow_delete'   => false
+            ])
             ->add('type_document', EntityType::class,
-                ['class' => TypeDocument::class, 'choice_label' => 'libelle','label' => 'label.type_document'])
+                ['class' => TypeDocument::class, 'choice_label' => 'libelle', 'label' => 'label.type_document'])
             ->add('semestres', EntityType::class, array(
                 'class'         => Semestre::class,
-                'label' => 'label.semestres_document',
+                'label'         => 'label.semestres_document',
                 'choice_label'  => 'libelle',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
+                'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByFormationBuilder($this->formation);
                 },
                 'required'      => true,
@@ -61,8 +62,8 @@ class DocumentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Document::class,
-            'formation'  => null,
+            'data_class'         => Document::class,
+            'formation'          => null,
             'translation_domain' => 'form'
 
         ]);

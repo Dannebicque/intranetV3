@@ -36,7 +36,7 @@ class CompetenceType extends AbstractType
             ->add('parent', EntityType::class, [
                 'class'         => Competence::class,
                 'choice_label'  => 'display',
-                'query_builder' => function (CompetenceRepository $competenceRepository) {
+                'query_builder' => function(CompetenceRepository $competenceRepository) {
                     return $competenceRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label'         => 'label.competence_parent',

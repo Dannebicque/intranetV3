@@ -38,7 +38,7 @@ class AfterLoginRedirect implements AuthenticationSuccessHandlerInterface
     {
         $roles = $token->getRoles();
 
-        $rolesTab = array_map(function ($role) {
+        $rolesTab = array_map(function($role) {
             return $role->getRole();
         }, $roles);
 

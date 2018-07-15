@@ -54,7 +54,7 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
+     * @Groups({"etudiants_administration"})
      */
     protected $mailUniv; //todo: passer le champs en index
 
@@ -78,7 +78,7 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(name="sexe", type="string", length=1, options={"default":"M"})
-     *
+     * @Groups({"etudiants_administration"})
      */
     protected $sexe = 'H'; //H ou F
 

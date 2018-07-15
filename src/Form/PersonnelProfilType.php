@@ -42,7 +42,7 @@ class PersonnelProfilType extends AbstractType
             ->add('numero_harpege', TextType::class, ['label' => 'label.numero_harpege'])
             ->add('initiales', TextType::class, ['label' => 'label.initiales'])
             ->add('statut', YesNoType::class, [
-                'label'                     => 'label.statut',
+                'label' => 'label.statut',
             ])
             ->add('poste_interne', TextType::class, ['label' => 'label.poste_interne'])
             ->add('tel_bureau', TextType::class, ['label' => 'label.tel_bureau'])

@@ -35,7 +35,6 @@ class MatiereType extends AbstractType
             ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
             ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
             ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement'])
-
             ->add('suspendu', YesNoType::class, [
                 'label' => 'label.suspendu'
             ])

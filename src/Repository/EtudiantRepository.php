@@ -69,7 +69,6 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
-        //$order = isset($data['query']) && $data['query'] ? $data['query'] : null;
 
         $qb
             ->select('u')
@@ -78,8 +77,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.formation = :formation')
-           // ->andWhere('u.visible = :visible')
-           // ->andWhere('u.anneesortie = :anneesortie')
+            // ->andWhere('u.visible = :visible')
+            // ->andWhere('u.anneesortie = :anneesortie')
             ->setParameters(array('formation' => $formation));
 
         /*switch ($order[0]['column']) {
@@ -119,8 +118,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orderBy('e.nom', 'ASC')
             ->orderBy('e.prenom', 'ASC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**

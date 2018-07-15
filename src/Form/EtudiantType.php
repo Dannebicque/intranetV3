@@ -42,9 +42,7 @@ class EtudiantType extends AbstractType
             ->add('annee_bac')
             ->add('username')
             ->add('demandeurEmploi')
-            ->add('boursier')
-
-        ;
+            ->add('boursier');
     }
 
     /**
@@ -55,7 +53,7 @@ class EtudiantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Etudiant::class,
+            'data_class'         => Etudiant::class,
             'translation_domain' => 'form'
         ]);
     }

@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Entity\Constantes;
 use App\Form\BorneType;
+use App\MesClasses\MyExport;
 use App\Repository\BorneRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -128,10 +129,19 @@ class BorneController extends BaseController
 
     /**
      * @Route("/export.{_format}", name="administration_borne_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport        $myExport
+     * @param BorneRepository $borneRepository
+     * @param                 $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $bornes = $borneRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $response = $myExport->genereFichierGenerique($_format, $bornes, 'bornes',
+            ['bornes_administration'], ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]);
+
+        return $response;
     }
 }

@@ -22,8 +22,7 @@ class SiteType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
-        ;
+            ->add('adresse', AdresseType::class, ['label' => 'label.adresse']);
     }
 
     /**
@@ -34,7 +33,7 @@ class SiteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Site::class,
+            'data_class'         => Site::class,
             'translation_domain' => 'form'
 
         ]);

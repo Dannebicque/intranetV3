@@ -17,24 +17,25 @@ class BlocNotesAbsencesController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function personnel(MyPrevisionnel $myPrevisionnel) :Response
-   {
-       return $this->render('bloc_notes_absences/personnel.html.twig',[
-           'previsionnel' => $myPrevisionnel->getPrevisionnelEnseignantFormation($this->getUser(), $this->dataUserSession->getFormation())
-       ]);
-   }
+    public function personnel(MyPrevisionnel $myPrevisionnel): Response
+    {
+        return $this->render('bloc_notes_absences/personnel.html.twig', [
+            'previsionnel' => $myPrevisionnel->getPrevisionnelEnseignantFormation($this->getUser(),
+                $this->dataUserSession->getFormation())
+        ]);
+    }
 
     /**
      * @param MyEtudiant $myEtudiant
      *
      * @return Response
      */
-    public function etudiant(MyEtudiant $myEtudiant) :Response
+    public function etudiant(MyEtudiant $myEtudiant): Response
     {
         $myEtudiant->setEtudiant($this->getUser());
         $myEtudiant->getNotesAbsences();
 
-        return $this->render('bloc_notes_absences/etudiant.html.twig',[
+        return $this->render('bloc_notes_absences/etudiant.html.twig', [
             'etudiant' => $myEtudiant,
         ]);
     }

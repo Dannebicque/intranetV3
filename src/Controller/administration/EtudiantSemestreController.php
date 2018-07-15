@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Semestre;
+use App\MesClasses\MyExport;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,6 +32,19 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
+     * @Route("/parcours/{semestre}", name="administration_etudiant_parcours_semestre_index")
+     * @param Semestre $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function parcoursSemestre(Semestre $semestre): Response
+    {
+        return $this->render('administration/etudiant/parcours.html.twig', [
+            'semestre' => $semestre
+        ]);
+    }
+
+    /**
      * @Route("/{semestre}", name="administration_etudiant_semestre_index")
      * @param Semestre $semestre
      *
@@ -43,6 +57,7 @@ class EtudiantSemestreController extends BaseController
         ]);
     }
 
+
     /**
      * @Route("/export/{semestre}.{_format}",
      *     name="administration_etudiant_semestre_export",
@@ -51,11 +66,26 @@ class EtudiantSemestreController extends BaseController
      *     "semestre"="\d+",
      *     "_format"="csv|xlsx|pdf"
      * })
+     * @param MyExport $myExport
+     * @param EtudiantRepository $etudiantRepository
+     * @param Semestre $semestre
+     * @param                    $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function exportAllAbsences(
+        MyExport $myExport,
+        EtudiantRepository $etudiantRepository,
+        Semestre $semestre,
+        $_format
+    ): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $etudiants = $etudiantRepository->findBySemestre($semestre);
+        $response = $myExport->genereFichierGenerique($_format, $etudiants, 'etudiants_' . $semestre->getLibelle(),
+            ['etudiants_administration', 'utilisateur'], ['nom', 'prenom', 'sexe', 'numEtudiant', 'bac', 'mailUniv']);
+
+        return $response;
     }
 
 

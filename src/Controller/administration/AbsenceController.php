@@ -6,6 +6,8 @@ use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\MesClasses\MyAbsences;
+use App\MesClasses\MyExport;
+use App\Repository\AbsenceRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -86,12 +88,51 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_semestre_liste_export", requirements={"_format"="csv|xlsx|pdf"})
-     * @param Semestre $semestre
+     * @param MyExport   $myExport
+     * @param MyAbsences $myAbsences
+     * @param Semestre   $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
-    public function export(Semestre $semestre): Response
+    public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
     {
-        return null;
+        $myAbsences->getAbsencesSemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $response = $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
+
+        return $response;
+    }
+
+    /**
+     * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export", requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport          $myExport
+     * @param AbsenceRepository $absenceRepository
+     * @param Semestre          $semestre
+     *
+     * @param                   $_format
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    public function exportAllAbsences(
+        MyExport $myExport,
+        AbsenceRepository $absenceRepository,
+        Semestre $semestre,
+        $_format
+    ): Response
+    {
+        $absences = $absenceRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $response = $myExport->genereFichierGenerique($_format, $absences, 'absences_' . $semestre->getLibelle(),
+            ['absences_administration', 'utilisateur', 'matiere'], [
+                'date',
+                'heure',
+                'duree',
+                'etudiant'  => ['nom', 'prenom'],
+                'justifie',
+                'matiere'   => ['libelle'],
+                'personnel' => ['nom', 'prenom']
+            ]);
+
+        return $response;
     }
 }

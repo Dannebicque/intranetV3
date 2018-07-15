@@ -55,4 +55,18 @@ class MyExport
                 return $this->excel->saveXlsx($nomFichier);
         }
     }
+
+    public function genereFichierAbsence($format, $myAbsences, $nomFichier)
+    {
+        $this->excel->genereExcelAbsence($myAbsences);
+
+        switch ($format) {
+            case 'csv':
+                return $this->excel->saveCsv($nomFichier);
+            case 'pdf':
+                return $this->excel->savePdf($nomFichier);
+            case 'xlsx':
+                return $this->excel->saveXlsx($nomFichier);
+        }
+    }
 }

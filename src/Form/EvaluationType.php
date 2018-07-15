@@ -50,7 +50,7 @@ class EvaluationType extends AbstractType
                 'class'         => Matiere::class,
                 'label'         => 'label.evaluation_matiere',
                 'choice_label'  => 'libelle',
-                'query_builder' => function (MatiereRepository $matiereRepository) {
+                'query_builder' => function(MatiereRepository $matiereRepository) {
                     return $matiereRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => true,
@@ -62,7 +62,7 @@ class EvaluationType extends AbstractType
                 'class'         => TypeGroupe::class,
                 'label'         => 'label.evaluation_type_groupe',
                 'choice_label'  => 'libelle',
-                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
+                'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => true,
@@ -74,7 +74,7 @@ class EvaluationType extends AbstractType
                 'help'          => 'help.personnelAutorise',
                 'label'         => 'label.evaluation_personnelAutorise',
                 'choice_label'  => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByFormationBuilder($this->formation);
                 },
                 'required'      => true,

@@ -29,7 +29,13 @@ class TypeHrsType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'label'                     => 'label.typehrs',
-                'choices'                   => ['choice.hrs' => 'HRS', 'choice.pca' => 'PCA', 'choice.prp' => 'PRP', 'choice.suivi' => 'Suivi', 'choice.autre' => 'Autre'],
+                'choices'                   => [
+                    'choice.hrs'   => 'HRS',
+                    'choice.pca'   => 'PCA',
+                    'choice.prp'   => 'PRP',
+                    'choice.suivi' => 'Suivi',
+                    'choice.autre' => 'Autre'
+                ],
                 'choice_translation_domain' => 'form',
                 'expanded'                  => true
             ])

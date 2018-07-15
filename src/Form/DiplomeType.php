@@ -27,42 +27,42 @@ class DiplomeType extends AbstractType
     {
         $builder
             ->add('type_diplome', EntityType::class, [
-                'class' => TypeDiplome::class,
+                'class'        => TypeDiplome::class,
                 'choice_label' => 'libelle',
-                'label' => 'label.type_diplome'
+                'label'        => 'label.type_diplome'
             ])
-            ->add('libelle', TextType::class,[
+            ->add('libelle', TextType::class, [
                 'label' => 'label.libelle'
             ])
             ->add('sigle', TextType::class, [
                 'label' => 'label.sigle'
             ])
             ->add('responsable_diplome', EntityType::class, [
-                'class' => Personnel::class,
+                'class'        => Personnel::class,
                 'choice_label' => 'display',
-                'label' => 'label.responsable_diplome'
+                'label'        => 'label.responsable_diplome'
             ])
             ->add('assistant_diplome', EntityType::class, [
-                'class' => Personnel::class,
+                'class'        => Personnel::class,
                 'choice_label' => 'display',
-                'label' => 'label.assistant_diplome'
+                'label'        => 'label.assistant_diplome'
             ])
-            ->add('code_apogee', TextType::class,[
+            ->add('code_apogee', TextType::class, [
                 'label' => 'label.code_apogee'
             ])
-            ->add('code_version', TextType::class,[
+            ->add('code_version', TextType::class, [
                 'label' => 'label.code_version'
             ])
-            ->add('code_departement', TextType::class,[
+            ->add('code_departement', TextType::class, [
                 'label' => 'label.code_departement'
             ])
-            ->add('opt_nb_jours_saisie', TextType::class,[
+            ->add('opt_nb_jours_saisie', TextType::class, [
                 'label' => 'label.opt_nb_jours_saisie'
             ])
             ->add('opt_dilpome_decale', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_dilpome_decale'
+                    'label' => 'label.opt_dilpome_decale'
                 ])
             ->add('opt_suppr_absence', YesNoType::class,
                 [
@@ -70,9 +70,9 @@ class DiplomeType extends AbstractType
                 ])
             ->add('opt_methode_calcul', ChoiceType::class,
                 [
-                    'choices' => ['choice.moymodules' => 'moymodules', 'choice.moyues' => 'moyues'],
-                    'expanded' => true,
-                    'label'   => 'label.opt_methode_calcul',
+                    'choices'                   => ['choice.moymodules' => 'moymodules', 'choice.moyues' => 'moyues'],
+                    'expanded'                  => true,
+                    'label'                     => 'label.opt_methode_calcul',
                     'choice_translation_domain' => 'form'
 
                 ])
@@ -83,22 +83,20 @@ class DiplomeType extends AbstractType
             ->add('opt_commentaires_releve', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_commentaires_releve'
+                    'label' => 'label.opt_commentaires_releve'
                 ])
             ->add('opt_espace_perso_visible', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_espace_perso_visible',
+                    'label' => 'label.opt_espace_perso_visible',
 
                 ])
-            ->add('volume_horaire', TextType::class,[
+            ->add('volume_horaire', TextType::class, [
                 'label' => 'label.volume_horaire'
             ])
-            ->add('code_celcat_departement', TextType::class,[
+            ->add('code_celcat_departement', TextType::class, [
                 'label' => 'label.code_celcat_departement'
-            ])
-
-        ;
+            ]);
     }
 
     /**
@@ -109,7 +107,7 @@ class DiplomeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Diplome::class,
+            'data_class'         => Diplome::class,
             'translation_domain' => 'form'
 
         ]);

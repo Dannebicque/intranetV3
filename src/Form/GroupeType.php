@@ -34,7 +34,7 @@ class GroupeType extends AbstractType
                 'class'         => TypeGroupe::class,
                 'label'         => 'label.typeGroupe',
                 'choice_label'  => 'libelle',
-                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
+                'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => true,

@@ -36,28 +36,29 @@ class FormationType extends AbstractType
                 'label' => 'label.logoFile'
             ])
             ->add('annee_courante', ChoiceType::class, [
-                'label' => 'label.annee_courante',
-                'choices' => array_combine(range(date('Y')-2, date('Y')+4), range(date('Y')-2, date('Y')+4))
+                'label'   => 'label.annee_courante',
+                'choices' => array_combine(range(date('Y') - 2, date('Y') + 4), range(date('Y') - 2, date('Y') + 4))
             ])
             ->add('opt_annee_previsionnel', ChoiceType::class,
                 [
-                    'choices' => array_combine(range(date('Y')-2, date('Y')+4), range(date('Y')-2, date('Y')+4)),
+                    'choices' => array_combine(range(date('Y') - 2, date('Y') + 4),
+                        range(date('Y') - 2, date('Y') + 4)),
                     'label'   => 'label.opt_annee_previsionnel'
                 ])
             ->add('tel_contact', TextType::class, [
-                'label' => 'label.tel_contact',
+                'label'    => 'label.tel_contact',
                 'required' => false
             ])
             ->add('fax', TextType::class, [
-                'label' => 'label.fax',
+                'label'    => 'label.fax',
                 'required' => false
             ])
             ->add('couleur', ColorType::class, [
-                'label' => 'label.couleur',
+                'label'    => 'label.couleur',
                 'required' => false
             ])
             ->add('site_web', TextType::class, [
-                'label' => 'label.site_web',
+                'label'    => 'label.site_web',
                 'required' => false
             ])
             ->add('description', TextareaType::class, [
@@ -65,48 +66,48 @@ class FormationType extends AbstractType
             ])
             ->add('opt_update_celcat', YesNoType::class,
                 [
-                    'label'   => 'label.opt_update_celcat'
+                    'label' => 'label.opt_update_celcat'
                 ])
             ->add('opt_agence', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_agence'
+                    'label' => 'label.opt_agence'
                 ])
             ->add('opt_materiel', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_materiel'
+                    'label' => 'label.opt_materiel'
                 ])
             ->add('opt_edt', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_edt'
+                    'label' => 'label.opt_edt'
                 ])
             ->add('opt_stage', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_stage'
+                    'label' => 'label.opt_stage'
                 ])
             ->add('opt_synthese', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_synthese'
+                    'label' => 'label.opt_synthese'
                 ])
             ->add('opt_messagerie', YesNoType::class,
                 [
 
-                    'label'   => 'label.opt_messagerie'
+                    'label' => 'label.opt_messagerie'
                 ])
-            ->add('respri', EntityType::class,[
-                'class' => Personnel::class,
+            ->add('respri', EntityType::class, [
+                'class'        => Personnel::class,
                 'choice_label' => 'display',
-                'label' => 'label.respri',
-                'required' => false
+                'label'        => 'label.respri',
+                'required'     => false
             ])
             ->add('site', EntityType::class, [
-                'class' => Site::class,
+                'class'        => Site::class,
                 'choice_label' => 'libelle',
-                'label' => 'label.site'
+                'label'        => 'label.site'
             ]);
     }
 

@@ -52,6 +52,26 @@ class Adresse extends BaseEntity
     /**
      * @return null|string
      */
+    public function getDisplay(): ?string
+    {
+        $html = $this->getAdresse1();
+        if ($this->getAdresse2() !== '') {
+            $html .= '<br />' . $this->getAdresse2();
+        }
+
+        if ($this->getAdresse3() !== '') {
+            $html .= '<br />' . $this->getAdresse3();
+        }
+
+        $html .= '<br />' . $this->getCodePostal() . ' ' . $this->getVille();
+        $html .= '<br />' . $this->getPays();
+
+        return $html;
+    }
+
+    /**
+     * @return null|string
+     */
     public function getAdresse1(): ?string
     {
         return $this->adresse1;
@@ -82,7 +102,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setAdresse2( $adresse2): self
+    public function setAdresse2($adresse2): self
     {
         $this->adresse2 = $adresse2;
 
@@ -102,7 +122,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setAdresse3( $adresse3): self
+    public function setAdresse3($adresse3): self
     {
         $this->adresse3 = $adresse3;
 
@@ -167,26 +187,6 @@ class Adresse extends BaseEntity
         $this->pays = $pays;
 
         return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getDisplay(): ?string
-    {
-        $html = $this->getAdresse1();
-        if ($this->getAdresse2() !== '') {
-            $html .= '<br />' . $this->getAdresse2();
-        }
-
-        if ($this->getAdresse3() !== '') {
-            $html .= '<br />' . $this->getAdresse3();
-        }
-
-        $html .= '<br />' . $this->getCodePostal() . ' ' . $this->getVille();
-        $html .= '<br />' . $this->getPays();
-
-        return $html;
     }
 
 

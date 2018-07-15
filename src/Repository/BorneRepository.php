@@ -23,4 +23,19 @@ class BorneRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Borne::class);
     }
+
+    public function findByFormation($formation, $nbResult)
+    {
+        $q = $this->createQueryBuilder('a')
+            ->andWhere('a.formation = :formation')
+            ->setParameter('formation', $formation)
+            ->orderBy('a.created', 'DESC');
+
+        if ($nbResult > 0) {
+            $q->setMaxResults($nbResult);
+        }
+
+        return $q->getQuery()
+            ->getResult();
+    }
 }
