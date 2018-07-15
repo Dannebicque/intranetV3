@@ -48,14 +48,20 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('sa_site_print'),
-            title: 'imprimer'|trans,
+            href: path('sa_site_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
             icone : "ti-printer"},
         {
             type:'info',
-            href:path('sa_site_save'),
-            title: 'sauvegarder'|trans,
+            href:path('sa_site_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
             icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('sa_site_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-table'
         },
         {
             type:'info',
@@ -65,7 +71,7 @@
         },
         {
             type:'info',
-            href:path('sa_site_help'),
+            href:path('help_article', {sujet: 'super-administration_site'}),
             title: 'aide'|trans,
             icone: 'ti-help'
         }

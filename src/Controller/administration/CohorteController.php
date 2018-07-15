@@ -23,4 +23,12 @@ class CohorteController extends BaseController
             'controller_name' => 'CohorteController',
         ]);
     }
+
+    /**
+     * @Route("/export.{_format}", name="administration_cohorte_export", requirements={"_format"="csv|xlsx|pdf"})
+     */
+    public function export()
+    {
+
+    }
 }

@@ -31,14 +31,6 @@ class DiplomeController extends BaseController
             ['diplomes' => $diplomeRepository->findByFormation($this->dataUserSession->getFormationId())]);
     }
 
-    /**
-    * @Route("/help", name="administration_structure_diplome_help", methods="GET")
-    */
-    public function help(): Response
-    {
-        //todo: comment l'exploiter...
-        return $this->render('structure/diplome/help.html.twig');
-    }
 
     /**
     * @Route("/save", name="administration_structure_diplome_save", methods="GET")

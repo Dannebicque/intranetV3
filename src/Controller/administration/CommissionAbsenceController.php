@@ -28,4 +28,14 @@ class CommissionAbsenceController extends BaseController
             'semestre' => $semestre
         ]);
     }
+
+    /**
+     * @param Semestre $semestre
+     * @Route("/semestre/{semestre}/export.{_format}", name="administration_commission_semestre_export",
+     *                                                 requirements={"_format"="csv|xlsx|pdf"})
+     */
+    public function export(Semestre $semestre)
+    {
+
+    }
 }

@@ -4,6 +4,8 @@
     "require": {
         "php": "^7.1.3",
         "ext-iconv": "*",
+      "core23/dompdf-bundle": "^2.2",
+      "dompdf/dompdf": "^0.8.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "php-translation/symfony-bundle": "^0.7.0",
       "phpoffice/phpspreadsheet": "^1.3",

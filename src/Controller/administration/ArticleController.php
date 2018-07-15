@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Article;
 use App\Entity\Constantes;
 use App\Form\ArticleType;
+use App\MesClasses\MyExport;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,29 +31,21 @@ class ArticleController extends BaseController
     }
 
     /**
-     * @Route("/help", name="administration_article_help", methods="GET")
+     * @Route("/export.{_format}", name="administration_article_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport          $myExport
+     * @param ArticleRepository $articleRepository
+     * @param                   $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function help(): Response
+    public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
-        return $this->render('administration/article/help.html.twig');
-    }
+        $articles = $articleRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $response = $myExport->genereFichierGenerique($_format, $articles, 'articles',
+            ['article_administration', 'utilisateur'], ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]);
 
-    /**
-     * @Route("/save", name="administration_article_save", methods="GET")
-     */
-    public function save(): Response
-    {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/imprimer", name="administration_article_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
-        return new Response('', Response::HTTP_OK);
+        return $response;
     }
 
     /**

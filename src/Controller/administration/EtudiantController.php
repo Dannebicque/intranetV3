@@ -84,29 +84,13 @@ class EtudiantController extends BaseController
 
     }
 
-    /**
-     * @Route("/help", name="administration_all_etudiant_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('administration/etudiant/help.html.twig');
-    }
 
     /**
-     * @Route("/save", name="administration_all_etudiant_save", methods="GET")
+     * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function save(): Response
+    public function export(): Response
     {
         //save en csv
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/imprimer", name="administration_all_etudiant_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
 }

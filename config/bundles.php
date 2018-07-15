@@ -15,4 +15,5 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class                        => ['all' => true],
     Translation\Bundle\TranslationBundle::class                          => ['all' => true],
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class            => ['all' => true],
+    Core23\DompdfBundle\Core23DompdfBundle::class                        => ['all' => true],
 ];

@@ -13,20 +13,20 @@ class Actualite extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups({"acutalite_administration"})
+     * @Groups({"actualite_administration"})
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"acutalite_administration"})
+     * @Groups({"actualite_administration"})
      */
     private $texte;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="actualites")
      * @MaxDepth(2)
-     * @Groups({"acutalite_administration"})
+     * @Groups({"actualite_administration"})
      */
     private $formation;
 

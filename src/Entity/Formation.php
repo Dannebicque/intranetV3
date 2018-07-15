@@ -20,7 +20,7 @@ class Formation extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"acutalite_administration"})
+     * @Groups({"actualite_administration"})
      */
     private $libelle;
 

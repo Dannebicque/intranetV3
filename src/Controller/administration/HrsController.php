@@ -120,17 +120,9 @@ class HrsController extends BaseController
     }
 
     /**
-     * @Route("/imprimer", name="administration_hrs_print", methods="GET")
+     * @Route("/export.{_format}", name="administration_hrs_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function imprimer(): Response
-    {
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/save", name="administration_hrs_save", methods="GET")
-     */
-    public function save(): Response
+    public function export(): Response
     {
         return new Response('', Response::HTTP_OK);
     }

@@ -187,18 +187,11 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/imprimer", name="administration_previsionnel_print", methods="GET")
+     * @Route("/export.{_format}", name="administration_previsionnel_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function imprimer(): Response
+    public function export(): Response
     {
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/save", name="administration_previsionnel_save", methods="GET")
-     */
-    public function save(): Response
-    {
+        //todo: probablement ajouter aussi un export spécifique au format OMEGA
         return new Response('', Response::HTTP_OK);
     }
 

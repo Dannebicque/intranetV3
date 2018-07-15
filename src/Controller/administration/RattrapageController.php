@@ -33,28 +33,12 @@ class RattrapageController extends BaseController
     }
 
     /**
-     * @Route("/help", name="administration_rattrapage_help", methods="GET")
+     * @Route("/export.{_format}", name="administration_rattrapage_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function help(): Response
-    {
-        return $this->render('administration/rattrapage/help.html.twig');
-    }
-
-    /**
-     * @Route("/save", name="administration_rattrapage_save", methods="GET")
-     */
-    public function save(): Response
+    public function export(): Response
     {
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/imprimer", name="administration_rattrapage_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
-        return new Response('', Response::HTTP_OK);
-    }
 }

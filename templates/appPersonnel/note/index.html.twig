@@ -163,7 +163,7 @@
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {
             type:'info',
-            href:path('application_personnel_note_help'),
+            href:path('help_article', {sujet: 'application/personnel_note'}),
             title: 'aide'|trans,
             icone: 'ti-help'
         }

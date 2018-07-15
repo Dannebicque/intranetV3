@@ -24,7 +24,7 @@
                     <th>{{ 'app.personnel.absence.prenom'|trans }}</th>
                     <th>{{ 'app.personnel.absence.date'|trans }}</th>
                     <th>{{ 'app.personnel.absence.heure'|trans }}</th>
-                    <th>{{ 'app.personnel.absence.dureee'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.duree'|trans }}</th>
                     <th>{{ 'app.personnel.absence.saisiepar'|trans }}</th>
                     <th>{{ 'app.personnel.absence.justifie'|trans }}</th>
                     <th>{{ 'actions'|trans }}</th>
@@ -39,7 +39,7 @@
                         <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
                         <td>{{ absence.duree ? absence.duree|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
                         <td>{{ absence.personnel.display }}</td>
-                        <td>{{ absence.justifie ? 'oui'|trans : 'non'|trans }}</td>
+                        <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
                         <td>
                             <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, page: 'absences'}) }}"
                                class="btn btn-info btn-outline btn-square" data-provide="tooltip"
@@ -65,14 +65,20 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('application_personnel_absence_imprimer',{matiere:matiere.id}),
-            title:'imprimer'|trans,
+            href: path('application_personnel_absence_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
             icone : "ti-printer"},
         {
             type:'info',
-            href:path('application_personnel_absence_save',{matiere:matiere.id}),
-            title: 'sauvegarder'|trans,
+            href:path('application_personnel_absence_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
             icone: 'ti-save'
+        },
+        {
+            type:'info',
+            href:path('application_personnel_absence_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-table'
         },
         {
             type:'info',
@@ -82,7 +88,7 @@
         },
         {
             type:'info',
-            href:path('application_personnel_absence_help'),
+            href:path('help_article', {sujet: 'application/personnel_absence'}),
             title: 'aide'|trans,
             icone: 'ti-help'
         }

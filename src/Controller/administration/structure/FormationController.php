@@ -29,14 +29,6 @@ class FormationController extends BaseController
         return $this->render('structure/formation/index.html.twig', ['formations' => $formationRepository->findAll()]);
     }
 
-    /**
-     * @Route("/help", name="administration_structure_formation_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        //todo: comment l'exploiter...
-        return $this->render('structure/formation/help.html.twig');
-    }
 
     /**
      * @Route("/save", name="administration_structure_formation_save", methods="GET")

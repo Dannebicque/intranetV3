@@ -85,39 +85,13 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/semestre/{semestre}/print", name="administration_absences_semestre_liste_print")
+     * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_semestre_liste_export", requirements={"_format"="csv|xlsx|pdf"})
      * @param Semestre $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function print(Semestre $semestre): Response
+    public function export(Semestre $semestre): Response
     {
         return null;
     }
-
-    /**
-     * @Route("/semestre/{semestre}/csv", name="administration_absences_semestre_liste_csv")
-     * @param Semestre $semestre
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function exportCsv(Semestre $semestre): Response
-    {
-        return null;
-    }
-
-    /**
-     * @Route("/semestre/{semestre}/excel", name="administration_absences_semestre_liste_excel")
-     * @param Semestre $semestre
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function excel(Semestre $semestre): Response
-    {
-        return $this->render('administration/absence/saisie.html.twig', [
-            'semestre' => $semestre
-        ]);
-    }
-
-
 }

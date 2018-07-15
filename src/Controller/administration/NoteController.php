@@ -34,4 +34,14 @@ class NoteController extends BaseController
             'evaluations' => $myEvaluations->getEvaluationsSemestre(),
         ]);
     }
+
+    /**
+     * @Route("/export.{_format}", name="administration_all_notes_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     */
+    public function export(): Response
+    {
+        //save en csv
+        return new Response('', Response::HTTP_OK);
+    }
 }

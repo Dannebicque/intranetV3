@@ -74,24 +74,24 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('administration_etudiant_semestre_save', {'semestre': semestre.id, '_format':'pdf'}),
-            title: 'imprimer'|trans,
+            href: path('administration_etudiant_semestre_export', {'semestre': semestre.id, '_format':'pdf'}),
+            title: 'exporter.pdf'|trans,
             icone : "ti-printer"},
         {
             type:'info',
-            href:path('administration_etudiant_semestre_save', {'semestre': semestre.id, '_format':'csv'}),
-            title: 'sauvegarder'|trans,
+            href:path('administration_etudiant_semestre_export', {'semestre': semestre.id, '_format':'csv'}),
+            title: 'exporter.csv'|trans,
             icone: 'ti-save'
         },
         {
             type:'info',
-            href:path('administration_etudiant_semestre_save', {'semestre': semestre.id, '_format':'xlsx'}),
-            title: 'sauvegarder'|trans,
+            href:path('administration_etudiant_semestre_export', {'semestre': semestre.id, '_format':'xlsx'}),
+            title: 'exporter.xls'|trans,
             icone: 'fa fa-table'
         },
         {
             type:'info',
-            href:path('administration_etudiant_semestre_help'),
+            href:path('help_article', {sujet: 'administration_etudiant_semestre'}),
             title: 'aide'|trans,
             icone: 'ti-help'
         }

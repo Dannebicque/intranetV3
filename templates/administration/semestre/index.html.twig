@@ -46,11 +46,14 @@
                                 <a data-toggle="dropdown" href="#"><i
                                             class="ti-more-alt rotate-90"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i
+                                    <a href="{{ path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format:'pdf'}) }}"
+                                       class="dropdown-item"><i
                                                 class="ti-export"></i>{{ 'exporter.xls'|trans }}</a>
-                                    <a href="#" class="dropdown-item"><i
+                                    <a href="{{ path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format:'pdf'}) }}"
+                                       class="dropdown-item"><i
                                                 class="ti-export"></i>{{ 'exporter.csv'|trans }}</a>
-                                    <a href="#" class="dropdown-item"><i
+                                    <a href="{{ path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format:'pdf'}) }}"
+                                       class="dropdown-item"><i
                                                 class="ti-printer"></i>{{ 'exporter.pdf'|trans }}</a>
                                 </div>
                             </li>
@@ -78,11 +81,14 @@
                         <li class="dropdown">
                             <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
+                                <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'pdf'}) }}"
+                                   class="dropdown-item"><i class="ti-printer"></i>{{ 'exporter.pdf'|trans }}
                                 </a>
-                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.csv'|trans }}
+                                <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'csv'}) }}"
+                                   class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.csv'|trans }}
                                 </a>
-                                <a href="#" class="dropdown-item"><i class="ti-printer"></i>{{ 'exporter.pdf'|trans }}
+                                <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                   class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xlsx'|trans }}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a>
@@ -116,12 +122,15 @@
                             <li class="dropdown">
                                 <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" class="dropdown-item"><i
-                                                class="ti-export"></i>{{ 'exporter.xls'|trans }}</a>
-                                    <a href="#" class="dropdown-item"><i
-                                                class="ti-export"></i>{{ 'exporter.csv'|trans }}</a>
-                                    <a href="#" class="dropdown-item"><i
+                                    <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}"
+                                       class="dropdown-item"><i
                                                 class="ti-printer"></i>{{ 'exporter.pdf'|trans }}</a>
+                                    <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'csv'}) }}"
+                                       class="dropdown-item"><i
+                                                class="ti-export"></i>{{ 'exporter.csv'|trans }}</a>
+                                    <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                       class="dropdown-item"><i
+                                                class="ti-export"></i>{{ 'exporter.xls'|trans }}</a>
 
                                 </div>
                             </li>
@@ -145,12 +154,7 @@
                             <a data-toggle="dropdown" href="#" aria-expanded="false"><i
                                         class="ti-more-alt rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
-                                </a>
-                                <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.csv'|trans }}
-                                </a>
-                                <a href="#" class="dropdown-item"><i class="ti-printer"></i>{{ 'exporter.pdf'|trans }}
-                                </a>
+
                             </div>
                         </li>
                     </ul>

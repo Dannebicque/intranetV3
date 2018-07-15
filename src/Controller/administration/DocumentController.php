@@ -30,20 +30,11 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @Route("/save", name="administration_document_save", methods="GET")
+     * @Route("/export.{_format}", name="administration_document_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function save(): Response
+    public function export(): Response
     {
         //save en csv
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/imprimer", name="administration_document_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
 

@@ -31,14 +31,6 @@ class AnneeController extends BaseController
         return $this->render('structure/annee/index.html.twig', ['annees' => $anneeRepository->findAll()]);
     }
 
-    /**
-     * @Route({"fr":"/aide", "en":"/help"}, name="administration_structure_annee_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        //todo: comment l'exploiter...
-        return $this->render('structure/annee/help.html.twig');
-    }
 
     /**
      * @Route({"fr":"/sauvegarder", "en":"/save"}, name="administration_structure_annee_save", methods="GET")

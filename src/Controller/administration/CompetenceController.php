@@ -64,14 +64,14 @@ class CompetenceController extends BaseController
     }
 
     /**
-     * @Route("/save", name="administration_competence_save", methods="GET")
+     * @Route("/export.{_format}", name="administration_competence_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      * @param Csv                  $csv
      * @param CompetenceRepository $competenceRepository
      *
      * @return Response
      * @throws \Doctrine\Common\Annotations\AnnotationException
      */
-    public function save(Csv $csv, CompetenceRepository $competenceRepository): Response
+    public function export(Csv $csv, CompetenceRepository $competenceRepository): Response
     {
         $competences = $competenceRepository->findByFormation($this->dataUserSession->getFormation(), 0);
         $csv->export('competences.csv', $competences, array('acutalite_administration'));
@@ -79,14 +79,6 @@ class CompetenceController extends BaseController
         return $csv->response();
     }
 
-    /**
-     * @Route("/imprimer", name="administration_competence_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
-        return new Response('', Response::HTTP_OK);
-    }
 
     /**
      * @Route("/{id}", name="administration_competence_show", methods="GET")
@@ -165,13 +157,5 @@ class CompetenceController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'competence.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * @Route("/help", name="administration_competence_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('administration/competence/help.html.twig');
     }
 }

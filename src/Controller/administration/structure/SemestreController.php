@@ -30,14 +30,6 @@ class SemestreController extends BaseController
         return $this->render('structure/semestre/index.html.twig', ['semestres' => $semestreRepository->findAll()]);
     }
 
-    /**
-     * @Route("/help", name="administration_structure_semestre_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        //todo: comment l'exploiter...
-        return $this->render('structure/semestre/help.html.twig');
-    }
 
     /**
      * @Route("/save", name="administration_structure_semestre_save", methods="GET")

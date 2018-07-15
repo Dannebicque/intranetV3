@@ -44,23 +44,15 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
-     * @Route("/help", name="administration_etudiant_semestre_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('administration/etudiant/help.html.twig');
-    }
-
-    /**
-     * @Route("/save/{semestre}.{_format}",
-     *     name="administration_etudiant_semestre_save",
+     * @Route("/export/{semestre}.{_format}",
+     *     name="administration_etudiant_semestre_export",
      *     methods="GET",
      *     requirements={
      *     "semestre"="\d+",
      *     "_format"="csv|xlsx|pdf"
      * })
      */
-    public function save(): Response
+    public function export(): Response
     {
         //save en csv
         return new Response('', Response::HTTP_OK);

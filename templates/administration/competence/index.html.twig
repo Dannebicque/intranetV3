@@ -112,7 +112,7 @@
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {
             type:'info',
-            href:path('administration_competence_help'),
+            href:path('help_article', {sujet: 'administration_competence'}),
             title: 'aide'|trans,
             icone: 'ti-help'
         }

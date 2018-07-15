@@ -3,7 +3,7 @@
 namespace App\Controller\social;
 
 use App\Controller\BaseController;
-use App\MesClasses\Excel\MyExcelWriter;
+use App\MesClasses\Excel\MyExcelMultiExport;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -18,11 +18,11 @@ class SocialController extends BaseController
 {
     /**
      * @Route("/", name="social_index")
-     * @param MyExcelWriter $myExcelWriter
+     * @param MyExcelMultiExport $myExcelWriter
      *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function index(MyExcelWriter $myExcelWriter): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function index(MyExcelMultiExport $myExcelWriter): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         $myExcelWriter->write('A1', 'Bonjour');
         $myExcelWriter->write('A2', 'Le monde');

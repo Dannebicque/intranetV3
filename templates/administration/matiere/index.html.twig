@@ -100,15 +100,20 @@
             icone : "ti-direction-alt"
         },
         {type: 'info',
-            href: path('administration_matiere_print'),
-            title: 'imprimer'|trans,
-            icone : "ti-printer"
+            href: path('administration_matiere_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "ti-printer"},
+        {
+            type:'info',
+            href:path('administration_matiere_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'ti-save'
         },
         {
             type:'info',
-            href:path('administration_matiere_save'),
-            title: 'sauvegarder'|trans,
-            icone: 'ti-save'
+            href:path('administration_matiere_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-table'
         },
         {
             type:'info',
@@ -118,7 +123,7 @@
         },
         {
             type:'info',
-            href:path('help_article', {sujet:'administration-matiere-index'}),
+            href:path('help_article', {sujet: 'administration_matiere'}),
             title: 'aide'|trans,
             icone: 'ti-help',
             target: "_blank"

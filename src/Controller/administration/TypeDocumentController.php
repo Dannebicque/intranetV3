@@ -30,28 +30,11 @@ class TypeDocumentController extends BaseController
     }
 
     /**
-     * @Route("/help", name="administration_type_document_help", methods="GET")
+     * @Route("/export.{_format}", name="administration_type_document_export", methods="GET", requirements={"_format":"pdf|csv\xlsx"})
      */
-    public function help(): Response
-    {
-        return $this->render('administration/type_document/help.html.twig');
-    }
-
-    /**
-     * @Route("/save", name="administration_type_document_save", methods="GET")
-     */
-    public function save(): Response
+    public function export(): Response
     {
         //save en csv
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/imprimer", name="administration_type_document_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
 

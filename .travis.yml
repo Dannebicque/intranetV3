@@ -17,7 +17,7 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: 7.1
+#   - php: 7.1
     - php: 7.2
 #    - php: nightly
 #  allow_failures:
@@ -28,12 +28,21 @@ before_install:
   - composer self-update
 
 install:
-  - composer install
   - cp .env.dist .env
-  - php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:create --env=test
+#  - mysql -e 'create database testing;'
+  - composer install
+  - php bin/console doctrine:database:create #--env=test
+  - php bin/console doctrine:schema:create #--env=test
   #- php bin/console doctrine:fixtures:load -n --env=test
   - ./vendor/bin/simple-phpunit install
 
 script:
-  - ./vendor/bin/simple-phpunit
+  - phpunit --configuration phpunit.xml
+  #- ./vendor/bin/simple-phpunit
+
+notifications:
+email:
+    recipients:
+        - david.annebicque@gmail.com
+    on_success: always
+    on_failure: always

@@ -14,7 +14,7 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
-        <env name="DATABASE_URL" value="mysql://root:root@localhost:3306/intranetv3" />
+        <env name="DATABASE_URL" value="mysql://root:@localhost:3306/testing"/>
 
         <!-- ###+ symfony/swiftmailer-bundle ### -->
         <!-- For Gmail as a transport, use: "gmail://username:password@localhost" -->

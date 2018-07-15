@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -14,11 +16,13 @@ class Article extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"article_administration"})
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"article_administration"})
      */
     private $texte;
 
@@ -29,22 +33,29 @@ class Article extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"article_administration"})
      */
     private $type;
 
     /**
      * @var Formation
      * @ORM\ManyToOne(targetEntity="App\Entity\Formation")
+     * @MaxDepth(2)
+     * @Groups({"article_administration"})
      */
     private $formation;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="articles")
+     * @MaxDepth(2)
+     * @Groups({"article_administration"})
      */
     private $semestres;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
+     * @MaxDepth(2)
+     * @Groups({"article_administration"})
      */
     private $personnel;
 

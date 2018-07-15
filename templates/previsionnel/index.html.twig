@@ -7,7 +7,9 @@
                     <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"><i class="ti-alarm-clock"></i> {{ 'chronologique'|trans }}</a>
-                        <a class="dropdown-item" href="{{ path('previsionnel_save') }}"><i class="ti-export"></i> {{ 'export'|trans }}</a>
+                        <a class="dropdown-item" href="{{ path('previsionnel_save') }}"><i
+                                    class="ti-export"></i> {{ 'export'|trans }}
+                        </a>{# todo: remplacer par les 3 exports génériques #}
                     </div>
                 </li>
             </ul>
@@ -49,18 +51,25 @@
 
 {{ include('composants/fab-buttons.html.twig', {boutons:[
     {type: 'info',
-        href: path('previsionnel_print'),
-        title: 'imprimer'|trans,
-        icone : "ti-printer"},
+        href: path('application_personnel_previsionnel_export', {_format:'pdf'}),
+        title: 'exporter.pdf'|trans,
+        icone : "ti-printer"
+    },
     {
         type:'info',
-        href:path('previsionnel_save'),
-        title: 'sauvegarder'|trans,
+        href:path('application_personnel_previsionnel_export', {_format:'csv'}),
+        title: 'exporter.csv'|trans,
         icone: 'ti-save'
     },
     {
         type:'info',
-        href:path('previsionnel_help'),
+        href:path('application_personnel_previsionnel_export', {_format:'xlsx'}),
+        title: 'exporter.xls'|trans,
+        icone: 'fa fa-table'
+    },
+    {
+        type:'info',
+        href:path('help_article', {sujet: 'previsionnel'}),
         title: 'aide'|trans,
         icone: 'ti-help'
     },

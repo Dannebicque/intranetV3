@@ -186,12 +186,4 @@ class TrelloTacheController extends BaseController
 
         return $this->redirectToRoute('administration_trello_tache_index');
     }
-
-    /**
-     * @Route("/help", name="administration_trello_tache_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('administration/trello_tache/help.html.twig');
-    }
 }

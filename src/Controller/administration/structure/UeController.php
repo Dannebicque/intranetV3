@@ -18,15 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class UeController extends BaseController
 {
     /**
-    * @Route("/help", name="administration_structure_ue_help", methods="GET")
-    */
-    public function help(): Response
-    {
-        //todo: comment l'exploiter...
-        return $this->render('structure/ue/help.html.twig');
-    }
-
-    /**
     * @Route("/save", name="administration_structure_ue_save", methods="GET")
     */
     public function save(): Response

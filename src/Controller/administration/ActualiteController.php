@@ -6,7 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Form\ActualiteType;
-use App\MesClasses\Csv\Csv;
+use App\MesClasses\MyExport;
 use App\Repository\ActualiteRepository;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -31,28 +31,22 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/save", name="administration_actualite_save", methods="GET")
-     * @param Csv                 $csv
+     * @Route("/export.{_format}", name="administration_actualite_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport            $myExport
      * @param ActualiteRepository $actualiteRepository
      *
+     * @param                     $_format
+     *
      * @return Response
-     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function save(Csv $csv, ActualiteRepository $actualiteRepository): Response
+    public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
         $actualites = $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 0);
-        $csv->export('actualites.csv', $actualites, array('acutalite_administration'));
+        $response = $myExport->genereFichierGenerique($_format, $actualites, 'actualites',
+            ['actualite_administration', 'utilisateur'], ['titre', 'texte', 'formation' => ['libelle']]);
 
-        return $csv->response();
-    }
-
-    /**
-     * @Route("/imprimer", name="administration_actualite_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
-        return new Response('', Response::HTTP_OK);
+        return $response;
     }
 
     /**
@@ -147,14 +141,4 @@ class ActualiteController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
-
-    /**
-     * @Route("/help", name="administration_actualite_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('administration/actualite/help.html.twig');
-    }
-
-
 }
