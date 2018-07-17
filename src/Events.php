@@ -25,5 +25,13 @@ class Events
      */
     public const NOTE_ADDED = 'note.added';
     public const ABSENCE_ADDED = 'absence.added';
+    public const ABSENCE_REMOVED = 'absence.removed';
     public const CARNET_ADDED = 'carnet.added';
+
+    public const MAIL_ABSENCE_ADDED = 'mail.absence.added';
+    public const MAIL_ABSENCE_ADDED_RESPONSABLE = 'mail.absence.added.responsable';
+    public const MAIL_ABSENCE_REMOVED = 'mail.absence.removed';
+    public const MAIL_ABSENCE_REMOVED_RESPONSABLE = 'mail.absence.removed.responsable';
+    public const MAIL_NOTE_MODIFICATION_RESPONSABLE = 'mail.note.modification.responsable';
+    public const MAIL_NEW_TRANSCRIPT_RESPONSABLE = 'mail.new.transcript.responsable';
 }

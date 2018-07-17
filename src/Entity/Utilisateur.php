@@ -607,4 +607,21 @@ abstract class Utilisateur implements UserInterface
     {
         $this->photoName = $photoName;
     }
+
+    /**
+     * @return array
+     */
+    public function getMails(): array
+    {
+        $mails = array();
+        if ($this->getMailUniv() !== null && trim($this->getMailUniv()) !== '') {
+            $mails[] = trim($this->getMailUniv());
+        }
+
+        if ($this->getMailPerso() !== null && trim($this->getMailPerso()) !== '') {
+            $mails[] = trim($this->getMailPerso());
+        }
+
+        return $mails;
+    }
 }

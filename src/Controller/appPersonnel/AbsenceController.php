@@ -4,8 +4,10 @@ namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
 use App\Entity\Absence;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
+use App\Events;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\Tools;
@@ -13,6 +15,8 @@ use App\Repository\AbsenceRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,7 +44,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/{matiere}", name="application_personnel_absence_index", requirements={"matiere"="\d+"})
+     * @Route("/{matiere}", name="application_personnel_absence_index", requirements={"matiere"="\d+"}, methods={"GET"})
      * @param MatiereRepository    $matiereRepository
      * @param TypeGroupeRepository $typeGroupeRepository
      * @param Matiere              $matiere
@@ -63,7 +67,6 @@ class AbsenceController extends BaseController
         }
 
         return $this->redirectToRoute('erreur_666');
-
     }
 
 
@@ -91,26 +94,14 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/save/{matiere}", name="application_personnel_absence_save", methods="GET")
+     * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
      * @param Matiere $matiere
      *
      * @return Response
      */
-    public function save(Matiere $matiere): Response
+    public function export(Matiere $matiere): Response
     {
         //save en csv
-        return null;
-    }
-
-    /**
-     * @Route("/imprimer/{matiere}", name="application_personnel_absence_imprimer", methods="GET")
-     * @param Matiere $matiere
-     *
-     * @return Response
-     */
-    public function imprimer(Matiere $matiere): Response
-    {
-        //print (pdf)
         return null;
     }
 
@@ -120,9 +111,26 @@ class AbsenceController extends BaseController
      *
      * @return Response
      */
-    public function supprimer(Absence $absence): Response
+    public function supprimer(EventDispatcherInterface $eventDispatcher, Request $request, Absence $absence): Response
     {
-        return null;
+        $id = $absence->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            $event = new GenericEvent($absence);
+            $this->entityManager->remove($absence);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.delete.success.flash');
+
+            //On déclenche les events
+            $eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED, $event);
+            $eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED_RESPONSABLE, $event);
+            $eventDispatcher->dispatch(Events::ABSENCE_REMOVED, $event);
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'date.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

@@ -62,4 +62,8 @@ class Constantes
             self::ROLE_ASS
         );
     }
+
+    /* Constantes de l'IUT utilisateur */
+    public const MAIL_FROM = 'intranet@iut-troyes.univ-reims.fr';
+    public const NOM_IUT = 'IUT de Troyes';
 }

@@ -2,6 +2,7 @@
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
 
+use App\Entity\Absence;
 use App\Entity\Etudiant;
 use App\Entity\Notification;
 use App\Events;
@@ -54,9 +55,10 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         return [
             // le nom de l'event et le nom de la fonction qui sera déclenché
             //Events::USER_REGISTERED => 'onUserRegistrated',
-            Events::NOTE_ADDED => 'onNoteAdded',
-            Events::ABSENCE_ADDED => 'onAbsenceAdded',
-            Events::CARNET_ADDED => 'onCarnetAdded',
+            Events::NOTE_ADDED      => 'onNoteAdded',
+            Events::ABSENCE_ADDED   => 'onAbsenceAdded',
+            Events::ABSENCE_REMOVED => 'onAbsenceRemoved',
+            Events::CARNET_ADDED    => 'onCarnetAdded',
         ];
     }
 
@@ -92,6 +94,38 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
      */
     public function onAbsenceAdded(GenericEvent $event): void
     {
+        /** @var Absence $absence */
+        $absence = $event->getSubject();
 
+        $notif = new Notification();
+        $notif->setEtudiant($absence->getEtudiant());
+        $notif->setPersonnel($absence->getPersonnel());
+        $notif->setTypeUser(Notification::ETUDIANT);
+        $notif->setType(Events::ABSENCE_ADDED);
+        $notif->setUrl($this->router->generate('user_mon_profil', ['onglet' => 'absence']));
+        $this->entityManager->persist($notif);
+
+
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param GenericEvent $event
+     */
+    public function onAbsenceRemoved(GenericEvent $event): void
+    {
+        /** @var Absence $absence */
+        $absence = $event->getSubject();
+
+        $notif = new Notification();
+        $notif->setEtudiant($absence->getEtudiant());
+        $notif->setPersonnel($absence->getPersonnel());
+        $notif->setTypeUser(Notification::ETUDIANT);
+        $notif->setType(Events::ABSENCE_REMOVED);
+        $notif->setUrl($this->router->generate('user_mon_profil', ['onglet' => 'absence']));
+        $this->entityManager->persist($notif);
+
+
+        $this->entityManager->flush();
     }
 }

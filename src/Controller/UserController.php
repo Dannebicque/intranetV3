@@ -23,13 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends BaseController
 {
     /**
-     * @Route("/mon-profil", name="user_mon_profil")
+     * @Route("/mon-profil/{onglet}", name="user_mon_profil")
      * @throws \LogicException
      */
-    public function monProfil(): Response
+    public function monProfil($onglet = ''): Response
     {
         return $this->render('user/mon-profil.html.twig', [
-            'user' => $this->getUser()
+            'user'   => $this->getUser(),
+            'onglet' => $onglet
         ]);
     }
 

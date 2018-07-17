@@ -15,11 +15,14 @@ use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Note;
 use App\Entity\Personnel;
+use App\Events;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
  * Class MyEtudiant
@@ -49,6 +52,11 @@ class MyEtudiant
     private $notes;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
      * MyEtudiant constructor.
      *
      * @param EntityManagerInterface $entityManager
@@ -60,12 +68,14 @@ class MyEtudiant
         EntityManagerInterface $entityManager,
         EtudiantRepository $etudiantRepository,
         NoteRepository $noteRepository,
-        AbsenceRepository $absenceRepository
+        AbsenceRepository $absenceRepository,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->entityManager = $entityManager;
         $this->etudiantRepository = $etudiantRepository;
         $this->noteRepository = $noteRepository;
         $this->absenceRepository = $absenceRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
 
@@ -139,8 +149,11 @@ class MyEtudiant
         $this->entityManager->persist($absence);
         $this->entityManager->flush();
 
-        //todo: gestion des mails ? ou sur un listener ? Ajout d'une notification pour l'étudiant également.
-
+        //On déclenche les events
+        $event = new GenericEvent($absence);
+        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_ADDED, $event);
+        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_ADDED_RESPONSABLE, $event);
+        $this->eventDispatcher->dispatch(Events::ABSENCE_ADDED, $event);
     }
 
     public function addNote(Evaluation $evaluation, $data): bool

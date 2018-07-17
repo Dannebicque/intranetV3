@@ -7462,5 +7462,11 @@
         <target>synthese.des.parcours</target>
       </segment>
     </unit>
+    <unit id="tij_04g" name="absence.delete.success.flash">
+      <segment>
+        <source>absence.delete.success.flash</source>
+        <target>absence.delete.success.flash</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

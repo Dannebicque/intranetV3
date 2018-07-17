@@ -1,0 +1,7 @@
+Bonjour,
+
+L'étudiant {{ absence.etudiant.displayPr  }} a été marqué absent pour le cours de {{ absence.matiere.display }} en date du {{ absence.date|date('d/m/Y') }}, {{ absence.heure|date('H:i') }}. L'intervenant qui a saisi l'absence est {{ absence.personnel.displayPr  }}.
+
+Cordialement
+
+Ce message est un message envoyé depuis l'intranet de l'{{ constant('App\\Entity\\Constantes::NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.

@@ -29,7 +29,7 @@ class Evaluation extends BaseEntity
     /**
      * @ORM\Column(type="date")
      */
-    private $dateEvaluation;
+    private $dateEvaluationdateEvaluation;
 
     /**
      * @ORM\Column(type="integer")
