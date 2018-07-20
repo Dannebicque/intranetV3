@@ -96,6 +96,4 @@ app.config({
   */
 
   cacheBust: '',
-
-
 });

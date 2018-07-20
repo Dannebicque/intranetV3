@@ -68,6 +68,9 @@ class PersonnelRepository extends ServiceEntityRepository
         foreach ($query as $personnel) {
             $tt = array();
             $tt['displayPr'] = $personnel->getDisplayPr();
+            $tt['slug'] = $personnel->getSlug();
+            $tt['photo'] = $personnel->getPhotoName();
+
             $t[] = $tt;
         }
 

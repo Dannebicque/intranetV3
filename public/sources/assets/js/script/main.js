@@ -20,6 +20,8 @@ require("../../css/style.scss");
 */
 
 app.ready(function () {
+  const basePath = 'http://newintranet:8888/upload/' //chemin de base pour les images
+
 
   //colorise le bon menu
   readUrlMenu($(location).attr('pathname'));

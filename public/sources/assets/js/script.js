@@ -99,8 +99,6 @@ app.config({
   */
 
   cacheBust: '',
-
-
 });
 
 
@@ -207,6 +205,8 @@ function addCallout (message, label) {
 */
 
 app.ready(function () {
+  const basePath = 'http://newintranet:8888/upload/' //chemin de base pour les images
+
 
   //colorise le bon menu
   readUrlMenu($(location).attr('pathname'));
@@ -1169,9 +1169,12 @@ app.ready(function () {
           var html = ''
           if (data.etudiants.length > 0) {
             jQuery.each(data.etudiants, function (index, etudiant) {
-              html = html + '<a class="media" href="#">\n' +
+              html = html + '<a class="media" href="' + Routing.generate('user_profil.fr', {
+                  type: 'etudiant',
+                  slug: etudiant.slug
+                }) + '" target="_blank">\n' +
                 '                <span class="avatar status-dark">\n' +
-                '                  <img src="../assets/img/avatar/3.jpg" alt="...">\n' +
+                '                  <img src="' + basePath + 'photo/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
                 '                </span>\n' +
                 '\n' +
                 '                        <div class="media-body">\n' +
@@ -1190,8 +1193,11 @@ app.ready(function () {
           html = ''
           if (data.personnels.length > 0) {
             jQuery.each(data.personnels, function (index, personnel) {
-              html = html + '<a class="media items-center" href="#">\n' +
-                '                        <img class="avatar avatar-sm" src="../assets/img/avatar/1.jpg" alt="...">\n' +
+              html = html + '<a class="media items-center" href="' + Routing.generate('user_profil.fr', {
+                  type: 'personnel',
+                  slug: personnel.slug
+                }) + '" target="_blank">\n' +
+                '                        <img class="avatar avatar-sm" src="' + basePath + 'photo/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
                 '                        <p>' + personnel.displayPr + '</p>\n' +
                 '                    </a>'
             })
@@ -1203,7 +1209,7 @@ app.ready(function () {
           html = ''
           if (data.autres.length > 0) {
             jQuery.each(data.autres, function (index, autre) {
-              html = html + '<a class="media items-center" href="#">\n' +
+              html = html + '<a class="media items-center" href="">\n' +
                 '                        <img class="avatar avatar-sm" src="../assets/img/avatar/1.jpg" alt="...">\n' +
                 '                        <p>' + autre + '</p>\n' +
                 '                    </a>'
@@ -1220,7 +1226,7 @@ app.ready(function () {
       search_reponse_personnel.slideUp().empty().append(html).slideDown()
       search_reponse_etudiant.slideUp().empty().append(html).slideDown()
     }
-  });
+  })
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 

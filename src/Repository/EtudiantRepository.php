@@ -160,6 +160,8 @@ class EtudiantRepository extends ServiceEntityRepository
         foreach ($query as $etudiant) {
             $tt = array();
             $tt['displayPr'] = $etudiant->getDisplayPr();
+            $tt['slug'] = $etudiant->getSlug();
+            $tt['photo'] = $etudiant->getPhotoName();
             $t[] = $tt;
         }
 
