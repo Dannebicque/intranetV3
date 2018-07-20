@@ -35,11 +35,13 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findByType($type, $formation)
     {
         return $this->createQueryBuilder('p')
+            ->innerJoin(PersonnelFormation::class, 'f', 'WITH', 'f.personnel = p.id')
             ->where('p.typeUser = :type')
+            ->andWhere('f.formation = :formation')
             ->setParameter('type', $type)
+            ->setParameter('formation', $formation)
             ->getQuery()
             ->getResult();
-        //todo: filtrer par formation
     }
 
     /**

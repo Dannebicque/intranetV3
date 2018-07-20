@@ -1,0 +1,14 @@
+{% if onglet == 'absences' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
+    )) }}
+{% elseif onglet == 'stages' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilPersonnelController::stage', {slug: user.slug}
+    )) }}
+
+{% else %}
+    {{ render(controller(
+        'App\\Controller\\ProfilPersonnelController::timeline', {slug: user.slug}
+    )) }}
+{% endif %}

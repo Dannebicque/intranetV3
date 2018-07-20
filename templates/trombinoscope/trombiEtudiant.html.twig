@@ -53,9 +53,10 @@
                                                     <i class="fa fa-heart"></i>
                                                 </label>
                                                 <nav class="nav mt-2">
-                                                    <a href="{{ path('user_profil.fr', {type: 'etudiant', slug: etudiant.slug}) }}"
+                                                    <a href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}"
                                                        class="nav-link"
                                                        data-provide="tooltip"
+                                                       target="_blank"
                                                        data-placement="bottom" title="Profil"><i
                                                                 class="fa fa-user"></i> </a>
                                                     <a href="{{ etudiant.sitePerso }}"

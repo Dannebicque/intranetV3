@@ -28,9 +28,10 @@
                                     &nbsp;
                                 </label>
                                 <nav class="nav mt-2">
-                                    <a href="{{ path('user_profil.fr', {type: 'permanent', slug: personnel.slug}) }}"
+                                    <a href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}"
                                        class="nav-link"
                                        data-provide="tooltip"
+                                       target="_blank"
                                        data-placement="bottom" title="Profil"><i
                                                 class="fa fa-user"></i> </a>
                                     <a href="{{ personnel.sitePerso }}"

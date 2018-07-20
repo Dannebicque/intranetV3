@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
  * Class PersonnelProfilType
@@ -39,8 +40,8 @@ class PersonnelProfilType extends AbstractType
                 'expanded'                  => true
             ])
             ->add('date_naissance', DateType::class, ['label' => 'label.date_naissance'])
-            ->add('numero_harpege', TextType::class, ['label' => 'label.numero_harpege'])
-            ->add('initiales', TextType::class, ['label' => 'label.initiales'])
+            ->add('numero_harpege', TextType::class,
+                ['label' => 'label.numero_harpege', 'disabled' => true, 'help' => 'Si erreur contacté les RH'])
             ->add('statut', YesNoType::class, [
                 'label' => 'label.statut',
             ])
@@ -61,7 +62,13 @@ class PersonnelProfilType extends AbstractType
                 'required'       => false,
                 'download_label' => 'label.apercu',
                 'allow_delete'   => false
-            ])//->add('photo', VichImageType::class, ['label' => 'label.photo'])
+            ])
+            ->add('photoFile', VichImageType::class, [
+                'label'          => 'label.photo',
+                'required'       => false,
+                'download_label' => 'label.apercu',
+                'allow_delete'   => false
+            ])
         ;
     }
 

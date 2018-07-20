@@ -22,13 +22,9 @@
     <div class="tab-content">
         <div class="tab-pane active show" id="vosInformations">
             <div class="card">
-                <h4 class="card-title">Vos informations</h4>
+                <h4 class="card-title">{{ 'settins.vos.informations'|trans }}</h4>
 
                 <div class="card-body">
-                    Choix de la formation par défaut (automatiquement logé)
-                    Définition de la signature, de l'avatar
-                    gestion de l'adresse (plutôt que dans apropos ?)
-
                     {% form_theme form 'form/bootstrap_4_layout.html.twig' %}
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
@@ -39,12 +35,38 @@
         </div>
         <div class="tab-pane" id="vosParametres">
             <div class="card">
-                <h4 class="card-title">Vos informations</h4>
+                <h4 class="card-title">{{ 'settins.vos.parametres'|trans }}</h4>
 
                 <div class="card-body">
-                    Choix de la formation par défaut (automatiquement logé)
-                    Définition de la signature, de l'avatar
-                    gestion de l'adresse (plutôt que dans apropos ?)
+                    {% if user.typeUser == 'permanent' %}
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'table.formation'|trans }}</th>
+                                <th>{{ 'table.diplomes'|trans }}</th>
+                                <th>{{ 'table.par.defaut'|trans }}</th>
+                            </tr>
+                            </thead>
+
+                            {% for formation in user.personnelformations %}
+                                <tr>
+                                    <td>{{ formation.formation.libelle }}</td>
+                                    <td>{% for diplome in formation.formation.diplomes %}{{ diplome.display }}, {% endfor %}</td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="pardefaut"
+                                                   value="{{ formation.formation.id }}"
+                                                   {% if formation.defaut == true %}checked{% endif %}>
+                                        </div>{# todo: gérer le changement de formation par défaut. #}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% elseif user.typeUser == 'etudiant' %}
+
+                    {% else %}
+                        <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

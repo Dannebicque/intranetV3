@@ -1,0 +1,21 @@
+{% if onglet == 'absences' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
+    )) }}
+{% elseif onglet == 'notes' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
+    )) }}
+{% elseif onglet == 'stages' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::stage', {slug: user.slug}
+    )) }}
+{% elseif onglet == 'scolarite' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::scolarite', {slug: user.slug}
+    )) }}
+{% else %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::timeline', {slug: user.slug}
+    )) }}
+{% endif %}

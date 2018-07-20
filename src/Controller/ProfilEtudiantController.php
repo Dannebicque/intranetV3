@@ -41,7 +41,7 @@ class ProfilEtudiantController extends BaseController
      */
     public function actions(Etudiant $etudiant): Response
     {
-        return $this->render('user/composants/actions.html.twig', [
+        return $this->render('user/composants/actions_etudiant.html.twig', [
             'etudiant' => $etudiant
         ]);
     }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Constantes;
+use App\Entity\Etudiant;
 use App\Entity\Favori;
 use App\Entity\Personnel;
 use App\Form\EtudiantProfilType;
@@ -26,11 +27,12 @@ class UserController extends BaseController
      * @Route("/mon-profil/{onglet}", name="user_mon_profil")
      * @throws \LogicException
      */
-    public function monProfil($onglet = ''): Response
+    public function monProfil($onglet = 'timeline'): Response
     {
-        return $this->render('user/mon-profil.html.twig', [
-            'user'   => $this->getUser(),
-            'onglet' => $onglet
+        return $this->render('user/profil.html.twig', [
+            'user'      => $this->getUser(),
+            'onglet'    => $onglet,
+            'monprofil' => true
         ]);
     }
 
@@ -55,18 +57,20 @@ class UserController extends BaseController
         if ($type === 'personnel') {
             $user = $personnelRepository->findOneBySlug($slug);
 
-            return $this->render('user/profil-personnel.html.twig', [
-                'user'   => $user,
-                'onglet' => $onglet
+            return $this->render('user/profil.html.twig', [
+                'user'      => $user,
+                'onglet'    => $onglet,
+                'monprofil' => false
             ]);
         }
 
         if ($type === 'etudiant') {
             $user = $etudiantRepository->findOneBySlug($slug);
 
-            return $this->render('user/profil-etudiant.html.twig', [
-                'user'   => $user,
-                'onglet' => $onglet
+            return $this->render('user/profil.html.twig', [
+                'user'      => $user,
+                'onglet'    => $onglet,
+                'monprofil' => false
             ]);
         }
 
@@ -97,7 +101,7 @@ class UserController extends BaseController
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
             }
-        } else {
+        } elseif ($user instanceof Etudiant) {
             $form = $this->createForm(EtudiantProfilType::class, $user, [
                 'attr' =>
                     ['data-provide' => 'validation']
@@ -109,10 +113,13 @@ class UserController extends BaseController
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
             }
+        } else {
+            return $this->redirectToRoute('erreur_404');
         }
 
         return $this->render('user/settings.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'user' => $user
         ]);
     }
 

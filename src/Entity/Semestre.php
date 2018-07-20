@@ -634,9 +634,9 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @return Etudiant[]
+     * @return mixed
      */
-    public function getEtudiants(): array
+    public function getEtudiants()
     {
         return $this->etudiants;
     }

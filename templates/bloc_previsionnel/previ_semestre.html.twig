@@ -34,45 +34,69 @@
                     <a href="">Détail du module</a>
                 </td>
                 <td colspan="1">
-                    <a href="{{ path('administration_previsionnel_duplicate', {id: previsionnel.id}) }}"
-                       class="btn btn-success btn-outline btn-square" data-provide="tooltip" data-placement="bottom"
-                       title="{{ 'atitle.dupliquer'|trans }}"><i
-                                class="fa fa-copy"></i></a>
-                    <a href="{{ path('administration_previsionnel_delete', {id: previsionnel.id}) }}"
-                       class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"
-                       data-placement="bottom"
-                       title="{{ 'atitle.supprimer'|trans }}"><i
-                                class="ti-close"></i></a>
+                    {% if (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE')) %}
+                        <a href="{{ path('administration_previsionnel_duplicate', {id: previsionnel.id}) }}"
+                           class="btn btn-success btn-outline btn-square" data-provide="tooltip" data-placement="bottom"
+                           title="{{ 'atitle.dupliquer'|trans }}"><i
+                                    class="fa fa-copy"></i></a>
+                        <a href="{{ path('administration_previsionnel_delete', {id: previsionnel.id}) }}"
+                           class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"
+                           data-placement="bottom"
+                           title="{{ 'atitle.supprimer'|trans }}"><i
+                                    class="ti-close"></i></a>
+                    {% endif %}
                 </td>
             </tr>
             <tr>
-                {# todo: Edit uniquement si admin... #}
-                <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
-                       data-name="NbHCm">{{ previsionnel.nbHCm }}</a> h
-                </td>
-                <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
-                       data-name="NbGrCm">{{ previsionnel.nbGrCm }}</td>
-                <td>{{ previsionnel.nbSeanceCm }}</td>
-                <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
-                                       data-name="NbHTd">{{ previsionnel.nbHTd }}</a> h
-                </td>
-                <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
-                                       data-name="NbGrTd">{{ previsionnel.nbGrTd }}</td>
-                <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
+                {% if (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE')) %}
+                    <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                           data-name="NbHCm">{{ previsionnel.nbHCm }}</a> h
+                    </td>
+                    <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                           data-name="NbGrCm">{{ previsionnel.nbGrCm }}</td>
+                    <td>{{ previsionnel.nbSeanceCm }}</td>
+                    <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                           data-name="NbHTd">{{ previsionnel.nbHTd }}</a> h
+                    </td>
+                    <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                           data-name="NbGrTd">{{ previsionnel.nbGrTd }}</a></td>
+                    <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
 
-                <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
-                                       data-name="NbHTp">{{ previsionnel.nbHTp }}</a> h
-                </td>
-                <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
-                                       data-name="NbGrTp">{{ previsionnel.nbGrTp }}</a></td>
-                <td class="previtp">{{ previsionnel.nbSeanceTp }}</a></td>
+                    <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                           data-name="NbHTp">{{ previsionnel.nbHTp }}</a> h
+                    </td>
+                    <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                           data-name="NbGrTp">{{ previsionnel.nbGrTp }}</a></td>
+                    <td class="previtp">{{ previsionnel.nbSeanceTp }}</a></td>
 
-                <td>{{ previsionnel.totalHCm }} h</td>
-                <td class="previtd">{{ previsionnel.totalHTd }} h</td>
-                <td class="previtp">{{ previsionnel.totalHTp }} h</td>
+                    <td>{{ previsionnel.totalHCm }} h</td>
+                    <td class="previtd">{{ previsionnel.totalHTd }} h</td>
+                    <td class="previtp">{{ previsionnel.totalHTp }} h</td>
 
-                <td>{{ previsionnel.totalEqTd }} h</td>
-                <td>{{ previsionnel.totalEtudiant }} h</td>
+                    <td>{{ previsionnel.totalEqTd }} h</td>
+                    <td>{{ previsionnel.totalEtudiant }} h</td>
+                {% else %}
+                    <td>{{ previsionnel.nbHCm }} h
+                    </td>
+                    <td>{{ previsionnel.nbGrCm }}</td>
+                    <td>{{ previsionnel.nbSeanceCm }}</td>
+                    <td class="previtd">{{ previsionnel.nbHTd }} h
+                    </td>
+                    <td class="previtd">{{ previsionnel.nbGrTd }}</td>
+                    <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
+
+                    <td class="previtp">{{ previsionnel.nbHTp }} h
+                    </td>
+                    <td class="previtp">{{ previsionnel.nbGrTp }}</td>
+                    <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
+
+                    <td>{{ previsionnel.totalHCm }} h</td>
+                    <td class="previtd">{{ previsionnel.totalHTd }} h</td>
+                    <td class="previtp">{{ previsionnel.totalHTp }} h</td>
+
+                    <td>{{ previsionnel.totalEqTd }} h</td>
+                    <td>{{ previsionnel.totalEtudiant }} h</td>
+                {% endif %}
             </tr>
         {% endfor %}
     {% else %}

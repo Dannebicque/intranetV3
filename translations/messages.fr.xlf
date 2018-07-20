@@ -692,15 +692,6 @@
         <target>Mentions Légales</target>
       </segment>
     </unit>
-    <unit id="iBnkB06" name="profil.etudiant.heading">
-      <notes>
-        <note category="file-source" priority="1">templates/user/profil-etudiant.html.twig:4</note>
-      </notes>
-      <segment>
-        <source>profil.etudiant.heading</source>
-        <target>Profil de l'étudiant %etudiant%</target>
-      </segment>
-    </unit>
     <unit id="sub7le2" name="mon.profil.heading">
       <notes>
         <note category="file-source" priority="1">templates/user/mon-profil.html.twig:4</note>
@@ -708,15 +699,6 @@
       <segment>
         <source>mon.profil.heading</source>
         <target>Mon profil</target>
-      </segment>
-    </unit>
-    <unit id="NvqBF_x" name="profil.personnel.heading">
-      <notes>
-        <note category="file-source" priority="1">templates/user/profil-personnel.html.twig:4</note>
-      </notes>
-      <segment>
-        <source>profil.personnel.heading</source>
-        <target>Profil du personnel</target>
       </segment>
     </unit>
     <unit id="JOaczlw" name="settings.heading">
@@ -7468,17 +7450,71 @@
         <target>absence.delete.success.flash</target>
       </segment>
     </unit>
-      <unit id="95ijfK1" name="absence.removed">
-          <segment>
-              <source>absence.removed</source>
-              <target>absence.removed</target>
-          </segment>
-      </unit>
-      <unit id="ruQIhH0" name="success">
-          <segment>
-              <source>success</source>
-              <target>success</target>
-          </segment>
-      </unit>
+    <unit id="95ijfK1" name="absence.removed">
+      <segment>
+        <source>absence.removed</source>
+        <target>absence.removed</target>
+      </segment>
+    </unit>
+    <unit id="ruQIhH0" name="success">
+      <segment>
+        <source>success</source>
+        <target>success</target>
+      </segment>
+    </unit>
+    <unit id="ie_S1Z5" name="table.ue">
+      <segment>
+        <source>table.ue</source>
+        <target>table.ue</target>
+      </segment>
+    </unit>
+    <unit id="V2amomi" name="table.nombre.notes">
+      <segment>
+        <source>table.nombre.notes</source>
+        <target>table.nombre.notes</target>
+      </segment>
+    </unit>
+    <unit id="7FiVtuX" name="profil.heading">
+      <segment>
+        <source>profil.heading</source>
+        <target>Profil de %user%</target>
+      </segment>
+    </unit>
+    <unit id="1LWOZnS" name="numero.harpege">
+      <segment>
+        <source>numero.harpege</source>
+        <target>numero.harpege</target>
+      </segment>
+    </unit>
+    <unit id="I4f8m9h" name="settins.vos.informations">
+      <segment>
+        <source>settins.vos.informations</source>
+        <target>Vos informations</target>
+      </segment>
+    </unit>
+    <unit id="wwkSAIV" name="settins.vos.parametres">
+      <segment>
+        <source>settins.vos.parametres</source>
+        <target>settins.vos.parametres</target>
+      </segment>
+    </unit>
+    <unit id="G4eGyQ0" name="table.diplomes">
+      <segment>
+        <source>table.diplomes</source>
+        <target>table.diplomes</target>
+      </segment>
+    </unit>
+    <unit id="RqmkWR9" name="table.par.defaut">
+      <segment>
+        <source>table.par.defaut</source>
+        <target>table.par.defaut</target>
+      </segment>
+    </unit>
+    <unit id="NCvWq52" name="bloc.actions.personnel.heading">
+      <segment>
+        <source>bloc.actions.personnel.heading</source>
+        <target>bloc.actions.personnel.heading</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

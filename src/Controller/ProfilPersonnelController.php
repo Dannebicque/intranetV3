@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Personnel;
+use App\MesClasses\MyPrevisionnel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,8 +39,8 @@ class ProfilPersonnelController extends BaseController
      */
     public function actions(Personnel $personnel): Response
     {
-        return $this->render('user/composants/actions.html.twig', [
-
+        return $this->render('user/composants/actions_personnel.html.twig', [
+            'personnel' => $personnel
         ]);
     }
 
@@ -66,8 +67,6 @@ class ProfilPersonnelController extends BaseController
      */
     public function about(Personnel $personnel): Response
     {
-
-
         return $this->render('user/composants/about.html.twig', [
             'user' => $personnel,
         ]);
@@ -80,10 +79,14 @@ class ProfilPersonnelController extends BaseController
      *
      * @return Response
      */
-    public function previsionnel(Personnel $personnel): Response
+    public function previsionnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel): Response
     {
-        return $this->render('user/composants/previsionnel.html.twig', [
+        $myPrevisionnel->setPersonnel($personnel);
+        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
+        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
 
+        return $this->render('user/composants/previsionnel.html.twig', [
+            'previsionnel' => $myPrevisionnel,
         ]);
     }
 

@@ -18,6 +18,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Formation extends BaseEntity
 {
+
+    //todo: passer par un UUID ?
+    //https://medium.com/@galopintitouan/auto-increment-is-the-devil-using-uuids-in-symfony-and-doctrine-71763721b9a9
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"actualite_administration"})

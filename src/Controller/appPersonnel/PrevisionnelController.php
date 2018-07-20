@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\appPersonnel;
 
+use App\Controller\BaseController;
 use App\MesClasses\MyPrevisionnel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,9 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PrevisionnelController
  * @package App\Controller
- * @Route("/{_locale}/previsionnel",
- *     requirements={
- *         "_locale": "fr|en"})
+ * @Route({"fr":"application/personnel/previsionnel",
+ *         "en":"application/team/previsionnel"}
+ *)
  */
 class PrevisionnelController extends BaseController
 {
@@ -27,7 +28,7 @@ class PrevisionnelController extends BaseController
         $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
         $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
 
-        return $this->render('previsionnel/index.html.twig', [
+        return $this->render('appPersonnel/previsionnel/index.html.twig', [
             'previsionnel' => $myPrevisionnel,
         ]);
     }
@@ -40,7 +41,7 @@ class PrevisionnelController extends BaseController
      */
     public function chronologique(MyPrevisionnel $myPrevisionnel): Response
     {
-        return $this->render('previsionnel/chronologique.html.twig', [
+        return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
         ]);
     }
 
@@ -49,24 +50,15 @@ class PrevisionnelController extends BaseController
      */
     public function help(): Response
     {
-        return $this->render('previsionnel/help.html.twig');
+        return $this->render('appPersonnel/previsionnel/help.html.twig');
     }
 
     /**
-     * @Route("/save", name="previsionnel_save", methods="GET")
+     * @Route("/export.{_format}", name="application_personnel_previsionnel_export", methods="GET")
      */
-    public function save(): Response
+    public function export(): Response
     {
         //save en csv
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/imprimer", name="previsionnel_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //print (pdf)
         return new Response('', Response::HTTP_OK);
     }
 }

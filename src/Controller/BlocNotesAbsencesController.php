@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyPrevisionnel;
+use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -40,10 +41,10 @@ class BlocNotesAbsencesController extends BaseController
         ]);
     }
 
-    public function mccSemestre(): Response
+    public function mccSemestre(MatiereRepository $matiereRepository): Response
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
-
+            'matieres' => $matiereRepository->findBySemestre($this->getUser()->getSemestre())
         ]);
     }
 }
