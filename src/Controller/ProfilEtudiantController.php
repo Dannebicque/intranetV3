@@ -42,7 +42,7 @@ class ProfilEtudiantController extends BaseController
     public function actions(Etudiant $etudiant): Response
     {
         return $this->render('user/composants/actions.html.twig', [
-
+            'etudiant' => $etudiant
         ]);
     }
 
@@ -89,13 +89,15 @@ class ProfilEtudiantController extends BaseController
 
         Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire(), 2, Constantes::DUREE_SEMESTRE);
 
+        //todo: gérer les mois, selon le semestre ?
         return $this->render('user/composants/absences.html.twig', [
             'tabPlanning' => Calendrier::getTabPlanning(),
             'tabJour'     => array('', 'L', 'M', 'M', 'J', 'V', 'S', 'D'),
             'tabFerie'    => Calendrier::getTabJoursFeries(),
             'tabFinMois'  => Calendrier::getTabFinMois(),
             'annee'       => $this->dataUserSession->getAnneeUniversitaire(),
-            'absences'    => $etudiant->getAbsences()
+            'absences'    => $etudiant->getAbsences(),
+            'tabAbsence'  => [] //compte des absences par créneaux du planning.
         ]);
     }
 

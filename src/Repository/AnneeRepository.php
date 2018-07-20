@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\Diplome;
+use App\Entity\Formation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -34,5 +36,15 @@ class AnneeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome);
+    }
+
+    public function findByFormation(Formation $formation)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.formation = :formation')
+            ->setParameter('formation', $formation->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

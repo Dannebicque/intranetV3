@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Diplome;
+use App\Entity\Formation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -30,9 +31,9 @@ class DiplomeRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByFormation($formation)
+    public function findByFormation(Formation $formation)
     {
-        return $this->findByFormationBuilder($formation)
+        return $this->findByFormationBuilder($formation->getId())
             ->getQuery()
             ->getResult();
     }

@@ -12,8 +12,14 @@ class Notification extends BaseEntity
     public const ETUDIANT = 'e';
     public const PERSONNEL = 'p';
 
-    public const TABICONE = array('carnet.added' => 'ti-bookmark-alt');
-    public const TABCOLOR = array('carnet.added' => 'warning');
+    public const TABICONE = array('carnet.added'    => 'ti-bookmark-alt',
+                                  'absence.removed' => 'ti-bookmark-alt',
+                                  'absence.added'   => 'ti-bookmark-alt'
+    );
+    public const TABCOLOR = array('carnet.added'    => 'info',
+                                  'absence.removed' => 'success',
+                                  'absence.added'   => 'danger'
+    );
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")

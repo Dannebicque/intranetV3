@@ -35,7 +35,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/{type}/{slug}", name="user_profil", options={"expose": true})
+     * @Route("/{type}/{slug}/{onglet}", name="user_profil", options={"expose": true})
      * @param EtudiantRepository  $etudiantRepository
      * @param PersonnelRepository $personnelRepository
      * @param                     $type
@@ -49,13 +49,15 @@ class UserController extends BaseController
         EtudiantRepository $etudiantRepository,
         PersonnelRepository $personnelRepository,
         $type,
-        $slug
+        $slug,
+        $onglet = 'timeline'
     ) {
         if ($type === 'personnel') {
             $user = $personnelRepository->findOneBySlug($slug);
 
             return $this->render('user/profil-personnel.html.twig', [
-                'user' => $user
+                'user'   => $user,
+                'onglet' => $onglet
             ]);
         }
 
@@ -63,7 +65,8 @@ class UserController extends BaseController
             $user = $etudiantRepository->findOneBySlug($slug);
 
             return $this->render('user/profil-etudiant.html.twig', [
-                'user' => $user
+                'user'   => $user,
+                'onglet' => $onglet
             ]);
         }
 

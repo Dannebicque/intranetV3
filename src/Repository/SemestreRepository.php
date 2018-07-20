@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
+use App\Entity\Formation;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -61,5 +62,10 @@ class SemestreRepository extends ServiceEntityRepository
     public function findByDiplome($diplome)
     {
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();
+    }
+
+    public function findByFormation(Formation $formation)
+    {
+        return $this->findByFormationBuilder($formation->getId())->getQuery()->getResult();
     }
 }

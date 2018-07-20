@@ -1,6 +1,16 @@
 {% if adresse != null %}
     <p>
-        {{ adresse.diplay }}
+        {{ adresse.adresse1 }}
+        {% if adresse.adresse2 != '' %}
+            <br/>{{ adresse.adresse2 }}
+        {% endif %}
+
+        {% if adresse.adresse3 != '' %}
+            <br/>{{ adresse.adresse3 }}
+        {% endif %}
+
+        <br/>{{ adresse.codepostal }} {{ adresse.ville }}
+        <br/>{{ adresse.pays }}
     </p>
 {% else %}
     <div class="alert alert-info">{{ 'aucune.adresse.fournie'|trans }}</div>

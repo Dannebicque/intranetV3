@@ -7468,5 +7468,17 @@
         <target>absence.delete.success.flash</target>
       </segment>
     </unit>
+      <unit id="95ijfK1" name="absence.removed">
+          <segment>
+              <source>absence.removed</source>
+              <target>absence.removed</target>
+          </segment>
+      </unit>
+      <unit id="ruQIhH0" name="success">
+          <segment>
+              <source>success</source>
+              <target>success</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

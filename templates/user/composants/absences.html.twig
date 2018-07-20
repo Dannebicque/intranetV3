@@ -47,8 +47,8 @@
                                 <td colspan="2" style="background-color: orangered">Férié</td>
                             {% else %}
 
-                                <td {{ we ? 'style="background-color: #00AAAA"' }}>A</td>
-                                <td {{ we ? 'style="background-color: #00AAAA"' }}>B</td>
+                                <td {{ we ? 'style="background-color: #00AAAA"' }}>{% if tabAbsence[i] is defined and tabAbsence[i][j] is defined %}{{ tabAbsence[i][j].am }}{% else %}&nbsp;{% endif %}</td>
+                                <td {{ we ? 'style="background-color: #00AAAA"' }}>{% if tabAbsence[i] is defined and tabAbsence[i][j] is defined %}{{ tabAbsence[i][j].pmde }}{% else %}&nbsp;{% endif %}</td>
                                 {#{% if events[tabPlanning[j][i]|date('Y-m-d')] is defined %}
                                 {% for event in events[tabPlanning[j][i]|date('Y-m-d')] %}
                                     <span class="event">{{ event.libelle }}</span>

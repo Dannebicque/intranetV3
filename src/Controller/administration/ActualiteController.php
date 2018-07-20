@@ -133,7 +133,8 @@ class ActualiteController extends BaseController
 
             $this->entityManager->remove($actualite);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.delete.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
+                'actualite.delete.success.flash');//todo: interet ? jamais affiché ?
 
             return $this->json($id, Response::HTTP_OK);
         }

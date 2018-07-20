@@ -14,6 +14,7 @@ use App\Entity\Etudiant;
 use App\Entity\Formation;
 use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
+use App\Entity\Personnel;
 use App\Entity\PersonnelFormation;
 use App\Entity\Semestre;
 use App\Repository\AnneeRepository;
@@ -24,6 +25,7 @@ use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -95,6 +97,8 @@ class DataUserSession
      * @param NotificationRepository                 $notificationRepository
      * @param TokenStorageInterface                  $user
      * @param Security                               $security
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function __construct(
         SemestreRepository $semestreRepository,
@@ -119,17 +123,27 @@ class DataUserSession
         $this->user = $user;
         $this->security = $security;
 
-        if ($this->user instanceof Etudiant) {
+        if ($this->getUser() instanceof Etudiant) {
             $this->messagesRepository = $messageDestinataireEtudiantRepository;
-        } else {
+            $this->formation = $this->formationRepository->findFormationEtudiant($this->getUser());
+            //todo: si formation est null alors pas d'accès. Rediriger vers page. Listener ?
+        } elseif ($this->getUser() instanceof Personnel) {
             $this->messagesRepository = $messageDestinatairePersonnelRepository;
+            $this->formation = $this->formationRepository->findFormationPersonnelDefaut($this->getUser());
+            //todo: si formation > 1 (plusieurs formation par défaut ? étrange).
+            //todo: si formation est null alors pas d'accès autorisé. Rediriger vers page. Listener ?
+        } else {
+            //todo: erreur
         }
 
-        //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
-        $this->semestres = $semestreRepository->findAll(); //todo à filter selon la formation
-        $this->diplomes = $diplomeRepository->findAll(); //todo à filter selon la formation
-        $this->annees = $anneeRepository->findAll(); //todo à filter selon la formation
-        $this->formation = $formationRepository->find(1); //todo: récuéprer selon le user et la formation choisie
+        if ($this->formation !== null) {
+            //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
+            $this->semestres = $semestreRepository->findByFormation($this->formation);
+            $this->diplomes = $diplomeRepository->findByFormation($this->formation);
+            $this->annees = $anneeRepository->findByFormation($this->formation);
+        } else {
+            //todo: ?? le cas sera traité avant ?
+        }
         //}
     }
 
@@ -199,7 +213,11 @@ class DataUserSession
      */
     public function getUser()
     {
-        return $this->user->getToken()->getUser();
+        if ($this->user->getToken() !== null) {
+            return $this->user->getToken()->getUser();
+        } else {
+            return null;
+        }
     }
 
     /**

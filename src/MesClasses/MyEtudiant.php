@@ -182,10 +182,23 @@ class MyEtudiant
 
             $this->entityManager->persist($newnote);
             $this->entityManager->flush();
-            //todo: gestion des mails ? ou sur un listener ? Ajout d'une notification pour l'étudiant également.
-
         }
 
         return false;
+    }
+
+    /**
+     * @param Absence $absence
+     */
+    public function removeAbsence(Absence $absence)
+    {
+        $event = new GenericEvent($absence);
+        $this->entityManager->remove($absence);
+        $this->entityManager->flush();
+
+        //On déclenche les events
+        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED, $event);
+        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED_RESPONSABLE, $event);
+        $this->eventDispatcher->dispatch(Events::ABSENCE_REMOVED, $event);
     }
 }

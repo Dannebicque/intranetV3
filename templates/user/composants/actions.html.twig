@@ -1,6 +1,85 @@
 <div class="card">
     <h4 class="card-title">{{ 'bloc.actions.etu.heading'|trans }}</h4>
     <div class="card-body">
+        <h5>Liste des groupes</h5>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Libellé</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            {% for gr in etudiant.groupes %}
+                <tr>
+                    <td>#{{ gr.id }}</td>
+                    <td>{{ gr.typegroupe.libelle }} | {{ gr.libelle }} | {{ gr.typegroupe.semestre.libelle }}</td>
+                    <td>
+                        <a href="{{ path('administration_etudiant_groupe_delete', {id: gr.id}) }}"
+                           data-csrf="{{ csrf_token('delete' ~ gr.id) }}"
+                           class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i
+                                    class="ti-close" data-provide="tooltip" data-placement="bottom"
+                                    title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                </tr>
+
+            {% endfor %}
+        </table>
+
+
+        <h5>Semestre et parcours</h5>
+        <form class="form form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2" for="chgt_etudiant_semestre">Semestre actuel</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="semestre" id="chgt_etudiant_semestre"
+                            data-etudiant="{{ etudiant.id }}">
+                        {% for semestre in user_data.semestres %}
+                            <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id == etudiant.semestre.id %} selected {% endif %}>{{ semestre.libelle }}</option>
+                        {% endfor %}
+                        <option value="null" {% if etudiant.semestre == null %} selected {% endif %}>Aucun semestre
+                        </option>
+                    </select>
+                </div>
+            </div>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <div class="form-group">
+                    <label class="col-sm-2" for="chgt_etudiant_formation">Formation actuelle</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="formation" id="chgt_etudiant_formation"
+                                data-etudiant="{{ etudiant.id }}">
+                            {% for format in t.formations %}
+                                <option value="{{ format.id }}" {% if format.id == etudiant.semestre.annee.diplome.formation.id %} selected {% endif %}>{{ format.libelle }}</option>
+                            {% endfor %}
+                            <option value="null">Aucune formation</option>
+                        </select>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label class="col-sm-2" for="chgt_etudiant_fin">Année sortie DUT/LP/IUT</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="fin" id="chgt_etudiant_fin" data-etudiant="{{ etudiant.id }}">
+                        Un simple YES/NO
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <h5>Re/initialiation du compte</h5>
+        <a href="#" class="btn btn-warning btnInit" data-element="{{ etudiant.id }}" rel="tooltip"
+           data-placement="bottom"
+           title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i></a>
+
+        <h3>Editions</h3> Liste en fonction du parcours.
+        <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug}) }}"
+           class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
+                    class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+
+
         ???
+        Changement de groupe / suppression
+        Changement de semestre / formation
+        Export de releve de note des différents semestres
     </div>
 </div>

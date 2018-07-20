@@ -24,7 +24,7 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
     public function findLast(Etudiant $user, $nbMessage = 0, $filtre = '')
     {
         $query = $this->createQueryBuilder('m')
-            ->where('m.etudiant = :personnel')
+            ->where('m.etudiant = :etudiant')
             ->setParameter('etudiant', $user->getId())
             ->orderBy('m.created', 'DESC');
 

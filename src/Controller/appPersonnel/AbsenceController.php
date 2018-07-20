@@ -111,20 +111,13 @@ class AbsenceController extends BaseController
      *
      * @return Response
      */
-    public function supprimer(EventDispatcherInterface $eventDispatcher, Request $request, Absence $absence): Response
+    public function supprimer(MyEtudiant $myEtudiant, Request $request, Absence $absence): Response
     {
         $id = $absence->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            $event = new GenericEvent($absence);
-            $this->entityManager->remove($absence);
-            $this->entityManager->flush();
+            $myEtudiant->setEtudiant($absence->getEtudiant());
+            $myEtudiant->removeAbsence($absence);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.delete.success.flash');
-
-            //On déclenche les events
-            $eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED, $event);
-            $eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED_RESPONSABLE, $event);
-            $eventDispatcher->dispatch(Events::ABSENCE_REMOVED, $event);
-
             return $this->json($id, Response::HTTP_OK);
         }
 
@@ -206,7 +199,6 @@ class AbsenceController extends BaseController
 
 
             //un tableau, donc une absence ?
-            //envoyer un mail de confirmation de la suppression à l'étudiant et au responsable
             $myEtudiant->setIdEtudiant($request->request->get('etudiant'));
             $myEtudiant->removeAbsence($absence[0]);
 
