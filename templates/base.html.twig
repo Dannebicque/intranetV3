@@ -97,8 +97,6 @@
                             <span class="title">{{ 'menu.administration'|trans }}</span>
                         </a>
                     </li>
-
-
                 {% endif %}
             {% endblock %}
         </ul>
@@ -170,7 +168,8 @@
                 </a>
             </div>
         </div>
-        <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="Rechercher" data-toggle="lookup"
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="{{ 'rechercher'|trans }}"
+           data-toggle="lookup"
            data-target="#lookup-full"
            data-original-title="{{ 'Rechercher'|trans }}">
             <i class="material-icons">search</i>
@@ -270,14 +269,14 @@
                          alt="{{ message.message.expediteur.displayPr }}">
                   </span>
 
-                                <div class="media-body">
-                                    <p><strong>{{ message.message.expediteur.displayPr }}</strong>
-                                        <time class="float-right"
-                                              datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago }}</time>
-                                    </p>
-                                    <p class="text-truncate">{{ message.message.sujet }}</p>
-                                </div>
-                            </a>
+                                    <div class="media-body">
+                                        <p><strong>{{ message.message.expediteur.displayPr }}</strong>
+                                            <time class="float-right"
+                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago }}</time>
+                                        </p>
+                                        <p class="text-truncate">{{ message.message.sujet }}</p>
+                                    </div>
+                                </a>
                             {% endfor %}
                         </div>
 
@@ -386,7 +385,7 @@
     <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="ti-close"></i></span>
 
     <div class="lookup-form">
-        <input type="text" placeholder="Search anything">
+        <input type="text" placeholder="Search anything" id="search">
     </div>
 
     <div class="lookup-results scrollable">
@@ -395,173 +394,26 @@
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }}</h5>
 
-                <div class="media-list media-list-divided media-list-hover">
-                    <a class="media media-new" href="#">
-                <span class="avatar status-success">
-                  <img src="../assets/img/avatar/1.jpg" alt="...">
-                </span>
-
-                        <div class="media-body">
-                            <p><strong>Maryam Amiri</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">23 min ago</time>
-                            </p>
-                            <p>Authoritatively exploit resource maximizing technologies before technically.</p>
-                        </div>
-                    </a>
-
-                    <a class="media media-new" href="#">
-                <span class="avatar status-warning">
-                  <img src="../assets/img/avatar/2.jpg" alt="...">
-                </span>
-
-                        <div class="media-body">
-                            <p><strong>Hossein Shams</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">48 min ago</time>
-                            </p>
-                            <p>Continually plagiarize efficient interfaces after bricks-and-clicks niches.</p>
-                        </div>
-                    </a>
-
-                    <a class="media" href="#">
-                <span class="avatar status-dark">
-                  <img src="../assets/img/avatar/3.jpg" alt="...">
-                </span>
-
-                        <div class="media-body">
-                            <p><strong>Helen Bennett</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">3 hours ago</time>
-                            </p>
-                            <p>Objectively underwhelm cross-unit web-readiness before sticky outsourcing.</p>
-                        </div>
-                    </a>
-
-                    <a class="media" href="#">
-                        <span class="avatar status-success bg-purple">FT</span>
-
-                        <div class="media-body">
-                            <p><strong>Fidel Tonn</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">21 hours ago</time>
-                            </p>
-                            <p>Interactively innovate transparent relationships with holistic infrastructures.</p>
-                        </div>
-                    </a>
-
-                    <a class="media" href="#">
-                <span class="avatar status-danger">
-                  <img src="../assets/img/avatar/4.jpg" alt="...">
-                </span>
-
-                        <div class="media-body">
-                            <p><strong>Freddie Arends</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">Yesterday</time>
-                            </p>
-                            <p>Collaboratively visualize corporate initiatives for web-enabled value.</p>
-                        </div>
-                    </a>
-
-                    <a class="media" href="#">
-                <span class="avatar status-success">
-                  <img src="../assets/img/avatar/5.jpg" alt="...">
-                </span>
-
-                        <div class="media-body">
-                            <p><strong>Garret Gloss</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">Yesterday</time>
-                            </p>
-                            <p>Competently plagiarize visionary outsourcing after turnkey outside.</p>
-                        </div>
-                    </a>
-
-                    <a class="media" href="#">
-                        <span class="avatar status-success bg-pink">EA</span>
-
-                        <div class="media-body">
-                            <p><strong>Ena Avelar</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">2 days ago</time>
-                            </p>
-                            <p>Holisticly restore resource maximizing mindshare before visionary.</p>
-                        </div>
-                    </a>
-
-                    <a class="media" href="#">
-                <span class="avatar status-warning">
-                  <img src="../assets/img/avatar/6.jpg" alt="...">
-                </span>
-
-                        <div class="media-body">
-                            <p><strong>Enoch Keach</strong>
-                                <time class="float-right" datetime="2018-07-14 20:00">2 days ago</time>
-                            </p>
-                            <p>Efficiently strategize resource sucking alignments after competitive.</p>
-                        </div>
-                    </a>
+                <div class="media-list media-list-divided media-list-hover" id="search_reponse_etudiant">
+                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
                 </div>
-
             </div>
 
 
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <h5 class="text-uppercase fw-400">{{ 'permanents'|trans }}</h5>
 
-                <div class="media-list media-list-hover">
-                    <a class="media items-center" href="#">
-                        <img class="avatar avatar-sm" src="../assets/img/avatar/1.jpg" alt="...">
-                        <p>Maryam Amiri</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
-                        <p>Hossein Shams</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <span class="avatar avatar-sm bg-secondary">LB</span>
-                        <p>Luz Buchler</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <img class="avatar avatar-sm" src="../assets/img/avatar/3.jpg" alt="...">
-                        <p>Tim Hank</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <span class="avatar avatar-sm bg-dark">KC</span>
-                        <p>Karla Cardinal</p>
-                    </a>
-
+                <div class="media-list media-list-hover" id="search_reponse_personnel">
+                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
                 </div>
             </div>
 
-            <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="col-sm-12 col-md-4 col-lg-4" id="search_reponse_autre">
                 <h5 class="text-uppercase fw-400">{{ 'autres'|trans }}</h5>
                 {# ou dernier éléménts recherchés
                 #}
                 <div class="media-list media-list-hover">
-                    <a class="media items-center" href="#">
-                        <img class="avatar avatar-sm" src="../assets/img/avatar/1.jpg" alt="...">
-                        <p>Maryam Amiri</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <img class="avatar avatar-sm" src="../assets/img/avatar/2.jpg" alt="...">
-                        <p>Hossein Shams</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <span class="avatar avatar-sm bg-secondary">LB</span>
-                        <p>Luz Buchler</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <img class="avatar avatar-sm" src="../assets/img/avatar/3.jpg" alt="...">
-                        <p>Tim Hank</p>
-                    </a>
-
-                    <a class="media items-center" href="#">
-                        <span class="avatar avatar-sm bg-dark">KC</span>
-                        <p>Karla Cardinal</p>
-                    </a>
-
+                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
                 </div>
             </div>
 

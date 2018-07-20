@@ -17,9 +17,12 @@
             <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
             <p><strong>{{ 'date.naissance'|trans }}
                     :</strong> {{ user.dateNaissance|localizeddate('long', 'none', app.request.getLocale()) }}</p>
+
+            <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
+            <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }} | {{ user.telBureau }}</p>
             <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
-            <p><strong>{{ 'mail.universite'|trans }} :</strong> <a href="mailto:{{ user.mailuniv }}"
-                                                                   target="_blank">{{ user.mailuniv }}</a></p>
+            <p><strong>{{ 'mail.universite'|trans }} :</strong> <a href="mailto:{{ user.mailUniv }}"
+                                                                   target="_blank">{{ user.mailUniv }}</a></p>
             <p><strong>{{ 'site.universite'|trans }} :</strong> <a href="{{ user.siteUniv }}"
                                                                    target="_blank">{{ user.siteUniv }}</a></p>
             <p><strong>{{ 'site.personnel'|trans }} :</strong> <a href="{{ user.sitePerso }}"
@@ -35,6 +38,11 @@
     <div class="card">
         <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
         <div class="card-body">
+            {% if user.typeUser == 'permanent' %}
+                <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
+            {% endif %}
+            <p><strong>{{ 'mail.personnel'|trans }} :</strong> <a href="mailto:{{ user.mailPerso }}"
+                                                                  target="_blank">{{ user.mailPerso }}</a></p>
             {% if user.typeUser == 'etudiant' %}
                 <h5>{{ 'adresse.de.letudiant'|trans }}</h5>
                 {{ include('composants/adresse.html.twig', {adresse:user.adresse}) }}

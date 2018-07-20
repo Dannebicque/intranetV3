@@ -7516,5 +7516,29 @@
         <target>bloc.actions.personnel.heading</target>
       </segment>
     </unit>
+      <unit id="IQdg_6g" name="bureau">
+          <segment>
+              <source>bureau</source>
+              <target>bureau</target>
+          </segment>
+      </unit>
+      <unit id="x__PpO5" name="tel.pro">
+          <segment>
+              <source>tel.pro</source>
+              <target>tel.pro</target>
+          </segment>
+      </unit>
+      <unit id="aeg0hIF" name="mail.personnel">
+          <segment>
+              <source>mail.personnel</source>
+              <target>mail.personnel</target>
+          </segment>
+      </unit>
+      <unit id="L_BX65B" name="rechercher">
+          <segment>
+              <source>rechercher</source>
+              <target>rechercher</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

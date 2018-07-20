@@ -51,7 +51,7 @@ class PersonnelRepository extends ServiceEntityRepository
      */
     public function search($needle): array
     {
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->where('p.nom LIKE :needle')
             ->orWhere('p.prenom LIKE :needle')
             ->orWhere('p.username LIKE :needle')
@@ -61,6 +61,17 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orderBy('p.prenom', 'ASC')
             ->getQuery()
             ->getResult();
+
+        $t = array();
+
+        /** @var Personnel $personnel */
+        foreach ($query as $personnel) {
+            $tt = array();
+            $tt['displayPr'] = $personnel->getDisplayPr();
+            $t[] = $tt;
+        }
+
+        return $t;
     }
 
     /**

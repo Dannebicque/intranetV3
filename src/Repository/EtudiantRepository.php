@@ -135,4 +135,34 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @param $needle
+     *
+     * @return array
+     */
+    public function search($needle): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.nom LIKE :needle')
+            ->orWhere('p.prenom LIKE :needle')
+            ->orWhere('p.username LIKE :needle')
+            ->orWhere('p.mailUniv LIKE :needle')
+            ->setParameter('needle', '%' . $needle . '%')
+            ->orderBy('p.nom', 'ASC')
+            ->orderBy('p.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $t = array();
+
+        /** @var Etudiant $etudiant */
+        foreach ($query as $etudiant) {
+            $tt = array();
+            $tt['displayPr'] = $etudiant->getDisplayPr();
+            $t[] = $tt;
+        }
+
+        return $t;
+    }
 }
