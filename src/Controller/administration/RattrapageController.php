@@ -7,6 +7,7 @@ use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Events;
+use App\MesClasses\MyExport;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -46,13 +47,40 @@ class RattrapageController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_rattrapage_export", methods="GET",
+     * @Route("/{semestre}/export.{_format}", name="administration_rattrapage_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport             $myExport
+     * @param RattrapageRepository $rattrapageRepository
+     * @param Semestre             $semestre
+     * @param                      $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(
+        MyExport $myExport,
+        RattrapageRepository $rattrapageRepository,
+        Semestre $semestre,
+        $_format
+    ): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $rattrapages = $rattrapageRepository->findBySemestre($semestre,
+            $this->dataUserSession->getAnneeUniversitaire());
+        $response = $myExport->genereFichierGenerique($_format, $rattrapages, 'rattrapages_' . $semestre->getLibelle(),
+            ['rattrapage_administration', 'utilisateur', 'matiere'], [
+                'etudiant'  => ['nom', 'prenom'],
+                'dateEval',
+                'heureEval',
+                'duree',
+                'matiere'   => ['libelle'],
+                'personnel' => ['nom', 'prenom'],
+                'dateRattrapage',
+                'heureRattrapage',
+                'salle',
+                'etatDemande'
+            ]);
+
+        return $response;
     }
 
     /**

@@ -35,11 +35,26 @@
                         à {{ demande.heureEval ? demande.heureEval|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
                     <td>{{ demande.personnel ? demande.personnel.display : 'non.defini'|trans }}</td>
                     <td>
-                        {% if demande.etatDemande =='f' %}{{ 'en.attente'|trans }}{% else %}
+                        {% if demande.etatDemande =='f' or demande.dateRattrapage == null %}<a href="#"
+                                                                                               class="btn btn-info btn-outline">
+                            <i class="ti-info"></i> {{ 'en.attente'|trans }}</a>{% else %}
                             {{ demande.dateRattrapage ? demande.dateRattrapage|localizeddate('long', 'none', app.request.getLocale()) : '' }}
                             à {{ demande.heureRattrapage ? demande.heureRattrapage|localizeddate('none', 'short', app.request.getLocale()) : '' }}
                         {% endif %}</td>
-                    <td>{% if demande.etatDemande =='f' %}{{ 'en.attente'|trans }}{% elseif demande.etatDemande =='a' %}{{ 'acceptee'|trans }}{% elseif demande.etatDemande=='r' %} {{ 'refusee'|trans }}{% else %} {{ 'erreur'|trans }}{% endif %}</td>
+                    <td>
+                        {% if demande.etatDemande =='f' %}
+                            <a href="#" class="btn btn-info btn-outline"><i
+                                        class="ti-info"></i> {{ 'en.attente'|trans }}</a>
+                        {% elseif demande.etatDemande =='A' %}
+                            <a href="#" class="btn btn-success btn-outline"><i
+                                        class="ti-check"></i> {{ 'acceptee'|trans }}</a>
+                        {% elseif demande.etatDemande=='R' %}
+                            <a href="#" class="btn btn-warning btn-outline"><i class="ti-na"></i> {{ 'refusee'|trans }}
+                            </a>
+                        {% else %}
+                            <a href="#" class="btn btn-danger btn-outline"> {{ 'erreur'|trans }}</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -159,7 +159,8 @@ class MyExcelMultiExport
 
             if (\is_array($value)) {
                 foreach ($value as $col) {
-                    MyExcelWriter::getSheet()->setCellValueByColumnAndRow($i, $ligne, $col);
+                    MyExcelWriter::getSheet()->setCellValueByColumnAndRow($i, $ligne,
+                        $col);//todo: utiliser translate pour générer les en-têtes de colonnes
                     $i++;
                 }
             } else {

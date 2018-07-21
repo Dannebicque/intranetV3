@@ -106,18 +106,18 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('administration_rattrapage_export', {_format:'pdf'}),
+            href: path('administration_rattrapage_export', {semestre:semestre.id,_format:'pdf'}),
             title: 'exporter.pdf'|trans,
             icone : "ti-printer"},
         {
             type:'info',
-            href:path('administration_rattrapage_export', {_format:'csv'}),
+            href:path('administration_rattrapage_export', {semestre:semestre.id,_format:'csv'}),
             title: 'exporter.csv'|trans,
             icone: 'ti-save'
         },
         {
             type:'info',
-            href:path('administration_rattrapage_export', {_format:'xlsx'}),
+            href:path('administration_rattrapage_export', {semestre:semestre.id,_format:'xlsx'}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-table'
         },

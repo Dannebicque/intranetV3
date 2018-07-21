@@ -7582,5 +7582,17 @@
               <target>atitle.accepter.la.demande</target>
           </segment>
       </unit>
+      <unit id="VNswwXg" name="decision.rattrapage.acceptee">
+          <segment>
+              <source>decision.rattrapage.acceptee</source>
+              <target>decision.rattrapage.acceptee</target>
+          </segment>
+      </unit>
+      <unit id="k.Jo8RJ" name="decision.rattrapage.refusee">
+          <segment>
+              <source>decision.rattrapage.refusee</source>
+              <target>decision.rattrapage.refusee</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

@@ -56,6 +56,14 @@ class MyExport
         }
     }
 
+    /**
+     * @param $format
+     * @param $myAbsences
+     * @param $nomFichier
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
     public function genereFichierAbsence($format, $myAbsences, $nomFichier)
     {
         $this->excel->genereExcelAbsence($myAbsences);

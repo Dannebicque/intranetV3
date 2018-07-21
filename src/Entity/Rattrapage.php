@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RattrapageRepository")
@@ -15,51 +16,61 @@ class Rattrapage extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="rattrapages")
+     * @Groups({"rattrapage_administration"})
      */
     private $etudiant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
+     * @Groups({"rattrapage_administration"})
      */
     private $matiere;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
+     * @Groups({"rattrapage_administration"})
      */
     private $personnel;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"rattrapage_administration"})
      */
     private $dateEval;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"rattrapage_administration"})
      */
     private $heureEval;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"rattrapage_administration"})
      */
     private $duree;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"rattrapage_administration"})
      */
     private $dateRattrapage;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Groups({"rattrapage_administration"})
      */
     private $heureRattrapage;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @Groups({"rattrapage_administration"})
      */
     private $salle;
 
     /**
      * @ORM\Column(type="string", length=1)
+     * @Groups({"rattrapage_administration"})
      */
     private $etatDemande;
 

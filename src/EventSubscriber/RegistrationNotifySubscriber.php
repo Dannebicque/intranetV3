@@ -128,7 +128,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         } else {
             $notif->setType(Events::DECISION_RATTRAPAGE_REFUSEE);
         }
-        $notif->setUrl($this->router->generate('application_index', ['onglet' => 'absence']));
+        $notif->setUrl($this->router->generate('application_index', ['onglet' => 'rattrapage']));
         $this->entityManager->persist($notif);
 
         $this->entityManager->flush();
