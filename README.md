@@ -12,6 +12,8 @@ Cet intranet est spécialisé dans la gestion de formation universitaire de type
 
 Il propose de nombreuses gestions comme le suivi des notes, des absences, des rattrapages, des services prévisionnels des enseignants, des trombinoscopes et des groupes d'étudiants et beaucoup d'autres fonctionnaltiés.
 
+Cette nouvelle version apporte une refonte ergonomique complète, et une optimisation du code, pour prendre en compte les standard de SF 4.1 et PHP 7.2.
+
 # Détails des fonctionnalités
 
 ## Fonctionnalités pour les étudiants
@@ -99,6 +101,7 @@ Il propose de nombreuses gestions comme le suivi des notes, des absences, des ra
 
 # Nouveautés globales à toutes les fonctionnalités ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
+* Version multilangue (Français et Anglais pour le moment)
 * Historisation des données (retrouver d'anciens semestre, d'anciennes notes)
 * Horadatage systèmatique
 * Suivi plus précis
@@ -110,10 +113,12 @@ Il propose de nombreuses gestions comme le suivi des notes, des absences, des ra
 * Celcat pour la récupération des emplois du temps ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Apogée pour la synchornisation des maquettes et la récupération des listes. ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
-# Apports sur la version 3.1 ![Nouveauté V3.1](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
+# Features sur la version 3.1 ![Nouveauté V3.1](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
 
+* Notion de "sous-évaluations" pour permettre la saisie de l'intérgalité des notes.
+* Prise en compte de l'évaluation en compétences
 * Dimension « sociale » et  »participative » de l’intranet
-
+* Mise en place d'API pour le développement d'applications tierces
 * Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP, module).
     * Répondre à une demande étudiante
     * Possibilité pour l’équipe d’interagir sur ces forums
