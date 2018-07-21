@@ -7540,5 +7540,47 @@
               <target>rechercher</target>
           </segment>
       </unit>
+      <unit id="ifaDJWD" name="Year">
+          <segment>
+              <source>Year</source>
+              <target>Year</target>
+          </segment>
+      </unit>
+      <unit id="MQylA_8" name="Month">
+          <segment>
+              <source>Month</source>
+              <target>Month</target>
+          </segment>
+      </unit>
+      <unit id="jyNk4Ru" name="Day">
+          <segment>
+              <source>Day</source>
+              <target>Day</target>
+          </segment>
+      </unit>
+      <unit id="8AY7gIc" name="Hour">
+          <segment>
+              <source>Hour</source>
+              <target>Hour</target>
+          </segment>
+      </unit>
+      <unit id="S3hmW_x" name="Minute">
+          <segment>
+              <source>Minute</source>
+              <target>Minute</target>
+          </segment>
+      </unit>
+      <unit id="_htlcwk" name="label.envoyer.demande">
+          <segment>
+              <source>label.envoyer.demande</source>
+              <target>label.envoyer.demande</target>
+          </segment>
+      </unit>
+      <unit id="W9.GBe_" name="atitle.accepter.la.demande">
+          <segment>
+              <source>atitle.accepter.la.demande</source>
+              <target>atitle.accepter.la.demande</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

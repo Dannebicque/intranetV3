@@ -12,13 +12,17 @@ class Notification extends BaseEntity
     public const ETUDIANT = 'e';
     public const PERSONNEL = 'p';
 
-    public const TABICONE = array('carnet.added'    => 'ti-bookmark-alt',
-                                  'absence.removed' => 'ti-bookmark-alt',
-                                  'absence.added'   => 'ti-bookmark-alt'
+    public const TABICONE = array('carnet.added'                 => 'ti-bookmark-alt',
+                                  'absence.removed'              => 'ti-bookmark-alt',
+                                  'absence.added'                => 'ti-bookmark-alt',
+                                  'decision.rattrapage.acceptee' => 'ti-check',
+                                  'decision.rattrapage.refusee'  => 'ti-na'
     );
-    public const TABCOLOR = array('carnet.added'    => 'info',
-                                  'absence.removed' => 'success',
-                                  'absence.added'   => 'danger'
+    public const TABCOLOR = array('carnet.added'                 => 'info',
+                                  'absence.removed'              => 'success',
+                                  'absence.added'                => 'danger',
+                                  'decision.rattrapage.acceptee' => 'success',
+                                  'decision.rattrapage.refusee'  => 'warning'
     );
 
     /**

@@ -27,6 +27,9 @@ class Events
     public const ABSENCE_ADDED = 'absence.added';
     public const ABSENCE_REMOVED = 'absence.removed';
     public const CARNET_ADDED = 'carnet.added';
+    public const DECISION_RATTRAPAGE = 'decision.rattrapage';
+    public const DECISION_RATTRAPAGE_ACCEPTEE = 'decision.rattrapage.acceptee';
+    public const DECISION_RATTRAPAGE_REFUSEE = 'decision.rattrapage.refusee';
 
     public const MAIL_ABSENCE_ADDED = 'mail.absence.added';
     public const MAIL_ABSENCE_ADDED_RESPONSABLE = 'mail.absence.added.responsable';
@@ -34,4 +37,7 @@ class Events
     public const MAIL_ABSENCE_REMOVED_RESPONSABLE = 'mail.absence.removed.responsable';
     public const MAIL_NOTE_MODIFICATION_RESPONSABLE = 'mail.note.modification.responsable';
     public const MAIL_NEW_TRANSCRIPT_RESPONSABLE = 'mail.new.transcript.responsable';
+    public const MAIL_DECISION_RATTRAPAGE = 'mail.decision.rattrapage';
+
+
 }

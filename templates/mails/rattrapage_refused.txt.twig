@@ -1,0 +1,12 @@
+Bonjour {{ rattrapage.etudiant.displayPr }},
+
+Votre demande de rattrapage pour l'évaluation "{{ rattrapage.matiere.libelle }}" du {{ rattrapage.dateEval|date('d/m/Y') }} a été refusée.
+
+Les raisons de ce refus peuvent être:
+- Demande incomplète ou érronée,
+- Absence non justifiée
+- Motif de l'absence non recevable
+
+Le directeur des études du diplôme
+{# todo: trouver le nom du directeur des études ? #}
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ constant('App\\Entity\\Constantes::NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.

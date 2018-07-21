@@ -27,7 +27,7 @@ class RattrapageController extends BaseController
         RattrapageRepository $rattrapageRepository,
         Request $request
     ) {
-        $rattrapage = new Rattrapage($this->getUser());
+        $rattrapage = new Rattrapage($this->getUser(), $this->dataUserSession->getAnneeUniversitaire());
         $form = $this->createForm(RattrapageType::class, $rattrapage,
             [
                 'semestre' => $this->getUser()->getSemestre(),

@@ -102,4 +102,30 @@ class AbsenceRepository extends ServiceEntityRepository
 
     }
 
+    public function findAbsenceBySemestreRattrapage(Semestre $semestre, $anneeCourante)
+    {
+        $absences = $this->findBySemestre($semestre, $anneeCourante);
+
+        $trattrapages = array();
+
+        /** @var Absence $absence */
+        foreach ($absences as $absence) {
+            if ($absence->getEtudiant() !== null && array_key_exists($absence->getEtudiant()->getId(), $trattrapages)) {
+                if (array_key_exists($absence->getDate()->format('Ymd'),
+                    $trattrapages[$absence->getEtudiant()->getId()])) {
+                    if (!array_key_exists($absence->getHeure()->format('Hi'),
+                        $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')])) {
+                        $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
+                    }
+                } else {
+                    $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
+                }
+            } else {
+                $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
+            }
+        }
+
+        return $trattrapages;
+    }
+
 }

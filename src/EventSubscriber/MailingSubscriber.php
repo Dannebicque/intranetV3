@@ -5,6 +5,7 @@ namespace App\EventSubscriber;
 use App\Entity\Absence;
 use App\Entity\Evaluation;
 use App\Entity\Note;
+use App\Entity\Rattrapage;
 use App\Events;
 use App\MesClasses\Mail\MyMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -45,6 +46,7 @@ class MailingSubscriber implements EventSubscriberInterface
             Events::MAIL_ABSENCE_REMOVED_RESPONSABLE   => 'onMailAbsenceRemovedResponsable',
             Events::MAIL_NOTE_MODIFICATION_RESPONSABLE => 'onMailNoteModificationResponsable',
             Events::MAIL_NEW_TRANSCRIPT_RESPONSABLE    => 'onMailNewTranscriptResponsable',
+            Events::DECISION_RATTRAPAGE                => 'onMailDecisionRattrapage',
         ];
     }
 
@@ -58,6 +60,25 @@ class MailingSubscriber implements EventSubscriberInterface
         if ($absence->getEtudiant() !== null) {
             $this->myMailer->setTemplate('mails/absence_added.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée');
+        }
+
+    }
+
+    /**
+     * @param GenericEvent $event
+     */
+    public function onMailDecisionRattrapage(GenericEvent $event): void
+    {
+        /** @var Rattrapage $rattrapage */
+        $rattrapage = $event->getSubject();
+        if ($rattrapage->getEtudiant() !== null) {
+            if ($rattrapage->getEtatDemande() === 'A') {
+                $this->myMailer->setTemplate('mails/rattrapage_accepted.txt.twig', ['rattrapage' => $rattrapage]);
+                $this->myMailer->sendMessage($rattrapage->getEtudiant()->getMails(), 'Demande de rattrapage acceptée');
+            } else {
+                $this->myMailer->setTemplate('mails/rattrapage_refused.txt.twig', ['rattrapage' => $rattrapage]);
+                $this->myMailer->sendMessage($rattrapage->getEtudiant()->getMails(), 'Demande de rattrapage refusée');
+            }
         }
 
     }

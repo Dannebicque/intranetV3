@@ -5,6 +5,7 @@ namespace App\EventSubscriber;
 use App\Entity\Absence;
 use App\Entity\Etudiant;
 use App\Entity\Notification;
+use App\Entity\Rattrapage;
 use App\Events;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,10 +56,11 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         return [
             // le nom de l'event et le nom de la fonction qui sera déclenché
             //Events::USER_REGISTERED => 'onUserRegistrated',
-            Events::NOTE_ADDED      => 'onNoteAdded',
-            Events::ABSENCE_ADDED   => 'onAbsenceAdded',
-            Events::ABSENCE_REMOVED => 'onAbsenceRemoved',
-            Events::CARNET_ADDED    => 'onCarnetAdded',
+            Events::NOTE_ADDED          => 'onNoteAdded',
+            Events::ABSENCE_ADDED       => 'onAbsenceAdded',
+            Events::ABSENCE_REMOVED     => 'onAbsenceRemoved',
+            Events::CARNET_ADDED        => 'onCarnetAdded',
+            Events::DECISION_RATTRAPAGE => 'onDecisionRattrapge',
         ];
     }
 
@@ -105,6 +107,29 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setUrl($this->router->generate('user_mon_profil', ['onglet' => 'absence']));
         $this->entityManager->persist($notif);
 
+
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param GenericEvent $event
+     */
+    public function onDecisionRattrapge(GenericEvent $event): void
+    {
+        /** @var Rattrapage $rattrapage */
+        $rattrapage = $event->getSubject();
+
+        $notif = new Notification();
+        $notif->setEtudiant($rattrapage->getEtudiant());
+        $notif->setPersonnel(null);
+        $notif->setTypeUser(Notification::ETUDIANT);
+        if ($rattrapage->getEtatDemande() === 'A') {
+            $notif->setType(Events::DECISION_RATTRAPAGE_ACCEPTEE);
+        } else {
+            $notif->setType(Events::DECISION_RATTRAPAGE_REFUSEE);
+        }
+        $notif->setUrl($this->router->generate('application_index', ['onglet' => 'absence']));
+        $this->entityManager->persist($notif);
 
         $this->entityManager->flush();
     }

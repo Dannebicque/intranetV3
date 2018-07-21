@@ -9,7 +9,7 @@
         {% form_theme form 'form/bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+        <button class="btn btn-success">{{ button_label|default('label.envoyer.demande'|trans) }}</button>
         {{ form_end(form) }}
     </div>
 </div>
@@ -34,8 +34,11 @@
                     <td>{{ demande.dateEval ? demande.dateEval|localizeddate('long', 'none', app.request.getLocale()) : '' }}
                         à {{ demande.heureEval ? demande.heureEval|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
                     <td>{{ demande.personnel ? demande.personnel.display : 'non.defini'|trans }}</td>
-                    <td>{{ demande.dateRattrapage ? demande.dateRattrapage|localizeddate('long', 'none', app.request.getLocale()) : '' }}
-                        à {{ demande.heureRattrapage ? demande.heureRattrapage|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>
+                        {% if demande.etatDemande =='f' %}{{ 'en.attente'|trans }}{% else %}
+                            {{ demande.dateRattrapage ? demande.dateRattrapage|localizeddate('long', 'none', app.request.getLocale()) : '' }}
+                            à {{ demande.heureRattrapage ? demande.heureRattrapage|localizeddate('none', 'short', app.request.getLocale()) : '' }}
+                        {% endif %}</td>
                     <td>{% if demande.etatDemande =='f' %}{{ 'en.attente'|trans }}{% elseif demande.etatDemande =='a' %}{{ 'acceptee'|trans }}{% elseif demande.etatDemande=='r' %} {{ 'refusee'|trans }}{% else %} {{ 'erreur'|trans }}{% endif %}</td>
                 </tr>
             {% endfor %}

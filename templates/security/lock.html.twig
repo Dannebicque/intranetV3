@@ -24,7 +24,8 @@
         <div class="col-md-6 col-lg-5 col-xl-4 align-self-center">
             <div class="px-80 py-30 text-center">
                 <div>
-                    <img class="avatar avatar-xxl" src="../assets/img/avatar/2.jpg" alt="...">
+                    <img class="avatar avatar-xxl" src="{{ asset('upload/photo/'~user_data.user.photoName) }}"
+                         alt="...">
                     <br><br>
                     <h5 class="lead">{{ user_data.user.displayPr }}</h5>
                     <small>{{ 'saisir.password.lock'|trans }}</small>
@@ -39,7 +40,8 @@
                     </div>
 
                     <br>
-                    <button class="btn btn-bold btn-block btn-primary" type="submit">{{ 'security.login.connexion'|trans }}</button>
+                    <button class="btn btn-bold btn-block btn-primary"
+                            type="submit">{{ 'security.login.deverouiller'|trans }}</button>
                 </form>
 
                 <p class="text-center text-muted fs-13 mt-20">{{ 'vous.netes.pas'|trans }} {{ user_data.user.displayPr }}

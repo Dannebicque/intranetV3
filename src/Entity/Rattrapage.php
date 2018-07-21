@@ -73,10 +73,11 @@ class Rattrapage extends BaseEntity
      *
      * @param Etudiant $etudiant
      */
-    public function __construct(Etudiant $etudiant)
+    public function __construct(Etudiant $etudiant, $annee)
     {
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
+        $this->anneeuniversitaire = $annee;
     }
 
     /**
