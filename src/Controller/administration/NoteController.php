@@ -40,6 +40,13 @@ class NoteController extends BaseController
     /**
      * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_notes_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport       $myExport
+     * @param NoteRepository $noteRepository
+     * @param Semestre       $semestre
+     * @param                $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportAllNotes(
         MyExport $myExport,

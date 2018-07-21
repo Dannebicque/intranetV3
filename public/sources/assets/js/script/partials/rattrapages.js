@@ -7,10 +7,10 @@ $(document).on('click', '.rattrapage-accepte', function (e) {
       var parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Acceptée</a>')
-      addCallout('Demande de rattrapge validée !', 'success')
+      addCallout('Demande de rattrapage validée !', 'success')
     },
     error: function (e) {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
@@ -24,10 +24,10 @@ $(document).on('click', '.rattrapage-refuse', function (e) {
       var parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-warning btn-outline"><i class="ti-na"></i>Refusée</a>')
-      addCallout('Demande de rattrapge refusée !', 'success')
+      addCallout('Demande de rattrapage refusée !', 'success')
     },
     error: function (e) {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
