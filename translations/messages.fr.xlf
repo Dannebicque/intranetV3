@@ -7594,5 +7594,11 @@
               <target>decision.rattrapage.refusee</target>
           </segment>
       </unit>
+      <unit id="RGGtXUU" name="Modification de la visibilité des notes effectuées">
+          <segment>
+              <source>Modification de la visibilité des notes effectuées</source>
+              <target>Modification de la visibilité des notes effectuées</target>
+          </segment>
+      </unit>
   </file>
 </xliff>
