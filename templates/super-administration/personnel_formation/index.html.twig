@@ -1,0 +1,144 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'super-admin.personnel-formation.heading'|trans({"%formation%": formation.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sa_rh_add_personnel') }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.creer_nouveau'|trans }}"><i class="ti-plus"></i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title"><strong>{{ 'super-admin.personnel-formation.heading'|trans({"%formation%": formation.libelle}) }}</strong></h4>
+            <div class="card-header-actions">
+                <a class="btn btn-sm btn-primary btn-square btn-round"
+                   title="{{ 'sa.ajouter.personnel'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   href="#addpersonnel"
+                >
+                    <i class="ti ti-plus"></i>
+                </a>
+                <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i
+                                    class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
+                            </a>
+                            <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i>{{ 'exporter.pdf'|trans }}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="card-body">
+               <table class="table table-striped table-bordered" data-provide="datatable" cellspacing="0" id="personnelsformation"
+                      data-formation="{{ formation.id }}">
+                   <thead>
+                   <tr>
+                       <th>Nom Prénom</th>
+                       <th>Status</th>
+                       <th>N° Adm.</th>
+                       <th>Login URCA</th>
+                       <th>Droits</th>
+                       <th>Actions</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {% for personnel in personnels %}
+                       <tr>
+                           <td>{{ personnel.personnel.display }}</td>
+                           <td>{{ personnel.personnel.statut }}</td>
+                           <td>{{ personnel.personnel.numeroHarpege }}</td>
+                           <td>{{ personnel.personnel.username }}</td>
+                           <td>
+                               <select class="form-control change_droit_pf" data-pf="{{ personnel.id }}">
+                                   {% for role in constant('App\\Entity\\Constantes::ROLE_LISTE') %}
+                                   <option value="{{ role }}" {% if role in personnel.roles %}selected{% endif %}>{{
+                                       role|trans
+                                       }}</option>
+                                   {% endfor %}
+                               </select>
+                           </td>
+                           <td>
+                               {# todo: peut être créer des pages spécifiques pour show et edit... #}
+                               <a href="{{ path('administration_personnel_show', {'id': personnel.personnel.id}) }}"
+                                  class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                                  data-placement="bottom" title="{{ 'atitle.details'|trans }}" target="_blank"><i class="{{ iconShow }}"></i></a>
+                               <a href="{{ path('administration_personnel_edit', {'id': personnel.personnel.id}) }}"
+                                  class="btn btn-warning btn-outline btn-square" data-provide="tooltip"
+                                  data-placement="bottom" title="{{ 'atitle.modifier'|trans }}" target="_blank"><i
+                                           class="{{ iconEdit }}"></i></a>
+                               <a href="{{ path('sa_personnel_formation_remove', {pf: personnel.id}) }}" data-csrf="{{
+                               csrf_token('delete' ~ personnel.id) }}"
+                                  class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip" data-placement="bottom"
+                                  title="{{ 'atitle.retirer_formation'|trans }}"><i class="{{ iconDelete }}"></i></a>
+                           </td>
+                       </tr>
+                   {% endfor %}
+                   </tbody>
+               </table>
+        </div>
+    </div>
+
+    <div class="card" id="addpersonnel">
+        <header class="card-header">
+            <h4 class="card-title"><strong>{{ 'super-admin.add.personnel-formation.heading'|trans({"%formation%": formation.libelle}) }}</strong></h4>
+            <div class="card-header-actions">
+                <a class="btn btn-sm btn-primary btn-square btn-round"
+                   title="{{ 'sa.creer.personnel'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   href="{{ path('sa_rh_add_personnel') }}"
+                >
+                    <i class="ti ti-plus"></i>
+                </a>
+            </div>
+        </header>
+
+        <div class="card-body">
+            <div class="form-group">
+                <label class="control-label" for="login_urca">Login URCA, nom ou prénom du nouvel intervenant :</label>
+
+                <input type="text" name="login_urca" id="sa_login_urca" class="form-control"
+                       placeholder="Saisissez les premiers caractères" data-formation="{{ formation.id }}">
+
+            </div>
+            <div>
+                <button type="submit" class="btn btn-block btn-warning">Vérifiez si l'intervenant est déjà présent dans une autre
+                    formation.
+                </button>
+                <br>
+            </div>
+            <br/>
+            <table class="table table-striped table-bordered" id="table-resultat">
+                <thead>
+                <tr>
+                    <th>{{ 'table.nom'|trans }}</th>
+                    <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.login'|trans }}</th>
+                    <th>{{ 'table.mail_univ'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody id="result">
+                <tr id="ligne-no-result">
+                    <td colspan="5">Saisissez quelques caractères pour afficher des résultats</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

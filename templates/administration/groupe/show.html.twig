@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.groupe.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'groupe', id: groupe.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.groupe.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ groupe.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code'|trans }}</th>
+                    <td>{{ groupe.codeApogee }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ groupe.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.typeGroupe'|trans }}</th>
+                    <td>{{ groupe.typeGroupe ? groupe.typeGroupe.libelle : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ groupe.created ? groupe.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ groupe.updated ? groupe.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

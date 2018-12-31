@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'default.heading'|trans({'%formation%':user_data.formation.libelle})|raw }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
+                    {% if user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE') or user_data.isGoodFormation('ROLE_ASS') %}
+                    <div class="card-header-actions" style="">
+                        <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-info"
+                           title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                                    class="ti-plus"></i></a>
+                    </div>
+                    {% endif %}
+                </header>
+                <div class="card-body">
+                    <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                        {% for actualite in actualites %}
+                            <li class="timeline-block">
+                                <div class="timeline-point timeline-point-primary">
+                                    <span class="badge badge-ring badge-primary"></span>{# todo: varier les couleurs#}
+                                </div>
+                                <div class="timeline-content">
+                                    <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|localizeddate('short', 'short', app.request.getLocale()) }}</time>
+                                    <p>{{ actualite.titre }} : {{ actualite.texte }}</p>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="alert alert-info">{{ 'pas.encore.actualite'|trans }}</li>
+                        {% endfor %}
+                        <a href="{{ path('actualite_liste') }}"
+                           class="pull-right">{{ 'voir.anciennes.actualites'|trans }}</a>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
+                    {% if user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE') or user_data.isGoodFormation('ROLE_ASS') %}
+                        <div class="card-header-actions" style="">
+                            <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-info"
+                               title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                                        class="ti-plus"></i></a>
+                        </div>
+                    {% endif %}
+                </header>
+                <div class="card-body">
+                    <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                        {% for date in dates %}
+                            <li class="timeline-block">
+                                <div class="timeline-point timeline-point-primary">
+                                    <span class="badge badge-ring badge-primary"></span>{# todo: varier les couleurs en fonction des types ? #}
+                                </div>
+                                <div class="timeline-content">
+                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|localizeddate('short', 'short', app.request.getLocale()) }}</time>
+                                    <p>{{ date.libelle }} : {{ date.texte }}</p>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
+                        {% endfor %}
+                        <a href="{{ path('planning_index') }}"
+                           class="pull-right">{{ 'voir.planning'|trans }}</a>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+
+        {% if user_data.formation.optEdt == true %}
+            {% if is_granted('ROLE_PERMANENT') %}
+                {{ render(controller(
+                    'App\\Controller\\EdtController::dashboardPersonnel'
+                )) }}
+            {% elseif is_granted('ROLE_ETUDIANT') %}
+                {{ render(controller(
+                    'App\\Controller\\EdtController::dashboardEtudiant'
+                )) }}
+            {% else %}
+                erreur
+            {% endif %}
+        {% endif %}
+
+
+        {% if is_granted('ROLE_PERMANENT') %}
+            {{ render(controller(
+                'App\\Controller\\BlocNotesAbsencesController::personnel'
+            )) }}
+        {% elseif is_granted('ROLE_ETUDIANT') %}
+            {{ render(controller(
+                'App\\Controller\\BlocNotesAbsencesController::etudiant'
+            )) }}
+
+            {{ render(controller(
+                'App\\Controller\\BlocNotesAbsencesController::mccSemestre'
+            )) }}
+        {% endif %}
+
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'liens.utiles.heading'|trans }}</h4>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <a href="https://www.univ-reims.fr" target="_blank"><img
+                                        src="{{ asset('upload/logo/urca.jpg') }}"
+                                        alt="URCA" class="img-rounded"
+                                        width="90px"/><br/>
+                                URCA</a>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <a href="https://{{ settings('SITE_IUT') }}"
+                               target="_blank"><img
+                                        src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
+                                        alt="{{ settings('NOM_IUT') }}" class="img-rounded"
+                                        width="90px"/><br/>
+                                {{ settings('NOM_IUT') }}</a>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <a href="https://ebureau.univ-reims.fr/" target="_blank"><img
+                                        src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
+                                        alt="Bureau Virtuel" class="img-rounded" width="90px"/><br/>
+                                Bureau Virtuel
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <a href="{{ user_data.formation.siteWeb }}" target="_blank"><img
+                                        src="{{ asset('upload/logo/'~user_data.formation.logoName) }}"
+                                        alt="{{ user_data.formation.libelle }}" class="img-rounded" width="90px"/><br/>
+                                {{ user_data.formation.libelle }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'contacts.heading'|trans }}</h4>
+                <div class="card-body">
+                    {% for diplome in user_data.diplomes %}
+                        <h5>{{ diplome.typeDiplome.sigle }} {{ diplome.libelle }} ({{ diplome.sigle }})</h5>
+                        <dl class="row">
+                            {% if diplome.responsableDiplome != null %}
+                                <dt class="col-sm-4">Responsable :</dt>
+                                <dd class="col-sm-6"><a
+                                            href="{{ path('user_profil', {slug: diplome.responsableDiplome.slug, type: 'permanent'}) }}"
+                                            target="_blank">{{ diplome.responsableDiplome.displayPr }}</a></dd>
+                            {% endif %}
+                            {% if diplome.assistantDiplome != null %}
+                                <dt class="col-sm-4">Assistant(e) :</dt>
+                                <dd class="col-sm-6"><a
+                                            href="{{ path('user_profil', {slug: diplome.assistantDiplome.slug, type: 'permanent'}) }}"
+                                            target="_blank">{{ diplome.assistantDiplome.displayPr }}</a></dd>
+                            {% endif %}
+                        </dl>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

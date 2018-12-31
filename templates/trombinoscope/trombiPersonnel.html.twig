@@ -1,0 +1,80 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title">{{ type~'s.heading'|trans }} ({{ personnels|length }})</h4>
+        <div class="card-header-actions" style="">
+            {% if is_granted('ROLE_PERMANENT') %}
+                <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="{{ path('trombinoscope_personnel_export', {_format:'pdf', type: type}) }}"
+                               class="dropdown-item"><i class="fa fa-file-pdf-o"></i> {{ 'exporter.pdf'|trans }}</a>
+                            <a href="{{ path('trombinoscope_personnel_export', {_format:'xlsx', type: type}) }}"
+                               class="dropdown-item"><i class="fa fa-file-excel-o"></i> {{ 'exporter.xlsx'|trans }}
+                            </a>
+                            <a href="{{ path('trombinoscope_personnel_export', {_format:'csv', type: type}) }}"
+                               class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.csv'|trans }}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </header>
+    <div class="card-body">
+
+        <div class="row">
+            {% if personnels|length >0 %}
+                {% for personnel in personnels %}
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        <div class="card card-trombi">
+                            <div class="flexbox align-items-center px-20">
+                                <label class="toggler toggler-danger fs-16">
+                                    &nbsp;
+                                </label>
+                                <nav class="nav mt-2">
+                                    <a href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}"
+                                       class="nav-link"
+                                       data-provide="tooltip"
+                                       target="_blank"
+                                       data-placement="bottom" title="Profil"><i
+                                                class="fa fa-user"></i> </a>
+                                    <a href="{{ personnel.sitePerso }}"
+                                       {% if personnel.sitePerso == '' or personnel.sitePerso == null %}disabled{% endif %}
+                                       class="nav-link"
+                                       target="_blank" title="Site personnel" data-provide="tooltip"
+                                       data-placement="bottom"><i class="fa fa-picture-o"></i> </a>
+                                    <a href="{{ personnel.siteUniv }}"
+                                       {% if personnel.siteUniv == '' or personnel.siteUniv == null %}disabled{% endif %}
+                                       class="nav-link"
+                                       target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                       data-placement="bottom"><i class="ti-world"></i> </a>
+                                    <a href="mailto:{{ personnel.mailUniv }}" target="_blank"
+                                       class="nav-link"
+                                       title="Contacter" data-provide="tooltip"
+                                       data-placement="bottom"><i class="ti-email"></i></a>
+                                </nav>
+                            </div>
+                            <div class="card-body text-center pt-1 pb-50">
+                                <a href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">
+                                    <img class="avatar avatar-xxl" src="{{ asset('personnels/'~personnel.photoName) }}">
+                                </a>
+                                <h5 class="mt-3 mb-1">
+                                    <a class="hover-primary"
+                                       href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">{{ personnel.displayPr }}
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-sm-12">
+                    <div class="alert alert-warning">
+                        Aucun personnel dans ce groupe.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

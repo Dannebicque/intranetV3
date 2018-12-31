@@ -1,0 +1,58 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}{{ 'security.login.heading'|trans }}{% endblock %}
+{% block body %}
+    class="min-h-fullscreen bg-img center-vh p-20" style="background-image: url({{ asset('assets/bg/2.jpg') }});" data-overlay="7"
+{% endblock %}
+{% block content %}
+    <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0" style="max-width: 100%">
+        <h5 class="text-uppercase">{{ 'security.login.connexion'|trans }}</h5>
+        <br>
+        {% if message %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey }}
+            </div>
+        {% endif %}
+
+        <form class="form-type-material" action="{{ path('security_login') }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+
+            <div class="form-group">
+                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+                <label for="username">{{ 'security.login.username'|trans }}</label>
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" name="_password">
+                <label for="password">{{ 'security.login.password'|trans }}</label>
+            </div>
+
+            <div class="form-group flexbox">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" checked>
+                    <label class="custom-control-label">{{ 'security.login.remenber-me'|trans }}</label>
+                </div>
+
+                <a class="text-muted hover-primary fs-13"
+                   href="{{ path('security_password_lost') }}">{{ 'security.login.forgot-password'|trans }}</a>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-bold btn-block btn-primary" type="submit">{{ 'security.login.login'|trans }}</button>
+            </div>
+        </form>
+
+        <div class="divider">{{ 'security.login.sign-with'|trans }}</div>
+        <div class="text-center">
+            <a class="btn btn-square btn-facebook" href="#"><i class="fa fa-facebook"></i></a>
+            <a class="btn btn-square btn-google" href="#"><i class="fa fa-google"></i></a>
+            <a class="btn btn-square btn-twitter" href="#"><i class="fa fa-twitter"></i></a>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CelcatCalendrier{% endblock %}
+
+{% block body %}
+    <h1>Create new CelcatCalendrier</h1>
+
+    {{ include('celcat_calendrier/_form.html.twig') }}
+
+    <a href="{{ path('celcat_calendrier_index') }}">back to list</a>
+{% endblock %}

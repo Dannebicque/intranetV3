@@ -1,0 +1,31 @@
+<div class="fab fab-fixed">
+    <button class="btn btn-float btn-primary" data-toggle="button">
+        <i class="fab-icon-default ti-plus"></i>
+        <i class="fab-icon-active {{ iconDelete }}"></i>
+    </button>
+
+    <ul class="fab-buttons">
+        {#{% if linkExport is defined %}#}
+        {#<li><a class="btn btn-float btn-sm btn-info" href="{{ path(linkExport, {'_format': 'pdf', options}) }}"#}
+        {#title="{{ 'exporter.pdf'|trans }}" data-provide="tooltip"#}
+        {#data-placement="left"#}
+        {#><i class="fa fa-file-pdf-o" ></i></a></li>#}
+        {#<li><a class="btn btn-float btn-sm btn-info" href="{{ path(linkExport, {'_format': 'csv', options}) }}"#}
+        {#title="{{ 'exporter.csv'|trans }}" data-provide="tooltip"#}
+        {#data-placement="left"#}
+        {#><i class="fa fa-file-text-o" ></i></a></li>#}
+        {#<li><a class="btn btn-float btn-sm btn-info" href="{{ path(linkExport, {'_format': 'xlsx', options}) }}"#}
+        {#title="{{ 'exporter.xls'|trans }}" data-provide="tooltip"#}
+        {#data-placement="left"#}
+        {#><i class="fa fa-file-excel-o" ></i></a></li>#}
+
+        {#{% endif %}#}
+        {% for bouton in boutons %}
+            <li><a class="btn btn-float btn-sm btn-{{ bouton.type }}" href="{{ bouton.href }}"
+                   title="{{ bouton.title }}" data-provide="tooltip"
+                   data-placement="left"
+                   target="{{ bouton.target is defined ? bouton.target : '' }}"
+                ><i class="{{ bouton.icone }}" ></i></a></li>
+        {% endfor %}
+    </ul>
+</div>

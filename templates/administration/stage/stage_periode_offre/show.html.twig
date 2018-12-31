@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage_periode_offre.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_stage_periode_offre_delete', {id: stage_periode_offre.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ stage_periode_offre.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"><i class="ti-trash"></i></a>
+            <a href="{{ path('administration_stage_periode_offre_edit', {id: stage_periode_offre.id}) }}"
+               class="btn btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="material-icons">edit</i></a>
+
+            <a href="{{ path('administration_stage_periode_offre_index', {stagePeriode: stagePeriode.uuidString}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.stage_periode_offre'|trans }}"><i class="material-icons">arrow_back</i></a>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage_periode_offre.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ stage_periode_offre.id }}</td>
+                </tr>
+
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ stage_periode_offre.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ stage_periode_offre.entreprise }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.ville'|trans }}</th>
+                    <td>{{ stage_periode_offre.ville }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.document'|trans }}</th>
+                    <td><a href="{{ vich_uploader_asset(stage_periode_offre, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a></td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ stage_periode_offre.created ? stage_periode_offre.created|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ stage_periode_offre.updated ? stage_periode_offre.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

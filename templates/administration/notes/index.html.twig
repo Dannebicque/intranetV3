@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'liste.des.notes.du.semestre'|trans({'%libelle%':semestre.libelle})|raw }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestres %}
+            <a href="{{ path('administration_notes_semestre_index', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'atitle.changer.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="pull-right">
+                <a href="{{ path('administration_note_all_releves_provisoires',{'semestre':semestre.id}) }}"
+                   class="btn btn-primary"><i class="fa fa-print"></i> Imprimer tous les relevés provisoires</a>
+                <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'visible', 'semestre':semestre.id}) }}"
+                   class="btn btn-info"><i class="fa fa-eye"></i> Afficher les notes</a>
+                <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'nonvisible', 'semestre':semestre.id}) }}"
+                   class="btn btn-danger"><i class="fa fa-eye-slash"></i> Masquer les notes</a>
+                <a href="{{ path('administration_evaluation_modifiable_all',{'etat':'autorise', 'semestre':semestre.id}) }}"
+                   class="btn btn-warning"><i class="fa fa-unlock"></i> Autoriser la modification</a>
+                <a href="{{ path('administration_evaluation_modifiable_all',{'etat':'nonautorise', 'semestre':semestre.id}) }}"
+                   class="btn btn-danger"><i class="fa fa-lock"></i> Interdire la modification</a>
+            </div>
+            <br>
+            <br>
+            <table class="table table-striped table-bordered" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>{{ 'table.matiere'|trans }}</th>
+                    <th>{{ 'table.coefficient'|trans }}</th>
+                    <th>{{ 'table.nb_notes'|trans }}</th>
+                    <th>{{ 'table.intervenants'|trans }}</th>
+                    <th>{{ 'table.evaluations'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for matiere in matieres %}
+                    <tr>
+                        <td>{{ matiere.codeMatiere }} | {{ matiere.libelle }}</td>
+                        <td>{{ matiere.coefficient }}</td>
+                        <td>{{ matiere.nbNotes }}</td>
+                        <td>
+                            <button data-provide="modaler tooltip"
+                                    data-size="lg"
+                                    data-confirm-text="{{ 'fermer'|trans }}"
+                                    data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.id}) }}"
+                                    class="btn btn-info btn-outline btn-square btn-xs"
+                                    data-placement="bottom"
+                                    title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                                    data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                            >
+                                <i class="ti-user"></i>
+                            </button>
+                        </td>
+                        <td>
+                            {% set nbEval = 0 %}
+                            <div class="btn-toolbar">
+
+                                {% if evaluations[matiere.id] is defined %}
+                                    {% for evaluation in evaluations[matiere.id] %}
+                                        <div class="btn-group mr-2">
+                                            <a class="btn btn-success"
+                                               href="{{ path('administration_evaluation_show', {uuid:evaluation.uuidString}) }}"
+                                               data-provide="tooltip"
+                                               data-placement="bottom"
+                                               title="{{ 'detail.evaluation'|trans }}">
+                                                {{ 'eval.du'|trans }} {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}
+                                                (#{{ evaluation.id }})
+                                            </a>
+
+                                            <button class="btn {% if evaluation.visible == false %}btn-danger{% else %}btn-outline btn-info{% endif %}  btn-square optAfficher"
+                                                    data-id="{{ evaluation.uuidString }}"
+                                                    data-provide="tooltip"
+                                                    data-placement="bottom"
+                                                    title="{% if evaluation.visible == true %}Evaluation visible. Masquer l'évaluation{% else %}Evaluation masquée. Rendre visible l'évaluation{% endif %}">
+                                                <i class="material-icons"> {% if evaluation.visible == true %}visibility{% else %}visibility_off{% endif %}</i>
+                                            </button>
+                                            <button class="btn {% if evaluation.modifiable == false %}btn-danger{% else %}btn-outline btn-warning{% endif %}  btn-square optVerrouiller"
+                                                    data-id="{{ evaluation.uuidString }}"
+                                                    data-provide="tooltip"
+                                                    data-placement="bottom"
+                                                    title="{% if evaluation.modifiable == false %}Modification interdite. Autoriser la modificaiton.{% else %}Modification autorisée. Interdire la modification{% endif %}">
+                                                <i class="material-icons"> {% if evaluation.modifiable == false %}lock_outlinek{% else %}lock_open{% endif %}</i>
+                                            </button>
+                                            <a class="btn btn-danger btn-outline btn-square supprimer"
+                                               data-provide="tooltip"
+                                               data-placement="bottom"
+                                               title="{{ 'atitle.supprimer'|trans }}"
+                                               href="{{ path('administration_evaluation_delete', {uuid: evaluation.uuidString}) }}"
+                                               data-csrf="{{ csrf_token('delete' ~ evaluation.uuidString) }}">
+                                                <i class="{{ iconDelete }}"></i>
+                                            </a>
+                                        </div>
+                                        {% set nbEval = nbEval + 1 %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% if nbEval < matiere.nbNotes %}
+                                    {% for i in (nbEval+1)..matiere.nbNotes %}
+                                        <div class="btn-group">
+                                            <button class="btn btn-label btn-primary"
+                                                    data-provide="tooltip"
+                                                    data-placement="bottom"
+                                                    title="{{ 'atitle.saisir.evaluation'|trans }}">
+                                                <label><i class="ti-plus"></i></label> {{ 'saisir.evaluation'|trans }}
+                                            </button>
+                                        </div>&nbsp;
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

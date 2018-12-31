@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'notification.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'notification.heading'|trans }}
+        </h4>
+        {# todo: finaliser mise en page et gérer les "a lire" des "lu" #}
+
+        <div class="media-list media-list-hover media-list-divided">
+            {% for notification in user_data.notifications %}
+                <a class="media media-single {% if notification.lu == false %}media-new{% endif %} notification"
+                   href="{{ notification.url }}">
+                    <span class="avatar bg-{{ notification.color }}"><i class="{{ notification.icone }}"></i></span>
+                    <span class="title">{{ notification.type|trans }}</span>
+                 <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
+                </a>
+            {% else %}
+                {{ 'aucune.notification'|trans }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

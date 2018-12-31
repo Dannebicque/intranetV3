@@ -1,0 +1,60 @@
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.structure.parcour.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'parcour', id: parcour.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{formation:parcour.diplome.formation.id}}}) }}
+        {% else %}
+            {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_parcour', id: parcour.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+        {% endif %}       </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.structure.parcour.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ parcour.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ parcour.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.semestre'|trans }}</th>
+                    <td>{{ parcour.semestre ? parcour.semestre.libelle : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code_apogee'|trans }}</th>
+                    <td>{{ parcour.codeApogee }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code_version'|trans }}</th>
+                    <td>{{ parcour.codeVersion }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code_departement'|trans }}</th>
+                    <td>{{ parcour.codeDepartement }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ parcour.created ? parcour.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ parcour.updated ? parcour.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

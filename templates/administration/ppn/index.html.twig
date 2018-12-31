@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.ppn.index.heading'|trans }}
+{% endblock %}
+
+{%block headeractions %}
+<div class="header-action">
+    {{ include('composants/adm-buttons-index.html.twig', {elt:'ppn', retour: {path: 'administration_matiere_index', titre: 'atitle.retour_matieres'|trans }}) }}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.ppn.index.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+            <thead>
+            <tr>
+                                    <th>{{ 'table.id'|trans }}</th>
+                                    <th>{{ 'table.libelle'|trans }}</th>
+                                    <th>{{ 'table.annee_ppn'|trans }}</th>
+                                    <th>{{ 'table.diplome'|trans }}</th>
+                                    <th>{{ 'table.updated'|trans }}</th>
+                                <th>{{ 'table.actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ppn in ppns %}
+            <tr>
+                                    <td>{{ ppn.id }}</td>
+                                    <td>{{ ppn.libelle }}</td>
+                                    <td>{{ ppn.annee }}</td>
+                <td>{{ ppn.diplome ? ppn.diplome.display : 'non.defini'|trans }}</td>
+                                    <td>{{ ppn.updated ? ppn.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                                <td>
+                    {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'ppn', id:ppn.id}) }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">{{ 'no.record.found'|trans }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div class="alert alert-info">Vous pouvez copier le contenu d'un PPN (matières) d'une version à une autre
+            ici :
+            {# todo: a finaliser + mise en page formulaire dans un card? N'afficher les select que si au moins 2 PPN,
+             sinon indiquer un message. #}
+            <form action="" method="post">
+            <div>
+                <select class="form-control">
+                    {% for ppn in ppns %}
+                    <option value="{{ ppn.id }}">{{ ppn.libelle }}</option>
+                    {% endfor %}
+                </select> vers <select class="form-control">
+                    {% for ppn in ppns %}
+                        <option value="{{ ppn.id }}">{{ ppn.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                <div>
+                    <button class="btn btn-success" type="submit">Dupliquer le contenu du PPN d'orogine vers un autre
+                        PPN
+                    </button>
+                </div>
+            </form>
+            <div class="alert alert-warning">La recopie du contenu d'un PPN vers un autre effacera le contenu
+                initial du PPN de destination.</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_ppn_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_ppn_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_ppn_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_ppn_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_ppn'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

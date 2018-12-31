@@ -1,0 +1,9 @@
+<div class="buttons">
+    {% if retour is defined %}
+        <a href="{{ path(retour.path) }}" class="btn btn-primary btn-float" data-provide="tooltip"
+           data-placement="bottom" title="{{ retour.titre }}"><i class="ti-home"></i></a>
+    {% else %}
+        <a href="{{ path('administration_'~elt~'_index') }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+           data-placement="bottom"><i class="ti-arrow-left"></i></a>
+    {% endif %}
+</div>

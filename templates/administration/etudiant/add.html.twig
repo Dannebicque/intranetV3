@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.etudiant.add.heading'|trans() }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestres %}
+            <a href="{{ path('administration_etudiant_semestre_add', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'changer.de.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab"
+                   href="#importListe">{{ 'importer.une.liste'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#ajoutManuel">{{ 'ajout.manuel.etudiant'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#importApogee">{{ 'recuperation.apogee.etudiant'|trans }}</a>
+            </li>
+        </ul>
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="tab-content card">
+        <div class="tab-pane fade active show" id="importListe">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Importer une liste pour le semestre {{ semestre.libelle }}</h4>
+                        <div class="card-body">
+                            <div class="alert alert-danger">
+                                {{ 'message.danger.etudiant.import'|trans }}
+                            </div>
+
+                            {% form_theme formImport 'form/my-form.html.twig' %}
+                            {{ form_start(formImport) }}
+                            {{ form_widget(formImport) }}
+                            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+                            {{ form_end(formImport) }}
+                            <br>
+                            <div class="alert alert-warning">
+                                {{ 'help.import.etudiant'|trans }}
+                            </div>{# todo: mettre un fichier de démonstration #}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="ajoutManuel">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Ajouter un étudiant manuellement pour le semestre {{ semestre.libelle }}</h4>
+                        <div class="card-body">
+                            {% form_theme formEtudiant 'form/my-form.html.twig' %}
+                            {{ form_start(formEtudiant) }}
+                            {{ form_widget(formEtudiant) }}
+                            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+                            {{ form_end(formEtudiant) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="importApogee">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Récupérez depuis Apogée pour le semestre {{ semestre.libelle }}</h4>
+                        <div class="card-body">
+                            <div class="alert alert-info">Comming Soon</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

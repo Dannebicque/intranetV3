@@ -1,0 +1,112 @@
+<div class="card">
+    <h4 class="card-title">Vos périodes de stage</h4>
+    <div class="card-body">
+        <ul class="nav nav-tabs">
+            {% for stagePeriode in stagePeriodes %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                       href="#stagePeriode{{ stagePeriode.numeroPeriode }}">{{ stagePeriode.libelle }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% for stagePeriode in stagePeriodes %}
+                <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                     id="stagePeriode{{ stagePeriode.numeroPeriode }}">
+                    {{ include('composants/stage_timeline.html.twig',{stageEtudiant: stageEtudiants[stagePeriode.id]}) }}
+
+
+                    <div class="alert alert-warning">
+                        <p>{{ stagePeriode.texteLibre }}</p>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <p>Période de stage du
+                                    <strong>{{ stagePeriode.dateDebut ? stagePeriode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                        au {{ stagePeriode.dateFin ? stagePeriode.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</strong>
+                                    soit {{ stagePeriode.nbJours }} jour(s) ou {{ stagePeriode.nbSemaines }} semaine(s)
+                                </p>
+                                <p>Les responsables de cette période sont : </p>
+                                <ul>
+                                    {% for personnel in stagePeriode.responsables %}
+                                        <li>{{ personnel.displayPr }}</li>
+                                    {% else %}
+                                        {{ 'non.defini'|trans }}
+                                    {% endfor %}
+                                </ul>
+                                <p>
+                                    Les dates de cette période de stage sont
+                                    <strong>{{ stagePeriode.datesFlexibles ? 'flexibles'|trans : 'fixe'|trans }}</strong>.
+                                </p>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <p>Périodes d'interruptions prévues : </p>
+                                <ul>
+                                    {% for stagePeriodeInterruption in stagePeriode.stagePeriodeInterruptions %}
+                                        <li>
+                                            Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                            au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} </li>
+                                    {% else %}
+                                        {{ 'non.defini'|trans }}
+                                    {% endfor %}
+                                </ul>
+
+                                <p>Périodes de soutenances prévues : </p>
+                                <ul>
+                                    {% for stagePeriodeSoutenance in stagePeriode.stagePeriodeSoutenances %}
+                                        <li>
+                                            Du {{ stagePeriodeSoutenance.dateDebut?stagePeriodeSoutenance.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                            au {{ stagePeriodeSoutenance.dateFin?stagePeriodeSoutenance.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                            , rapport pour
+                                            le {{ stagePeriodeSoutenance.dateRenduRapport?stagePeriodeSoutenance.dateRenduRapport|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</li>
+                                    {% else %}
+                                        {{ 'non.defini'|trans }}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% if stageEtudiants[stagePeriode.id] is  not defined %}
+                        <div class="alert alert-warning">Imprimez <a
+                                    href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}"
+                                    target="_blank">la fiche de stage</a> à faire compléter et signer par l'entreprise.
+                            <strong>Ce document n'est pas la convention de stage !</strong></div>
+
+                        <a href="" class="btn btn-block btn-large btn-info">Consultez les offres de stage</a>
+                    {% endif %}
+                    {% if ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_AUTORISE', stageEtudiants[stagePeriode.id]) )) %}
+                        <div class="alert alert-warning"><p>Vous proposition a été acceptée le
+                                <strong>{{ stageEtudiants[stagePeriode.id].dateAutorise|localizeddate('long', 'none', app.request.getLocale()) }}</strong>.
+                                Vous devez maintenant remplir le formulaire.</p></div>
+                        <a href="{{ path('application_etudiant_stage_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"
+                           class="btn btn-block btn-large btn-info">Compléter la proposition de stage</a>
+                    {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_DEPOSE', stageEtudiants[stagePeriode.id]) )) %}
+                        <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de validation
+                            par les responsables de stage. Vous recevrez un mail dés que vous pourrez signer la
+                            convention.
+                        </div>
+                    {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiants[stagePeriode.id]) )) %}
+                        <div class="alert alert-success">Votre formulaire a été validé. La convention va être imprimée
+                            prochainement.
+                        </div>
+                    {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_IMPRIME', stageEtudiants[stagePeriode.id]) )) %}
+                        <div class="alert alert-success">La convention est imprimée. Vous devez venir signer votre
+                            convention de stage
+                        </div>
+                    {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiants[stagePeriode.id]) )) %}
+                        <div class="alert alert-success">Votre convention a été envoyée à l'entreprise pour signature
+                        </div>
+                    {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiants[stagePeriode.id]) )) %}
+                        <div class="alert alert-success">La convention est signée par l'ensemble des parties. Vous devez
+                            venir récupérer votre exemplaire de convention de stage signée
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+

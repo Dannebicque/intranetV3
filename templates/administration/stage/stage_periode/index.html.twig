@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage_periode.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'stage_periode'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage_periode.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.mumeroPeriode'|trans }}</th>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.anneeUniversitaire'|trans }}</th>
+                    <th>{{ 'table.duree_stage'|trans }}</th>
+                    <th>{{ 'table.dateDebut'|trans }}</th>
+                    <th>{{ 'table.dateFin'|trans }}</th>
+                    <th>{{ 'table.nbEcts'|trans }}</th>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stage_periode in stage_periodes %}
+                    <tr>
+
+                        <td>{{ stage_periode.numeroPeriode }}</td>
+                        <td>{{ stage_periode.libelle }}</td>
+                        <td>{{ stage_periode.anneeUniversitaire }}</td>
+                        <td>{{ stage_periode.nbSemaines }} sem. soit
+                        {{ stage_periode.nbJours }}</td>
+                        <td>{{ stage_periode.dateDebut ? stage_periode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                        </td>
+                        <td>{{ stage_periode.dateFin ? stage_periode.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                        </td>
+                        <td>{{ stage_periode.nbEcts }}</td>
+                        <td>{{ stage_periode.updated ? stage_periode.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
+                        </td>
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'stage_periode', id: stage_periode.uuidString}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_stage_periode_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_stage_periode_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_stage_periode_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_stage_periode_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_stage_periode'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.materiel.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'materiel'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.materiel.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables" data-checkbox="true">
+                <thead>
+                <tr>
+                    <th><input name="select_all" value="1" id="select_all" type="checkbox"/></th>
+                    <th>Libelle</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for materiel in materiels %}
+                    <tr id="ligne_{{ materiel.id }}">
+                        <td></td>
+                        <td>{{ materiel.libelle }}</td>
+                        <td>{{ materiel.description }}</td>
+                        <td>{{ materiel.typeMateriel ? materiel.typeMateriel.libelle : 'non.defini'|trans }}</td>
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'materiel', id: materiel.id}) }}
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_materiel_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_materiel_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_materiel_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_materiel_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_materiel'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

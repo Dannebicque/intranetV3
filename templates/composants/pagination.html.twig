@@ -1,0 +1,22 @@
+<nav>
+    <ul class="pagination pagination-circle">
+
+        <li class="page-item {% if not pagination.hasPreviousLink %}disabled{% endif %}">
+            <a class="page-link" href="{% if pagination.hasPreviousLink %}{{ pagination.previousLink }}{% endif %}">
+                <span class="ti-arrow-left"></span>
+            </a>
+        </li>
+
+        {% for page in 1..pagination.nbPages %}
+            <li class="page-item {% if page == pagination.currentPage %}active{% endif %}">
+                <a class="page-link" href="{{ pagination.linkPage(page) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        <li class="page-item {% if not pagination.hasNextLink %}disabled{% endif %}">
+            <a class="page-link" href="{% if pagination.hasNextLink %}{{ pagination.nextLink }}{% endif %}">
+                <span class="ti-arrow-right"></span>
+            </a>
+        </li>
+    </ul>
+</nav>

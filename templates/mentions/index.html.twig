@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'mentions-legales.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h3 class="card-title">{{ 'mentions-legales.heading'|trans }}</h3>
+        <div class="card-body">
+            <div class="divider">English Version Below</div>
+            <h4>Informations générales</h4>
+            <p>Ce site est propriété de David Annebicque et a été développé pour l’{{ settings('NOM_IUT') }}
+                et de l'université de Reims Champagne Ardenne</p>
+            <p>Siège social : {{ settings('ADRESSE_IUT') }}</p>
+            <h4>Crédits</h4>
+            <ul>
+                <li>David Annebicque (MCF 61eme, CReSTIC), développeur et responsable technique de l'intranet</li>
+                <li>TheAdmin pour le thème</li>
+                <li>Tous les auteurs respectifs des différents plug-in du thème</li>
+            </ul>
+
+            <h4>Droits de propriété intellectuelle</h4>
+
+            <p>L’{{ settings('NOM_IUT') }} avise les utilisateurs de
+                ce site que de nombreux éléments de ce site :</p>
+
+            <p>sont protégés par la législation sur le droit d’auteur : ce peut être notamment le cas des photographies, des articles, des dessins, des séquences animées,... ;
+                et/ou sont protégés par la législation sur les dessins et modèles ;</p>
+            <p>sont protégés par la législation sur les marques.</p>
+
+            <p>Les éléments ainsi protégés sont la propriété de
+                L’{{ settings('NOM_IUT') }} ou de tiers ayant
+                autorisé
+                L’{{ settings('NOM_IUT') }} à les exploiter.</p>
+
+            <p>Ce site utilise des éléments visuels provenant de documents internes de
+                L’{{ settings('NOM_IUT') }}.</p>
+
+            <p>A ce titre, toute reproduction, représentation, utilisation, adaptation, modification,
+                incorporation, traduction, commercialisation, partielles ou intégrales par quelque procédé et
+                sur quelque support que ce soit (papier, numérique, ...) sont interdites, sans l’autorisation
+                écrite préalable de L’{{ settings('NOM_IUT') }},
+                hormis les exceptions visées à l’article L 122.5 du Code de
+                la Propriété Intellectuelle, sous peine de constituer un délit de contrefaçon de droit d’auteur
+                et/ou de dessins et modèles et/ou de marque, puni de deux ans d’emprisonnement et de 150 000€
+                d’amende.</p>
+
+            <h4>Protection des données personnelles</h4>
+
+            <p>L’{{ settings('NOM_IUT') }} s’engage à respecter votre
+                vie privée et à protéger les informations que vous lui
+                communiquez. En particulier, les données personnelles collectées sur le site
+                Internet {{ settings('SITE_INTRANET_IUT') }} sont
+                destinées à l’usage de L’IUT de Troyes et de ses filiales.
+                Elles sont confidentielles et traitées comme telles.</p>
+
+            <p>Concernant les informations à caractère nominatif que vous seriez amenés à nous communiquer, vous
+                bénéficiez d’un droit d’accès et de rectification conformément à la loi française Informatique
+                et Liberté n° 78-17 du 6 janvier 1978. Vous pouvez exercer ce droit auprès de
+                l’{{ settings('NOM_IUT') }}
+                - {{ settings('ADRESSE_IUT') }}</p>
+
+            <p>La collecte de ces informations est nécessaire pour répondre à vos demandes d’offres commerciales et vous adresser, le cas échéant, une lettre d’information électronique.</p>
+
+            <p>Nous vous signalons qu’afin de vous proposer des produits et services toujours plus adaptés,
+                certaines informations à caractère non personnel, relatives à votre activité sur ce site, seront
+                automatiquement collectées. Ces informations sont destinées à
+                l’{{ settings('NOM_IUT') }} et pourront
+                également être utilisées dans le cadre d’opérations commerciales ou de marketing ou servir de
+                base à des études et analyses.</p>
+
+            <p>Ces informations ne seront en aucun cas communiquées à des tiers. Seul le personnel de
+                l’{{ settings('NOM_IUT') }} ou celui des agences qui
+                nous assistent pour la gestion de ces opérations ont
+                accès aux données. Ces agences sont tenues de respecter la confidentialité des informations et
+                de ne les utiliser que pour l’opération bien précise pour laquelle elles doivent intervenir.</p>
+
+            <h4>Sécurité</h4>
+
+            <p>Nous prenons toutes les précautions utiles afin de préserver l’intégrité des données, leur confidentialité et empêcher toute communication à des tiers non autorisés.</p>
+
+            <h4>Droit applicable</h4>
+
+            <p>Le site Internet {{ settings('SITE_INTRANET_IUT') }}
+                et les présentes conditions générales sont soumises au
+                droit français et sont rédigés en français.</p>
+
+            <p>Pour tout litige, il est fait attribution exclusive de juridiction aux tribunaux compétents du
+                ressort de Lyon. l’{{ settings('NOM_IUT') }} se
+                réserve le droit de modifier les présentes mentions à tout
+                moment. L’utilisateur s’engage à la consulter régulièrement.</p>
+
+            <h4>Limitation de responsabilité</h4>
+
+            <p>Vous utilisez le
+                site {{ settings('SITE_INTRANET_IUT') }} sous votre
+                seule et entière responsabilité. L’IUT de
+                Troyes ne pourra être tenu pour responsable des dommages directs ou indirects, tels que,
+                notamment, préjudice matériel, pertes de données ou de programme, préjudice financier, résultant
+                de l’utilisation de ce site ou de sites qui lui sont liés.</p>
+
+            <h4>Mise à jour</h4>
+
+            <p>L’{{ settings('NOM_IUT') }} se réserve le droit de
+                modifier et de mettre à jour, sans préavis, les présentes
+                mentions légales et tous les éléments, produits présentés sur le site. L’ensemble de ces
+                modifications s’impose aux internautes qui doivent consulter les présentes Conditions Générales
+                lors de chaque connexion.</p>
+
+            <h4>Données statistiques de suivi</h4>
+
+            <p>Nous utilisons les données de connexion pour nos statistiques de consultation (type de navigateur, nombre de visiteurs, rubriques visitées…) pour l’optimisation de notre site en terme de rubriques et de navigation, mais ces informations ne sont pas transmises à des tiers.</p>
+            <hr class="w-300px border-danger">
+            {# todo: english version#}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.salle.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'salle', id: salle.id}) }}
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.salle.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ salle.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ salle.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.capacite_salle'|trans }}</th>
+                    <td>{{ salle.capacite }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.type_salle'|trans }}</th>
+                    <td>{{ salle.type }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.site'|trans }}</th>
+                    <td>{{ salle.site ? salle.site.libelle : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ salle.created ? salle.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ salle.updated ? salle.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'liste.absence.semestre.heading'|trans({'%semestre%':semestre.libelle})|raw }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestres %}
+            <a href="{{ path('administration_absences_semestre_liste', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'atitle.changer.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+            {#<a href="{{ path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'pdf'}) }}"#}
+            {#class="btn btn-info btn-sm btn-float" data-provide="tooltip"#}
+            {#data-placement="bottom" title="{{ 'atitle.save_pdf'|trans }}"><i class="fa fa-file-pdf-o"></i></a>#}
+            {#<a href="{{ path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'csv'}) }}"#}
+            {#class="btn btn-info btn-sm btn-float" data-provide="tooltip"#}
+            {#data-placement="bottom" title="{{ 'atitle.save_csv'|trans }}"><i class="ti-save"></i></a>#}
+            {#<a href="{{ path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'xlsx'}) }}"#}
+            {#class="btn btn-info btn-sm btn-float" data-provide="tooltip"#}
+            {#data-placement="bottom" title="{{ 'atitle.save_xls'|trans }}"><i class="fa fa-file-excel-o"></i></a>#}
+
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.etudiant'|trans }}</th>
+                    <th>{{ 'table.nb_cours_manques'|trans }}</th>
+                    <th>{{ 'table.duree_cours_manques'|trans }}</th>
+                    <th>{{ 'table.duree_demi_journee'|trans }}</th>
+                    <th>{{ 'table.nb_non_justifies'|trans }}</th>
+                    <th>{{ 'table.nb_justifies'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in absences.etudiants %}
+                    <tr>
+                        <td>{{ etudiant.display }}</td>
+                        <td>
+                            <span class="{{ absences.statistiques[etudiant.id].nbCoursManques|badge }}">{{ absences.statistiques[etudiant.id].nbCoursManques }}</span>
+                        </td>
+                        <td>{{ absences.statistiques[etudiant.id].totalDuree|localizeddate('none', 'short', app.request.getLocale()) }}</td>
+                        <td>
+                            <span class="{{ absences.statistiques[etudiant.id].nbDemiJournee|badge }}">{{ absences.statistiques[etudiant.id].nbDemiJournee }}</span>
+                        </td>
+                        <td>
+                            <span class="{{ absences.statistiques[etudiant.id].nbNonJustifie|badge }}">{{ absences.statistiques[etudiant.id].nbNonJustifie }}</span>
+                        </td>
+                        <td>{{ absences.statistiques[etudiant.id].nbJustifie }}</td>
+                        <td>
+                            <a href="{{ path('user_profil', {type: 'etudiant', 'slug': etudiant.slug, onglet:'absences'}) }}"
+                               class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.details'|trans }}" target="_blank"><i
+                                        class="ti-eye"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"},
+        {
+            type:'info',
+            href:path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_rattrapage'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}
+

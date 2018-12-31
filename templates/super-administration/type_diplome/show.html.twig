@@ -1,0 +1,56 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_diplome.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'type_diplome', id: type_diplome.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.type_diplome.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ type_diplome.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle'|trans }}</th>
+                <td>{{ type_diplome.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.sigle'|trans }}</th>
+                <td>{{ type_diplome.sigle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.nb_semestres'|trans }}</th>
+                <td>{{ type_diplome.nbSemestres }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.niveau_entree'|trans }}</th>
+                <td>{{ type_diplome.niveauEntree }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.niveau_sortie'|trans }}</th>
+                <td>{{ type_diplome.niveauSortie }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ type_diplome.created ? type_diplome.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ type_diplome.updated ? type_diplome.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

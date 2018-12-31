@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.gestion.des.etudiants.formation'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_etudiant_import') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.import_etudiant'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-import"></i></a>
+            <a href="{{ path('administration_etudiant_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i></a>
+            {# todo fusionner les deux liens et ajouter l'ajout des photos #}
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.gestion.des.etudiants.formation'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" id="datatableEtudiants">
+                <thead>
+                <tr>
+                    <th>{{ 'table.numetudiant'|trans }}</th>
+                    <th>{{ 'table.nom'|trans }}</th>
+                    <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.semestre'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_all_etudiant_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_all_etudiant_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_all_etudiant_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_etudiant_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_all_etudiants'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

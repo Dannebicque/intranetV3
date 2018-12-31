@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.alternance.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_alternance_delete', {id: alternance.id}) }}" data-csrf="{{ csrf_token('delete' ~ alternance.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-trash"></i></a>
+            <a href="{{ path('administration_alternance_edit', {id: alternance.id}) }}" class="btn btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="material-icons">edit</i></a>
+                <a href="{{ path('administration_alternance_index',{annee:alternance.annee.id}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+                   data-placement="bottom"><i class="ti-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.alternance.show.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ alternance.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.etudiant'|trans }}</th>
+                <td>{{ alternance.etudiant ? alternance.etudiant.displayPr : 'non.defini'|trans }}</td>
+            </tr>
+            {{ include('composants/entreprise_array.html.twig', {entreprise: alternance.entreprise}) }}
+            {{ include('composants/contact_array.html.twig', {contact: alternance.tuteur}) }}
+
+            <tr>
+                <th>AnneeUniversitaire</th>
+                <td>{{ alternance.anneeUniversitaire }}</td>
+            </tr>
+            <tr>
+                <th>TypeContrat</th>
+                <td>{{ alternance.typeContrat }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.dateDebut'|trans }}</th>
+                <td>{{ alternance.dateDebut ? alternance.dateDebut|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.dateFin'|trans }}</th>
+                <td>{{ alternance.dateFin ? alternance.dateFin|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                <td>{{ alternance.tuteurUniversitaire ? alternance.tuteurUniversitaire.displayPr : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ alternance.created ? alternance.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ alternance.updated ? alternance.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% if adresse != null %}
+    <tr>
+        <th>{{ 'table.adresse'|trans }}</th>
+        <td>
+        {{ adresse.adresse1 }}
+        {% if adresse.adresse2 != '' %}
+            <br/>{{ adresse.adresse2 }}
+        {% endif %}
+
+        {% if adresse.adresse3 != '' %}
+            <br/>{{ adresse.adresse3 }}
+        {% endif %}
+
+        <br/>{{ adresse.codepostal }} {{ adresse.ville }}
+        <br/>{{ adresse.pays }}
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <th>{{ 'table.adresse'|trans }}</th>
+        <td>{{ 'non.defini'|trans }}</td>
+    </tr>
+{% endif %}

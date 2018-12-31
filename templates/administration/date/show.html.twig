@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.date.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+<div class="header-action">
+    {{ include('composants/adm-buttons-show.html.twig', {elt: 'date', id: date.id}) }}
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.date.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ date.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.titre'|trans }}</th>
+                <td>{{ date.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.type_event'|trans }}</th>
+                <td>{{ date.type }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.texte'|trans }}</th>
+                <td>{{ date.texte }}</td>
+            </tr>
+            {% if date.dateDebut == date.dateFin %}
+                <tr>
+                    <th>{{ 'table.date_evenement'|trans }}</th>
+                    <td>
+                        Le {{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}  </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.heure_event'|trans }}</th>
+                    <td>
+                        de {{ date.heureDebut ? date.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}
+                        à {{ date.heureFin ? date.heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <th>{{ 'table.date_evenement'|trans }}</th>
+                    <td>
+                        Du {{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}
+                        ,
+                        à {{ date.heureDebut ? date.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}  </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.au'|trans }}</th>
+                    <td>{{ date.dateFin ? date.dateFin|localizeddate('long', 'none', app.request.getLocale()) : '' }},
+                        à {{ date.heureFin ? date.heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>{{ 'table.lieu'|trans }}</th>
+                <td>{{ date.lieu }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.semestres'|trans }}</th>
+                <td>{% for semestre in date.semestres %} {{ semestre.libelle }}, {% endfor %}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ date.created ? date.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ date.updated ? date.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

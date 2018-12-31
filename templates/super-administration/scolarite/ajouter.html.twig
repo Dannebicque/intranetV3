@@ -1,0 +1,57 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.scolarite.ajouter.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'sadm.scolarite.ajouter.un.heading'|trans }}</h4>
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'sadm.scolarite.import.listing.heading'|trans }}</h4>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="control-label" for="etudiant">Login URCA, nom, prénom, numéro étudiant ou numéro INE
+                            de l'étudiant</label>
+
+                        <input type="file" name="login_urca" id="etudiant" class="form-control"
+                               placeholder="Saisissez les premiers caractères">
+
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-block btn-warning">Recherchez l'étudiant
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'sadm.scolarite.synchro.apogee.heading'|trans }}</h4>
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

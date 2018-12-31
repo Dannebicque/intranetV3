@@ -1,0 +1,101 @@
+<!-- Page aside -->
+<aside class=""
+       style="background-color: white; margin-left: -30px;margin-top: -60px; padding-bottom: -30px; height: 100%; padding-left: 10px; padding-right: 10px">
+    <div class="aside-body">
+        {% if is_granted('ROLE_PERMANENT') %}
+            <a href="#dock-compose" class="btn btn-primary" data-toggle="dock">
+                <i class="fa fa-plus"></i>
+                {{ 'nouveau.message'|trans }}
+            </a>
+        {% endif %}
+        <ul class="nav nav-lg nav-pills flex-column">
+            <li class="nav-item active">
+                <i class="fa fa-inbox"></i>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="all">Inbox</a>
+                <span class="badge badge-pill badge-info">6</span>
+            </li>
+
+            <li class="nav-item">
+                <i class="fa fa-envelope"></i>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="sent">Sent</a>
+            </li>
+
+            <li class="nav-item">
+                <i class="fa fa-file"></i>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="draft">Draft</a>
+            </li>
+
+            <li class="nav-item">
+                <i class="{{ iconDelete }}"></i>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="trash">Trash</a>
+            </li>
+
+            <li class="nav-item">
+                <i class="fa fa-star"></i>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="starred">Starred</a>
+            </li>
+        </ul>
+
+        <hr>
+
+        <div class="aside-block">
+            <div class="flexbox align-items-center mb-1">
+                <h6 class="aside-title fs-13">Labels</h6>
+                <a class="float-right text-lighter hover-success" href="#" data-provide="tooltip"
+                   data-title="Create New Label" data-toggle="modal" data-target="#modal-add-label"><i
+                            class="ti-plus"></i></a>
+            </div>
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <span class="badge badge-ring fill badge-danger"></span>
+                        <span>Family</span>
+                    </a>
+                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span
+                                class="{{ iconEdit }}"></span></a>
+                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"
+                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="badge badge-ring badge-warning"></span>
+                        <span>Fiends</span>
+                    </a>
+                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span
+                                class="{{ iconEdit }}"></span></a>
+                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"
+                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="badge badge-ring badge-info"></span>
+                        <span>Work</span>
+                    </a>
+                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span
+                                class="{{ iconEdit }}"></span></a>
+                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"
+                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="badge badge-ring badge-purple"></span>
+                        <span>Bills</span>
+                    </a>
+                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span
+                                class="{{ iconEdit }}"></span></a>
+                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"
+                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <button class="aside-toggler"></button>
+</aside>
+<!-- END Page aside -->

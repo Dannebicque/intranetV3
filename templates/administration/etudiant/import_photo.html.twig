@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{# //todo: a fusionner dans EtudiantController #}
+{% block header %}
+    {{ 'adm.etudiant.import.photo.heading'|trans() }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab"
+                   href="#fichiersUrca">Fichiers URCA</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#autresFichiers">Autres fichiers</a>
+            </li>
+        </ul>
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="tab-content card">
+        <div class="tab-pane fade active show" id="fichiersUrca">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Import depuis le fichier du "bureau virtuel"</h4>
+                        <div class="card-body">
+                            <form action="{{ path('administration_etudiant_import_photo_zip', {semestre:semestre.id}) }}" method="post" class="form" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label class="control-label" for="userfile">Fichier zip des photos</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <div class="input-append">
+                                            <input type="file" class="form-control fileinput" id="fichierimport" name="fichierimport" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Récupérez les photos (format .zip) sur le bureau virtuel de l'URCA (mes cours > trombinoscope) et importez les directements.</p>
+                                <div class="form-actions">
+                                    <a type="button" class="btn" href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}">Annuler</a>
+                                    <button type="submit" class="btn btn-primary btn-large">Importer et revenir au semestre</button>
+                                    <button type="submit" class="btn btn-primary btn-large">Importer</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="autresFichiers">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Import depuis vos fichiers</h4>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                Les fichiers doivent se nommer : "numero_etudiant.jpg"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

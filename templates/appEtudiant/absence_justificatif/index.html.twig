@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.etudiant.absence.justificatif.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.nouveau_depot'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-plus"></i></a>
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span
+                        class="material-icons">dashboard</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">    {{ 'app.etudiant.absence.justificatif.index.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.date_debut'|trans }}</th>
+                    <th>{{ 'table.heure_debut'|trans }}</th>
+                    <th>{{ 'table.date_fin'|trans }}</th>
+                    <th>{{ 'table.heure_fin'|trans }}</th>
+                    <th>{{ 'table.motif'|trans }}</th>
+                    <th>{{ 'table.absence_justificatif_etat'|trans }}</th>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for absence_justificatif in absence_justificatifs %}
+                    <tr>
+
+                        <td>{{ absence_justificatif.dateDebut ? absence_justificatif.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence_justificatif.heureDebut ? absence_justificatif.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence_justificatif.dateFin ? absence_justificatif.dateFin|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+
+                        <td>{{ absence_justificatif.heureFin ? absence_justificatif.heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence_justificatif.motif }}</td>
+                        <td>{{ absence_justificatif.etat }}</td>
+                        <td>{{ absence_justificatif.created ? absence_justificatif.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>
+                            <a href="{{ path('app_etudiant_absence_justificatif_show', {'id': absence_justificatif.uuidString}) }}"
+                               class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                        class="{{ iconShow }}"></i></a>
+
+                            <a href="{{ path('app_etudiant_absence_justificatif_edit', {'id': absence_justificatif.uuidString}) }}"
+                               class="btn btn-warning btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
+                            <a href="{{ path('app_etudiant_absence_justificatif_delete', {id: absence_justificatif.uuidString}) }}"
+                               data-csrf="{{ csrf_token('delete' ~ absence_justificatif.uuidString) }}"
+                               class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
+    <meta name="keywords" content="blank, starter">
+
+    <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+          rel="stylesheet"/>
+
+    <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
+
+</head>
+
+<body>
+
+<!-- Preloader -->
+<div class="preloader">
+    <div class="spinner-dots">
+        <span class="dot1"></span>
+        <span class="dot2"></span>
+        <span class="dot3"></span>
+    </div>
+</div>
+
+
+<!-- Sidebar -->
+<aside class="sidebar sidebar-expand-lg sidebar-iconic">
+    <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.formation.couleur }}{% else %}#926DDF{% endif %}">
+        <span class="logo text-center">
+          <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
+                                                        alt="logo"></a>
+        </span>
+    </header>
+
+    <nav class="sidebar-navigation ps-container ps-theme-default" data-ps-id="9edea121-7e34-6d68-3caa-50294dffdd48">
+        <ul class="menu">
+            {% block sidebar_menu %}
+
+                <li class="menu-item active" id="menu-dashboard">
+                    <a class="menu-link" href="{{ path('default_homepage') }}">
+                        <span class="material-icons">dashboard</span>
+                        <span class="title">{{ 'menu.dashboard'|trans }}</span>
+                    </a>
+                </li>
+
+                <li class="menu-item" id="menu-trombinoscope">
+                    <a class="menu-link" href="{{ path('trombinoscope_index') }}">
+                        <span class="material-icons">group</span>
+                        <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
+                    </a>
+                </li>
+
+                <li class="menu-item" id="menu-agenda">
+                    <a class="menu-link" href="{{ path('agenda_index') }}">
+                        <span class="material-icons">perm_contact_calendar</span>
+                        <span class="title">{{ 'menu.agenda'|trans }}</span>
+                    </a>
+                </li>
+
+                <li class="menu-item" id="menu-application">
+                    <a class="menu-link" href="{{ path('application_index') }}">
+                        <span class="material-icons">apps</span>
+                        <span class="title">{{ 'menu.applications'|trans }}</span>
+                    </a>
+                </li>
+
+                <li class="menu-item" id="menu-document">
+                    <a class="menu-link" href="{{ path('document_index') }}">
+                        <span class="material-icons">folder</span>
+                        <span class="title">{{ 'menu.documents'|trans }}</span>
+                    </a>
+                </li>
+
+                <li class="menu-item" id="menu-information">
+                    <a class="menu-link" href="{{ path('informations_index') }}">
+                        <span class="material-icons">insert_drive_file</span>
+                        <span class="title">{{ 'menu.informations'|trans }}</span>
+                    </a>
+                </li>
+                {% if user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE') or user_data.isGoodFormation('ROLE_ASS') %}
+                    <li class="menu-item" id="menu-administration">
+                        <a class="menu-link" href="{{ path('administration_index') }}">
+                            <span class="material-icons">build</span>
+                            <span class="title">{{ 'menu.administration'|trans }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endblock %}
+        </ul>
+
+        <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 0;">
+            <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
+        </div>
+        <div class="ps-scrollbar-y-rail" style="top: 0; right: 2px;">
+            <div class="ps-scrollbar-y" tabindex="0" style="top: 0; height: 0;"></div>
+        </div>
+    </nav>
+
+</aside>
+<!-- END Sidebar -->
+
+
+<!-- Topbar -->
+<header class="topbar">
+    <div class="topbar-left">
+        <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip" title=""
+           data-original-title="{{ 'fullscreen'|trans }}">
+            <i class="material-icons fullscreen-default">fullscreen</i>
+            <i class="material-icons fullscreen-active">fullscreen_exit</i>
+        </a>
+        <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip" title=""
+           data-original-title="{{ 'lock'|trans }}">
+            <i class="material-icons">lock_outline</i>
+        </a>
+
+        <div class="dropdown d-none d-md-block">
+            <span class="topbar-btn" data-toggle="dropdown"><i class="ti-layout-grid3-alt"></i></span>
+            <div class="dropdown-menu dropdown-grid">
+                <a class="dropdown-item" href="{{ path('default_homepage') }}">
+                    <span data-i8-icon="home"></span>
+                    <span class="title">Dashboard</span>
+                </a>
+                <a class="dropdown-item" href="{{ path('trombinoscope_index') }}">
+                    <span data-i8-icon="stack_of_photos"></span>
+                    <span class="title">Trombinoscope</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span data-i8-icon="search"></span>
+                    <span class="title">Search</span>
+                </a>
+                <a class="dropdown-item" href="{{ path('agenda_index') }}">
+                    <span data-i8-icon="calendar"></span>
+                    <span class="title">Agenda</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span data-i8-icon="sms"></span>
+                    <span class="title">Chat</span>
+                </a>
+                <a class="dropdown-item" href="{{ path('messagerie_index') }}">
+                    <span data-i8-icon="invite"></span>
+                    <span class="title">Emails</span>
+                </a>
+                <a class="dropdown-item" href="#">
+                    <span data-i8-icon="contacts"></span>
+                    <span class="title">Contacts</span>
+                </a>
+                <a class="dropdown-item" href="">
+                    <span data-i8-icon="bar_chart"></span>
+                    <span class="title">Charts</span>
+                </a>
+                <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
+                    <span data-i8-icon="businessman"></span>
+                    <span class="title">Profile</span>
+                </a>
+            </div>
+        </div>
+
+        {% if (is_granted('ROLE_PERMANENT') and user_data.formationMultiple == true) %}
+        <div class="dropdown d-none d-md-block">
+            <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
+            <div class="dropdown-menu dropdown-grid">
+                {% for formation in user_data.user.getPersonnelFormations %}
+                <a class="dropdown-item" href="{{ path('security_change_formation', {formation: formation.formation.uuidString}) }}">
+                    <span data-i8-icon="home"></span>
+                    <span class="title">{{ formation.formation.libelle }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="{{ 'rechercher'|trans }}"
+           data-toggle="lookup"
+           data-target="#lookup-full"
+           data-original-title="{{ 'Rechercher'|trans }}">
+            <i class="material-icons">search</i>
+        </a>
+    </div>
+
+    <div class="topbar-right">
+        <ul class="topbar-btns">
+            <li class="dropdown">
+                    <span class="topbar-btn" data-toggle="dropdown"><img class="avatar"
+                                                                         src="{{ asset('upload/photo/'~user_data.user.photoName) }}"
+                                                                         alt="Votre avatar"></span>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
+                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
+                        Paramètres</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="ti-lock"></i> Lock</a>
+                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="ti-power-off"></i>
+                        Logout</a>
+                </div>
+            </li>
+
+            <!-- Change language -->
+            <li class="dropdown">
+                    <span class="topbar-btn" data-toggle="dropdown"><img class="icon"
+                                                                         src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                         alt="fr"></span>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item active" href="#"><img class="icon"
+                                                                  src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                  alt="en"></a>
+                    <a class="dropdown-item" href="#"><img class="icon"
+                                                           src="{{ asset('sources/assets/img/flag/de.png') }}"
+                                                           alt="..."></a>
+                    <a class="dropdown-item" href="#"><img class="icon"
+                                                           src="{{ asset('sources/assets/img/flag/es.png') }}"
+                                                           alt="..."></a>
+                </div>
+            </li>
+            <!-- END Change language -->
+
+            <!-- Notifications -->
+            <li class="dropdown d-none d-md-block">
+                <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i></span>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="media-list media-list-hover media-list-divided media-list-xs">
+                        {% for notification in user_data.notifications %}
+                            <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
+                               href="{{ notification.url }}">
+                                    <span class="avatar bg-{{ notification.color }}"><i
+                                                class="{{ notification.icone }}"></i></span>
+                                <div class="media-body">
+                                    <p>{{ notification.type|trans }}</p>
+                                    <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
+                                </div>
+                            </a>
+                        {% else %}
+                            {{ 'aucune.notification'|trans }}
+                        {% endfor %}
+                    </div>
+
+                    <div class="dropdown-footer">
+                        <div class="left">
+                            <a href="{{ path('notification_index') }}">{{ 'lire.toutes.les.notifications'|trans }}</a>
+                        </div>
+
+                        <div class="right">
+                            <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
+                               id="marquerNotificationsRead"><i
+                                        class="material-icons">radio_button_unchecked</i></a>
+                            <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}"><i
+                                        class="material-icons">refresh</i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <!-- END Notifications -->
+
+            {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.formation.optMessagerie == true) %}
+                <!-- Messages -->
+                <li class="dropdown d-none d-md-block">
+                    <span class="topbar-btn" data-toggle="dropdown"><i class="ti-email"></i></span>
+                    <div class="dropdown-menu dropdown-menu-right">
+
+                        <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
+                             style="height: 290px">
+                            {% for message in user_data.messages %}
+                                <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
+                                   href="{{ path('messagerie_message',{message:message.message.id}) }}">
+                  <span class="avatar status-success">
+                    <img src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
+                         alt="{{ message.message.expediteur.displayPr }}">
+                  </span>
+
+                                    <div class="media-body">
+                                        <p><strong>{{ message.message.expediteur.displayPr }}</strong>
+                                            <time class="float-right"
+                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago }}</time>
+                                        </p>
+                                        <p class="text-truncate">{{ message.message.sujet }}</p>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="dropdown-footer">
+                            <div class="left">
+                                <a href="{{ path('messagerie_index') }}">{{ 'voir.tous.les.messages'|trans }}</a>
+                            </div>
+
+                            <div class="right">
+                                <a href="#" data-provide="tooltip" title="Mark all as read"><i
+                                            class="material-icons">radio_button_unchecked</i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                <!-- END Messages -->
+            {% endif %}
+        </ul>
+    </div>
+</header>
+<!-- END Topbar -->
+
+
+<!-- Main container -->
+<main class="main-container">
+    <header class="header">
+        <div class="header-info">
+            <div class="left">
+                <h2 class="header-title" id="header-title">
+                    {% block header %}
+                        <strong>No title</strong>
+                    {% endblock %}
+                </h2>
+            </div>
+            {% block headerright %}
+
+            {% endblock %}
+        </div>
+        {% block headeractions %}
+
+        {% endblock %}
+    </header>
+
+    <div class="main-content" id="mainContent">
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="callout callout-{{ label }}" role="alert">
+                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                    <h5>{{ ('callout'~label)|trans }}</h5>
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+
+        {% block content %}
+
+
+        {% endblock %}
+
+        <!-- bouton fab en bas de chaque page -->
+        {% block fabactions %}
+
+        {% endblock %}
+        <!-- fin du bouton fab -->
+
+    </div><!--/.main-content -->
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-center text-md-left">Copyright © 2018 <a href="http://thetheme.io/theadmin">Template :
+                        TheAdmin</a> | <a href="https://www.davidannebicque.fr">@DavidAnnebicque</a>.
+                    All rights reserved.</p>
+            </div>
+
+            <div class="col-md-6">
+                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('help_index') }}">{{ 'menu.documentation'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('faq_index') }}">{{ 'menu.faq'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- END Footer -->
+
+</main>
+<!-- END Main container -->
+
+<!-- Fullscreen search -->
+<div class="lookup-fullscreen" id="lookup-full">
+    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="{{ iconDelete }}"></i></span>
+
+    <div class="lookup-form">
+        <input type="text" placeholder="Search anything" id="search">
+    </div>
+
+    <div class="lookup-results scrollable">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }}</h5>
+
+                <div class="media-list media-list-divided media-list-hover" id="search_reponse_etudiant">
+                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase fw-400">{{ 'permanents'|trans }}</h5>
+
+                <div class="media-list media-list-hover" id="search_reponse_personnel">
+                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-4 col-lg-4" id="search_reponse_autre">
+                <h5 class="text-uppercase fw-400">{{ 'autres'|trans }}</h5>
+                {# ou dernier éléménts recherchés
+                #}
+                <div class="media-list media-list-hover">
+                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- END Fullscreen search -->
+
+
+<!-- Global quickview -->
+<div id="qv-global" class="quickview" data-url="assets/data/quickview-global.html">
+    <div class="spinner-linear">
+        <div class="line"></div>
+    </div>
+</div>
+<!-- END Global quickview -->
+
+
+<!-- Scripts -->
+<!-- Routing -->
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+<script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
+<script src="{{ asset('sources/assets/js/app.js') }}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="{{ asset('sources/assets/js/jquery.collection.js') }}"></script>
+<script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
+
+<script data-provide="sweetalert"></script>
+
+<script type="text/javascript">
+{% block javascript %}
+
+{% endblock %}
+</script>
+</body>
+</html>

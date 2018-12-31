@@ -1,0 +1,31 @@
+{% if entreprise != null %}
+    <tr>
+        <th>{{ 'table.entreprise'|trans }}</th>
+        <td>{{ entreprise.raisonSociale }} {{ entreprise.libelle }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'table.siret'|trans }}</th>
+        <td>{{ entreprise.siret }}</td>
+    </tr>
+    {% if entreprise.adresse != null %}
+        {{ include('composants/adresse_array.html.twig', {adresse:entreprise.adresse}) }}
+        {% else %}
+            <tr>
+        <th>{{ 'table.adresse'|trans }}</th>
+        <td>{{ 'non.defini'|trans }}</td>
+    </tr>
+            {% endif %}
+    {% if entreprise.responsable != null %}
+        {{ include('composants/contact_array.html.twig', {contact:entreprise.responsable}) }}
+    {% else %}
+        <tr>
+            <th>{{ 'table.responsable'|trans }}</th>
+            <td>{{ 'non.defini'|trans }}</td>
+        </tr>
+    {% endif %}
+{% else %}
+    <tr>
+        <th>{{ 'table.entreprise'|trans }}</th>
+        <td>{{ 'non.defini'|trans }}</td>
+    </tr>
+{% endif %}

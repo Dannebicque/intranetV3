@@ -1,0 +1,205 @@
+<div class="card">
+    <h4 class="card-title">{{ 'application.vos.stages.et.alternances.heading'|trans }}</h4>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs nav-tabs-danger nav-justified" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#onglet_stage_en_cours" role="tab">Stagiaires à
+                    suivre</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#onglet_alternance_en_cours" role="tab">Alternants à
+                    suivre</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#onglet_stage_historique" role="tab">Anciens stages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#onglet_alternance_historique" role="tab">Anciennes
+                    alternances</a>
+            </li>
+        </ul>
+        <div class="card-body tab-content">
+            <div class="tab-pane fade active show" id="onglet_stage_en_cours">
+                <table class="table table-striped" data-provide="datatable">
+                    <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Semestre</th>
+                        <th>Période</th>
+                        <th>Entreprise</th>
+                        <th>Ville</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stage in stagesEnCours %}
+                        <tr>
+                            <td>{% if stage.etudiant != null %}<a
+                                    href="{{ path('user_profil', {slug:stage.etudiant.slug, type: 'etudiant'}) }}"
+                                    title="Profil de l'étudiant"
+                                    target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
+                            <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
+                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                                                                      data-url="{{ path('application_personnel_stage_periode_info', {'id': stage.id}) }}"
+                                                                      class="btn btn-info btn-outline btn-xs"
+                                                                      data-placement="bottom"
+                                                                      title="Informations sur la période"
+                                                                      data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
+                            </td>
+                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                                    data-url="{{ path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}"
+                                                                    class="btn btn-info btn-outline btn-xs"
+                                                                    data-placement="bottom"
+                                                                    title="Informations sur l'entreprise"
+                                                                    data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
+                            </td>
+                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.cp }}){% else %} - {% endif %}</td>
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">
+                                <div class="alert alert-info">Pas d'éudiant à suivre pour le moment</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="onglet_alternance_en_cours">
+                <table class="table table-striped" data-provide="datatable">
+                    <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Année</th>
+                        <th>Entreprise</th>
+                        <th>Ville</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for alternance in alternancesEnCours %}
+                        <tr>
+                            <td>{% if alternance.etudiant != null %}<a
+                                    href="{{ path('user_profil', {slug:alternance.etudiant.slug, type: 'etudiant'}) }}"
+                                    title="Profil de l'étudiant"
+                                    target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
+                            <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                            {% if alternance.entreprise != null %}
+                                <td><a href="#" data-provide="modaler tooltip"
+                                       data-url="{{ path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}"
+                                       class="btn btn-info btn-outline btn-xs"
+                                       data-placement="bottom"
+                                       title="Informations sur l'entreprise"
+                                       data-title="Informations sur l'entreprise">{{ alternance.entreprise.libelle }}</a>
+                                </td>
+                                <td>{% if alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }} ({{ alternance.entreprise.adresse.cp }}){% else %} - {% endif %}</td>
+                            {% else %}
+                                <td>-</td>
+                                <td>-</td>{% endif %}
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">Pas d'éudiant à suivre pour le moment</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="onglet_stage_historique">
+                <table class="table table-striped" data-provide="datatable">
+                    <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Semestre</th>
+                        <th>Année</th>
+                        <th>Période</th>
+                        <th>Entreprise</th>
+                        <th>Ville</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for stage in stagesHistorique %}
+                        <tr>
+                            <td>{% if stage.etudiant != null %}<a
+                                    href="{{ path('user_profil', {slug:stage.etudiant.slug, type: 'etudiant'}) }}"
+                                    title="Profil de l'étudiant"
+                                    target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
+                            <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
+                            <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.anneeUniversitaire }}{% else %} - {% endif %}</td>
+                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                                                                      data-url="{{ path('application_personnel_stage_periode_info', {'id': stage.id}) }}"
+                                                                      class="btn btn-info btn-outline btn-xs"
+                                                                      data-placement="bottom"
+                                                                      title="Informations sur la période"
+                                                                      data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
+                            </td>
+                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                                    data-url="{{ path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}"
+                                                                    class="btn btn-info btn-outline btn-xs"
+                                                                    data-placement="bottom"
+                                                                    title="Informations sur l'entreprise"
+                                                                    data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
+                            </td>
+                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.cp }}){% else %} - {% endif %}</td>
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">
+                                <div class="alert alert-info">Pas d'historique pour le moment</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="onglet_alternance_historique">
+                <table class="table table-striped" data-provide="datatable">
+                    <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Année</th>
+                        <th>Année Universitaire</th>
+                        <th>Entreprise</th>
+                        <th>Ville</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for alternance in alternancesHistorique %}
+                        <tr>
+                            <td>{% if alternance.etudiant != null %}<a
+                                    href="{{ path('user_profil', {slug:alternance.etudiant.slug, type: 'etudiant'}) }}"
+                                    title="Profil de l'étudiant"
+                                    target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
+                            <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                            <td>{{ alternance.anneeUniversitaire }}</td>
+                            <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                                         data-url="{{ path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}"
+                                                                         class="btn btn-info btn-outline btn-xs"
+                                                                         data-placement="bottom"
+                                                                         title="Informations sur l'entreprise"
+                                                                         data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
+                            </td>
+                            <td>{% if alternance.adresseAlternance != null %}{{ alternance.adresseAlternance.ville }} ({{ alternance.adresseAlternance.cp }}){% else %} - {% endif %}</td>
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">
+                                <div class="alert alert-info">Pas d'historique pour le moment</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

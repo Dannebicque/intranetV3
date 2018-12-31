@@ -1,0 +1,86 @@
+{% use "bootstrap_4_layout.html.twig" %}
+
+{#{% block _stage_periode_stagePeriodeInterruptions_entry_widget %}#}
+    {#<h5>Période d'interruption</h5>#}
+    {#<div class="row">#}
+        {#<div class="col-md-6">{{ form_row(form.dateDebut) }}</div>#}
+        {#<div class="col-md-6">{{ form_row(form.dateFin) }}</div>#}
+        {#<div class="col-md-12">{{ form_row(form.motif) }}</div>#}
+    {#</div>#}
+{#{% endblock %}#}
+
+{% block vich_file_row -%}
+    {% set force_error = true %}
+    {{- block('form_row') }}
+{%- endblock %}
+
+{% block vich_file_widget %}
+    {% spaceless %}
+        <div class="vich-file">
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ form_widget(form.file) }}
+                </div>
+                <div class="col-sm-2">
+                    {% if download_uri %}
+                        <a href="{{ download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
+                    {% endif %}
+                </div>
+                <div class="col-sm-4">
+                    {% if form.delete is defined %}
+                        {{ form_row(form.delete) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block vich_image_row -%}
+    {% set force_error = true %}
+    {{- block('form_row') }}
+{%- endblock %}
+
+{% block vich_image_widget %}
+    {% spaceless %}
+        <div class="vich-image">
+            {{ form_widget(form.file) }}
+            {% if form.delete is defined %}
+                {{ form_row(form.delete) }}
+            {% endif %}
+
+            {% if image_uri %}
+                <a href="{{ image_uri }}"><img src="{{ image_uri }}" alt=""/></a>
+            {% endif %}
+            {% if download_uri %}
+                <a href="{{ download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block my_date_range_widget %}
+    <div class="input-group" data-provide="datepicker" data-language="{{ app.request.locale }}">
+        <div class="input-group-prepend">
+            <span class="input-group-text">{{ 'from_date'|trans }}</span>
+        </div>
+        {{ form_widget(form.from_date, {'attr': attr}) }}
+        <div class="input-group-prepend input-group-append">
+            <span class="input-group-text">{{ 'to_date'|trans }}</span>
+        </div>
+        {{ form_widget(form.to_date, {'attr': attr}) }}
+    </div>
+{% endblock %}
+
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
+            {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
+        {% endif %}
+        {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
+        {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
+        {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+        {{ block('form_widget') }}
+    {% endspaceless %}
+{% endblock collection_widget %}

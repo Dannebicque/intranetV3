@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}
+{% endblock %}
+
+{% block headeractions %}
+
+    <div class="header-action bg-white">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'hrs'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {# todo: Ligne (ou modal) pour ajouter rapidement une nouvelle entrée ? #}
+
+    <div class="card card-body">
+        <select id="change_annee_temp_hrs" class="form-control">
+            <option value="0">Changer d'année temporairement</option>
+            {% for annee in 2017..'now'|date('Y')+4 %}
+                <option value="{{ annee }}">{{ annee }}</option>
+            {% endfor %}
+        </select>
+        <small class="form-text">Le changement d'année de manière permanent <a href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel de l'année selectionné dans le configuration est celui actif sur l'intranet</small>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}</h4>
+        <div class="card-body">
+
+            <table class="table table-striped table-bordered" cellspacing="0"
+                   data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.type_hrs'|trans }}</th>
+                    <th>{{ 'table.personnel'|trans }}</th>
+                    <th>{{ 'table.semestre_ou_diplome'|trans }}</th>
+                    <th>{{ 'table.nb_heures_td'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for hr in hrs %}
+                    <tr id="ligne_{{ hr.id }}">
+
+                        <td>{{ hr.libelle }}</td>
+                        <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
+                        <td>{{ hr.personnel ? hr.personnel.display : 'non.defini'|trans }}</td>
+                        <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
+                        <td>{{ hr.nbHeuresTd }}</td>
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'hrs', id:hr.id, modal:true}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="bg-pale-warning">
+                        <td colspan="11">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.hrs.duplicate.annee.heading'|trans }}</h4>
+        <div class="card-body">
+            <form action="{{ path('administration_hrs_duplicate_annee') }}" method="post" class="form">
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="annee_depart">Année à copier</label>
+                            <select name="annee_depart" id="annee_depart" class="form-control">
+                                <option value="">Choisir</option>
+                                {% for annee in 2017..'now'|date('Y')+2 %}
+                                    <option value="{{ annee }}">{{ annee }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="annee_destination">Année de destination</label>
+                            <select name="annee_destination" id="annee_destination" class="form-control">
+                                <option value="">Choisir</option>
+                                {% for annee in 2017..'now'|date('Y')+4 %}
+                                    <option value="{{ annee }}">{{ annee }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-controls-stacked">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="annee_concerver" name="annee_concerver" value="true">
+                                <label class="custom-control-label" for="annee_concerver">Conserver les données dans l'année de destination ? (par défaut la copie remplace l'ensemble des données)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <button class="btn btn-block btn-success" type="submit">
+                            Dupliquer les HRS et primes de l'année
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {# todo: ajouter un delete année complete ?#}
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_hrs_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_hrs_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_hrs_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_hrs_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_hrs'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question',
+            target: "_blank"
+        }
+    ]}) }}
+{% endblock %}

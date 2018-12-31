@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% if monprofil %}
+        {{ 'mon.profil.heading'|trans }}
+    {% else %}
+        {{ 'profil.heading'|trans({'%user%': user.displayPr}) }}
+    {% endif %}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action bg-white">
+        <nav class="nav">
+            {% if user.typeUser == 'permanent' %}
+                {{ include('user/composants/menu_personnel.html.twig') }}
+            {% elseif user.typeUser == 'etudiant' %}
+                {{ include('user/composants/menu_etudiant.html.twig') }}
+            {% endif %}
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8" id="profilContent">
+            {% if user.typeUser == 'permanent' %}
+                {{ include('user/composants/content_personnel.html.twig') }}
+            {% elseif user.typeUser == 'etudiant' %}
+                {{ include('user/composants/content_etudiant.html.twig') }}
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="text-white card-body bg-img text-center py-50"
+                     style="background-image: url({{ asset('upload/background/2.jpg') }});">
+                    <a href="#">
+                        <img class="avatar avatar-xxl avatar-bordered"
+                             src="{{ asset('upload/photo/'~user.photoName) }}">
+                    </a>
+                    <h5 class="mt-2 mb-0"><a class="hover-primary text-white" href="#">{{ user.displayPr }}</a></h5>
+                    {% if user.typeUser == 'etudiant' %}
+                        <span>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %} {% endfor %}</span>
+                    {% else %}
+                        <span>{{ user.typeUser|trans }}</span>
+                    {% endif %}
+                </div>
+                <ul class="flexbox flex-justified text-center p-20">
+                    <li class="br-1 border-light">
+                        <span class="text-muted">{{ 'contacter'|trans }}</span><br>
+                        <span class="fs-22"><a href="mailto:{{ user.mailUniv }}" target="_blank"
+                                               title="{{ 'contacter.sur.mail.univ'|trans }}" data-provide="tooltip"
+                                               data-placement="bottom"><i class="fa fa-envelope"></i></a></span>
+                    </li>
+                    <li class="br-1 border-light">
+                        <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
+                        <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank"
+                                               title="{{ 'consulter.espace.travail'|trans }}" data-provide="tooltip"
+                                               data-placement="bottom"><i class="fa fa-globe"></i></a></span>
+                    </li>
+                    <li>
+                        <span class="text-muted">Tweets</span><br>
+                        <span class="fs-22">165</span>
+                    </li>
+                </ul>
+            </div>
+
+            {% if user.typeUser == 'etudiant' %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flexbox align-items-baseline mb-20">
+                            <h6 class="text-uppercase ls-2">{{ 'amis'|trans }}</h6>
+                            <small>{{ user.etudiantDemande|length }}</small>
+                        </div>
+
+                        <div class="gap-items-2 gap-y">
+                            {% for favori in user.etudiantDemande|slice(0, 8) %}
+                                <a class="avatar"
+                                   href="{{ path('user_profil', {type: 'etudiant', slug: favori.etudiantDemande.slug}) }}"
+                                   title="{{ favori.etudiantDemande.display }}"
+                                   target="_blank"
+                                ><img src="{{ asset('upload/photo/'~favori.etudiantDemande.photoName) }}"
+                                      alt="{{ favori.etudiantDemande.display }}"></a>
+                            {% endfor %}
+                            {% if user.etudiantDemande|length > 8 %}
+                                {% set nb = user.etudiantDemande - 8 %}
+                                <a class="avatar avatar-more" href="#">+{{ nb }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

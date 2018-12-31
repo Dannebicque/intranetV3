@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="MVIu471" resname="label.fichier">
+        <source>label.fichier</source>
+        <target>Fichier</target>
+        <note priority="1">obsolete</note>
+      </trans-unit>
+      <trans-unit id="DdW5EV0" resname="label.logoFile">
+        <source>label.logoFile</source>
+        <target>label.logoFile</target>
+        <note priority="1">obsolete</note>
+      </trans-unit>
+      <trans-unit id="x7vVhiW" resname="label.cv">
+        <source>label.cv</source>
+        <target>label.cv</target>
+        <note priority="1">obsolete</note>
+      </trans-unit>
+      <trans-unit id="F_My2fP" resname="label.photo">
+        <source>label.photo</source>
+        <target>label.photo</target>
+        <note priority="1">obsolete</note>
+      </trans-unit>
+      <trans-unit id="U9dHZqv" resname="label.apercu">
+        <source>label.apercu</source>
+        <target>label.apercu</target>
+        <note priority="1">obsolete</note>
+      </trans-unit>
+      <trans-unit id="lgWCmBh" resname="help.ficheRenseignement">
+        <source>help.ficheRenseignement</source>
+        <target>help.ficheRenseignement</target>
+      </trans-unit>
+      <trans-unit id="B861HTo" resname="Fichier">
+        <source>Fichier</source>
+        <target>Fichier</target>
+      </trans-unit>
+      <trans-unit id="2E7rrak" resname="Photo">
+        <source>Photo</source>
+        <target>Photo</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

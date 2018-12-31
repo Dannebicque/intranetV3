@@ -1,0 +1,80 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.help.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-index.html.twig', {elt:'help'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.help.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <th>{{ 'table.titre'|trans }}</th>
+                    <th>{{ 'table.texte'|trans }}</th>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for help in helps %}
+                    <tr id="ligne_{{ help.id }}">
+                        <td>{{ help.id }}</td>
+                        <td>{{ help.titre }}</td>
+                        <td>{{ help.texte }}</td>
+                        <td>{{ help.updated ? help.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt: 'help', id: help.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('sa_help_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"},
+        {
+            type:'info',
+            href:path('sa_help_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('sa_help_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('sa_help_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'super-administration_help'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

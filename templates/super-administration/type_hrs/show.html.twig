@@ -1,0 +1,44 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_hrs.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'type_hrs', id: type_hr.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.type_hrs.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ type_hr.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle'|trans }}</th>
+                <td>{{ type_hr.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.type_hrs'|trans }}</th>
+                <td>{{ type_hr.type }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.dans_service'|trans }}</th>
+                <td>{{ type_hr.incluService ? 'Yes'|trans : 'No'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.maximum'|trans }}</th>
+                <td>{{ type_hr.maximum }}  {{ 'heures'|trans }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

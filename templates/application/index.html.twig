@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'applications.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    {{ include('application/menu.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {% if is_granted('ROLE_PERMANENT') %}
+        {% if onglet == 'messagerie' %}
+            {{ render(controller(
+                'App\\Controller\\MessagerieController::index'
+            )) }}
+        {% elseif onglet == 'previsionnel' %}
+            {{ render(controller(
+                'App\\Controller\\PrevisionnelController::index'
+            )) }}
+        {% elseif onglet == 'stage' %}
+            {{ render(controller(
+                'App\\Controller\\appPersonnel\\StageController::index'
+            )) }}
+        {% elseif onglet == 'carnet' %}
+            {{ render(controller(
+                'App\\Controller\\appPersonnel\\CarnetController::index'
+            )) }}
+        {% elseif onglet == 'quizz' %}
+            {{ render(controller(
+                'App\\Controller\\appPersonnel\\QuizzController::index'
+            )) }}
+        {% elseif onglet == 'salle_examen' %}
+            {{ render(controller(
+                'App\\Controller\\appPersonnel\\SalleExamenController::index'
+            )) }}
+
+        {% endif %}
+    {% else %}
+        {% if onglet == 'rattrapage' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\RattrapageController::index'
+            )) }}
+        {% elseif onglet == 'stage' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\StageController::index'
+            )) }}
+        {% else %}
+            {{ render(controller(
+                'App\\Controller\\MessagerieController::index'
+            )) }}
+        {% endif %}
+
+    {% endif %}
+{% endblock %}

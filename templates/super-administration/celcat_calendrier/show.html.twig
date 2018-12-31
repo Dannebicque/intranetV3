@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CelcatCalendrier{% endblock %}
+
+{% block body %}
+    <h1>CelcatCalendrier</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ celcat_calendrier.id }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ celcat_calendrier.created ? celcat_calendrier.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ celcat_calendrier.updated ? celcat_calendrier.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>SemaineFormation</th>
+                <td>{{ celcat_calendrier.semaineFormation }}</td>
+            </tr>
+            <tr>
+                <th>SemaineReelle</th>
+                <td>{{ celcat_calendrier.semaineReelle }}</td>
+            </tr>
+            <tr>
+                <th>DateLundi</th>
+                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('celcat_calendrier_index') }}">back to list</a>
+
+    <a href="{{ path('celcat_calendrier_edit', {'id': celcat_calendrier.id}) }}">edit</a>
+
+    {{ include('celcat_calendrier/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% if user_data.formation.optUpdateCelcat %}
+        {{ include('administration/edt/edt-celcat.html.twig') }}
+    {% else %}
+        {{ include('administration/edt/edt-intranet.html.twig') }}
+    {% endif %}
+{% endblock %}
+
+{% block fabactions %}
+
+{% endblock %}

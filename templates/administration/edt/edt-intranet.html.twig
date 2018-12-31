@@ -1,0 +1,117 @@
+
+<div class="card">
+    <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
+    <div class="card-body">
+
+        <div class="row gap-y">
+            <div class="col-md-2 col-sm-6"></div>
+            <div class="col-md-2 col-sm-6"></div>
+            <div class="col-md-2 col-sm-6">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <a class="btn btn-primary"
+                           href="" title="{{ 'semaine.precedente'|trans }}"><i
+                                    class="material-icons">keyboard_arrow_left</i></a>
+                        <a class="btn btn-primary"
+                           href="" title="{{ 'semaine.courante'|trans }}"><i
+                                    class="material-icons">perm_contact_calendar</i></a>
+                        <a class="btn btn-primary"
+                           href="" title="{{ 'semaine.suivante'|trans }}"><i
+                                    class="material-icons">keyboard_arrow_right</i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                            {% for semestre in user_data.semestres %}
+                                <a class="btn"
+                                   href="">{{ semestre.libelle }}</a>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row gap-y">
+            {#<input type="hidden" name="semainereelle" id="semainereelle" value="{{ edt.semaine }}"/>#}
+            <div class="col-sm-2">
+                <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichejour" name="affichejour">
+                    <option value="">{{ 'edt.filtrer.jour'|trans }}</option>
+                    <option value="1">Lundi</option>
+                    <option value="2">Mardi</option>
+                    <option value="3">Mercredi</option>
+                    <option value="4">Jeudi</option>
+                    <option value="5">Vendredi</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichesalle" name="affichesalle">
+                    <option value="">{{ 'edt.filtrer.salle'|trans }}</option>
+                    {% for salle in salles %}
+                        <option value="{{ salle.id }}">{{ salle.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichepersonnel" name="affichepersonnel">
+                    <option value="">{{ 'edt.filtrer.personnel'|trans }}</option>
+                    {% for personnel in personnels %}
+                        <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichematiere" id="affichematiere">
+                    <option value="">{{ 'edt.filtrer.matiere'|trans }}</option>
+                    {% for matiere in matieres %}
+                        <option value="{{ matiere.id }}">{{ matiere.display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichesemaine" id="affichesemaine">
+                    <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
+                        {#{% for sem in edt.semaines %}#}
+                    {#<option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">#}
+                        {#du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem.semaineIUT }}</option>#}
+                    {#{% endfor %}#}
+                </select>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{ include('composants/edt.html.twig') }}
+
+<div class="card">
+    <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
+    <div class="card-body">
+        <div class="row gap-y">
+            <div class="col-md-4 col-sm-12">
+                <div><a href="{{ path('administration_structure_index') }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.import.semaine'|trans }}</a></div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div><a href="{{ path('administration_structure_index') }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.effacer.semestre'|trans }}</a></div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div><a href="{{ path('administration_structure_index') }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.export'|trans }}</a></div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div><a href="{{ path('administration_structure_index') }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.comparaison'|trans }}</a></div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div><a href="{{ path('administration_structure_index') }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.service.realise'|trans }}</a></div>
+            </div>
+
+        </div>
+    </div>
+</div>

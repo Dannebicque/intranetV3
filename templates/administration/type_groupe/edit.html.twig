@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_groupe.modification.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-edit.html.twig', {elt:'type_groupe', id: type_groupe.id, retour: {path: 'administration_groupe_index', titre: 'atitle.retour_groupe'|trans }}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_groupe.modification.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% if contact != null %}
+<tr>
+    <th>{{ 'table.prenom_nom'|trans }}</th>
+    <td>{{ contact.display }}</td>
+</tr>
+<tr>
+    <th>{{ 'table.fonction'|trans }}</th>
+    <td>{{ contact.fonction }}</td>
+</tr>
+<tr>
+    <th>{{ 'table.email'|trans }}</th>
+    <td>{{ contact.email }}</td>
+</tr>
+<tr>
+    <th>{{ 'table.telephone'|trans }}</th>
+    <td>{{ contact.telephone }}</td>
+</tr>
+<tr>
+    <th>{{ 'table.portable'|trans }}</th>
+    <td>{{ contact.portable }}</td>
+</tr>
+<tr>
+    <th>{{ 'table.fax'|trans }}</th>
+    <td>{{ contact.fax }}</td>
+</tr>
+{% else %}
+<tr>
+    <th>{{ 'table.contact'|trans }}</th>
+    <td>{{ 'non.defini'|trans }}</td>
+</tr>
+{% endif %}

@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.personnel.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <nav class="nav">
+            <a class="nav-link active personnel_index_change" data-type="permanent" href="#">{{ 'permanent'|trans }}</a>
+            <a class="nav-link personnel_index_change" data-type="vacataire" href="#">{{ 'vacataire'|trans }}</a>
+        </nav>
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'personnel'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">{{ 'adm.personnel.index.heading'|trans }}</h4>
+        </header>
+
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables" id="tableau">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>{{ 'table.nom'|trans }}</th>
+                    <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.poste_interne'|trans }}</th>
+                    <th>{{ 'table.tel_bureau'|trans }}</th>
+                    <th>{{ 'table.bureau1'|trans }}</th>
+                    <th>{{ 'table.numero_harpege'|trans }}</th>
+                    <th>{{ 'table.mail_univ'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody id="datatableau">
+                {% for personnel in personnels %}
+                    <tr>
+                        <td></td>
+                        <td>{{ personnel.personnel.nom }}</td>
+                        <td>{{ personnel.personnel.prenom }}</td>
+                        <td>{{ personnel.personnel.posteInterne }}</td>
+                        <td>{{ personnel.personnel.telBureau }}</td>
+                        <td>{{ personnel.personnel.bureau1 }}</td>
+                        <td>{{ personnel.personnel.numeroHarpege }}</td>
+                        <td>{{ personnel.personnel.mailUniv }}</td>
+                        <td>
+                            {% if user_data.isGoodFormation("ROLE_CDD") or user_data.isGoodFormation("ROLE_DDE") %}
+                            <button data-provide="modaler tooltip"
+                                    data-url="{{ path('administration_personnel_droit', {'personnel': personnel.personnel.id}) }}"
+                                    data-size="lg"
+                                    data-confirm-text="{{ 'fermer'|trans }}"
+                                    class="btn btn-warning btn-outline btn-square "
+                                    data-placement="bottom"
+                                    title="{{ 'personnel.droit.access'|trans }}"
+                                    data-title="{{ 'gestion.personnel.droit.access'|trans }}"
+                            >
+                                <i class="fa fa-key"></i>
+                            </button>
+                            {% endif %}
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt:'personnel', id:personnel.personnel.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {
+        boutons:[
+            {type: 'info',
+                href: path('administration_personnel_export', {_format:'pdf'}),
+                title: 'exporter.pdf'|trans,
+                icone : "fa fa-file-pdf-o"
+            },
+            {
+                type:'info',
+                href:path('administration_personnel_export', {_format:'csv'}),
+                title: 'exporter.csv'|trans,
+                icone: 'fa fa-file-text-o'
+            },
+            {
+                type:'info',
+                href:path('administration_personnel_export', {_format:'xlsx'}),
+                title: 'exporter.xls'|trans,
+                icone: 'fa fa-file-excel-o'
+            },
+            {
+                type:'info',
+                href:path('administration_personnel_new'),
+                title: 'ajouter'|trans,
+                icone: 'ti-plus'
+            },
+            {
+                type:'info',
+                href:path('help_article', {sujet: 'administration_personnel'}),
+                title: 'aide'|trans,
+                icone: 'fa fa-question'
+            }
+        ]}) }}
+{% endblock %}

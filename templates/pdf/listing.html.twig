@@ -1,0 +1,77 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+
+    {% for groupe in typeGroupe.groupes %}
+        <table style="width: 100%; border:none;">
+            <tr>
+                <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.formation.logoName }}" alt="logo" height="75px"/></td>
+                <td style="text-align: center; width:60%"><h2>{{ typeGroupe.semestre.display }} | {{ user_data.displayAnneeUniversitaire }}</h2></td>
+                <td style="text-align: center; width:20%"><img
+                            src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
+                            alt="logo"
+                            height="75px"/></td>
+            </tr>
+        </table>
+        <h4>Feuille d'émargement | <strong>Groupe {{ groupe.libelle }}</strong></h4>
+
+        <table>
+            <tr style="height:25px">
+                <td>Enseignant :</td>
+                <td>____________________________________</td>
+                <td>&nbsp;</td>
+                <td>Module :</td>
+                <td>____________________________________</td>
+            </tr>
+        </table>
+        <br /><br />
+        <table style="width:100%" class="table">
+            <tr>
+                <td style="font-weight: bold; width:30px;" rowspan="2">#</td>
+                <td style="font-weight: bold; width:75px;" rowspan="2">N°</td>
+                <td style="font-weight: bold">Date</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Heure</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            {% for etu in groupe.etudiants %}
+                <tr style="height: 25px;">
+                    <td style="vertical-align: middle">#{{ loop.index }}</td>
+                    <td style="vertical-align: middle">{{ etu.numEtudiant }}</td>
+                    <td style="vertical-align: middle">{{ etu.display  }}</td>
+                    <td width="60px">&nbsp;</td>
+                    <td width="60px">&nbsp;</td>
+                    <td width="60px">&nbsp;</td>
+                    <td width="60px">&nbsp;</td>
+                    <td width="60px">&nbsp;</td>
+                    <td width="60px">&nbsp;</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3">Nb. Absence(s) sur la période</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+                <td width="60px">&nbsp;</td>
+            </tr>
+        </table>
+
+        {% if not loop.last %}
+            <div style="page-break-after: always"></div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

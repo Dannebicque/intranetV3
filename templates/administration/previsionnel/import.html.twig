@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'import.previsionnel.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'import.previsionnel.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                {{ 'message.danger.previsionnel.import'|trans }}
+            </div>
+
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
+            <br>
+            <div class="alert alert-warning">{# todo: intégrer excel ? #}
+                Le fichier doit être au format CSV (séparateur ;) et doit correspondre au formatage OMEGA (<a href="{{ asset('upload/exemples/omega.xlsx') }}">télécharger
+                    un exemple</a>). Le code administratif (SIAM ou Harpège) de l'intervenant doit être présent pour que l'import fonctionne.
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-plus"></i></a>
+            <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+

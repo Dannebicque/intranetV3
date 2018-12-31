@@ -1,0 +1,12 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+    globals:
+        # the value is the service's id
+        user_data: '@App\MesClasses\DataUserSession'
+        iconShow: 'fa fa-info'
+        iconEdit: 'fa fa-edit'
+        iconDelete: 'fa fa-trash'
+        iconDuplicate: 'fa fa-copy'

@@ -1,0 +1,194 @@
+{% extends 'pdf/basepdf.html.twig' %}
+
+{% block content %}
+    {% for groupe in groupes %}
+        {{ include('pdf/composants/entete-placement.html.twig') }}
+
+        <h3>Groupe : {{ groupe.libelle }}</h3>
+        <p>Nombre d'étudiants : {{ groupe.etudiants|length }}</p>
+        <table style="clear:both;width:100%" class="table">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nom - Prénom</th>
+                <th>Place</th>
+                <th>Signature</th>
+                <th>Note</th>
+                <th>Retour copie</th>
+            </tr>
+            </thead>
+            {% for etu in groupe.etudiants %}
+                <tr>
+                    <td>{{ etu.numetudiant }}</td>
+                    <td>{{ etu.display }}</td>
+                    <td style="text-align:center">{{ tabplace.etudiant[etu.id] }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% if not loop.last %}
+            <div style="page-break-after: always"></div>
+        {% endif %}
+    {% endfor %}
+
+    {# affichage par placement#}
+    {% for lettre in 1..salle.nbColonnes %}
+        {{ include('pdf/composants/entete-placement.html.twig') }}
+
+        <h3>Feuille d'émargement</h3>
+        <table style="clear:both;width:100%" class="table">
+            <thead>
+            <tr>
+                <th>Place</th>
+                <th>N°</th>
+                <th>Nom - Prénom</th>
+                <th>Groupe</th>
+                <th>Signature</th>
+                <th>Note</th>
+                <th>Retour copie</th>
+            </tr>
+            </thead>
+        {% for key, t in tabplace.place if key|slice(0,1) == (lettre+64)|chr %}
+            <tr style="height: 20px;">
+                <td style="text-align:center">{{ key }}</td>
+                <td>{{ t.numetudiant }}</td>
+                <td>{{ t.display }}</td>
+                <td>{% for g in t.groupes if g.typegroupe.typegroupe == typeg %}{{ g.libelle }}{% endfor %}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        </table>
+        {% if not loop.last %}
+            <div style="page-break-after: always"></div>
+        {% endif %}
+    {% endfor %}
+
+    <div style="page-break-after: always"></div>
+    {# PV d'examen #}
+    <table style="width: 100%; border:0;">
+        <tr>
+            <td style="text-align: center; width:20%"><img
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.formation.logoName }}" alt="logo"
+                        height="70px"/></td>
+            <td style="text-align: center; width:60%"><h1>{{ user_data.formation.libelle }}</h1>
+
+                <h2>PV de surveillance de partiel</h2>
+            <td style="text-align: center; width:20%"><img
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
+                        alt="logo"
+                        height="70px"/></td>
+        </tr>
+    </table>
+    <p>Article 22 du décret n° 92-657 du 13 juillet 1992 relatif à la procédure disciplinaire dans les établissements
+        publics d'enseignement supérieur :</p><br />
+    <i>"En cas de flagrant délit de fraude ou tentative de fraude aux examens ou concours, le surveillant responsable de
+        la salle prend toutes mesures pour faire cesser la fraude ou la tentative sans interrompre la participation à
+        l'épreuve du ou des candidats. Il saisit les pièces ou matériels permettant d'établir ultérieurement la réalité
+        des faits. Il dresse un PV contresigné par les autres surveillants et par le ou les auteurs de la fraude ou de la
+        tentative de fraude. En cas de refus de contresigner, mention est portée au PV. Toutefois, en cas de substitution
+        de personne ou de troubles affectant le déroulement des épreuves, l'expulsion de la salle des examens peut être
+        prononcée par les autorités compétentes mentionnées aux articles 1er et 3 du décret n° 85-827 du 31 juillet 1985
+        susvisé, ou par le chef de centre des épreuves du baccalauréat. La section disciplinaire est saisie dans les
+        conditions prévues à l'article 23".
+    </i><br /><br />
+    <table style="width: 100%">
+        <tr>
+            <td style="width:15%">Matière :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black; width:35%">&nbsp;</td>
+            <td style="width:15%">Salle :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black; width:35%">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="4"><h3 style="text-align: center; font-size: 18px; font-weight: bold;">Surveillants</h3></td>
+        </tr>
+        <tr>
+            <td>Nom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black">&nbsp;</td>
+            <td>Prénom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Nom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black">&nbsp;</td>
+            <td>Prénom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Nom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black">&nbsp;</td>
+            <td>Prénom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black">&nbsp;</td>
+        </tr>
+    </table>
+    <br /><br />
+    <table style="width: 100%">
+        <tr>
+            <td style="width:25%">Nombre prévu d'étudiants :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black; width:25%">&nbsp;</td>
+            <td style="width:25%">Nombre de présents :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black; width:25%">&nbsp;</td>
+        </tr>
+    </table>
+    <br /><br />
+    <div>
+        <strong>Merci de bien vouloir noter le nom des étudiants absents page suivante</strong>
+    </div>
+    <br /><br />
+    <div style="border: 1px solid black">
+        <h3>Procès-verbal en cas de fraude (joindre l'anti-sèche)</h3>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <table width="100%">
+            <tr>
+                <td>Noms et signatures des surveillants</td>
+                <td>&nbsp;</td>
+                <td>Nom et signature du fraudeur</td>
+            </tr>
+        </table>
+        <br /><br /><br /><br /><br />
+    </div>
+    <div style="page-break-after: always"></div>
+    <h3 style="text-align: center; font-size:20px">Nombre d'étudiants :</h3>
+    <h4 style="text-align: center">Récapitulatif des absences</h4>
+    <p>Partiel de </p>
+    <p>Date</p>
+    <table style="width:75%; margin:auto;" class="table">
+        <tr>
+            <th>Etudiants Absents</th>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 30px;">
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+    <p style="font-size:24px; text-align: center">A remettre au secrétariat dès la fin du partiel. Merci.</p>
+{% endblock %}

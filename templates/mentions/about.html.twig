@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'about.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h3 class="card-title">{{ 'about.heading'|trans }}</h3>
+        <div class="card-body">
+            <div class="divider">English Version Below</div>
+            <h4>Où êtes vous ?</h4>
+            <p>Vous êtes sur l'intranet de
+                l'{{ settings('NOM_IUT') }} (10), de l'Université
+                Reims Champagne Ardenne (URCA).
+                Ce site est à l'usage des personnels et des étudiants de
+                l'{{ settings('NOM_IUT') }}</p>
+            <h4>Qui sommes nous ?</h4>
+            <p>Nous sommes un établissement d'enseignement supérieur. <a
+                        href="{{ settings('SITE_IUT') }}"
+                        target="_blank">N'hésitez pas à
+                    consulter notre site pour plus d'informations sur les formations proposées.</a></p>
+            <hr class="w-300px border-danger">
+            <h4>Where Are You ?</h4>
+            <p>Vous êtes sur l'intranet de
+                l'{{ settings('NOM_IUT') }} (10), de l'Université
+                Reims Champagne Ardenne (URCA).
+                Ce site est à l'usage des personnels et des étudiants de
+                l'{{ settings('NOM_IUT') }}</p>
+            <h4>Qui sommes nous ?</h4>
+            <p>Nous sommes un établissement d'enseignement supérieur. <a
+                        href="{{ settings('SITE_IUT') }}"
+                        target="_blank">N'hésitez pas à
+                    consulter notre site pour plus d'informations sur les formations proposées.</a></p>
+        </div>
+    </div>
+{% endblock %}

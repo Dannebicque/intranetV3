@@ -1,0 +1,25 @@
+<dl class="row">
+    <dt class="col-md-5 col-sm-12">{{ 'matiere'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ note.evaluation.matiere.codeMatiere }} {{ note.evaluation.matiere.libelle }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.ue.libelle }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'coefficient.de.matiere'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.coefficient }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'nb.note.matiere'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.nbnotes }}</dd>
+</dl>
+<h4>{{ 'situation.par.rapport.promo'|trans }}</h4>
+<dl class="row">
+    <dt class="col-md-5 col-sm-12">{{ 'vous'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.note|number_format(2) }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'rang'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ classement }} / {{ statistiques.promo.rang|length }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'commentaire'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.commentaire }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'note.minimale'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ statistiques.promo.min|number_format(2) }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'note.maximale'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ statistiques.promo.max|number_format(2) }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'moyenne.promo'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ statistiques.promo.moyenne|number_format(2) }}</dd>
+</dl>

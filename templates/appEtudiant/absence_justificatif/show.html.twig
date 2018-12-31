@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.etudiant.absence.justificatif.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_etudiant_absence_justificatif_delete', {id: absence_justificatif.uuidString}) }}" data-csrf="{{ csrf_token('delete' ~ absence_justificatif.uuidString) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-trash"></i></a>
+            <a href="{{ path('app_etudiant_absence_justificatif_edit', {id: absence_justificatif.uuidString}) }}" class="btn btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="material-icons">edit</i></a>
+
+                <a href="{{ path('app_etudiant_absence_justificatif_index') }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+                   data-placement="bottom"><i class="ti-arrow-left"></i></a>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'app.etudiant.absence.justificatif.show.heading'|trans }}</h4>
+    <div class="card-body">
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <th>Created</th>
+                <td>{{ absence_justificatif.created ? absence_justificatif.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ absence_justificatif.updated ? absence_justificatif.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ absence_justificatif.dateDebut ? absence_justificatif.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ absence_justificatif.dateFin ? absence_justificatif.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>HeureDebut</th>
+                <td>{{ absence_justificatif.heureDebut ? absence_justificatif.heureDebut|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>HeureFin</th>
+                <td>{{ absence_justificatif.heureFin ? absence_justificatif.heureFin|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ absence_justificatif.motif }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ absence_justificatif.etat }}</td>
+            </tr>
+
+            <tr>
+                <th>FichierName</th>
+                <td>{{ absence_justificatif.fichierName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>
+{% endblock %}

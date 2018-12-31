@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <header class="card-header">
+                <h4 class="card-title"><strong>{{ 'service.previsionnel.matiere.heading'|trans }}</strong>
+                    | {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }} |
+                    ({{ 'periode'|trans }}
+                    : {{ user_data.formation.optAnneePrevisionnel }})</h4>
+                <ul class="card-controls">
+                    <li><a class="card-btn-reload" href="#" id="reloadPreviMatiere" data-annee="{{ annee }}" data-matiere="{{ previsionnel.matiere.id }}" title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a></li>
+                </ul>
+            </header>
+
+            <div class="card-body">
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th class="cm">NB h*</th>
+                        <th class="cm">NB Gr.</th>
+                        <th class="cm">1.5**</th>
+
+                        <th class="previtd">NB h/ Gr.*</th>
+                        <th class="previtd">NB Gr.</th>
+                        <th class="previtd">1.5**</th>
+
+                        <th class="previtp">NB h/ Gr.*</th>
+                        <th class="previtp">NB Gr.</th>
+                        <th class="previtp">1.5**</th>
+
+                        <th class="cm">tot. CM*</th>
+                        <th class="previtd">tot. TD</th>
+                        <th class="previtp">tot. TP</th>
+
+                        <th>total eq. TD**</th>
+                        <th>total etu.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for previsionnel in previsionnel.previsionnels %}
+                        <tr>
+                            <td colspan="11">
+                                {{ previsionnel.personnel.display }}
+                            </td>
+                            <td colspan="2">
+                                <a href="">Voir son service complet</a>
+                            </td>
+                            <td colspan="1">
+                                <a href="{{ path('administration_previsionnel_duplicate', {id: previsionnel.id}) }}"
+                                   class="btn btn-success btn-outline btn-square" data-provide="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ 'atitle.dupliquer'|trans }}"><i
+                                            class="{{ iconDuplicate }}"></i></a>
+                                <a href="{{ path('administration_previsionnel_delete', {id: previsionnel.id}) }}"
+                                   class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ 'atitle.supprimer'|trans }}"><i
+                                                class="{{ iconDelete }}"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                   data-name="NbHCm">{{ previsionnel.nbHCm }}</a> h
+                            </td>
+                            <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                   data-name="NbGrCm">{{ previsionnel.nbGrCm }}</a></td>
+                            <td>{{ previsionnel.nbSeanceCm }}</td>
+                            <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbHTd">{{ previsionnel.nbHTd }}</a> h
+                            </td>
+                            <td class="previtd"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbGrTd">{{ previsionnel.nbGrTd }}</a></td>
+                            <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
+
+                            <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbHTp">{{ previsionnel.nbHTp }}</a> h
+                            </td>
+                            <td class="previtp"><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
+                                                   data-name="NbGrTp">{{ previsionnel.nbGrTp }}</a></td>
+                            <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
+
+                            <td>{{ previsionnel.totalHCm }} h</td>
+                            <td class="previtd">{{ previsionnel.totalHTd }} h</td>
+                            <td class="previtp">{{ previsionnel.totalHTp }} h</td>
+
+                            <td>{{ previsionnel.totalEqTd }} h</td>
+                            <td>{{ previsionnel.totalEtudiant }} h</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
+                    Information indicative !
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+
+            <h4 class="card-title"><strong>{{ 'service.previsionnel.matiere.heading'|trans }}</strong>
+                | {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }} |
+                ({{ 'periode'|trans }}
+                : {{ user_data.formation.optAnneePrevisionnel }})</h4>
+
+
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th></th>
+                        <th class="importantgros text-center">CM</th>
+                        <th class="previtd text-center">TD</th>
+                        <th class="previtp text-center">TP</th>
+                        <th class="importantgros text-center">Total</th>
+                    </tr>
+                    <tr>
+                        <td class="importantgros">Total général (h)</td>
+                        <td class="importantgros text-center">{{ previsionnel.totalCm }}</td>
+                        <td class="previtd text-center">{{ previsionnel.totalTd }}</td>
+                        <td class="previtp text-center">{{ previsionnel.totalTp }}</td>
+                        <td class="importantgros text-center">{{ previsionnel.totalService }}</td>
+                    </tr>
+                    <tr>
+                        <td class="importantgros">Total Etudiant</td>
+                        <td class="importantgros text-center">{{ previsionnel.totalEtuCm }}</td>
+                        <td class="previtd text-center">{{ previsionnel.totalEtuTd }}</td>
+                        <td class="previtp text-center">{{ previsionnel.totalEtuTp }}</td>
+                        <td class="importantgros text-center">{{ previsionnel.totalEtu }}</td>
+                    </tr>
+                    <tr>
+                        <td class="importantgros"><a href="{{ path('administration_matiere_show', {id: previsionnel.matiere.id}) }}" target="_blank">Prévisionnel Matière</a></td>
+                        <td class="importantgros text-center">{{ previsionnel.matiere.cmFormation }}</td>
+                        <td class="previtd text-center">{{ previsionnel.matiere.tdFormation }}</td>
+                        <td class="previtp text-center">{{ previsionnel.matiere.tpFormation }}</td>
+                        <td class="importantgros text-center">{{ previsionnel.matiere.etuFormation }}</td>
+                    </tr>
+                    <tr>
+                        <td class="importantgros">Différence</td>
+                        <td class="importantgros text-center">0</td>
+                        <td class="importantgros previtd text-center">0</td>
+                        <td class="importantgros previtp text-center">0</td>
+                        <td class="importantgros text-center">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="alert alert-info">Total donné à titre indicatif.</div>
+            </div>
+        </div>
+    </div>
+</div>

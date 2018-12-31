@@ -1,0 +1,44 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.gestion.rh.import.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sa_rh_import_personnel') }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.import_personnel'|trans }}"><i class="ti-import"></i></a>
+            <a href="{{ path('sa_rh_add_personnel') }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.creer_nouveau'|trans }}"><i class="ti-plus"></i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.gestion.rh.import.heading'|trans }}</h4>
+        <div class="card-body">
+
+
+            <div class="alert alert-info"><p>Importer un fichier csv (ou xlsx) contenant les données des personnels. Vous pouvez <a
+                            href="">récupérer un modèle ici</a>. Veuillez respecter l'ordre des colonnes, ne pas en
+                    ajouter ni en supprimer. Laisser vide les données non connues.</p>
+                <p>Les personnels déjà présents ne seront ni supprimés ni modifiés.</p>
+            </div>
+            <br>
+            <div class="alert alert-warning">Le <strong>login est obligatoire</strong> pour permettre l'accès via le système
+                d'authentification de l'université.</div>
+
+            <form class="form">
+                <div class="form-group">
+                    <label for="fichier" class="required">{{ 'fichier.personnel.import'|trans }}</label>
+                    <input type="file" id="fichier" name="fichier" required="required" class="form-control">
+                </div>
+                <button class="btn btn-success">Importer</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{{ 'app.personnel.absence.voir'|trans }} | <strong>{{ matiere.libelle }}</strong>{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_personnel_absence_index',{matiere:matiere.id}) }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_saisie'|trans }}"><i class="ti-plus"></i></a>
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.personnel.absence.voir'|trans }} | <strong>{{ matiere.libelle }}</strong></h4>
+        <div class="card-body">
+            <table class="table table-bordered" cellspacing="0" id="liste-absences">
+                <thead>
+                <tr>
+                    <th>{{ 'app.personnel.absence.nom'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.prenom'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.date'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.heure'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.duree'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.saisiepar'|trans }}</th>
+                    <th>{{ 'app.personnel.absence.justifie'|trans }}</th>
+                    <th>{{ 'actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for absence in absences %}
+                    <tr class="{{ absence.justifie ? 'bg-pale-success':'bg-pale-error' }}" id="ligne_{{ absence.uuidString }}">
+                        <td>{{ absence.etudiant.nom }}</td>
+                        <td>{{ absence.etudiant.prenom }}</td>
+                        <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence.duree ? absence.duree|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ absence.personnel.display }}</td>
+                        <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
+                        <td>
+                            <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, onglet: 'absences'}) }}"
+                               class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'details.des.absences'|trans }}"><i class="ti-eye"></i></a>
+                            {% if absence.personnel.id == user_data.user.id and matiere.ue.semestre.annee.diplome.optSupprAbsence == true %}
+                                <a href="{{ path('application_personnel_absence_delete', {uuid: absence.uuidString}) }}"
+                                   class="btn btn-danger btn-outline btn-square supprimer"
+                                   data-csrf="{{ csrf_token('delete' ~ absence.uuidString) }}"><i class="{{ iconDelete }}"
+                                                                                          data-provide="tooltip"
+                                                                                          data-placement="bottom"
+                                                                                          title="{{ 'supprimer'|trans }}"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('application_personnel_absence_export', {matiere:matiere.id, _format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('application_personnel_absence_export', {matiere:matiere.id,_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('application_personnel_absence_export', {matiere:matiere.id,_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('application_personnel_absence_index',{matiere:matiere.id}),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'application_personnel_absence'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

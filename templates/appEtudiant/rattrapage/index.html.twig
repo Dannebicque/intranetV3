@@ -1,0 +1,64 @@
+<div class="card">
+    <h4 class="card-title">Demande de Rattrapage</h4>
+    <div class="card-body">
+        <div class="alert alert-info">Veuillez remplir complétement le formulaire ci-dessous. Une réponse vous
+            sera donnée par mail dans les plus bref délais (sous réserve que le
+            formulaire soit complet et
+            exact).
+        </div>
+        {% form_theme form 'form/my-form.html.twig' %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">{{ button_label|default('label.envoyer.demande'|trans) }}</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<div class="card">
+    <h4 class="card-title">Demandes effectuées</h4>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Module</th>
+                <th>Date evaluation initiale</th>
+                <th>Enseignant</th>
+                <th>Date Rattrapage</th>
+                <th>Etat</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for demande in rattrapages %}
+                <tr>
+                    <td>{{ demande.matiere ? demande.matiere.libelle : 'non.defini'|trans }}</td>
+                    <td>{{ demande.dateEval ? demande.dateEval|localizeddate('long', 'none', app.request.getLocale()) : '' }}
+                        à {{ demande.heureEval ? demande.heureEval|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ demande.personnel ? demande.personnel.display : 'non.defini'|trans }}</td>
+                    <td>
+                        {% if demande.etatDemande =='f' or demande.dateRattrapage == null %}<a href="#"
+                                                                                               class="btn btn-info btn-outline">
+                            <i class="{{ iconShow }}"></i> {{ 'en.attente'|trans }}</a>{% else %}
+                            {{ demande.dateRattrapage ? demande.dateRattrapage|localizeddate('long', 'none', app.request.getLocale()) : '' }}
+                            à {{ demande.heureRattrapage ? demande.heureRattrapage|localizeddate('none', 'short', app.request.getLocale()) : '' }}
+                        {% endif %}</td>
+                    <td>
+                        {% if demande.etatDemande =='f' %}
+                            <a href="#" class="btn btn-info btn-outline"><i
+                                        class="{{ iconShow }}"></i> {{ 'en.attente'|trans }}</a>
+                        {% elseif demande.etatDemande =='A' %}
+                            <a href="#" class="btn btn-success btn-outline"><i
+                                        class="ti-check"></i> {{ 'acceptee'|trans }}</a>
+                        {% elseif demande.etatDemande=='R' %}
+                            <a href="#" class="btn btn-warning btn-outline"><i class="ti-na"></i> {{ 'refusee'|trans }}
+                            </a>
+                        {% else %}
+                            <a href="#" class="btn btn-danger btn-outline"> {{ 'erreur'|trans }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>

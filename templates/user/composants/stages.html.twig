@@ -1,0 +1,118 @@
+<div class="card">
+    <h4 class="card-title">{{ 'bloc.stage.etu.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Semestre</th>
+                <th>Période</th>
+                <th>Entreprise</th>
+                <th>Tuteur</th>
+            </tr>
+            </thead>
+            {% for stage in stages if stage.stagePeriode.anneeuniversiaitaire >= user_data.anneeuniversitaire %}
+                <tr class="stage">
+                    <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
+                    <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                                                              data-url="{{ path('application_etudiant_stage_periode_info', {'id': stage.id}) }}"
+                                                              class="btn btn-info btn-outline btn-xs"
+                                                              data-placement="bottom"
+                                                              title="Informations sur la période"
+                                                              data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
+                    </td>
+                    <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                            data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': stage.id}) }}"
+                                                            class="btn btn-info btn-outline btn-xs"
+                                                            data-placement="bottom"
+                                                            title="Informations sur l'entreprise"
+                                                            data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
+                    </td>
+                    <td>{% if stage.tuteur != null %}{{ stage.tuteur.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+
+            {% for alternance in alternances if alternance.anneeUniversitaire >= user_data
+                .anneeuniversitaire %}
+                <tr class="alternance">
+                    <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                    <td>
+                        Du {{ alternance.dateDebut ? alternance.dateDebut|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
+                        au {{ alternance.dateFin ? alternance.dateFin|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                    <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                                 data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': alternance.id}) }}"
+                                                                 class="btn btn-info btn-outline btn-xs"
+                                                                 data-placement="bottom"
+                                                                 title="Informations sur l'entreprise"
+                                                                 data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
+                    </td>
+                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
+                    .defini'|trans }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div>
+            <span class="stage carre"> &nbsp;</span> Stage | <span class="alternance carre"> &nbsp;</span> Alternance
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h4 class="card-title">{{ 'bloc.stage.histo.etu.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Semestre</th>
+                <th>Année Universitaire</th>
+                <th>Période</th>
+                <th>Entreprise</th>
+                <th>Tuteur</th>
+            </tr>
+            </thead>
+            {% for stage in stages if stage.stagePeriode.anneeuniversiaitaire < user_data.anneeuniversitaire %}
+                <tr class="stage">
+                    <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
+                    <td>{{ stage.stagePeriode.anneeuniversiaitaire }}</td>
+                    <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                                                              data-url="{{ path('application_etudiant_stage_periode_info', {'id': stage.id}) }}"
+                                                              class="btn btn-info btn-outline btn-xs"
+                                                              data-placement="bottom"
+                                                              title="Informations sur la période"
+                                                              data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
+                    </td>
+                    <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                            data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': stage.id}) }}"
+                                                            class="btn btn-info btn-outline btn-xs"
+                                                            data-placement="bottom"
+                                                            title="Informations sur l'entreprise"
+                                                            data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
+                    </td>
+                    <td>{% if stage.tuteur != null %}{{ stage.tuteur.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+
+            {% for alternance in alternances if alternance.anneeUniversitaire < user_data
+                .anneeuniversitaire %}
+                <tr class="alternance">
+                    <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                    <td>{{ alternance.anneeUniversitaire }}</td>
+                    <td>
+                        Du {{ alternance.dateDebut ? alternance.dateDebut|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
+                        au {{ alternance.dateFin ? alternance.dateFin|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                    <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                                                                 data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': alternance.id}) }}"
+                                                                 class="btn btn-info btn-outline btn-xs"
+                                                                 data-placement="bottom"
+                                                                 title="Informations sur l'entreprise"
+                                                                 data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
+                    </td>
+                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
+                    .defini'|trans }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div>
+            <span class="stage carre"> &nbsp;</span> Stage | <span class="alternance carre"> &nbsp;</span> Alternance
+        </div>
+    </div>
+</div>

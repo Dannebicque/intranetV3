@@ -1,0 +1,78 @@
+
+<div class="card">
+    <h4 class="card-title">{{ 'vos.informations.identification'|trans }}</h4>
+    <div class="card-body">
+        {% if user.typeUser == 'etudiant' %}
+            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+            <p><strong>{{ 'date.naissance'|trans }}
+                    :</strong> {{ user.dateNaissance|localizeddate('long', 'none', app.request.getLocale()) }}</p>
+            <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
+            <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
+            <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
+            <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
+            <p><strong>{{ 'mail.universite'|trans }} :</strong> <a href="mailto:{{ user.mailuniv }}"
+                                                                   target="_blank">{{ user.mailuniv }}</a></p>
+            <p><strong>{{ 'site.universite'|trans }} :</strong> <a href="{{ user.siteUniv }}"
+                                                                   target="_blank">{{ user.siteUniv }}</a></p>
+            <p><strong>{{ 'site.personnel'|trans }} :</strong> <a href="{{ user.sitePerso }}"
+                                                                  target="_blank">{{ user.sitePerso }}</a></p>
+        {% elseif user.typeUser == 'permanent' %}
+            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+            <p><strong>{{ 'date.naissance'|trans }}
+                    :</strong> {{ user.dateNaissance|localizeddate('long', 'none', app.request.getLocale()) }}</p>
+
+            <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
+            <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }} | {{ user.telBureau }}</p>
+            <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
+            <p><strong>{{ 'mail.universite'|trans }} :</strong> <a href="mailto:{{ user.mailUniv }}"
+                                                                   target="_blank">{{ user.mailUniv }}</a></p>
+            <p><strong>{{ 'site.universite'|trans }} :</strong> <a href="{{ user.siteUniv }}"
+                                                                   target="_blank">{{ user.siteUniv }}</a></p>
+            <p><strong>{{ 'site.personnel'|trans }} :</strong> <a href="{{ user.sitePerso }}"
+                                                                  target="_blank">{{ user.sitePerso }}</a></p>
+        {% else %}
+            <div class="alert alert-danger">Erreur de profil !</div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+    <div class="card">
+        <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
+        <div class="card-body">
+            {% if user.typeUser == 'permanent' %}
+                <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
+            {% endif %}
+            <p><strong>{{ 'mail.personnel'|trans }} :</strong> <a href="mailto:{{ user.mailPerso }}"
+                                                                  target="_blank">{{ user.mailPerso }}</a></p>
+            {% if user.typeUser == 'etudiant' %}
+                <h5>{{ 'adresse.de.letudiant'|trans }}</h5>
+                {{ include('composants/adresse.html.twig', {adresse:user.adresse}) }}
+                <h5>{{ 'adresse.parentale'|trans }}</h5>
+                {{ include('composants/adresse.html.twig', {adresse:user.adresseParentale}) }}
+            {% else %}
+                {{ include('composants/adresse.html.twig', {adresse:user.adresse}) }}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+{% if user.typeUser == 'etudiant' %}
+    <div class="card">
+        <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
+        <div class="card-body">
+                <p>{{ user.amenagementsParticuliers }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'parcours.scolaire'|trans }}</h4>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">{{ 'bac'|trans }} :</dt>
+                <dd class="col-sm-9">{{ user.bac }} {{ 'obtenu.en'|trans }} {{ user.anneeBac }}</dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

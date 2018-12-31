@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.trello_tache.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_trello_tache_board') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.board'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-eye"></i></a>
+            <a href="{{ path('administration_trello_tache_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><span
+                        class="material-icons">build</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.trello_tache.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.deadline'|trans }}</th>
+                    <th>{{ 'table.description'|trans }}</th>
+                    <th>{{ 'table.membres'|trans }}</th>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for trello_tache in trello_taches %}
+                    <tr>
+                        <td>{{ trello_tache.libelle }}</td>
+                        <td>{{ trello_tache.deadline ? trello_tache.deadline|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ trello_tache.description }}</td>
+                        <td>membre</td>
+                        <td>{{ trello_tache.updated ? trello_tache.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+
+                        <td>
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'trello_tache', id: trello_tache.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_trello_tache_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_trello_tache_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_trello_tache_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_trello_tache_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_trello_tache'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

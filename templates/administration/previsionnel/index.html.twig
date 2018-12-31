@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'administration.previsionnel.heading'|trans({'%annee%': annee}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_previsionnel_import') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.import_previsionnel'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-import"></i></a>
+            <a href="{{ path('administration_previsionnel_export_omega', {annee:annee}) }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.export_omega'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-layout-tab"></i></a>
+            <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card card-body">
+        <select id="change_annee_temp_previsionnel" class="form-control">
+            <option value="0">Changer d'année temporairement</option>
+            {% for annee in 2017..'now'|date('Y')+4 %}
+                <option value="{{ annee }}">{{ annee }}</option>
+            {% endfor %}
+        </select>
+        <small class="form-text">Le changement d'année de manière permanent <a href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel de l'année selectionné dans le configuration est celui actif sur l'intranet</small>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">Par enseignant</h4>
+                <div class="card-body">
+                    <div class="form-group">
+                        <select class="form-control" data-live-search="true" data-provide="selectpicker" data-annee="{{ annee }}"
+                                id="previPersonnel">
+                            <option value="">Choisir l'enseignant</option>
+                            {% for personnel in user_data.personnels %}
+                                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">Par matière</h4>
+                <div class="card-body">
+                    <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previMatiere" data-annee="{{ annee }}">
+                        <option value="">Choisir la matière</option>
+                        {% for matiere in matieres %}
+                            <option value="{{ matiere.id }}">{{ matiere.codeMatiere }} | {{ matiere.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-title">Par semestre</h4>
+                <div class="card-body">
+                    <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previSemestre" data-annee="{{ annee }}">
+                        <option value="">Choisir le semestre</option>
+                        {% for semestre in user_data.semestres %}
+                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="blocPrevisionnel">
+        <div class="card">
+            <h4 class="card-title">{{ 'adm.previsionnel.index.heading'|trans }}</h4>
+            <div class="card-body">
+                <div class="alert alert-info">Veuillez choisir dans une des listes ci-dessus.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.previsionnel.duplicate.annee.heading'|trans }}</h4>
+        <div class="card-body">
+            <form action="{{ path('administration_previsionnel_duplicate_annee') }}" method="post" class="form">
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="annee_depart">Année à copier</label>
+                            <select name="annee_depart" id="annee_depart" class="form-control">
+                                <option value="">Choisir</option>
+                                {% for annee in 2017..'now'|date('Y')+2 %}
+                                    <option value="{{ annee }}">{{ annee }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="annee_destination">Année de destination</label>
+                            <select name="annee_destination" id="annee_destination" class="form-control">
+                                <option value="">Choisir</option>
+                                {% for annee in 2017..'now'|date('Y')+4 %}
+                                    <option value="{{ annee }}">{{ annee }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="custom-controls-stacked">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="annee_concerver" name="annee_concerver" value="true">
+                                <label class="custom-control-label" for="annee_concerver">Conserver les données dans l'année de destination ? (par défaut la copie remplace l'ensemble des données)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <button class="btn btn-block btn-success" type="submit">
+                            Dupliquer le prévisionnel de l'année
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_previsionnel_export_omega', {annee: annee}),
+            title: 'exporter.omega'|trans,
+            icone : "fa fa-table"
+        },
+        {type: 'info',
+            href: path('administration_previsionnel_export', {_format:'pdf', annee: annee}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_previsionnel_export', {_format:'csv', annee: annee}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_previsionnel_export', {_format:'xlsx', annee: annee}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('administration_previsionnel_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_previsionnel'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

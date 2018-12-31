@@ -1,0 +1,150 @@
+<?php
+
+namespace App\Controller\superAdministration;
+
+use App\Controller\BaseController;
+use App\Entity\Constantes;
+use App\Entity\Semestre;
+use App\Entity\Ue;
+use App\Form\UeType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+/**
+ * @Route("/super-administration/structure/unite-enseignement")
+ */
+class UeController extends BaseController
+{
+    /**
+     * @Route("/new/{semestre}", name="sa_ue_new", methods="GET|POST")
+     * @param Request                $request
+     *
+     * @param Semestre               $semestre
+     *
+     * @return Response
+     */
+    public function create(Request $request, Semestre $semestre): Response
+    {
+        if ($semestre->getAnnee() !== null) {
+            $ue = new Ue($semestre);
+            $form = $this->createForm(UeType::class, $ue, [
+                'diplome' => $semestre->getAnnee()->getDiplome(),
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($ue);
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.add.success.flash');
+
+                return $this->redirectToRoute(
+                    'sa_structure_index',
+                    ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]
+                );
+            }
+
+            return $this->render('structure/ue/new.html.twig', [
+                'ue'   => $ue,
+                'form' => $form->createView(),
+            ]);
+        }
+
+        return $this->redirectToRoute('erreur_666');
+    }
+
+    /**
+     * @Route("/{id}", name="sa_ue_show", methods="GET")
+     * @param Ue $ue
+     *
+     * @return Response
+     */
+    public function show(Ue $ue): Response
+    {
+        return $this->render('structure/ue/show.html.twig', ['ue' => $ue]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="sa_ue_edit", methods="GET|POST")
+     * @param Request                $request
+     * @param Ue                     $ue
+     *
+     * @return Response
+     */
+    public function edit(Request $request, Ue $ue): Response
+    {
+        if ($ue->getDiplome() !== null) {
+            $form = $this->createForm(UeType::class, $ue, [
+                'diplome' => $ue->getDiplome(),
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.edit.success.flash');
+
+                return $this->redirectToRoute(
+                    'sa_structure_index',
+                    ['formation' => $ue->getDiplome()->getFormation()->getId()]
+                );
+            }
+
+            return $this->render('structure/ue/edit.html.twig', [
+                'ue'   => $ue,
+                'form' => $form->createView(),
+            ]);
+        }
+
+        return $this->render('erreur/404.html.twig');
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="sa_ue_duplicate", methods="GET|POST")
+     * @param Ue                     $ue
+     *
+     * @return Response
+     */
+    public function duplicate(Ue $ue): Response
+    {
+        $newUe = clone $ue;
+
+        $this->entityManager->persist($newUe);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('sa_ue_edit', ['id' => $newUe->getId()]);
+    }
+
+    /**
+     * @Route("/{id}", name="sa_ue_delete", methods="DELETE")
+     */
+    public function delete(Request $request, Ue $ue): Response
+    {
+        $id = $ue->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            if (count($ue->getMatieres()) === 0) {
+                $this->entityManager->remove($ue);
+                $this->entityManager->flush();
+                $this->addFlashBag(
+                    Constantes::FLASHBAG_SUCCESS,
+                    'ue.delete.success.flash'
+                );
+
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'ue.delete.error.non-vide.flash');
+
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}

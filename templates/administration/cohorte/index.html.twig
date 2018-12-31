@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'gestion.cohorte.heading'|trans({'%annee%': annee})|raw }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">
+        {{ 'gestion.cohorte.choix.annee.heading'|trans()|raw }}
+    </h4>
+    <div class="card-body">
+        <div class="form-group">
+            <label class="control-label" for="annee">Choisissez une année</label>
+
+            <select name="annee" id="annee" class="form-control">
+                {% for i in 2015..'now'|date('Y') %}
+                <option value="{{ i }}" {% if i == annee %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+        <div>
+            <button type="submit" class="btn btn-block btn-warning">Afficher le suivi de cohorte
+            </button>
+            <br>
+        </div>
+    </div>
+</div>
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'gestion.cohorte.heading'|trans({'%annee%': annee})|raw }}
+        </h4>
+        <div class="card-body">
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom - Prénom</th>
+                    <th>Bac</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>Nb. Sem.</th>
+                    <th>Situation</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in etudiants %}
+                    <tr>
+                        <td>#{{ loop.index }}</td>
+                        <td>{{ etudiant.display }}</td>
+                        <td>{{ etudiant.bac }}</td>
+                        {% set i=0 %}
+                        {% set nbs=0 %}
+                        {% set last = '' %}
+                        {% for parcour in parcours if parcour.etudiant==etudiant %}
+                            <td><span class="
+			                                {% if parcour.decision=='V' %} label label-success
+			                                {% elseif parcour.decision == 'NV' or parcour.decision =='MNC' %}
+			                                label label-warning
+			                                {% endif %}">{{ parcour.semestre.libelle }}</span></td>
+                            {% set nbs=nbs+1 %}
+                            {% set i=i+1 %}
+                            {% set last = parcour.decision %}
+                        {% endfor %}
+                        {% for j in i..5 %}
+                            <td> -</td>
+                        {% endfor %}
+                        <td>{{ nbs }}</td>
+                        <td>{{ last }}</td>
+                        <td><a href="{{ path('user_profil',{slug:etudiant.slug, type:'etudiant'}) }}" target="_blank"
+                               class="btn
+                    btn-info"
+                               rel="tooltip" data-placement="top" data-original-title="Voir profil de l'étudiant"><i
+                                        class="fa fa-eye"></i></a>
+                            {#<a href="{{ path('da_kernel_administration_cohorte_parcours',{'etudiant':etudiant.id}) }}"  target="_blank" class="btn btn-warning" rel="tooltip" data-placement="top" data-original-title="Voir/modifier le parcours de l'étudiant"><i class="glyphicon glyphicon-road"></i></a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">Statistiques</h4>
+        <div class="card-body">
+
+            <div class="additional-btn">
+                <a href="#" title="Export excel"><i class="fa fa-file-excel-o"></i> Export (xls)</a>
+            </div>
+
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>Promo</th>
+                    <th>En 2 ans</th>
+                    <th>En 2 ans 1/2</th>
+                    <th>En 3 ans</th>
+                    <th>Démissions</th>
+                    <th>Réorientation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2013</td>
+                    <td>10 (12%)</td>
+                    <td>12 (11%)</td>
+                    <td>10 (10%)</td>
+                    <td>23 (1%)</td>
+                    <td>12 (4%)</td>
+                </tr>
+
+                <tr>
+                    <th>Général</th>
+                    <th>10 (12%)</th>
+                    <th>12 (11%)</th>
+                    <th>10 (10%)</th>
+                    <th>23 (1%)</th>
+                    <th>12 (4%)</th>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

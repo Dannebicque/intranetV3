@@ -1,0 +1,69 @@
+<div class="header-action">
+    <ul class="nav nav-tabs" role="tablist">
+        {% if is_granted('ROLE_PERMANENT') %}
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
+                   href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'previsionnel' %}active{% endif %}"
+                   href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
+            </li>
+
+            {% if user_data.formation.optStage == true %}
+                <li class="nav-item">
+                    <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
+                       href="{{ path('application_personnel_stage_index') }}"
+                       role="tab">{{ 'menu.stages'|trans }}</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
+                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'salle_examen' %}active{% endif %}"
+                   href="{{ path('application_personnel_salle_examen_index') }}" role="tab">{{ 'menu.salle_examen'|trans }}</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
+                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
+            </li>
+
+        {% else %}
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
+                   href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
+            </li>
+            {% if user_data.formation.optStage == true %}
+                <li class="nav-item ">
+                    <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
+                       href="{{ path('application_etudiant_stage_index') }}"
+                       role="tab">{{ 'menu.stages'|trans }}</a>
+                </li>
+            {% endif %}
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
+                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
+            </li>
+
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'rattrapage' %}active{% endif %}"
+                   href="{{ path('application_etudiant_rattrapage_index') }}"
+                   role="tab">{{ 'menu.rattrapage'|trans }}</a>
+            </li>
+
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
+                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="buttons">
+        <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+           data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                    class="material-icons">dashboard</i></a>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+Bouton pour Synchro avec Celcat ou pour Synchro avec Fils (2 TP donne  TD)
+<table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+    <thead>
+    <tr>
+        <th></th>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Bac</th>
+        {% for groupe in typeGroupe.groupes %}
+            <th>GR. {{ groupe.libelle }}</th>
+        {% endfor %}
+        <th>N</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for etudiant in etudiants %}
+        {% set grp='' %}
+        {% set grp_etu='' %}
+        <tr id="ligne_{{ etudiant.id }}">
+            <td></td>
+            <td>{{ etudiant.numetudiant }}</td>
+            <td>{{ etudiant.nom|upper }}</td>
+            <td>{{ etudiant.prenom|capitalize }}</td>
+            <td>{{ etudiant.bac }}</td>
+            {% for groupe in typeGroupe.groupes %}
+                <td><input type="radio" title="{{ etudiant.displayPr }} => {{ groupe.libelle }}" name="etu_{{ etudiant.id }}" class="changegroupe" value="{{ groupe.id }}" {% for etu in groupe.etudiants %} {% if etu==etudiant %}checked {% set grp='ok' %}{% set grp_etu=groupe.id %}{% endif %}{% endfor %} /></td>
+            {% endfor %}
+            <td><input type="radio" title="{{ etudiant.displayPr }} => N" name="etu_{{ etudiant.id }}" class="changegroupe" value="0" {% if grp!='ok' %}checked {% set grp_etu=0 %}{% endif %}/>
+                <input type="hidden" name="etu_{{ etudiant.id }}_old" id="etu_{{ etudiant.id }}_old" value="{{ grp_etu }}" /></td>
+            <td class="ms">
+                <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i
+                                    class="ti-more-alt rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}"
+                               class="dropdown-item"><i
+                                        class="{{ iconShow }}"></i>Profil</a>
+                            <a href="{{ path('edt_intervenant_export_annee') }}"
+                               class="dropdown-item"><i
+                                        class="ti-trash"></i>Supprimer</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.etudiant.absence.justificatif.edit.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_etudiant_absence_justificatif_delete', {id: absence_justificatif.uuidString}) }}"
+               data-csrf="{{ csrf_token('delete' ~ absence_justificatif.uuidString) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"><i class="ti-trash"></i></a>
+            <a href="{{ path('app_etudiant_absence_justificatif_show', {id: absence_justificatif.uuidString}) }}"
+               class="btn btn-info btn-sm btn-float" title="{{ 'atitle.voir'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-eye"></i></a>
+            <a href="{{ path('app_etudiant_absence_justificatif_index') }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.etudiant.absence.justificatif.edit.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
+{% endblock %}

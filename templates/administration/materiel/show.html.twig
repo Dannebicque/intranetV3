@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.materiel.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'materiel', id: materiel.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.materiel.show.heading'|trans }}</h4>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ materiel.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ materiel.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ materiel.description }}</td>
+            </tr>
+            <tr>
+                <th>PhotoName</th>
+                <td>{{ materiel.photoName }}</td>
+            </tr>
+            <tr>
+                <th>PhotoFile</th>
+                <td>{{ materiel.photoFile }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% import "macros/show-line.html.twig" as table %}
+
+{% block header %}
+    {{ 'adm.matiere.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+<div class="header-action">
+    {{ include('composants/adm-buttons-show.html.twig', {elt: 'matiere', id: matiere.id}) }}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.matiere.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            {{ table.line('table.id', matiere.id) }}
+            {{ table.line('table.libelle', matiere.libelle) }}
+            {{ table.line('table.code_matiere', matiere.codeMatiere) }}
+            {{ table.line('table.created', matiere.created ? matiere.created|localizeddate('long', 'short', app.request.getLocale()) : '') }}
+            {{ table.line('table.updated', matiere.updated ? matiere.updated|localizeddate('long', 'short', app.request.getLocale()) : '') }}
+            {{ table.line('table.code_apogee', matiere.codeApogee) }}
+            {{ table.line('table.code_version', matiere.codeVersion) }}
+            {{ table.line('table.code_departement', matiere.codeDepartement) }}
+            {{ table.line('table.ue', matiere.ue ? matiere.ue.libelle : 'non.defini'|trans) }}
+            {{ table.line('table.ppn', matiere.ppn ? matiere.ppn.libelle : 'non.defini'|trans) }}
+            {{ table.line('table.parcours', matiere.parcours ? matiere.parcours.libelle : 'non.defini'|trans) }}
+            {{ table.line('table.cm_ppn', matiere.cmPpn) }}
+            {{ table.line('table.cm_formation', matiere.cmFormation) }}
+            {{ table.line('table.td_ppn', matiere.tdPpn) }}
+            {{ table.line('table.td_formation', matiere.tdFormation) }}
+            {{ table.line('table.tp_ppn', matiere.tpPpn) }}
+            {{ table.line('table.tp_formation', matiere.tpFormation) }}
+            {{ table.line('table.commentaire', matiere.commentaire) }}
+            {{ table.line('table.nb_notes', matiere.nbNotes) }}
+            {{ table.line('table.coefficient', matiere.coefficient) }}
+            {{ table.line('table.nb_ects', matiere.nbEcts) }}
+            {{ table.line('table.suspendu', matiere.suspendu ? 'Yes'|trans : 'No'|trans) }}
+            {{ table.line('table.pac', matiere.pac ? 'Yes'|trans : 'No'|trans) }}
+            {{ table.line('table.objectifs_module', matiere.objectifsModule) }}
+            {{ table.line('table.competences_visees', matiere.competencesVisees) }}
+            {{ table.line('table.contenu', matiere.contenu) }}
+            {{ table.line('table.pre_requis', matiere.preRequis) }}
+            {{ table.line('table.modalites', matiere.modalites) }}
+            {{ table.line('table.prolongements', matiere.prolongements) }}
+            {{ table.line('table.mots_cles', matiere.motsCles) }}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

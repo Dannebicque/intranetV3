@@ -1,0 +1,44 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}{{ 'security.login.heading'|trans }}{% endblock %}
+{% block body %}
+    class="min-h-fullscreen bg-img center-vh p-20" style="background-image: url({{ asset('assets/bg/2.jpg') }});" data-overlay="7"
+{% endblock %}
+{% block content %}
+    <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0 text-center" style="max-width: 100%">
+        <div>
+            <img class="avatar avatar-xxl" src="{{ asset('upload/photo/'~user.photoName) }}" alt="Photo de {{ user
+            .display }}">
+            <br><br>
+            <h5 class="lead">{{ user.displayPr }}</h5>
+            <p>Veuillez définir votre formation par défaut</p>
+            <small>Vous pourrez modifier ce chois dans vos paramètres.</small>
+        </div>
+
+        <form class="form-type-material" method="post" action="{{ path('security_choix_formation') }}">
+            <div class="row">
+                {% for formation in formations %}
+                    <div class="col-sm-12 col-md-6">
+                        <div class="custom-control custom-control-lg custom-radio">
+                            <input type="radio" class="custom-control-input" id="formation_{{ formation.id }}"
+                                   value="{{ formation.id }}"
+                                   name="formation">
+                            <label class="custom-control-label"
+                                   for="formation_{{ formation.id }}" style="background-color: {{ formation.formation.couleur }}; color:white;
+                                   display:block">{{ formation.formation.libelle }}</label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+            <p>Si la formation n'apparaît pas dans la liste, merci de contacter le responsable de cette formation.</p>
+            <br>
+            <button class="btn btn-bold btn-block btn-primary" type="submit"><i class="fa fa-unlock-alt mr-2"></i>
+                Enregistrer
+            </button>
+        </form>
+
+        <p class="text-center text-muted fs-13 mt-20">Vous n'êtes pas {{ user.displayPr }}? <a class="text-primary
+        fw-500" href="{{ path('security_logout') }}">Déconnexion</a></p>
+    </div>
+{% endblock %}

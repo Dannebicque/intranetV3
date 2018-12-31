@@ -1,0 +1,103 @@
+<header class="card-header">
+    <h4 class="card-title">{{ title }}</h4>
+    <div class="card-header-actions" style="">
+
+                <span>
+                    {% for semestre in user_data.semestres %}
+                        <a href="#" class="btn btn-sm btn btn-info filtreUtilisateurDate"
+                           data-type="{{ semestre.libelle }}"> {{ semestre.libelle }}</a>
+                    {% endfor %}
+                    {% if is_granted('ROLE_PERMANENT') %}
+                        <a href="#" class="btn btn-sm btn btn-info filtreUtilisateurDate"
+                           data-type="personnel"> {{ 'personnel'|trans }}</a>
+                    {% endif %}
+                </span>
+
+        <span>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_SOUTENANCE') }}"> {{ constant('App\\Entity\\Date::TYPE_SOUTENANCE')|trans }}</button>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_PROJET') }}"> {{ constant('App\\Entity\\Date::TYPE_PROJET')|trans }}</button>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_STAGE') }}"> {{ constant('App\\Entity\\Date::TYPE_STAGE')|trans }}</button>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_COMMISSION') }}"> {{ constant('App\\Entity\\Date::TYPE_COMMISSION')|trans }}</button>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_REUNION') }}"> {{ constant('App\\Entity\\Date::TYPE_REUNION')|trans }}
+                            s</button>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_RENTREE') }}"> {{ constant('App\\Entity\\Date::TYPE_RENTREE')|trans }}</button>
+                        <button class="btn btn-sm btn btn-success filtreTypeDate"
+                                data-type="{{ constant('App\\Entity\\Date::TYPE_AUTRE') }}"> {{ constant('App\\Entity\\Date::TYPE_AUTRE')|trans }}</button>
+                </span>
+    </div>
+</header>
+<div class="card-body">
+
+    <table class="table table-bordered" id="planning">
+        <thead>
+        <tr>
+            {% if onglet == 1 %}
+                {% set debut = 1 %}
+                {% set fin = 6 %}
+                <th colspan="4">{{ 'septembre'|trans }}</th>
+                <th colspan="4">{{ 'octobre'|trans }}</th>
+                <th colspan="4">{{ 'novembre'|trans }}</th>
+                <th colspan="4">{{ 'decembre'|trans }}</th>
+                <th colspan="4">{{ 'janvier'|trans }}</th>
+                <th colspan="4">{{ 'fevrier'|trans }}</th>
+            {% else %}
+                {% set debut = 7 %}
+                {% set fin = 12 %}
+                <th colspan="4">{{ 'mars'|trans }}</th>
+                <th colspan="4">{{ 'avril'|trans }}</th>
+                <th colspan="4">{{ 'mai'|trans }}</th>
+                <th colspan="4">{{ 'juin'|trans }}</th>
+                <th colspan="4">{{ 'juillet'|trans }}</th>
+                <th colspan="4">{{ 'aout'|trans }}</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in 1..31 %}
+            <tr>
+                {% for j in debut..fin %}
+                    {% if tabPlanning[j][i] is defined %}
+                        {% set we = tabPlanning[j][i]|date('N') == 6 or tabPlanning[j][i]|date('N') == 7 %}
+                        {% if tabPlanning[j][i]|date('N') == 1 %}
+                            {% if tabFinMois[j]-i >6 %}
+                                <td rowspan="7">{{ tabPlanning[j][i]|date('W') }}</td>
+                            {% else %}
+                                <td rowspan="{{ tabFinMois[j] - i + 1 }}">{{ tabPlanning[j][i]|date('W') }}</td>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if i == 1 and tabPlanning[j][i]|date('N') != 1 %}
+                            <td rowspan="{{ 8 - tabPlanning[j][i]|date('N') }}">{{ tabPlanning[j][i]|date('W') }}</td>
+                        {% endif %}
+
+                        <td {{ we ? 'style="background-color: #00AAAA"' }}>{{ tabJour[tabPlanning[j][i]|date('N')] }}</td>
+                        <td {{ we ? 'style="background-color: #00AAAA"' }}>{{ tabPlanning[j][i]|date('d') }}</td>
+                        <td
+                                {% if tabPlanning[j][i]|date('Y-m-d') in tabFerie %}
+                                style="background-color: orangered">
+                            Férié
+                            {% else %}
+                                >{% if events[tabPlanning[j][i]|date('Y-m-d')] is defined %}
+                                {% for event in events[tabPlanning[j][i]|date('Y-m-d')] %}
+                                    <span class="event {% for sem in event.semestres %}{{ sem.libelle }} {% endfor %}"
+                                          data-type-event="{{ event.type }}"
+                                          data-qui-event="{{ event.qui }}">{{ event.libelle }}</span>
+                                {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                        </td>
+                    {% else %}
+                        <td colspan="4">&nbsp;</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

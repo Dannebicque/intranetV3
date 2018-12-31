@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuration index{% endblock %}
+
+{% block body %}
+    <h1>Configuration index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Cle</th>
+                <th>Valeur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for configuration in configurations %}
+            <tr>
+                <td>{{ configuration.id }}</td>
+                <td>{{ configuration.created ? configuration.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ configuration.updated ? configuration.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ configuration.cle }}</td>
+                <td>{{ configuration.valeur }}</td>
+                <td>
+                    <a href="{{ path('configuration_show', {'id': configuration.id}) }}">show</a>
+                    <a href="{{ path('configuration_edit', {'id': configuration.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('configuration_new') }}">Create new</a>
+{% endblock %}

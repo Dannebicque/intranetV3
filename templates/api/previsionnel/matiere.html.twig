@@ -1,0 +1,39 @@
+<table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th class="cm">NB h*</th>
+        <th class="cm">NB Gr.</th>
+        <th class="cm">1.5**</th>
+
+        <th class="previtd">NB h/ Gr.*</th>
+        <th class="previtd">NB Gr.</th>
+        <th class="previtd">1.5**</th>
+
+        <th class="previtp">NB h/ Gr.*</th>
+        <th class="previtp">NB Gr.</th>
+        <th class="previtp">1.5**</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for previ in previsionnel %}
+        <tr>
+            <td colspan="9">
+                {{ previ.personnel ? previ.personnel.displayPr :'non.defini'|trans }}
+            </td>
+        </tr>
+        <tr>
+            <td>{{ previ.nbHCm }} h</td>
+            <td>{{ previ.nbGrCm }}</td>
+            <td>{{ previ.nbSeanceCm }}</td>
+            <td class="previtd">{{ previ.nbHTd }} h</td>
+            <td class="previtd">{{ previ.nbGrTd }}</td>
+            <td class="previtd">{{ previ.nbSeanceTd }}</td>
+            <td class="previtp">{{ previ.nbHTp }} h</td>
+            <td class="previtp">{{ previ.nbGrTp }}</td>
+            <td class="previtp">{{ previ.nbSeanceTp }}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+</table>

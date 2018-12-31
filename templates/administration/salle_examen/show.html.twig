@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.salle_examen.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'salle_examen', id: salle_examan.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.salle_examen.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.nbColonnes'|trans }}</th>
+                    <td>{{ salle_examan.nbColonnes }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.nbRangs'|trans }}</th>
+                    <td>{{ salle_examan.nbRangs }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.capacite_salle'|trans }}</th>
+                    <td>{{ salle_examan.capacite }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.placesInterdites'|trans }}</th>
+                    <td>{{ salle_examan.placesInterdites }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ salle_examan.created ? salle_examan.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ salle_examan.updated ? salle_examan.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

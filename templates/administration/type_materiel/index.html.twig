@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_materiel.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'type_materiel'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.type_materiel.index.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables" data-checkbox="true">
+            <thead>
+            <tr>
+                <th><input name="select_all" value="1" id="select_all" type="checkbox" /></th>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_materiel in type_materiels %}
+            <tr id="ligne_{{ type_materiel.id }}">
+                <td></td>
+                <td>{{ type_materiel.id }}</td>
+                <td>{{ type_materiel.libelle }}</td>
+                <td>
+                    {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'type_materiel', id: type_materiel.id}) }}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+    </div>
+{% endblock %}

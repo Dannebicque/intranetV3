@@ -1,0 +1,88 @@
+<table width="100%">
+    <tr>
+        <td style="text-align: center; width:20%"><img
+                    src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.formation.logoName }}" alt="logo"
+                    width="75"/></td>
+        <td style="text-align: center; width:60%"><h1>{{ connect.formation.nomformation }}</h1>
+            <stong>Année Universitaire {{ etudiant.annee.diplome.displayAnneeUniversitaire }}</stong>
+            <br/>
+            UNIVERSITE de REIMS CHAMPAGNE-ARDENNE<br/>
+            {{ settings('NOM_LONG_IUT') }}<br/>
+            <strong>{{ etudiant.annee.diplome.typediplome.libelle }}</strong><br/>
+            <strong>{{ etudiant.annee.diplome.nomdiplome }}</strong><br/>
+        </td>
+        <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}" alt="logo"
+                                                       width="75"/></td>
+    </tr>
+</table>
+<h1>Liste des notes du Semestre {{ etudiant.semestre.display }}<br/>Relevé provisoire</h1><br/>
+<h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
+<p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
+    <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
+<table class="table table-bordered" width="100%">
+    <thead>
+    <tr>
+        <th>N° Eval.</th>
+        <th>Date</th>
+        <th>Module</th>
+        <th>Coeff.</th>
+        <th>Note</th>
+        <th>Moy.</th>
+        <th>Min.</th>
+        <th>Max.</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for n in notes %}
+        {% if etudiant.diplome.colCommentaires == true %}
+            {% if matprec is defined and matprec != n.evaluation.matiere.id %}
+                <tr style="height: 50px">
+                    <td colspan="2">Commentaires :</td>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
+                <td style="text-align: center">{{ n.evaluation.dateeval|date('d/m/Y') }}</td>
+                <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
+                <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moy|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
+            </tr>
+
+
+        {% else %}
+            <tr>
+                <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
+                <td style="text-align: center">{{ n.evaluation.dateeval|date('d/m/Y') }}</td>
+                <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
+                <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moy|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
+            </tr>
+        {% endif %}
+        {% set matprec = n.evaluation.matiere.id %}
+    {% endfor %}
+
+    </tbody>
+</table>
+<br/><br/><br/>
+<table width="100%">
+    <tr>
+        <td width="50%">{{ settings('VILLE_IUT') }},
+            le {{ "now"|date('d/m/Y') }}</td>
+        <td width="50%">Le responsable du diplôme<br/>
+            {{ etudiant.diplome.respDiplome.displayPr }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td>Observations</td>
+        <td>Signature</td>
+    </tr>
+</table>

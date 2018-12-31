@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{{ 'app.personnel.note.index.titre'|trans }} | <strong>{{ matiere.libelle }}</strong>{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if matiere.nbNotes > 0 %}
+            <ul class="nav nav-tabs" role="tablist">
+                {% for eval in evaluations.evaluations %}
+                    <li class="nav-item">
+                        <a href="#eval{{ eval.id }}" data-toggle="tab"
+                           class="nav-link {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active{% endif %}">{{ 'evaluation'|trans }} N° {{ loop.index }}
+                            ({{ eval.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }})</a>
+                    </li>
+                {% endfor %}
+
+                {% if evaluations.evaluations|length < matiere.nbNotes %}
+                    {% for i in evaluations.evaluations|length..matiere.nbNotes-1 %}
+                        <li class="nav-item">
+                            <a href="#evalvide{{ i }}" data-toggle="tab"
+                               class="nav-link {% if evaluations.evaluations|length == 0 and loop.first %} active {% endif %}">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+
+            </ul>
+        {% endif %}
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% if matiere.nbNotes > 0 %}
+        <div class="tab-content">
+            {% for eval in evaluations.evaluations %}
+                {# feature: Par défaut afficher la synthèse selon le type choisi + promo, mais laisser la possibilité d'avoir la synthèse sur les autres type de groupe, en proposant des "boutons" sur le header comme pour le trombi #}
+                <div class="tab-pane {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active show{% endif %}"
+                     id="eval{{ eval.id }}" role="tabpanel">
+                    <div class="card">
+                        <h4 class="card-title">Evaluation N° {{ loop.index }} ({{ eval.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }},
+                            #{{ eval.id }})</h4>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>{{ 'table.groupe'|trans }}</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <th>{{ groupe.libelle }}</th>
+                                    {% endfor %}
+                                    <th>{{ 'table.promo'|trans }}</th>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'table.minimum'|trans }}</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].min|number_format(2) }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].promo.min|number_format(2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'table.maximum'|trans }}</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].max|number_format(2) }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].promo.max|number_format(2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'table.moyenne'|trans }}</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].moyenne|number_format(2) }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].promo.moyenne|number_format(2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'ecart.type'|trans }}</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].ecart_type|number_format(2) }}</td>
+                                    {% endfor %}
+                                    <td>{{ evaluations.statistiques[eval.id].promo.ecart_type|number_format(2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'table.actions'|trans }}</th>
+                                    {% for groupe in eval.typeGroupe.groupes %}
+                                        <td>
+
+                                            <div class="btn-group  btn-block">
+                                                <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
+                                                        data-toggle="dropdown"><label><i class="fa fa-file-pdf-o"></i></label>
+                                                    {{ 'exporter'|trans }}
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'groupe_'~groupe.id}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'groupe_'~groupe.id}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'groupe_'~groupe.id}) }}">{{ 'exporter.csv'|trans }}</a>
+                                                </div>
+                                            </div>
+                                            <a href="{{ path('application_personnel_evaluation_show', {uuid:eval.uuidString}) }}"
+                                               class="btn btn-block btn-info">{{ 'voir.modifier'|trans }}</a>
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <div class="btn-group  btn-block">
+                                            <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown"><label><i class="ti-printer"></i></label>
+                                                {{ 'exporter'|trans }}
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item"
+                                                   href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'all'}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'all'}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'all'}) }}">{{ 'exporter.csv'|trans }}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if evaluations.evaluations|length < matiere.nbNotes %}
+                {% for i in evaluations.evaluations|length..matiere.nbNotes-1 %}
+                    <div class="tab-pane {% if evaluations.evaluations|length == 0 and loop.first %} active show{% endif %}"
+                         id="evalvide{{ i }}" role="tabpanel">
+                        <div class="card">
+                            <h4 class="card-title">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})</h4>
+                            <div class="card-body">
+                                <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.id}) }}"
+                                   class="btn btn-block btn-large btn-primary">{{ 'note.saisie.manuelle'|trans }}</a>
+                                <a href="{{ path('application_personnel_note_import', {matiere:matiere.id}) }}"
+                                   class="btn btn-block btn-large btn-primary">{{ 'note.import'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="card">
+            <h4 class="card-title">{{ 'app.personnel.note.index.titre'|trans }} | {{ matiere.libelle }}</h4>
+            <div class="card-body">
+                {{ 'aucune.note.matiere'|trans }}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'application_personnel_note'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

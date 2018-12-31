@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.etudiant.semestre.parcours.heading'|trans() }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestres %}
+            <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'changer.de.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-header">Parcours des étudiants du semestre</h4>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>N° Etudiant</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Semestre courant</th>
+                    <th>Parcours</th>
+                    <th>A suivre</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in etudiants %}
+                    <tr>
+                        <td>{{ etudiant.numeroEtudiant }}</td>
+                        <td>{{ etudiant.nom }}</td>
+                        <td>{{ etudiant.prenom }}</td>
+                        <td>{{ etudiant.semestre.display }}</td>
+                        <td>{{ etudiant.parcours }}</td>
+                        <td>{{ etudiant.suvire }}</td>
+                        <td>
+                            actions
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            Parcours des étudiants du semestre.
+        </div>
+    </div>
+{% endblock %}
+

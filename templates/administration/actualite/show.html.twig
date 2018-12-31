@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.actualite.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'actualite', id: actualite.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.actualite.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ actualite.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.titre'|trans }}</th>
+                    <td>{{ actualite.titre }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.texte'|trans }}</th>
+                    <td>{{ actualite.texte }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ actualite.created ? actualite.created|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ actualite.updated ? actualite.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

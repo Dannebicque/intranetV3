@@ -1,0 +1,15 @@
+<dl class="row">
+    <dt class="col-md-5 col-sm-12">{{ 'matiere'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ absence.matiere.codeMatiere }} {{ absence.matiere.libelle }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'date'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : '' }} </dd>
+    <dt class="col-md-5 col-sm-12">{{ 'heure'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : '' }} </dd>
+    <dt class="col-md-5 col-sm-12">{{ 'justifiee'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ absence.justifie ? 'Yes'|trans : 'No'|trans }} </dd>
+    <dt class="col-md-5 col-sm-12">{{ 'saisie_par'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ absence.personnel.displayPr }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'created'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12"> {{ absence.created ? absence.created|localizeddate('long', 'short', app.request.getLocale()) : '' }} </dd>
+</dl>
+

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CelcatCalendrier{% endblock %}
+
+{% block body %}
+    <h1>Edit CelcatCalendrier</h1>
+
+    {{ include('celcat_calendrier/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('celcat_calendrier_index') }}">back to list</a>
+
+    {{ include('celcat_calendrier/_delete_form.html.twig') }}
+{% endblock %}

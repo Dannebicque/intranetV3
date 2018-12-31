@@ -1,0 +1,66 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+    {% for groupe in groupes %}
+
+        <table style="width: 100%; border:0;">
+            <tr>
+                <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.formation.logoName }}" alt="logo" height="75px"/></td>
+                <td style="text-align: center; width:60%"><h1>{{ user_data.formation.libelle }}</h1>
+                    <h2>{{ evaluation.semestre.libelle }}</h2>
+                    <h2>{{ user_data.displayAnneeUniversitaire }}</h2></td>
+                <td style="text-align: center; width:20%"><img
+                            src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
+                            alt="logo"
+                            height="75px"/></td>
+            </tr>
+        </table>
+
+        <h3>Rélévé de note pour le module {{ evaluation.matiere.display }} | Evaluation du {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}</h3>
+        <h4>{{ groupe.libelle }}</h4>
+        <h4>Saisi par : {{ evaluation.personnelAuteur.displayPr }}. Modification autorisées pour : {% for pers in evaluation.personnelAutorise %}{{ pers.displayPr }}
+                {% if not loop.last %}
+                    , {% endif %}
+            {% else %}
+                -
+            {% endfor %}</h4>
+        <table style="clear:both;width:100%" class="table">
+            <thead>
+            <tr>
+                {% if evaluation.semestre.annee.diplome.optAnonymat == false %}
+                    <th style="width: 15%">N°</th>
+                    <th style="width: 30%">Nom - Prénom</th>
+                    <th style="width: 20%; text-align: center">Note</th>
+                    <th style="width: 35%">Remise copie</th>
+                {% else %}
+                    <th style="width: 15%">N°</th>
+                    <th style="width: 35%; text-align: center">Note</th>
+                    <th style="width: 50%">Remise copie</th>
+                {% endif %}
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for etudiant in groupe.etudiants %}
+                <tr>
+                    <td style="text-align: center; height: 20px">{{ etudiant.numetudiant }}</td>
+
+                    {% if evaluation.semestre.annee.diplome.optAnonymat == false %}
+                        <td>&nbsp; {{ etudiant.display  }} </td>
+                    {% endif %}
+
+                    <td style="text-align: center">{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note|number_format(2) }}{% else %} - {% endif %}</td>
+                    <td>&nbsp;</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        {% if not loop.last %}
+            <div style="page-break-after: always"></div>
+        {% endif %}
+
+    {% endfor %}
+{% endblock %}

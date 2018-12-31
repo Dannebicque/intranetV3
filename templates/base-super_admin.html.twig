@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block sidebar_menu %}
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('super_admin_homepage') }}">
+            <span class="material-icons">dashboard</span>
+            <span class="title">{{ 'menu.dashboard'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('sa_scolarite_index') }}">
+            <span class="material-icons">perm_identity</span>
+            <span class="title">{{ 'menu.scolarite'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('sa_rh_index') }}">
+            <span class="material-icons">supervisor_account</span>
+            <span class="title">{{ 'menu.rh'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item active" id="menu-dashboard">
+        <a class="menu-link" href="{{ path('sa_previsionnel_index') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.previsionnel'|trans }}</span>
+        </a>
+    </li>
+
+{% endblock %}
+

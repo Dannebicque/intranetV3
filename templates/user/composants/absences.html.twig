@@ -1,0 +1,68 @@
+{{ include('bloc_notes_absences/etudiant_absences.html.twig', {absences: absences}) }}
+
+<div class="card">
+    <h4 class="card-title">Planning</h4>
+    <div class="card-body">
+        Planning du semestre avec les absences.
+        Mise en valeur des WE et des vacances.
+        sur une demi journée. Et un chiffre avec le nb de cours manqué sur une demi-journée.
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th colspan="3">Février</th>
+                <th colspan="3">Mars</th>
+                <th colspan="3">Avril</th>
+                <th colspan="3">Mai</th>
+                <th colspan="3">Juin</th>
+            </tr>
+            <tr>
+                <th>Jrs.</th>
+                <th>AM</th>
+                <th>PM</th>
+                <th>Jrs.</th>
+                <th>AM</th>
+                <th>PM</th>
+                <th>Jrs.</th>
+                <th>AM</th>
+                <th>PM</th>
+                <th>Jrs.</th>
+                <th>AM</th>
+                <th>PM</th>
+                <th>Jrs.</th>
+                <th>AM</th>
+                <th>PM</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in 1..31 %}
+                <tr>
+                    {% for j in 1..5 %}
+                        {% if tabPlanning[j][i] is defined %}
+                            {% set we = tabPlanning[j][i]|date('N') == 6 or tabPlanning[j][i]|date('N') == 7 %}
+
+
+                            <td {{ we ? 'style="background-color: #00AAAA"' }}>{{ tabJour[tabPlanning[j][i]|date('N')] }} {{ tabPlanning[j][i]|date('d') }}</td>
+
+                            {% if tabPlanning[j][i]|date('Y-m-d') in tabFerie %}
+                                <td colspan="2" style="background-color: orangered">Férié</td>
+                            {% else %}
+
+                                <td {{ we ? 'style="background-color: #00AAAA"' }}>{% if tabAbsence[i] is defined and tabAbsence[i][j] is defined %}{{ tabAbsence[i][j].am }}{% else %}&nbsp;{% endif %}</td>
+                                <td {{ we ? 'style="background-color: #00AAAA"' }}>{% if tabAbsence[i] is defined and tabAbsence[i][j] is defined %}{{ tabAbsence[i][j].pmde }}{% else %}&nbsp;{% endif %}</td>
+                                {#{% if events[tabPlanning[j][i]|date('Y-m-d')] is defined %}
+                                {% for event in events[tabPlanning[j][i]|date('Y-m-d')] %}
+                                    <span class="event">{{ event.libelle }}</span>
+                                {% endfor %}
+                            {% endif %}#}
+                            {% endif %}
+
+                        {% else %}
+                            <td colspan="3">&nbsp;</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

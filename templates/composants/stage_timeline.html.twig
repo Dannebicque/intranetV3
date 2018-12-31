@@ -1,0 +1,122 @@
+<ul class="nav nav-process nav-process-circle">
+
+    <li class="nav-item {% if stageEtudiant is not defined %}processing{% else %}complete{% endif %} ">
+        <span class="nav-title">Proposition de stage</span>
+        <a class="nav-link" href="#"></a>
+    </li>
+    <li class="nav-item
+                            {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is not constant
+        ('ETAT_STAGE_AUTORISE', stageEtudiant) )) %}
+                            complete
+                            {% elseif ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_AUTORISE', stageEtudiant) )) %}
+                            processing
+                            {% endif %}"
+    >
+        <span class="nav-title">Accès au formulaire</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+            ('ETAT_STAGE_AUTORISE', stageEtudiant) )) %}
+            <span>{{ stageEtudiant.dateAutorise|localizeddate('long', 'none', app.request.getLocale()) }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+                             {% if ((stageEtudiant is  defined) and (
+        (stageEtudiant.etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiant) )
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_IMPRIME', stageEtudiant) )
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+        )) %}
+                            complete
+                            {% elseif ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_DEPOSE', stageEtudiant) )) %}
+                            processing
+                            {% endif %}"
+    >
+        <span class="nav-title">Formulaire soumis</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((stageEtudiant is  defined) and (
+            (stageEtudiant.etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiant) )
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_IMPRIME', stageEtudiant) )
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+            )) %}
+            <span>{{ stageEtudiant.dateDepotFormulaire|localizeddate('long', 'none', app.request.getLocale())
+                }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+                        {% if ((stageEtudiant is  defined) and ((stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_IMPRIME', stageEtudiant) )
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+        )) %}
+                            complete
+                            {% elseif ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_VALIDE', stageEtudiant) )) %}
+                            processing
+                            {% endif %}">
+        <span class="nav-title">Formulaire Validé</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((stageEtudiant is  defined) and (
+            (stageEtudiant.etatStage is constant('ETAT_STAGE_IMPRIME', stageEtudiant) )
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+            )) %}
+            <span>{{ stageEtudiant.dateValidation|localizeddate('long', 'none', app.request.getLocale())
+                }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+                        {% if ((stageEtudiant is  defined) and (
+        (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+        )) %}
+                            complete
+                            {% elseif ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_IMPRIME', stageEtudiant) )) %}
+                            processing
+                            {% endif %}">
+        <span class="nav-title">Signature convention</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((stageEtudiant is  defined) and (
+            (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+            )) %}
+            <span>{{ stageEtudiant.dateImprime|localizeddate('long', 'none', app.request.getLocale()) }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+{% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE',
+        stageEtudiant))
+        ) %}
+                            complete
+                            {% elseif ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant) )) %}
+                            processing
+                            {% endif %}"
+    >
+        <span class="nav-title">Convention envoyée</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+            ('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
+            ) %}
+            <span>{{ stageEtudiant.dateConventionEnvoyee|localizeddate('long', 'none', app.request.getLocale())
+                }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+                        {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+        ('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant) )) %}
+                            complete
+                            {% endif %}">
+        <span class="nav-title">Convention complète</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
+            ('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant) )) %}
+            <span>{{ stageEtudiant.dateConventionRecu|localizeddate('long', 'none', app.request.getLocale
+                    ())
+                }}</span>
+        {% endif %}
+    </li>
+</ul>

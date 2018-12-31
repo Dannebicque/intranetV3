@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'actualite.liste.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'actualite.liste.heading'|trans }}</h4>
+        <div class="card-body">
+            <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                {% for actualite in actualites %}
+                    <li class="timeline-block">
+                        <div class="timeline-point timeline-point-primary">
+                            <span class="badge badge-ring badge-primary"></span>{# todo: varier les couleurs#}
+                        </div>
+                        <div class="timeline-content">
+                            <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|localizeddate('short', 'short', app.request.getLocale()) }}</time>
+                            <p>{{ actualite.titre }} : {{ actualite.texte }}</p>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="alert alert-info">{{ 'pas.encore.actualite'|trans }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+{% endblock %}

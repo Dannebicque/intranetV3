@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'settings.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action bg-white">
+        <nav class="nav">
+            <a class="nav-link active show"
+               href="#vosInformations" data-toggle="tab" role="tab"
+               id="profil-vosInformations">{{ 'tab.vosInformations'|trans }}</a>
+            <a class="nav-link" href="#vosParametres" data-toggle="tab" role="tab"
+               id="profil-vosParametres">{{ 'tab.vosParametres'|trans }}</a>
+
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="tab-content">
+        <div class="tab-pane active show" id="vosInformations">
+            <div class="card">
+                <h4 class="card-title">{{ 'settings.vos.informations'|trans }}</h4>
+
+                <div class="card-body">
+                    {% form_theme form 'form/my-form.html.twig' %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="vosParametres">
+            <div class="card">
+                <h4 class="card-title">{{ 'settins.vos.parametres'|trans }}</h4>
+
+                <div class="card-body">
+                    {% if user.typeUser == 'permanent' %}
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'table.formation'|trans }}</th>
+                                <th>{{ 'table.diplomes'|trans }}</th>
+                                <th>{{ 'table.par.defaut'|trans }}</th>
+                            </tr>
+                            </thead>
+
+                            {% for formation in user.personnelformations %}
+                                <tr>
+                                    <td>{{ formation.formation.libelle }}</td>
+                                    <td>{% for diplome in formation.formation.diplomes %}{{ diplome.display }}, {% endfor %}</td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input formationParDefaut" type="radio" name="pardefaut"
+                                                   value="{{ formation.formation.id }}"
+                                                   {% if formation.defaut == true %}checked{% endif %}>
+                                        </div>{# todo: A TESTER ! gérer le changement de formation par défaut. #}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% elseif user.typeUser == 'etudiant' %}
+
+                    {% else %}
+                        <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

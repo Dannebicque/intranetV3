@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.competence.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'competence', id: competence.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.competence.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ competence.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.code'|trans }}</th>
+                    <td>{{ competence.code }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ competence.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.parent'|trans }}</th>
+                    <td>{{ competence.parent ? competence.parent.display ? 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.diplome'|trans }}</th>
+                    <td>{{ competence.diplome ? competence.diplome.libelle : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ competence.created ? competence.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ competence.updated ? competence.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {# toto: liste des compétences enfants + ajout #}
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage_periode_courrier.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            {#<a href="{{ path('administration_stage_courrier_new') }}" class="btn btn-info btn-sm btn-float"#}
+               {#title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i#}
+                        {#class="ti-plus"></i></a>#}
+            <a href="{{ path('administration_stage_periode_gestion', {uuid: stagePeriode.uuidString}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i
+                        class="material-icons">arrow_back</i></a>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage_periode_courrier.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <p>Personnalisation des courriers et des mails associés à la période : <strong>{{ stagePeriode.libelle }}</strong></p>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Element</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for courrier in courriers %}
+                <tr>
+                    <td>{{ courrier.libelle }}</td>
+                    <td>{{ courrier.type }}</td>
+                    <td>
+                        <a href="{{ path('administration_stage_periode_courrier_show', {'id': courrier.id}) }}"
+                           class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+
+                        <a href="{{ path('administration_stage_periode_courrier_edit', {'id': courrier.id}) }}"
+                           class="btn btn-warning btn-outline btn-square"
+                           data-provide="tooltip"
+                           data-placement="bottom"
+                           title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
+                        <a href="{{ path('administration_stage_periode_courrier_delete', {id: courrier.id}) }}"
+                           data-csrf="{{ csrf_token('delete' ~ courrier.id) }}"
+                           class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip" data-placement="bottom"
+                           title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

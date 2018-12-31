@@ -1,0 +1,21 @@
+Bonjour {{ justificatif.etudiant.displayPr  }},
+
+Le justificatif que vous avez déposé le {{ justificatif.create|date('d/m/Y') }} pour la période du {{ justficiatif
+.dateDebut|date('d/m/Y') }} à partir de {{ justficiatif.heureDebut|date('H:i') }} au {{ justficiatif
+.dateFin|date('d/m/Y') }} jusqu'à {{ justficiatif.heureFin|date('H:i') }} a été refusé.
+
+Les motifs de refus peuvent être :
+- Motif non recevable (convocation officielle ou certificat médical)
+- Formulaire incomplet
+- Pièce jointe illisible
+- Période invalide.
+
+Les absences sur cette période ne sont donc pas justifiées. Vous pouvez vous rapprocher du directeur des études pour
+plus d'explications.
+
+Cordialement,
+
+Le responsable du diplôme
+{{ justificatif.etudiant.semestre.annee.diplome.responsableDiplome.displayPr  }}
+
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.

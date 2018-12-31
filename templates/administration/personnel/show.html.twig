@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.personnel.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+<div class="header-action">
+    <div class="buttons">
+        <a href="{{ path('administration_personnel_delete', {id: personnel.id}) }}" data-csrf="{{ csrf_token('delete' ~ personnel.id) }}" class="btn btn-danger btn-sm btn-float supprimer" title="Supprimer" data-provide="tooltip"
+           data-placement="bottom"><i class="ti-trash"></i></a>
+        <a href="{{ path('administration_personnel_edit', {id: personnel.id}) }}" class="btn btn-warning btn-sm btn-float" title="Modifier" data-provide="tooltip"
+           data-placement="bottom"><i class="{{ iconEdit }}"></i></a>
+
+        <a href="{{ path('administration_personnel_index',{type:personnel.typeUser}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+           data-placement="bottom"><i class="ti-arrow-left"></i></a>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'adm.personnel.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ personnel.id }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ personnel.statut }}</td>
+            </tr>
+            <tr>
+                <th>Poste_interne</th>
+                <td>{{ personnel.posteInterne }}</td>
+            </tr>
+            <tr>
+                <th>Tel_bureau</th>
+                <td>{{ personnel.telBureau }}</td>
+            </tr>
+            <tr>
+                <th>Responsabilites</th>
+                <td>{{ personnel.responsabilites }}</td>
+            </tr>
+            <tr>
+                <th>Domaines</th>
+                <td>{{ personnel.domaines }}</td>
+            </tr>
+            <tr>
+                <th>Entreprise</th>
+                <td>{{ personnel.entreprise }}</td>
+            </tr>
+            <tr>
+                <th>Bureau1</th>
+                <td>{{ personnel.bureau1 }}</td>
+            </tr>
+            <tr>
+                <th>Bureau2</th>
+                <td>{{ personnel.bureau2 }}</td>
+            </tr>
+            <tr>
+                <th>Numero_harpege</th>
+                <td>{{ personnel.numeroHarpege }}</td>
+            </tr>
+            <tr>
+                <th>Initiales</th>
+                <td>{{ personnel.initiales }}</td>
+            </tr>
+            <tr>
+                <th>Cv</th>
+                <td>{{ personnel.cvName }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ personnel.created ? personnel.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ personnel.updated ? personnel.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>Login</th>
+                <td>{{ personnel.username }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ personnel.slug }}</td>
+            </tr>
+            <tr>
+                <th>Type_user</th>
+                <td>{{ personnel.typeUser }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ personnel.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ personnel.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Mail_univ</th>
+                <td>{{ personnel.mailUniv }}</td>
+            </tr>
+            <tr>
+                <th>Site_univ</th>
+                <td>{{ personnel.siteUniv }}</td>
+            </tr>
+            <tr>
+                <th>Mail_perso</th>
+                <td>{{ personnel.mailPerso }}</td>
+            </tr>
+            <tr>
+                <th>Site_perso</th>
+                <td>{{ personnel.sitePerso }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ personnel.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Date_naissance</th>
+                <td>{{ personnel.dateNaissance ? personnel.dateNaissance|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tel1</th>
+                <td>{{ personnel.tel1 }}</td>
+            </tr>
+            <tr>
+                <th>Tel2</th>
+                <td>{{ personnel.tel2 }}</td>
+            </tr>
+            <tr>
+                <th>Remarque</th>
+                <td>{{ personnel.remarque }}</td>
+            </tr>
+            <tr>
+                <th>Signature</th>
+                <td>{{ personnel.signature }}</td>
+            </tr>
+            <tr>
+                <th>Visible</th>
+                <td>{{ personnel.visible ? 'Yes'|trans : 'No'|trans }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{{ personnel.photoName }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

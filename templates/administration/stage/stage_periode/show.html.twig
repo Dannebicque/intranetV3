@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage_periode.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'stage_periode', id: stage_periode.uuidString}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+    <h4 class="card-title">{{ 'adm.stage_periode.show.heading'|trans }}</h4>
+    <div class="card-body">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'table.id'|trans }}</th>
+                <td>{{ stage_periode.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.libelle'|trans }}</th>
+                <td>{{ stage_periode.libelle }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.semestre'|trans }}</th>
+                <td>{{ stage_periode.semestre ? stage_periode.semestre.libelle : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.numeroPeriode'|trans }}</th>
+                <td>{{ stage_periode.numeroPeriode }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.responsables_stage_periode'|trans }}</th>
+                <td>
+                    <ul>
+                    {% for personnel in stage_periode.responsables %}
+                        <li>{{ personnel.displayPr }}</li>
+                    {% else %}
+                        {{ 'non.defini'|trans }}
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'table.nbSemaines'|trans }}</th>
+                <td>{{ stage_periode.nbSemaines }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.nbJours'|trans }}</th>
+                <td>{{ stage_periode.nbJours }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.dateDebut'|trans }}</th>
+                <td>{{ stage_periode.dateDebut ? stage_periode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.dateFin'|trans }}</th>
+                <td>{{ stage_periode.dateFin ? stage_periode.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.stage_periode_interruptions'|trans }}</th>
+                <td>
+                    <ul>{% for stagePeriodeInterruption in stage_periode.stagePeriodeInterruptions %}
+                        <li>Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} </li>
+                    {% else %}
+                        {{ 'non.defini'|trans }}
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'table.stage_periode_soutenance'|trans }}</th>
+                <td>
+                    <ul>{% for stagePeriodeSoutenance in stage_periode.stagePeriodeSoutenances %}
+                            <li>Du {{ stagePeriodeSoutenance.dateDebut?stagePeriodeSoutenance.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} au {{ stagePeriodeSoutenance.dateFin?stagePeriodeSoutenance.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}, rapport pour le  {{ stagePeriodeSoutenance.dateRenduRapport?stagePeriodeSoutenance.dateRenduRapport|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</li>
+                        {% else %}
+                            {{ 'non.defini'|trans }}
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.ficheRenseignement'|trans }}</th>
+                <td><a href="{{ vich_uploader_asset(stage_periode, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a></td>
+            </tr>
+            <tr>
+                <th>{{ 'table.competencesVisees'|trans }}</th>
+                <td>{{ stage_periode.competencesVisees }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.modaliteEvaluation'|trans }}</th>
+                <td>{{ stage_periode.modaliteEvaluation }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.modaliteEvaluationPedagogique'|trans }}</th>
+                <td>{{ stage_periode.modaliteEvaluationPedagogique }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.modaliteEncadrement'|trans }}</th>
+                <td>{{ stage_periode.modaliteEncadrement }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.documentRendre'|trans }}</th>
+                <td>{{ stage_periode.documentRendre }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.nbEcts'|trans }}</th>
+                <td>{{ stage_periode.nbEcts }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.datesFlexibles'|trans }}</th>
+                <td>{{ stage_periode.datesFlexibles ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.copieAssistant'|trans }}</th>
+                <td>{{ stage_periode.copieAssistant ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ stage_periode.created ? stage_periode.created|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }} }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ stage_periode.updated ? stage_periode.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }} }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+{% endblock %}
