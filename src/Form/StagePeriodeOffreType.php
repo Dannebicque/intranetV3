@@ -17,6 +17,7 @@ class StagePeriodeOffreType extends AbstractType
 {
     /** @var Formation */
     private $formation;
+    private $annee;
 
     /**
      * @param FormBuilderInterface $builder
@@ -25,6 +26,7 @@ class StagePeriodeOffreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formation = $options['formation'];
+        $this->annee = $options['annee'];
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
@@ -42,7 +44,7 @@ class StagePeriodeOffreType extends AbstractType
                 'choice_label'  => 'libelle',
                 'query_builder' => function(StagePeriodeRepository $stagePeriodeRepository) {
                     return $stagePeriodeRepository->findByFormationBuilder($this->formation,
-                        $this->formation->getAnneeCourante());
+                        $this->annee);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -56,6 +58,7 @@ class StagePeriodeOffreType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => StagePeriodeOffre::class,
             'formation'          => null,
+            'annee'          => null,
             'translation_domain' => 'form'
         ]);
     }

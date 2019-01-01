@@ -21,11 +21,12 @@ class StagePeriodeCourrierController extends BaseController
      */
     public function index(StagePeriode $stagePeriode): Response
     {
-        
 
+        $courriers = null;
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
-            'stagePeriode' => $stagePeriode
+            'stagePeriode' => $stagePeriode,
+            'courriers' => $courriers
         ]);
     }
 }

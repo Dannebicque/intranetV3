@@ -80,6 +80,7 @@ class StagePeriodeOffreController extends BaseController
         $stagePeriodeOffre = new StagePeriodeOffre($stagePeriode);
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
             'formation' => $this->dataUserSession->getFormation(),
+            'annee' => $stagePeriode->getAnneeUniversitaire(),
             'attr'      => [
                 'data-provide' => 'validation'
             ]

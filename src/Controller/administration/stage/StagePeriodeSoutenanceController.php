@@ -24,7 +24,7 @@ class StagePeriodeSoutenanceController extends BaseController
      */
     public function index(StagePeriode $stagePeriode): Response
     {
-        return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
+        return $this->render('administration/stage/stage_periode_soutenance/index.html.twig', [
             'stagePeriode' => $stagePeriode
         ]);
     }

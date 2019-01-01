@@ -67,37 +67,37 @@ class MyStageEtudiant
                 $eventNotif = Events::CHGT_ETAT_STAGE_AUTORISE;
                 break;
             case StageEtudiant::ETAT_STAGE_DEPOSE:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
                 $this->stageEtudiant->setDateDepotFormulaire(new \DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_DEPOSE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_DEPOSE;
                 break;
             case StageEtudiant::ETAT_STAGE_VALIDE:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_VALIDE);
                 $this->stageEtudiant->setDateValidation(new \DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_VALIDE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_VALIDE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE);
                 $this->stageEtudiant->setDateConventionEnvoyee(new \DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_RECUE:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_RECUE);
                 $this->stageEtudiant->setDateConventionRecu(new \DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_CONVENTION_RECUE;
                 $eventNotif = Events::CHGT_ETAT_CONVENTION_RECUE;
                 break;
             case StageEtudiant::ETAT_STAGE_ERASMUS:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_ERASMUS);
                 break;
             case StageEtudiant::ETAT_STAGE_ETRANGER:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_ETRANGER);
                 break;
             case StageEtudiant::ETAT_STAGE_APPRENTISSAGE:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_APPRENTISSAGE);
                 break;
         }
 

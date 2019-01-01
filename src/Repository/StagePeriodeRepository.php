@@ -89,12 +89,26 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('d.formation = :formation');
-
-        $query->setParameter('formation', $formation->getId())
+            ->where('d.formation = :formation')
+            ->setParameter('formation', $formation->getId())
             ->orderBy('p.anneeUniversitaire', 'DESC')
             ->orderBy('p.numeroPeriode', 'ASC');
 
         return $query->getQuery()->getResult();
+    }
+
+    public function findByFormationBuilder(Formation $formation, $annee) {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.formation = :formation')
+            ->andWhere('p.anneeUniversitaire = :annee');
+
+        $query->setParameter('formation', $formation->getId())
+            ->setParameter('annee', $annee)
+            ->orderBy('p.numeroPeriode', 'ASC');
+
+        return $query;
     }
 }
