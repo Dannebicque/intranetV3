@@ -19,22 +19,40 @@ use Symfony\Component\Routing\Annotation\Route;
 class HrsController extends BaseController
 {
     /**
-     * @Route("/{annee}", name="administration_hrs_index", methods="GET", options={"expose":true}, requirements={"annee":"\d+"})
+     * @Route("/{annee}", name="administration_hrs_index", methods="GET|POST", options={"expose":true},
+     *                    requirements={"annee":"\d+"})
      * @param HrsRepository $hrsRepository
      *
      * @param int           $annee
      *
      * @return Response
      */
-    public function index(HrsRepository $hrsRepository, $annee = 0): Response
+    public function index(Request $request, HrsRepository $hrsRepository, $annee = 0): Response
     {
         if ($annee === 0 && $this->dataUserSession->getFormation() !== null) {
             $annee = $this->dataUserSession->getFormation()->getOptAnneePrevisionnel();
         }
 
+        $hrs = new Hrs($this->dataUserSession->getFormation());
+        $form = $this->createForm(HrsType::class, $hrs, [
+            'formation' => $this->dataUserSession->getFormation(),
+            'attr'      => [
+                'data-provide' => 'validation'
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($hrs);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.add.success.flash');
+        }
+
         return $this->render('administration/hrs/index.html.twig', [
             'hrs'   => $hrsRepository->findHrsFormation($this->dataUserSession->getFormation(), $annee),
-            'annee' => $annee
+            'annee' => $annee,
+            'form'  => $form->createView()
         ]);
     }
 
@@ -66,42 +84,6 @@ class HrsController extends BaseController
             'hrs'  => $hrs,
             'form' => $form->createView(),
         ]);
-    }
-
-
-    /**
-     * @Route("/new", name="administration_hrs_new", methods="GET|POST", options={"expose": true})
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function ajout(Request $request)
-    {
-        if ($this->dataUserSession->getFormation() !== null) {
-            $hrs = new Hrs($this->dataUserSession->getFormation()->getOptAnneePrevisionnel());
-            $form = $this->createForm(HrsType::class, $hrs, [
-                'formation' => $this->dataUserSession->getFormation(),
-                'attr'      => [
-                    'data-provide' => 'validation'
-                ]
-            ]);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->entityManager->persist($hrs);
-                $this->entityManager->flush();
-                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.add.success.flash');
-
-                return $this->redirectToRoute('administration_hrs_index');
-            }
-
-            return $this->render('administration/hrs/new.html.twig', [
-                'hrs'  => $hrs,
-                'form' => $form->createView(),
-            ]);
-        }
-
-        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -199,5 +181,28 @@ class HrsController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @Route("/supprimer/annee", name="administration_hrs_supprimer_annee", methods="DELETE")
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function supprimer(Request $request, HrsRepository $hrsRepository): Response
+    {
+        if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
+            $hrs = $hrsRepository->findHrsFormation($this->dataUserSession->getFormation(),
+                $request->request->get('annee_supprimer'));
+            foreach ($hrs as $hr) {
+                $this->entityManager->remove($hr);
+            }
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.success.flash');
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.error.flash');
+
+        return $this->redirectToRoute('administration_hrs_index');
     }
 }

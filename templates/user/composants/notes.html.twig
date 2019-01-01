@@ -1,7 +1,7 @@
 {{ include('bloc_notes_absences/etudiant_notes.html.twig', {notes:notes}) }}
 
 <div class="card">
-    <h4 class="card-title">Situation par semestre</h4>
+    <h4 class="card-title">{{ 'situation.par.semestre.notes'|trans }}</h4>
     <div class="card-body">
         <canvas class="mx-auto" id="chart-radar" width="360" height="360"></canvas>
     </div>

@@ -1,0 +1,424 @@
+/* CONTENEUR 1080px */
+html, body {
+	margin: 0 auto;
+	padding: 0;
+}
+
+#container {
+	width: 1080px;
+	margin: auto;
+	font-family: 'Roboto', sans-serif;
+}
+/* /CONTENEUR 1080px */
+
+/* DATE */
+#date {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #146f88;
+	height: 70px;
+	line-height: 70px;
+	color: #fff;
+	font-size: 40px;
+	font-weight: 700;
+}
+.element:first-child{
+	flex: 1;
+}
+/* /DATE */
+
+/* HEADER SEMESTRE */
+.semestre {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin-top: 20px;
+	height: 91px;
+	color: #000;
+	font-weight: 700;
+	font-size: 21px;
+	text-align: center;
+}
+.semestre > * {
+	flex: 13% 50%;
+}
+
+.heure, .s1, .s2, .s3, .s4, .s1d, .s2d, .s3d, .s4d, .lp, .item, .itemd, .itemlp {
+	background-color: #e0e0e0;
+}
+
+.picto {
+	height: 65px;
+	width: 65px;
+}
+
+.heure {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 10px;
+	height: 91px;
+	border-radius: 5px;
+	width: 101px;
+	margin-right: 21px;
+}
+
+.s1, .s2, .s3, .s4, .s1d, .s2d, .s3d, .s4d, .lp {
+	margin-right: 10px;
+	height: 50px;
+	line-height: 50px;
+	width: 938px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.groupe {
+	display: flex;
+	height: 31px;
+	width: 938px;
+	border-radius: 5px;
+}
+
+.item {
+	width: 101px;
+	height: 31px;
+	line-height: 31px;
+	border-radius: 5px;
+	margin-right: 20px;
+}
+
+.item:last-child {
+	width: 101px;
+	height: 31px;
+	line-height: 31px;
+	border-radius: 5px;
+	margin-right: 0;
+}
+.itemd, .itemlp {
+	width: 462px;
+	height: 31px;
+	line-height: 31px;
+	margin-right: 20px;
+	border-radius: 5px;
+}
+
+.itemd:last-child, .itemlp:last-child {
+	margin-right: 0;
+}
+/* /HEADER SEMESTRE */
+
+/* CONTENU SEMESTRE */
+.edt-content{
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+}
+
+.horaires, .cours, .reunion {
+	color: #fff;
+	font-size: 21px;
+}
+.time {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 10px;
+	height: 80px;
+	width: 101px;
+	border-radius: 5px;
+	background-color: #146f88;
+	margin-right: 21px;
+}
+
+.horaires {
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+	font-weight: 700;
+}
+
+.cours {
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+	font-weight: 400;
+}
+
+.reunion {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+	text-align: center;
+	font-weight: 400;
+	width: 100%;
+}
+
+.reunion>p {
+	margin-right: 10px;
+}
+
+.reunion>p:last-child {
+	margin-right: 0;
+}
+
+.cm, .td-s4d, .tplp {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	width: 938px;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+.td {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 222px;
+	height: 80px;
+	border-radius: 5px;
+	margin-right: 20px;
+}
+.td:last-child {
+	margin-right: 0;
+}
+.td-s2d, .td-d {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	width: 462px;
+	border-radius: 5px;
+	margin-right: 20px;
+}
+.td-s2d:last-child, .td-s4d:last-child, .tplp:last-child, .td-d:last-child {
+	margin-right: 0;
+}
+.tp {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	width: 101px;
+	border-radius: 5px;
+	margin-right: 20px;
+}
+
+.tp:last-child {
+	margin-right: 0;
+}
+/* /CONTENU SEMESTRE */
+
+/* BANDEAU INFOS */
+.bandeau {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 220px;
+	width: 100%;
+}
+/* /BANDEAU INFOS */
+
+/* shadow */
+.shadow {
+	-moz-box-shadow: 3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
+}
+
+
+/* CIBLAGE COURS */
+.ciblage {
+    box-shadow: 1px 0px 1px #BDBDBD,0px 1px 1px #BDBDBD,2px 1px 1px #BDBDBD,1px 2px 1px #BDBDBD,3px 2px 1px #BDBDBD,2px 3px 1px #BDBDBD,4px 3px 1px #BDBDBD,3px 4px 1px #BDBDBD,5px 4px 1px #BDBDBD,4px 5px 1px #BDBDBD,6px 5px 1px #BDBDBD;
+}
+/* /CIBLAGE COURS */
+
+/* COULEURS COURS */
+.white {
+	background-color: #fff;
+}
+
+.orange, .orangecm {
+	background-color: #E65100;
+}
+
+.orangetd {
+	background-color: #F57C00;
+}
+
+.orangetp {
+	background-color: #FFA726;
+}
+
+.rosecm, .rose {
+	background-color: #880E4F;
+}
+
+.rosetd {
+	background-color: #C2185B;
+}
+
+.rosetp {
+	background-color: #F06292;
+}
+
+.tealcm, .teal {
+	background-color: #004D40;
+}
+
+.tealtd {
+	background-color: #00897B;
+}
+
+.tealtp {
+	background-color: #4DB6AC;
+}
+
+.violetcm, .violet {
+	background-color: #8e24aa;
+}
+
+.violettd {
+	background-color: #ab47bc;
+}
+
+.violettp {
+	background-color: #cb76da;
+}
+
+.vertcm, .vert{
+	background-color: #1B5E20;
+}
+
+.verttd {
+	background-color: #388E3C;
+}
+
+.verttp {
+	background-color: #4CAF50;
+}
+
+.bleucm, .bleu {
+	background-color: #0d47a1;
+}
+
+.bleutd {
+	background-color: #2979FF;
+}
+
+.bleutp {
+	background-color: #42A5F5;
+}
+.bleummi {
+	background-color: #146f88;
+}
+/* /COULEURS COURS */
+
+/* COULEURS BANDEAU */
+.vertinfos {
+	background-color: #4caf50;
+}
+
+.orangeinfos {
+	background-color: #FF9800;
+}
+
+.rougeinfos {
+	background-color: #f44336;
+}
+
+.bleuinfos {
+	background-color: #03a9f4;
+}
+/* /COULEURS BANDEAU */
+
+/* Horloge */
+
+.clock {
+	border-radius: 50%;
+	background: #fff url(ios_clock.svg) no-repeat center;
+	background-size: 88%;
+	height: 4em;
+	position: relative;
+	width: 4em;
+}
+
+.clock.simple:after {
+	background: #000;
+	border-radius: 50%;
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 5%;
+	height: 5%;
+	z-index: 10;
+}
+
+.minutes-container, .hours-container, .seconds-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.hours {
+	background: #000;
+	height: 20%;
+	left: 48.75%;
+	position: absolute;
+	top: 30%;
+	transform-origin: 50% 100%;
+	width: 2.5%;
+}
+
+.minutes {
+	background: #000;
+	height: 40%;
+	left: 49%;
+	position: absolute;
+	top: 10%;
+	transform-origin: 50% 100%;
+	width: 2%;
+}
+
+.seconds {
+	background: #000;
+	height: 45%;
+	left: 49.5%;
+	position: absolute;
+	top: 14%;
+	transform-origin: 50% 80%;
+	width: 1%;
+	z-index: 8;
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+
+.hours-container {
+	animation: rotate 43200s infinite linear;
+}
+.minutes-container {
+	animation: rotate 3600s infinite steps(60);
+}
+.seconds-container {
+	animation: rotate 60s infinite steps(60);
+}
+
+.message_footer {
+	color: darkgray;
+	font-size: 10px;
+}
+

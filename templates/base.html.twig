@@ -19,8 +19,8 @@
     <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
-    <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
 
 </head>
 
@@ -40,7 +40,7 @@
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
     <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.formation.couleur }}{% else %}#926DDF{% endif %}">
         <span class="logo text-center">
-          <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
+          <a href="{{ path('default_homepage') }}"><img src="{{ asset('assets/img/logo-icon-light.png') }}"
                                                         alt="logo"></a>
         </span>
     </header>
@@ -211,17 +211,17 @@
             <!-- Change language -->
             <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown"><img class="icon"
-                                                                         src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                         src="{{ asset('assets/img/flag/en.png') }}"
                                                                          alt="fr"></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item active" href="#"><img class="icon"
-                                                                  src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                  src="{{ asset('assets/img/flag/en.png') }}"
                                                                   alt="en"></a>
                     <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('sources/assets/img/flag/de.png') }}"
+                                                           src="{{ asset('assets/img/flag/de.png') }}"
                                                            alt="..."></a>
                     <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('sources/assets/img/flag/es.png') }}"
+                                                           src="{{ asset('assets/img/flag/es.png') }}"
                                                            alt="..."></a>
                 </div>
             </li>
@@ -455,7 +455,6 @@
 <script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
 <script src="{{ asset('sources/assets/js/app.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script src="{{ asset('sources/assets/js/jquery.collection.js') }}"></script>
 <script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
 
 <script data-provide="sweetalert"></script>

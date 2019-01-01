@@ -313,4 +313,27 @@ class PrevisionnelController extends BaseController
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * @Route("/supprimer/annee", name="administration_previsionnel_supprimer_annee", methods="DELETE")
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function supprimer(Request $request, PrevisionnelRepository $previsionnelRepository): Response
+    {
+        if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
+            $hrs = $previsionnelRepository->findPrevisionnelFormation($this->dataUserSession->getFormation(),
+                $request->request->get('annee_supprimer'));
+            foreach ($hrs as $hr) {
+                $this->entityManager->remove($hr);
+            }
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.success.flash');
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.error.flash');
+
+        return $this->redirectToRoute('administration_previsionnel_index');
+    }
 }

@@ -190,9 +190,10 @@ class Hrs extends BaseEntity
      *
      * @param $annee
      */
-    public function __construct($annee)
+    public function __construct(Formation $formation)
     {
-        $this->annee = $annee;
+        $this->annee = $formation->getOptAnneePrevisionnel();
+        $this->formation = $formation;
     }
 
     public function getFormation(): ?Formation

@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-
 {% block header %}
     {{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}
 {% endblock %}
 
 {% block headeractions %}
-
     <div class="header-action bg-white">
-        {{ include('composants/adm-buttons-index.html.twig', {elt:'hrs'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><span
+                        class="material-icons">build</span></a>
+        </div>
     </div>
 {% endblock %}
 
 {% block content %}
-    {# todo: Ligne (ou modal) pour ajouter rapidement une nouvelle entrée ? #}
-
     <div class="card card-body">
         <select id="change_annee_temp_hrs" class="form-control">
             <option value="0">Changer d'année temporairement</option>
@@ -22,7 +22,10 @@
                 <option value="{{ annee }}">{{ annee }}</option>
             {% endfor %}
         </select>
-        <small class="form-text">Le changement d'année de manière permanent <a href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel de l'année selectionné dans le configuration est celui actif sur l'intranet</small>
+        <small class="form-text">Le changement d'année de manière permanent <a
+                    href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel
+            de l'année selectionné dans le configuration est celui actif sur l'intranet
+        </small>
     </div>
 
     <div class="card">
@@ -44,7 +47,6 @@
                 <tbody>
                 {% for hr in hrs %}
                     <tr id="ligne_{{ hr.id }}">
-
                         <td>{{ hr.libelle }}</td>
                         <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
                         <td>{{ hr.personnel ? hr.personnel.display : 'non.defini'|trans }}</td>
@@ -59,6 +61,20 @@
                         <td colspan="11">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
+
+                {% form_theme form 'form/my-form.html.twig' %}
+                {{ form_start(form) }}
+                <tr>
+                    <td>{{ form_widget(form.libelle) }}</td>
+                    <td>{{ form_widget(form.typeHrs) }}</td>
+                    <td>{{ form_widget(form.personnel) }}</td>
+                    <td>{{ form_widget(form.semestre) }} ou {{ form_widget(form.diplome) }}</td>
+                    <td>{{ form_widget(form.nbHeuresTd) }}</td>
+                    <td>
+                        <input type="submit" value="Ajouter">
+                    </td>
+                </tr>
+                {{ form_end(form) }}
                 </tbody>
             </table>
         </div>
@@ -68,7 +84,6 @@
         <h4 class="card-title">{{ 'adm.hrs.duplicate.annee.heading'|trans }}</h4>
         <div class="card-body">
             <form action="{{ path('administration_hrs_duplicate_annee') }}" method="post" class="form">
-
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
@@ -95,8 +110,11 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="custom-controls-stacked">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="annee_concerver" name="annee_concerver" value="true">
-                                <label class="custom-control-label" for="annee_concerver">Conserver les données dans l'année de destination ? (par défaut la copie remplace l'ensemble des données)</label>
+                                <input type="checkbox" class="custom-control-input" id="annee_concerver"
+                                       name="annee_concerver" value="true">
+                                <label class="custom-control-label" for="annee_concerver">Conserver les données dans
+                                    l'année de destination ? (par défaut la copie remplace l'ensemble des
+                                    données)</label>
                             </div>
                         </div>
                     </div>
@@ -110,7 +128,32 @@
         </div>
     </div>
 
-    {# todo: ajouter un delete année complete ?#}
+    <div class="card card-danger">
+        <h4 class="card-title">{{ 'adm.hrs.supprimer.annee.heading'|trans }}</h4>
+        <div class="card-body">
+            <form action="{{ path('administration_hrs_supprimer_annee') }}" method="delete" class="form">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input type="hidden" value="{{ csrf_token('supprimer') }}" name="_token">
+                        <select name="annee_supprimer" id="annee_supprimer" class="form-control">
+                            <option value="">Choisir</option>
+                            {% for annee in 2017..'now'|date('Y')+2 %}
+                                <option value="{{ annee }}">{{ annee }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <button class="btn btn-block btn-warning" type="submit">
+                        Supprimer les données pour l'année selectionnée
+                    </button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block fabactions %}
@@ -131,12 +174,6 @@
             href:path('administration_hrs_export', {_format:'xlsx'}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-file-excel-o'
-        },
-        {
-            type:'info',
-            href:path('administration_hrs_new'),
-            title: 'ajouter'|trans,
-            icone: 'ti-plus'
         },
         {
             type:'info',

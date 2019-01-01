@@ -6507,6 +6507,10 @@
         <source>adm.bac.show.heading</source>
         <target>__adm.bac.show.heading</target>
       </trans-unit>
+        <trans-unit id="0">
+            <source>situation.par.semestre.notes</source>
+            <target>Situation par semestre</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

@@ -12,10 +12,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    {{ encore_entry_link_tags('app') }}
+
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
     <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
@@ -31,8 +30,10 @@
 
 
 <!-- Scripts -->
-<script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('sources/assets/js/app.js') }}"></script>
-<script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
+{{ encore_entry_script_tags('app') }}
+
+{#<script src="{{ asset('sources/assets/js/core.min.js') }}"></script>#}
+{#<script src="{{ asset('sources/assets/js/app.js') }}"></script>#}
+{#<script src="{{ asset('sources/assets/js/script.min.js') }}"></script>#}
 </body>
 </html>

@@ -131,6 +131,33 @@
             </form>
         </div>
     </div>
+
+    <div class="card card-danger">
+        <h4 class="card-title">{{ 'adm.previsionnel.supprimer.annee.heading'|trans }}</h4>
+        <div class="card-body">
+            <form action="{{ path('administration_previsionnel_supprimer_annee') }}" method="DELETE" class="form">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="hidden" value="{{ csrf_token('supprimer') }}" name="_token">
+                            <select name="annee_supprimer" id="annee_supprimer" class="form-control">
+                                <option value="">Choisir</option>
+                                {% for annee in 2017..'now'|date('Y')+2 %}
+                                    <option value="{{ annee }}">{{ annee }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <button class="btn btn-block btn-warning" type="submit">
+                            Supprimer les données pour l'année selectionnée
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 
