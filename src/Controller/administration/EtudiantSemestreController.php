@@ -22,7 +22,8 @@ class EtudiantSemestreController extends BaseController
 {
     /**
      * @Route("/parcours/{semestre}", name="administration_etudiant_parcours_semestre_index", requirements={"semestre"="\d+"})
-     * @param Semestre $semestre
+     * @param EtudiantRepository $etudiantRepository
+     * @param Semestre           $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -41,6 +42,7 @@ class EtudiantSemestreController extends BaseController
      * @param Semestre $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function addEtudiant(Semestre $semestre = null){
         if ($semestre === null) {
@@ -96,6 +98,7 @@ class EtudiantSemestreController extends BaseController
 
     /**
      * @Route("/import/photo/zip/{semestre}", name="administration_etudiant_import_photo", requirements={"semestre"="\d+"}, methods={"GET|POST"})
+     * @param Request  $request
      * @param Semestre $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response

@@ -145,8 +145,6 @@ class PersonnelFormation
     }
 
     /**
-     * @param string $role
-     *
      * @return PersonnelFormation
      */
     public function clearRole(): self

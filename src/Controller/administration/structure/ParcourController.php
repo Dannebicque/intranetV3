@@ -56,6 +56,9 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_structure_parcour_show", methods="GET")
+     * @param Parcour $parcour
+     *
+     * @return Response
      */
     public function show(Parcour $parcour): Response
     {
@@ -64,6 +67,9 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_structure_parcour_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Parcour $parcour
+     * @return Response
      */
     public function edit(Request $request, Parcour $parcour): Response
     {
@@ -79,7 +85,7 @@ class ParcourController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
-                return $this->redirectToRoute('administration_parcour_edit', ['id' => $parcour->getId()]);
+                return $this->redirectToRoute('administration_structure_parcour_edit', ['id' => $parcour->getId()]);
             }
 
             return $this->render('structure/parcour/edit.html.twig', [
@@ -105,7 +111,7 @@ class ParcourController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcour.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_parcour_edit', ['id' => $newParcour->getId()]);
+        return $this->redirectToRoute('administration_structure_parcour_edit', ['id' => $newParcour->getId()]);
     }
 
     /**

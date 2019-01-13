@@ -1,41 +1,78 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}Configuration index{% endblock %}
 
-{% block body %}
-    <h1>Configuration index</h1>
+{% block header %}
+    {{ 'sadm.configuration.index.heading'|trans }}
+{% endblock %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Cle</th>
-                <th>Valeur</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for configuration in configurations %}
-            <tr>
-                <td>{{ configuration.id }}</td>
-                <td>{{ configuration.created ? configuration.created|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ configuration.updated ? configuration.updated|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ configuration.cle }}</td>
-                <td>{{ configuration.valeur }}</td>
-                <td>
-                    <a href="{{ path('configuration_show', {'id': configuration.id}) }}">show</a>
-                    <a href="{{ path('configuration_edit', {'id': configuration.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-index.html.twig', {elt:'configuration'}) }}
+    </div>
+{% endblock %}
 
-    <a href="{{ path('configuration_new') }}">Create new</a>
+{% block content %}
+    {# feature: création directement dans le datatable ??? #}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.configuration.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>{{ 'table.cle'|trans }}</th>
+                    <th>{{ 'table.valeur'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for configuration in configurations %}
+                    <tr>
+                        <td>{{ configuration.cle }}</td>
+                        <td>{{ configuration.valeur }}</td>
+                        <td>
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'configuration', id: configuration.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('sa_configuration_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"},
+        {
+            type:'info',
+            href:path('sa_configuration_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('sa_configuration_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('sa_configuration_new'),
+            title: 'ajouter'|trans,
+            icone: 'ti-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'super-administration_configuration'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
 {% endblock %}

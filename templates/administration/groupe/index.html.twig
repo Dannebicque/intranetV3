@@ -50,80 +50,125 @@
                     </header>
 
                     <div class="card-body">
-
-                        <ul class="nav nav-pills nav-actions-visible flex-column">
+                        <table class="table table-separated">
+                            <tbody>
                             {% for typeGroupe in semestre.typeGroupes %}
-                                <li class="nav-item">
-                                    <a class="nav-link"
-                                       href="{{ path('administration_groupe_show', {id:typeGroupe.id}) }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ 'atitle.details'|trans }}">{{ typeGroupe.libelle }}
-                                        | {{ typeGroupe.type }}</a>
-                                    <a class="nav-action"
-                                       href="{{ path('administration_groupe_new', {typegroupe:typeGroupe.id, semestre:semestre.id}) }}"
-                                       data-title="Ajouter un groupe dans ce groupe"><span class="ti-plus"></span></a>
-                                    <a class="nav-action"
-                                       href="{{ path('administration_groupe_duplicate', {id:typeGroupe.id}) }}"
+                            <tr class="bg-success">
+                                <th scope="row">{{ typeGroupe.libelle }}</th>
+                                <td>{{ typeGroupe.type }}</td>
+                                <td>&nbsp;</td>
+                                <td><div class="form-check">
+                                        <input class="form-check-input" type="radio" name="new_type_groupe"
+                                               id="new_type_groupe" value="true">
+                                        <label class="form-check-label" for="new_type_groupe">
+                                            Par défaut
+                                        </label>
+                                    </div></td>
+                                <td class="text-right table-actions">
+                                    <a class="table-action hover-primary"
+                                       href="{{ path('administration_type_groupe_duplicate', {id:typeGroupe.id}) }}"
                                        data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
                                                 class="{{ iconDuplicate }}"></span></a>
-                                    <a class="nav-action"
-                                       href="{{ path('administration_groupe_show', {id:typeGroupe.id}) }}"
+                                    <a class="table-action hover-info"
+                                       href="{{ path('administration_type_groupe_show', {id:typeGroupe.id}) }}"
                                        data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
                                                 class="ti-eye"></span></a>
-                                    <a class="nav-action"
-                                       href="{{ path('administration_groupe_edit', {id:typeGroupe.id}) }}"
+                                    <a class="table-action hover-warning"
+                                       href="{{ path('administration_type_groupe_edit', {id:typeGroupe.id}) }}"
                                        data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
                                                 class="{{ iconEdit }}"></span></a>
-                                    <a class="nav-action supprimer"
-                                       href="{{ path('administration_groupe_delete', {id:typeGroupe.id}) }}"
+                                    <a class="table-action hover-danger supprimer"
+                                       href="{{ path('administration_type_groupe_delete', {id:typeGroupe.id}) }}"
                                        data-csrf="{{ csrf_token('delete' ~ typeGroupe.id) }}"
                                        data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
                                                 class="{{ iconDelete }}"></span></a>
-                                </li>
-                                <li>
-                                    <ul class="nav nav-pills nav-actions-visible flex-column" style="margin-left: 50px">
-                                        {% for groupe in typeGroupe.groupes %}
-                                            <li class="nav-item">
-                                                <a class="nav-link"
-                                                   href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
-                                                   data-provide="tooltip"
-                                                   data-placement="bottom"
-                                                   title="{{ 'atitle.details'|trans }}">{{ groupe.libelle }}
-                                                    | {{ groupe.codeApogee }}</a>
-                                                <a class="nav-action"
-                                                   href="{{ path('administration_groupe_duplicate', {id:groupe.id}) }}"
-                                                   data-provide="tooltip"
-                                                   data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
-                                                            class="{{ iconDuplicate }}"></span></a>
-                                                <a class="nav-action"
-                                                   href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
-                                                   data-provide="tooltip"
-                                                   data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
-                                                            class="ti-eye"></span></a>
-                                                <a class="nav-action"
-                                                   href="{{ path('administration_groupe_edit', {id:groupe.id}) }}"
-                                                   data-provide="tooltip"
-                                                   data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
-                                                            class="{{ iconEdit }}"></span></a>
-                                                <a class="nav-action supprimer"
-                                                   href="{{ path('administration_groupe_delete', {id:groupe.id}) }}"
-                                                   data-csrf="{{ csrf_token('delete' ~ groupe.id) }}"
-                                                   data-provide="tooltip"
-                                                   data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
-                                                            class="{{ iconDelete }}"></span></a>
-                                            </li>
-                                        {% endfor %}
-                                        formulaire
-                                    </ul>
-                                </li>
+
+                                    <div class="dropdown table-action">
+                                        <span class="dropdown-toggle no-caret hover-primary" data-toggle="dropdown"><i class="ti-more-alt rotate-90"></i></span>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#"><i class="ti-menu-alt"></i> Details</a>
+                                            <a class="dropdown-item" href="#"><i class="ti-clip"></i> Add file</a>
+                                            <a class="dropdown-item" href="#"><i class="ti-bar-chart"></i> Performance</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                                {% for groupe in typeGroupe.groupes %}
+                                <tr>
+                                    <td scope="row">&nbsp;</td>
+                                    <th>{{ groupe.libelle }}</th>
+                                    <td>{{ groupe.codeapogee }}</td>
+                                    <td><select></select></td>
+                                    <td class="text-right table-actions">
+                                        <a class="table-action hover-primary"
+                                           href="{{ path('administration_groupe_duplicate', {id:groupe.id}) }}"
+                                           data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
+                                                    class="{{ iconDuplicate }}"></span></a>
+                                        <a class="table-action hover-info"
+                                           href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
+                                           data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
+                                                    class="ti-eye"></span></a>
+                                        <a class="table-action hover-warning"
+                                           href="{{ path('administration_groupe_edit', {id:groupe.id}) }}"
+                                           data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
+                                                    class="{{ iconEdit }}"></span></a>
+                                        <a class="table-action hover-danger supprimer"
+                                           href="{{ path('administration_groupe_delete', {id:groupe.id}) }}"
+                                           data-csrf="{{ csrf_token('delete' ~ groupe.id) }}"
+                                           data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
+                                                    class="{{ iconDelete }}"></span></a>
+
+                                        <div class="dropdown table-action">
+                                            <span class="dropdown-toggle no-caret hover-primary" data-toggle="dropdown"><i class="ti-more-alt rotate-90"></i></span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="ti-menu-alt"></i> Details</a>
+                                                <a class="dropdown-item" href="#"><i class="ti-clip"></i> Add file</a>
+                                                <a class="dropdown-item" href="#"><i class="ti-bar-chart"></i> Performance</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td scope="row">&nbsp;</td>
+                                    <th><input type="text" class="form-control" placeholder="Libellé"></th>
+                                    <td><input type="text" class="form-control" placeholder="Code Apogée"></td>
+                                    <td class="text-right table-actions">
+                                        <button class="btn btn-primary btn-block"><span
+                                                    class="ti-plus"></span> Ajouter</button>
+                                    </td>
+                                </tr>
                             {% endfor %}
-                            formulaire
-                        </ul>
+                            <tr>
+                                <td scope="row"><input type="text" class="form-control" placeholder="Libellé"></td>
+                                <td><select class="form-control" placeholder="Code Apogée"></select></td>
+                                <td></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="new_type_groupe"
+                                               id="new_type_groupe" value="true">
+                                        <label class="form-check-label" for="new_type_groupe">
+                                            Par défaut
+                                        </label>
+                                    </div>
+
+
+                                </td>
+                                <td class="text-right table-actions">
+                                    <button class="btn btn-primary btn-block"><span
+                                                class="ti-plus"></span> Ajouter</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

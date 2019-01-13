@@ -8,7 +8,6 @@ use App\Entity\Etudiant;
 use App\Entity\Notification;
 use App\Entity\Rattrapage;
 use App\Events;
-use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;

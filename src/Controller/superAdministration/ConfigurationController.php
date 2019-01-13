@@ -17,6 +17,9 @@ class ConfigurationController extends AbstractController
 {
     /**
      * @Route("/", name="sa_configuration_index", methods="GET")
+     * @param ConfigurationRepository $configurationRepository
+     *
+     * @return Response
      */
     public function index(ConfigurationRepository $configurationRepository): Response
     {
@@ -24,7 +27,17 @@ class ConfigurationController extends AbstractController
     }
 
     /**
+     *
+     * @Route("/export/{_format}", name="sa_configuration_export", methods="GET")
+     */
+    public function export($_format){
+
+    }
+
+    /**
      * @Route("/new", name="sa_configuration_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -48,6 +61,8 @@ class ConfigurationController extends AbstractController
 
     /**
      * @Route("/{id}", name="sa_configuration_show", methods="GET")
+     * @param Configuration $configuration
+     * @return Response
      */
     public function show(Configuration $configuration): Response
     {
@@ -56,6 +71,9 @@ class ConfigurationController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="sa_configuration_edit", methods="GET|POST")
+     * @param Request       $request
+     * @param Configuration $configuration
+     * @return Response
      */
     public function edit(Request $request, Configuration $configuration): Response
     {

@@ -8,7 +8,6 @@
 
 namespace App\MesClasses\Mail;
 
-use App\Entity\Constantes;
 use App\MesClasses\Configuration;
 use App\Twig\DatabaseTwigLoader;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;

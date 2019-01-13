@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Formation;
-use App\Entity\PersonnelFormation;
 use App\Repository\FormationRepository;
 use App\Repository\PersonnelFormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +37,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion/{message}", name="security_login")
      * @param AuthenticationUtils $helper
+     *
+     * @param string              $message
      *
      * @return Response
      */
@@ -103,8 +104,9 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/change-formation/{formation}", name="security_change_formation")
-     * @param Request $request
+     * @param Request   $request
      *
+     * @param Formation $formation
      * @return Response
      */
     public function changeFormation(Request $request, Formation $formation): Response
@@ -114,10 +116,10 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/choix-formation", name="security_choix_formation")
-     * @param FormationRepository $formationRepository
-     *
+     * @param TranslatorInterface          $translator
+     * @param Request                      $request
+     * @param PersonnelFormationRepository $personnelFormationRepository
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function choixFormation(
         TranslatorInterface $translator,

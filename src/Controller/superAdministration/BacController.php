@@ -8,7 +8,6 @@ use App\Entity\Constantes;
 use App\Form\BacType;
 use App\MesClasses\MyExport;
 use App\Repository\BacRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +19,9 @@ class BacController extends BaseController
 {
     /**
      * @Route("/", name="sa_bac_index", methods={"GET"})
+     * @param BacRepository $bacRepository
+     *
+     * @return Response
      */
     public function index(BacRepository $bacRepository): Response
     {
@@ -52,6 +54,9 @@ class BacController extends BaseController
 
     /**
      * @Route("/new", name="sa_bac_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -75,6 +80,9 @@ class BacController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_bac_show", methods={"GET"})
+     * @param Bac $bac
+     *
+     * @return Response
      */
     public function show(Bac $bac): Response
     {
@@ -83,6 +91,10 @@ class BacController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_bac_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Bac     $bac
+     *
+     * @return Response
      */
     public function edit(Request $request, Bac $bac): Response
     {

@@ -4,16 +4,16 @@ namespace App\Controller;
 
 use App\MesClasses\MyExportListing;
 use App\Repository\MatiereRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class ExportController
  * @package App\Controller
  * @Route("/export")
  */
-class ExportController extends Controller
+class ExportController extends AbstractController
 {
     /**
      * @Route("/listing", name="export_listing")

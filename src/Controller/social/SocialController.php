@@ -3,7 +3,6 @@
 namespace App\Controller\social;
 
 use App\Controller\BaseController;
-use App\MesClasses\Excel\MyExcelMultiExport;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**

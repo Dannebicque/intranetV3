@@ -92,6 +92,8 @@ class PersonnelApiController extends BaseController
      * @param PersonnelFormationRepository $personnelFormationRepository
      * @param                              $slug
      *
+     * @param Formation                    $formation
+     *
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @Route("/personnel/formation/add/{slug}/{formation}", name="api_personnel_add_to_formation", options={"expose":true})

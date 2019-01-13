@@ -54,7 +54,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
         }
 
         return $this->createQueryBuilder('j')
-            ->select("count(j.id)")
+            ->select('count(j.id)')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
             ->where('e.semestre = :semestre')
             ->andWhere('j.anneeUniversitaire = :annee')

@@ -598,7 +598,7 @@ class MyPrevisionnel
                     $extension = 'bin';
                 }
                 $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.csv';
-                $dir = $this->get('kernel')->getRootDir() . '/../web/uploads/temp/';
+                $dir = $this->get('kernel')->getRootDir() . '/public/uploads/temp/';
                 $file->move($dir, $nomfile);
             }
             /* fin necessaire ? */

@@ -122,6 +122,10 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_ue_delete", methods="DELETE")
+     * @param Request $request
+     * @param Ue      $ue
+     *
+     * @return Response
      */
     public function delete(Request $request, Ue $ue): Response
     {

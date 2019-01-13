@@ -189,6 +189,10 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/gestion/droit/{personnel}", name="administration_personnel_droit")
+     * @param PersonnelFormationRepository $personnelFormationRepository
+     * @param Personnel                    $personnel
+     *
+     * @return Response
      */
     public function gestionDroit(PersonnelFormationRepository $personnelFormationRepository, Personnel $personnel) {
         //todo: tester si CDD ou DDE

@@ -18,7 +18,7 @@ class MyUpload
 
     public function __construct(KernelInterface $kernel)
     {
-        $this->dir = $this->base = $kernel->getProjectDir() . '/public/upload/';
+        $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
 
     /**
@@ -36,10 +36,8 @@ class MyUpload
 
         if ($fichier !== null) {
 
-            if (count($extensions) > 0) {
-                if (!in_array($extension, $extensions)) {
-                    return false; //extension interdite
-                }
+            if ((count($extensions) > 0) && !in_array($extension, $extensions)) {
+                return false; //extension interdite
             }
 
             $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.' . $extension;

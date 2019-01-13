@@ -11,7 +11,6 @@ namespace App\MesClasses\Model;
 
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
-use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 
@@ -161,12 +160,10 @@ class MoyennesSemestreEtudiant
 
         /** @var Matiere $mod */
         foreach ($matieres as $mod) {
-            if ($mod->isPac() === false) {
-                if ($moyenneMatieres[$mod->getId()]->isPasOption() !== false) {
-                    $totmodules += $moyenneMatieres[$mod->getId()]->getMoyenne() * $mod->getCoefficient();
-                    $totmodulesPenalisee += $moyenneMatieres[$mod->getId()]->getMoyennePenalisee() * $mod->getCoefficient();
-                    $totcoeff += $mod->getCoefficient();
-                }
+            if (($mod->isPac() === false) && $moyenneMatieres[$mod->getId()]->isPasOption() !== false) {
+                $totmodules += $moyenneMatieres[$mod->getId()]->getMoyenne() * $mod->getCoefficient();
+                $totmodulesPenalisee += $moyenneMatieres[$mod->getId()]->getMoyennePenalisee() * $mod->getCoefficient();
+                $totcoeff += $mod->getCoefficient();
             }
         }
 
@@ -195,40 +192,37 @@ class MoyennesSemestreEtudiant
             } else {
                 $this->proposition = '?';
             }
-        } else {
-            //semestre < 10 ou UE < 8
-            if ($this->semestre->getOrdreLmd() === 1) {
-                //premier semestre
-                $this->decision = 'NV';
-                $this->proposition = '?';
-            } elseif (array_key_exists($this->semestre->getOrdreLmd() - 1, $parcours)) {
-                //c'est pas le premier, on regarde le passé.
+        } else if ($this->semestre->getOrdreLmd() === 1) {
+            //premier semestre
+            $this->decision = 'NV';
+            $this->proposition = '?';
+        } elseif (array_key_exists($this->semestre->getOrdreLmd() - 1, $parcours)) {
+            //c'est pas le premier, on regarde le passé.
 
-                /** @var ParcoursEtudiant $prec */
-                $prec = $parcours[$this->semestre->getOrdreLmd() - 1];
-                if ($prec->getDecision() === 'V' || $prec->getDecision() === 'NV') {
-                    //donc pas utilisé pour VCA ou VCJ
-                    if ($this->semestre->isOptPenaliteAbsence() === true) {
-                        $moyenneS = ($this->moyennePenalisee + $prec->getMoyenne()) / 2;
-                    } else {
-                        $moyenneS = ($this->moyenne + $prec->getMoyenne()) / 2;
-                    }
+            /** @var ParcoursEtudiant $prec */
+            $prec = $parcours[$this->semestre->getOrdreLmd() - 1];
+            if ($prec->getDecision() === 'V' || $prec->getDecision() === 'NV') {
+                //donc pas utilisé pour VCA ou VCJ
+                if ($this->semestre->isOptPenaliteAbsence() === true) {
+                    $moyenneS = ($this->moyennePenalisee + $prec->getMoyenne()) / 2;
+                } else {
+                    $moyenneS = ($this->moyenne + $prec->getMoyenne()) / 2;
+                }
 
-                    if ($moyenneS >= 10) {
-                        $this->decision = 'VCA';
-                        if ($this->semestre->getSuivant() !== null) {
-                            $this->proposition = $this->semestre->getSuivant()->getLibelle();
-                        } else {
-                            $this->proposition = '?';
-                        }
+                if ($moyenneS >= 10) {
+                    $this->decision = 'VCA';
+                    if ($this->semestre->getSuivant() !== null) {
+                        $this->proposition = $this->semestre->getSuivant()->getLibelle();
                     } else {
-                        $this->decision = 'NV';
                         $this->proposition = '?';
                     }
                 } else {
                     $this->decision = 'NV';
                     $this->proposition = '?';
                 }
+            } else {
+                $this->decision = 'NV';
+                $this->proposition = '?';
             }
         }
     }

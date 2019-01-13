@@ -34,8 +34,8 @@ class MyEdt
     /**
      * MyEdt constructor.
      *
-     * @param EdtPlanningRepository $edtPlanningRepository
-     * @param CelcatCalendrierRepository $celcatCalendrier
+     * @param EdtPlanningRepository      $edtPlanningRepository
+     * @param CelcatCalendrierRepository $celcatCalendrierRepository
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,

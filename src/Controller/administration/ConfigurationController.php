@@ -3,7 +3,6 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\Constantes;
 use App\MesClasses\MyConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

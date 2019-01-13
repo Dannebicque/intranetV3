@@ -88,7 +88,7 @@ class AbsenceRepository extends ServiceEntityRepository
 
         /** @var Absence $absence */
         foreach ($absences as $absence) {
-            if ($absence->getEtudiant() !== null && array_key_exists($absence->getEtudiant()->getId(), $trattrapages)) {
+            if ($absence->getEtudiant() !== null && $absence->getDate() !== null && $absence->getHeure() !== null && array_key_exists($absence->getEtudiant()->getId(), $trattrapages)) {
                 if (array_key_exists(
                     $absence->getDate()->format('Ymd'),
                     $trattrapages[$absence->getEtudiant()->getId()]

@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Diplome;
 use App\Entity\Formation;
 use App\Entity\Hrs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

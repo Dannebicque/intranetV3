@@ -51,6 +51,8 @@ class PrevisionnelController extends BaseController
      * @param MyPrevisionnel $myPrevisionnel
      * @param Matiere        $matiere
      *
+     * @param int            $annee
+     *
      * @return Response
      */
     public function matiere(MyPrevisionnel $myPrevisionnel, Matiere $matiere, $annee = 0): Response
@@ -73,6 +75,7 @@ class PrevisionnelController extends BaseController
      * @param MyPrevisionnel $myPrevisionnel
      * @param Semestre       $semestre
      *
+     * @param int            $annee
      * @return Response
      */
     public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre, $annee = 0): Response
@@ -95,6 +98,7 @@ class PrevisionnelController extends BaseController
      * @param MyPrevisionnel $myPrevisionnel
      * @param Personnel      $personnel
      *
+     * @param int            $annee
      * @return Response
      */
     public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel, $annee = 0): Response
@@ -181,7 +185,8 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/import", name="administration_previsionnel_import", methods="GET|POST")
-     * @param Request $request
+     * @param MyPrevisionnel $myPrevisionnel
+     * @param Request        $request
      *
      * @return Response
      */
@@ -212,6 +217,8 @@ class PrevisionnelController extends BaseController
     /**
      * @Route("/{annee}/export.{_format}", name="administration_previsionnel_export", methods="GET",
      *                                     requirements={"_format"="csv|xlsx|pdf"})
+     * @param $annee
+     * @return Response
      */
     public function export($annee): Response
     {
@@ -316,8 +323,9 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/supprimer/annee", name="administration_previsionnel_supprimer_annee", methods="DELETE")
-     * @param Request $request
+     * @param Request                $request
      *
+     * @param PrevisionnelRepository $previsionnelRepository
      * @return Response
      */
     public function supprimer(Request $request, PrevisionnelRepository $previsionnelRepository): Response

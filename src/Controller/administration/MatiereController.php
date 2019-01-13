@@ -39,7 +39,9 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/new/{diplome}", name="administration_matiere_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
+     *
+     * @param Diplome $diplome
      *
      * @return Response
      */

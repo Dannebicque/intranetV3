@@ -4,19 +4,20 @@
 <p>Période de stage du {{ stageEtudiant.dateDebutStage|localizeddate('long', 'none', app.request.getLocale()) }}
     au {{ stageEtudiant.dateFinStage|localizeddate('long', 'none', app.request.getLocale()) }}</p>
 
-<p>Périodes d'interruption :
+<p>Périodes d'interruption :</p>
 <ul>{% for interruption in stagePeriode.stagePeriodeInterruptions %}
         <li>Du {{ interruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}
             au {{ interruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}</li>
     {% else %}
-        <li>Aucune</li>{% endfor %}</ul>
-</p>
-<p>Périodes de soutenance :
+        <li>Aucune</li>{% endfor %}
+</ul>
+
+<p>Périodes de soutenance :</p>
 <ul>{% for interruption in stagePeriode.stagePeriodeSoutenances %}
         <li>Du {{ interruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}
             au {{ interruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}. Retour du rapport
             le {{ interruption.dateRenduRapport|localizeddate('long', 'short', app.request.getLocale()) }}</li>
     {% else %}
-        <li>Aucune</li>{% endfor %}</ul>
-</p>
+        <li>Aucune</li>{% endfor %}
+</ul>
 

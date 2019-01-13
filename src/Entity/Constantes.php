@@ -75,7 +75,7 @@ class Constantes
             self::ROLE_MAT
         );
 
-    const TAB_HEURES = array(
+    public const TAB_HEURES = array(
         '',
         '8:00',
         '8:30',

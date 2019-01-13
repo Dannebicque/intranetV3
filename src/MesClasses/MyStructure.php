@@ -9,12 +9,9 @@
 namespace App\MesClasses;
 
 
-use App\Entity\Constantes;
 use App\Entity\Formation;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\MesClasses\Pdf\MyPDF;
-use Dompdf\Dompdf;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class MyStructure
 {

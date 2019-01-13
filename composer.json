@@ -20,6 +20,7 @@
         "symfony/form": "4.2.*",
         "symfony/framework-bundle": "4.2.*",
         "symfony/maker-bundle": "^1.11",
+        "symfony/monolog-bundle": "^3.3",
         "symfony/orm-pack": "^1.0",
         "symfony/profiler-pack": "^1.0",
         "symfony/routing": "4.2.*",

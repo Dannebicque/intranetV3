@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

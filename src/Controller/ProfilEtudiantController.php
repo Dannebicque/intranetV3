@@ -33,10 +33,12 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/actions", name="profil_etudiant_action")
-     * @param Etudiant $etudiant
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     * @param ScolariteRepository $scolariteRepository
+     * @param Etudiant            $etudiant
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     *
      */
     public function actions(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
     {

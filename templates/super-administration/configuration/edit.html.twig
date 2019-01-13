@@ -1,13 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}Edit Configuration{% endblock %}
+{% block header %}
+    {{ 'sadm.configuration.modification.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>Edit Configuration</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-edit.html.twig', {elt:'configuration', id: configuration.id}) }}
+    </div>
+{% endblock %}
 
-    {{ include('configuration/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('configuration_index') }}">back to list</a>
-
-    {{ include('configuration/_delete_form.html.twig') }}
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.configuration.modification.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
 {% endblock %}

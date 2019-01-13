@@ -7,7 +7,6 @@ use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Formation;
 use App\Form\DiplomeType;
-use App\Repository\DiplomeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +18,9 @@ class DiplomeController extends BaseController
 {
     /**
      * @Route("/new/{formation}", name="sa_diplome_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request   $request
+     *
+     * @param Formation $formation
      *
      * @return Response
      */
@@ -107,7 +108,9 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_diplome_delete", methods="DELETE")
-     * @param Diplome $id
+     * @param Request $request
+     * @param Diplome $diplome
+     * @return Response
      */
     public function delete(Request $request, Diplome $diplome): Response
     {

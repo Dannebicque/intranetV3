@@ -12,9 +12,6 @@ use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
-use App\MesClasses\Model\MoyenneMatiereEtudiant;
-use App\MesClasses\Model\MoyennesSemestreEtudiant;
-use App\MesClasses\Model\ParcoursEtudiant;
 use App\Repository\EtudiantRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\NoteRepository;
@@ -67,6 +64,7 @@ class MySousCommission
      * @param MatiereRepository  $matiereRepository
      * @param SemestreRepository $semestreRepository
      * @param UeRepository       $ueRepository
+     * @param NoteRepository     $noteRepository
      */
     public function __construct(
         EtudiantRepository $etudiantRepository,
@@ -84,6 +82,7 @@ class MySousCommission
 
     /**
      * @param Semestre $semestre
+     * @param          $annee
      */
     public function init(Semestre $semestre, $annee)
     {

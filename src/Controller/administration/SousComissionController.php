@@ -4,7 +4,6 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Semestre;
-use App\MesClasses\MyEtudiants;
 use App\MesClasses\MySousCommission;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,8 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/{semestre}", name="administration_sous_comission_index")
-     * @param Semestre $semestre
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

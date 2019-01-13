@@ -56,6 +56,9 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_parcour_show", methods="GET")
+     * @param Parcour $parcour
+     *
+     * @return Response
      */
     public function show(Parcour $parcour): Response
     {
@@ -64,6 +67,9 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_parcour_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Parcour $parcour
+     * @return Response
      */
     public function edit(Request $request, Parcour $parcour): Response
     {

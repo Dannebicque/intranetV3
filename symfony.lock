@@ -95,6 +95,9 @@
     "markbaker/complex": {
         "version": "1.4.7"
     },
+    "monolog/monolog": {
+        "version": "1.24.0"
+    },
     "nikic/php-parser": {
         "version": "v4.1.1"
     },
@@ -246,6 +249,18 @@
             "branch": "master",
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
+    "symfony/monolog-bridge": {
+        "version": "v4.2.2"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.1",
+            "ref": "18ebf5a940573a20de06f9c4060101eeb438cf3d"
         }
     },
     "symfony/options-resolver": {

@@ -50,8 +50,9 @@ class StageController extends BaseController
     /**
      * @Route("/formulaire/{stageEtudiant}", name="application_etudiant_stage_formulaire", methods="GET|POST")
      * @ParamConverter("stageEtudiant", options={"mapping": {"stageEtudiant": "uuid"}})
-     * @param Request       $request
-     * @param StageEtudiant $stageEtudiant
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Request                  $request
+     * @param StageEtudiant            $stageEtudiant
      *
      * @return Response
      */

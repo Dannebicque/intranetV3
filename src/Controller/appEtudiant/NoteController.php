@@ -5,7 +5,6 @@ namespace App\Controller\appEtudiant;
 use App\Controller\BaseController;
 use App\Entity\Note;
 use App\MesClasses\MyEvaluation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

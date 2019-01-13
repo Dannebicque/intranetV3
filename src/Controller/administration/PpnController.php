@@ -118,7 +118,7 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_ppn_duplicate", methods="GET|POST")
-     * @param Ppn $actualite
+     * @param Ppn $ppn
      *
      * @return Response
      */

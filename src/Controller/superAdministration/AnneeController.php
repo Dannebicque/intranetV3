@@ -7,7 +7,6 @@ use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
-use App\Repository\AnneeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -131,6 +130,10 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_delete", methods="DELETE")
+     * @param Request $request
+     * @param Annee   $annee
+     *
+     * @return Response
      */
     public function delete(Request $request, Annee $annee): Response
     {

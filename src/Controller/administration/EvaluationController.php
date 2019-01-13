@@ -156,11 +156,13 @@ class EvaluationController extends BaseController
 
     /**
      * @Route("/{uuid}", name="administration_evaluation_delete", methods="DELETE")
-     * @param Request    $request
-     * @param Evaluation $evaluation
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param MyEvaluation $myEvaluation
+     * @param Request      $request
+     * @param Evaluation   $evaluation
      *
      * @return Response
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     *
      */
     public function delete(MyEvaluation $myEvaluation, Request $request, Evaluation $evaluation): Response
     {

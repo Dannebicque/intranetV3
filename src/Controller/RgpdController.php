@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class RgpdController
  * @package App\Controller
  * @Route("/mentions-legales/rgpd")
  */
-class RgpdController extends Controller
+class RgpdController extends BaseController
 {
     /**
      * @Route("/", name="rgpd_index")

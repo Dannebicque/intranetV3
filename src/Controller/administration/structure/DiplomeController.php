@@ -7,7 +7,6 @@ use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Formation;
 use App\Form\DiplomeType;
-use App\Repository\DiplomeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,10 +18,11 @@ class DiplomeController extends BaseController
 {
     /**
      * @Route("/new/{formation}", name="administration_structure_diplome_new", methods="GET|POST")
-     * @param Request $request
+     * @param Request   $request
+     *
+     * @param Formation $formation
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function create(Request $request, Formation $formation): Response
     {

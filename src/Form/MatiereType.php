@@ -13,7 +13,6 @@ use App\Repository\ParcourRepository;
 use App\Repository\PpnRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,7 +22,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormEvents;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class MatiereType
@@ -174,7 +172,7 @@ class MatiereType extends AbstractType
                 ]);
     }
 
-    function onPreSubmit(FormEvent $event) {
+    protected function onPreSubmit(FormEvent $event) {
         $form = $event->getForm();
         $data = $event->getData();
 
@@ -182,7 +180,7 @@ class MatiereType extends AbstractType
         $this->addElements($form, $semestre);
     }
 
-    function onPreSetData(FormEvent $event) {
+    protected function onPreSetData(FormEvent $event) {
         $matiere = $event->getData();
         $form = $event->getForm();
 

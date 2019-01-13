@@ -8,7 +8,6 @@ use App\Entity\TypeMateriel;
 use App\Form\TypeMaterielType;
 use App\MesClasses\MyExport;
 use App\Repository\TypeMaterielRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +19,9 @@ class TypeMaterielController extends BaseController
 {
     /**
      * @Route("/", name="administration_type_materiel_index", methods="GET")
+     * @param TypeMaterielRepository $typeMaterielRepository
+     *
+     * @return Response
      */
     public function index(TypeMaterielRepository $typeMaterielRepository): Response
     {
@@ -52,6 +54,8 @@ class TypeMaterielController extends BaseController
 
     /**
      * @Route("/new", name="administration_type_materiel_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -79,6 +83,8 @@ class TypeMaterielController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_materiel_show", methods="GET")
+     * @param TypeMateriel $typeMateriel
+     * @return Response
      */
     public function show(TypeMateriel $typeMateriel): Response
     {
@@ -87,6 +93,9 @@ class TypeMaterielController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_materiel_edit", methods="GET|POST")
+     * @param Request      $request
+     * @param TypeMateriel $typeMateriel
+     * @return Response
      */
     public function edit(Request $request, TypeMateriel $typeMateriel): Response
     {

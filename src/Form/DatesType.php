@@ -6,7 +6,6 @@ use App\Entity\Date;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

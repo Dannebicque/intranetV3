@@ -144,8 +144,10 @@ class NoteController extends BaseController
 
     /**
      * @Route("/import/{matiere}", name="application_personnel_note_import", requirements={"matiere"="\d+"})
-     * @param Request $request
-     * @param Matiere $matiere
+     * @param Request      $request
+     * @param MyUpload     $myUpload
+     * @param MyEvaluation $myEvaluation
+     * @param Matiere      $matiere
      *
      * @return Response
      * @throws \Exception
@@ -193,6 +195,9 @@ class NoteController extends BaseController
 
     /**
      * @Route("/confirme-import/{evaluation}", name="application_personnel_note_confirme_import", methods="GET")
+     * @param Evaluation $evaluation
+     *
+     * @return Response
      */
     public function confirmeImport(Evaluation $evaluation): Response
     {

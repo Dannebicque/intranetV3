@@ -7,7 +7,6 @@ use App\Entity\Constantes;
 use App\Entity\Formation;
 use App\Form\FormationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +29,10 @@ class FormationController extends BaseController
 
     /**
      * @Route("/new", name="sa_formation_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function create(Request $request): Response
     {

@@ -188,7 +188,7 @@ class Hrs extends BaseEntity
     /**
      * Hrs constructor.
      *
-     * @param $annee
+     * @param Formation $formation
      */
     public function __construct(Formation $formation)
     {

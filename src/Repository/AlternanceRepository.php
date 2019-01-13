@@ -71,8 +71,9 @@ class AlternanceRepository extends ServiceEntityRepository
         $tab = array();
         /** @var Alternance $alternance */
         foreach ($alternances as $alternance) {
-            if ($alternance->getEtudiant() !== null)
+            if ($alternance->getEtudiant() !== null) {
                 $tab[$alternance->getEtudiant()->getId()] = $alternance;
+            }
         }
 
         return $tab;

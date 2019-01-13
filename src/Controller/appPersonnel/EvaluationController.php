@@ -6,7 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\MesClasses\MyEvaluation;
 use App\Repository\GroupeRepository;
-use App\Repository\TypeGroupeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,9 +42,11 @@ class EvaluationController extends BaseController
      * @Route("export/{uuid}/{type}/{_format}", name="application_personnel_evaluation_export",
      *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
-     *
+     * @param GroupeRepository $groupeRepository
+     * @param MyEvaluation     $myEvaluation
+     * @param Evaluation       $evaluation
+     * @param                  $type
+     * @param                  $_format
      */
     public function exportEvaluation(
         GroupeRepository $groupeRepository,

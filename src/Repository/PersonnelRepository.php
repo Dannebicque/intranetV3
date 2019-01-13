@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Diplome;
-use App\Entity\Formation;
 use App\Entity\Personnel;
 use App\Entity\PersonnelFormation;
 use App\Entity\Semestre;

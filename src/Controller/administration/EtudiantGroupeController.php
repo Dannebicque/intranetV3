@@ -36,7 +36,8 @@ class EtudiantGroupeController extends BaseController
 
     /**
      * @Route("/affecte/{typeGroupe}", name="administration_etudiant_groupe_affecte", options={"expose":true})
-     * @param Semestre $semestre
+     * @param EtudiantRepository $etudiantRepository
+     * @param TypeGroupe         $typeGroupe
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -53,6 +54,9 @@ class EtudiantGroupeController extends BaseController
     /**
      * @Route("/change", name="administration_etudiant_groupe_change", options={"expose":true})
      *
+     * @param Request            $request
+     * @param EtudiantRepository $etudiantRepository
+     * @param GroupeRepository   $groupeRepository
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function change(Request $request, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository): Response

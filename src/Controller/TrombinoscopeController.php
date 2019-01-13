@@ -91,9 +91,10 @@ class TrombinoscopeController extends BaseController
 
     /**
      * @Route("/{type}.{_format}", name="trombinoscope_personnel_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport          $myExport
+     * @param MyExport            $myExport
      * @param PersonnelRepository $personnelRepository
-     * @param                   $_format
+     * @param                     $type
+     * @param                     $_format
      *
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception

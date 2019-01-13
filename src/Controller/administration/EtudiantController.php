@@ -7,7 +7,6 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
-use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,6 +72,7 @@ class EtudiantController extends BaseController
      * @param Request $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function create(Request $request): Response
     {

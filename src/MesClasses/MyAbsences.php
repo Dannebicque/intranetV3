@@ -88,8 +88,6 @@ class MyAbsences
     /**
      * @param Semestre $semestre
      *
-     * @param          $anneeCourante
-     *
      * @throws \Exception
      */
     public function getAbsencesSemestre(Semestre $semestre): void

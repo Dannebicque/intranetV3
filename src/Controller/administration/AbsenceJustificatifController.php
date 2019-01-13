@@ -70,8 +70,9 @@ class AbsenceJustificatifController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_absence_justificatif_delete", methods="DELETE")
-     * @param Request             $request
-     * @param AbsenceJustificatif $absenceJustificatif
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Request                  $request
+     * @param AbsenceJustificatif      $absenceJustificatif
      *
      * @return Response
      */

@@ -79,7 +79,6 @@ class AbsenceJustificatif extends BaseEntity
      * AbsenceJustificatif constructor.
      *
      * @param Etudiant $etudiant
-     * @param          $anneeUniversitaire
      *
      * @throws \Exception
      */

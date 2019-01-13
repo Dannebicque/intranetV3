@@ -48,7 +48,7 @@ class AlternanceController extends BaseController
     }
 
     /**
-     * @route("/init/all/{annee}", name="administration_alternance_init_all")
+     * @Route("/init/all/{annee}", name="administration_alternance_init_all")
      * @param EtudiantRepository $etudiantRepository
      * @param Annee              $annee
      *
@@ -80,7 +80,7 @@ class AlternanceController extends BaseController
      * @param Annee    $annee
      *
      * @return RedirectResponse
-     * @route("/init/{annee}/{action}/{etudiant}", name="administration_alternance_init")
+     * @Route("/init/{annee}/{action}/{etudiant}", name="administration_alternance_init")
      */
     public function init(Etudiant $etudiant, $action, Annee $annee): RedirectResponse
     {

@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class MyExportListing
 {
-    protected $colonnesEnTete = [];
+    private $colonnesEnTete = [];
 
     /** @var TypeGroupeRepository */
     protected $typeGroupeRepository;
@@ -75,7 +75,7 @@ class MyExportListing
         $this->dataUserSession = $dataUserSession;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
-        $this->base = $kernel->getRootDir() . '/../';
+        $this->base = $kernel->getProjectDir() . '/../';
     }
 
     /**

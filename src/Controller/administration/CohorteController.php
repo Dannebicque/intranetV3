@@ -5,7 +5,6 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Scolarite;
 use App\Repository\EtudiantRepository;
-use App\Repository\ParcourRepository;
 use App\Repository\ScolariteRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +18,11 @@ class CohorteController extends BaseController
 {
     /**
      * @Route("/{annee}", name="administration_cohorte_index")
+     * @param EtudiantRepository  $etudiantRepository
+     * @param ScolariteRepository $scolariteRepository
+     * @param int                 $annee
+     *
+     * @return Response
      */
     public function index(EtudiantRepository $etudiantRepository, ScolariteRepository $scolariteRepository, $annee = 0): Response
     {

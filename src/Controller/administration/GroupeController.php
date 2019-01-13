@@ -30,8 +30,10 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/new/{semestre}/{typegroupe}", name="administration_groupe_new", methods="GET|POST")
-     * @param Request                $request
-     * @param Semestre               $semestre
+     * @param Request    $request
+     * @param Semestre   $semestre
+     *
+     * @param TypeGroupe $typeGroupe
      *
      * @return Response
      */

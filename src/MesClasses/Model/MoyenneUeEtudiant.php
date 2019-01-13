@@ -58,15 +58,13 @@ class MoyenneUeEtudiant
 
         /** @var Matiere $matiere */
         foreach ($this->matieres as $matiere) {
-            if ($matiere->isPac() === false) {
-                if ($this->moyenneMatieres[$matiere->getId()]->isPasOption() === false) {
-                    if ($matiere->getUe() !== null && $matiere->getUe()->getId() === $this->ue->getId()) {
-                        $totue += $this->moyenneMatieres[$matiere->getId()]->getMoyenne() * $matiere->getCoefficient();
-                        /* penalite */
-                        $totueP += $this->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee() * $matiere->getCoefficient();
-                        /*fin penalite */
-                        $totcoeff += $matiere->getCoefficient();
-                    }
+            if (($matiere->isPac() === false) && $this->moyenneMatieres[$matiere->getId()]->isPasOption() === false) {
+                if ($matiere->getUe() !== null && $matiere->getUe()->getId() === $this->ue->getId()) {
+                    $totue += $this->moyenneMatieres[$matiere->getId()]->getMoyenne() * $matiere->getCoefficient();
+                    /* penalite */
+                    $totueP += $this->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee() * $matiere->getCoefficient();
+                    /*fin penalite */
+                    $totcoeff += $matiere->getCoefficient();
                 }
             }
         }

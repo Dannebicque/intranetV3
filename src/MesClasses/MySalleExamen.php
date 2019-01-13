@@ -57,6 +57,7 @@ class MySalleExamen
      * @param SalleExamenRepository $salleExamenRepository
      * @param GroupeRepository      $groupeRepository
      * @param EtudiantRepository    $etudiantRepository
+     * @param MyPDF                 $myPdf
      */
     public function __construct(
         MatiereRepository $matiereRepository,

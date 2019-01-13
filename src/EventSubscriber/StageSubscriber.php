@@ -138,6 +138,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function onMailChgtEtatStageAutorise(GenericEvent $event): void
     {
@@ -149,6 +152,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param              $codeEvent
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function sendMail(GenericEvent $event, $codeEvent): void
     {

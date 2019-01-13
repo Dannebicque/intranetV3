@@ -18,7 +18,6 @@ use App\MesClasses\Model\MoyenneMatiereEtudiant;
 use App\MesClasses\Model\MoyennesSemestreEtudiant;
 use App\MesClasses\Model\MoyenneUeEtudiant;
 use App\MesClasses\Model\ParcoursEtudiant;
-use App\Repository\NoteRepository;
 
 class MyEtudiantSousCommission
 {
@@ -51,6 +50,9 @@ class MyEtudiantSousCommission
      * MyEtudiantSousCommission constructor.
      *
      * @param Etudiant $etudiant
+     * @param Semestre $semestre
+     * @param          $matieres
+     * @param          $notes
      */
     public function __construct(Etudiant $etudiant, Semestre $semestre, $matieres, $notes)
     {

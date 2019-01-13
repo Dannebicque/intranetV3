@@ -21,6 +21,7 @@ class HrsController extends BaseController
     /**
      * @Route("/{annee}", name="administration_hrs_index", methods="GET|POST", options={"expose":true},
      *                    requirements={"annee":"\d+"})
+     * @param Request       $request
      * @param HrsRepository $hrsRepository
      *
      * @param int           $annee
@@ -88,6 +89,9 @@ class HrsController extends BaseController
 
     /**
      * @Route("/annee/duplicate", name="administration_hrs_duplicate_annee", methods="POST")
+     *
+     * @param HrsRepository $hrsRepository
+     * @param Request       $request
      *
      * @return Response
      */
@@ -185,8 +189,9 @@ class HrsController extends BaseController
 
     /**
      * @Route("/supprimer/annee", name="administration_hrs_supprimer_annee", methods="DELETE")
-     * @param Request $request
+     * @param Request       $request
      *
+     * @param HrsRepository $hrsRepository
      * @return Response
      */
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response

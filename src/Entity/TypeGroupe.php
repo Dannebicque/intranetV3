@@ -70,7 +70,7 @@ class TypeGroupe extends BaseEntity
     /**
      * @param string $type
      *
-     * @return Groupe
+     * @return TypeGroupe
      */
     public function setType(string $type): self
     {

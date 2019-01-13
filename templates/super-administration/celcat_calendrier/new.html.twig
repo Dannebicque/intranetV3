@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}New CelcatCalendrier{% endblock %}
+{% block header %}
+    {{ 'adm.celcat_calendrier.new.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>Create new CelcatCalendrier</h1>
+{%block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-new.html.twig', {elt: 'celcat_calendrier'}) }}
+    </div>
+{% endblock %}
 
-    {{ include('celcat_calendrier/_form.html.twig') }}
-
-    <a href="{{ path('celcat_calendrier_index') }}">back to list</a>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.celcat_calendrier.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

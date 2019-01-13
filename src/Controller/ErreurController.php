@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class ErreurController
  * @package App\Controller
  */
-class ErreurController extends Controller
+class ErreurController extends AbstractController
 {
     /**
      * @Route("/404", name="erreur_404")

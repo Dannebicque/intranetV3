@@ -7,8 +7,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-                <a href="{{ path('administration_stage_periode_offre_index', {uuid: stagePeriode.uuidString}) }}"
-                   class="btn btn-primary btn-float" data-provide="tooltip"
+                <a href="{{ path('administration_stage_periode_offre_index', {stagePeriode: stagePeriode.uuidString}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
                    data-placement="bottom" title="{{ 'atitle.retour.stage_periode_offre'|trans }}"><i class="material-icons">arrow_back</i></a>
         </div>
     </div>

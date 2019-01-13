@@ -19,7 +19,6 @@ use App\Events;
 use App\MesClasses\Pdf\MyPDF;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
-use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -71,6 +70,8 @@ class MyEtudiant
      * @param NoteRepository           $noteRepository
      * @param AbsenceRepository        $absenceRepository
      * @param EventDispatcherInterface $eventDispatcher
+     * @param MyPDF                    $myPdf
+     * @param MyEvaluations            $myEvaluations
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -158,8 +159,6 @@ class MyEtudiant
      * @param Matiere   $matiere
      * @param Personnel $personnel
      *
-     * @param           $annee
-     *
      * @return void
      * @throws \Exception
      */
@@ -239,7 +238,6 @@ class MyEtudiant
 
     /**
      * @param Semestre $semestre
-     * @param int      $anneeUniversitaire
      */
     public function exportReleveProvisoire(Semestre $semestre): void
     {

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Competence;
 use App\Entity\Diplome;
-use App\Entity\Formation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -39,7 +38,7 @@ class CompetenceRepository extends ServiceEntityRepository
             ->orderBy('c.libelle', 'ASC');
     }
 
-    public function findByFormation(\App\Entity\Formation $formation)
+    public function findByFormation(Formation $formation)
     {
         return $this->createQueryBuilder('c')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'c.diplome=d.id')

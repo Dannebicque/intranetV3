@@ -230,7 +230,6 @@ class Formation extends BaseEntity
     public function __construct()
     {
         $this->uuid = Uuid::uuid4();
-        $this->anneeCourante = (int)date('Y');
         $this->optAnneePrevisionnel = (int)date('Y');
         $this->typeDocuments = new ArrayCollection();
         $this->personnelFormations = new ArrayCollection();

@@ -6,8 +6,6 @@ use App\Controller\BaseController;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Repository\GroupeRepository;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

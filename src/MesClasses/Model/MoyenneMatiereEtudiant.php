@@ -42,8 +42,9 @@ class MoyenneMatiereEtudiant
     /**
      * MoyenneMatiereEtudiant constructor.
      *
-     * @param Matiere  $matiere
      * @param Etudiant $etudiant
+     * @param Matiere  $matiere
+     * @param          $notes
      */
     public function __construct(Etudiant $etudiant, Matiere $matiere, $notes)
     {
@@ -60,10 +61,8 @@ class MoyenneMatiereEtudiant
         }
 
         foreach ($this->etudiant->getGroupes() as $groupe) {
-            if ($groupe->getOptions() !== null) {
-                if ($groupe->getOptions()->getId() == $this->matiere->getParcours()->getId()) {
-                    return true;
-                }
+            if (($groupe->getOptions() !== null) && $groupe->getOptions()->getId() === $this->matiere->getParcours()->getId()) {
+                return true;
             }
         }
 

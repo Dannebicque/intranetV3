@@ -7,7 +7,6 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +18,10 @@ class TypeGroupeController extends BaseController
 {
     /**
      * @Route("/new/{semestre}", name="administration_type_groupe_new", methods="GET|POST")
+     * @param Request  $request
+     * @param Semestre $semestre
+     *
+     * @return Response
      */
     public function create(Request $request, Semestre $semestre): Response
     {
@@ -42,6 +45,8 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_groupe_show", methods="GET")
+     * @param TypeGroupe $typeGroupe
+     * @return Response
      */
     public function show(TypeGroupe $typeGroupe): Response
     {
@@ -50,6 +55,9 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_groupe_edit", methods="GET|POST")
+     * @param Request    $request
+     * @param TypeGroupe $typeGroupe
+     * @return Response
      */
     public function edit(Request $request, TypeGroupe $typeGroupe): Response
     {

@@ -101,6 +101,9 @@ class DataUserSession
      * @param TokenStorageInterface                  $user
      * @param Security                               $security
      *
+     * @param EventDispatcherInterface               $eventDispatcher
+     * @param SessionInterface                       $session
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function __construct(
@@ -260,8 +263,6 @@ class DataUserSession
     public function isGoodFormation($role): bool
     {
         if ($this->getUser() !== null && !($this->getUser() instanceof Etudiant)) {
-            $autorize = false;
-
             /** @var PersonnelFormation $rf */
             foreach ($this->getUser()->getPersonnelFormations() as $rf) {
                 if ($rf->getFormation() !== null &&

@@ -1,10 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}Configuration{% endblock %}
+{% block header %}
+    {{ 'adm.configuration.show.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>Configuration</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'configuration', id: configuration.id}) }}
 
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.configuration.show.heading'|trans }}</h4>
+        <div class="card-body">
     <table class="table">
         <tbody>
             <tr>
@@ -29,10 +39,6 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('configuration_index') }}">back to list</a>
-
-    <a href="{{ path('configuration_edit', {'id': configuration.id}) }}">edit</a>
-
-    {{ include('configuration/_delete_form.html.twig') }}
+    </div>
+    </div>
 {% endblock %}

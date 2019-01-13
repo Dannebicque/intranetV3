@@ -301,7 +301,7 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @param mixed $sexe
+     * @param $civilite
      */
     public function setCivilite($civilite): void
     {
