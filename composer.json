@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "dompdf/dompdf": "^0.8.3",
+        "endroid/qr-code-bundle": "^3.3",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "ninsuo/symfony-collection": "^2.1",
         "phpoffice/phpspreadsheet": "^1.5",

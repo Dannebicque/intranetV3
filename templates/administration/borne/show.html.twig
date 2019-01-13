@@ -35,22 +35,29 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.semestres'|trans }}</th>
-                    <td>?? Semestre</td>
+                    <td>{% for semestre in borne.semestres %}{{ semestre.display }}{% if not loop.last %}, {% endif
+                        %}{% endfor
+                        %}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.url'|trans }}</th>
                     <td>{{ borne.url }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.qrcode'|trans }}</th>
-                    <td>{{ borne.url }}QRCODE généré</td>
+                    <th>{{ 'table.message_visible'|trans }}</th>
+                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.id'|trans }}DateDebutPublication</th>
+                    <th>{{ 'table.qrcode'|trans }}</th>
+                    <td>{{ borne.url }} {% if borne.url is defined %}<img src="{{ qr_code_data_uri(borne.url, { writer: 'svg', size: 150 }) }}" />{%
+                            endif %}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.dateDebutPublication'|trans }}</th>
                     <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.id'|trans }}DateFinPublication</th>
+                    <th>{{ 'table.dateFinPublication'|trans }}</th>
                     <td>{{ borne.dateFinPublication ? borne.dateFinPublication|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                 </tr>
                 <tr>
@@ -61,10 +68,7 @@
                     <th>{{ 'table.updated'|trans }}</th>
                     <td>{{ borne.updated ? borne.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                 </tr>
-                <tr>
-                    <th>{{ 'table.visible'|trans }}</th>
-                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
-                </tr>
+
                 </tbody>
             </table>
         </div>

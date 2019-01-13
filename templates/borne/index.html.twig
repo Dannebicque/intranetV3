@@ -276,12 +276,12 @@
                             <p class="white-text">
                                 {{ m.message }}
                             </p>
-                            {#{% if m.url != '' or m.url != null %}#}
-                            {#<div class="qrcode">#}
-                            {#<img src="{{ qr_code_data_uri(m.url) }}" />#}
-                            {#<p>Flashez moi pour plus d'informations.</p>#}
-                            {#</div>#}
-                            {#{% endif %}#}
+                            {% if m.url != '' or m.url != null %}
+                            <div class="qrcode">
+                            <img src="{{ qr_code_data_uri(m.url) }}" />
+                            <p>Flashez moi pour plus d'informations.</p>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
