@@ -18,7 +18,11 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+        l3_firewall:
+            pattern: ^/
+            security: true
+            cas: true # Activation du CAS
+            provider: chain_provider
         main:
             #http_basic: ~
             # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
