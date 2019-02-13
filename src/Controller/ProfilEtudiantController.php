@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\MesClasses\Calendrier;
+use App\Repository\AlternanceRepository;
 use App\Repository\ScolariteRepository;
+use App\Repository\StageEtudiantRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,7 +92,7 @@ class ProfilEtudiantController extends BaseController
      */
     public function absences(Etudiant $etudiant): Response
     {
-        Calendrier::calculPlanning($etudiant->getSemestre()->getAnneeUniversitaire(), 2, Constantes::DUREE_SEMESTRE);
+        Calendrier::calculPlanning($etudiant->getAnneeUniversitaire(), 2, Constantes::DUREE_SEMESTRE);
 
         //todo: gérer les mois, selon le semestre ?
         return $this->render('user/composants/absences.html.twig', [
@@ -98,7 +100,7 @@ class ProfilEtudiantController extends BaseController
             'tabJour'     => array('', 'L', 'M', 'M', 'J', 'V', 'S', 'D'),
             'tabFerie'    => Calendrier::getTabJoursFeries(),
             'tabFinMois'  => Calendrier::getTabFinMois(),
-            'annee'       => $etudiant->getSemestre()->getAnneeUniversitaire(),
+            'annee'       => $etudiant->getAnneeUniversitaire(),
             'absences'    => $etudiant->getAbsences(),
             'tabAbsence'  => [] //compte des absences par créneaux du planning.
         ]);
@@ -111,12 +113,22 @@ class ProfilEtudiantController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function stages(Etudiant $etudiant): Response
+    public function stages( StageEtudiantRepository $stageEtudiantRepository,
+        AlternanceRepository $alternanceRepository,
+        Etudiant $etudiant): Response
     {
         return $this->render('user/composants/stages.html.twig', [
-            'stages' => $etudiant->getStageEtudiants(),
-            'alternances' => $etudiant->getAlternances()
-        ]);
+
+                'stagesEnCours'         => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
+                    $etudiant->getAnneeUniversitaire()),
+                'stagesHistorique'      => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
+                    $etudiant->getAnneeUniversitaire()),
+                'alternancesEnCours'    => $alternanceRepository->findByEtudiantAnnee($etudiant,
+                    $etudiant->getAnneeUniversitaire()),
+                'alternancesHistorique' => $alternanceRepository->findByEtudiantHistorique($etudiant,
+                    $etudiant->getAnneeUniversitaire()),
+            ]);
+
     }
 
     /**

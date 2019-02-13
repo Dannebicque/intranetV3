@@ -296,4 +296,12 @@ class DataUserSession
     {
         return count($this->getUser()->getPersonnelFormations()) > 1;
     }
+
+    public function getAnneeUniversitaire() {
+        if ($this->getUser() !== null && $this->getUser() instanceof Etudiant) {
+            return $this->getUser()->getAnneeUniversitaire();
+        } else {
+            return date('Y'); //todo: a améliorer pour les non étudiants...
+        }
+    }
 }

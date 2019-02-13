@@ -276,12 +276,12 @@
                             <p class="white-text">
                                 {{ m.message }}
                             </p>
-                            {% if m.url != '' or m.url != null %}
-                            <div class="qrcode">
-                            <img src="{{ qr_code_data_uri(m.url) }}" />
-                            <p>Flashez moi pour plus d'informations.</p>
-                            </div>
-                            {% endif %}
+                            {#{% if m.url != '' or m.url != null %}#}
+                            {#<div class="qrcode">#}
+                            {#<img src="{{ qr_code_data_uri(m.url) }}" />#}
+                            {#<p>Flashez moi pour plus d'informations.</p>#}
+                            {#</div>#}
+                            {#{% endif %}#}
                         </div>
                     </div>
                 {% endfor %}
@@ -313,7 +313,7 @@
                     <p class="white-text">Une multitude de revues et de livres ainsi qu'un grand nombre
                         de ressources sont disponibles sur le bureau virtuel.</p>
                     <div class="qrcode">
-                        <img class="" src="{{ asset('assets/bornes/img/qrcode.png') }}" alt="qrcode">
+                        <img class="" src="{{ asset('assets/bornes/img/grcode.png') }}" alt="qrcode">
                         <p>Flashez ici pour accéder à la bibliothèque en ligne.</p>
                     </div>
                 </div>

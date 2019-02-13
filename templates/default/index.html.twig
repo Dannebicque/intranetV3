@@ -66,7 +66,7 @@
                         {% else %}
                             <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
                         {% endfor %}
-                        <a href="{{ path('planning_index') }}"
+                        <a href="{{ path('planning_index', {annee: user_data.anneeUniversitaire}) }}"
                            class="pull-right">{{ 'voir.planning'|trans }}</a>
                     </ol>
                 </div>

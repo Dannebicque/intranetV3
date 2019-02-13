@@ -51,8 +51,6 @@ class Etudiant extends Utilisateur implements \Serializable
      */
     private $numIne;
 
-
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -954,5 +952,12 @@ class Etudiant extends Utilisateur implements \Serializable
         $this->bac = $bac;
 
         return $this;
+    }
+
+    public function getAnneeUniversitaire() {
+        if ($this->getSemestre() !== null) {
+            return $this->getSemestre()->getAnneeUniversitaire();
+        }
+        return 0;
     }
 }

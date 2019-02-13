@@ -105,7 +105,7 @@
       </trans-unit>
       <trans-unit id="aTrpOPs" resname="security.login.sign-with">
         <source>security.login.sign-with</source>
-        <target>Connexion avec</target>
+        <target>Extérieur ou compte invité</target>
         <note priority="1">templates/security/login.html.twig:45</note>
       </trans-unit>
       <trans-unit id="fdkV0aN" resname="service.previsionnel.heading">

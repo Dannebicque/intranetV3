@@ -45,6 +45,28 @@ class AlternanceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByEtudiantAnnee(Etudiant $etudiant, int $getAnneeUniversitaire)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.anneeUniversitaire = :annee')
+            ->andWhere('a.etudiant = :etudiant')
+            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByEtudiantHistorique(Etudiant $etudiant, int $getAnneeUniversitaire)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.anneeUniversitaire != :annee')
+            ->andWhere('a.tuteurUniversitaire = :etudiant')
+            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByAnnee(Annee $annee, int $getAnneeUniversitaire)
     {
         return $this->createQueryBuilder('a')

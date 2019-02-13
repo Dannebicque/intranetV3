@@ -19,8 +19,8 @@
     <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-touch-icon.png') }}">
-    <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
 
 </head>
 
@@ -40,7 +40,7 @@
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
     <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.formation.couleur }}{% else %}#926DDF{% endif %}">
         <span class="logo text-center">
-          <a href="{{ path('default_homepage') }}"><img src="{{ asset('assets/img/logo-icon-light.png') }}"
+          <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
                                                         alt="logo"></a>
         </span>
     </header>
@@ -70,21 +70,21 @@
                     </a>
                 </li>
 
-                <li class="menu-item" id="menu-application">
+                <li class="menu-item" id="menu-applications">
                     <a class="menu-link" href="{{ path('application_index') }}">
                         <span class="material-icons">apps</span>
                         <span class="title">{{ 'menu.applications'|trans }}</span>
                     </a>
                 </li>
 
-                <li class="menu-item" id="menu-document">
+                <li class="menu-item" id="menu-documents">
                     <a class="menu-link" href="{{ path('document_index') }}">
                         <span class="material-icons">folder</span>
                         <span class="title">{{ 'menu.documents'|trans }}</span>
                     </a>
                 </li>
 
-                <li class="menu-item" id="menu-information">
+                <li class="menu-item" id="menu-informations">
                     <a class="menu-link" href="{{ path('informations_index') }}">
                         <span class="material-icons">insert_drive_file</span>
                         <span class="title">{{ 'menu.informations'|trans }}</span>
@@ -211,17 +211,17 @@
             <!-- Change language -->
             <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown"><img class="icon"
-                                                                         src="{{ asset('assets/img/flag/en.png') }}"
+                                                                         src="{{ asset('sources/assets/img/flag/en.png') }}"
                                                                          alt="fr"></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item active" href="#"><img class="icon"
-                                                                  src="{{ asset('assets/img/flag/en.png') }}"
+                                                                  src="{{ asset('sources/assets/img/flag/en.png') }}"
                                                                   alt="en"></a>
                     <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('assets/img/flag/de.png') }}"
+                                                           src="{{ asset('sources/assets/img/flag/de.png') }}"
                                                            alt="..."></a>
                     <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('assets/img/flag/es.png') }}"
+                                                           src="{{ asset('sources/assets/img/flag/es.png') }}"
                                                            alt="..."></a>
                 </div>
             </li>
@@ -341,7 +341,7 @@
                     <button type="button" class="close" data-dismiss="callout" aria-label="Close">
                         <span>&times;</span>
                     </button>
-                    <h5>{{ ('callout'~label)|trans }}</h5>
+                    <h5>{{ 'callout'~label|trans }}</h5>
                     <p>{{ message }}</p>
                 </div>
             {% endfor %}
@@ -396,7 +396,7 @@
 
 <!-- Fullscreen search -->
 <div class="lookup-fullscreen" id="lookup-full">
-    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="{{ iconDelete }}"></i></span>
+    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="ti-close"></i></span>
 
     <div class="lookup-form">
         <input type="text" placeholder="Search anything" id="search">
@@ -455,6 +455,7 @@
 <script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
 <script src="{{ asset('sources/assets/js/app.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="{{ asset('sources/assets/js/jquery.collection.js') }}"></script>
 <script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
 
 <script data-provide="sweetalert"></script>

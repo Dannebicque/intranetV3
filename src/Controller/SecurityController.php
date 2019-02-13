@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Class SecurityController
@@ -51,6 +52,33 @@ class SecurityController extends AbstractController
             // La derniere erreur de connexion (si il y en a une)
             'error' => $helper->getLastAuthenticationError(),
         ]);
+    }
+
+    /**
+     * Connexion avec le CAS
+     * @Route("/login_cas", name="security_login_cas")
+     */
+    public function loginCas() {
+        $target = urlencode(getenv('CAS_LOGIN_TARGET'));
+        $url = 'https://'.getenv('CAS_HOST') . getenv('CAS_PATH') . '/login?service=';
+
+        return $this->redirect($url . $target . '/force');
+    }
+
+    /**
+     * @Route("/force", name="security_force_cas")
+     */
+    public function forceAction() {
+
+        if (getenv('CAS_GATEWAY')) {
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+
+            session_destroy();
+        }
+
+        return $this->redirect($this->generateUrl('default_homepage'));
     }
 
     /**

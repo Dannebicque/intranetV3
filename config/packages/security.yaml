@@ -52,6 +52,7 @@ security:
     # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
     # peuvent acceder à toutes les pages commençant par /admin
     - { path: '^/[a-z]{2}/connexion', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: '^/[a-z]{2}/login_cas', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
     - { path: '^/[a-z]{2}/administration', roles: ROLE_PERMANENT }
     - { path: '^/[a-z]{2}/iut', roles: ROLE_IUT }

@@ -63,4 +63,28 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByEtudiantAnnee(Etudiant $etudiant, int $getAnneeUniversitaire)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
+            ->where('p.anneeUniversitaire = :annee')
+            ->andWhere('s.etudiant = :etudiant')
+            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByEtudiantHistorique(Etudiant $etudiant, int $getAnneeUniversitaire)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
+            ->where('p.anneeUniversitaire < :annee')
+            ->andWhere('s.etudiant = :etudiant')
+            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getResult();
+    }
 }

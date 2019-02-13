@@ -10,7 +10,7 @@
                 <th>Tuteur</th>
             </tr>
             </thead>
-            {% for stage in stages if stage.stagePeriode.anneeuniversiaitaire >= user_data.anneeuniversitaire %}
+            {% for stage in stagesEnCours %}
                 <tr class="stage">
                     <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
                     <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
@@ -31,8 +31,7 @@
                 </tr>
             {% endfor %}
 
-            {% for alternance in alternances if alternance.anneeUniversitaire >= user_data
-                .anneeuniversitaire %}
+            {% for alternance in alternancesEnCours %}
                 <tr class="alternance">
                     <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
                     <td>
@@ -62,14 +61,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Semestre</th>
-                <th>Année Universitaire</th>
-                <th>Période</th>
-                <th>Entreprise</th>
-                <th>Tuteur</th>
+                <th>{{ 'table.semestre'|trans }}</th>
+                <th>{{ 'table.anneeUniversitaire'|trans }}</th>
+                <th>{{ 'table.periode'|trans }}</th>
+                <th>{{ 'table.entreprise'|trans }}</th>
+                <th>{{ 'table.tuteur'|trans }}</th>
             </tr>
             </thead>
-            {% for stage in stages if stage.stagePeriode.anneeuniversiaitaire < user_data.anneeuniversitaire %}
+            {% for stage in stagesHistorique %}
                 <tr class="stage">
                     <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
                     <td>{{ stage.stagePeriode.anneeuniversiaitaire }}</td>
@@ -91,8 +90,7 @@
                 </tr>
             {% endfor %}
 
-            {% for alternance in alternances if alternance.anneeUniversitaire < user_data
-                .anneeuniversitaire %}
+            {% for alternance in alternancesHistorique %}
                 <tr class="alternance">
                     <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
                     <td>{{ alternance.anneeUniversitaire }}</td>

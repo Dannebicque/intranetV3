@@ -1,10 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block body %}
-
+{% block header %}
+    {{ 'sadm.celcat_calendrier.index.heading'|trans }}
 {% endblock %}
 
-{% block title %}
-
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sa_celcat_calendrier_index') }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="ti-arrow-left"></i></a>
+        </div>
+    </div>
 {% endblock %}
 
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'sadm.celcat_calendrier.index.heading'|trans }}</h4>
+    <div class="card-body">
+
+    </div>
+</div>
+{% endblock %}

@@ -18,6 +18,9 @@
                 {{ error.messageKey }}
             </div>
         {% endif %}
+        <p>Etudiants ou personnels de l'Université, connectez-vous avec l'authentification de
+            l'Université .<a href="{{ path('security_login_cas') }}" class="btn btn-bold btn-block btn-primary">Connexion URCA</a></p>
+        <div class="divider">{{ 'security.login.sign-with'|trans }}</div>
 
         <form class="form-type-material" action="{{ path('security_login') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
@@ -46,13 +49,6 @@
                 <button class="btn btn-bold btn-block btn-primary" type="submit">{{ 'security.login.login'|trans }}</button>
             </div>
         </form>
-
-        <div class="divider">{{ 'security.login.sign-with'|trans }}</div>
-        <div class="text-center">
-            <a class="btn btn-square btn-facebook" href="#"><i class="fa fa-facebook"></i></a>
-            <a class="btn btn-square btn-google" href="#"><i class="fa fa-google"></i></a>
-            <a class="btn btn-square btn-twitter" href="#"><i class="fa fa-twitter"></i></a>
-        </div>
     </div>
 
 {% endblock %}
