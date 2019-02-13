@@ -20,6 +20,7 @@ class UserFixtures extends Fixture
         $user->setMailUniv('david.annebicque@gmail.com');
         $user->setNom('Annebicque');
         $user->setPrenom('David');
+        $user->setStatut('MCF');
         $user->setRoles(["ROLE_SUPER_ADMIN"]);
         $user->setPhotoName('noimage.png');
         $user->setCreated(new \DateTime('now'));
