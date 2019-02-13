@@ -21,6 +21,7 @@ class UserFixtures extends Fixture
         $user->setNom('Annebicque');
         $user->setPrenom('David');
         $user->setStatut('MCF');
+        $user->setTypeUser('permanent');
         $user->setRoles(["ROLE_SUPER_ADMIN"]);
         $user->setPhotoName('noimage.png');
         $user->setCreated(new \DateTime('now'));
