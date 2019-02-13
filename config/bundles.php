@@ -17,5 +17,5 @@ return [
     L3\Bundle\CasBundle\L3CasBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
-    L3\Bundle\CasBundle\L3CasBundle::class => ['all' => true]
+    Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
 ];
