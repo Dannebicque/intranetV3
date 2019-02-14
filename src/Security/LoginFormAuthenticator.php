@@ -98,6 +98,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return $role->getRole();
         }, $roles);
 
+        dump($rolesTab);
+
         if (\in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
             $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));

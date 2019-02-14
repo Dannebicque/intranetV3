@@ -8,4 +8,3 @@
 ###< symfony/framework-bundle ###
 
 /node_modules/
-/public/sources/assets/vendor/
