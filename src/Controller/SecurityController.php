@@ -2,90 +2,38 @@
 
 namespace App\Controller;
 
-use App\Entity\Formation;
-use App\Repository\FormationRepository;
-use App\Repository\PersonnelFormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\Formation;
+use App\Repository\PersonnelFormationRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-/**
- * Class SecurityController
- * @package App\Controller
- */
 class SecurityController extends AbstractController
 {
-    private $encoder;
-
-    /**
-     * SecurityController constructor.
-     *
-     * @param UserPasswordEncoderInterface $encoder
-     */
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
-
     /**
      * @Route("/connexion/{message}", name="security_login")
-     * @param AuthenticationUtils $helper
-     *
-     * @param string              $message
-     *
-     * @return Response
      */
-    public function login(AuthenticationUtils $helper, $message = ''): Response
+    public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
     {
-        return $this->render('security/login.html.twig', [
-            'message' => $message,
-            // dernier username saisi (si il y en a un)
-            'last_username' => $helper->getLastUsername(),
-            // La derniere erreur de connexion (si il y en a une)
-            'error' => $helper->getLastAuthenticationError(),
-        ]);
-    }
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-    /**
-     * Connexion avec le CAS
-     * @Route("/login_cas", name="security_login_cas")
-     */
-    public function loginCas() {
-        $target = urlencode(getenv('CAS_LOGIN_TARGET'));
-        $url = 'https://'.getenv('CAS_HOST') . getenv('CAS_PATH') . '/login?service=';
-
-        return $this->redirect($url . $target . '/force');
-    }
-
-    /**
-     * @Route("/force", name="security_force_cas")
-     */
-    public function forceAction() {
-
-        if (getenv('CAS_GATEWAY')) {
-            if (!isset($_SESSION)) {
-                session_start();
-            }
-
-            session_destroy();
-        }
-
-        return $this->redirect($this->generateUrl('default_homepage'));
+        return $this->render('security/login.html.twig', ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
      * @Route("/deconnexion", name="security_logout")
      */
-    public function logout(): void
+    public function logout()
     {
+        return $this->redirectToRoute('security_login');
     }
 
     /**

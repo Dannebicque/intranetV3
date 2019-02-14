@@ -13,7 +13,7 @@ l3_cas:
     ca: '%env(bool:CAS_CA)%'
     handleLogoutRequest: '%env(bool:CAS_HANDLE_LOGOUT_REQUEST)%'
     casLogoutTarget: '%env(string:CAS_LOGOUT_TARGET)%'
-    force: '%env(bool:CAS_FORCE)%'
+    force: false
     gateway: '%env(bool:CAS_GATEWAY)%'
 
 services:
@@ -36,9 +36,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    redirect.after.login:
-        class: App\Listener\AfterLoginRedirect
-        arguments: ['@router']
 
     App\Twig\AppExtension:
         calls:

@@ -8,6 +8,7 @@
         "dompdf/dompdf": "^0.8.3",
         "endroid/qr-code-bundle": "^3.3",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
+        "l3/cas-bundle": "~1.0",
         "ninsuo/symfony-collection": "^2.1",
         "phpoffice/phpspreadsheet": "^1.5",
         "ramsey/uuid-doctrine": "^1.5",
@@ -27,10 +28,10 @@
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/translation": "4.2.*",
         "symfony/twig-bundle": "^4.2",
+        "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*",
         "twig/extensions": "^1.5",
-        "vich/uploader-bundle": "^1.8",
-        "l3/cas-bundle": "~1.0"
+        "vich/uploader-bundle": "^1.8"
     },
     "config": {
         "preferred-install": {

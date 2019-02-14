@@ -1,17 +1,19 @@
 {% extends 'base-speciale.html.twig' %}
 
 {% block header %}{{ 'security.login.heading'|trans }}{% endblock %}
+
 {% block body %}
     class="min-h-fullscreen bg-img center-vh p-20" style="background-image: url({{ asset('assets/bg/2.jpg') }});" data-overlay="7"
 {% endblock %}
+
 {% block content %}
     <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0" style="max-width: 100%">
         <h5 class="text-uppercase">{{ 'security.login.connexion'|trans }}</h5>
         <br>
         {% if message %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
         {% endif %}
         {% if error %}
             <div class="alert alert-danger">
@@ -19,19 +21,19 @@
             </div>
         {% endif %}
         <p>Etudiants ou personnels de l'Université, connectez-vous avec l'authentification de
-            l'Université .<a href="{{ path('security_login_cas') }}" class="btn btn-bold btn-block btn-primary">Connexion URCA</a></p>
+            l'Université .<a href="" class="btn btn-bold btn-block btn-primary">Connexion URCA</a></p>
         <div class="divider">{{ 'security.login.sign-with'|trans }}</div>
 
         <form class="form-type-material" action="{{ path('security_login') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
             <div class="form-group">
-                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+                <input type="text" class="form-control" id="username" name="username" value="{{ last_username }}">
                 <label for="username">{{ 'security.login.username'|trans }}</label>
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" name="_password">
+                <input type="password" class="form-control" name="password">
                 <label for="password">{{ 'security.login.password'|trans }}</label>
             </div>
 
@@ -51,4 +53,36 @@
         </form>
     </div>
 
+
+
+    {#<form method="post">#}
+    {#{% if error %}#}
+        {#<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+    {#{% endif %}#}
+
+    {#<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>#}
+    {#<label for="inputUsername" class="sr-only">Username</label>#}
+    {#<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>#}
+    {#<label for="inputPassword" class="sr-only">Password</label>#}
+    {#<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>#}
+
+    {#<input type="hidden" name="_csrf_token"#}
+           {#value="{{ csrf_token('authenticate') }}"#}
+    {#>#}
+
+    {##}
+        {#Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.#}
+        {#See https://symfony.com/doc/current/security/remember_me.html#}
+
+        {#<div class="checkbox mb-3">#}
+            {#<label>#}
+                {#<input type="checkbox" name="_remember_me"> Remember me#}
+            {#</label>#}
+        {#</div>#}
+    {##}
+
+    {#<button class="btn btn-lg btn-primary" type="submit">#}
+        {#Sign in#}
+    {#</button>#}
+{#</form>#}
 {% endblock %}
