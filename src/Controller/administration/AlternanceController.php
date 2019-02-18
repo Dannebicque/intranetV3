@@ -131,7 +131,7 @@ class AlternanceController extends BaseController
             $actualites,
             'alternances',
             ['alternances_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]//todo: a parametrer avec alternance
+            ['entreprise' => ['libelle'], 'texte', 'formation' => ['libelle']]//todo: a parametrer avec alternance
         );
 
         return $response;

@@ -8,7 +8,7 @@
                     <ul class="card-controls">
                         <li class="dropdown">
                             <a data-toggle="dropdown" href="#"><i
-                                        class="ti-more-alt rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i></a>
+                                        class="ti-more-alt rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}"
                                    class="dropdown-item"><i
@@ -36,7 +36,7 @@
                     <div class="btn-toolbar pull-right">
                         <div class="btn-group mr-2">
                         <a class="btn btn-primary" href="" data-provide="tooltip" title="Cette semaine"><i class="fa
-	fa-calendar"></i></a>
+	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
                         </div>
 
                         <div class="btn-group mr-2">
@@ -49,7 +49,8 @@
                             </ul>
                         </div>
                         <div class="btn-group mr-2">
-                            <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaine précédente"><i class="fa fa-caret-left"></i></a>
+                            <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaine précédente"><i
+                                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
                             {% for semestre in user_data.semestres if semestre.actif == true %}
                                 <a class="btn
 {#{% if (edt.semestre != null and edt.semestre.id == semestre.id) %} btn-success {% else %} btn-primary {% endif %}" #}"
@@ -58,7 +59,8 @@
                             <a class="btn
 {#{% if edt.filtre=='prof' %} btn-success {% else %} btn-primary {% endif %}" #}"
                                href="" data-provide="tooltip" title="Votre emploi du temps">Perso.</a>
-                            <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaie suivante"><i class="fa fa-caret-right"></i></a>
+                            <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaie suivante"><i
+                                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                         </div>
                     </div>
 

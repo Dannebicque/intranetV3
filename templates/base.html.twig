@@ -41,7 +41,7 @@
     <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.formation.couleur }}{% else %}#926DDF{% endif %}">
         <span class="logo text-center">
           <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
-                                                        alt="logo"></a>
+                                                        alt="logo de l'intranet."></a>
         </span>
     </header>
 
@@ -124,7 +124,8 @@
         </a>
         <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip" title=""
            data-original-title="{{ 'lock'|trans }}">
-            <i class="material-icons">lock_outline</i>
+            <i class="material-icons">lock_outline</i><span
+                    class="sr-only">Vérouiller</span>
         </a>
 
         <div class="dropdown d-none d-md-block">
@@ -216,20 +217,21 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item active" href="#"><img class="icon"
                                                                   src="{{ asset('sources/assets/img/flag/en.png') }}"
-                                                                  alt="en"></a>
+                                                                  alt="version anglaise"></a>
                     <a class="dropdown-item" href="#"><img class="icon"
                                                            src="{{ asset('sources/assets/img/flag/de.png') }}"
-                                                           alt="..."></a>
+                                                           alt="version allemande"></a>
                     <a class="dropdown-item" href="#"><img class="icon"
                                                            src="{{ asset('sources/assets/img/flag/es.png') }}"
-                                                           alt="..."></a>
+                                                           alt="version espagnole"></a>
                 </div>
             </li>
             <!-- END Change language -->
 
             <!-- Notifications -->
             <li class="dropdown d-none d-md-block">
-                <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i></span>
+                <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i><span
+                            class="sr-only">Notifications</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="media-list media-list-hover media-list-divided media-list-xs">
                         {% for notification in user_data.notifications %}
@@ -318,11 +320,11 @@
     <header class="header">
         <div class="header-info">
             <div class="left">
-                <h2 class="header-title" id="header-title">
+                <h1 class="header-title" id="header-title">
                     {% block header %}
                         <strong>No title</strong>
                     {% endblock %}
-                </h2>
+                </h1>
             </div>
             {% block headerright %}
 
@@ -399,6 +401,8 @@
     <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="ti-close"></i></span>
 
     <div class="lookup-form">
+        <label for="search"><span
+                    class="sr-only">Rechercher</span></label>
         <input type="text" placeholder="Search anything" id="search">
     </div>
 

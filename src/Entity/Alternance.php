@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlternanceRepository")
@@ -19,6 +20,7 @@ class Alternance extends BaseEntity
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", cascade={"persist", "remove"})
+     * @Groups({"absences_administration"})
      */
     private $entreprise;
 

@@ -33,7 +33,8 @@
 
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i><span
+                        class="sr-only">{{ 'atitle.retour_semestres'|trans }}</span></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
         </div>
@@ -74,7 +75,8 @@
                             <a href="{{ path('user_profil', {type: 'etudiant', 'slug': etudiant.slug, onglet:'absences'}) }}"
                                class="btn btn-info btn-outline btn-square" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.details'|trans }}" target="_blank"><i
-                                        class="ti-eye"></i></a>
+                                        class="ti-eye"></i><span
+                                        class="sr-only">{{ 'atitle.details'|trans }}</span></a>
                         </td>
                     </tr>
                 {% endfor %}
