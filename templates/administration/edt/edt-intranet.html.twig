@@ -84,7 +84,7 @@
     </div>
 </div>
 
-{{ include('composants/edt.html.twig') }}
+{{ include('composants/edt.html.twig', {source: 'intranet'}) }}
 
 <div class="card">
     <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
@@ -99,19 +99,6 @@
                 <div><a href="{{ path('administration_structure_index') }}"
                         class="btn btn-block btn-primary"> {{ 'adm.edt.effacer.semestre'|trans }}</a></div>
             </div>
-            <div class="col-md-4 col-sm-12">
-                <div><a href="{{ path('administration_structure_index') }}"
-                        class="btn btn-block btn-primary"> {{ 'adm.edt.export'|trans }}</a></div>
-            </div>
-            <div class="col-md-4 col-sm-12">
-                <div><a href="{{ path('administration_structure_index') }}"
-                        class="btn btn-block btn-primary"> {{ 'adm.edt.comparaison'|trans }}</a></div>
-            </div>
-            <div class="col-md-4 col-sm-12">
-                <div><a href="{{ path('administration_structure_index') }}"
-                        class="btn btn-block btn-primary"> {{ 'adm.edt.service.realise'|trans }}</a></div>
-            </div>
-
         </div>
     </div>
 </div>

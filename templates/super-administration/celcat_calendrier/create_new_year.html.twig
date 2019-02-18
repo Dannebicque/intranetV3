@@ -15,14 +15,25 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">{{ 'sadm.celcat_calendrier.index.heading'|trans }}</h4>
-    <div class="card-body">
-        <p>Executer la synchronisation avec Celcat</p>
-        <form>
-            Année universitaire :
-
-        </form>
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.celcat_calendrier.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <div class="alert alert-info">Executer la synchronisation avec Celcat pour récupérer le calendrier en
+                fonction.</div>
+            <form name="annee_universitaire" method="post">
+                <div id="annee_universitaire">
+                    <div class="form-group">
+                        <label class="required" for="annee_universitaire">Année universitaire</label>
+                        <select id="annee_universitaire" name="annee_universitaire" class="form-control">
+                            <option value="">Choisir l'année concernée</option>
+                            {% for annee in annees %}
+                                <option value="{{ annee.id }}">{{ annee.libelle }} ({{ annee.annee }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-success">Synchroniser le calendrier Celcat</button>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}

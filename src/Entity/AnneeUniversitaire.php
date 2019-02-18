@@ -31,6 +31,11 @@ class AnneeUniversitaire
      */
     private $commentaire;
 
+    public function __construct()
+    {
+        $this->setAnnee(date('Y'));
+    }
+
     public function getId(): ?int
     {
         return $this->id;

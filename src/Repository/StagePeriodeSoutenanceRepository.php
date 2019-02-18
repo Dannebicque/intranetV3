@@ -18,33 +18,4 @@ class StagePeriodeSoutenanceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StagePeriodeSoutenance::class);
     }
-
-//    /**
-//     * @return StagePeriodeSoutenance[] Returns an array of StagePeriodeSoutenance objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?StagePeriodeSoutenance
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

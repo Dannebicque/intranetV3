@@ -114,7 +114,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findPrevisionnelFormation(Formation $formation, $annee)
+    public function findByFormation(Formation $formation, $annee)
     {
 
         return $this->createQueryBuilder('p')

@@ -1,6 +1,25 @@
 <div class="card">
     <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
     <div class="card-body">
+        <div class="row gap-y">
+            <div class="col-md-3 col-sm-12">
+                //todo: intégrer la source intranet ou celcat
+                <div><a href="{{ path('administration_structure_index') }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.export'|trans }}</a></div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div><a href="{{ path('administration_edt_compare_personnels', {source:source}) }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.comparaison.personnels'|trans }}</a></div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div><a href="{{ path('administration_edt_compare_matiere', {source:source}) }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.comparaison.matieres'|trans }}</a></div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <div><a href="{{ path('administration_edt_service_realise', {source:source}) }}"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.service.realise'|trans }}</a></div>
+            </div>
 
+        </div>
     </div>
 </div>

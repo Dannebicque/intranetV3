@@ -1,0 +1,30 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Date</td>
+        <td>Heure</td>
+        <td>Enseignant</td>
+        <td>Type</td>
+        <td>Groupe</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for pl in planning %}
+        <tr>
+            <td>{{ pl.jourlong }} {{ pl.dateFr(calendrier[pl.semaine].semainereelle) }}</td>
+            <td>{{ pl.hDebut }} | {{ pl.hFin }}</td>
+            {% if pl.intervenant != null %}
+                <td>{{ displayPr(pl.intervenant.nom, pl.intervenant.prenom) }}</td>
+            {% else %}
+                <td> - </td>
+            {% endif %}
+            <td>{{ pl.type|upper }}</td>
+            {% if pl.groupe != null %}
+                <td>{{ pl.displayGroupe }}</td>
+            {% else %}
+                <td> - </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

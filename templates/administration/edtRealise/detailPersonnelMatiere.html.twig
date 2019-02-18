@@ -1,0 +1,56 @@
+<div class="card">
+    <h4 class="card-title">{{ 'adm.edt.realise.chronologique.heading'|trans({'%personnel%':personnel.display }) }}</h4>
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th colspan="2">CM</th>
+                <th colspan="2">TD</th>
+                <th colspan="2">TP</th>
+            </tr>
+            <tr>
+                <th>Previ.</th>
+                <th>Real.</th>
+                <th>Previ.</th>
+                <th>Real.</th>
+                <th>Previ.</th>
+                <th>Real.</th>
+            </tr>
+            <tr>
+                <td>{{ t.cm.previ }}</td>
+                <td>{{ t.cm.real }}</td>
+                <td>{{ t.td.previ }}</td>
+                <td>{{ t.td.real }}</td>
+                <td>{{ t.tp.previ }}</td>
+                <td>{{ t.tp.real }}</td>
+            </tr>
+        </table>
+        <br/>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Jour</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Salle</th>
+                <th>Type</th>
+                <th>Groupe</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pl in planning %}
+                <tr>
+                    <td>{{ pl.id }}</td>
+                    <td>{{ pl.jourLong }}</td>
+                    <td>{{ pl.datelong(calendrier[pl.semaine].lundi)|date('d/m/Y') }}</td>
+                    <td>{{ pl.hDebut }} | {{ pl.hFin }}</td>
+                    <td>{{ pl.salle }}</td>
+                    <td>{{ pl.type|upper }}</td>
+                    <td>{{ pl.displayGroupe }}</td>{# todo voir pour récupérer le code du groupe ... #}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

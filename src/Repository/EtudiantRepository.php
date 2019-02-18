@@ -37,7 +37,7 @@ class EtudiantRepository extends ServiceEntityRepository
      */
     public function getArrayEtudiantsByFormation($getId, $filters, $start, $length): array
     {
-        $etudiants = $this->getEtudiantsByFormation($getId, $filters, $start, $length);
+        $etudiants = $this->getByFormation($getId, $filters, $start, $length);
         $tab = array();
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
@@ -64,7 +64,7 @@ class EtudiantRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\Query|mixed
      */
-    public function getEtudiantsByFormation($formation, $data, $page = 0, $max = null, $getResult = true)
+    public function getByFormation($formation, $data, $page = 0, $max = null, $getResult = true)
     {
         $qb = $this->_em->createQueryBuilder();
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;

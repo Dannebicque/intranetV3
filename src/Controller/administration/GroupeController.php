@@ -8,6 +8,8 @@ use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Form\GroupeType;
+use App\MesClasses\MyExport;
+use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -155,10 +157,25 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/export.{_format}", name="administration_groupe_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport         $myExport
+     * @param GroupeRepository $groupeRepository
+     * @param                  $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format): Response
     {
-        //todo: save en csv
-        return new Response('', Response::HTTP_OK);
+        $groupes = $groupeRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $groupes,
+            'dates',
+            ['date_administration', 'utilisateur'],
+            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+        );
+        //todo: définir les colonnes. copier/coller ici
+
+        return $response;
     }
 }

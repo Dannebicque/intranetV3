@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Hrs;
 use App\Form\HrsType;
+use App\MesClasses\MyExport;
 use App\Repository\HrsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +52,7 @@ class HrsController extends BaseController
         }
 
         return $this->render('administration/hrs/index.html.twig', [
-            'hrs'   => $hrsRepository->findHrsFormation($this->dataUserSession->getFormation(), $annee),
+            'hrs'   => $hrsRepository->findByFormation($this->dataUserSession->getFormation(), $annee),
             'annee' => $annee,
             'form'  => $form->createView()
         ]);
@@ -103,14 +104,14 @@ class HrsController extends BaseController
 
         //on efface, sauf si la case est cochée.
         if ($annee_concerver === null || $annee_concerver !== 'true') {
-            $hrs = $hrsRepository->findHrsFormation($this->dataUserSession->getFormation(), $annee_destination);
+            $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(), $annee_destination);
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);
             }
             $this->entityManager->flush();
         }
 
-        $hrs = $hrsRepository->findHrsFormation($this->dataUserSession->getFormation(), $anneeDepart);
+        $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(), $anneeDepart);
 
         /** @var Hrs $hr */
         foreach ($hrs as $hr) {
@@ -142,16 +143,31 @@ class HrsController extends BaseController
         return $this->redirectToRoute('administration_hrs_edit', ['id' => $newHrs->getId()]);
     }
 
-
     /**
      * @Route("/export.{_format}", name="administration_hrs_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport          $myExport
+     * @param HrsRepository    $hrsRepository
+     * @param                   $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(MyExport $myExport, HrsRepository $hrsRepository, $_format): Response
     {
-        //todo: a faire
-        return new Response('', Response::HTTP_OK);
+        $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $hrs,
+            'dates',
+            ['date_administration', 'utilisateur'],
+            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+        );
+        //todo: définir les colonnes. copier/coller ici
+
+        return $response;
     }
+
 
     /**
      * @Route("/{id}", name="administration_hrs_show", methods="GET")
@@ -197,7 +213,7 @@ class HrsController extends BaseController
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $hrs = $hrsRepository->findHrsFormation($this->dataUserSession->getFormation(),
+            $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(),
                 $request->request->get('annee_supprimer'));
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);

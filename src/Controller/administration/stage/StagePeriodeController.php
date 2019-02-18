@@ -152,7 +152,7 @@ class StagePeriodeController extends BaseController
                 Constantes::FLASHBAG_SUCCESS,
                 'stage_periode.delete.success.flash'
             );
-            //todo: supprimer les autres éléments ??
+            //todo: supprimer les autres éléments ou définir le cas ??
 
             return $this->json($id, Response::HTTP_OK);
         }

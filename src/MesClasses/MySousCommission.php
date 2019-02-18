@@ -93,7 +93,7 @@ class MySousCommission
         $this->matieres = $this->matiereRepository->findBySemestre($semestre);
         $this->ues = $this->ueRepository->findBySemestre($semestre);
         $this->semestres = $this->semestreRepository->findByDiplome($semestre->getDiplome());
-        $notes = $this->noteRepository->findNotesByEtudiantsSemestre($semestre, $annee, $this->etudiants);
+        $notes = $this->noteRepository->findByEtudiantSemestreArray($semestre, $annee, $this->etudiants);
 
         foreach ($this->etudiants as $etudiant) {
             $etuId = $etudiant->getId();

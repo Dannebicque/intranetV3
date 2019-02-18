@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.compare.matieres.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <a href="" class="btn btn-primary btn-block">Comparer
+            par personnel</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title"><strong>{{ 'adm.edt.compare.matieres.heading'|trans }}</strong></h4>
+        <div class="card-body">
+
+        <a href="{{ path('da_kernel_administration_edt_compare') }}" class="btn btn-primary btn-block">Comparer
+                        par
+                        enseignants</a>
+                    <br/>
+                    <ul class="nav nav-tabs">
+                        {% for semestre in connect.semestres %}
+                            <li {% if loop.first %} class="active" {% endif %}><a href="#semestre_{{ semestre.id }}"
+                                                                                  data-toggle="tab">{{ semestre.display }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content padding">
+                        {% for semestre in connect.semestres %}
+                            <div class="tab-pane {% if loop.first %} active {% endif %}"
+                                 id="semestre_{{ semestre.id }}">
+                                <h2>Modules du semestre {{ semestre.display }}</h2>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th colspan>Enseignant</th>
+                                        <th colspan="2">CM</th><!-- afficher OK, + ou - -->
+                                        <th colspan="2">TD</th>
+                                        <th colspan="2">TP</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    {% for matiere in matieres if matiere.ue.semestre.id == semestre.id %}
+                                        <tr style="background-color:#cccccc;">
+                                            <td colspan="10" style="text-align:center;">
+                                                <button data-provide="modaler tooltip"
+                                                        data-url="{{ path('administration_edt_compare_plus_info',
+                                                            {'matiere': matiere.id}) }}"
+                                                        class="btn btn-info"
+                                                        data-placement="bottom"
+                                                        title="{{ 'compare.plusinfos.details'|trans }}"
+                                                        data-title="{{ 'compare.plusinfos.details.title'|trans }}"
+                                                >
+                                                    <i class="{{ iconShow }}"></i> { matiere.display }}
+                                                </button>
+
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Intervenant</td>
+                                            <td>EDT</td>
+                                            <td>Prévi.</td>
+                                            <td>EDT</td>
+                                            <td>Prévi.</td>
+                                            <td>EDT</td>
+                                            <td>Prévi.</td>
+                                        </tr>
+                                        {% for ed in edts[matiere.id] %}
+                                            <tr>
+                                                <td>{{ displayPr(ed.personnel.nom, ed.personnel.prenom) }}</td>
+                                                <td>
+                                                    <span class="label {% if ed.nbCMEDT > ed.nbCMPrevi %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMEDT }}</span>
+                                                </td><!--CM -->
+                                                <td>
+                                                    <span class="label {% if ed.nbCMPrevi > ed.nbCMEDT %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="label {% if ed.nbTDEDT > ed.nbTDPrevi %} label-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTDEDT }}</span>
+                                                </td><!--TD -->
+                                                <td>
+                                                    <span class="label {% if ed.nbTDPrevi > ed.nbTDEDT %} label-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="label {% if ed.nbTPEDT > ed.nbTPPrevi %} label-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTPEDT }}</span>
+                                                </td><!-- TP -->
+                                                <td>
+                                                    <span class="label {% if ed.nbTPPrevi > ed.nbTPEDT %} label-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+

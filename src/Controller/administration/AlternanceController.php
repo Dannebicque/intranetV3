@@ -54,17 +54,21 @@ class AlternanceController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function initAll(EtudiantRepository $etudiantRepository, Annee $annee): RedirectResponse
+    public function initAll(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): RedirectResponse
     {
         $etudiants = $etudiantRepository->findByAnnee($annee);
-        //todo: faudrait vérifier si existe pas déjà ...
+
+        /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
-            $alternance = new Alternance();
-            $alternance->setEtudiant($etudiant);
-            $alternance->setAnneeUniversitaire($annee->getAnneeUniversitaire());
-            $alternance->setAnnee($annee);
-            $alternance->setEtat('init');
-            $this->entityManager->persist($alternance);
+            $exist = $alternanceRepository->findBy(['etudiant' => $etudiant->getId(), 'anneeUniversitaire'=>$annee->getAnneeUniversitaire(), 'annee' => $annee->getId()]);
+            if ($exist === null) {
+                $alternance = new Alternance();
+                $alternance->setEtudiant($etudiant);
+                $alternance->setAnneeUniversitaire($annee->getAnneeUniversitaire());
+                $alternance->setAnnee($annee);
+                $alternance->setEtat('init');
+                $this->entityManager->persist($alternance);
+            }
         }
 
         $this->entityManager->flush();

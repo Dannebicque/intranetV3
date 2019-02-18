@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class EdtController
  * @package App\Controller\administration
- * @Route("/administration/amploi-du-temps")
+ * @Route("/administration/emploi-du-temps")
  */
 class EdtController extends BaseController
 {

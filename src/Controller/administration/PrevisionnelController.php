@@ -256,7 +256,7 @@ class PrevisionnelController extends BaseController
 
         //on efface, sauf si la case est cochée.
         if ($annee_concerver === null || $annee_concerver !== 'true') {
-            $previsionnels = $previsionnelRepository->findPrevisionnelFormation($this->dataUserSession->getFormation(),
+            $previsionnels = $previsionnelRepository->findByFormation($this->dataUserSession->getFormation(),
                 $annee_destination);
             foreach ($previsionnels as $previsionnel) {
                 $this->entityManager->remove($previsionnel);
@@ -264,7 +264,7 @@ class PrevisionnelController extends BaseController
             $this->entityManager->flush();
         }
 
-        $previsionnels = $previsionnelRepository->findPrevisionnelFormation($this->dataUserSession->getFormation(),
+        $previsionnels = $previsionnelRepository->findByFormation($this->dataUserSession->getFormation(),
             $anneeDepart);
 
         /** @var Previsionnel $previsionnel */
@@ -331,7 +331,7 @@ class PrevisionnelController extends BaseController
     public function supprimer(Request $request, PrevisionnelRepository $previsionnelRepository): Response
     {
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $hrs = $previsionnelRepository->findPrevisionnelFormation($this->dataUserSession->getFormation(),
+            $hrs = $previsionnelRepository->findByFormation($this->dataUserSession->getFormation(),
                 $request->request->get('annee_supprimer'));
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);

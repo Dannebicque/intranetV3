@@ -41,7 +41,7 @@ class RattrapageController extends BaseController
             'rattrapages' => $rattrapageRepository->findBySemestre(
                 $semestre),
             'semestre'    => $semestre,
-            'absences'    => $absenceRepository->findAbsenceBySemestreRattrapage(
+            'absences'    => $absenceRepository->findBySemestreRattrapage(
                 $semestre)
         ]);
     }

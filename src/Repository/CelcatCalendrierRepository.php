@@ -18,33 +18,4 @@ class CelcatCalendrierRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CelcatCalendrier::class);
     }
-
-//    /**
-//     * @return CelcatCalendrier[] Returns an array of CelcatCalendrier objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CelcatCalendrier
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

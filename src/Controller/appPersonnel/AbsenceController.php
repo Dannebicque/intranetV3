@@ -140,7 +140,7 @@ class AbsenceController extends BaseController
         Matiere $matiere
     ): \Symfony\Component\HttpFoundation\JsonResponse
     {
-        $absences = $absenceRepository->getAbsencesMatiereArray(
+        $absences = $absenceRepository->getByMatiereArray(
             $matiere,
             $matiere->getSemestre()->getAnneeUniversitaire()
         );
@@ -188,7 +188,7 @@ class AbsenceController extends BaseController
                 $this->dataUserSession->getUser()
             );
 
-            $absences = $absenceRepository->getAbsencesMatiereArray(
+            $absences = $absenceRepository->getByMatiereArray(
                 $matiere,
                 $matiere->getSemestre()->getAnneeUniversitaire()
             );
@@ -208,7 +208,7 @@ class AbsenceController extends BaseController
             $myEtudiant->setIdEtudiant($request->request->get('etudiant'));
             $myEtudiant->removeAbsence($absence[0]);
 
-            $absences = $absenceRepository->getAbsencesMatiereArray(
+            $absences = $absenceRepository->getByMatiereArray(
                 $matiere,
                 $matiere->getSemestre()->getAnneeUniversitaire()
             );

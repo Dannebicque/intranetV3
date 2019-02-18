@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.realise.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.edt.realise.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="intervenant">Intervenant</label>
+                        <select name="intervenant" id="intervenant" data-provide="selectpicker"
+                                data-live-search="true" class="form-control">
+                            <option value="">Choisir</option>
+                            {% for personnel in personnels %}
+                                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="selectsemestre">
+                        Semestre
+                    </label>
+                        <select name="selectsemestre" id="selectsemestre" data-provide="selectpicker"
+                                data-live-search="true" class="form-control">
+                            <option value="0">Choisissez un semestre</option>
+                            {% for semestrea in semestres %}
+                                {% for semestre in semestrea %}
+                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="selectmatiere">Module</label>
+                            <select id="selectmatiere" name="selectmatiere" data-provide="selectpicker"
+                                    data-live-search="true" class="form-control">
+                                <option value="0">Choisissez d'abord un semestre</option>
+                            </select>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="#" id="btnaffiche" class="btn btn-block btn-primary">Afficher le chronologique</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="blocchrono">
+        <div class="card">
+            <h4 class="card-title">{{ 'adm.edt.realise.chronologique.heading'|trans }}</h4>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+{# todo: voir pour ajouter le JS et centraliser le refresh des select ? #}
+{#{{ include('DAKernelBundle:js:admEdtRealise.js.twig') }}#}
+{% endblock %}

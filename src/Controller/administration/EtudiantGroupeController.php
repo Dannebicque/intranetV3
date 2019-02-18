@@ -3,6 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
@@ -109,18 +110,18 @@ class EtudiantGroupeController extends BaseController
      */
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
-        //todo: a faire
-        /*$id = $actualite->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $this->entityManager->remove($actualite);
+        if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
+            $etudiant->removeGroupe($groupe);
+            $groupe->removeEtudiant($etudiant);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.delete.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant_groupe.delete.success.flash');
 
-            return $this->json($id, Response::HTTP_OK);
+            return $this->json('ok', Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');*/
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'etudiant_groupe.delete.error.flash');
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

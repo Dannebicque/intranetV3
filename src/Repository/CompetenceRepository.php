@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Competence;
 use App\Entity\Diplome;
+use App\Entity\Formation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

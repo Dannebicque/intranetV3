@@ -6,7 +6,9 @@ use App\Controller\BaseController;
 use App\Entity\CelcatCalendrier;
 use App\Entity\Constantes;
 use App\Form\CelcatCalendrierType;
+use App\MesClasses\Celcat\Connect;
 use App\MesClasses\MyExport;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CelcatCalendrierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,9 +45,9 @@ class CelcatCalendrierController extends BaseController
         $response = $myExport->genereFichierGenerique(
             $_format,
             $articles,
-            'articles',
-            ['article_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            'celcat',
+            ['celcat_administration'],
+            ['titre', 'texte', 'type']//todo: adapter
         );
 
         return $response;
@@ -67,6 +69,7 @@ class CelcatCalendrierController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($celcatCalendrier);
             $em->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.create.success.flash');
 
             return $this->redirectToRoute('sa_celcat_calendrier_index');
         }
@@ -79,13 +82,26 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/new/year", name="sa_celcat_calendrier_new_year", methods="GET|POST")
-     * @param Request $request
+     * @param Request                      $request
+     *
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
      *
      * @return Response
      */
-    public function createNewYear(Request $request): Response
+    public function createNewYear(Request $request, AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
-        return $this->render('super-administration/celcat_calendrier/create_new_year.html.twig');
+        if ($request->isMethod('POST')) {
+            $annee = $anneeUniversitaireRepository->find($request->request->get('annee_universitaire'));
+            if ($annee) {
+                Connect::getCalendar($this->entityManager);
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.create_year.success.flash');
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'celcat_calendrier.create_year.error.flash');
+            }
+        }
+
+        return $this->render('super-administration/celcat_calendrier/create_new_year.html.twig',
+            ['annees' => $anneeUniversitaireRepository->findAll()]);
     }
 
     /**

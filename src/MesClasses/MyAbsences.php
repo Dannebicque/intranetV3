@@ -82,7 +82,7 @@ class MyAbsences
      */
     public function getAbsencesMatiere($matiere, $anneeCourante)
     {
-        return $this->absenceRepository->getAbsencesMatiere($matiere, $anneeCourante);
+        return $this->absenceRepository->getByMatiere($matiere, $anneeCourante);
     }
 
     /**

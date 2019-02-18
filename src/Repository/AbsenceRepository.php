@@ -34,9 +34,9 @@ class AbsenceRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function getAbsencesMatiereArray($matiere, $anneeCourante): array
+    public function getByMatiereArray($matiere, $anneeCourante): array
     {
-        $absences = $this->getAbsencesMatiere($matiere, $anneeCourante);
+        $absences = $this->getByMatiere($matiere, $anneeCourante);
 
         $tab = array();
         //dump($absences);
@@ -67,7 +67,7 @@ class AbsenceRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function getAbsencesMatiere(Matiere $matiere, $anneeCourante)
+    public function getByMatiere(Matiere $matiere, $anneeCourante)
     {
         return $this->createQueryBuilder('m')
             ->where('m.matiere = :matiere')
@@ -80,7 +80,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAbsenceBySemestreRattrapage(Semestre $semestre, $anneeCourante): array
+    public function findBySemestreRattrapage(Semestre $semestre, $anneeCourante): array
     {
         $absences = $this->findBySemestre($semestre, $anneeCourante);
 

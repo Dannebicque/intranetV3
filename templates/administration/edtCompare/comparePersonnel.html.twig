@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.compare.personnels.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <a href="" class="btn btn-primary btn-block">Comparer
+            par modules</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title"><strong>{{ 'adm.edt.compare.personnels.heading'|trans }}</strong></h4>
+        <div class="card-body">
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th colspan>Module</th>
+                    <th>Semestre</th>
+                    <th colspan="2">CM</th><!-- afficher OK, + ou - -->
+                    <th colspan="2">TD</th>
+                    <th colspan="2">TP</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                {% for personnel in personnels if personnel.typeuser != 'ASS' and personnel.typeuser!='TEC' %}
+                    <tr style="background-color:#cccccc;">
+                        <td colspan="10"
+                            style="text-align:center;">{{ personnel.display }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan>&nbsp;</td>
+                        <td>Semestre</td>
+                        <td>EDT.</td>
+                        <td>Prévi.</td>
+                        <td>EDT</td>
+                        <td>Prévi.</td>
+                        <td>EDT</td>
+                        <td>Prévi.</td>
+                    </tr>
+                    {% for ed in comparatifs[personnel.id] %}
+                        <tr>
+                            <td>
+                                <button data-provide="modaler tooltip"
+                                        data-url="{{ path('administration_edt_compare_plus_info',
+                                            {'module': ed.matiere.id}) }}"
+                                        class="btn btn-info"
+                                        data-placement="bottom"
+                                        title="{{ 'compare.plusinfos.details'|trans }}"
+                                        data-title="{{ 'compare.plusinfos.details.title'|trans }}"
+                                >
+                                    <i class="{{ iconShow }}"></i> { ed.matiere.display }}
+                                </button>
+                            <td>{{ ed.matiere.ue.semestre.nom }}</td>
+                            <td>
+                                <span class="label {% if ed.nbCMEDT > ed.nbCMPrevi %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMEDT }}</span>
+                            </td><!--CM -->
+                            <td>
+                                <span class="label {% if ed.nbCMPrevi > ed.nbCMEDT %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
+                            </td>
+
+                            <td>
+                                <span class="label {% if ed.nbTDEDT > ed.nbTDPrevi %} label-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTDEDT }}</span>
+                            </td><!--TD -->
+                            <td>
+                                <span class="label {% if ed.nbTDPrevi > ed.nbTDEDT %} label-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
+                            </td>
+
+                            <td>
+                                <span class="label {% if ed.nbTPEDT > ed.nbTPPrevi %} label-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTPEDT }}</span>
+                            </td><!-- TP -->
+                            <td>
+                                <span class="label {% if ed.nbTPPrevi > ed.nbTPEDT %} label-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+    <div id="modalcompare" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="zone_modal_edt">
+                    test
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+
+{% block fabactions %}
+    {#todo: export?#}
+{% endblock %}

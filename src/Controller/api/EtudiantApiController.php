@@ -87,13 +87,13 @@ class EtudiantApiController extends BaseController
         $output = [
             'draw'            => 1,
             'data'            => $users,
-            'recordsFiltered' => \count($this->etudiantRepository->getEtudiantsByFormation(
+            'recordsFiltered' => \count($this->etudiantRepository->getByFormation(
                 $this->dataUserSession->getFormationId(),
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => \count($this->etudiantRepository->getEtudiantsByFormation(
+            'recordsTotal'    => \count($this->etudiantRepository->getByFormation(
                 $this->dataUserSession->getFormationId(),
                 [],
                 0,

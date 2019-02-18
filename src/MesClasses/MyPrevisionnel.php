@@ -307,7 +307,7 @@ class MyPrevisionnel
      */
     public function getHrsEnseignant($annee): void
     {
-        $this->hrs = $this->hrsRepository->findHrsEnseignant($this->personnel, $annee);
+        $this->hrs = $this->hrsRepository->findByEnseignant($this->personnel, $annee);
 
         foreach ($this->hrs as $hr) {
             $this->totalHrs += $hr->getNbHeuresTd();
@@ -384,8 +384,8 @@ class MyPrevisionnel
      */
     public function exportOmegaFormation(Formation $formation, int $anneePrevisionnel): StreamedResponse
     {
-        $previsionnels = $this->previsionnelRepository->findPrevisionnelFormation($formation, $anneePrevisionnel);
-        $hrs = $this->hrsRepository->findHrsFormation($formation, $anneePrevisionnel);
+        $previsionnels = $this->previsionnelRepository->findByFormation($formation, $anneePrevisionnel);
+        $hrs = $this->hrsRepository->findByFormation($formation, $anneePrevisionnel);
 
         $this->myExcelWriter->createSheet('omega');
         $this->myExcelWriter->writeHeader([
@@ -620,10 +620,7 @@ class MyPrevisionnel
                     $t = explode(';', $phrase);
 
                     if (array_key_exists($t[4], $personnels) && array_key_exists($t[2], $matieres)) {
-                        $pr = new Previsionnel();
-                        $pr->setPersonnel($personnels[$t[4]]);
-                        $pr->setMatiere($matieres[$t[2]]);
-                        $pr->setAnnee($annee);
+                        $pr = new Previsionnel($matieres[$t[2]], $personnels[$t[4]], $annee);
                         $pr->setNbHCm(str_replace(',', '.', $t[6]));
                         $pr->setNbHTd(str_replace(',', '.', $t[8]));
                         $pr->setNbGrTp($t[9]);
@@ -655,5 +652,148 @@ class MyPrevisionnel
         }
 
         $this->entityManager->flush();
+    }
+
+    public function compareEdtPreviPersonnels($personnels, $planning, Formation $formation, $annee)
+    {
+        $previsionnels = $this->previsionnelRepository->findByFormation($formation, $annee);
+        $t = array();
+
+        /** @var Personnel $ens */
+        foreach ($personnels as $ens) {
+            $t[$ens->getId()] = array();
+        }
+
+        /** @var  $p Previsionnel */
+        foreach ($previsionnels as $p) {
+            if ($p !== null) {
+                if (array_key_exists($p->getPersonnel()->getId(), $t)) {
+                    if (!array_key_exists($p->getMatiere()->getId(), $t[$p->getPersonnel()->getId()])) {
+                        $ligne = $p->getPersonnel()->getId();
+                        $colonne = $p->getMatiere()->getId();
+                        $t[$ligne][$colonne]['matiere'] = $p->getMatiere();
+                        $t[$ligne][$colonne]['nbCMPrevi'] = 0;
+                        $t[$ligne][$colonne]['nbTDPrevi'] = 0;
+                        $t[$ligne][$colonne]['nbTPPrevi'] = 0;
+                        $t[$ligne][$colonne]['nbCMEDT'] = 0;
+                        $t[$ligne][$colonne]['nbTDEDT'] = 0;
+                        $t[$ligne][$colonne]['nbTPEDT'] = 0;
+
+                    }
+
+                    $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbCMPrevi'] += $p->getNbHCM();
+                    $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbTDPrevi'] += $p->getNbHTD() * $p->getNbGrTD();
+                    $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbTPPrevi'] += $p->getNbHTP() * $p->getNbGrTP();
+                }
+            }
+        }
+
+        /** @var  $pl Planning */
+        foreach ($planning as $pl) {
+            if ($pl->getMatiere() !== null && $pl->getIntervenant() !== null) {
+                if (array_key_exists($pl->getIntervenant()->getId(), $t)) {
+                    if (!array_key_exists($pl->getMatiere()->getId(), $t[$pl->getIntervenant()->getId()])) {
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['matiere'] = $pl->getMatiere();
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMPrevi'] = 0;
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDPrevi'] = 0;
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTPPrevi'] = 0;
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMEDT'] = 0;
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDEDT'] = 0;
+                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTPEDT'] = 0;
+                    }
+
+                    switch ($pl->getType()) {
+                        case 'cm':
+                        case 'CM':
+                            $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMEDT'] += $pl->getDuree2();
+                            break;
+                        case 'td':
+                        case 'TD':
+                            $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDEDT'] += $pl->getDuree2();
+                            break;
+                        case 'tp':
+                        case 'TP':
+                            $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTPEDT'] += $pl->getDuree2();
+                            break;
+                    }
+                }
+            }
+        }
+
+        return $t;
+    }
+
+    /**
+     * @param $modules
+     * @param $previModule
+     * @param $planning
+     *
+     * @return array
+     */
+    public function compareEdtPreviMatiere($modules, $previModule, $planning)
+    {
+        $t = array();
+
+        /** @var Matieres $module */
+        foreach ($modules as $module) {
+            $t[$module->getId()] = array();
+        }
+
+        /** @var  $p PersonnelMatiere */
+        foreach ($previModule as $p) {
+            if ($p !== null) {
+                if (array_key_exists($p->getMatiere()->getId(), $t)) {
+                    if (!array_key_exists($p->getPersonnel()->getId(), $t[$p->getMatiere()->getId()])) {
+
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['personnel'] = $p->getPersonnel();
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] = 0;
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] = 0;
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPPrevi'] = 0;
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMEDT'] = 0;
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDEDT'] = 0;
+                        $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPEDT'] = 0;
+
+                    }
+
+                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] += $p->getNbHCM();
+                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] += $p->getNbHTD() * $p->getNbGrTD();
+                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPPrevi'] += $p->getNbHTP() * $p->getNbGrTP();
+                }
+            }
+        }
+
+        /** @var  $pl Planning */
+        foreach ($planning as $pl) {
+            if ($pl->getMatiere() !== null && $pl->getIntervenant() !== null) {
+                if (array_key_exists($pl->getMatiere()->getId(), $t)) {
+                    if (!array_key_exists($pl->getIntervenant()->getId(), $t[$pl->getMatiere()->getId()])) {
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['personnel'] = $pl->getIntervenant();
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMPrevi'] = 0;
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDPrevi'] = 0;
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPPrevi'] = 0;
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMEDT'] = 0;
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDEDT'] = 0;
+                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPEDT'] = 0;
+                    }
+
+                    switch ($pl->getType()) {
+                        case 'cm':
+                        case 'CM':
+                            $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMEDT'] += $pl->getDuree2();
+                            break;
+                        case 'td':
+                        case 'TD':
+                            $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDEDT'] += $pl->getDuree2();
+                            break;
+                        case 'tp':
+                        case 'TP':
+                            $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPEDT'] += $pl->getDuree2();
+                            break;
+                    }
+                }
+            }
+        }
+
+        return $t;
     }
 }

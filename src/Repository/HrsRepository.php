@@ -31,7 +31,7 @@ class HrsRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findHrsEnseignant($getUser, $annee)
+    public function findByEnseignant($getUser, $annee)
     {
         return $this->createQueryBuilder('h')
             ->where('h.personnel = :user')
@@ -45,12 +45,12 @@ class HrsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
-     * @param $annee
+     * @param Formation $formation
+     * @param           $annee
      *
      * @return mixed
      */
-    public function findHrsFormation(Formation $formation, $annee)
+    public function findByFormation(Formation $formation, $annee)
     {
         return $this->createQueryBuilder('h')
             ->where('h.formation = :formation')
