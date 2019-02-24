@@ -46,10 +46,10 @@ class SalleExamenController extends BaseController
             $_format,
             $salles_examen,
             'salles_examens',
-            ['article_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            ['salle_examen_administration', 'salle_administration'],
+            ['salle' => ['libelle'], 'nbColonnes', 'nbRangs', 'capacite', 'placesInterdites']
         );
-        //todo: définir les colonnes. copier/coller ici
+
 
         return $response;
     }

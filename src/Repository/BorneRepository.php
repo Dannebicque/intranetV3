@@ -2,7 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
 use App\Entity\Borne;
+use App\Entity\Diplome;
+use App\Entity\Formation;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -24,11 +28,15 @@ class BorneRepository extends ServiceEntityRepository
         parent::__construct($registry, Borne::class);
     }
 
-    public function findByFormation($formation, $nbResult)
+    public function findByFormation(Formation $formation, $nbResult)
     {
-        $q = $this->createQueryBuilder('a')
-            ->andWhere('a.formation = :formation')
-            ->setParameter('formation', $formation)
+        $q = $this->createQueryBuilder('b')
+            ->innerJoin( 'b.semestres', 'c') //récupération de la jointure dans la table dédiée
+            ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.formation = :formation')
+            ->setParameter('formation', $formation->getId())
             ->orderBy('a.created', 'DESC');
 
         if ($nbResult > 0) {

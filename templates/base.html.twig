@@ -49,7 +49,7 @@
         <ul class="menu">
             {% block sidebar_menu %}
 
-                <li class="menu-item active" id="menu-dashboard">
+                <li class="menu-item active" id="menu-tableau-de-bord">
                     <a class="menu-link" href="{{ path('default_homepage') }}">
                         <span class="material-icons">dashboard</span>
                         <span class="title">{{ 'menu.dashboard'|trans }}</span>
@@ -70,21 +70,21 @@
                     </a>
                 </li>
 
-                <li class="menu-item" id="menu-applications">
+                <li class="menu-item" id="menu-application">
                     <a class="menu-link" href="{{ path('application_index') }}">
                         <span class="material-icons">apps</span>
                         <span class="title">{{ 'menu.applications'|trans }}</span>
                     </a>
                 </li>
 
-                <li class="menu-item" id="menu-documents">
+                <li class="menu-item" id="menu-document">
                     <a class="menu-link" href="{{ path('document_index') }}">
                         <span class="material-icons">folder</span>
                         <span class="title">{{ 'menu.documents'|trans }}</span>
                     </a>
                 </li>
 
-                <li class="menu-item" id="menu-informations">
+                <li class="menu-item" id="menu-information">
                     <a class="menu-link" href="{{ path('informations_index') }}">
                         <span class="material-icons">insert_drive_file</span>
                         <span class="title">{{ 'menu.informations'|trans }}</span>

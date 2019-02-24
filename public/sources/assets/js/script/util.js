@@ -1,19 +1,23 @@
 function readUrlMenu($url) {
-  if ($url !== '/' && $url !== '/index.php/') {
-    var $elt = $url.split('/');
-    var $firstElt = 2;
-    console.log($elt);
-
+  var $elt = $url.split('/');
+  var $firstElt = 2;
+  console.log($elt);
     if ($elt[1] === 'index.php') {
       if ($elt.length > 1) {
         $firstElt = 3;
       }
     }
-    $('.menu-item').removeClass('active');
-    $('#menu-' + $elt[$firstElt]).addClass('active');
-  } else {
-    $('#menu-dashboard').addClass('active');
+
+    if ($elt[$firstElt] === 'super-administration') {
+        $firstElt = $firstElt+1;
+    }
+
+  if ($elt[$elt.length-1] === "") {
+    $elt.pop();
   }
+
+  $('.menu-item').removeClass('active');
+  $('#menu-' + $elt[$firstElt]).addClass('active');
 }
 
 //pop up de confirmation de suppression

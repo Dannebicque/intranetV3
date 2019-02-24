@@ -38,11 +38,14 @@
                         <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
                         <td>{% for semestre in borne.semestres %}{{ semestre.libelle }}, {% endfor %}</td>
                         <td>
-{# todo: gérer affichage/masquer #}
-                            <a href="#" class="btn btn-success btn-outline btn-square visibiliteBorne"
+                            <a href="#" class="btn {% if borne.visible %}btn-success{% else %}btn-danger{% endif %}
+                            btn-outline btn-square visibiliteBorne"
                                data-provide="tooltip"
-                               data-placement="bottom" title="{{ 'atitle.afficher.masquer'|trans }}"
-                               data-id="{{ borne.id }}"><i class="fa fa-eye"></i></a>
+                               data-placement="bottom"
+                               title="{% if borne.visible %}{{ 'atitle.afficher.visibile'|trans }}{% else %}{{
+                               'atitle.afficher.invisibile'|trans }}{% endif %}"
+                               data-id="{{ borne.id }}"><i class="fa {% if borne.visible %}fa-eye{% else
+                                %}fa-eye-slash{% endif %}"></i></a>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'borne', id: borne.id}) }}
 
                         </td>

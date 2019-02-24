@@ -16,11 +16,13 @@ class Borne extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"bornes_administration"})
      */
     private $icone;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"bornes_administration"})
      */
     private $couleur;
 
@@ -56,6 +58,7 @@ class Borne extends BaseEntity
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="bornes")
+     * @Groups({"bornes_administration"})
      */
     private $semestres;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SalleExamenRepository")
@@ -11,6 +12,7 @@ class SalleExamen extends BaseEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Salle", inversedBy="salleExamens")
+     * @Groups({"salle_examen_administration"})
      */
     private $salle;
 
@@ -21,21 +23,25 @@ class SalleExamen extends BaseEntity
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"salle_examen_administration"})
      */
     private $nbColonnes;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"salle_examen_administration"})
      */
     private $nbRangs;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"salle_examen_administration"})
      */
     private $capacite;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_examen_administration"})
      */
     private $placesInterdites;
 

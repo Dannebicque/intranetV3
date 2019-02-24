@@ -17,7 +17,6 @@
     <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
         <thead>
             <tr>
-                <th>{{ 'table.id'|trans }}</th>
                 <th>{{ 'table.nbColonnes'|trans }}</th>
                 <th>{{ 'table.nbRangs'|trans }}</th>
                 <th>{{ 'table.capacite_salle'|trans }}</th>
@@ -27,8 +26,7 @@
         </thead>
         <tbody>
         {% for salle_examen in salle_examens %}
-            <tr>
-                <td>{{ salle_examen.id }}</td>
+            <tr id="ligne_{{ salle_examen.id }}">
                 <td>{{ salle_examen.nbColonnes }}</td>
                 <td>{{ salle_examen.nbRangs }}</td>
                 <td>{{ salle_examen.capacite }}</td>

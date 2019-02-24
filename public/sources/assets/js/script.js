@@ -103,21 +103,25 @@ app.config({
 
 
 function readUrlMenu($url) {
-  if ($url !== '/' && $url !== '/index.php/') {
-    var $elt = $url.split('/');
-    var $firstElt = 2;
-    console.log($elt);
-
+  var $elt = $url.split('/');
+  var $firstElt = 2;
+  console.log($elt);
     if ($elt[1] === 'index.php') {
       if ($elt.length > 1) {
         $firstElt = 3;
       }
     }
-    $('.menu-item').removeClass('active');
-    $('#menu-' + $elt[$firstElt]).addClass('active');
-  } else {
-    $('#menu-dashboard').addClass('active');
+
+    if ($elt[$firstElt] === 'super-administration') {
+        $firstElt = $firstElt+1;
+    }
+
+  if ($elt[$elt.length-1] === "") {
+    $elt.pop();
   }
+
+  $('.menu-item').removeClass('active');
+  $('#menu-' + $elt[$firstElt]).addClass('active');
 }
 
 //pop up de confirmation de suppression
@@ -206,8 +210,16 @@ var locale = '.fr';
 */
 
 app.ready(function () {
-  const basePath = 'http://newintranet:8888/upload/' //chemin de base pour les images
+  const basePath = 'http://newintranet:7888/upload/' //chemin de base pour les images
 
+  // script pour afficher le fichier selectionné avec bootstrap4
+  $('.custom-file input').change(function (e) {
+    var files = [];
+    for (var i = 0; i < $(this)[0].files.length; i++) {
+      files.push($(this)[0].files[i].name);
+    }
+    $(this).next('.custom-file-label').html(files.join(', '));
+  });
 
   //colorise le bon menu
   readUrlMenu($(location).attr('pathname'));
@@ -1812,6 +1824,31 @@ $(document).on('keyup', '#etudiant', function() {
     $('#resultat').empty().load(Routing.generate('sa_scolarite_recherche', {needle: $val}))
   }
 });
+
+
+  //require('./partials/admEdt')
+
+
+$(document).on('click', '.visibiliteBorne', function(){
+  var btn = $(this);
+  $.ajax({
+    url: Routing.generate('administration_borne_visibilite', {id:btn.data('id')}),
+    success: function(data) {
+      console.log(data)
+      if (data === false) {
+        addCallout('Message masqué avec succés !', 'success')
+        btn.removeClass('btn-success').addClass('btn-danger');
+        btn.children('i').removeClass('fa-eye').addClass('fa-eye-slash');
+        btn.attr('title','Message masqué. Rendre visible')
+      } else {
+        addCallout('Message affiché avec succés !', 'success')
+        btn.removeClass('btn-danger').addClass('btn-success');
+        btn.children('i').removeClass('fa-eye-slash').addClass('fa-eye');
+        btn.attr('title','Message affiché. Rendre invisible')
+      }
+    }
+  })
+})
 
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.

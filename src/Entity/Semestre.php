@@ -18,7 +18,7 @@ class Semestre extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"article_administration"})
+     * @Groups({"article_administration", "semestre"})
      */
     private $libelle;
 

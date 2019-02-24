@@ -29,6 +29,29 @@ class BorneController extends BaseController
     }
 
     /**
+     * @Route("/export.{_format}", name="administration_borne_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport        $myExport
+     * @param BorneRepository $borneRepository
+     * @param                 $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
+    {
+        $bornes = $borneRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $bornes,
+            'bornes',
+            ['bornes_administration', 'semestre'],
+            ['message', 'icone', 'couleur','url','dateDebutPublication','dateFinPublication']
+        );
+
+        return $response;
+    }
+
+    /**
      * @Route("/{id}/duplicate", name="administration_borne_duplicate", methods="GET")
      * @param Borne $borne
      *
@@ -147,25 +170,11 @@ class BorneController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_borne_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport        $myExport
-     * @param BorneRepository $borneRepository
-     * @param                 $_format
-     *
-     * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     *  @Route("/visibilite/{id}", name="administration_borne_visibilite", options={"expose"=true})
      */
-    public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
-    {
-        $bornes = $borneRepository->findByFormation($this->dataUserSession->getFormation(), 0);
-        $response = $myExport->genereFichierGenerique(
-            $_format,
-            $bornes,
-            'bornes',
-            ['bornes_administration'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
-        );
-
-        return $response;
+    public function visibilite(Borne $borne) {
+        $borne->setVisible(!$borne->getVisible());
+        $this->entityManager->flush();
+        return $this->json($borne->getVisible(), Response::HTTP_OK);
     }
 }

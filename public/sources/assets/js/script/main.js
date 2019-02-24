@@ -20,8 +20,16 @@ var locale = '.fr';
 */
 
 app.ready(function () {
-  const basePath = 'http://newintranet:8888/upload/' //chemin de base pour les images
+  const basePath = 'http://newintranet:7888/upload/' //chemin de base pour les images
 
+  // script pour afficher le fichier selectionné avec bootstrap4
+  $('.custom-file input').change(function (e) {
+    var files = [];
+    for (var i = 0; i < $(this)[0].files.length; i++) {
+      files.push($(this)[0].files[i].name);
+    }
+    $(this).next('.custom-file-label').html(files.join(', '));
+  });
 
   //colorise le bon menu
   readUrlMenu($(location).attr('pathname'));
@@ -110,7 +118,8 @@ app.ready(function () {
   require('./partials/matiere')
   require('./partials/alternances')
   require('./partials/scolarite')
-  require('./partials/admEdt')
+  //require('./partials/admEdt')
+  require('./partials/borne')
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 
