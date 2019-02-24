@@ -56,7 +56,7 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"etudiants_administration"})
+     * @Groups({"etudiants_administration", "utilisateur"})
      */
     protected $mailUniv;
 

@@ -45,9 +45,9 @@ class TypeHrsController extends BaseController
             $_format,
             $typeHrs,
             'typeHrs',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            ['type_hrs_administration'],
+            ['libelle', 'type', 'incluService', 'maximum']
+        );
 
         return $response;
     }

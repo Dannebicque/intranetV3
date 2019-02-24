@@ -45,9 +45,9 @@ class BacController extends BaseController
             $_format,
             $bacs,
             'bacs',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            ['bac_administration'],
+            ['libelle', 'libelleLong']
+        );
 
         return $response;
     }

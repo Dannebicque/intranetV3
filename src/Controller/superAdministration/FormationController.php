@@ -18,16 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class FormationController extends BaseController
 {
     /**
-     * @Route("/imprimer", name="sa_formation_print", methods="GET")
-     */
-    public function imprimer(): Response
-    {
-        //todo: comment l'exploiter...
-        //print (pdf)
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
      * @Route("/new", name="sa_formation_new", methods="GET|POST")
      * @param Request $request
      *

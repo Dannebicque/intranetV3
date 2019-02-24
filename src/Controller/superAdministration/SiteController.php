@@ -45,9 +45,9 @@ class SiteController extends BaseController
             $_format,
             $sites,
             'sites',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            ['sites_administration', 'adresse'],
+            ['libelle', 'adresse'=> ['adresse1','adresse2','adresse3','codePostal', 'ville', 'pays']]
+        );
 
         return $response;
     }

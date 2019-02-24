@@ -45,9 +45,9 @@ class UfrController extends BaseController
             $_format,
             $ufrs,
             'ufr',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            ['ufr_administration', 'utilisateur'],
+            ['libelle', 'responsable' => ['nom', 'prenom', 'mailUniv']]
+        );
 
         return $response;
     }

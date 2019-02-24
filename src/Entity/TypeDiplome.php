@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeDiplomeRepository")
@@ -14,6 +15,7 @@ class TypeDiplome extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"type_diplome_administration"})
      */
     private $libelle;
 
@@ -21,6 +23,7 @@ class TypeDiplome extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=20)
+     * @Groups({"type_diplome_administration"})
      */
     private $sigle;
 
@@ -28,6 +31,7 @@ class TypeDiplome extends BaseEntity
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Groups({"type_diplome_administration"})
      */
     private $nbSemestres = 2;
 
@@ -35,6 +39,7 @@ class TypeDiplome extends BaseEntity
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Groups({"type_diplome_administration"})
      */
     private $niveauEntree = 0;
 
@@ -42,6 +47,7 @@ class TypeDiplome extends BaseEntity
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Groups({"type_diplome_administration"})
      */
     private $niveauSortie = 2;
 

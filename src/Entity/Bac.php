@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BacRepository")
@@ -11,11 +12,13 @@ class Bac extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"bac_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"bac_administration"})
      */
     private $libelleLong;
 

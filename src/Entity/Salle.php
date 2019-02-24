@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SalleRepository")
@@ -18,21 +19,25 @@ class Salle extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"salle_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"salle_administration"})
      */
     private $capacite = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"salle_administration"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="salles")
+     * @Groups({"salle_administration"})
      */
     private $site;
 

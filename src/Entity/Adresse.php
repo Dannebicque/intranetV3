@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdresseRepository")
@@ -12,31 +13,37 @@ class Adresse extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"adresse"})
      */
     private $adresse1;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"adresse"})
      */
     private $adresse2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"adresse"})
      */
     private $adresse3;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
+     * @Groups({"adresse"})
      */
     private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"adresse"})
      */
     private $ville;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"adresse"})
      */
     private $pays = 'France';
 

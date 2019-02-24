@@ -104,9 +104,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         } elseif (\in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
             // c'est un administratif : on le rediriger vers l'espace administration
             $redirection = new RedirectResponse($this->urlGenerator->generate('administratif_homepage'));
+        }
+        elseif (\in_array('ROLE_PERMANENT', $rolesTab, true) || \in_array('ROLE_ETUDIANT', $roles, true)) {
+            // c'est un administratif : on le rediriger vers l'espace administration
+            $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
             // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
+            $redirection = new RedirectResponse($this->urlGenerator->generate('security_login', ['message'=>'erreur_role']));
         }
 
         return $redirection;

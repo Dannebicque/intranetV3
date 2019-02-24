@@ -26,7 +26,9 @@ security:
       # La connexion n'est pas requise sur toutes les pages
       # par exemple la page d'accueil
       anonymous: true
-
+      logout:
+        path: security_logout
+        target: security_login
       provider: chain_provider
       guard:
           authenticators:

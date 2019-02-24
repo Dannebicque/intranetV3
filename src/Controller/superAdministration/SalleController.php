@@ -45,9 +45,9 @@ class SalleController extends BaseController
             $_format,
             $salles,
             'salles',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            ['salle_administration', 'sites_administration'],
+            ['libelle', 'capacite', 'type', 'site' => ['libelle']]
+        );
 
         return $response;
     }

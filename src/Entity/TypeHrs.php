@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeHrsRepository")
@@ -16,11 +17,13 @@ class TypeHrs extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"type_hrs_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"type_hrs_administration"})
      */
     private $type;
 
@@ -31,11 +34,13 @@ class TypeHrs extends BaseEntity
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"type_hrs_administration"})
      */
     private $incluService;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"type_hrs_administration"})
      */
     private $maximum;
 

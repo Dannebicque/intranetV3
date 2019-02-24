@@ -45,9 +45,9 @@ class TypeDiplomeController extends BaseController
             $_format,
             $typeDiplomes,
             'typeDiplomes',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            ['type_diplome_administration'],
+            ['libelle', 'sigle', 'nbSemestres', 'niveauEntree', 'niveauSortie']
+        );
 
         return $response;
     }
