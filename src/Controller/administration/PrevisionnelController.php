@@ -215,18 +215,6 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/{annee}/export.{_format}", name="administration_previsionnel_export", methods="GET",
-     *                                     requirements={"_format"="csv|xlsx|pdf"})
-     * @param $annee
-     * @return Response
-     */
-    public function export($annee): Response
-    {
-        //todo: a finaliser... exporter quoi?
-        return new Response('', Response::HTTP_OK);
-    }
-
-    /**
      * @param MyPrevisionnel $myPrevisionnel
      * @param                $annee
      *

@@ -144,32 +144,6 @@ class HrsController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_hrs_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport          $myExport
-     * @param HrsRepository    $hrsRepository
-     * @param                   $_format
-     *
-     * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     */
-    public function export(MyExport $myExport, HrsRepository $hrsRepository, $_format): Response
-    {
-        $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(), 0);
-        $response = $myExport->genereFichierGenerique(
-            $_format,
-            $hrs,
-            'dates',
-            ['date_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
-        );
-        //todo: définir les colonnes. copier/coller ici
-
-        return $response;
-    }
-
-
-    /**
      * @Route("/{id}", name="administration_hrs_show", methods="GET")
      * @param Hrs $hrs
      *

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HrsRepository")
@@ -11,16 +12,19 @@ class Hrs extends BaseEntity
 {
     /**
      * @ORM\Column(type="float")
+     * @Groups({"hrs_administration"})
      */
     private $nbHeuresTd;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups({"hrs_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="hrs")
+     * @Groups({"hrs_administration"})
      */
     private $semestre;
 
@@ -31,11 +35,13 @@ class Hrs extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="hrs")
+     * @Groups({"hrs_administration"})
      */
     private $personnel;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeHrs", inversedBy="hrs")
+     * @Groups({"hrs_administration"})
      */
     private $typeHrs;
 

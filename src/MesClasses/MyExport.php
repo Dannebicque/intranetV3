@@ -28,6 +28,16 @@ class MyExport
     }
 
     /**
+     * @return MyExcelMultiExport
+     */
+    public function getExcel(): MyExcelMultiExport
+    {
+        return $this->excel;
+    }
+
+
+
+    /**
      * @param        $format
      * @param        $data
      * @param        $nomFichier

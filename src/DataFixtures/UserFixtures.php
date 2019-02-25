@@ -6,26 +6,46 @@ use App\Entity\Configuration;
 use App\Entity\Personnel;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-        $user = new Personnel();
-        $user->setUsername('annebi01');
-        $user->setPassword('$2y$10$Nq3ZV0/lAQZCrUtxZZJn0OoIHGrhtn3JXgJwpJ7obD759XqLJF78y');
-        $user->setMailUniv('david.annebicque@gmail.com');
-        $user->setNom('Annebicque');
-        $user->setPrenom('David');
-        $user->setStatut('MCF');
-        $user->setTypeUser('permanent');
-        $user->setRoles(['ROLE_SUPER_ADMIN']);
-        $user->setPhotoName('noimage.png');
-        $user->setCreated(new \DateTime('now'));
-        $manager->persist($user);
+        $user2 = new Personnel();
+        $user2->setUsername('etudiant');
+        $password = $this->encoder->encodePassword($user2, 'test');
+        $user2->setPassword($password);
+        $user2->setMailUniv('etudiant@gmail.com');
+        $user2->setNom('Doe');
+        $user2->setPrenom('Etudiant');
+        $user2->setStatut('ETU');
+        $user2->setTypeUser('etudiant');
+        $user2->setRoles(['ROLE_ETUDIANT']);
+        $user2->setPhotoName('noimage.png');
+        $user2->setCreated(new \DateTime('now'));
+        $manager->persist($user2);
+
+        $user3 = new Personnel();
+        $user3->setUsername('super_admin');
+        $password = $this->encoder->encodePassword($user3, 'test');
+        $user3->setPassword($password);
+        $user3->setMailUniv('super_admin@gmail.com');
+        $user3->setNom('Super');
+        $user3->setPrenom('Admin');
+        $user3->setStatut('MCF');
+        $user3->setTypeUser('permanent');
+        $user3->setRoles(['ROLE_SUPER_ADMIN']);
+        $user3->setPhotoName('noimage.png');
+        $user3->setCreated(new \DateTime('now'));
+        $manager->persist($user3);
 
         $manager->flush();
     }

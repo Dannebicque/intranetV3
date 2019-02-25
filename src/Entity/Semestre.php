@@ -220,6 +220,7 @@ class Semestre extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres")
+     * @Groups({"semestre"})
      */
     private $annee;
 

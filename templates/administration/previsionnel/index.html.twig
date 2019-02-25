@@ -9,13 +9,16 @@
         <div class="buttons">
             <a href="{{ path('administration_previsionnel_import') }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.import_previsionnel'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-import"></i></a>
+               data-placement="bottom"><i class="ti-import"></i><span
+                        class="sr-only">importer</span></a>
             <a href="{{ path('administration_previsionnel_export_omega', {annee:annee}) }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.export_omega'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-layout-tab"></i></a>
+               data-placement="bottom"><i class="fa fa-table"></i><span
+                        class="sr-only">Exporter</span></a>
             <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
-                        class="ti-plus"></i></a>
+                        class="ti-plus"></i><span
+                        class="sr-only">Ajouter</span></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
         </div>
@@ -24,8 +27,9 @@
 
 {% block content %}
     <div class="card card-body">
+        <label class="sr-only" for="change_annee_temp_previsionnel">{{ 'change_annee_temp_previsionnel'|trans }}</label>
         <select id="change_annee_temp_previsionnel" class="form-control">
-            <option value="0">Changer d'année temporairement</option>
+            <option value="0">{{ 'change_annee_temp_previsionnel'|trans }}</option>
             {% for annee in 2017..'now'|date('Y')+4 %}
                 <option value="{{ annee }}">{{ annee }}</option>
             {% endfor %}
@@ -39,9 +43,10 @@
                 <h4 class="card-title">Par enseignant</h4>
                 <div class="card-body">
                     <div class="form-group">
+                        <label class="sr-only" for="previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
                         <select class="form-control" data-live-search="true" data-provide="selectpicker" data-annee="{{ annee }}"
                                 id="previPersonnel">
-                            <option value="">Choisir l'enseignant</option>
+                            <option value="">{{ 'choisir.intervenant'|trans }}</option>
                             {% for personnel in user_data.personnels %}
                                 <option value="{{ personnel.id }}">{{ personnel.display }}</option>
                             {% endfor %}
@@ -54,8 +59,9 @@
             <div class="card">
                 <h4 class="card-title">Par matière</h4>
                 <div class="card-body">
+                    <label class="sr-only" for="previMatiere">{{ 'choisir.matiere'|trans }}</label>
                     <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previMatiere" data-annee="{{ annee }}">
-                        <option value="">Choisir la matière</option>
+                        <option value="">{{ 'choisir.matiere'|trans }}</option>
                         {% for matiere in matieres %}
                             <option value="{{ matiere.id }}">{{ matiere.codeMatiere }} | {{ matiere.libelle }}</option>
                         {% endfor %}
@@ -67,8 +73,9 @@
             <div class="card">
                 <h4 class="card-title">Par semestre</h4>
                 <div class="card-body">
+                    <label class="sr-only" for="previSemestre">{{ 'choisir.un.semestre'|trans }}</label>
                     <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previSemestre" data-annee="{{ annee }}">
-                        <option value="">Choisir le semestre</option>
+                        <option value="">{{ 'choisir.un.semestre'|trans }}</option>
                         {% for semestre in user_data.semestres %}
                             <option value="{{ semestre.id }}">{{ semestre.display }}</option>
                         {% endfor %}
@@ -140,6 +147,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <input type="hidden" value="{{ csrf_token('supprimer') }}" name="_token">
+                            <label class="sr-only" for="annee_supprimer">{{ 'choisir'|trans }}</label>
                             <select name="annee_supprimer" id="annee_supprimer" class="form-control">
                                 <option value="">Choisir</option>
                                 {% for annee in 2017..'now'|date('Y')+2 %}
@@ -167,23 +175,6 @@
             href: path('administration_previsionnel_export_omega', {annee: annee}),
             title: 'exporter.omega'|trans,
             icone : "fa fa-table"
-        },
-        {type: 'info',
-            href: path('administration_previsionnel_export', {_format:'pdf', annee: annee}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"
-        },
-        {
-            type:'info',
-            href:path('administration_previsionnel_export', {_format:'csv', annee: annee}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
-        },
-        {
-            type:'info',
-            href:path('administration_previsionnel_export', {_format:'xlsx', annee: annee}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
         },
         {
             type:'info',

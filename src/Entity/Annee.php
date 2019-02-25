@@ -6,6 +6,7 @@ use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnneeRepository")
@@ -17,6 +18,7 @@ class Annee extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"annee"})
      */
     private $libelle;
 
@@ -59,6 +61,7 @@ class Annee extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=150, nullable=true)
+     * @Groups({"annee"})
      */
     private $libelleLong;
 

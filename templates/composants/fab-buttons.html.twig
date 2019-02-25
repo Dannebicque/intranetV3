@@ -2,6 +2,7 @@
     <button class="btn btn-float btn-primary" data-toggle="button">
         <i class="fab-icon-default ti-plus"></i>
         <i class="fab-icon-active ti-close"></i>
+        <span class="sr-only">Bouton déroulant</span>
     </button>
 
     <ul class="fab-buttons">
@@ -25,7 +26,8 @@
                    title="{{ bouton.title }}" data-provide="tooltip"
                    data-placement="left"
                    target="{{ bouton.target is defined ? bouton.target : '' }}"
-                ><i class="{{ bouton.icone }}" ></i></a></li>
+                ><i class="{{ bouton.icone }}" ></i>
+                    <span class="sr-only">{{ bouton.title }}</span></a></li>
         {% endfor %}
     </ul>
 </div>

@@ -37,6 +37,22 @@ class PpnController extends BaseController
     }
 
     /**
+     * @Route("/copie", name="administration_ppn_copie_integrale", methods="POST")
+     *
+     * @return Response
+     */
+    public function copieIntegrale(Request $request): Response
+    {
+        //effacer contenu PPN de destination
+        //todo: a finaliser
+        //Copie PPN
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.copie.integrale.success.flash');
+
+        return $this->redirectToRoute('administration_ppn_index');
+    }
+
+    /**
      * @Route("/new", name="administration_ppn_new", methods="GET|POST")
      * @param Request                $request
      *
@@ -132,4 +148,6 @@ class PpnController extends BaseController
 
         return $this->redirectToRoute('administration_ppn_edit', ['id' => $newPpn->getId()]);
     }
+
+
 }
