@@ -19,22 +19,8 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $user2 = new Personnel();
-        $user2->setUsername('etudiant');
-        $password = $this->encoder->encodePassword($user2, 'test');
-        $user2->setPassword($password);
-        $user2->setMailUniv('etudiant@gmail.com');
-        $user2->setNom('Doe');
-        $user2->setPrenom('Etudiant');
-        $user2->setStatut('ETU');
-        $user2->setTypeUser('etudiant');
-        $user2->setRoles(['ROLE_ETUDIANT']);
-        $user2->setPhotoName('noimage.png');
-        $user2->setCreated(new \DateTime('now'));
-        $manager->persist($user2);
-
         $user3 = new Personnel();
-        $user3->setUsername('super_admin');
+        $user3->setUsername('superAdmin');
         $password = $this->encoder->encodePassword($user3, 'test');
         $user3->setPassword($password);
         $user3->setMailUniv('super_admin@gmail.com');

@@ -6,6 +6,7 @@ use App\Entity\Adresse;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
+use App\Entity\Etudiant;
 use App\Entity\Formation;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
@@ -148,6 +149,22 @@ class FormationFixtures extends Fixture
         $previ->setNbHTd(1.5);
         $previ->setNbHTp(1.5);
         $manager->persist($previ);
+
+        $user2 = new Etudiant();
+        $user2->setUsername('etudiant');
+        $password = $this->encoder->encodePassword($user2, 'test');
+        $user2->setPassword($password);
+        $user2->setMailUniv('etudiant@gmail.com');
+        $user2->setNom('Doe');
+        $user2->setPrenom('Etudiant');
+        $user2->setTypeUser('etudiant');
+        $user2->setRoles(['ROLE_ETUDIANT']);
+        $user2->setPhotoName('noimage.png');
+        $user2->setNumEtudiant('21800000');
+        $user2->setNumIne('21800000A');
+        $user2->setSemestre($semestre);
+        $user2->setCreated(new \DateTime('now'));
+        $manager->persist($user2);
 
         $manager->flush();
     }
