@@ -50,7 +50,7 @@ class EvaluationController extends BaseController
      */
     public function exportEvaluation(
         GroupeRepository $groupeRepository,
-        MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format)
+        MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format): void
     {
         $t = explode('_', $type);
         if ($t[0] === 'groupe') {

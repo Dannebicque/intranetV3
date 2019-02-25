@@ -102,7 +102,8 @@ class TypeGroupeController extends BaseController
      * @return Response
      */
     public function delete(Request $request, TypeGroupe $typeGroupe): Response
-    {//todo: tester delete cascade et la suppression ds groupes et des étudiants affectés.
+    {
+        //todo: tester delete cascade et la suppression ds groupes et des étudiants affectés.
 
         $id = $typeGroupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CelcatCalendrierRepository")
@@ -11,16 +12,19 @@ class CelcatCalendrier extends BaseEntity
 {
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"celcat_administration"})
      */
     private $semaineFormation;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"celcat_administration"})
      */
     private $semaineReelle;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"celcat_administration"})
      */
     private $dateLundi;
 

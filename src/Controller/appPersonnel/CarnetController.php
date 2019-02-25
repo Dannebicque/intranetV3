@@ -54,9 +54,9 @@ class CarnetController extends BaseController
         $response = $myExport->genereFichierGenerique(
             $_format,
             $actualites,
-            'actualites',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]//todo: gérer les bon champs, copier/coller
+            'carnet_texte',
+            ['carnet_personnel', 'utilisateur', 'semestre', 'matiere'],
+            ['libelle', 'description', 'dateRetour', 'personnel' => ['nom', 'prenom'], 'semestre' => ['libelle'], 'matiere' => ['libelle', 'codeMatiere']]
         );
 
         return $response;

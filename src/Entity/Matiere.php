@@ -26,6 +26,7 @@ class Matiere extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=20)
+     * @Groups({"matiere"})
      */
     private $codeMatiere;
 

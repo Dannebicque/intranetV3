@@ -29,30 +29,6 @@ class HelpController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="sa_help_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param HelpRepository $helpRepository
-     *
-     * @param                     $_format
-     *
-     * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     */
-    public function export(MyExport $myExport, HelpRepository $helpRepository, $_format): Response
-    {
-        $helps = $helpRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
-            $_format,
-            $helps,
-            'helps',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
-
-        return $response;
-    }
-
-    /**
      * @Route("/new", name="sa_help_new", methods="GET|POST")
      * @param Request $request
      *

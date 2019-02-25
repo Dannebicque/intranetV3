@@ -87,8 +87,8 @@ class TrelloTacheController extends BaseController
             $_format,
             $trellos,
             'treelo_tache',
-            ['trello_administration', 'utilisateur'],//todo: adapter
-            ['titre', 'texte', 'formation' => ['libelle']]
+            ['trello_administration', 'utilisateur'],
+            ['libelle', 'deadline', 'description', 'personnels' => ['nom', 'prenom']]
         );
 
         return $response;

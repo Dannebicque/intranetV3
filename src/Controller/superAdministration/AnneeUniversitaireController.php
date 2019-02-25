@@ -44,10 +44,10 @@ class AnneeUniversitaireController extends BaseController
         $response = $myExport->genereFichierGenerique(
             $_format,
             $annee_universitaires,
-            'bacs',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
-        );//todo: ajuster les champs
+            'annee_universitaire',
+            ['annee_universitaire'],
+            ['libelle', 'annee', 'commentaire']
+        );
 
         return $response;
     }

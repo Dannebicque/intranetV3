@@ -48,22 +48,6 @@
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('sa_help_export', {_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"},
-        {
-            type:'info',
-            href:path('sa_help_export', {_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
-        },
-        {
-            type:'info',
-            href:path('sa_help_export', {_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
-        },
         {
             type:'info',
             href:path('sa_help_new'),

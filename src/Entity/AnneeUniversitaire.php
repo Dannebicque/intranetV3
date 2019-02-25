@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnneeUniversitaireRepository")
@@ -18,16 +19,19 @@ class AnneeUniversitaire
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"annee_universitaire"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"annee_universitaire"})
      */
     private $annee;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"annee_universitaire"})
      */
     private $commentaire;
 

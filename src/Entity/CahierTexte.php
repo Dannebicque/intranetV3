@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CahierTexteRepository")
@@ -13,21 +14,25 @@ class CahierTexte extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups({"carnet_personnel"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"carnet_personnel"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"carnet_personnel"})
      */
     private $dateRetour;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="cahierTextes")
+     * @Groups({"carnet_personnel"})
      */
     private $personnel;
 
@@ -38,11 +43,13 @@ class CahierTexte extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="cahierTextes")
+     * @Groups({"carnet_personnel"})
      */
     private $semestre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
+     * @Groups({"carnet_personnel"})
      */
     private $matiere;
 

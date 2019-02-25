@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrelloTacheRepository")
@@ -13,21 +14,25 @@ class TrelloTache extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"trello_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"trello_administration"})
      */
     private $deadline;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="trelloTaches")
+     * @Groups({"trello_administration"})
      */
     private $personnels;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"trello_administration"})
      */
     private $description;
 
