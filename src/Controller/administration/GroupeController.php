@@ -166,15 +166,14 @@ class GroupeController extends BaseController
      */
     public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format): Response
     {
-        $groupes = $groupeRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $groupes = $groupeRepository->findByFormation($this->dataUserSession->getFormation());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $groupes,
-            'dates',
-            ['date_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            'groupes',
+            ['type_groupe_administration', 'groupe_administration', 'semestre'],
+            ['libelle', 'codeApogee', 'parent' => ['libelle'], 'typeGroupe' => ['libelle', 'type', 'codeApogee', 'semestre' => ['libelle']]]
         );
-        //todo: définir les colonnes. copier/coller ici
 
         return $response;
     }

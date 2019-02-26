@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeGroupeRepository")
@@ -17,21 +18,25 @@ class TypeGroupe extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Groups({"type_groupe_administration"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="typeGroupes")
+     * @Groups({"type_groupe_administration"})
      */
     private $semestre;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"type_groupe_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"type_groupe_administration"})
      */
     private $codeApogee;
 

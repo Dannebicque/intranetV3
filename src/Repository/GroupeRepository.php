@@ -2,7 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
+use App\Entity\Diplome;
+use App\Entity\Formation;
 use App\Entity\Groupe;
+use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -22,5 +27,18 @@ class GroupeRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Groupe::class);
+    }
+
+    public function findByFormation(Formation $formation)
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.formation = :formation')
+            ->setParameter('formation', $formation->getId())
+            ->getQuery()
+            ->getResult();
     }
 }
