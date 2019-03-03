@@ -1,0 +1,40 @@
+<tr>
+    <td>Parent : {{ groupe.libelle }}</td>
+    <td scope="row">
+        <label class="sr-only" for="libelle_{{ groupe.id }}">Libellé du groupe</label>
+        <input type="text"
+               class="form-control"
+               placeholder="Libellé"
+               id="libelle_{{ groupe.id }}"
+               name="libelle_{{ groupe.id }}">
+    </td>
+    <td><label class="sr-only" for="code_apogee_{{ groupe.id }}">Code apogée du groupe</label>
+        <input type="text"
+               class="form-control"
+               placeholder="Code apogée"
+               id="code_apogee_{{ groupe.id }}"
+               name="code_apogee_{{ groupe.id }}">
+    </td>
+    <td>
+        <label class="sr-only" for="type_groupe_{{ groupe.id }}">Type de Groupe</label>
+        <select class="form-control" id="type_groupe_{{ groupe.id }}" name="type_groupe_{{ groupe.id }}">
+        <option value="">Type de Groupe</option>
+            {% for typegroupe in semestre.typeGroupes %}
+                <option value="{{ typegroupe.id }}">{{ typegroupe.libelle }}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td>
+        <label class="sr-only" for="parcours_{{ groupe.id }}">Parcours</label>
+        <select class="form-control" id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}">
+            <option value="">Parcours d'option</option>
+            {% for parcour in semestre.parcours %}
+                <option value="{{ parcour.id }}">{{ parcour.libelle }}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td class="text-right table-actions">
+        <button class="btn btn-primary btn-block addGroupe" data-parent="{{ groupe.id }}"><span class="ti-plus"></span>
+            Ajouter</button>
+    </td>
+</tr>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block header %}{{ 'adm.type.groupes.index.titre'|trans }}{% endblock %}
+{% block header %}{{ 'adm.groupes.index.titre'|trans }}{% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
@@ -27,22 +27,21 @@
                  id="semestre{{ semestre.id }}" role="tabpanel">
                 <div class="card">
                     <header class="card-header">
-                        <h4 class="card-title">Groupes du semestre {{ semestre.libelle }}</h4>
+                        <h2 class="card-title">Groupes du semestre {{ semestre.libelle }}</h2>
                         <div class="card-header-actions" style="">
-                            <span id="trombifiltre">
-                                <a href="{{ path('administration_type_groupe_new',{semestre:semestre.id}) }}"
-                                   class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"><i class="ti-plus"></i></a>
-                            </span>
                             <ul class="card-controls">
                                 <li class="dropdown">
-                                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i><span
+                                                class="sr-only">Menu Export</span></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF</a>
-                                        <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i>
+                                        <a href="{{ path('administration_groupe_export', {_format:'pdf',
+                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa
+                                            fa-file-pdf-o"></i> PDF</a>
+                                        <a href="{{ path('administration_groupe_export', {_format:'xlsx',
+                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-excel-o"></i>
                                             Excel</a>
-                                        <a href="#" class="dropdown-item"><i class="fa fa-file-text-o"></i> CSV</a>
+                                        <a href="{{ path('administration_groupe_export', {_format:'csv',
+                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-text-o"></i> CSV</a>
                                     </div>
                                 </li>
                             </ul>
@@ -51,123 +50,68 @@
 
                     <div class="card-body">
                         <table class="table table-separated">
-                            <tbody>
-                            {% for typeGroupe in semestre.typeGroupes %}
-                            <tr class="bg-success">
-                                <th scope="row">{{ typeGroupe.libelle }}</th>
-                                <td>{{ typeGroupe.type }}</td>
-                                <td>&nbsp;</td>
-                                <td><div class="form-check">
-                                        <input class="form-check-input" type="radio" name="new_type_groupe"
-                                               id="new_type_groupe" value="true">
-                                        <label class="form-check-label" for="new_type_groupe">
-                                            Par défaut
-                                        </label>
-                                    </div></td>
-                                <td class="text-right table-actions">
-                                    <a class="table-action hover-primary"
-                                       href="{{ path('administration_type_groupe_duplicate', {id:typeGroupe.id}) }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
-                                                class="{{ iconDuplicate }}"></span></a>
-                                    <a class="table-action hover-info"
-                                       href="{{ path('administration_type_groupe_show', {id:typeGroupe.id}) }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
-                                                class="ti-eye"></span></a>
-                                    <a class="table-action hover-warning"
-                                       href="{{ path('administration_type_groupe_edit', {id:typeGroupe.id}) }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
-                                                class="{{ iconEdit }}"></span></a>
-                                    <a class="table-action hover-danger supprimer"
-                                       href="{{ path('administration_type_groupe_delete', {id:typeGroupe.id}) }}"
-                                       data-csrf="{{ csrf_token('delete' ~ typeGroupe.id) }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
-                                                class="{{ iconDelete }}"></span></a>
-
-                                    <div class="dropdown table-action">
-                                        <span class="dropdown-toggle no-caret hover-primary" data-toggle="dropdown"><i class="ti-more-alt rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ti-menu-alt"></i> Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ti-clip"></i> Add file</a>
-                                            <a class="dropdown-item" href="#"><i class="ti-bar-chart"></i> Performance</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                                {% for groupe in typeGroupe.groupes %}
-                                <tr>
-                                    <td scope="row">&nbsp;</td>
-                                    <th>{{ groupe.libelle }}</th>
-                                    <td>{{ groupe.codeapogee }}</td>
-                                    <td><select></select></td>
-                                    <td class="text-right table-actions">
-                                        <a class="table-action hover-primary"
-                                           href="{{ path('administration_groupe_duplicate', {id:groupe.id}) }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><span
-                                                    class="{{ iconDuplicate }}"></span></a>
-                                        <a class="table-action hover-info"
-                                           href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><span
-                                                    class="ti-eye"></span></a>
-                                        <a class="table-action hover-warning"
-                                           href="{{ path('administration_groupe_edit', {id:groupe.id}) }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
-                                                    class="{{ iconEdit }}"></span></a>
-                                        <a class="table-action hover-danger supprimer"
-                                           href="{{ path('administration_groupe_delete', {id:groupe.id}) }}"
-                                           data-csrf="{{ csrf_token('delete' ~ groupe.id) }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}"><span
-                                                    class="{{ iconDelete }}"></span></a>
-
-                                        <div class="dropdown table-action">
-                                            <span class="dropdown-toggle no-caret hover-primary" data-toggle="dropdown"><i class="ti-more-alt rotate-90"></i></span>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#"><i class="ti-menu-alt"></i> Details</a>
-                                                <a class="dropdown-item" href="#"><i class="ti-clip"></i> Add file</a>
-                                                <a class="dropdown-item" href="#"><i class="ti-bar-chart"></i> Performance</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                <tr>
-                                    <td scope="row">&nbsp;</td>
-                                    <th><input type="text" class="form-control" placeholder="Libellé"></th>
-                                    <td><input type="text" class="form-control" placeholder="Code Apogée"></td>
-                                    <td class="text-right table-actions">
-                                        <button class="btn btn-primary btn-block"><span
-                                                    class="ti-plus"></span> Ajouter</button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                            <thead>
                             <tr>
-                                <td scope="row"><input type="text" class="form-control" placeholder="Libellé"></td>
-                                <td><select class="form-control" placeholder="Code Apogée"></select></td>
-                                <td></td>
+                                <th>Libellé</th>
+                                <th>Code Apogée</th>
+                                <th>Type Groupe</th>
+                                <th>Parcours</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% import 'macros/tree-groupe.html.twig' as m %}
+                                {% for groupe in groupes if (groupe.parent == null) %}
+                                   {{ include('administration/groupe/_ligne_groupe.html.twig') }}
+                                    {{ m.tree(groupe.enfants, 1, semestre) }}
+                                    {{ include('administration/groupe/_ligne_add_groupe.html.twig', {parent:groupe,
+                                        semestre:semestre
+                                    }) }}
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <header class="card-header">
+                        <h2 class="card-title">Types de Groupe du semestre {{ semestre.libelle }}</h2>
+                    </header>
+
+                    <div class="card-body">
+                        <table class="table table-separated">
+                            <tbody id="typgeGroupe_bloc">
+                            {{ include('administration/type_groupe/liste.html.twig') }}
+                            </tbody>
+                            <tfoot>
+                            <tr id="ligne_add">
+                                <td scope="row">
+                                    <label for="type_groupe_libelle" class="sr-only">Libellé du type de groupe</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="Libellé du type de groupe"
+                                           id="type_groupe_libelle">
+                                </td>
                                 <td>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="new_type_groupe"
-                                               id="new_type_groupe" value="true">
-                                        <label class="form-check-label" for="new_type_groupe">
+                                        <input class="form-check-input"
+                                               type="radio"
+                                               name="type_groupe_defaut"
+                                               id="type_groupe_defaut"
+                                               value="true">
+                                        <label class="form-check-label" for="type_groupe_defaut">
                                             Par défaut
                                         </label>
                                     </div>
-
-
                                 </td>
                                 <td class="text-right table-actions">
-                                    <button class="btn btn-primary btn-block"><span
+                                    <button class="btn btn-primary btn-block" id="add_type_groupe"
+                                            data-semestre="{{ semestre.id }}"><span
                                                 class="ti-plus"></span> Ajouter</button>
                                 </td>
                             </tr>
-                            </tbody>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -178,23 +122,6 @@
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_groupe_export', {_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"
-        },
-        {
-            type:'info',
-            href:path('administration_groupe_export', {_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
-        },
-        {
-            type:'info',
-            href:path('administration_groupe_export', {_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
-        },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration_groupe'}),

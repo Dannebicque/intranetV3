@@ -42,10 +42,10 @@ $contextMenuEdt.on("click", "a", function () {
       $('#blocadd').hide();
       var tabetu = $('#zoneaction');
       tabetu.empty().hide();
-      //tabetu.load("{{ path('da_kernel_administration_edt_modifier') }}", {
+      /*tabetu.load("{{ path('da_kernel_administration_edt_modifier') }}", {
         id: $rowClicked[0].id,
         annee: $annee
-      });
+      });*/
       tabetu.fadeIn(1000);
       break;
     case 'dupliquer':

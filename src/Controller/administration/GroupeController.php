@@ -24,9 +24,12 @@ class GroupeController extends BaseController
     /**
      * @Route("/", name="administration_groupe_index")
      */
-    public function index(): Response
+    public function index(GroupeRepository $groupeRepository): Response
     {
+        $groupes = $groupeRepository->findByFormation($this->dataUserSession->getFormation());
+
         return $this->render('administration/groupe/index.html.twig', [
+            'groupes' => $groupes
         ]);
     }
 
@@ -156,7 +159,7 @@ class GroupeController extends BaseController
 
 
     /**
-     * @Route("/export.{_format}", name="administration_groupe_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/{semestre}/export.{_format}", name="administration_groupe_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport         $myExport
      * @param GroupeRepository $groupeRepository
      * @param                  $_format
@@ -164,9 +167,9 @@ class GroupeController extends BaseController
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format): Response
+    public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format, Semestre $semestre): Response
     {
-        $groupes = $groupeRepository->findByFormation($this->dataUserSession->getFormation());
+        $groupes = $groupeRepository->findBySemestre($semestre);
         $response = $myExport->genereFichierGenerique(
             $_format,
             $groupes,

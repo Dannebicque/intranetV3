@@ -1,0 +1,11 @@
+{% macro tree(items, space, semestre) %}
+    {% import _self as m %}
+    {% if items %}
+
+            {% for groupe in items %}
+                {{ include('administration/groupe/_ligne_groupe.html.twig') }}
+                {{ m.tree(groupe.enfants, space+1, semestre) }}
+                {{ include('administration/groupe/_ligne_add_groupe.html.twig', {parent:groupe, semestre:semestre}) }}
+            {% endfor %}
+    {% endif %}
+{% endmacro %}

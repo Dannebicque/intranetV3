@@ -7,6 +7,9 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
+use App\Repository\SemestreRepository;
+use App\Repository\TypeGroupeRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,30 +20,74 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeGroupeController extends BaseController
 {
     /**
-     * @Route("/new/{semestre}", name="administration_type_groupe_new", methods="GET|POST")
-     * @param Request  $request
-     * @param Semestre $semestre
+     * @Route("/new", name="administration_type_groupe_new", methods="POST", options={"expose"=true})
+     * @param SemestreRepository $semestreRepository
+     * @param Request            $request
      *
      * @return Response
      */
-    public function create(Request $request, Semestre $semestre): Response
+    public function create(SemestreRepository $semestreRepository, Request $request): Response
     {
-        $typeGroupe = new TypeGroupe($semestre);
-        $form = $this->createForm(TypeGroupeType::class, $typeGroupe);
-        $form->handleRequest($request);
+        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        if ($semestre) {
+            $typeGroupe = new TypeGroupe($semestre);
+            $typeGroupe->setLibelle($request->request->get('libelle'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->request->get('defaut') === 'true') {
+                //tous les autres à faux.
+                foreach ($semestre->getTypeGroupes() as $tg) {
+                    $tg->setDefaut(false);
+                    $this->entityManager->persist($tg);
+                }
+                $typeGroupe->setDefaut(true);
+            } else {
+                $typeGroupe->setDefaut(false);
+            }
+
             $this->entityManager->persist($typeGroupe);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.add.success.flash');
+            return $this->json($typeGroupe->getArray(), Response::HTTP_OK);
 
-            return $this->redirectToRoute('administration_groupe_index');
+        }
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @Route("/refresh/{semestre}", name="administration_type_groupe_refresh", methods="GET", options={"expose"=true})
+     */
+    public function refreshListe(Semestre $semestre) {
+
+        return $this->render('administration/type_groupe/liste.html.twig', ['semestre' => $semestre]);
+    }
+
+    /**
+     * @param Request              $request
+     * @param TypeGroupeRepository $typeGroupeRepository
+     * @Route("/ajax/groupe_defaut", name="administration_type_groupe_defaut", methods="POST", options={"expose"=true})
+     * @return JsonResponse
+     */
+    public function typeGroupeDefaut(Request $request, TypeGroupeRepository $typeGroupeRepository): JsonResponse
+    {
+        $typeGroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
+
+        if ($typeGroupe) {
+            $groupes = $typeGroupeRepository->findBySemestre($typeGroupe->getSemestre());
+
+            /** @var TypeGroupe $groupe */
+            foreach ($groupes as $groupe) {
+                $groupe->setDefaut(false);
+                $this->entityManager->persist($groupe);
+            }
+
+            $typeGroupe->setDefaut(true);
+            $this->entityManager->persist($typeGroupe);
+            $this->entityManager->flush();
+
+            return $this->json(true, Response::HTTP_OK);
         }
 
-        return $this->render('administration/type_groupe/new.html.twig', [
-            'type_groupe' => $typeGroupe,
-            'form' => $form->createView(),
-        ]);
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 
     /**
@@ -61,14 +108,22 @@ class TypeGroupeController extends BaseController
      */
     public function edit(Request $request, TypeGroupe $typeGroupe): Response
     {
-        $form = $this->createForm(TypeGroupeType::class, $typeGroupe);
+        $form = $this->createForm(TypeGroupeType::class, $typeGroupe, ['formation' => $this->dataUserSession->getFormation()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($typeGroupe->getDefaut() === true) {
+                /** @var TypeGroupe $groupe */
+                foreach ($typeGroupe->getSemestre()->getTypeGroupes() as $groupe) {
+                    $groupe->setDefaut(false);
+                    $this->entityManager->persist($groupe);
+                }
+                $typeGroupe->setDefaut(true);
+            }
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.edit.success.flash');
 
-            return $this->redirectToRoute('administration_type_groupe_edit', ['id' => $typeGroupe->getId()]);
+            return $this->redirectToRoute('administration_groupe_index');
         }
 
         return $this->render('administration/type_groupe/edit.html.twig', [

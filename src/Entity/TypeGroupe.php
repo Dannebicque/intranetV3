@@ -17,12 +17,6 @@ class TypeGroupe extends BaseEntity
     public const TYPE_GROUPE_TP = 'tp';
 
     /**
-     * @ORM\Column(type="string", length=5)
-     * @Groups({"type_groupe_administration"})
-     */
-    private $type;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="typeGroupes")
      * @Groups({"type_groupe_administration"})
      */
@@ -33,12 +27,6 @@ class TypeGroupe extends BaseEntity
      * @Groups({"type_groupe_administration"})
      */
     private $libelle;
-
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"type_groupe_administration"})
-     */
-    private $codeApogee;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe")
@@ -62,26 +50,6 @@ class TypeGroupe extends BaseEntity
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return TypeGroupe
-     */
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     /**
@@ -112,26 +80,6 @@ class TypeGroupe extends BaseEntity
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCodeApogee(): ?string
-    {
-        return $this->codeApogee;
-    }
-
-    /**
-     * @param string $codeApogee
-     *
-     * @return TypeGroupe
-     */
-    public function setCodeApogee(string $codeApogee): self
-    {
-        $this->codeApogee = $codeApogee;
 
         return $this;
     }
@@ -187,5 +135,17 @@ class TypeGroupe extends BaseEntity
         $this->defaut = $defaut;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'libelle' => $this->getLibelle(),
+            'defaut' => $this->getDefaut()
+        ];
     }
 }

@@ -97,10 +97,10 @@ app.ready(function () {
   | Import your main application code
   |
   */
-  require('./partials/profil.js');
-  require('./partials/documents.js');
-  require('./partials/trombinoscope.js');
-  require('./partials/personnel.js');
+  require('./partials/profil');
+  require('./partials/documents');
+  require('./partials/trombinoscope');
+  require('./partials/personnel');
   require('./partials/etudiants');
   require('./partials/applications');
   require('./partials/previsionnel');
@@ -118,8 +118,8 @@ app.ready(function () {
   require('./partials/matiere')
   require('./partials/alternances')
   require('./partials/scolarite')
-  //require('./partials/admEdt')
   require('./partials/borne')
+  require('./partials/groupe')
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 
