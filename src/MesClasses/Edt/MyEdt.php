@@ -9,10 +9,10 @@
 namespace App\MesClasses\Edt;
 
 
-use App\Entity\CelcatCalendrier;
+use App\Entity\Calendrier;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
-use App\Repository\CelcatCalendrierRepository;
+use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 
 class MyEdt
@@ -20,7 +20,7 @@ class MyEdt
 
     protected $semaine;
 
-    /** @var CelcatCalendrier */
+    /** @var Calendrier */
     protected $calendrier;
 
     protected $semaineFormation;
@@ -28,18 +28,18 @@ class MyEdt
     /** @var EdtPlanningRepository */
     protected $edtPlanningRepository;
 
-    /** @var CelcatCalendrierRepository */
+    /** @var CalendrierRepository */
     protected $celcatCalendrierRepository;
 
     /**
      * MyEdt constructor.
      *
-     * @param EdtPlanningRepository      $edtPlanningRepository
-     * @param CelcatCalendrierRepository $celcatCalendrierRepository
+     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param CalendrierRepository  $celcatCalendrierRepository
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
-        CelcatCalendrierRepository $celcatCalendrierRepository
+        CalendrierRepository $celcatCalendrierRepository
     ) {
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->celcatCalendrierRepository = $celcatCalendrierRepository;

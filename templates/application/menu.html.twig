@@ -32,6 +32,14 @@
                    href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
 
+            {% if user_data.formation.preparationAnnee == true %}
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'disponibilite' %}active{% endif %}"
+                   href="{{ path('application_personnel_disponibilite_index') }}" role="tab">{{ 'menu.disponibilite'|trans
+                    }}</a>
+            </li>
+                {% endif %}
+
         {% else %}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"

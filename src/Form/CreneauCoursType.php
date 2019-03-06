@@ -2,28 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Calendrier;
+use App\Entity\CreneauCours;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CelcatCalendrierType extends AbstractType
+class CreneauCoursType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('created')
-            ->add('updated')
-            ->add('semaineFormation')
-            ->add('semaineReelle')
-            ->add('dateLundi')
+            ->add('jour')
+            ->add('debut')
+            ->add('fin')
+            ->add('anneeUniversitaire')
+            ->add('formation')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Calendrier::class,
+            'data_class' => CreneauCours::class,
         ]);
     }
 }

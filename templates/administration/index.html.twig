@@ -134,9 +134,13 @@
                         </div>
                     </div>
                     <div class="row gap-y">
-                        <div class="col-md-12">
+                        <div class="col-md-6 col-sm-12">
                             <div><a href="{{ path('administration_date_index') }}"
                                     class="btn btn-block btn-primary"> {{ 'adm.gerer.dates'|trans }}</a></div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div><a href="{{ path('administration_creneau_bloque_index') }}"
+                                    class="btn btn-block btn-primary"> {{ 'adm.gerer.creneaux'|trans }}</a></div>
                         </div>
                     </div>
                     <div class="row gap-y">
@@ -281,6 +285,7 @@
                                 {{ 'adm.configuration'|trans }}</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -291,6 +296,13 @@
                         <div class="col-md-12">
                             <a href="{{ path('administration_salle_examen_index') }}"
                                class="btn btn-block btn-primary"> {{ 'adm.salle_examens'|trans }}</a>
+                        </div>
+
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <a href="{{ path('administration_creneau_cours_index') }}" class="btn btn-block btn-primary">
+                                {{ 'adm.creneau_cours_index'|trans }}</a>
                         </div>
                     </div>
                 </div>
