@@ -9,7 +9,7 @@
 namespace App\MesClasses\Celcat;
 
 
-use App\Entity\CelcatCalendrier;
+use App\Entity\Calendrier;
 use Doctrine\ORM\EntityManagerInterface;
 
 abstract class Connect
@@ -29,7 +29,7 @@ abstract class Connect
 
         while (odbc_fetch_row($result)) {
             $date = odbc_result($result, 'week_date');
-            $cal = new CelcatCalendrier();
+            $cal = new Calendrier();
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
             $cal->setSemaineReelle(date('W', strtotime($date)));
             $cal->setDateLundi($date);

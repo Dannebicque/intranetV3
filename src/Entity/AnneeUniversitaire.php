@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -35,9 +37,27 @@ class AnneeUniversitaire
      */
     private $commentaire;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Formation", mappedBy="anneeUniversitairePrepare")
+     */
+    private $formations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calendrier", mappedBy="anneeUniversitaire")
+     */
+    private $calendriers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="anneeUniversitaire")
+     */
+    private $creneauCours;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
+        $this->formations = new ArrayCollection();
+        $this->calendriers = new ArrayCollection();
+        $this->creneauCours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +97,99 @@ class AnneeUniversitaire
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Formation[]
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations[] = $formation;
+            $formation->setAnneeUniversitairePrepare($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        if ($this->formations->contains($formation)) {
+            $this->formations->removeElement($formation);
+            // set the owning side to null (unless already changed)
+            if ($formation->getAnneeUniversitairePrepare() === $this) {
+                $formation->setAnneeUniversitairePrepare(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calendrier[]
+     */
+    public function getCalendriers(): Collection
+    {
+        return $this->calendriers;
+    }
+
+    public function addCalendrier(Calendrier $calendrier): self
+    {
+        if (!$this->calendriers->contains($calendrier)) {
+            $this->calendriers[] = $calendrier;
+            $calendrier->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCalendrier(Calendrier $calendrier): self
+    {
+        if ($this->calendriers->contains($calendrier)) {
+            $this->calendriers->removeElement($calendrier);
+            // set the owning side to null (unless already changed)
+            if ($calendrier->getAnneeUniversitaire() === $this) {
+                $calendrier->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CreneauCours[]
+     */
+    public function getCreneauCours(): Collection
+    {
+        return $this->creneauCours;
+    }
+
+    public function addCreneauCour(CreneauCours $creneauCour): self
+    {
+        if (!$this->creneauCours->contains($creneauCour)) {
+            $this->creneauCours[] = $creneauCour;
+            $creneauCour->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreneauCour(CreneauCours $creneauCour): self
+    {
+        if ($this->creneauCours->contains($creneauCour)) {
+            $this->creneauCours->removeElement($creneauCour);
+            // set the owning side to null (unless already changed)
+            if ($creneauCour->getAnneeUniversitaire() === $this) {
+                $creneauCour->setAnneeUniversitaire(null);
+            }
+        }
 
         return $this;
     }

@@ -224,6 +224,21 @@ class Formation extends BaseEntity
     private $actif = true;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $preparationAnnee;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="formations")
+     */
+    private $anneeUniversitairePrepare;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="formation")
+     */
+    private $creneauCours;
+
+    /**
      * Formation constructor.
      * @throws \Exception
      */
@@ -240,6 +255,7 @@ class Formation extends BaseEntity
         $this->hrs = new ArrayCollection();
         $this->typeMateriels = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
+        $this->creneauCours = new ArrayCollection();
     }
 
     /**
@@ -924,6 +940,61 @@ class Formation extends BaseEntity
     public function setActif(bool $actif): self
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getPreparationAnnee(): ?bool
+    {
+        return $this->preparationAnnee;
+    }
+
+    public function setPreparationAnnee(bool $preparationAnnee): self
+    {
+        $this->preparationAnnee = $preparationAnnee;
+
+        return $this;
+    }
+
+    public function getAnneeUniversitairePrepare(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitairePrepare;
+    }
+
+    public function setAnneeUniversitairePrepare(?AnneeUniversitaire $anneeUniversitairePrepare): self
+    {
+        $this->anneeUniversitairePrepare = $anneeUniversitairePrepare;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CreneauCours[]
+     */
+    public function getCreneauCours(): Collection
+    {
+        return $this->creneauCours;
+    }
+
+    public function addCreneauCour(CreneauCours $creneauCour): self
+    {
+        if (!$this->creneauCours->contains($creneauCour)) {
+            $this->creneauCours[] = $creneauCour;
+            $creneauCour->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreneauCour(CreneauCours $creneauCour): self
+    {
+        if ($this->creneauCours->contains($creneauCour)) {
+            $this->creneauCours->removeElement($creneauCour);
+            // set the owning side to null (unless already changed)
+            if ($creneauCour->getFormation() === $this) {
+                $creneauCour->setFormation(null);
+            }
+        }
 
         return $this;
     }

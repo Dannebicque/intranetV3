@@ -19,6 +19,7 @@ class Date extends BaseEntity
     public const TYPE_COMMISSION = 'type.commission';
     public const TYPE_REUNION = 'type.reunion';
     public const TYPE_RENTREE = 'type.rentree';
+    public const TYPE_VACANCES = 'type.vacances';
 
     public const QUI_ETUDIANT = 'E';
     public const QUI_PERSONNEL = 'P';

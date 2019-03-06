@@ -80,7 +80,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.1",
+        "easycorp/easy-deploy-bundle": "^1.0",
         "symfony/maker-bundle": "^1.11",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/web-profiler-bundle": "4.2.*"
     }
 }

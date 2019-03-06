@@ -120,6 +120,7 @@ app.ready(function () {
   require('./partials/scolarite')
   require('./partials/borne')
   require('./partials/groupe')
+  require('./partials/creneaux')
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 

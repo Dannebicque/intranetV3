@@ -186,7 +186,12 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $couleur;//todo: a gérer
+    private $couleur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\IndisponibilitePersonnel", mappedBy="personnel")
+     */
+    private $indisponibilitePersonnels;//todo: a gérer
 
     public function __construct()
     {
@@ -206,6 +211,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
+        $this->indisponibilitePersonnels = new ArrayCollection();
     }
 
     /**
@@ -1053,6 +1059,37 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     public function setCouleur(string $couleur): self
     {
         $this->couleur = $couleur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|IndisponibilitePersonnel[]
+     */
+    public function getIndisponibilitePersonnels(): Collection
+    {
+        return $this->indisponibilitePersonnels;
+    }
+
+    public function addIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
+    {
+        if (!$this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
+            $this->indisponibilitePersonnels[] = $indisponibilitePersonnel;
+            $indisponibilitePersonnel->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
+    {
+        if ($this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
+            $this->indisponibilitePersonnels->removeElement($indisponibilitePersonnel);
+            // set the owning side to null (unless already changed)
+            if ($indisponibilitePersonnel->getPersonnel() === $this) {
+                $indisponibilitePersonnel->setPersonnel(null);
+            }
+        }
 
         return $this;
     }

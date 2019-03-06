@@ -3,13 +3,13 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
-use App\Entity\CelcatCalendrier;
+use App\Entity\Calendrier;
 use App\Entity\Constantes;
 use App\Form\CelcatCalendrierType;
 use App\MesClasses\Celcat\Connect;
 use App\MesClasses\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
-use App\Repository\CelcatCalendrierRepository;
+use App\Repository\CalendrierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,25 +21,25 @@ class CelcatCalendrierController extends BaseController
 {
     /**
      * @Route("/", name="sa_celcat_calendrier_index", methods="GET")
-     * @param CelcatCalendrierRepository $celcatCalendrierRepository
+     * @param CalendrierRepository $celcatCalendrierRepository
      *
      * @return Response
      */
-    public function index(CelcatCalendrierRepository $celcatCalendrierRepository): Response
+    public function index(CalendrierRepository $celcatCalendrierRepository): Response
     {
         return $this->render('super-administration/celcat_calendrier/index.html.twig', ['celcat_calendriers' => $celcatCalendrierRepository->findAll()]);
     }
 
     /**
      * @Route("/export.{_format}", name="sa_celcat_calendrier_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport          $myExport
-     * @param CelcatCalendrierRepository $celcatCalendrierRepository
+     * @param MyExport             $myExport
+     * @param CalendrierRepository $celcatCalendrierRepository
      * @param                   $_format
      *
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(MyExport $myExport, CelcatCalendrierRepository $celcatCalendrierRepository, $_format): Response
+    public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
     {
         $articles = $celcatCalendrierRepository->findAll();
         $response = $myExport->genereFichierGenerique(
@@ -61,7 +61,7 @@ class CelcatCalendrierController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $celcatCalendrier = new CelcatCalendrier();
+        $celcatCalendrier = new Calendrier();
         $form = $this->createForm(CelcatCalendrierType::class, $celcatCalendrier);
         $form->handleRequest($request);
 
@@ -106,23 +106,23 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_celcat_calendrier_show", methods="GET")
-     * @param CelcatCalendrier $celcatCalendrier
+     * @param Calendrier $celcatCalendrier
      *
      * @return Response
      */
-    public function show(CelcatCalendrier $celcatCalendrier): Response
+    public function show(Calendrier $celcatCalendrier): Response
     {
         return $this->render('super-administration/celcat_calendrier/show.html.twig', ['celcat_calendrier' => $celcatCalendrier]);
     }
 
     /**
      * @Route("/{id}/edit", name="sa_celcat_calendrier_edit", methods="GET|POST")
-     * @param Request          $request
-     * @param CelcatCalendrier $celcatCalendrier
+     * @param Request    $request
+     * @param Calendrier $celcatCalendrier
      *
      * @return Response
      */
-    public function edit(Request $request, CelcatCalendrier $celcatCalendrier): Response
+    public function edit(Request $request, Calendrier $celcatCalendrier): Response
     {
         $form = $this->createForm(CelcatCalendrierType::class, $celcatCalendrier);
         $form->handleRequest($request);
@@ -142,12 +142,12 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_celcat_calendrier_delete", methods="DELETE")
-     * @param Request          $request
-     * @param CelcatCalendrier $celcatCalendrier
+     * @param Request    $request
+     * @param Calendrier $celcatCalendrier
      *
      * @return Response
      */
-    public function delete(Request $request, CelcatCalendrier $celcatCalendrier): Response
+    public function delete(Request $request, Calendrier $celcatCalendrier): Response
     {
         $id = $celcatCalendrier->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
@@ -164,11 +164,11 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_celcat_calendrier_duplicate", methods="GET|POST")
-     * @param CelcatCalendrier $celcatCalendrier
+     * @param Calendrier $celcatCalendrier
      *
      * @return Response
      */
-    public function duplicate(CelcatCalendrier $celcatCalendrier): Response
+    public function duplicate(Calendrier $celcatCalendrier): Response
     {
         $newCelcatCalendrier = clone $celcatCalendrier;
 
