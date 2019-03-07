@@ -18,10 +18,10 @@ services:
             context: docker
             dockerfile: MysqlDockerfile
         environment:
-          - MYSQL_ROOT_PASSWORD=symfony-docker
-          - MYSQL_USER=symfony-docker
-          - MYSQL_PASSWORD=symfony-docker
-          - MYSQL_DATABASE=symfony-docker
+          - MYSQL_ROOT_PASSWORD=intranet
+          - MYSQL_USER=intranet
+          - MYSQL_PASSWORD=intranet
+          - MYSQL_DATABASE=intranet
         volumes:
             - db_data:/var/lib/mysql
         networks:
