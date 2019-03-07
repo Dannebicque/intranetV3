@@ -7,4 +7,13 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> app/docker ###
+docker-compose.override.yml
+###< app/docker ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
+
 /node_modules/

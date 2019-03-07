@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+    app:
+        build:
+            context: .
+            target: app-dev
+        depends_on:
+            - db
+        networks:
+            - frontend
+            - backend
+        volumes:
+            - .:/app
+
+    db:
+        build:
+            context: docker
+            dockerfile: MysqlDockerfile
+        environment:
+          - MYSQL_ROOT_PASSWORD=symfony-docker
+          - MYSQL_USER=symfony-docker
+          - MYSQL_PASSWORD=symfony-docker
+          - MYSQL_DATABASE=symfony-docker
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - backend
+
+volumes:
+    db_data:
+        driver: local
+
+networks:
+    frontend:
+    backend:
