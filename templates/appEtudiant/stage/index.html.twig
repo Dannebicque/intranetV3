@@ -1,6 +1,7 @@
 <div class="card">
     <h4 class="card-title">Vos périodes de stage</h4>
     <div class="card-body">
+        {% if stagePeriodes|length > 0 %}
         <ul class="nav nav-tabs">
             {% for stagePeriode in stagePeriodes %}
                 <li class="nav-item">
@@ -107,6 +108,9 @@
                 </div>
             {% endfor %}
         </div>
+        {% else %}
+        <div class="alert alert-info">Vous n'avez pas de période de stage à compléter sur ce semestre.</div>
+        {% endif %}
     </div>
 </div>
 

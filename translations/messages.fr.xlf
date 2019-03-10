@@ -10633,5 +10633,29 @@
         <target>type_groupe.duplicate.success.flash</target>
       </segment>
     </unit>
+    <unit id="Udzz79x" name="menu.emprunt">
+      <segment>
+        <source>menu.emprunt</source>
+        <target>Emprunts</target>
+      </segment>
+    </unit>
+    <unit id="G24bD9v" name="menu.justificatif">
+      <segment>
+        <source>menu.justificatif</source>
+        <target>Justificatifs</target>
+      </segment>
+    </unit>
+    <unit id="Jcp8zNA" name="applications.etudiant.quizz.heading">
+      <segment>
+        <source>applications.etudiant.quizz.heading</source>
+        <target>applications.etudiant.quizz.heading</target>
+      </segment>
+    </unit>
+    <unit id="jRFacAY" name="applications.etudiant.emprunt.heading">
+      <segment>
+        <source>applications.etudiant.emprunt.heading</source>
+        <target>applications.etudiant.emprunt.heading</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
