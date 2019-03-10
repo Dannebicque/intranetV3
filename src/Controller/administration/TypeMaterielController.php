@@ -102,8 +102,7 @@ class TypeMaterielController extends BaseController
         $form = $this->createForm(TypeMaterielType::class, $typeMateriel,[
             'attr' => [
                 'data-provide' => 'validation'
-            ],
-            'formation' => $this->dataUserSession->getFormation()
+            ]
         ]);
         $form->handleRequest($request);
 

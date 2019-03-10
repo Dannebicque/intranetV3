@@ -70,7 +70,7 @@
                                         </tr>
                                         {% for ed in edts[matiere.id] %}
                                             <tr>
-                                                <td>{{ displayPr(ed.personnel.nom, ed.personnel.prenom) }}</td>
+                                                <td>{{ ed.personnel.displayPr }}</td>
                                                 <td>
                                                     <span class="label {% if ed.nbCMEDT > ed.nbCMPrevi %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMEDT }}</span>
                                                 </td><!--CM -->

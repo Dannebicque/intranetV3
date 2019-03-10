@@ -57,7 +57,7 @@ class TypeGroupeController extends BaseController
      */
     public function refreshListe(Semestre $semestre) {
 
-        return $this->render('administration/type_groupe/liste.html.twig', ['semestre' => $semestre]);
+        return $this->render('_liste.html.twig', ['semestre' => $semestre]);
     }
 
     /**

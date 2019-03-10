@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b7de9375f92752aecf6eff618328922",
+    "content-hash": "b5ce3df14dcb4c97ff0ea82131bda4f4",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2296,6 +2296,57 @@
             "time": "2019-02-04T21:18:49+00:00"
         },
         {
+            "name": "nikic/php-parser",
+            "version": "v4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
+                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5 || ^7.0"
+            },
+            "bin": [
+                "bin/php-parse"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpParser\\": "lib/PhpParser"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov"
+                }
+            ],
+            "description": "A PHP parser written in PHP",
+            "keywords": [
+                "parser",
+                "php"
+            ],
+            "time": "2019-01-12T16:31:37+00:00"
+        },
+        {
             "name": "ninsuo/symfony-collection",
             "version": "2.1.30",
             "source": {
@@ -2522,6 +2573,57 @@
             "description": "A library to read, parse and export to PDF SVG files.",
             "homepage": "https://github.com/PhenX/php-svg-lib",
             "time": "2018-06-03T10:10:03+00:00"
+        },
+        {
+            "name": "php-translation/extractor",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/extractor.git",
+                "reference": "82fc51a07fb626c0bfb31fb3f041baa88fee6acb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/extractor/zipball/82fc51a07fb626c0bfb31fb3f041baa88fee6acb",
+                "reference": "82fc51a07fb626c0bfb31fb3f041baa88fee6acb",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.2",
+                "nikic/php-parser": "^3.0 || ^4.0",
+                "php": "^5.5 || ^7.0",
+                "symfony/finder": "^2.7 || ^3.0 || ^4.0",
+                "twig/twig": "^1.27 || ^2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4 || ^4.0",
+                "symfony/translation": "^3.0 || ^4.0",
+                "symfony/twig-bridge": "^3.0 || ^4.0",
+                "symfony/validator": "^3.0 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Extractor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Extract translations form the source code",
+            "time": "2018-07-09T17:05:17+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -6473,29 +6575,352 @@
             "time": "2018-12-21T10:10:51+00:00"
         },
         {
-            "name": "nikic/php-parser",
-            "version": "v4.2.0",
+            "name": "easycorp/easy-deploy-bundle",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a"
+                "url": "https://github.com/EasyCorp/easy-deploy-bundle.git",
+                "reference": "f6c45c2c874ba85e0ec584a8942fd796f956a0aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
-                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
+                "url": "https://api.github.com/repos/EasyCorp/easy-deploy-bundle/zipball/f6c45c2c874ba85e0ec584a8942fd796f956a0aa",
+                "reference": "f6c45c2c874ba85e0ec584a8942fd796f956a0aa",
                 "shasum": ""
             },
             "require": {
-                "ext-tokenizer": "*",
-                "php": ">=7.0"
+                "php": ">=7.1.0",
+                "symfony/console": "~2.3|~3.0|~4.0",
+                "symfony/dependency-injection": "~2.3|~3.0|~4.0",
+                "symfony/expression-language": "~2.4|~3.0|~4.0",
+                "symfony/filesystem": "~2.3|~3.0|~4.0",
+                "symfony/http-foundation": "~2.3|~3.0|~4.0",
+                "symfony/http-kernel": "~2.3|~3.0|~4.0",
+                "symfony/polyfill-mbstring": "^1.3",
+                "symfony/process": "~2.3|~3.0|~4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.5 || ^7.0"
+                "phpunit/phpunit": "^6.1"
             },
-            "bin": [
-                "bin/php-parse"
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EasyCorp\\Bundle\\EasyDeployBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
             ],
+            "authors": [
+                {
+                    "name": "Javier Eguiluz",
+                    "email": "javiereguiluz@gmail.com"
+                }
+            ],
+            "description": "The easiest way to deploy Symfony applications",
+            "homepage": "https://github.com/EasyCorp/easy-deploy-bundle",
+            "keywords": [
+                "deploy",
+                "deployer",
+                "deployment"
+            ],
+            "time": "2018-04-21T14:08:18+00:00"
+        },
+        {
+            "name": "facebook/webdriver",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/php-webdriver.git",
+                "reference": "bd8c740097eb9f2fc3735250fc1912bc811a954e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/bd8c740097eb9f2fc3735250fc1912bc811a954e",
+                "reference": "bd8c740097eb9f2fc3735250fc1912bc811a954e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-zip": "*",
+                "php": "^5.6 || ~7.0",
+                "symfony/process": "^2.8 || ^3.1 || ^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "jakub-onderka/php-parallel-lint": "^0.9.2",
+                "php-coveralls/php-coveralls": "^2.0",
+                "php-mock/php-mock-phpunit": "^1.1",
+                "phpunit/phpunit": "^5.7",
+                "sebastian/environment": "^1.3.4 || ^2.0 || ^3.0",
+                "squizlabs/php_codesniffer": "^2.6",
+                "symfony/var-dumper": "^3.3 || ^4.0"
+            },
+            "suggest": {
+                "ext-SimpleXML": "For Firefox profile creation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-community": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Facebook\\WebDriver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A PHP client for Selenium WebDriver",
+            "homepage": "https://github.com/facebook/php-webdriver",
+            "keywords": [
+                "facebook",
+                "php",
+                "selenium",
+                "webdriver"
+            ],
+            "time": "2018-05-16T17:37:13+00:00"
+        },
+        {
+            "name": "nyholm/nsa",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyholm/NSA.git",
+                "reference": "213a70dee2dd04433d31a187e24e92c8b59d1655"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyholm/NSA/zipball/213a70dee2dd04433d31a187e24e92c8b59d1655",
+                "reference": "213a70dee2dd04433d31a187e24e92c8b59d1655",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0",
+                "webmozart/assert": "^1.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nyholm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "See everything and do whatever you want. No privacy rule will stop us. Used in tests, debugging and fixtures to access properties and methods.",
+            "homepage": "http://tnyholm.se",
+            "keywords": [
+                "Fixture",
+                "debug",
+                "reflection",
+                "test"
+            ],
+            "time": "2017-04-13T17:21:01+00:00"
+        },
+        {
+            "name": "php-translation/common",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/common.git",
+                "reference": "ceac357a7ad0582d0a6be7b7f2db178c87f229fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/common/zipball/ceac357a7ad0582d0a6be7b7f2db178c87f229fd",
+                "reference": "ceac357a7ad0582d0a6be7b7f2db178c87f229fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4 || ^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Common\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Common translation stuff",
+            "time": "2018-06-14T16:18:37+00:00"
+        },
+        {
+            "name": "php-translation/symfony-bundle",
+            "version": "0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/symfony-bundle.git",
+                "reference": "fe29aeff419c311672c7d3dc72d9423eefc3ca5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/symfony-bundle/zipball/fe29aeff419c311672c7d3dc72d9423eefc3ca5c",
+                "reference": "fe29aeff419c311672c7d3dc72d9423eefc3ca5c",
+                "shasum": ""
+            },
+            "require": {
+                "nyholm/nsa": "^1.1",
+                "php": "^5.5 || ^7.0",
+                "php-translation/common": "^1.0",
+                "php-translation/extractor": "^1.3",
+                "php-translation/symfony-storage": "^1.0",
+                "symfony/finder": "^2.7 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.7 || ^3.0 || ^4.0",
+                "symfony/intl": "^2.7 || ^3.0 || ^4.0",
+                "symfony/translation": "^2.7 || ^3.0 || ^4.0",
+                "symfony/twig-bundle": "^2.7 || ^3.0 || ^4.0",
+                "symfony/validator": "^2.7 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "guzzlehttp/psr7": "^1.4",
+                "matthiasnoback/symfony-config-test": "^2.2 || ^3.1",
+                "matthiasnoback/symfony-dependency-injection-test": "^1.2 || ^2.3",
+                "nyholm/symfony-bundle-test": "^1.2.3",
+                "php-http/curl-client": "^1.7",
+                "php-http/message": "^1.6",
+                "php-http/message-factory": "^1.0.2",
+                "php-translation/translator": "^1.0",
+                "symfony/asset": "^2.7 || ^3.0 || ^4.0",
+                "symfony/console": "^2.7 || ^3.0 || ^4.0",
+                "symfony/dependency-injection": "^2.7 || ^3.0 || ^4.0",
+                "symfony/phpunit-bridge": "^3.4 || ^4.0",
+                "symfony/templating": "^2.7 || ^3.0 || ^4.0",
+                "symfony/twig-bridge": "^2.7 || ^3.0 || ^4.0",
+                "symfony/web-profiler-bundle": "^2.7 || ^3.0 || ^4.0"
+            },
+            "suggest": {
+                "php-http/httplug-bundle": "To easier configure your httplug clients."
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\Bundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "time": "2018-10-02T10:05:24+00:00"
+        },
+        {
+            "name": "php-translation/symfony-storage",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-translation/symfony-storage.git",
+                "reference": "8d7b1ea6bf22bee0c7dc9b228cf9437312373a27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-translation/symfony-storage/zipball/8d7b1ea6bf22bee0c7dc9b228cf9437312373a27",
+                "reference": "8d7b1ea6bf22bee0c7dc9b228cf9437312373a27",
+                "shasum": ""
+            },
+            "require": {
+                "nyholm/nsa": "^1.1",
+                "php": "^5.5 || ^7.0",
+                "php-translation/common": "^1.0",
+                "symfony/translation": "^2.7 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "^2.7.39 || ^3.0 || ^4.0",
+                "symfony/phpunit-bridge": "^3.4 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Translation\\SymfonyStorage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "A translation file storage using Symfony translation component.",
+            "time": "2018-07-10T10:32:01+00:00"
+        },
+        {
+            "name": "symfony/browser-kit",
+            "version": "v4.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/browser-kit.git",
+                "reference": "61d85c5af2fc058014c7c89504c3944e73a086f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/61d85c5af2fc058014c7c89504c3944e73a086f0",
+                "reference": "61d85c5af2fc058014c7c89504c3944e73a086f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/dom-crawler": "~3.4|~4.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/process": ""
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -6504,37 +6929,203 @@
             },
             "autoload": {
                 "psr-4": {
-                    "PhpParser\\": "lib/PhpParser"
-                }
+                    "Symfony\\Component\\BrowserKit\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Nikita Popov"
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "A PHP parser written in PHP",
-            "keywords": [
-                "parser",
-                "php"
-            ],
-            "time": "2019-01-12T16:31:37+00:00"
+            "description": "Symfony BrowserKit Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-02-23T15:17:42+00:00"
         },
         {
-            "name": "symfony/maker-bundle",
-            "version": "v1.11.3",
+            "name": "symfony/css-selector",
+            "version": "v4.2.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "08fabae78050d2fe71341d0edc3872bddf03482f"
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/08fabae78050d2fe71341d0edc3872bddf03482f",
-                "reference": "08fabae78050d2fe71341d0edc3872bddf03482f",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/48eddf66950fa57996e1be4a55916d65c10c604a",
+                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony CssSelector Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:31:39+00:00"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "v4.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "53c97769814c80a84a8403efcf3ae7ae966d53bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/53c97769814c80a84a8403efcf3ae7ae966d53bb",
+                "reference": "53c97769814c80a84a8403efcf3ae7ae966d53bb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-02-23T15:17:42+00:00"
+        },
+        {
+            "name": "symfony/expression-language",
+            "version": "v4.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/expression-language.git",
+                "reference": "a69b153996a13ffdb05395e8724c7217a8448e9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/expression-language/zipball/a69b153996a13ffdb05395e8724c7217a8448e9e",
+                "reference": "a69b153996a13ffdb05395e8724c7217a8448e9e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/cache": "~3.4|~4.0",
+                "symfony/contracts": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ExpressionLanguage\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ExpressionLanguage Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:31:39+00:00"
+        },
+        {
+            "name": "symfony/maker-bundle",
+            "version": "v1.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/maker-bundle.git",
+                "reference": "540996bfdcc14ca38dfe4865c020d965020ae821"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/540996bfdcc14ca38dfe4865c020d965020ae821",
+                "reference": "540996bfdcc14ca38dfe4865c020d965020ae821",
                 "shasum": ""
             },
             "require": {
@@ -6587,7 +7178,141 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2019-01-17T02:02:27+00:00"
+            "time": "2019-03-01T20:45:16+00:00"
+        },
+        {
+            "name": "symfony/panther",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/panther.git",
+                "reference": "5e41bc856eded5f546c71173a1e8e260c5e3a07a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/panther/zipball/5e41bc856eded5f546c71173a1e8e260c5e3a07a",
+                "reference": "5e41bc856eded5f546c71173a1e8e260c5e3a07a",
+                "shasum": ""
+            },
+            "require": {
+                "facebook/webdriver": "^1.5",
+                "php": ">=7.1",
+                "symfony/browser-kit": "^4.0",
+                "symfony/polyfill-php72": "^1.9",
+                "symfony/process": "^3.4 || ^4.0"
+            },
+            "conflict": {
+                "symfony/browser-kit": "4.1.0"
+            },
+            "require-dev": {
+                "fabpot/goutte": "^3.2.3",
+                "guzzlehttp/guzzle": "^6.3",
+                "phpunit/phpunit": "^7.3",
+                "symfony/css-selector": "^3.4 || ^4.0",
+                "symfony/framework-bundle": "^3.4 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Panther\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                },
+                {
+                    "name": "Kévin Dunglas",
+                    "email": "dunglas@gmail.com",
+                    "homepage": "https://dunglas.fr"
+                }
+            ],
+            "description": "A browser testing and web scraping library for PHP and Symfony.",
+            "homepage": "https://dunglas.fr",
+            "keywords": [
+                "e2e",
+                "scraping",
+                "selenium",
+                "symfony",
+                "testing",
+                "webdriver"
+            ],
+            "time": "2019-02-27T12:48:28+00:00"
+        },
+        {
+            "name": "symfony/phpunit-bridge",
+            "version": "v4.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/phpunit-bridge.git",
+                "reference": "2cc651a38fcb831a405c14fcb76fcb00320e7ee8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/2cc651a38fcb831a405c14fcb76fcb00320e7ee8",
+                "reference": "2cc651a38fcb831a405c14fcb76fcb00320e7ee8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+            },
+            "suggest": {
+                "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
+            },
+            "bin": [
+                "bin/simple-phpunit"
+            ],
+            "type": "symfony-bridge",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                },
+                "thanks": {
+                    "name": "phpunit/phpunit",
+                    "url": "https://github.com/sebastianbergmann/phpunit"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Bridge\\PhpUnit\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony PHPUnit Bridge",
+            "homepage": "https://symfony.com",
+            "time": "2019-02-18T06:49:49+00:00"
         },
         {
             "name": "symfony/polyfill-php72",
@@ -6645,6 +7370,55 @@
             "time": "2018-09-21T13:07:52+00:00"
         },
         {
+            "name": "symfony/process",
+            "version": "v4.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "6c05edb11fbeff9e2b324b4270ecb17911a8b7ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/6c05edb11fbeff9e2b324b4270ecb17911a8b7ad",
+                "reference": "6c05edb11fbeff9e2b324b4270ecb17911a8b7ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-24T22:05:03+00:00"
+        },
+        {
             "name": "symfony/profiler-pack",
             "version": "v1.0.4",
             "source": {
@@ -6671,6 +7445,35 @@
             ],
             "description": "A pack for the Symfony web profiler",
             "time": "2018-12-10T12:11:44+00:00"
+        },
+        {
+            "name": "symfony/test-pack",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/test-pack.git",
+                "reference": "1792b80cc2da5310e84afa983682b71dfc409d17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/test-pack/zipball/1792b80cc2da5310e84afa983682b71dfc409d17",
+                "reference": "1792b80cc2da5310e84afa983682b71dfc409d17",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/browser-kit": "*",
+                "symfony/css-selector": "*",
+                "symfony/panther": "*",
+                "symfony/phpunit-bridge": "*"
+            },
+            "type": "symfony-pack",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A pack for functional and end-to-end testing within a Symfony app",
+            "time": "2018-12-10T12:13:08+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -6813,6 +7616,57 @@
             "description": "Symfony WebProfilerBundle",
             "homepage": "https://symfony.com",
             "time": "2019-01-30T11:44:30+00:00"
+        },
+        {
+            "name": "webmozart/assert",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webmozart/assert.git",
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.6",
+                "sebastian/version": "^1.0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webmozart\\Assert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                }
+            ],
+            "description": "Assertions to validate method input/output with nice error messages.",
+            "keywords": [
+                "assert",
+                "check",
+                "validate"
+            ],
+            "time": "2018-12-25T11:19:39+00:00"
         }
     ],
     "aliases": [],

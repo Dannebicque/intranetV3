@@ -15,6 +15,7 @@
             Pas d'option
         {% endif %}
     </td>
+    {# todo: duplicate (en js?) et modifier (en ligne ?) #}
     <td class="text-right table-actions">
         <a class="table-action hover-primary"
            href="{{ path('administration_groupe_duplicate', {id:groupe.id}) }}"
@@ -24,18 +25,23 @@
             <span class="sr-only">Dupliquer le groupe</span>
         </a>
         <a class="table-action hover-info"
-           href="{{ path('administration_groupe_show', {id:groupe.id}) }}"
-           data-provide="tooltip"
-           data-placement="bottom" title="{{ 'atitle.details'|trans }}">
+           href="#"
+           data-provide="modaler tooltip"
+           data-size="lg"
+           data-confirm-text="{{ 'fermer'|trans }}"
+           data-url="{{ path('administration_groupe_show', {id:groupe.id}) }}"
+           data-placement="bottom"
+           data-title="{{ 'details.groupes.groupe'|trans }}"
+           title="{{ 'atitle.details'|trans }}">
             <span class="ti-eye"></span>
-            <span class="sr-only">Détails du groupe</span>
+            <span class="sr-only">Voir le détail</span>
         </a>
         <a class="table-action hover-warning"
-           href="{{ path('administration_groupe_edit', {id:groupe.id}) }}"
+           href=""
            data-provide="tooltip"
-           data-placement="bottom" title="{{ 'atitle.modifier'|trans }}">
-            <span class="{{ iconEdit }}"></span>
-            <span class="sr-only">Modifier le groupe</span>
+           data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
+                    class="{{ iconEdit }}"></span>
+            <span class="sr-only">Modifier le type de groupe</span>
         </a>
         <a class="table-action hover-danger supprimer"
            href="{{ path('administration_groupe_delete', {id:groupe.id}) }}"
