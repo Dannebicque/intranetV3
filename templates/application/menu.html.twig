@@ -45,6 +45,12 @@
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
                    href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
             </li>
+
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'justificatif' %}active{% endif %}"
+                   href="{{ path('app_etudiant_absence_justificatif_index') }}">{{ 'menu.justificatif'|trans }}</a>
+            </li>
+
             {% if user_data.formation.optStage == true %}
                 <li class="nav-item ">
                     <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
@@ -67,6 +73,12 @@
                 <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
                    href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
+            {% if user_data.formation.optMateriel == true %}
+                <li class="nav-item ">
+                    <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}"
+                       href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a>
+                </li>
+            {% endif %}
         {% endif %}
     </ul>
     <div class="buttons">
