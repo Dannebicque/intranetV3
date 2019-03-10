@@ -10,6 +10,8 @@ use App\Entity\TypeGroupe;
 use App\Form\GroupeType;
 use App\MesClasses\MyExport;
 use App\Repository\GroupeRepository;
+use App\Repository\ParcourRepository;
+use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,43 +36,61 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @Route("/new/{semestre}/{typegroupe}", name="administration_groupe_new", methods="GET|POST")
+     * @Route("/refresh/{parent}", name="administration_groupe_refresh", methods="GET", options={"expose"=true})
+     */
+    public function refreshListe(GroupeRepository $groupeRepository, Groupe $parent)
+    {
+        if ($parent->getTypeGroupe()!== null) {
+            $semestre = $parent->getTypeGroupe()->getSemestre();
+            $groupes = $groupeRepository->findBySemestre($semestre);
+
+            return $this->render('administration/groupe/_liste.html.twig', [
+                'groupes'  => $groupes,
+                'semestre' => $semestre
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/new", name="administration_groupe_new", methods="POST", options={"expose"=true})
      * @param Request    $request
-     * @param Semestre   $semestre
      *
-     * @param TypeGroupe $typeGroupe
      *
      * @return Response
      */
-    public function create(Request $request, Semestre $semestre, TypeGroupe $typeGroupe): Response
+    public function create(TypeGroupeRepository $typeGroupeRepository,
+                            ParcourRepository $parcourRepository,
+                            GroupeRepository $groupeRepository, Request $request): Response
     {
-        $groupe = new Groupe($typeGroupe);
-        $form = $this->createForm(GroupeType::class, $groupe, [
-            'semestre' => $semestre,
-            'attr'     => [
-                'data-provide' => 'validation'
-            ]
-        ]);
-        $form->handleRequest($request);
+        $typeGroupe = $typeGroupeRepository->find($request->request->get('type'));
+        if ($typeGroupe) {
+            $groupe = new Groupe($typeGroupe);
+            if (!empty($request->request->get('parent'))) {
+                $parent = $groupeRepository->find($request->request->get('parent'));
+                if ($parent) {
+                    $groupe->setParent($parent);
+                }
+            }
+            /*if (!empty($request->request->get('parcours'))) {
+                $parcour = $parcourRepository->find($request->request->get('parent'));
+                if ($parcour) {
+                    $groupe->set($parcour);
+                }
+            }*/
+            $groupe->setLibelle($request->request->get('libelle'));
+            $groupe->setCodeApogee($request->request->get('code'));
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($groupe);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.add.success.flash');
-
-            return $this->redirectToRoute('administration_groupe_index');
+            return $this->json(true, Response::HTTP_OK);
         }
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        return $this->render('administration/groupe/new.html.twig', [
-            'groupe' => $groupe,
-            'form'   => $form->createView(),
-        ]);
     }
 
     /**
      * @Route("/{id}", name="administration_groupe_show", methods="GET")
      * @param Groupe $groupe
-     *
      * @return Response
      */
     public function show(Groupe $groupe): Response
@@ -79,9 +99,44 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_groupe_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Groupe                 $groupe
+     * @Route("/{semestre}/export.{_format}", name="administration_groupe_export", methods="GET",
+     *                                        requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport         $myExport
+     * @param GroupeRepository $groupeRepository
+     * @param                  $_format
+     *
+     * @param Semestre         $semestre
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    public function export(
+        MyExport $myExport,
+        GroupeRepository $groupeRepository,
+        $_format,
+        Semestre $semestre
+    ): Response {
+        $groupes = $groupeRepository->findBySemestre($semestre);
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $groupes,
+            'groupes',
+            ['type_groupe_administration', 'groupe_administration', 'semestre'],
+            [
+                'libelle',
+                'codeApogee',
+                'parent'     => ['libelle'],
+                'typeGroupe' => ['libelle', 'type', 'codeApogee', 'semestre' => ['libelle']]
+            ]
+        );
+
+        return $response;
+    }
+
+    /**
+     * @Route("/{id}/edit", name="administration_groupe_edit", methods="POST", options={"expose"=true})
+     * @param Request $request
+     * @param Groupe  $groupe
      *
      * @return Response
      */
@@ -118,7 +173,7 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_groupe_duplicate", methods="GET|POST")
-     * @param Groupe                 $groupe
+     * @param Groupe $groupe
      *
      * @return Response
      */
@@ -155,29 +210,5 @@ class GroupeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-
-    /**
-     * @Route("/{semestre}/export.{_format}", name="administration_groupe_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport         $myExport
-     * @param GroupeRepository $groupeRepository
-     * @param                  $_format
-     *
-     * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     */
-    public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format, Semestre $semestre): Response
-    {
-        $groupes = $groupeRepository->findBySemestre($semestre);
-        $response = $myExport->genereFichierGenerique(
-            $_format,
-            $groupes,
-            'groupes',
-            ['type_groupe_administration', 'groupe_administration', 'semestre'],
-            ['libelle', 'codeApogee', 'parent' => ['libelle'], 'typeGroupe' => ['libelle', 'type', 'codeApogee', 'semestre' => ['libelle']]]
-        );
-
-        return $response;
     }
 }

@@ -48,29 +48,8 @@
                         </div>
                     </header>
 
-                    <div class="card-body">
-                        <table class="table table-separated">
-                            <thead>
-                            <tr>
-                                <th>Libellé</th>
-                                <th>Code Apogée</th>
-                                <th>Type Groupe</th>
-                                <th>Parcours</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% import 'macros/tree-groupe.html.twig' as m %}
-                                {% for groupe in groupes if (groupe.parent == null) %}
-                                   {{ include('administration/groupe/_ligne_groupe.html.twig') }}
-                                    {{ m.tree(groupe.enfants, 1, semestre) }}
-                                    {{ include('administration/groupe/_ligne_add_groupe.html.twig', {parent:groupe,
-                                        semestre:semestre
-                                    }) }}
-                                {% endfor %}
-
-                            </tbody>
-                        </table>
+                    <div class="card-body" id="groupe_bloc">
+                       {{ include('administration/groupe/_liste.html.twig') }}
                     </div>
                 </div>
 
@@ -82,7 +61,7 @@
                     <div class="card-body">
                         <table class="table table-separated">
                             <tbody id="typgeGroupe_bloc">
-                            {{ include('administration/type_groupe/liste.html.twig') }}
+                            {{ include('administration/type_groupe/_liste.html.twig') }}
                             </tbody>
                             <tfoot>
                             <tr id="ligne_add">

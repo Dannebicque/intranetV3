@@ -14,7 +14,7 @@
             <td>{{ pl.jourlong }} {{ pl.dateFr(calendrier[pl.semaine].semainereelle) }}</td>
             <td>{{ pl.hDebut }} | {{ pl.hFin }}</td>
             {% if pl.intervenant != null %}
-                <td>{{ displayPr(pl.intervenant.nom, pl.intervenant.prenom) }}</td>
+                <td>{{ pl.intervenant.displayPr }}</td>
             {% else %}
                 <td> - </td>
             {% endif %}
