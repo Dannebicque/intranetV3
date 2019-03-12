@@ -215,7 +215,7 @@ class StageSubscriber implements EventSubscriberInterface
             foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $resp) {
                 $tMails[] = $resp->getMailUniv();
             }
-            $this->myMailer->sendMessage($tMails, $mailTemplate->getSubject());
+            $this->myMailer->sendMessage($tMails, 'Formulaire de stage complété');
         }
     }
 

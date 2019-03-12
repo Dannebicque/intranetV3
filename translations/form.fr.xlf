@@ -3359,5 +3359,11 @@
         <target>Fichier import</target>
       </segment>
     </unit>
+    <unit id="05iynT2" name="2023">
+      <segment>
+        <source>2023</source>
+        <target>2023</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -47,26 +47,13 @@ class AbsenceJustificatifController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.add.success.flash');
 
-            return $this->redirectToRoute('app_etudiant_absence_justificatif_index');
+            return $this->redirectToRoute('application_index', ['onglet' => 'justificatif']);
         }
 
         return $this->render('appEtudiant/absence_justificatif/new.html.twig', [
             'absence_justificatif' => $absenceJustificatif,
             'form'                 => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/{id}", name="app_etudiant_absence_justificatif_show", methods="GET")
-     * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
-     * @param AbsenceJustificatif $absenceJustificatif
-     *
-     * @return Response
-     */
-    public function show(AbsenceJustificatif $absenceJustificatif): Response
-    {
-        return $this->render('appEtudiant/absence_justificatif/show.html.twig',
-            ['absence_justificatif' => $absenceJustificatif]);
     }
 
     /**

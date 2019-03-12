@@ -5,6 +5,7 @@ namespace App\Controller\appEtudiant;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StageEtudiant;
+use App\Entity\StagePeriode;
 use App\Events;
 use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
@@ -34,6 +35,7 @@ class StageController extends BaseController
     {
         $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->dataUserSession->getUser()->getSemestre());
         $stageEtudiants = array();
+
         foreach ($this->dataUserSession->getUser()->getStageEtudiants() as $stage) {
             if ($stage->getStagePeriode() !== null) {
                 $stageEtudiants[$stage->getStagePeriode()->getId()] = $stage;

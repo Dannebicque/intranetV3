@@ -245,4 +245,15 @@ class AbsenceJustificatif extends BaseEntity
     {
         return $this->getUuid()->toString();
     }
+
+    public function getEtatLong()
+    {
+        $tabEtat = [
+            'A' => 'Accepté, absences justifiées',
+            'R' => 'Refusé',
+            'D' => 'Déposé, en attente de validation'
+        ];
+
+        return $tabEtat[$this->etat];
+    }
 }

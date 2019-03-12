@@ -159,6 +159,16 @@ class Etudiant extends Utilisateur implements \Serializable
     private $bac;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $intituleSecuriteSociale;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adresseSecuriteSociale;
+
+    /**
      * Etudiant constructor.
      * @throws \Exception
      */
@@ -959,5 +969,29 @@ class Etudiant extends Utilisateur implements \Serializable
             return $this->getSemestre()->getAnneeUniversitaire();
         }
         return 0;
+    }
+
+    public function getIntituleSecuriteSociale(): ?string
+    {
+        return $this->intituleSecuriteSociale;
+    }
+
+    public function setIntituleSecuriteSociale(?string $intituleSecuriteSociale): self
+    {
+        $this->intituleSecuriteSociale = $intituleSecuriteSociale;
+
+        return $this;
+    }
+
+    public function getAdresseSecuriteSociale(): ?string
+    {
+        return $this->adresseSecuriteSociale;
+    }
+
+    public function setAdresseSecuriteSociale(?string $adresseSecuriteSociale): self
+    {
+        $this->adresseSecuriteSociale = $adresseSecuriteSociale;
+
+        return $this;
     }
 }

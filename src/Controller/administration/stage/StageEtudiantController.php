@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Options;
+use Dompdf\Dompdf;
 
 /**
  *  * @Route("/administration/stage/etudiant")
@@ -116,7 +118,10 @@ class StageEtudiantController extends BaseController
      */
     public function conventionPdf(StageEtudiant $stageEtudiant): Response
     {
-
+        //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
+        //2. Si oui envoyer
+        //3. Si non générer et envoyer + sauvegarde
+        //todo: prevoir bouton pour "regenerer" la convention
     }
 
     /**
@@ -136,8 +141,21 @@ class StageEtudiantController extends BaseController
      *
      * @return Response
      */
-    public function ficheEnseignant(StageEtudiant $stageEtudiant): Response
+    public function ficheEnseignant(StageEtudiant $stageEtudiant)
     {
+        $html = $this->renderView('pdf/fichePDFStage.html.twig',
+            array(
+                'stageEtudiant' => $stageEtudiant
+            ));
 
+        $options = new Options();
+        $options->set('isRemoteEnabled', TRUE);
+        $options->set('isPhpEnabled', TRUE);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return new Response ($dompdf->stream('Fiche-Enseignant-stage-' . $stageEtudiant->getEtudiant()->getNom(), array('Attachment' => 1)));
     }
 }

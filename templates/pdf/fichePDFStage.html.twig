@@ -1,0 +1,98 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+    <table border="0">
+        <tr>
+            <td width="15%">
+                <img src="{{ path~'img/logo/urcapetit.jpg' }}" alt="logo" width="100px" />
+            </td>
+            <td width="70%">&nbsp;</td>
+            <td width="15%" style="text-align: right">
+                <img src="{{ path~'img/logo/'~user_data.formation.logoName }}" alt="logo"
+                     width="100px"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center">
+                <h1>DUT TC<br />
+                    {{ settings('NOM_IUT') }} – {{ settings('NOM_UNIVERSITE') }}
+                    <br /><br />
+                    FICHE DE RENSEIGNEMENTS<br />
+                    Stages (Année universitaire {{ stageEtudiant.etudiant.semestre.anneeUniversitaire }} / {{ stageEtudiant.etudiant.semestre.anneeUniversitaire+1 }})<br />
+                    Formation suivie : {{ stageEtudiant.etudiant.semestre.annee.libelle }} {{ stageEtudiant.etudiant
+                    .semestre.annee.diplome.libelle }}<br />
+                </h1>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        <h2>Informations sur l'étudiant</h2>
+        Nom : {{ stageEtudiant.etudiant.nom|upper }}<br />
+        Prénom : {{ stageEtudiant.etudiant.prenom|capitalize }}<br />
+        Sexe : {{ stageEtudiant.etudiant.civilite }}<br />
+        Date de naissance : {{ stageEtudiant.etudiant.datenaissance|date('d/m/Y') }}<br />
+        N° d’étudiant : {{ stageEtudiant.etudiant.numetudiant }}<br />
+        Adresse postale : {% if stageEtudiant.etudiant.adresse != null %}{{ stageEtudiant.etudiant.adresse.display }}{% endif %}<br />
+        Courriel(s) : {{ stageEtudiant.etudiant.mailuniv }} | {{ stageEtudiant.etudiant.mailperso }}<br />
+        Téléphone : {{ stageEtudiant.etudiant.tel1 }}<br />
+        Téléphone portable : {{ stageEtudiant.etudiant.tel2 }}<br />
+        Caisse Primaire d’Assurance Maladie (à contacter en cas d’accident) :<br />
+        Intitulé : {{ stageEtudiant.etudiant.intituleSecuriteSociale }}<br />
+        Adresse : {{ stageEtudiant.etudiant.adresseSecuriteSociale }}<br />
+
+        <h2>Entreprise</h2>
+        Raison sociale : {{ stageEtudiant.entreprise.raisonSociale }}<br />
+        Entreprise : {{ stageEtudiant.entreprise.libelle }}<br />
+        N° de Siret : {{ stageEtudiant.entreprise.siret }}<br />
+        Adresse postale : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display
+        }}{%
+            endif %}<br />
+        Représenté par (nom et prénom du signataire de la convention) : {{ stageEtudiant.entreprise.responsable
+        .display }}<br />
+        Qualité du représentant : {{ stageEtudiant.entreprise.responsable.fonction }}<br />
+        Service dans lequel le stage sera effectué<br />
+        <ul>
+            <li>Intitulé : {{ stageEtudiant.serviceStageEntreprise }}</li>
+            <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone }}</li>
+            <li>Courriel : {{ stageEtudiant.entreprise.responsable.email }}</li>
+        </ul>
+        Adresse du lieu du stage (si différente de celle de l’organisme): {% if stageEtudiant.adresseStage != null %}{{ stageEtudiant.adresseStage.display }}{% endif %}<br />
+
+        <h2>Tuteur entreprise</h2>
+        <ul>
+            {% if stageEtudiant.tuteur == null %}
+                <li>Nom : {{ stageEtudiant.entreprise.responsable.nom }}</li>
+                <li>Prénom : {{ stageEtudiant.entreprise.responsable.prenom }}</li>
+                <li>Fonction : {{ stageEtudiant.entreprise.responsable.fonction }}</li>
+                <li>Adresse postale : {% if stageEtudiant.adresseStage == null or stageEtudiant.adresseStage.adresse1
+                        == '' %} {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse
+                    .display
+                    }}{%
+                        endif %}{% else %}{{ stageEtudiant.adresseStage.display }}{% endif %}</li>
+                <li>Courriel : {{ stageEtudiant.entreprise.responsable.email }}</li>
+                <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone }}</li>
+            {% else %}
+                <li>Nom : {{ stageEtudiant.tuteur.nom }}</li>
+                <li>Prénom : {{ stageEtudiant.tuteur.prenom }}</li>
+                <li>Fonction : {{ stageEtudiant.tuteur.fonction }}</li>
+                <li>Adresse postale : {% if stageEtudiant.adresseStage == null or stageEtudiant.adresseStage.adresse1
+                        == '' %} {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse
+                    .display
+                    }}{%
+                        endif %}{% else %}{{ stageEtudiant.adresseStage.display }}{% endif %}</li>
+                <li>Courriel : {{ stageEtudiant.tuteur.email }}</li>
+                <li>Téléphone : {{ stageEtudiant.tuteur.telephone }}</li>
+            {% endif %}
+        </ul>
+
+        <h2>Le stage</h2>
+        Sujet du stage :{{ stageEtudiant.sujetstage }}<br />
+        Activités confiées au stagiaire (art. 2) : {{ stageEtudiant.activites }}<br />
+        Compétences à acquérir ou à développer (art. 2) :{{ stageEtudiant.stagePeriode.competencesVisees }}<br />
+        <ul>
+            <li>Date de début :{{ stageEtudiant.dateDebutStage|date('d/m/Y') }}</li>
+            <li>Date de fin :{{ stageEtudiant.dateFinStage|date('d/m/Y') }}</li>
+        </ul>
+    </div>
+{% endblock %}

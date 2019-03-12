@@ -1,8 +1,16 @@
 {# ajout d'une note avec un dock et détails avec l'onglet latéral droit http://thetheme.io/theadmin/page-app/users.html #}
 
 <div class="card">
-    <h4 class="card-title">Ajouter une note dans le cahier de texte</h4>
-    <div class="card-body">
+    <header class="card-header">
+        <h4 class="card-title">Ajouter une note dans le cahier de texte</h4>
+        <div class="card-header-actions" style="">
+            <button class="btn btn-sm btn-primary btn-square btn-round"
+                    id="add_carnet"
+                    title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i><span class="sr-only">ajouter une demande de rattrapge</span></button>
+        </div>
+    </header>
+    <div class="card-body" id="bloc_add_carnet" style="display:none">
         <form action="" class="form form-horizontal">
             <div class="row">
                 <div class="col-sm-6">
