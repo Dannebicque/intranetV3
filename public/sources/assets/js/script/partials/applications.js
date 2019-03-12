@@ -5,7 +5,6 @@ $(document).on('click', '.changeapplication', function(e) {
   $('.changeapplication').removeClass('active show');
   $(this).addClass('active show');
   $('#mainContent').empty().load($(this).attr('href'));
-
 });
 
 $(document).on('change', '#selectsemestre', function () {
@@ -78,3 +77,13 @@ $(document).on('change', '#selectgroupes', function () {
       }
     });
 });
+
+$(document).on('click','#add_rattrapage', function(){
+  $('#bloc_add_rattrapage').toggle();
+})
+
+$(document).on('click','#add_carnet', function(){
+  $('#bloc_add_carnet').toggle();
+})
+
+//todo: faire idem avec justificatif ? Implique de changer les méthodes.

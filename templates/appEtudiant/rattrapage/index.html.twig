@@ -1,6 +1,14 @@
 <div class="card">
-    <h4 class="card-title">Demande de Rattrapage</h4>
-    <div class="card-body">
+    <header class="card-header">
+        <h4 class="card-title">Effectuer une demande de Rattrapage</h4>
+        <div class="card-header-actions" style="">
+            <button class="btn btn-sm btn-primary btn-square btn-round"
+               id="add_rattrapage"
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                        class="ti-plus"></i><span class="sr-only">ajouter une demande de rattrapge</span></button>
+        </div>
+    </header>
+    <div class="card-body" id="bloc_add_rattrapage" style="display:none">
         <div class="alert alert-info">Veuillez remplir complétement le formulaire ci-dessous. Une réponse vous
             sera donnée par mail dans les plus bref délais (sous réserve que le
             formulaire soit complet et

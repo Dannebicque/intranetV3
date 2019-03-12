@@ -26,7 +26,7 @@ class AbsenceController extends BaseController
      */
     public function details(Absence $absence): Response
     {
-        return $this->render('appEtudiant/absence/detail.html.twig', [
+        return $this->render('_detail.html.twig', [
             'absence' => $absence
         ]);
     }

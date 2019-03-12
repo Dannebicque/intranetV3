@@ -8446,7 +8446,7 @@
     <unit id="JuflWsk" name="atitle.retour.stage_periode_gestion">
       <segment>
         <source>atitle.retour.stage_periode_gestion</source>
-        <target>atitle.retour.stage_periode_gestion</target>
+        <target>Retour à la période de stage</target>
       </segment>
     </unit>
     <unit id="X6QHDri" name="adm.stage_periode_offre.show.heading">
@@ -8476,7 +8476,7 @@
     <unit id="gur7Cu_" name="table.email">
       <segment>
         <source>table.email</source>
-        <target>table.email</target>
+        <target>E-mail</target>
       </segment>
     </unit>
     <unit id="ZTn4PkY" name="table.nbstagiaire">
@@ -9760,7 +9760,7 @@
     <unit id="_YVF7tY" name="adm.stage_etudiant.show.heading">
       <segment>
         <source>adm.stage_etudiant.show.heading</source>
-        <target>adm.stage_etudiant.show.heading</target>
+        <target>Détails du stage de l'étudiant</target>
       </segment>
     </unit>
     <unit id="BL2yzv0" name="table.siret">
@@ -9772,19 +9772,19 @@
     <unit id="mHX_zsK" name="table.fonction">
       <segment>
         <source>table.fonction</source>
-        <target>table.fonction</target>
+        <target>Fonctions</target>
       </segment>
     </unit>
     <unit id="GsD0Ln6" name="table.telephone">
       <segment>
         <source>table.telephone</source>
-        <target>table.telephone</target>
+        <target>Téléphone</target>
       </segment>
     </unit>
     <unit id="L6dg8rP" name="table.portable">
       <segment>
         <source>table.portable</source>
-        <target>table.portable</target>
+        <target>Portable</target>
       </segment>
     </unit>
     <unit id="fEyYbz0" name="site.add.success.flash">
@@ -10264,73 +10264,73 @@
     <unit id="iNnhEfr" name="table.stage">
       <segment>
         <source>table.stage</source>
-        <target>__table.stage</target>
+        <target>Information sur le stage</target>
       </segment>
     </unit>
     <unit id="npAqFJ2" name="table.serviceStageEntreprise">
       <segment>
         <source>table.serviceStageEntreprise</source>
-        <target>__table.serviceStageEntreprise</target>
+        <target>Service d'accueil</target>
       </segment>
     </unit>
     <unit id="Tvu7F03" name="table.dateDebutStage">
       <segment>
         <source>table.dateDebutStage</source>
-        <target>__table.dateDebutStage</target>
+        <target>Date de début de stage</target>
       </segment>
     </unit>
     <unit id="Nj3IAR." name="table.dateFinStage">
       <segment>
         <source>table.dateFinStage</source>
-        <target>__table.dateFinStage</target>
+        <target>Date de fin de stage</target>
       </segment>
     </unit>
     <unit id="x5UyTDn" name="table.dureeHebdomadaire">
       <segment>
         <source>table.dureeHebdomadaire</source>
-        <target>__table.dureeHebdomadaire</target>
+        <target>Durée de travail hebdomadaire</target>
       </segment>
     </unit>
     <unit id="LYH8RYl" name="table.dureeJoursStage">
       <segment>
         <source>table.dureeJoursStage</source>
-        <target>__table.dureeJoursStage</target>
+        <target>Nombre de jours de stage</target>
       </segment>
     </unit>
     <unit id="zL8vWSW" name="table.sujetStage">
       <segment>
         <source>table.sujetStage</source>
-        <target>__table.sujetStage</target>
+        <target>Sujet du stage</target>
       </segment>
     </unit>
     <unit id="MJiz_ev" name="table.activites">
       <segment>
         <source>table.activites</source>
-        <target>__table.activites</target>
+        <target>Activités</target>
       </segment>
     </unit>
     <unit id="oQzsr6u" name="table.amenagementStage">
       <segment>
         <source>table.amenagementStage</source>
-        <target>__table.amenagementStage</target>
+        <target>Aménagement du stage</target>
       </segment>
     </unit>
     <unit id="wnIBePq" name="table.gratification">
       <segment>
         <source>table.gratification</source>
-        <target>__table.gratification</target>
+        <target>Gratification</target>
       </segment>
     </unit>
     <unit id="b9FzO83" name="table.gratificationMontant">
       <segment>
         <source>table.gratificationMontant</source>
-        <target>__table.gratificationMontant</target>
+        <target>Montant de la gratification</target>
       </segment>
     </unit>
     <unit id="wPtbNR." name="table.avantages">
       <segment>
         <source>table.avantages</source>
-        <target>__table.avantages</target>
+        <target>Autres avantages</target>
       </segment>
     </unit>
     <unit id="NN6ufTQ" name="adm.stage_periode_soutenance.index.heading">
@@ -10655,6 +10655,50 @@
       <segment>
         <source>applications.etudiant.emprunt.heading</source>
         <target>applications.etudiant.emprunt.heading</target>
+      </segment>
+    </unit>
+    <unit id="vHKjqki" name="absence_justificatif.add.success.flash">
+      <segment>
+        <source>absence_justificatif.add.success.flash</source>
+        <target>absence_justificatif.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="Un9jlZ4" name="atitle.voir_fichier">
+      <segment>
+        <source>atitle.voir_fichier</source>
+        <target>atitle.voir_fichier</target>
+      </segment>
+    </unit>
+    <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
+      <segment>
+        <source>app.etudiant.justificatif.explication.index</source>
+        <target>Les justificats sont validés manuellement. Il peut y avoir un délai de
+                  traitement.
+              </target>
+      </segment>
+    </unit>
+    <unit id="Qoot1_a" name="fixes">
+      <segment>
+        <source>fixes</source>
+        <target>fixes</target>
+      </segment>
+    </unit>
+    <unit id="e5YpBLZ" name="chgt.etat_stage.depose">
+      <segment>
+        <source>chgt.etat_stage.depose</source>
+        <target>Formulaire complété</target>
+      </segment>
+    </unit>
+    <unit id="RL165g9" name="H">
+      <segment>
+        <source>H</source>
+        <target>Heure</target>
+      </segment>
+    </unit>
+    <unit id="KjKQEql" name="table.groupe_promo">
+      <segment>
+        <source>table.groupe_promo</source>
+        <target>table.groupe_promo</target>
       </segment>
     </unit>
   </file>

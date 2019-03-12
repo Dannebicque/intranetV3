@@ -10,3 +10,4 @@ twig:
         iconEdit: 'fa fa-edit'
         iconDelete: 'fa fa-trash'
         iconDuplicate: 'fa fa-copy'
+        path: 'http://newintranet:8888/public'

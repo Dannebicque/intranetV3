@@ -293,14 +293,17 @@ $(document).on('click', '.page-link', function (e) {
   zone.load($(this).attr('href'));
 });
 
-  $.fn.editable.defaults.mode = 'inline'
-  $.fn.editableform.buttons =
-    '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
-    '<i class="fa fa-fw fa-check"></i>' +
-    '</button>' +
-    '<button type="button" class="btn btn-default btn-sm editable-cancel">' +
-    '<i class="fa fa-fw fa-times"></i>' +
-    '</button>'
+  //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
+  // $.fn.editable.defaults.mode = 'inline'
+  // $.fn.editableform.buttons =
+  //   '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
+  //   '<i class="fa fa-fw fa-check"></i>' +
+  //   '</button>' +
+  //   '<button type="button" class="btn btn-default btn-sm editable-cancel">' +
+  //   '<i class="fa fa-fw fa-times"></i>' +
+  //   '</button>'
+
+
   /*$('#username').editable({
     type: 'text',
     pk: 1,
@@ -685,7 +688,6 @@ $(document).on('click', '.changeapplication', function(e) {
   $('.changeapplication').removeClass('active show');
   $(this).addClass('active show');
   $('#mainContent').empty().load($(this).attr('href'));
-
 });
 
 $(document).on('change', '#selectsemestre', function () {
@@ -759,15 +761,28 @@ $(document).on('change', '#selectgroupes', function () {
     });
 });
 
+$(document).on('click','#add_rattrapage', function(){
+  $('#bloc_add_rattrapage').toggle();
+})
+
+$(document).on('click','#add_carnet', function(){
+  $('#bloc_add_carnet').toggle();
+})
+
+//todo: faire idem avec justificatif ? Implique de changer les méthodes.
+
+
 var nbLignePrevisionnel = 1;
 
-$(document).ajaxComplete(function () {
-  $('.editPrevi').editable({
-    type: 'text',
-    url: Routing.generate('administration_previsionnel_edit')
-    //todo: si success recalculer toute la ligne.
-  })
-})
+//todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
+//todo: pourquoi ajaxcomplete?
+// $(document).ajaxComplete(function () {
+//   $('.editPrevi').editable({
+//     type: 'text',
+//     url: Routing.generate('administration_previsionnel_edit')
+//     //todo: si success recalculer toute la ligne.
+//   })
+// })
 
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault();
@@ -956,7 +971,7 @@ $(document).on('click', '#btnGenereFichier', function (e) {
       'exportFiltre': $('input[type=radio][name=exportFiltre]:checked').val()
     },
     success: function(fichier) {
-      
+
     }
   })
 });
@@ -1025,6 +1040,7 @@ $(document).on('change', '#change_annee_temp_previsionnel', function (e){
 //     }
 //   });
 // })
+
 
 $(document).on('click', '.changeinformation', function(e) {
   e.preventDefault();
@@ -1896,7 +1912,7 @@ $(document).on('click', '.add_groupe', function() {
       parent: $parent
     },
     success: function(data) {
-      $('#typgeGroupe_bloc').empty().load(Routing.generate('administration_groupe_refresh', {parent: $parent}));
+      $('#groupe_bloc').empty().load(Routing.generate('administration_groupe_refresh', {parent: $parent}));
       addCallout('Groupe ajouté', 'success')
     }, error: function(e){
       addCallout('Erreur lors de l\'ajout du groupe', 'danger')

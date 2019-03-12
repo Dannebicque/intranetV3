@@ -23,6 +23,11 @@ class ConfigurationFixtures extends Fixture
         $manager->persist($conf);
 
         $conf = new Configuration();
+        $conf->setCle('NOM_UNIVERSITE');
+        $conf->setValeur('Université de Reims Champagne-Ardenne');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
         $conf->setCle('LOGO_IUT');
         $conf->setValeur('logo.jpg');
         $manager->persist($conf);

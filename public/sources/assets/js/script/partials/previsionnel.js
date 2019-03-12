@@ -1,12 +1,14 @@
 var nbLignePrevisionnel = 1;
 
-$(document).ajaxComplete(function () {
-  $('.editPrevi').editable({
-    type: 'text',
-    url: Routing.generate('administration_previsionnel_edit')
-    //todo: si success recalculer toute la ligne.
-  })
-})
+//todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
+//todo: pourquoi ajaxcomplete?
+// $(document).ajaxComplete(function () {
+//   $('.editPrevi').editable({
+//     type: 'text',
+//     url: Routing.generate('administration_previsionnel_edit')
+//     //todo: si success recalculer toute la ligne.
+//   })
+// })
 
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault();
@@ -195,7 +197,7 @@ $(document).on('click', '#btnGenereFichier', function (e) {
       'exportFiltre': $('input[type=radio][name=exportFiltre]:checked').val()
     },
     success: function(fichier) {
-      
+
     }
   })
 });

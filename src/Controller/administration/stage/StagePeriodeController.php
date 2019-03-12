@@ -103,8 +103,8 @@ class StagePeriodeController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}/edit", name="administration_stage_periode_edit", methods="GET|POST")
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
+     * @Route("/{id}/edit", name="administration_stage_periode_edit", methods="GET|POST")
+     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "id"}})
      * @param Request      $request
      * @param StagePeriode $stagePeriode
      *
