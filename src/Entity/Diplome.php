@@ -120,9 +120,9 @@ class Diplome extends BaseEntity
     private $competences;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="diplomes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="diplomes")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Annee", mappedBy="diplome")
@@ -144,11 +144,11 @@ class Diplome extends BaseEntity
      */
     private $anneeUniversitaire;
 
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
 
         $this->anneeUniversitaire = date('Y');
-        $this->formation = $formation;
+        $this->departement = $departement;
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
         $this->competences = new ArrayCollection();
@@ -515,21 +515,21 @@ class Diplome extends BaseEntity
     }
 
     /**
-     * @return Formation|null
+     * @return Departement|null
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation|null $formation
+     * @param Departement|null $departement
      *
      * @return Diplome
      */
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

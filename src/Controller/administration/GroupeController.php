@@ -28,7 +28,7 @@ class GroupeController extends BaseController
      */
     public function index(GroupeRepository $groupeRepository): Response
     {
-        $groupes = $groupeRepository->findByFormation($this->dataUserSession->getFormation());
+        $groupes = $groupeRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $this->render('administration/groupe/index.html.twig', [
             'groupes' => $groupes

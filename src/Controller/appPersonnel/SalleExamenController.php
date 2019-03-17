@@ -31,8 +31,8 @@ class SalleExamenController extends BaseController
         PersonnelRepository $personnelRepository
     ): Response {
         return $this->render('appPersonnel/salle_examen/index.html.twig', [
-            'salles'     => $salleExamenRepository->findByFormation($this->dataUserSession->getFormation()),
-            'personnels' => $personnelRepository->findByFormation($this->dataUserSession->getFormation())
+            'salles'     => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())
         ]);
     }
 

@@ -10,7 +10,7 @@
                    href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
             </li>
 
-            {% if user_data.formation.optStage == true %}
+            {% if user_data.departement.optStage == true %}
                 <li class="nav-item">
                     <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
                        href="{{ path('application_personnel_stage_index') }}"
@@ -32,7 +32,7 @@
                    href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
 
-            {% if user_data.formation.preparationAnnee == true %}
+            {% if user_data.departement.preparationAnnee == true %}
             <li class="nav-item">
                 <a class="nav-link changeapplication {% if onglet == 'disponibilite' %}active{% endif %}"
                    href="{{ path('application_personnel_disponibilite_index') }}" role="tab">{{ 'menu.disponibilite'|trans
@@ -51,7 +51,7 @@
                    href="{{ path('app_etudiant_absence_justificatif_index') }}">{{ 'menu.justificatif'|trans }}</a>
             </li>
 
-            {% if user_data.formation.optStage == true %}
+            {% if user_data.departement.optStage == true %}
                 <li class="nav-item ">
                     <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"
                        href="{{ path('application_etudiant_stage_index') }}"
@@ -73,7 +73,7 @@
                 <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
                    href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
-            {% if user_data.formation.optMateriel == true %}
+            {% if user_data.departement.optMateriel == true %}
                 <li class="nav-item ">
                     <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}"
                        href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a>

@@ -47,7 +47,7 @@ class CelcatCalendrierController extends BaseController
             $articles,
             'celcat',
             ['celcat_administration'],
-            ['semaineFormation', 'semaineReelle', 'dateLundi']
+            ['semaineDepartement', 'semaineReelle', 'dateLundi']
         );
 
         return $response;

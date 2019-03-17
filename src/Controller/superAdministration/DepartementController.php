@@ -4,8 +4,8 @@ namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Formation;
-use App\Form\FormationType;
+use App\Entity\Departement;
+use App\Form\DepartementType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/structure/formation")
+ * @Route("/super-administration/structure/departement")
  */
-class FormationController extends BaseController
+class DepartementController extends BaseController
 {
     /**
-     * @Route("/new", name="sa_formation_new", methods="GET|POST")
+     * @Route("/new", name="sa_departement_new", methods="GET|POST")
      * @param Request $request
      *
      * @return Response
@@ -26,8 +26,8 @@ class FormationController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $formation = new Formation();
-        $form = $this->createForm(FormationType::class, $formation, [
+        $departement = new Departement();
+        $form = $this->createForm(DepartementType::class, $departement, [
             'attr' => [
                 'data-provide' => 'validation'
             ]
@@ -35,40 +35,40 @@ class FormationController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($formation);
+            $this->entityManager->persist($departement);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'formation.add.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.add.success.flash');
 
             return $this->redirectToRoute('super_admin_homepage');
         }
 
-        return $this->render('structure/formation/new.html.twig', [
-            'formation' => $formation,
+        return $this->render('structure/departement/new.html.twig', [
+            'departement' => $departement,
             'form'      => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}", name="sa_formation_show", methods="GET")
-     * @param Formation $formation
+     * @param Departement $formation
      *
      * @return Response
      */
-    public function show(Formation $formation): Response
+    public function show(Departement $departement): Response
     {
-        return $this->render('structure/formation/show.html.twig', ['formation' => $formation]);
+        return $this->render('structure/departement/show.html.twig', ['departement' => $departement]);
     }
 
     /**
      * @Route("/{id}/edit", name="sa_formation_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Formation              $formation
+     * @param Request     $request
+     * @param Departement $formation
      *
      * @return Response
      */
-    public function edit(Request $request, Formation $formation): Response
+    public function edit(Request $request, Departement $departement): Response
     {
-        $form = $this->createForm(FormationType::class, $formation, [
+        $form = $this->createForm(DepartementType::class, $departement, [
             'attr' => [
                 'data-provide' => 'validation'
             ]
@@ -77,13 +77,13 @@ class FormationController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'formation.edit.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.edit.success.flash');
 
             return $this->redirectToRoute('super_admin_homepage');
         }
 
-        return $this->render('structure/formation/new.html.twig', [
-            'formation' => $formation,
+        return $this->render('structure/departement/new.html.twig', [
+            'departement' => $departement,
             'form'      => $form->createView(),
         ]);
     }
@@ -96,18 +96,18 @@ class FormationController extends BaseController
     }
 
     /**
-     * @param Formation $formation
-     * @param bool      $etat
-     * @Route("/activate/{formation}/{etat}", methods={"GET"}, name="sa_formation_activate")
+     * @param Departement $departement
+     * @param bool        $etat
+     * @Route("/activate/{departement}/{etat}", methods={"GET"}, name="sa_departement_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @return RedirectResponse
      */
-    public function activate(Formation $formation, bool $etat): RedirectResponse
+    public function activate(Departement $departement, bool $etat): RedirectResponse
     {
-        $formation->setActif($etat);
+        $departement->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'formation.activate.'.$etat.'.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.activate.'.$etat.'.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
 

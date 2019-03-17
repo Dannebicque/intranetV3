@@ -51,9 +51,9 @@ class Hrs extends BaseEntity
     private $annee;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="hrs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="hrs")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @return float|null
@@ -194,22 +194,22 @@ class Hrs extends BaseEntity
     /**
      * Hrs constructor.
      *
-     * @param Formation $formation
+     * @param Departement $departement
      */
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
-        $this->annee = $formation->getOptAnneePrevisionnel();
-        $this->formation = $formation;
+        $this->annee = $departement->getOptAnneePrevisionnel();
+        $this->departement = $departement;
     }
 
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

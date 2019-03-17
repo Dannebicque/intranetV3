@@ -26,7 +26,7 @@ class RedirectSubscriber implements EventSubscriberInterface
     {
         return [
             Events::REDIRECT_TO_LOGIN => 'onRedirectToLogin',
-            Events::CHOISIR_FORMATION_DEFAUT => 'onChoixFormationDefaut',
+            Events::CHOISIR_DEPARTEMENT_DEFAUT => 'onChoixDepartementDefaut',
         ];
     }
 
@@ -36,9 +36,9 @@ class RedirectSubscriber implements EventSubscriberInterface
         return new RedirectResponse($this->router->generate('security_login', ['message' => $event->getSubject()]));
     }
 
-    public function onChoixFormationDefaut($event)
+    public function onChoixDepartementDefaut($event)
     {
         //logout
-        return new RedirectResponse($this->router->generate('security_choix_formation', ['message' => $event->getSubject()]));
+        return new RedirectResponse($this->router->generate('security_choix_departement', ['message' => $event->getSubject()]));
     }
 }

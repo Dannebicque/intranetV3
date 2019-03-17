@@ -24,9 +24,9 @@ class CreneauCours
     private $anneeUniversitaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="creneauCours")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="creneauCours")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\Column(type="integer")
@@ -76,14 +76,14 @@ class CreneauCours
         return $this;
     }
 
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

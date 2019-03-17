@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class HrsType extends AbstractType
 {
-    protected $formation;
+    protected $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -30,7 +30,7 @@ class HrsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add('personnel', EntityType::class, [
@@ -38,7 +38,7 @@ class HrsType extends AbstractType
                 'required'      => true,
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByFormationBuilder($this->formation);
+                    return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
                 'label'         => 'label.personnel'
             ])
@@ -55,7 +55,7 @@ class HrsType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'display',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByFormationBuilder($this->formation);
+                    return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'label'         => 'label.semestre'
             ])
@@ -64,7 +64,7 @@ class HrsType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'libelle',
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
-                    return $diplomeRepository->findByFormationBuilder($this->formation);
+                    return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
                 'label'         => 'label.diplome'
             ]);
@@ -77,7 +77,7 @@ class HrsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Hrs::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
         ]);
     }

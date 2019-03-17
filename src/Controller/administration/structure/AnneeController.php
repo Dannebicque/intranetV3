@@ -28,11 +28,11 @@ class AnneeController extends BaseController
      */
     public function create(Request $request, Diplome $diplome)
     {
-        if ($diplome->getFormation() !== null) {
+        if ($diplome->getDepartement() !== null) {
             $annee = new Annee();
             $annee->setDiplome($diplome);
             $form = $this->createForm(AnneeType::class, $annee, [
-                'formation' => $diplome->getFormation(),
+                'departement' => $diplome->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -77,12 +77,12 @@ class AnneeController extends BaseController
      */
     public function edit(Request $request, Annee $annee): Response
     {
-        if ($annee->getDiplome() !== null && $annee->getDiplome()->getFormation() !== null) {
+        if ($annee->getDiplome() !== null && $annee->getDiplome()->getDepartement() !== null) {
             $form = $this->createForm(
                 AnneeType::class,
                 $annee,
                 [
-                    'formation' => $annee->getDiplome()->getFormation()->getId(),
+                    'departement' => $annee->getDiplome()->getDepartement()->getId(),
                     'attr'      => [
                         'data-provide' => 'validation'
                     ]

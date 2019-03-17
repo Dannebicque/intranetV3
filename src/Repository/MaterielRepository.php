@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\Materiel;
 use App\Entity\TypeMateriel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,12 +21,12 @@ class MaterielRepository extends ServiceEntityRepository
         parent::__construct($registry, Materiel::class);
     }
 
-    public function findByFormation(\App\Entity\Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(TypeMateriel::class, 't', 'WITH', 'm.typeMateriel = t.id')
-            ->where('t.formation = :formation')
-            ->setParameter('formation', $formation->getId())
+            ->where('t.departement = :departement')
+            ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
     }

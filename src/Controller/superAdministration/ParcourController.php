@@ -42,7 +42,7 @@ class ParcourController extends BaseController
                 $em->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
-                    ['formation' => $parcour->getDiplome()->getFormation()->getId()]);
+                    ['departement' => $parcour->getDiplome()->getDepartement()->getId()]);
             }
 
             return $this->render('structure/parcour/new.html.twig', [

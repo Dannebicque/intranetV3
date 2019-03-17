@@ -123,9 +123,9 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     private $modificationNotes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PersonnelFormation", mappedBy="personnel")
+     * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="personnel")
      */
-    private $personnelFormations;
+    private $personnelDepartements;
 
     /**
      * @ORM\Column(type="float")
@@ -204,7 +204,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         $this->cahierTextes = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->trelloTaches = new ArrayCollection();
-        $this->personnelFormations = new ArrayCollection();
+        $this->personnelDepartements = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->messageDestinatairePersonnels = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
@@ -808,40 +808,40 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     }
 
     /**
-     * @return Collection|PersonnelFormation[]
+     * @return Collection|PersonnelDepartement[]
      */
-    public function getPersonnelFormations(): Collection
+    public function getPersonnelDepartements(): Collection
     {
-        return $this->personnelFormations;
+        return $this->personnelDepartements;
     }
 
     /**
-     * @param PersonnelFormation $personnelFormation
+     * @param PersonnelDepartement $personnelDepartement
      *
      * @return Personnel
      */
-    public function addPersonnelFormation(PersonnelFormation $personnelFormation): self
+    public function addPersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
-        if (!$this->personnelFormations->contains($personnelFormation)) {
-            $this->personnelFormations[] = $personnelFormation;
-            $personnelFormation->setPersonnel($this);
+        if (!$this->personnelDepartements->contains($personnelDepartement)) {
+            $this->personnelDepartements[] = $personnelDepartement;
+            $personnelDepartement->setPersonnel($this);
         }
 
         return $this;
     }
 
     /**
-     * @param PersonnelFormation $personnelFormation
+     * @param PersonnelDepartement $personnelDepartement
      *
      * @return Personnel
      */
-    public function removePersonnelFormation(PersonnelFormation $personnelFormation): self
+    public function removePersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
-        if ($this->personnelFormations->contains($personnelFormation)) {
-            $this->personnelFormations->removeElement($personnelFormation);
+        if ($this->personnelDepartements->contains($personnelDepartement)) {
+            $this->personnelDepartements->removeElement($personnelDepartement);
             // set the owning side to null (unless already changed)
-            if ($personnelFormation->getPersonnel() === $this) {
-                $personnelFormation->setPersonnel(null);
+            if ($personnelDepartement->getPersonnel() === $this) {
+                $personnelDepartement->setPersonnel(null);
             }
         }
 

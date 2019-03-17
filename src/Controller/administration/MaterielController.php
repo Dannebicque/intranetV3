@@ -25,7 +25,7 @@ class MaterielController extends BaseController
      */
     public function index(MaterielRepository $materielRepository): Response
     {
-        return $this->render('administration/materiel/index.html.twig', ['materiels' => $materielRepository->findByFormation($this->dataUserSession->getFormation())]);
+        return $this->render('administration/materiel/index.html.twig', ['materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
@@ -40,13 +40,13 @@ class MaterielController extends BaseController
      */
     public function export(MyExport $myExport, MaterielRepository $materielRepository, $_format): Response
     {
-        $materiels = $materielRepository->findByFormation($this->dataUserSession->getFormation());
+        $materiels = $materielRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $materiels,
             'materiels',
             ['materiel_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
+            ['titre', 'texte', 'departement' => ['libelle']]
         );
 
         return $response;
@@ -65,7 +65,7 @@ class MaterielController extends BaseController
                                                        'attr' => [
         'data-provide' => 'validation'
     ],
-                                                       'formation' => $this->dataUserSession->getFormation()
+                                                       'departement' => $this->dataUserSession->getDepartement()
         ]);
         $form->handleRequest($request);
 
@@ -107,7 +107,7 @@ class MaterielController extends BaseController
             'attr' => [
                 'data-provide' => 'validation'
             ],
-            'formation' => $this->dataUserSession->getFormation()
+            'departement' => $this->dataUserSession->getDepartement()
         ]);
         $form->handleRequest($request);
 

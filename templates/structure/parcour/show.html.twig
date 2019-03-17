@@ -7,7 +7,7 @@
 {% block headeractions %}
     <div class="header-action">
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'parcour', id: parcour.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{formation:parcour.diplome.formation.id}}}) }}
+            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'parcour', id: parcour.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:parcour.diplome.departement.id}}}) }}
         {% else %}
             {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_parcour', id: parcour.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}       </div>

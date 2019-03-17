@@ -16,7 +16,7 @@ class CreneauCoursType extends AbstractType
             ->add('debut')
             ->add('fin')
             ->add('anneeUniversitaire')
-            ->add('formation')
+            ->add('departement')
         ;
     }
 

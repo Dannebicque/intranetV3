@@ -52,14 +52,14 @@ class MyPersonnel
         foreach ($personnels as $personnel) {
             $t = array();
 
-            $formations = '';
+            $departements = '';
 
-            foreach ($personnel->getPersonnelFormations() as $formation)
+            foreach ($personnel->getPersonnelDepartements() as $departement)
             {
-                $formations .= $formation->getFormation()->getLibelle().', ';
+                $departements .= $departement->getDepartement() ? $departement->getDepartement()->getLibelle().', ' : '';
             }
             $t['id'] = $personnel->getId();
-            $t['formations'] = $formations;
+            $t['departements'] = $departements;
             $t['numero_harpege'] = $personnel->getNumeroHarpege();
             $t['nom'] = $personnel->getNom();
             $t['prenom'] = $personnel->getPrenom();

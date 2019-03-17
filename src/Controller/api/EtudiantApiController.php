@@ -61,10 +61,10 @@ class EtudiantApiController extends BaseController
      * @param Request         $request
      *
      * @return Response
-     * @Route("/formation", name="api_etudiant_formation", options={"expose":true})
+     * @Route("/departement", name="api_etudiant_departement", options={"expose":true})
      * @throws \InvalidArgumentException
      */
-    public function getEtudiantsByFormation(Request $request): Response
+    public function getEtudiantsByDepartement(Request $request): Response
     {
         $length = $request->get('length');
         $length = $length && ($length !== -1) ? $length : 0;
@@ -77,8 +77,8 @@ class EtudiantApiController extends BaseController
             'query' => $search['value']
         ];
 
-        $users = $this->etudiantRepository->getArrayEtudiantsByFormation(
-            $this->dataUserSession->getFormationId(),
+        $users = $this->etudiantRepository->getArrayEtudiantsByDepartement(
+            $this->dataUserSession->getDepartementId(),
             $filters,
             $start,
             $length
@@ -87,14 +87,14 @@ class EtudiantApiController extends BaseController
         $output = [
             'draw'            => 1,
             'data'            => $users,
-            'recordsFiltered' => \count($this->etudiantRepository->getByFormation(
-                $this->dataUserSession->getFormationId(),
+            'recordsFiltered' => \count($this->etudiantRepository->getByDepartement(
+                $this->dataUserSession->getDepartementId(),
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => \count($this->etudiantRepository->getByFormation(
-                $this->dataUserSession->getFormationId(),
+            'recordsTotal'    => \count($this->etudiantRepository->getByDepartement(
+                $this->dataUserSession->getDepartementId(),
                 [],
                 0,
                 false

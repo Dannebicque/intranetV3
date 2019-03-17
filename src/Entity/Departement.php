@@ -13,11 +13,11 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FormationRepository")
+ * @ORM\Entity(repositoryClass="DepartementRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
-class Formation extends BaseEntity
+class Departement extends BaseEntity
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface
@@ -173,48 +173,48 @@ class Formation extends BaseEntity
     private $optAnneePrevisionnel;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="departement")
      * @MaxDepth(1)
      */
     private $typeDocuments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PersonnelFormation", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="departement")
      */
-    private $personnelFormations;
+    private $personnelDepartements;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
      */
     private $actualites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="departement")
      */
     private $trelloTaches;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
      */
     private $diplomes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="departement")
      */
     private $salleExamens;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="departement")
      */
     private $hrs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeMateriel", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeMateriel", mappedBy="departement")
      */
     private $typeMateriels;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MaterielPret", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\MaterielPret", mappedBy="departement")
      */
     private $materielPrets;
 
@@ -229,17 +229,17 @@ class Formation extends BaseEntity
     private $preparationAnnee;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="formations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="departements")
      */
     private $anneeUniversitairePrepare;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="formation")
+     * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="departement")
      */
     private $creneauCours;
 
     /**
-     * Formation constructor.
+     * Departement constructor.
      * @throws \Exception
      */
     public function __construct()
@@ -247,7 +247,7 @@ class Formation extends BaseEntity
         $this->uuid = Uuid::uuid4();
         $this->optAnneePrevisionnel = (int)date('Y');
         $this->typeDocuments = new ArrayCollection();
-        $this->personnelFormations = new ArrayCollection();
+        $this->personnelDepartements = new ArrayCollection();
         $this->actualites = new ArrayCollection();
         $this->trelloTaches = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
@@ -289,22 +289,6 @@ class Formation extends BaseEntity
     {
         $this->libelle = $libelle;
     }
-
-//    /**
-//     * @return int
-//     */
-//    public function getAnneeCourante(): ?int
-//    {
-//        return $this->anneeCourante;
-//    }
-//
-//    /**
-//     * @param int $anneeCourante
-//     */
-//    public function setAnneeCourante(int $anneeCourante): void
-//    {
-//        $this->anneeCourante = $anneeCourante;
-//    }
 
     /**
      * @return string
@@ -557,13 +541,13 @@ class Formation extends BaseEntity
     /**
      * @param TypeDocument $typeDocument
      *
-     * @return Formation
+     * @return Departement
      */
     public function addTypeDocument(TypeDocument $typeDocument): self
     {
         if (!$this->typeDocuments->contains($typeDocument)) {
             $this->typeDocuments[] = $typeDocument;
-            $typeDocument->setFormation($this);
+            $typeDocument->setDepartement($this);
         }
 
         return $this;
@@ -572,15 +556,15 @@ class Formation extends BaseEntity
     /**
      * @param TypeDocument $typeDocument
      *
-     * @return Formation
+     * @return Departement
      */
     public function removeTypeDocument(TypeDocument $typeDocument): self
     {
         if ($this->typeDocuments->contains($typeDocument)) {
             $this->typeDocuments->removeElement($typeDocument);
             // set the owning side to null (unless already changed)
-            if ($typeDocument->getFormation() === $this) {
-                $typeDocument->setFormation(null);
+            if ($typeDocument->getDepartement() === $this) {
+                $typeDocument->setDepartement(null);
             }
         }
 
@@ -632,40 +616,40 @@ class Formation extends BaseEntity
     }
 
     /**
-     * @return Collection|PersonnelFormation[]
+     * @return Collection|PersonnelDepartement[]
      */
-    public function getPersonnelFormations(): Collection
+    public function getPersonnelDepartements(): Collection
     {
-        return $this->personnelFormations;
+        return $this->personnelDepartements;
     }
 
     /**
-     * @param PersonnelFormation $personnelFormation
+     * @param PersonnelDepartement $personnelDepartement
      *
-     * @return Formation
+     * @return Departement
      */
-    public function addPersonnelFormation(PersonnelFormation $personnelFormation): self
+    public function addPersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
-        if (!$this->personnelFormations->contains($personnelFormation)) {
-            $this->personnelFormations[] = $personnelFormation;
-            $personnelFormation->setFormation($this);
+        if (!$this->personnelDepartements->contains($personnelDepartement)) {
+            $this->personnelDepartements[] = $personnelDepartement;
+            $personnelDepartement->setDepartement($this);
         }
 
         return $this;
     }
 
     /**
-     * @param PersonnelFormation $personnelFormation
+     * @param PersonnelDepartement $personnelDepartement
      *
-     * @return Formation
+     * @return Departement
      */
-    public function removePersonnelFormation(PersonnelFormation $personnelFormation): self
+    public function removePersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
-        if ($this->personnelFormations->contains($personnelFormation)) {
-            $this->personnelFormations->removeElement($personnelFormation);
+        if ($this->personnelDepartements->contains($personnelDepartement)) {
+            $this->personnelDepartements->removeElement($personnelDepartement);
             // set the owning side to null (unless already changed)
-            if ($personnelFormation->getFormation() === $this) {
-                $personnelFormation->setFormation(null);
+            if ($personnelDepartement->getDepartement() === $this) {
+                $personnelDepartement->setDepartement(null);
             }
         }
 
@@ -683,13 +667,13 @@ class Formation extends BaseEntity
     /**
      * @param Actualite $actualite
      *
-     * @return Formation
+     * @return Departement
      */
     public function addActualite(Actualite $actualite): self
     {
         if (!$this->actualites->contains($actualite)) {
             $this->actualites[] = $actualite;
-            $actualite->setFormation($this);
+            $actualite->setDepartement($this);
         }
 
         return $this;
@@ -698,15 +682,15 @@ class Formation extends BaseEntity
     /**
      * @param Actualite $actualite
      *
-     * @return Formation
+     * @return Departement
      */
     public function removeActualite(Actualite $actualite): self
     {
         if ($this->actualites->contains($actualite)) {
             $this->actualites->removeElement($actualite);
             // set the owning side to null (unless already changed)
-            if ($actualite->getFormation() === $this) {
-                $actualite->setFormation(null);
+            if ($actualite->getDepartement() === $this) {
+                $actualite->setDepartement(null);
             }
         }
 
@@ -737,13 +721,13 @@ class Formation extends BaseEntity
     /**
      * @param TrelloTache $trelloTach
      *
-     * @return Formation
+     * @return Departement
      */
     public function addTrelloTach(TrelloTache $trelloTach): self
     {
         if (!$this->trelloTaches->contains($trelloTach)) {
             $this->trelloTaches[] = $trelloTach;
-            $trelloTach->setFormation($this);
+            $trelloTach->setDepartement($this);
         }
 
         return $this;
@@ -752,15 +736,15 @@ class Formation extends BaseEntity
     /**
      * @param TrelloTache $trelloTach
      *
-     * @return Formation
+     * @return Departement
      */
     public function removeTrelloTach(TrelloTache $trelloTach): self
     {
         if ($this->trelloTaches->contains($trelloTach)) {
             $this->trelloTaches->removeElement($trelloTach);
             // set the owning side to null (unless already changed)
-            if ($trelloTach->getFormation() === $this) {
-                $trelloTach->setFormation(null);
+            if ($trelloTach->getDepartement() === $this) {
+                $trelloTach->setDepartement(null);
             }
         }
 
@@ -778,13 +762,13 @@ class Formation extends BaseEntity
     /**
      * @param Diplome $diplome
      *
-     * @return Formation
+     * @return Departement
      */
     public function addDiplome(Diplome $diplome): self
     {
         if (!$this->diplomes->contains($diplome)) {
             $this->diplomes[] = $diplome;
-            $diplome->setFormation($this);
+            $diplome->setDepartement($this);
         }
 
         return $this;
@@ -793,15 +777,15 @@ class Formation extends BaseEntity
     /**
      * @param Diplome $diplome
      *
-     * @return Formation
+     * @return Departement
      */
     public function removeDiplome(Diplome $diplome): self
     {
         if ($this->diplomes->contains($diplome)) {
             $this->diplomes->removeElement($diplome);
             // set the owning side to null (unless already changed)
-            if ($diplome->getFormation() === $this) {
-                $diplome->setFormation(null);
+            if ($diplome->getDepartement() === $this) {
+                $diplome->setDepartement(null);
             }
         }
 
@@ -820,7 +804,7 @@ class Formation extends BaseEntity
     {
         if (!$this->salleExamens->contains($salleExamen)) {
             $this->salleExamens[] = $salleExamen;
-            $salleExamen->setFormation($this);
+            $salleExamen->setDepartement($this);
         }
 
         return $this;
@@ -831,8 +815,8 @@ class Formation extends BaseEntity
         if ($this->salleExamens->contains($salleExamen)) {
             $this->salleExamens->removeElement($salleExamen);
             // set the owning side to null (unless already changed)
-            if ($salleExamen->getFormation() === $this) {
-                $salleExamen->setFormation(null);
+            if ($salleExamen->getDepartement() === $this) {
+                $salleExamen->setDepartement(null);
             }
         }
 
@@ -851,7 +835,7 @@ class Formation extends BaseEntity
     {
         if (!$this->hrs->contains($hr)) {
             $this->hrs[] = $hr;
-            $hr->setFormation($this);
+            $hr->setDepartement($this);
         }
 
         return $this;
@@ -862,8 +846,8 @@ class Formation extends BaseEntity
         if ($this->hrs->contains($hr)) {
             $this->hrs->removeElement($hr);
             // set the owning side to null (unless already changed)
-            if ($hr->getFormation() === $this) {
-                $hr->setFormation(null);
+            if ($hr->getDepartement() === $this) {
+                $hr->setDepartement(null);
             }
         }
 
@@ -882,7 +866,7 @@ class Formation extends BaseEntity
     {
         if (!$this->typeMateriels->contains($typeMateriel)) {
             $this->typeMateriels[] = $typeMateriel;
-            $typeMateriel->setFormation($this);
+            $typeMateriel->setDepartement($this);
         }
 
         return $this;
@@ -893,8 +877,8 @@ class Formation extends BaseEntity
         if ($this->typeMateriels->contains($typeMateriel)) {
             $this->typeMateriels->removeElement($typeMateriel);
             // set the owning side to null (unless already changed)
-            if ($typeMateriel->getFormation() === $this) {
-                $typeMateriel->setFormation(null);
+            if ($typeMateriel->getDepartement() === $this) {
+                $typeMateriel->setDepartement(null);
             }
         }
 
@@ -913,7 +897,7 @@ class Formation extends BaseEntity
     {
         if (!$this->materielPrets->contains($materielPret)) {
             $this->materielPrets[] = $materielPret;
-            $materielPret->setFormation($this);
+            $materielPret->setDepartement($this);
         }
 
         return $this;
@@ -924,8 +908,8 @@ class Formation extends BaseEntity
         if ($this->materielPrets->contains($materielPret)) {
             $this->materielPrets->removeElement($materielPret);
             // set the owning side to null (unless already changed)
-            if ($materielPret->getFormation() === $this) {
-                $materielPret->setFormation(null);
+            if ($materielPret->getDepartement() === $this) {
+                $materielPret->setDepartement(null);
             }
         }
 
@@ -980,7 +964,7 @@ class Formation extends BaseEntity
     {
         if (!$this->creneauCours->contains($creneauCour)) {
             $this->creneauCours[] = $creneauCour;
-            $creneauCour->setFormation($this);
+            $creneauCour->setDepartement($this);
         }
 
         return $this;
@@ -991,8 +975,8 @@ class Formation extends BaseEntity
         if ($this->creneauCours->contains($creneauCour)) {
             $this->creneauCours->removeElement($creneauCour);
             // set the owning side to null (unless already changed)
-            if ($creneauCour->getFormation() === $this) {
-                $creneauCour->setFormation(null);
+            if ($creneauCour->getDepartement() === $this) {
+                $creneauCour->setDepartement(null);
             }
         }
 

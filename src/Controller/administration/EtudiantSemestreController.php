@@ -53,7 +53,7 @@ class EtudiantSemestreController extends BaseController
             ImportEtudiantType::class,
             null,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'semestre' => $semestre,
                 'attr'      => [
                     'data-provide' => 'validation'

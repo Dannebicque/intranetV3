@@ -8,8 +8,8 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active show" data-toggle="tab" href="#tab-formation" role="tab"
-                   aria-selected="false">{{ 'adm.configuration.tab.formation.menu'|trans }}</a>
+                <a class="nav-link active show" data-toggle="tab" href="#tab-departement" role="tab"
+                   aria-selected="false">{{ 'adm.configuration.tab.departement.menu'|trans }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tab-diplome" role="tab"
@@ -34,9 +34,9 @@
 
 {% block content %}
     <div class="tab-content">
-        <div class="tab-pane active show" id="tab-formation" role="tabpanel">
+        <div class="tab-pane active show" id="tab-departement" role="tabpanel">
             <div class="card">
-                <h4 class="card-title">{{ 'adm.configuration.tab.formation.heading'|trans }}</h4>
+                <h4 class="card-title">{{ 'adm.configuration.tab.departement.heading'|trans }}</h4>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -48,12 +48,12 @@
                                 <select class="form-control col-sm-6 changeOptionSelect"
                                         name="optAnneePrevisionnel"
                                         id="optAnneePrevisionnel"
-                                        data-type="formation"
-                                        data-id="{{ user_data.formation.id }}">
+                                        data-type="departement"
+                                        data-id="{{ user_data.departement.id }}">
                                     <option value="">{{ 'non.selectionee'|trans }} / {{ 'aucune'|trans }}</option>
                                     {% for annee in 'now'|date('Y')-2 .. 'now'|date('Y')+2 %}
                                         <option value="{{ annee }}"
-                                                {% if user_data.formation.optAnneePrevisionnel == annee %}selected{% endif %}>{{ annee }}</option>
+                                                {% if user_data.departement.optAnneePrevisionnel == annee %}selected{% endif %}>{{ annee }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -65,12 +65,12 @@
                                     <p>{{ 'help.opt_edt'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optEdt ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optEdt ? 'checked': '' }}
                                            class="changeOption"
                                            name="optEdt"
                                            id="optEdt"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -81,12 +81,12 @@
                                     <p>{{ 'help.opt_stage'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optStage ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optStage ? 'checked': '' }}
                                            class="changeOption"
                                            name="optStage"
                                            id="optStage"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -97,12 +97,12 @@
                                     <p>{{ 'help.opt_update_celcat'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optUpdateCelcat ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optUpdateCelcat ? 'checked': '' }}
                                            class="changeOption"
                                            name="optUpdateCelcat"
                                            id="optUpdateCelcat"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -113,12 +113,12 @@
                                     <p>{{ 'help.opt_messagerie'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optMessagerie ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optMessagerie ? 'checked': '' }}
                                            class="changeOption"
                                            name="optMessagerie"
                                            id="optMessagerie"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -132,12 +132,12 @@
                                     <p>{{ 'help.opt_agence'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optAgence ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optAgence ? 'checked': '' }}
                                            class="changeOption"
                                            name="optAgence"
                                            id="optAgence"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -148,12 +148,12 @@
                                     <p>{{ 'help.opt_materiel'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optMateriel ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optMateriel ? 'checked': '' }}
                                            class="changeOption"
                                            name="optMateriel"
                                            id="optMateriel"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -164,12 +164,12 @@
                                     <p>{{ 'help.opt_synthese'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optSynthese ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optSynthese ? 'checked': '' }}
                                            class="changeOption"
                                            name="optSynthese"
                                            id="optSynthese"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>
@@ -182,12 +182,12 @@
                                 <select class="form-control col-sm-6 changeOptionSelect"
                                         name="respRi"
                                         id="respRi"
-                                        data-type="formation"
-                                        data-id="{{ user_data.formation.id }}">
+                                        data-type="departement"
+                                        data-id="{{ user_data.departement.id }}">
                                     <option value="">{{ 'non.selectione'|trans }} / {{ 'aucun'|trans }}</option>
                                     {% for personnel in user_data.personnels %}
                                         <option value="pers{{ personnel.id }}"
-                                                {% if user_data.formation.respRi != null and user_data.formation.respRi.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
+                                                {% if user_data.departement.respRi != null and user_data.departement.respRi.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -198,12 +198,12 @@
                                     <p>{{ 'help.opt_Infos'|trans }}</p>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" {{ user_data.formation.optInfos ? 'checked': '' }}
+                                    <input type="checkbox" {{ user_data.departement.optInfos ? 'checked': '' }}
                                            class="changeOption"
                                            name="optInfos"
                                            id="optInfos"
-                                           data-type="formation"
-                                           data-id="{{ user_data.formation.id }}">
+                                           data-type="departement"
+                                           data-id="{{ user_data.departement.id }}">
                                     <span class="switch-indicator"></span>
                                 </label>
                             </div>

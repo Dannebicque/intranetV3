@@ -29,7 +29,7 @@ class EdtRealiseController extends BaseController
      */
     public function index(PersonnelRepository $personnelRepository, $source)
     {
-        $personnels = $personnelRepository->findByFormation($this->dataUserSession->getFormation());
+        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtRealise/index.html.twig', array(
             'personnels' => $personnels,
@@ -68,7 +68,7 @@ class EdtRealiseController extends BaseController
             $p = $this->getDoctrine()->getRepository('DAKernelBundle:PersonnelMatiere')->findBy(array(
                 'personnel' => $personnel->getId(),
                 'matiere'   => $matiere->getId(),
-                'annee'     => $connect->getFormation()->getAnneeprevi()
+                'annee'     => $connect->getDepartement()->getAnneeprevi()
             ));
 
             $t = array();
@@ -128,7 +128,7 @@ class EdtRealiseController extends BaseController
 
         if ($semestre !== null && $personnel !== null) {
             $matieres = $this->getDoctrine()->getRepository('DAKernelBundle:PersonnelMatiere')->findServiceSemestre($personnel->getId(),
-                $semestre->getId(), $semestre->getAnnee()->getDiplome()->getFormation()->getAnneeprevi());
+                $semestre->getId(), $semestre->getAnnee()->getDiplome()->getDepartement()->getAnneeprevi());
 
             $array = array();
             $i = 1;

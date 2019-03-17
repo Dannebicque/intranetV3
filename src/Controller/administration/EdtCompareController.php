@@ -27,15 +27,15 @@ class EdtCompareController extends BaseController
      */
     public function comparePersonnel(PersonnelRepository $personnelRepository, MyPrevisionnel $myPrevisionnel, $source)
     {
-        $personnels = $personnelRepository->findByFormation($this->dataUserSession->getFormation());
+        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         if ($source === 'intranet') {
             //intranet
-            $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findFormation($this->dataUserSession->getFormation());
+            $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findDepartement($this->dataUserSession->getDepartement());
         } else {
             //celcat
         }
-        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($personnels, $planning, $this->dataUserSession->getFormation());
+        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($personnels, $planning, $this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtCompare/comparePersonnel.html.twig', [
             'personnels' => $personnels,
@@ -52,16 +52,16 @@ class EdtCompareController extends BaseController
      */
     public function compareMatiereAction(MatiereRepository $matiereRepository, MyPrevisionnel $myPrevisionnel, $source)
     {
-        $matieres = $matiereRepository->findByFormation($this->dataUserSession->getFormation());
+        $matieres = $matiereRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         if ($source === 'intranet') {
             //intranet
-            $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findFormation($this->dataUserSession->getFormation());
+            $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findDepartement($this->dataUserSession->getDepartement());
         } else {
             //celcat
         }
 
-        $ed = $myPrevisionnel->compareEdtPreviMatiere($matieres, $planning, $this->dataUserSession->getFormation());
+        $ed = $myPrevisionnel->compareEdtPreviMatiere($matieres, $planning, $this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [
             'matieres' => $matieres,

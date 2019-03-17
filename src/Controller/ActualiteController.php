@@ -22,7 +22,7 @@ class ActualiteController extends BaseController
     public function liste(ActualiteRepository $actualiteRepository): Response
     {
         return $this->render('actualite/liste.html.twig', [
-            'actualites' => $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 0)
+            'actualites' => $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement(), 0)
         ]);
     }
 }

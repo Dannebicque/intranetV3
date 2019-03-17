@@ -26,7 +26,7 @@ class SalleExamenController extends BaseController
     public function index(SalleExamenRepository $salleExamenRepository): Response
     {
         return $this->render('administration/salle_examen/index.html.twig',
-            ['salle_examens' => $salleExamenRepository->findByFormation($this->dataUserSession->getFormation())]);
+            ['salle_examens' => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
@@ -41,7 +41,7 @@ class SalleExamenController extends BaseController
      */
     public function export(MyExport $myExport, SalleExamenRepository $salleExamenRepository, $_format): Response
     {
-        $salles_examen = $salleExamenRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
         $response = $myExport->genereFichierGenerique(
             $_format,
             $salles_examen,
@@ -62,7 +62,7 @@ class SalleExamenController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $salleExaman = new SalleExamen($this->dataUserSession->getFormation());
+        $salleExaman = new SalleExamen($this->dataUserSession->getDepartement());
         $form = $this->createForm(SalleExamenType::class, $salleExaman);
         $form->handleRequest($request);
 

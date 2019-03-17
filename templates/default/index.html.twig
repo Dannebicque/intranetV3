@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'default.heading'|trans({'%formation%':user_data.formation.libelle})|raw }}
+    {{ 'default.heading'|trans({'%departement%':user_data.departement.libelle})|raw }}
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
-                    {% if user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE') or user_data.isGoodFormation('ROLE_ASS') %}
+                    {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                     <div class="card-header-actions" style="">
                         <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-info"
                            title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-provide="tooltip" data-placement="bottom"><i
@@ -43,7 +43,7 @@
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
-                    {% if user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE') or user_data.isGoodFormation('ROLE_ASS') %}
+                    {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                         <div class="card-header-actions" style="">
                             <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-info"
                                title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-provide="tooltip" data-placement="bottom"><i
@@ -74,7 +74,7 @@
         </div>
 
 
-        {% if user_data.formation.optEdt == true %}
+        {% if user_data.departement.optEdt == true %}
             {% if is_granted('ROLE_PERMANENT') %}
                 {{ render(controller(
                     'App\\Controller\\EdtController::dashboardPersonnel'
@@ -131,10 +131,10 @@
                             </a>
                         </div>
                         <div class="col-md-3 col-sm-6">
-                            <a href="{{ user_data.formation.siteWeb }}" target="_blank"><img
-                                        src="{{ asset('upload/logo/'~user_data.formation.logoName) }}"
-                                        alt="{{ user_data.formation.libelle }}" class="img-rounded" width="90px"/><br/>
-                                {{ user_data.formation.libelle }}
+                            <a href="{{ user_data.departement.siteWeb }}" target="_blank"><img
+                                        src="{{ asset('upload/logo/'~user_data.departement.logoName) }}"
+                                        alt="{{ user_data.departement.libelle }}" class="img-rounded" width="90px"/><br/>
+                                {{ user_data.departement.libelle }}
                             </a>
                         </div>
                     </div>

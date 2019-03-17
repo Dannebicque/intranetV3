@@ -38,9 +38,9 @@ class AnneeUniversitaire
     private $commentaire;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Formation", mappedBy="anneeUniversitairePrepare")
+     * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="anneeUniversitairePrepare")
      */
-    private $formations;
+    private $departements;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Calendrier", mappedBy="anneeUniversitaire")
@@ -55,7 +55,7 @@ class AnneeUniversitaire
     public function __construct()
     {
         $this->setAnnee(date('Y'));
-        $this->formations = new ArrayCollection();
+        $this->departements = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
         $this->creneauCours = new ArrayCollection();
     }
@@ -102,30 +102,30 @@ class AnneeUniversitaire
     }
 
     /**
-     * @return Collection|Formation[]
+     * @return Collection|Departement[]
      */
-    public function getFormations(): Collection
+    public function getDepartements(): Collection
     {
-        return $this->formations;
+        return $this->departements;
     }
 
-    public function addFormation(Formation $formation): self
+    public function addDepartement(Departement $departement): self
     {
-        if (!$this->formations->contains($formation)) {
-            $this->formations[] = $formation;
-            $formation->setAnneeUniversitairePrepare($this);
+        if (!$this->departements->contains($departement)) {
+            $this->departements[] = $departement;
+            $departement->setAnneeUniversitairePrepare($this);
         }
 
         return $this;
     }
 
-    public function removeFormation(Formation $formation): self
+    public function removeDepartement(Departement $departement): self
     {
-        if ($this->formations->contains($formation)) {
-            $this->formations->removeElement($formation);
+        if ($this->departements->contains($departement)) {
+            $this->departements->removeElement($departement);
             // set the owning side to null (unless already changed)
-            if ($formation->getAnneeUniversitairePrepare() === $this) {
-                $formation->setAnneeUniversitairePrepare(null);
+            if ($departement->getAnneeUniversitairePrepare() === $this) {
+                $departement->setAnneeUniversitairePrepare(null);
             }
         }
 

@@ -15,23 +15,25 @@
             <small>Vous pourrez modifier ce chois dans vos paramètres.</small>
         </div>
 
-        <form class="form-type-material" method="post" action="{{ path('security_choix_formation') }}">
+        <form class="form-type-material" method="post" action="{{ path('security_choix_departement') }}">
             <div class="row">
-                {% for formation in formations %}
+                {% for departement in departements %}
                     <div class="col-sm-12 col-md-6">
                         <div class="custom-control custom-control-lg custom-radio">
-                            <input type="radio" class="custom-control-input" id="formation_{{ formation.id }}"
-                                   value="{{ formation.id }}"
-                                   name="formation">
+                            <input type="radio" class="custom-control-input" id="departement_{{ departement.id }}"
+                                   value="{{ departement.id }}"
+                                   name="departement">
                             <label class="custom-control-label"
-                                   for="formation_{{ formation.id }}" style="background-color: {{ formation.formation.couleur }}; color:white;
-                                   display:block">{{ formation.formation.libelle }}</label>
+                                   for="departement_{{ departement.id }}" style="background-color: {{ departement
+                            .departement.couleur }}; color:white;
+                                   display:block">{{ departement.departement.libelle }}</label>
                         </div>
                     </div>
                 {% endfor %}
             </div>
             <br>
-            <p>Si la formation n'apparaît pas dans la liste, merci de contacter le responsable de cette formation.</p>
+            <p>Si le département n'apparaît pas dans la liste, merci de contacter le responsable de ce département
+               .</p>
             <br>
             <button class="btn btn-bold btn-block btn-primary" type="submit"><i class="fa fa-unlock-alt mr-2"></i>
                 Enregistrer

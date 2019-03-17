@@ -28,7 +28,7 @@ class StagePeriodeController extends BaseController
     {
         return $this->render(
             'administration/stage/stage_periode/index.html.twig',
-            ['stage_periodes' => $stagePeriodeRepository->findByFormation($this->dataUserSession->getFormation())]
+            ['stage_periodes' => $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement())]
         );
     }
 
@@ -44,7 +44,7 @@ class StagePeriodeController extends BaseController
      */
     public function export(MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
     {
-        $dates = $stagePeriodeRepository->findByFormation($this->dataUserSession->getFormation());
+        $dates = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $dates,
@@ -68,7 +68,7 @@ class StagePeriodeController extends BaseController
     {
         $stagePeriode = new StagePeriode();
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
-            'formation' => $this->dataUserSession->getFormation(),
+            'departement' => $this->dataUserSession->getDepartement(),
             'attr'      => [
                 'data-provide' => 'validation'
             ]
@@ -113,7 +113,7 @@ class StagePeriodeController extends BaseController
     public function edit(Request $request, StagePeriode $stagePeriode): Response
     {
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
-            'formation' => $this->dataUserSession->getFormation(),
+            'departement' => $this->dataUserSession->getDepartement(),
             'attr'      => [
                 'data-provide' => 'validation'
             ]

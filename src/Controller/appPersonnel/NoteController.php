@@ -61,12 +61,12 @@ class NoteController extends BaseController
     public function saisie(Request $request, Matiere $matiere)
     {
         if ($matiere !== null && $matiere->getUe() !== null) {
-            $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
+            $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getDepartement());
             $form = $this->createForm(
                 EvaluationType::class,
                 $evaluation,
                 [
-                    'formation'       => $this->dataUserSession->getFormation(),
+                    'departement'       => $this->dataUserSession->getDepartement(),
                     'semestre'        => $matiere->getUe()->getSemestre(),
                     'matiereDisabled' => false,
                     'locale' =>$request->getLocale(),
@@ -154,12 +154,12 @@ class NoteController extends BaseController
      */
     public function import(Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Matiere $matiere): Response
     {
-        $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getFormation());
+        $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getDepartement());
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
             [
-                'formation'       => $this->dataUserSession->getFormation(),
+                'departement'       => $this->dataUserSession->getDepartement(),
                 'semestre'        => $matiere->getUe() !== null ? $matiere->getUe()->getSemestre() : '',
                 'import'          => true,
                 'matiereDisabled' => true,

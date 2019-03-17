@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -28,17 +28,17 @@ class SemestreRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByFormationBuilder($formation): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuilder($departement): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
-            ->where('d.formation = :formation')
-            ->setParameter('formation', $formation);
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement);
     }
 
     /**
@@ -64,8 +64,8 @@ class SemestreRepository extends ServiceEntityRepository
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();
     }
 
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
-        return $this->findByFormationBuilder($formation->getId())->getQuery()->getResult();
+        return $this->findByDepartementBuilder($departement->getId())->getQuery()->getResult();
     }
 }

@@ -16,11 +16,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AlternanceType extends AbstractType
 {
-    private $formation;
+    private $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add('typeContrat', ChoiceType::class, [
@@ -52,7 +52,7 @@ class AlternanceType extends AbstractType
                 'help'          => 'help.tuteur_universitaire',
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByFormationBuilder($this->formation);
+                    return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
@@ -78,7 +78,7 @@ class AlternanceType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => Alternance::class,
             'translation_domain' => 'form',
-            'formation'          => null
+            'departement'          => null
         ]);
     }
 }

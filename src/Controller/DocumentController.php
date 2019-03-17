@@ -31,7 +31,7 @@ class DocumentController extends BaseController
      */
     public function typeDocument(TypeDocumentRepository $typeDocumentRepository): Response
     {
-        $typeDocuments = $typeDocumentRepository->findByFormation(1);
+        $typeDocuments = $typeDocumentRepository->findByDepartement(1);
 
         return $this->render('document/typedocument.html.twig', [
             'typedocuments' => $typeDocuments

@@ -22,7 +22,7 @@ class DisponibiliteController extends BaseController
     {
 
         return $this->render('appPersonnel/disponibilite/index.html.twig', [
-            'anneepreparee' => $this->dataUserSession->getFormation() ? $this->dataUserSession->getFormation()->getAnneeUniversitairePrepare() : null
+            'anneepreparee' => $this->dataUserSession->getDepartement() ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : null
         ]);
     }
 }

@@ -27,9 +27,9 @@ class EdtController extends BaseController
     public function index(PersonnelRepository $personnelRepository, MatiereRepository $matiereRepository, SalleRepository $salleRepository): Response
     {
         return $this->render('administration/edt/index.html.twig', [
-            'personnels' => $personnelRepository->findByFormation($this->dataUserSession->getFormation()),
+            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles' => $salleRepository->findAll(),
-            'matieres' => $matiereRepository->findByFormation($this->dataUserSession->getFormation())
+            'matieres' => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement())
         ]);
     }
 }

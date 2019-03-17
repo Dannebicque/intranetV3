@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -79,33 +79,33 @@ class StagePeriodeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Formation $formation
+     * @param Departement $departement
      *
      * @return mixed
      */
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('d.formation = :formation')
-            ->setParameter('formation', $formation->getId())
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
             ->orderBy('p.anneeUniversitaire', 'DESC')
             ->orderBy('p.numeroPeriode', 'ASC');
 
         return $query->getQuery()->getResult();
     }
 
-    public function findByFormationBuilder(Formation $formation, $annee) {
+    public function findByDepartementBuilder(Departement $departement, $annee) {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('d.formation = :formation')
+            ->where('d.departement = :departement')
             ->andWhere('p.anneeUniversitaire = :annee');
 
-        $query->setParameter('formation', $formation->getId())
+        $query->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
             ->orderBy('p.numeroPeriode', 'ASC');
 

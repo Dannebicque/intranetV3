@@ -25,16 +25,16 @@ class ActualiteRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      * @param $nbResult
      *
      * @return Actualite[]
      */
-    public function findByFormation($formation, $nbResult = 2): array
+    public function findByDepartement($departement, $nbResult = 2): array
     {
         $q = $this->createQueryBuilder('a')
-            ->andWhere('a.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->andWhere('a.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('a.created', 'DESC');
 
         if ($nbResult > 0) {

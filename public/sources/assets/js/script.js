@@ -492,7 +492,7 @@ $(document).on('keyup', '#login_urca', function() {
             "<td>"+pers.prenom+"</td>" +
             "<td>"+pers.username+"</td>" +
             "<td>"+pers.mail_univ+"</td>" +
-            "<td><a href=\"#\" class=\"btn btn-success btn-outline btn-square addpersonnel\" data-provide=\"tooltip\" data-placement=\"bottom\" title=\"Ajouter à la formation\" data-slug=\""+pers.slug+"\"><i class=\"ti-plus\"></i></a></td>" +
+            "<td><a href=\"#\" class=\"btn btn-success btn-outline btn-square addpersonnel\" data-provide=\"tooltip\" data-placement=\"bottom\" title=\"Ajouter à la departement\" data-slug=\""+pers.slug+"\"><i class=\"ti-plus\"></i></a></td>" +
             "</tr>";
           $('#result').append(html);
         });
@@ -506,7 +506,7 @@ $(document).on('click', '.addpersonnel', function(){
     url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug')}),
     dataType: 'json',
     success: function(data) {
-      addCallout('Personnel ajouté à la formation !', 'success')
+      addCallout('Personnel ajouté à la departement !', 'success')
     }
   })
 });
@@ -527,7 +527,7 @@ $(document).on('keyup', '#sa_login_urca', function () {
             '<td>' + pers.prenom + '</td>' +
             '<td>' + pers.username + '</td>' +
             '<td>' + pers.mail_univ + '</td>' +
-            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la formation" data-slug="' + pers.slug + '" data-formation="' + formation + '"><i class="ti-plus"></i></a></td>' +
+            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la departement" data-slug="' + pers.slug + '" data-departement="' + formation + '"><i class="ti-plus"></i></a></td>' +
             '</tr>'
           $('#result').append(html)
         })
@@ -541,7 +541,7 @@ $(document).on('click', '.sa_addpersonnel', function () {
     url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug'), formation: $(this).data('formation')}),
     dataType: 'json',
     success: function (data) {
-      addCallout('Personnel ajouté à la formation !', 'success')
+      addCallout('Personnel ajouté à la departement !', 'success')
 
     }
   })
@@ -943,7 +943,7 @@ $(document).on('change', '#previsionnel_matiere', function () {
     $.ajax({
       url: Routing.generate('api_matiere', {'matiere': $(this).val()}),
       success: function (data) {
-        var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/formation => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
+        var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/departement => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
         volumeMatiere.html(html);
       }
     });
@@ -1282,7 +1282,7 @@ $(document).on('click', '.etudiant', function () {
       },
       //affichage de l'erreur en cas de problème
       error: function (msg, string) {
-        addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'danger')
+        addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
       },
       success: function (data) {
         tabsences = data
@@ -1309,7 +1309,7 @@ $(document).on('click', '.etudiant', function () {
       //affichage de l'erreur en cas de problème
       error: function (msg, string) {
         if (msg.responseText == 'out') {
-          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la formation', 'danger')
+          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
         } else {
           addCallout('Erreur lors de l\'enregistrement.', 'danger')
         }
@@ -1379,7 +1379,7 @@ $(document).on('click', '.justificatif-refuse', function (e) {
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
-  }) 
+  })
 })
 
 $(document).on('click', '.justificatif-annuler', function (e) {
@@ -1817,7 +1817,7 @@ $('#matiere_semestre').change(function () {
       alert('An error ocurred while loading data ...')
     }
   })
-}) 
+})
 
 
 $(document).on('change', '#tuteurUniversitaire', function (e) {
@@ -1829,7 +1829,7 @@ $(document).on('change', '#tuteurUniversitaire', function (e) {
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
-  }) 
+  })
 })
 
 

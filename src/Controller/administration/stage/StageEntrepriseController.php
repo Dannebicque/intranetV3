@@ -45,7 +45,7 @@ class StageEntrepriseController extends BaseController
      */
     public function export(StagePeriodeRepository $stagePeriodeRepository, MyExport $myExport, $_format): Response
     {
-        $dates = $stagePeriodeRepository->findByFormation($this->dataUserSession->getFormation());
+        $dates = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $dates,

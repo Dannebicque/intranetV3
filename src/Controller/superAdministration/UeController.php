@@ -43,7 +43,7 @@ class UeController extends BaseController
 
                 return $this->redirectToRoute(
                     'sa_structure_index',
-                    ['formation' => $ue->getSemestre()->getAnnee()->getDiplome()->getFormation()->getId()]
+                    ['departement' => $ue->getSemestre()->getAnnee()->getDiplome()->getDepartement()->getId()]
                 );
             }
 
@@ -91,7 +91,7 @@ class UeController extends BaseController
 
                 return $this->redirectToRoute(
                     'sa_structure_index',
-                    ['formation' => $ue->getDiplome()->getFormation()->getId()]
+                    ['departement' => $ue->getDiplome()->getDepartement()->getId()]
                 );
             }
 

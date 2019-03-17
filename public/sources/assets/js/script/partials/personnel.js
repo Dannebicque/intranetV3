@@ -13,7 +13,7 @@ $(document).on('keyup', '#login_urca', function() {
             "<td>"+pers.prenom+"</td>" +
             "<td>"+pers.username+"</td>" +
             "<td>"+pers.mail_univ+"</td>" +
-            "<td><a href=\"#\" class=\"btn btn-success btn-outline btn-square addpersonnel\" data-provide=\"tooltip\" data-placement=\"bottom\" title=\"Ajouter à la formation\" data-slug=\""+pers.slug+"\"><i class=\"ti-plus\"></i></a></td>" +
+            "<td><a href=\"#\" class=\"btn btn-success btn-outline btn-square addpersonnel\" data-provide=\"tooltip\" data-placement=\"bottom\" title=\"Ajouter à la departement\" data-slug=\""+pers.slug+"\"><i class=\"ti-plus\"></i></a></td>" +
             "</tr>";
           $('#result').append(html);
         });
@@ -24,16 +24,16 @@ $(document).on('keyup', '#login_urca', function() {
 
 $(document).on('click', '.addpersonnel', function(){
   $.ajax({
-    url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug')}),
+    url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug')}),
     dataType: 'json',
     success: function(data) {
-      addCallout('Personnel ajouté à la formation !', 'success')
+      addCallout('Personnel ajouté au département !', 'success')
     }
   })
 });
 
 $(document).on('keyup', '#sa_login_urca', function () {
-  var formation = $(this).data('formation');
+  var departement = $(this).data('departement');
   var $val = $(this).val()
   console.log($val)
   if ($val.length > 2) {
@@ -48,7 +48,7 @@ $(document).on('keyup', '#sa_login_urca', function () {
             '<td>' + pers.prenom + '</td>' +
             '<td>' + pers.username + '</td>' +
             '<td>' + pers.mail_univ + '</td>' +
-            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la formation" data-slug="' + pers.slug + '" data-formation="' + formation + '"><i class="ti-plus"></i></a></td>' +
+            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '" data-departement="' + departement + '"><i class="ti-plus"></i></a></td>' +
             '</tr>'
           $('#result').append(html)
         })
@@ -59,10 +59,10 @@ $(document).on('keyup', '#sa_login_urca', function () {
 
 $(document).on('click', '.sa_addpersonnel', function () {
   $.ajax({
-    url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug'), formation: $(this).data('formation')}),
+    url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug'), departement: $(this).data('departement')}),
     dataType: 'json',
     success: function (data) {
-      addCallout('Personnel ajouté à la formation !', 'success')
+      addCallout('Personnel ajouté au departement !', 'success')
 
     }
   })
@@ -119,7 +119,7 @@ $('#datatableRh').DataTable({
     {"data": "numero_harpege"},
     {"data": "nom"},
     {"data": "prenom"},
-    {"data": "formations"},
+    {"data": "departements"},
     {"data": "deleted"},
     {
       "data": "id",
@@ -140,7 +140,7 @@ $('#datatableRh').DataTable({
 
 $(document).on('change','.change_droit_pf', function (){
   $.ajax({
-    url: Routing.generate('sa_personnel_formation_modifier_droit', {pf: $(this).data('pf')}),
+    url: Routing.generate('sa_personnel_departement_modifier_droit', {pf: $(this).data('pf')}),
     method: 'POST',
     data: {'droit': $(this).val()},
     success: function (data) {

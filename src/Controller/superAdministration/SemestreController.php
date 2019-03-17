@@ -43,7 +43,7 @@ class SemestreController extends BaseController
 
                 return $this->redirectToRoute(
                     'sa_structure_index',
-                    ['formation' => $annee->getDiplome()->getFormation()->getId()]
+                    ['departement' => $annee->getDiplome()->getDepartement()->getId()]
                 );
             }
 
@@ -95,7 +95,7 @@ class SemestreController extends BaseController
 
                 return $this->redirectToRoute(
                     'sa_structure_index',
-                    ['formation' => $semestre->getAnnee()->getDiplome()->getFormation()->getId()]
+                    ['departement' => $semestre->getAnnee()->getDiplome()->getDepartement()->getId()]
                 );
             }
 

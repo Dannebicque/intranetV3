@@ -12,7 +12,7 @@
 
 {% block content %}
 
-    {% if user_data.formation.optUpdateCelcat %}
+    {% if user_data.departement.optUpdateCelcat %}
         {{ include('administration/edt/edt-celcat.html.twig') }}
     {% else %}
         {{ include('administration/edt/edt-intranet.html.twig') }}

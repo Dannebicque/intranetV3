@@ -14,11 +14,11 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MaterielType extends AbstractType
 {
-    protected $formation;
+    protected $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
@@ -34,7 +34,7 @@ class MaterielType extends AbstractType
                 'required'      => true,
                 'choice_label'  => 'libelle',
                 'query_builder' => function(TypeMaterielRepository $typeMaterielRepository) {
-                    return $typeMaterielRepository->findByFormationBuider($this->formation);
+                    return $typeMaterielRepository->findByDepartementBuider($this->departement);
                 },
                 'label'         => 'label.type_materiel',
                 'expanded'      => false
@@ -48,7 +48,7 @@ class MaterielType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Materiel::class,
             'translation_domain' => 'form',
-            'formation'            => null,
+            'departement'            => null,
 
         ]);
     }

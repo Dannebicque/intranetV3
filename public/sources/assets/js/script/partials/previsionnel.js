@@ -169,7 +169,7 @@ $(document).on('change', '#previsionnel_matiere', function () {
     $.ajax({
       url: Routing.generate('api_matiere', {'matiere': $(this).val()}),
       success: function (data) {
-        var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/formation => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
+        var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/departement => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
         volumeMatiere.html(html);
       }
     });

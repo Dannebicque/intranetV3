@@ -26,9 +26,9 @@ class CreneauBloqueController extends BaseController
         CreneauCoursRepository $creneauCoursRepository,
         CalendrierRepository $calendrierRepository
     ): Response {
-        if ($this->dataUserSession->getFormation() !== null && $this->dataUserSession->getFormation()->getAnneeUniversitairePrepare() !== null) {
-            $creneaux = $creneauCoursRepository->findByAnneeFormation($this->dataUserSession->getFormation(),
-                $this->dataUserSession->getFormation()->getAnneeUniversitairePrepare());
+        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() !== null) {
+            $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+                $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare());
             $tCreneaux = [];
             /** @var CreneauCours $creneau */
             foreach ($creneaux as $creneau) {
@@ -41,7 +41,7 @@ class CreneauBloqueController extends BaseController
             return $this->render('administration/creneau_bloque/index.html.twig', [
                 'creneau_bloques' => $creneauBloqueRepository->findAll(),
                 'creneaux'        => $tCreneaux,
-                'semaines'        => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getFormation()->getAnneeUniversitairePrepare())
+                'semaines'        => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare())
             ]);
         }
     }

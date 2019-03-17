@@ -84,11 +84,11 @@ class Date extends BaseEntity
     private $qui;
 
     /**
-     * @var Formation
+     * @var Departement
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="dates")
@@ -274,19 +274,19 @@ class Date extends BaseEntity
     }
 
     /**
-     * @return Formation
+     * @return Departement
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation $formation
+     * @param Departement $departement
      */
-    public function setFormation(Formation $formation): void
+    public function setDepartement(Departement $departement): void
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
     }
 
     /**

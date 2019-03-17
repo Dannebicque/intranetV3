@@ -10,7 +10,7 @@ namespace App\MesClasses;
 
 use App\Repository\AnneeRepository;
 use App\Repository\DiplomeRepository;
-use App\Repository\FormationRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,9 +22,9 @@ use Doctrine\ORM\EntityManagerInterface;
 class MyConfiguration
 {
     /**
-     * @var FormationRepository
+     * @var DepartementRepository
      */
-    private $formationRepository;
+    private $departementRepository;
 
     /**
      * @var DiplomeRepository
@@ -54,7 +54,7 @@ class MyConfiguration
     /**
      * MyConfiguration constructor.
      *
-     * @param FormationRepository    $formationRepository
+     * @param DepartementRepository  $departementRepository
      * @param DiplomeRepository      $diplomeRepository
      * @param AnneeRepository        $anneeRepository
      * @param SemestreRepository     $semestreRepository
@@ -62,14 +62,14 @@ class MyConfiguration
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(
-        FormationRepository $formationRepository,
+        DepartementRepository $departementRepository,
         DiplomeRepository $diplomeRepository,
         AnneeRepository $anneeRepository,
         SemestreRepository $semestreRepository,
         PersonnelRepository $personnelRepository,
         EntityManagerInterface $entityManager
     ) {
-        $this->formationRepository = $formationRepository;
+        $this->departementRepository = $departementRepository;
         $this->diplomeRepository = $diplomeRepository;
         $this->anneeRepository = $anneeRepository;
         $this->semestreRepository = $semestreRepository;
@@ -88,8 +88,8 @@ class MyConfiguration
     public function updateOption($type, $id, $name, $value): bool
     {
         switch ($type) {
-            case 'formation':
-                return $this->updateFormation($id, $name, $value);
+            case 'departement':
+                return $this->updateDepartement($id, $name, $value);
             case 'diplome':
                 return $this->updateDiplome($id, $name, $value);
             case 'annee':
@@ -108,12 +108,12 @@ class MyConfiguration
      *
      * @return bool
      */
-    private function updateFormation($id, $name, $value): bool
+    private function updateDepartement($id, $name, $value): bool
     {
-        $formation = $this->formationRepository->find($id);
-        if ($formation) {
-            $formation->update($name, $this->transformeValue($value));
-            $this->entityManager->persist($formation);
+        $departement = $this->departementRepository->find($id);
+        if ($departement) {
+            $departement->update($name, $this->transformeValue($value));
+            $this->entityManager->persist($departement);
             $this->entityManager->flush();
             echo 'update';
 

@@ -6,7 +6,7 @@ $('#datatableEtudiants').DataTable({
   "language": langueFr,
   "processing": true,
   "serverSide": true,
-  "ajax": Routing.generate('api_etudiant_formation'),
+  "ajax": Routing.generate('api_etudiant_departement'),
   "sAjaxDataProp": "data",
   //"pageLength": 25,
   "columns": [

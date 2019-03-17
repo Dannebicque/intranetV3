@@ -9,14 +9,14 @@
 namespace App\MesClasses;
 
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\MesClasses\Pdf\MyPDF;
 
 class MyStructure
 {
-    /** @var Formation */
-    protected $formation;
+    /** @var Departement */
+    protected $departement;
 
     /** @var MyPDF */
     protected $myPdf;
@@ -37,13 +37,13 @@ class MyStructure
     }
 
 
-    public function export(Formation $formation, $_format): void
+    public function export(Departement $departement, $_format): void
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         switch ($_format) {
             case 'pdf':
-                $this->myPdf::generePdf('pdf/structure.html.twig', ['formation' => $formation], 'structure_formation');
+                $this->myPdf::generePdf('pdf/structure.html.twig', ['departement' => $departement], 'structure_departement');
                 break;
             case 'xlsx':
 

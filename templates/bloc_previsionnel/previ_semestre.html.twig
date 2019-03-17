@@ -34,7 +34,7 @@
                     <a href="">Détail du module</a>
                 </td>
                 <td colspan="1">
-                    {% if (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE')) %}
+                    {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
                         <a href="{{ path('administration_previsionnel_duplicate', {id: previsionnel.id}) }}"
                            class="btn btn-success btn-outline btn-square" data-provide="tooltip" data-placement="bottom"
                            title="{{ 'atitle.dupliquer'|trans }}"><i
@@ -48,7 +48,7 @@
                 </td>
             </tr>
             <tr>
-                {% if (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE')) %}
+                {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
                     <td><a href="#" class="editPrevi" data-pk="{{ previsionnel.id }}"
                            data-name="NbHCm">{{ previsionnel.nbHCm }}</a> h
                     </td>

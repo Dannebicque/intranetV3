@@ -47,7 +47,7 @@ class TypeDocumentController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $typeDocument = new TypeDocument($this->dataUserSession->getFormation());
+        $typeDocument = new TypeDocument($this->dataUserSession->getDepartement());
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
                 'data-provide' => 'validation'

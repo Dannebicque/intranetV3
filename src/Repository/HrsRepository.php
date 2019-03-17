@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Hrs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -45,17 +45,17 @@ class HrsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Formation $formation
+     * @param Departement $departement
      * @param           $annee
      *
      * @return mixed
      */
-    public function findByFormation(Formation $formation, $annee)
+    public function findByDepartement(Departement $departement, $annee)
     {
         return $this->createQueryBuilder('h')
-            ->where('h.formation = :formation')
+            ->where('h.departement = :departement')
             ->andWhere('h.annee = :annee')
-            ->setParameter('formation', $formation->getId())
+            ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
             ->orderBy('h.typeHrs', 'ASC')
             ->orderBy('h.semestre', 'ASC')

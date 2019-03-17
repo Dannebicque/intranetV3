@@ -42,22 +42,22 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>{{ 'table.formation'|trans }}</th>
+                                <th>{{ 'table.departement'|trans }}</th>
                                 <th>{{ 'table.diplomes'|trans }}</th>
                                 <th>{{ 'table.par.defaut'|trans }}</th>
                             </tr>
                             </thead>
 
-                            {% for formation in user.personnelformations %}
+                            {% for departement in user.personnelDepartements %}
                                 <tr>
-                                    <td>{{ formation.formation.libelle }}</td>
-                                    <td>{% for diplome in formation.formation.diplomes %}{{ diplome.display }}, {% endfor %}</td>
+                                    <td>{{ departement.departement.libelle }}</td>
+                                    <td>{% for diplome in departement.departement.diplomes %}{{ diplome.display }}, {% endfor %}</td>
                                     <td>
                                         <div class="form-check">
-                                            <input class="form-check-input formationParDefaut" type="radio" name="pardefaut"
-                                                   value="{{ formation.formation.id }}"
-                                                   {% if formation.defaut == true %}checked{% endif %}>
-                                        </div>{# todo: A TESTER ! gérer le changement de formation par défaut. #}
+                                            <input class="form-check-input departementParDefaut" type="radio" name="pardefaut"
+                                                   value="{{ departement.departement.id }}"
+                                                   {% if departement.defaut == true %}checked{% endif %}>
+                                        </div>{# todo: A TESTER ! gérer le changement de departement par défaut. #}
                                     </td>
                                 </tr>
                             {% endfor %}

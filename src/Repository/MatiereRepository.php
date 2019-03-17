@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
@@ -42,19 +42,19 @@ class MatiereRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByFormationBuilder(Formation $formation): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuilder(Departement $departement): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = u.semestre')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
-            ->where('d.formation = :formation')
-            ->setParameter('formation', $formation->getId())
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
             ->orderBy('m.codeMatiere', 'ASC')
             ->orderBy('m.libelle', 'ASC');
     }
@@ -74,9 +74,9 @@ class MatiereRepository extends ServiceEntityRepository
             ->orderBy('m.codeMatiere', 'ASC');
     }
 
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
-        return $this->findByFormationBuilder($formation)->getQuery()->getResult();
+        return $this->findByDepartementBuilder($departement)->getQuery()->getResult();
     }
 
     /**

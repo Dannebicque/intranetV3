@@ -38,12 +38,12 @@ class Article extends BaseEntity
     private $type;
 
     /**
-     * @var Formation
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation")
+     * @var Departement
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement")
      * @MaxDepth(2)
      * @Groups({"article_administration"})
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="articles")
@@ -78,19 +78,19 @@ class Article extends BaseEntity
     }
 
     /**
-     * @return Formation
+     * @return Departement
      */
-    public function getFormation(): Formation
+    public function getDepartement(): Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation $formation
+     * @param Departement $departement
      */
-    public function setFormation(Formation $formation): void
+    public function setDepartement(Departement $departement): void
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
     }
 
     /**

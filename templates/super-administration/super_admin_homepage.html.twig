@@ -8,21 +8,21 @@
 
     <div class="card">
         <header class="card-header">
-            <h4 class="card-title"><strong>{{ 'formations.heading'|trans }}</strong></h4>
+            <h4 class="card-title"><strong>{{ 'departements.heading'|trans }}</strong></h4>
             <div class="card-header-actions">
                 <a class="btn btn-sm btn-primary btn-square btn-round"
-                   title="{{ 'creation.formation.manuellement'|trans }}"
+                   title="{{ 'creation.departement.manuellement'|trans }}"
                    data-provide="tooltip"
                    data-placement="bottom"
-                   href="{{ path('sa_formation_new') }}"
+                   href="{{ path('sa_departement_new') }}"
                 >
                     <i class="ti ti-plus"></i>
                 </a>
                 <a class="btn btn-sm btn-primary btn-square btn-round"
-                   title="{{ 'assistant.creation.formation'|trans }}"
+                   title="{{ 'assistant.creation.departement'|trans }}"
                    data-provide="tooltip"
                    data-placement="bottom"
-                   href="{{ path('sa_formation_new') }}"
+                   href="{{ path('sa_departement_new') }}"
                 >
                     <i class="ti ti-wand"></i>
                 </a>
@@ -43,24 +43,26 @@
 
         <div class="card-body">
             <div class="row gap-y">
-                {% for formation in formations %}
+                {% for departement in departements %}
                     <div class="col-md-4 col-sm-12">
                         <div class="btn-group btn-block">
-                            <button class="btn {% if formation.actif %}btn-primary{% else %} btn-default {% endif %} btn-block dropdown-toggle"
-                                    data-toggle="dropdown"> {{ formation.libelle }}</button>
+                            <button class="btn {% if departement.actif %}btn-primary{% else %} btn-default {% endif %} btn-block dropdown-toggle"
+                                    data-toggle="dropdown"> {{ departement.libelle }}</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item"
-                                   href="{{ path('sa_structure_index', {formation:formation.id}) }}">Structure</a>
+                                   href="{{ path('sa_structure_index', {departement:departement.id}) }}">Structure</a>
                                 <a class="dropdown-item" href="#">Etudiants</a>
                                 <a class="dropdown-item"
-                                   href="{{ path('sa_personnel_formation_index', {formation:formation.id}) }}">Personnels</a>
+                                   href="{{ path('sa_personnel_departement_index', {departement:departement.id}) }}">Personnels</a>
                                 <div class="dropdown-divider"></div>
-                                {% if formation.actif == true %}
-                                    <a class="dropdown-item" href="{{ path('sa_formation_activate', {formation: formation.id, etat:0}) }}">Suspendre la formation</a>
+                                {% if departement.actif == true %}
+                                    <a class="dropdown-item" href="{{ path('sa_departement_activate', {departement:
+                                        departement.id, etat:0}) }}">Suspendre le département</a>
                                 {% else %}
-                                    <a class="dropdown-item" href="{{ path('sa_formation_activate', {formation: formation.id, etat:1}) }}">Activer la formation</a>
+                                    <a class="dropdown-item" href="{{ path('sa_departement_activate', {departement:
+                                        departement.id, etat:1}) }}">Activer le département</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Supprimer la formation</a>
+                                    <a class="dropdown-item" href="#">Supprimer le département</a>
                                 {% endif %}
                             </div>
                         </div>

@@ -27,19 +27,19 @@ class DateRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      * @param $nbResult
      *
      * @return mixed
      */
-    public function findByFormation($formation, $nbResult)
+    public function findByDepartement($departement, $nbResult)
     {
         return $this->createQueryBuilder('d')
             ->leftJoin('d.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
-            ->where('p.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->where('p.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('d.dateDebut', 'DESC')
             ->setMaxResults($nbResult)
             ->getQuery()
@@ -47,12 +47,12 @@ class DateRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      * @param $annee
      *
      * @return array
      */
-    public function findByFormationPlanning($formation, $annee): array
+    public function findByDepartementPlanning($departement, $annee): array
     {
         $datedebut = new \DateTime($annee . '-09-01');
         $annee2 = $annee + 1;
@@ -62,10 +62,10 @@ class DateRepository extends ServiceEntityRepository
             ->leftJoin('d.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
-            ->where('p.formation = :formation')
+            ->where('p.departement = :departement')
             ->andWhere('d.dateDebut >= :datedebut')
             ->andWhere('d.dateDebut <= :datefin')
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->setParameter('datedebut', $datedebut)
             ->setParameter('datefin', $datefin)
             ->orderBy('d.dateDebut', 'ASC')

@@ -80,7 +80,7 @@ class TrombinoscopeController extends BaseController
     {
         $personnels = $personnelRepository->findByType(
             $type,
-            $this->dataUserSession->getFormationId()
+            $this->dataUserSession->getDepartementId()
         );
 
         return $this->render('trombinoscope/trombiPersonnel.html.twig', [
@@ -101,7 +101,7 @@ class TrombinoscopeController extends BaseController
      */
     public function trombiPersonnelExport(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
-        $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getFormation());
+        $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $personnels,

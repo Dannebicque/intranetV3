@@ -51,7 +51,7 @@ class DocumentController extends BaseController
             DocumentType::class,
             $document,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -99,7 +99,7 @@ class DocumentController extends BaseController
             DocumentType::class,
             $document,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]

@@ -75,7 +75,7 @@ class CompetenceController extends BaseController
      */
     public function export(Csv $csv, CompetenceRepository $competenceRepository): Response
     {
-        $competences = $competenceRepository->findByFormation($this->dataUserSession->getFormation());
+        $competences = $competenceRepository->findByDepartement($this->dataUserSession->getDepartement());
         $csv->export('competences.csv', $competences, array('acutalite_administration'));
 
         return $csv->response();

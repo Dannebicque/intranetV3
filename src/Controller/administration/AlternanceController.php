@@ -131,7 +131,7 @@ class AlternanceController extends BaseController
             $actualites,
             'alternances',
             ['alternances_administration', 'utilisateur'],
-            ['entreprise' => ['libelle'], 'texte', 'formation' => ['libelle']]//todo: a parametrer avec alternance
+            ['entreprise' => ['libelle'], 'texte', 'departement' => ['libelle']]//todo: a parametrer avec alternance
         );
 
         return $response;
@@ -146,7 +146,7 @@ class AlternanceController extends BaseController
     public function create(Request $request): Response
     {
         $alternance = new Alternance();
-        $form = $this->createForm(AlternanceType::class, $alternance, ['formation' => $this->dataUserSession->getFormation()]);
+        $form = $this->createForm(AlternanceType::class, $alternance, ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -183,7 +183,7 @@ class AlternanceController extends BaseController
      */
     public function edit(Request $request, Alternance $alternance): Response
     {
-        $form = $this->createForm(AlternanceType::class, $alternance, ['formation' => $this->dataUserSession->getFormation()]);
+        $form = $this->createForm(AlternanceType::class, $alternance, ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

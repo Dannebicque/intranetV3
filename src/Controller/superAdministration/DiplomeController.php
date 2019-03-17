@@ -5,7 +5,7 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Form\DiplomeType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +17,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiplomeController extends BaseController
 {
     /**
-     * @Route("/new/{formation}", name="sa_diplome_new", methods="GET|POST")
-     * @param Request   $request
+     * @Route("/new/{departement}", name="sa_diplome_new", methods="GET|POST")
+     * @param Request     $request
      *
-     * @param Formation $formation
+     * @param Departement $departement
      *
      * @return Response
      */
-    public function create(Request $request, Formation $formation): Response
+    public function create(Request $request, Departement $departement): Response
     {
-        $diplome = new Diplome($formation);
+        $diplome = new Diplome($departement);
         $form = $this->createForm(DiplomeType::class, $diplome, [
             'attr' => [
                 'data-provide' => 'validation'
@@ -39,12 +39,12 @@ class DiplomeController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.add.success.flash');
 
-            return $this->redirectToRoute('sa_structure_index', ['formation' => $formation->getId()]);
+            return $this->redirectToRoute('sa_structure_index', ['departement' => $departement->getId()]);
         }
 
         return $this->render('structure/diplome/new.html.twig', [
             'diplome' => $diplome,
-            'formation' => $formation,
+            'departement' => $departement,
             'form'    => $form->createView(),
         ]);
     }
@@ -80,7 +80,7 @@ class DiplomeController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.edit.success.flash');
 
-            return $this->redirectToRoute('sa_structure_index', ['formation' => $diplome->getFormation()->getId()]);
+            return $this->redirectToRoute('sa_structure_index', ['departement' => $diplome->getDepartement()->getId()]);
         }
 
         return $this->render('structure/diplome/edit.html.twig', [

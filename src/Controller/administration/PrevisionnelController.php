@@ -36,12 +36,12 @@ class PrevisionnelController extends BaseController
      */
     public function index(MatiereRepository $matiereRepository, $annee = 0): Response
     {
-        if ($annee === 0 && $this->dataUserSession->getFormation() !== null) {
-            $annee = $this->dataUserSession->getFormation()->getOptAnneePrevisionnel();
+        if ($annee === 0 && $this->dataUserSession->getDepartement() !== null) {
+            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
         return $this->render('administration/previsionnel/index.html.twig', [
-            'matieres' => $matiereRepository->findByFormation($this->dataUserSession->getFormation()),
+            'matieres' => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'annee'    => $annee
         ]);
     }
@@ -57,8 +57,8 @@ class PrevisionnelController extends BaseController
      */
     public function matiere(MyPrevisionnel $myPrevisionnel, Matiere $matiere, $annee = 0): Response
     {
-        if ($annee === 0 && $this->dataUserSession->getFormation() !== null) {
-            $annee = $this->dataUserSession->getFormation()->getOptAnneePrevisionnel();
+        if ($annee === 0 && $this->dataUserSession->getDepartement() !== null) {
+            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
         $myPrevisionnel->getPrevisionnelMatiere($matiere, $annee);
@@ -80,8 +80,8 @@ class PrevisionnelController extends BaseController
      */
     public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre, $annee = 0): Response
     {
-        if ($annee === 0 && $this->dataUserSession->getFormation() !== null) {
-            $annee = $this->dataUserSession->getFormation()->getOptAnneePrevisionnel();
+        if ($annee === 0 && $this->dataUserSession->getDepartement() !== null) {
+            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
         $myPrevisionnel->getPrevisionnelSemestre($semestre, $annee);
@@ -103,8 +103,8 @@ class PrevisionnelController extends BaseController
      */
     public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel, $annee = 0): Response
     {
-        if ($annee === 0 && $this->dataUserSession->getFormation() !== null) {
-            $annee = $this->dataUserSession->getFormation()->getOptAnneePrevisionnel();
+        if ($annee === 0 && $this->dataUserSession->getDepartement() !== null) {
+            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
         $myPrevisionnel->setPersonnel($personnel);
@@ -196,7 +196,7 @@ class PrevisionnelController extends BaseController
             ImportPrevisionnelType::class,
             null,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -225,7 +225,7 @@ class PrevisionnelController extends BaseController
      */
     public function exportOmega(MyPrevisionnel $myPrevisionnel, $annee)
     {
-        return $myPrevisionnel->exportOmegaFormation($this->dataUserSession->getFormation(), $annee);
+        return $myPrevisionnel->exportOmegaDepartement($this->dataUserSession->getDepartement(), $annee);
     }
 
     /**
@@ -244,7 +244,7 @@ class PrevisionnelController extends BaseController
 
         //on efface, sauf si la case est cochée.
         if ($annee_concerver === null || $annee_concerver !== 'true') {
-            $previsionnels = $previsionnelRepository->findByFormation($this->dataUserSession->getFormation(),
+            $previsionnels = $previsionnelRepository->findByDepartement($this->dataUserSession->getDepartement(),
                 $annee_destination);
             foreach ($previsionnels as $previsionnel) {
                 $this->entityManager->remove($previsionnel);
@@ -252,7 +252,7 @@ class PrevisionnelController extends BaseController
             $this->entityManager->flush();
         }
 
-        $previsionnels = $previsionnelRepository->findByFormation($this->dataUserSession->getFormation(),
+        $previsionnels = $previsionnelRepository->findByDepartement($this->dataUserSession->getDepartement(),
             $anneeDepart);
 
         /** @var Previsionnel $previsionnel */
@@ -319,7 +319,7 @@ class PrevisionnelController extends BaseController
     public function supprimer(Request $request, PrevisionnelRepository $previsionnelRepository): Response
     {
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $hrs = $previsionnelRepository->findByFormation($this->dataUserSession->getFormation(),
+            $hrs = $previsionnelRepository->findByDepartement($this->dataUserSession->getDepartement(),
                 $request->request->get('annee_supprimer'));
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);

@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Diplome;
 use App\Entity\Personnel;
-use App\Entity\PersonnelFormation;
+use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -29,18 +29,18 @@ class PersonnelRepository extends ServiceEntityRepository
 
     /**
      * @param $type
-     * @param $formation
+     * @param $departement
      *
      * @return mixed
      */
-    public function findByType($type, $formation)
+    public function findByType($type, $departement)
     {
         return $this->createQueryBuilder('p')
-            ->innerJoin(PersonnelFormation::class, 'f', 'WITH', 'f.personnel = p.id')
+            ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
             ->where('p.typeUser = :type')
-            ->andWhere('f.formation = :formation')
+            ->andWhere('f.departement = :departement')
             ->setParameter('type', $type)
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->getQuery()
             ->getResult();
     }
@@ -98,28 +98,28 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return mixed
      */
-    public function findByFormation($formation)
+    public function findByDepartement($departement)
     {
-        return $this->findByFormationBuilder($formation)
+        return $this->findByDepartementBuilder($departement)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByFormationBuilder($formation): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuilder($departement): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->innerJoin(PersonnelFormation::class, 'f', 'WITH', 'f.personnel = p.id')
-            ->where('f.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
+            ->where('f.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC');
     }
@@ -132,7 +132,7 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findBySemestreBuilder(Semestre $semestre): ?\Doctrine\ORM\QueryBuilder
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
-            return $this->findByFormationBuilder($semestre->getAnnee()->getDiplome()->getFormation());
+            return $this->findByDepartementBuilder($semestre->getAnnee()->getDiplome()->getFormation());
         }
 
         return null;
@@ -189,7 +189,7 @@ class PersonnelRepository extends ServiceEntityRepository
      */
     public function tableauPersonnelHarpege(Diplome $diplome): array
     {
-        $p = $this->findByFormation($diplome->getFormation());
+        $p = $this->findByDepartement($diplome->getFormation());
 
         $t = array();
 

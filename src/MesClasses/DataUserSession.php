@@ -11,16 +11,16 @@ namespace App\MesClasses;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\Personnel;
-use App\Entity\PersonnelFormation;
+use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use App\Events;
 use App\Repository\AnneeRepository;
 use App\Repository\DiplomeRepository;
-use App\Repository\FormationRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
@@ -34,7 +34,7 @@ use Symfony\Component\Security\Core\Security;
 
 /**
  * Récupère les données d'une session utilisateur
- * Par exemple les données d'une formation pour un permanent
+ * Par exemple les données d'une departement pour un permanent
  */
 class DataUserSession
 {
@@ -43,7 +43,7 @@ class DataUserSession
     /**
      * @var Semestre[]
      */
-    protected $semestres; //semestres actifs de la formation
+    protected $semestres; //semestres actifs de la departement
 
     /**
      * @var Diplome[]
@@ -59,9 +59,9 @@ class DataUserSession
     protected $messages;
 
     /**
-     * @var Formation
+     * @var Departement
      */
-    protected $formation;
+    protected $departement;
 
     protected $user;
 
@@ -79,8 +79,8 @@ class DataUserSession
     /** @var PersonnelRepository */
     protected $personnelRepository;
 
-    /** @var FormationRepository */
-    protected $formationRepository;
+    /** @var DepartementRepository */
+    protected $departementRepository;
 
     /** @var NotificationRepository */
     protected $notificationRepository;
@@ -96,7 +96,7 @@ class DataUserSession
      * @param AnneeRepository                        $anneeRepository
      * @param DiplomeRepository                      $diplomeRepository
      * @param PersonnelRepository                    $personnelRepository
-     * @param FormationRepository                    $formationRepository
+     * @param DepartementRepository                  $departementRepository
      * @param NotificationRepository                 $notificationRepository
      * @param TokenStorageInterface                  $user
      * @param Security                               $security
@@ -113,7 +113,7 @@ class DataUserSession
         AnneeRepository $anneeRepository,
         DiplomeRepository $diplomeRepository,
         PersonnelRepository $personnelRepository,
-        FormationRepository $formationRepository,
+        DepartementRepository $departementRepository,
         NotificationRepository $notificationRepository,
         TokenStorageInterface $user,
         Security $security,
@@ -124,7 +124,7 @@ class DataUserSession
         $this->anneeRepository = $anneeRepository;
         $this->diplomeRepository = $diplomeRepository;
         $this->personnelRepository = $personnelRepository;
-        $this->formationRepository = $formationRepository;
+        $this->departementRepository = $departementRepository;
         $this->notificationRepository = $notificationRepository;
 
 
@@ -133,11 +133,11 @@ class DataUserSession
 
         if ($this->getUser() instanceof Etudiant) {
            $this->messagesRepository = $messageDestinataireEtudiantRepository;
-            $this->formation = $this->formationRepository->findFormationEtudiant($this->getUser());
+            $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
        } elseif ($this->getUser() instanceof Personnel) {
             $this->messagesRepository = $messageDestinatairePersonnelRepository;
-            if ($session->get('formation') !== null) {
-                $this->formation = $this->formationRepository->find($session->get('formation'));
+            if ($session->get('departement') !== null) {
+                $this->departement = $this->departementRepository->find($session->get('departement'));
             }
         } else {
             //ni étudiant, ni personnel... étrange
@@ -145,11 +145,11 @@ class DataUserSession
             $eventDispatcher->dispatch(Events::REDIRECT_TO_LOGIN, $event);
         }
 
-        if ($this->formation !== null) {
+        if ($this->departement !== null) {
             //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
-            $this->semestres = $semestreRepository->findByFormation($this->formation);
-            $this->diplomes = $diplomeRepository->findByFormation($this->formation);
-            $this->annees = $anneeRepository->findByFormation($this->formation);
+            $this->semestres = $semestreRepository->findByDepartement($this->departement);
+            $this->diplomes = $diplomeRepository->findByDepartement($this->departement);
+            $this->annees = $anneeRepository->findByDepartement($this->departement);
         }
     }
 
@@ -190,11 +190,11 @@ class DataUserSession
     }
 
     /**
-     * @return Formation
+     * @return Departement
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
@@ -212,7 +212,7 @@ class DataUserSession
      */
     public function getPersonnels()
     {
-        return $this->personnelRepository->findByFormation($this->formation->getId());
+        return $this->personnelRepository->findByDepartement($this->departement->getId());
     }
 
     /**
@@ -221,7 +221,7 @@ class DataUserSession
     public function getPersonnelsEnseignant()
     {
         //todo: les administrations sont aussi des permanents ?
-        return $this->personnelRepository->findByType('permanent', $this->formation);
+        return $this->personnelRepository->findByType('permanent', $this->departement);
     }
 
     /**
@@ -240,16 +240,16 @@ class DataUserSession
      */
     public function getAnneePrevisionnel(): ?int
     {
-        return $this->formation->getOptAnneePrevisionnel();
+        return $this->departement->getOptAnneePrevisionnel();
     }
 
     /**
      * @return null
      */
-    public function getFormationId()
+    public function getDepartementId()
     {
-        if ($this->formation !== null) {
-            return $this->formation->getId();
+        if ($this->departement !== null) {
+            return $this->departement->getId();
         }
 
         return null;
@@ -260,14 +260,14 @@ class DataUserSession
      *
      * @return bool
      */
-    public function isGoodFormation($role): bool
+    public function isGoodDepartement($role): bool
     {
         if ($this->getUser() !== null && !($this->getUser() instanceof Etudiant)) {
-            /** @var PersonnelFormation $rf */
-            foreach ($this->getUser()->getPersonnelFormations() as $rf) {
-                if ($rf->getFormation() !== null &&
+            /** @var PersonnelDepartement $rf */
+            foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
+                if ($rf->getDepartement() !== null &&
                     \in_array($role, $rf->getRoles(), true) !== false &&
-                    $rf->getFormation()->getId() === $this->formation->getId()) {
+                    $rf->getDepartement()->getId() === $this->departement->getId()) {
                     return true;
                 }
             }
@@ -292,9 +292,9 @@ class DataUserSession
     /**
      * @return bool
      */
-    public function getFormationMultiple() : bool
+    public function getDepartementMultiple() : bool
     {
-        return count($this->getUser()->getPersonnelFormations()) > 1;
+        return count($this->getUser()->getPersonnelDepartements()) > 1;
     }
 
     public function getAnneeUniversitaire() {

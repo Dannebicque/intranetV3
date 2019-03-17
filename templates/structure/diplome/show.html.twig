@@ -7,7 +7,7 @@
 {% block headeractions %}
     <div class="header-action">
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'diplome', id: diplome.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{formation:diplome.formation.id}}}) }}
+            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'diplome', id: diplome.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:diplome.departement.id}}}) }}
         {% else %}
             {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_diplome', id: diplome.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}       </div>
@@ -33,8 +33,8 @@
                 <td>{{ diplome.libelle }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.formation'|trans }}</th>
-                <td>{{ diplome.formation ? diplome.formation.libelle : 'non.defini'|trans }}</td>
+                <th>{{ 'table.departement'|trans }}</th>
+                <td>{{ diplome.departement ? diplome.departement.libelle : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.responsable_diplome'|trans }}</th>

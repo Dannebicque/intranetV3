@@ -9,7 +9,7 @@
 namespace App\MesClasses;
 
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Hrs;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
@@ -251,16 +251,16 @@ class MyPrevisionnel
     }
 
     /**
-     * @param Personnel $personnel
-     * @param Formation $formation
+     * @param Personnel   $personnel
+     * @param Departement $departement
      *
      * @return mixed
      */
-    public function getPrevisionnelEnseignantFormation(
+    public function getPrevisionnelEnseignantDepartement(
         Personnel $personnel,
-        Formation $formation
+        Departement $departement
     ) {
-        return $this->previsionnelRepository->findPrevisionnelEnseignantFormation($personnel, $formation);
+        return $this->previsionnelRepository->findPrevisionnelEnseignantDepartement($personnel, $departement);
     }
 
     /**
@@ -376,16 +376,16 @@ class MyPrevisionnel
     }
 
     /**
-     * @param Formation $formation
-     * @param int       $anneePrevisionnel
+     * @param Departement $departement
+     * @param int         $anneePrevisionnel
      *
      * @return StreamedResponse
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function exportOmegaFormation(Formation $formation, int $anneePrevisionnel): StreamedResponse
+    public function exportOmegaDepartement(Departement $departement, int $anneePrevisionnel): StreamedResponse
     {
-        $previsionnels = $this->previsionnelRepository->findByFormation($formation, $anneePrevisionnel);
-        $hrs = $this->hrsRepository->findByFormation($formation, $anneePrevisionnel);
+        $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $anneePrevisionnel);
+        $hrs = $this->hrsRepository->findByDepartement($departement, $anneePrevisionnel);
 
         $this->myExcelWriter->createSheet('omega');
         $this->myExcelWriter->writeHeader([
@@ -415,7 +415,7 @@ class MyPrevisionnel
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="export-omega' . $formation->getLibelle() . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="export-omega' . $departement->getLibelle() . '.xlsx"'
             ]
         );
     }
@@ -654,9 +654,9 @@ class MyPrevisionnel
         $this->entityManager->flush();
     }
 
-    public function compareEdtPreviPersonnels($personnels, $planning, Formation $formation, $annee)
+    public function compareEdtPreviPersonnels($personnels, $planning, Departement $departement, $annee)
     {
-        $previsionnels = $this->previsionnelRepository->findByFormation($formation, $annee);
+        $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
         $t = array();
 
         /** @var Personnel $ens */

@@ -4,41 +4,41 @@ namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Formation;
-use App\Entity\PersonnelFormation;
+use App\Entity\Departement;
+use App\Entity\PersonnelDepartement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class PersonnelFormationController
+ * Class PersonnelDepartementController
  * @package App\Controller\superAdministration
- * @Route("/super-administration/formation/personnel")
+ * @Route("/super-administration/departement/personnel")
  */
-class PersonnelFormationController extends BaseController
+class PersonnelDepartementController extends BaseController
 {
     /**
-     * @Route("/{formation}", name="sa_personnel_formation_index")
-     * @param Formation $formation
+     * @Route("/{departement}", name="sa_personnel_departement_index")
+     * @param Departement $departement
      *
      * @return Response
      */
-    public function index(Formation $formation): Response
+    public function index(Departement $departement): Response
     {
         return $this->render('super-administration/personnel_formation/index.html.twig', [
-            'personnels' => $formation->getPersonnelFormations(),
-            'formation'  => $formation
+            'personnels' => $departement->getPersonnelDepartements(),
+            'departement'  => $departement
         ]);
     }
 
     /**
      * @Route("/remove/{pf}", name="sa_personnel_formation_remove", methods="DELETE")
-     * @param Request            $request
-     * @param PersonnelFormation $pf
+     * @param Request              $request
+     * @param PersonnelDepartement $pf
      *
      * @return Response
      */
-    public function delete(Request $request, PersonnelFormation $pf): Response
+    public function delete(Request $request, PersonnelDepartement $pf): Response
     {
         $id = $pf->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
@@ -58,12 +58,12 @@ class PersonnelFormationController extends BaseController
 
     /**
      * @Route("/modifier-droit/{pf}", name="sa_personnel_formation_modifier_droit", options={"expose":true})
-     * @param Request            $request
-     * @param PersonnelFormation $pf
+     * @param Request              $request
+     * @param PersonnelDepartement $pf
      *
      * @return Response
      */
-    public function modifierDroits(Request $request, PersonnelFormation $pf): Response
+    public function modifierDroits(Request $request, PersonnelDepartement $pf): Response
     {
         $droit = $request->request->get('droit');
         if ($pf !== null && \in_array($droit, Constantes::ROLE_LISTE, true)) {

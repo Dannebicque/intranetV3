@@ -17,9 +17,9 @@ class SalleExamen extends BaseEntity
     private $salle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="salleExamens")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="salleExamens")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\Column(type="integer")
@@ -45,9 +45,9 @@ class SalleExamen extends BaseEntity
      */
     private $placesInterdites;
 
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
     }
 
     public function getSalle(): ?Salle
@@ -62,14 +62,14 @@ class SalleExamen extends BaseEntity
         return $this;
     }
 
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

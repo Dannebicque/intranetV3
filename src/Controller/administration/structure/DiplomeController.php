@@ -5,7 +5,7 @@ namespace App\Controller\administration\structure;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Form\DiplomeType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,17 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiplomeController extends BaseController
 {
     /**
-     * @Route("/new/{formation}", name="administration_structure_diplome_new", methods="GET|POST")
-     * @param Request   $request
+     * @Route("/new/{departement}", name="administration_structure_diplome_new", methods="GET|POST")
+     * @param Request     $request
      *
-     * @param Formation $formation
+     * @param Departement $departement
      *
      * @return Response
      */
-    public function create(Request $request, Formation $formation): Response
+    public function create(Request $request, Departement $departement): Response
     {
-        $diplome = new Diplome($formation);
-        $diplome->setFormation($this->dataUserSession->getFormation());
+        $diplome = new Diplome($departement);
+        $diplome->setDepartement($this->dataUserSession->getDepartement());
         $form = $this->createForm(DiplomeType::class, $diplome, [
             'attr' => [
                 'data-provide' => 'validation'

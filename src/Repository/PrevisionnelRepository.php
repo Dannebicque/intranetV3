@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
@@ -32,12 +32,12 @@ class PrevisionnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Personnel $personnel
-     * @param Formation $formation
+     * @param Personnel   $personnel
+     * @param Departement $departement
      *
      * @return mixed
      */
-    public function findPrevisionnelEnseignantFormation(Personnel $personnel, Formation $formation)
+    public function findPrevisionnelEnseignantDepartement(Personnel $personnel, Departement $departement)
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
@@ -47,9 +47,9 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('p.annee = :annee')
             ->andWhere('p.personnel = :personnel')
-            ->andWhere('d.formation = :formation')
-            ->setParameter('annee', $formation->getOptAnneePrevisionnel())
-            ->setParameter('formation', $formation->getId())
+            ->andWhere('d.departement = :departement')
+            ->setParameter('annee', $departement->getOptAnneePrevisionnel())
+            ->setParameter('departement', $departement->getId())
             ->setParameter('personnel', $personnel->getId())
             ->getQuery()
             ->getResult();
@@ -114,7 +114,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByFormation(Formation $formation, $annee)
+    public function findByDepartement(Departement $departement, $annee)
     {
 
         return $this->createQueryBuilder('p')
@@ -124,9 +124,9 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('p.annee = :annee')
-            ->andWhere('d.formation = :formation')
+            ->andWhere('d.departement = :departement')
             ->setParameter('annee', $annee)
-            ->setParameter('formation', $formation->getId())
+            ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
 

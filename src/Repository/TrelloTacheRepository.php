@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\TrelloTache;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -26,15 +26,15 @@ class TrelloTacheRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Formation $formation
+     * @param Departement $departement
      *
      * @return mixed
      */
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.formation = :formation')
-            ->setParameter('formation', $formation->getId())
+            ->andWhere('a.departement = :departement')
+            ->setParameter('departement', $departement->getId())
             ->orderBy('a.deadline', 'ASC')
             ->getQuery()
             ->getResult();
@@ -45,7 +45,7 @@ class TrelloTacheRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findByFormationTaches($getId): array
+    public function findByDepartementTaches($getId): array
     {
         $query = $this->createQueryBuilder('t') //prendre la période de 30 jours
             ->orderBy('t.deadline', 'ASC')

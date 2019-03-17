@@ -34,7 +34,7 @@ class ArticleController extends BaseController
         $categorie,
         $page = 1
     ): Response {
-        $articles = $articleRepository->findByTypeFormationBuilder($categorie, $this->dataUserSession->getFormation());
+        $articles = $articleRepository->findByTypeDepartementBuilder($categorie, $this->dataUserSession->getDepartement());
 
         $myPagination->calculPagination(
             $articles,

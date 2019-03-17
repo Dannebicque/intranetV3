@@ -7,7 +7,7 @@ use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\MesClasses\MyExport;
-use App\Repository\PersonnelFormationRepository;
+use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,15 +20,15 @@ class PersonnelController extends BaseController
 {
     /**
      * @Route("/", name="administration_personnel_index", methods="GET", requirements={"type": "permanent|vacataire"})
-     * @param PersonnelFormationRepository $personnelRepository
+     * @param PersonnelDepartementRepository $personnelRepository
      *
      * @return Response
      */
-    public function index(PersonnelFormationRepository $personnelRepository): Response
+    public function index(PersonnelDepartementRepository $personnelRepository): Response
     {
         return $this->render(
             'administration/personnel/index.html.twig',
-            ['personnels' => $personnelRepository->findByType('permanent', $this->dataUserSession->getFormationId())]
+            ['personnels' => $personnelRepository->findByType('permanent', $this->dataUserSession->getDepartementId())]
         );
     }
 
@@ -45,7 +45,7 @@ class PersonnelController extends BaseController
      */
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
-        $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getFormation());
+        $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $personnels,
@@ -154,22 +154,22 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_personnel_delete", methods="DELETE", options={"expose":true})
-     * @param PersonnelFormationRepository $personnelFormationRepository
-     * @param Request                      $request
-     * @param Personnel                    $personnel
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
+     * @param Request                        $request
+     * @param Personnel                      $personnel
      *
      * @return Response
      */
     public function delete(
-        PersonnelFormationRepository $personnelFormationRepository,
+        PersonnelDepartementRepository $personnelDepartementRepository,
         Request $request,
         Personnel $personnel
     ): Response {
         $id = $personnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
-            $pf = $personnelFormationRepository->findByPersonnelFormation($personnel,
-                $this->dataUserSession->getFormation());
+            $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
+                $this->dataUserSession->getDepartement());
             foreach ($pf as $p) {
                 $this->entityManager->remove($p);
             }
@@ -189,15 +189,15 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/gestion/droit/{personnel}", name="administration_personnel_droit")
-     * @param PersonnelFormationRepository $personnelFormationRepository
-     * @param Personnel                    $personnel
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
+     * @param Personnel                      $personnel
      *
      * @return Response
      */
-    public function gestionDroit(PersonnelFormationRepository $personnelFormationRepository, Personnel $personnel) {
+    public function gestionDroit(PersonnelDepartementRepository $personnelDepartementRepository, Personnel $personnel) {
         //todo: tester si CDD ou DDE
 
-        $droits = $personnelFormationRepository->findDroitsByPersonnelFormation($personnel, $this->dataUserSession->getFormation());
+        $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
         return $this->render('administration/personnel/droit.html.twig', ['personnel' => $personnel, 'droits' => $droits]);
     }
 }

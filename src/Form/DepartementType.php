@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\Site;
 use App\Form\Type\YesNoType;
@@ -20,7 +20,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  * Class FormationType
  * @package App\Form
  */
-class FormationType extends AbstractType
+class DepartementType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -144,7 +144,7 @@ class FormationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Formation::class,
+            'data_class'         => Departement::class,
             'translation_domain' => 'form'
 
         ]);

@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CahierTexteType extends AbstractType
 {
-    private $formation;
+    private $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -27,7 +27,10 @@ class CahierTexteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+
+        //Todo: gérer par diplôme ?
+
+        $this->departement = $options['departement'];
 
         $builder
             ->add('libelle', TextType::class, [
@@ -44,7 +47,7 @@ class CahierTexteType extends AbstractType
                 'label'         => 'label.semestre',
                 'choice_label'  => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByFormationBuilder($this->formation);
+                    return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -59,7 +62,7 @@ class CahierTexteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => CahierTexte::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
         ]);
     }

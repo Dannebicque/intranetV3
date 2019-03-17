@@ -47,7 +47,7 @@ class TypeGroupeType extends AbstractType
                 'label'         => 'label.semestre',
                 'choice_label'  => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByFormationBuilder($this->formation);
+                    return $semestreRepository->findByDepartementBuilder($this->formation);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -63,7 +63,7 @@ class TypeGroupeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => TypeGroupe::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
         ]);
     }

@@ -3,7 +3,7 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,15 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class StructureController extends BaseController
 {
     /**
-     * @Route("/detail/{formation}", name="sa_structure_index")
-     * @param Formation $formation
+     * @Route("/detail/{departement}", name="sa_structure_index")
+     * @param Departement $departement
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Formation $formation): Response
+    public function index(Departement $departement): Response
     {
         return $this->render('structure/index.html.twig', [
-            'formation' => $formation,
+            'departement' => $departement,
         ]);
     }
 }

@@ -1,9 +1,9 @@
 <table width="100%">
     <tr>
         <td style="text-align: center; width:20%"><img
-                    src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.formation.logoName }}" alt="logo"
+                    src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"
                     width="75"/></td>
-        <td style="text-align: center; width:60%"><h1>{{ connect.formation.nomformation }}</h1>
+        <td style="text-align: center; width:60%"><h1>{{ user_data.departement.libelle }}</h1>
             <stong>Année Universitaire {{ etudiant.annee.diplome.displayAnneeUniversitaire }}</stong>
             <br/>
             UNIVERSITE de REIMS CHAMPAGNE-ARDENNE<br/>
