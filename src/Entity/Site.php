@@ -35,10 +35,16 @@ class Site extends BaseEntity
      */
     private $salles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ufr", mappedBy="sitePrincipal")
+     */
+    private $ufrPrincipales;
+
     public function __construct()
     {
         $this->ufrs = new ArrayCollection();
         $this->salles = new ArrayCollection();
+        $this->ufrPrincipales = new ArrayCollection();
     }
 
     /**
@@ -150,6 +156,37 @@ class Site extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($salle->getSite() === $this) {
                 $salle->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ufr[]
+     */
+    public function getUfrPrincipales(): Collection
+    {
+        return $this->ufrPrincipales;
+    }
+
+    public function addUfrPrincipale(Ufr $ufrPrincipale): self
+    {
+        if (!$this->ufrPrincipales->contains($ufrPrincipale)) {
+            $this->ufrPrincipales[] = $ufrPrincipale;
+            $ufrPrincipale->setSitePrincipal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUfrPrincipale(Ufr $ufrPrincipale): self
+    {
+        if ($this->ufrPrincipales->contains($ufrPrincipale)) {
+            $this->ufrPrincipales->removeElement($ufrPrincipale);
+            // set the owning side to null (unless already changed)
+            if ($ufrPrincipale->getSitePrincipal() === $this) {
+                $ufrPrincipale->setSitePrincipal(null);
             }
         }
 

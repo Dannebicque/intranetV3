@@ -32,6 +32,13 @@ class UfrType extends AbstractType
                 'expanded'     => false,
                 'multiple'     => false
             ])
+            ->add('sitePrincipal', EntityType::class, [
+                'class'        => Site::class,
+                'label'        => 'label.site_principal',
+                'choice_label' => 'libelle',
+                'expanded'     => true,
+                'multiple'     => false
+            ])
             ->add('sites', EntityType::class, [
                 'class'        => Site::class,
                 'label'        => 'label.sites',
