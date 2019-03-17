@@ -25,7 +25,7 @@ class ArticleController extends BaseController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
-        return $this->render('administration/article/index.html.twig', ['articles' => $articleRepository->findByFormation($this->dataUserSession->getFormation())]);
+        return $this->render('administration/article/index.html.twig', ['articles' => $articleRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
@@ -39,7 +39,7 @@ class ArticleController extends BaseController
      */
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
-        $articles = $articleRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $articles = $articleRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
         $response = $myExport->genereFichierGenerique(
             $_format,
             $articles,
@@ -60,12 +60,12 @@ class ArticleController extends BaseController
     public function create(Request $request): Response
     {
         $article = new Article($this->getUser());
-        $article->setFormation($this->dataUserSession->getFormation());
+        $article->setDepartement($this->dataUserSession->getDepartement());
         $form = $this->createForm(
             ArticleType::class,
             $article,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -111,7 +111,7 @@ class ArticleController extends BaseController
             ArticleType::class,
             $article,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]

@@ -3,7 +3,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\MesClasses\MyStructure;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,18 +21,18 @@ class StructureController extends BaseController
     public function index(): Response
     {
         return $this->render('structure/index.html.twig', [
-            'formation' => $this->dataUserSession->getFormation()
+            'departement' => $this->dataUserSession->getDepartement()
         ]);
     }
 
     /**
-     * @Route("/{formation}/export.{_format}", name="administration_structure_export", methods="GET", requirements={"_format"="xlsx|pdf"})
+     * @Route("/{departement}/export.{_format}", name="administration_structure_export", methods="GET", requirements={"_format"="xlsx|pdf"})
      * @param MyStructure       $myStructure
-     * @param Formation         $formation
+     * @param Departement       $departement
      * @param                   $_format
      */
-    public function export(MyStructure $myStructure, Formation $formation, $_format): void
+    public function export(MyStructure $myStructure, Departement $departement, $_format): void
     {
-        $myStructure->export($formation, $_format);
+        $myStructure->export($departement, $_format);
     }
 }

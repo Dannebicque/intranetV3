@@ -49,7 +49,7 @@ class EtudiantType extends AbstractType
             ->add('numEtudiant', TextType::class, ['label' => 'label.num_etudiant'])
             ->add('numIne', TextType::class, ['label' => 'label.num_ine', 'required' => false])
             ->add('bac', EntityType::class, ['label' => 'label.bac', 'class' => Bac::class, 'choice_label' => 'libelle', 'required' => false])
-            ->add('semestre', EntityType::class, ['label' => 'label.semestre', 'class' => Semestre::class, 'choice_label' => 'libelle']) //todo: en finction de la formation
+            ->add('semestre', EntityType::class, ['label' => 'label.semestre', 'class' => Semestre::class, 'choice_label' => 'libelle']) //todo: en finction de la departement
             ->add('anneeBac', TextType::class, ['label' => 'label.annee_bac'])
             ->add('username', TextType::class, ['label' => 'label.username'])
             ->add('demandeurEmploi', YesNoType::class, ['label' => 'label.demandeurEmploi'])

@@ -64,7 +64,7 @@ class TrelloTacheController extends BaseController
         sort($tab);
 
         return $this->render('administration/trello_tache/board.html.twig', [
-            'taches'     => $trelloTacheRepository->findByFormationTaches($this->dataUserSession->getFormationId()),
+            'taches'     => $trelloTacheRepository->findByDepartementTaches($this->dataUserSession->getDepartementId()),
             'calendrier' => $tab
         ]);
     }
@@ -82,7 +82,7 @@ class TrelloTacheController extends BaseController
      */
     public function export(MyExport $myExport, TrelloTacheRepository $trelloTacheRepository, $_format): Response
     {
-        $trellos = $trelloTacheRepository->findByFormation($this->dataUserSession->getFormation());
+        $trellos = $trelloTacheRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $trellos,
@@ -104,12 +104,12 @@ class TrelloTacheController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $trelloTache = new TrelloTache($this->dataUserSession->getFormation());
+        $trelloTache = new TrelloTache($this->dataUserSession->getDepartement());
         $form = $this->createForm(
             TrelloTacheType::class,
             $trelloTache,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -155,7 +155,7 @@ class TrelloTacheController extends BaseController
             TrelloTacheType::class,
             $trelloTache,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]

@@ -244,7 +244,7 @@ class MyExportListing
 
         $this->myExcelWriter->writeCellName('H1', 'Année Universitaire - ' . $dbt . ' - ' . $fin,
             ['style' => ['HORIZONTAL_RIGHT']]);
-        $this->myExcelWriter->writeCellName('H2', 'IUT de Troyes - ' . $this->dataUserSession->getFormation()->getLibelle(),
+        $this->myExcelWriter->writeCellName('H2', 'IUT de Troyes - ' . $this->dataUserSession->getDepartement()->getLibelle(),
             ['style' => ['HORIZONTAL_RIGHT']]);
         $this->myExcelWriter->writeCellName('H4', $this->titre, ['style' => ['HORIZONTAL_RIGHT']]);
 
@@ -252,9 +252,9 @@ class MyExportListing
 
         //todo: dans le writer ?
         $objDrawing = new Drawing();
-        $objDrawing->setName('Logo Formation');
-        $objDrawing->setDescription('Logo Formation');
-        $objDrawing->setPath($base . 'logo/' . $this->dataUserSession->getFormation()->getLogoName());
+        $objDrawing->setName('Logo Departement');
+        $objDrawing->setDescription('Logo Departement');
+        $objDrawing->setPath($base . 'logo/' . $this->dataUserSession->getDepartement()->getLogoName());
         $objDrawing->setHeight(120);
         $objDrawing->setCoordinates('A1');
         $objDrawing->setWorksheet($this->myExcelWriter->getSheet());

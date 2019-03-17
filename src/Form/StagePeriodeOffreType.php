@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use App\Repository\StagePeriodeRepository;
@@ -15,8 +15,8 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class StagePeriodeOffreType extends AbstractType
 {
-    /** @var Formation */
-    private $formation;
+    /** @var Departement */
+    private $departement;
     private $annee;
 
     /**
@@ -25,7 +25,7 @@ class StagePeriodeOffreType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
         $this->annee = $options['annee'];
 
         $builder
@@ -43,7 +43,7 @@ class StagePeriodeOffreType extends AbstractType
                 'label'         => 'label.stagePeriodes',
                 'choice_label'  => 'libelle',
                 'query_builder' => function(StagePeriodeRepository $stagePeriodeRepository) {
-                    return $stagePeriodeRepository->findByFormationBuilder($this->formation,
+                    return $stagePeriodeRepository->findByDepartementBuilder($this->departement,
                         $this->annee);
                 },
                 'required'      => true,
@@ -57,7 +57,7 @@ class StagePeriodeOffreType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => StagePeriodeOffre::class,
-            'formation'          => null,
+            'departement'          => null,
             'annee'          => null,
             'translation_domain' => 'form'
         ]);

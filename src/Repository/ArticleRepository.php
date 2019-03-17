@@ -26,13 +26,13 @@ class ArticleRepository extends ServiceEntityRepository
 
     /**
      * @param $type
-     * @param $formation
+     * @param $departement
      *
      * @return mixed
      */
-    public function findByTypeFormation($type, $formation)
+    public function findByTypeDepartement($type, $departement)
     {
-        return $this->findByTypeFormationBuilder($type, $formation)
+        return $this->findByTypeDepartementBuilder($type, $departement)
             ->getQuery()
             ->getResult();
     }
@@ -57,31 +57,31 @@ class ArticleRepository extends ServiceEntityRepository
 
     /**
      * @param $type
-     * @param $formation
+     * @param $departement
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function findByTypeFormationBuilder($type, $formation): \Doctrine\ORM\QueryBuilder
+    public function findByTypeDepartementBuilder($type, $departement): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->where('a.type = :type')
-            ->andWhere('a.formation = :formation')
+            ->andWhere('a.departement = :departement')
             ->setParameter('type', $type)
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->orderBy('a.updated', 'DESC');
     }
 
     /**
-     * @param $formation
+     * @param $departement
      * @param $nbResult
      *
      * @return Article[]
      */
-    public function findByFormation($formation, $nbResult = 2): array
+    public function findByDepartement($departement, $nbResult = 2): array
     {
         $q = $this->createQueryBuilder('a')
-            ->andWhere('a.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->andWhere('a.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('a.created', 'DESC');
 
         if ($nbResult > 0) {

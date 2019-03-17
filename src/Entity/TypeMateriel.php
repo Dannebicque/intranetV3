@@ -19,19 +19,19 @@ class TypeMateriel extends BaseEntity
     private $libelle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="typeMateriels")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="typeMateriels")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Materiel", mappedBy="typeMateriel")
      */
     private $materiels;
 
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
         $this->materiels = new ArrayCollection();
-        $this->formation = $formation;
+        $this->departement = $departement;
     }
 
     public function getLibelle(): ?string
@@ -46,14 +46,14 @@ class TypeMateriel extends BaseEntity
         return $this;
     }
 
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

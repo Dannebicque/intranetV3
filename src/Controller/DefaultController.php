@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
-use App\Repository\FormationRepository;
+use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,21 +24,21 @@ class DefaultController extends BaseController
     public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository): Response
     {
         return $this->render('default/index.html.twig', [
-            'actualites' => $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 2),
-            'dates'      => $dateRepository->findByFormation($this->dataUserSession->getFormation(), 2)
+            'actualites' => $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement(), 2),
+            'dates'      => $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 2)
         ]);
     }
 
     /**
      * @Route("/super-administration/", name="super_admin_homepage")
-     * @param FormationRepository $formationRepository
+     * @param DepartementRepository $departementRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function superAdminHomepage(FormationRepository $formationRepository): Response
+    public function superAdminHomepage(DepartementRepository $departementRepository): Response
     {
         return $this->render('super-administration/super_admin_homepage.html.twig', [
-            'formations' => $formationRepository->findAll()
+            'departements' => $departementRepository->findAll()
         ]);
     }
 

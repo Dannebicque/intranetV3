@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
@@ -29,15 +29,15 @@ class GroupeRepository extends ServiceEntityRepository
         parent::__construct($registry, Groupe::class);
     }
 
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
-            ->where('d.formation = :formation')
-            ->setParameter('formation', $formation->getId())
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
     }

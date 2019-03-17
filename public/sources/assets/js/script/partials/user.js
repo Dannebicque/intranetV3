@@ -1,8 +1,8 @@
-$(document).on('change', '.formationParDefaut', function(e){
+$(document).on('change', '.departementParDefaut', function(e){
   $.ajax({
-    url: Routing.generate('user_change_formation_defaut'),
+    url: Routing.generate('user_change_departement_defaut'),
     data: {
-      formation: $(this.val())
+      departement: $(this.val())
     },
     method: 'POST',
     success: function(e) {

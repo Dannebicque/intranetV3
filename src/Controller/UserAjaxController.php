@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Favori;
-use App\Entity\Formation;
-use App\Entity\PersonnelFormation;
+use App\Entity\Departement;
+use App\Entity\PersonnelDepartement;
 use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
-use App\Repository\PersonnelFormationRepository;
+use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,21 +62,21 @@ class UserAjaxController extends BaseController
     }
 
     /**
-     * @Route("/change-defaut/{formation}", name="user_change_formation_defaut", options={"expose":true})
-     * @param PersonnelFormationRepository $personnelFormationRepository
-     * @param Formation                    $formation
+     * @Route("/change-defaut/{departement}", name="user_change_departement_defaut", options={"expose":true})
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
+     * @param Departement                    $departement
      *
      * @return JsonResponse
      */
-    public function changeFormationDefaut(
-        PersonnelFormationRepository $personnelFormationRepository,
-        Formation $formation
+    public function changeDepartementDefaut(
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        Departement $departement
     ): ?JsonResponse {
         if ($this->dataUserSession->getUser() !== null && $this->dataUserSession->getUser()->getTypeUser() === 'permanent') {
-            $pf = $personnelFormationRepository->findByPersonnel($this->dataUserSession->getUser());
-            /** @var PersonnelFormation $p */
+            $pf = $personnelDepartementRepository->findByPersonnel($this->dataUserSession->getUser());
+            /** @var PersonnelDepartement $p */
             foreach ($pf as $p) {
-                if ($p->getFormation() !== null && $p->getFormation()->getId() === $formation->getId()) {
+                if ($p->getDepartement() !== null && $p->getDepartement()->getId() === $departement->getId()) {
                     $p->setDefaut(true);
                 } else {
                     $p->setDefaut(false);

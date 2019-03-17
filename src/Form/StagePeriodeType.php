@@ -23,7 +23,7 @@ use Symfony\Component\Form\FormEvents;
 
 class StagePeriodeType extends AbstractType
 {
-    private $formation;
+    private $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -31,7 +31,7 @@ class StagePeriodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => 'help.libelleStagePeriode'])
             ->add('numeroPeriode', ChoiceType::class, [
@@ -44,7 +44,7 @@ class StagePeriodeType extends AbstractType
                 'label'         => 'label.semestre_stage_periode',
                 'choice_label'  => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByFormationBuilder($this->formation);
+                    return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -58,7 +58,7 @@ class StagePeriodeType extends AbstractType
                 'help'          => 'help.responsables',
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByFormationBuilder($this->formation);
+                    return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
             ->add('anneeUniversitaire', ChoiceType::class, [
@@ -138,7 +138,7 @@ class StagePeriodeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => StagePeriode::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
         ]);
     }

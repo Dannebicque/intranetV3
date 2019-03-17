@@ -31,9 +31,9 @@ class CreneauCoursController extends BaseController
         CreneauCoursRepository $creneauCoursRepository
     ): Response {
         return $this->render('administration/creneau_cours/index.html.twig', [
-            'creneau_cours'        => $creneauCoursRepository->findByAnneeFormation($this->dataUserSession->getFormation(), $this->dataUserSession->getAnneeUniversitaire()),
+            'creneau_cours'        => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $this->dataUserSession->getAnneeUniversitaire()),
             'annee_universitaires' => $anneeUniversitaireRepository->findAll(),
-            'defaut' => $this->dataUserSession->getFormation()->getAnneeUniversitairePrepare()
+            'defaut' => $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare()
         ]);
     }
 
@@ -49,7 +49,7 @@ class CreneauCoursController extends BaseController
         CreneauCoursRepository $creneauCoursRepository
     ): Response {
         return $this->render('administration/creneau_cours/_liste_creneaux.html.twig', [
-            'creneau_cours'        => $creneauCoursRepository->findByAnneeFormation($this->dataUserSession->getFormation(), $annee_universitaire),
+            'creneau_cours'        => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $annee_universitaire),
         ]);
     }
 
@@ -65,7 +65,7 @@ class CreneauCoursController extends BaseController
      */
     public function export(MyExport $myExport, CreneauCoursRepository $creneauCoursRepository, $_format): Response
     {
-        $creneaux = $creneauCoursRepository->findByFormation($this->dataUserSession->getFormation());
+        $creneaux = $creneauCoursRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $creneaux,
@@ -90,7 +90,7 @@ class CreneauCoursController extends BaseController
         if ($annee) {
 
             $creneauCour = new CreneauCours();
-            $creneauCour->setFormation($this->dataUserSession->getFormation());
+            $creneauCour->setDepartement($this->dataUserSession->getDepartement());
             $creneauCour->setAnneeUniversitaire($annee);
             $creneauCour->setDebut(new \DateTime($request->request->get('debut')));
             $creneauCour->setFin(new \DateTime(($request->request->get('fin'))));
@@ -191,14 +191,14 @@ class CreneauCoursController extends BaseController
 
         //on efface, sauf si la case est cochée.
         if ($annee_destination !== null) {
-            $creneaux = $creneauCoursRepository->findByAnneeFormation($this->dataUserSession->getFormation(), $annee_destination);
+            $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $annee_destination);
             foreach ($creneaux as $creneau) {
                 $this->entityManager->remove($creneau);
             }
             $this->entityManager->flush();
         }
 
-        $creneaux = $creneauCoursRepository->findByAnneeFormation($this->dataUserSession->getFormation(), $annee_depart);
+        $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $annee_depart);
 
 
         /** @var CreneauCours $creneau */

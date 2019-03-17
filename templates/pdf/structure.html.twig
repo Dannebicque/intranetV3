@@ -4,9 +4,9 @@
     <table style="width: 100%; border:0;">
         <tr>
             <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~ formation.logoName }}" alt="logo"
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~ departement.logoName }}" alt="logo"
                         height="70px"/></td>
-            <td style="text-align: center; width:60%"><h1>{{ formation.libelle }}</h1>
+            <td style="text-align: center; width:60%"><h1>{{ departement.libelle }}</h1>
 
                 <h2>Structure de la formation</h2>
             </td>
@@ -20,9 +20,9 @@
     <br>
     <table class="table" style="width:100%">
         <tr class="active">
-            <td colspan="6">{{ formation.libelle }}</td>
+            <td colspan="6">{{ departement.libelle }}</td>
         </tr>
-        {% for diplome in formation.diplomes %}
+        {% for diplome in departement.diplomes %}
             <tr>
                 <td>&nbsp;</td>
                 <td colspan="5" class="success">{{ diplome.typeDiplome.libelle }} {{ diplome.libelle }} | {{ diplome.codeApogee }}

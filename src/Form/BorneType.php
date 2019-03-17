@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BorneType extends AbstractType
 {
-    private $formation;
+    private $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -31,7 +31,7 @@ class BorneType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add('icone', ChoiceType::class, [
@@ -65,7 +65,7 @@ class BorneType extends AbstractType
                 'label'         => 'label.semestres_date',
                 'choice_label'  => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByFormationBuilder($this->formation);
+                    return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -99,7 +99,7 @@ class BorneType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Borne::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
         ]);
     }

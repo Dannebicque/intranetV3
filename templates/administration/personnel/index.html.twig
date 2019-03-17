@@ -47,7 +47,7 @@
                         <td>{{ personnel.personnel.numeroHarpege }}</td>
                         <td>{{ personnel.personnel.mailUniv }}</td>
                         <td>
-                            {% if user_data.isGoodFormation("ROLE_CDD") or user_data.isGoodFormation("ROLE_DDE") %}
+                            {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
                             <button data-provide="modaler tooltip"
                                     data-url="{{ path('administration_personnel_droit', {'personnel': personnel.personnel.id}) }}"
                                     data-size="lg"

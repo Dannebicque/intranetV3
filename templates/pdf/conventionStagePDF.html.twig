@@ -45,16 +45,16 @@
     <div class="blocconvention">
         <p style="font-size:10px">Adresse : Villa Douce – 9 boulevard de la paix – CS 60005 – 51724 REIMS Cedex<br/>
                                   Téléphone : 03.26.91.34.68</p>
-        Représenté par : {{ user_data.formation.ufr.responsable.display }}<br/>
+        Représenté par : {{ user_data.departement.ufr.responsable.display }}<br/>
         Qualité du représentant : Directeur {{ settings('NOM_IUT') }}<br/>
         Composante
         <ul>
             <li>Intitulé (UFR/IUT …) : {{ settings('NOM_IUT') }}
                 - {{ proposition.etudiant.semestre.annee.diplome.typeDiplome.sigle }} {{ proposition.etudiant
                 .semestre.annee.diplome.sigle }}</li>
-            <li>Adresse : {% if user_data.formation.ufr.sitePrincipal.adresse != null %}{{ user_data.formation.ufr
+            <li>Adresse : {% if user_data.departement.ufr.sitePrincipal.adresse != null %}{{ user_data.departement.ufr
                 .sitePrincipal.adresse.display|raw}}{% endif %}</li>
-            <li>Téléphone : {{ user_data.formation.telcontact }}</li>
+            <li>Téléphone : {{ user_data.departement.telcontact }}</li>
             <li>Courriel : {{ proposition.etudiant.semestre.annee.diplome.assistantDiplome.mailUniv }}</li>
         </ul>
     </div>
@@ -639,7 +639,7 @@
            compétente.</p>
     </div>
     <br/>
-    <p><strong>FAIT À</strong> : {{ user_data.formation.ufr.sitePrincipal.adresse.ville }}</p>
+    <p><strong>FAIT À</strong> : {{ user_data.departement.ufr.sitePrincipal.adresse.ville }}</p>
     <p><strong>LE</strong> : {{ 'now'|date('d/m/Y') }}</p>
     <br/>
     <table width="100%">
@@ -649,7 +649,7 @@
         </tr>
         <tr>
             <td><strong>Représentant de l’établissement</strong><br/>Nom et signature
-                                                                     :<br/>{{ user_data.formation.ufr.responsable
+                                                                     :<br/>{{ user_data.departement.ufr.responsable
                 .display }}</td>
             <td><strong>Représentant de l’organisme d’accueil</strong><br/>
                 Nom et signature :<br/>
@@ -731,8 +731,8 @@
             <li>Au sein de l’Université de Reims Champagne-Ardenne (9 boulevard de la paix – CS
                 60005 – 51724 REIMS Cedex)
             </li>
-            <li>Composante (UFR/IUT …) : {{ user_data.formation.ufr.libelle }}
-                ({{ user_data.formation.ufr.sitePrincipal.adresse.display|raw }}) #}
+            <li>Composante (UFR/IUT …) : {{ user_data.departement.ufr.libelle }}
+                ({{ user_data.departement.ufr.sitePrincipal.adresse.display|raw }}) #}
             </li>
         </ul>
     </div>

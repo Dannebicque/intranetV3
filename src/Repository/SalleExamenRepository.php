@@ -19,11 +19,11 @@ class SalleExamenRepository extends ServiceEntityRepository
         parent::__construct($registry, SalleExamen::class);
     }
 
-    public function findByFormation($formation, $nbResult = 0): array
+    public function findByDepartement($departement, $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
-            ->andWhere('a.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->andWhere('a.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('a.created', 'DESC');
 
         if ($nbResult > 0) {

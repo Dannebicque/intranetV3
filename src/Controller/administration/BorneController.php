@@ -39,7 +39,7 @@ class BorneController extends BaseController
      */
     public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
-        $bornes = $borneRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
         $response = $myExport->genereFichierGenerique(
             $_format,
             $bornes,
@@ -79,7 +79,7 @@ class BorneController extends BaseController
             BorneType::class,
             $borne,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -126,7 +126,7 @@ class BorneController extends BaseController
             BorneType::class,
             $borne,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]

@@ -25,7 +25,7 @@ class TypeMaterielController extends BaseController
      */
     public function index(TypeMaterielRepository $typeMaterielRepository): Response
     {
-        return $this->render('administration/type_materiel/index.html.twig', ['type_materiels' => $typeMaterielRepository->findByFormation($this->dataUserSession->getFormation())]);
+        return $this->render('administration/type_materiel/index.html.twig', ['type_materiels' => $typeMaterielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
@@ -40,13 +40,13 @@ class TypeMaterielController extends BaseController
      */
     public function export(MyExport $myExport, TypeMaterielRepository $type_materielRepository, $_format): Response
     {
-        $type_materiels = $type_materielRepository->findByFormation($this->dataUserSession->getFormation());
+        $type_materiels = $type_materielRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $type_materiels,
             'type_materiels',
             ['type_materiel_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
+            ['titre', 'texte', 'departement' => ['libelle']]
         );
 
         return $response;
@@ -59,7 +59,7 @@ class TypeMaterielController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $typeMateriel = new TypeMateriel($this->dataUserSession->getFormation());
+        $typeMateriel = new TypeMateriel($this->dataUserSession->getDepartement());
         $form = $this->createForm(TypeMaterielType::class, $typeMateriel,[
             'attr' => [
                 'data-provide' => 'validation'

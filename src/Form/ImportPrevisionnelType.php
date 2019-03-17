@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class ImportPrevisionnelType extends AbstractType
 {
-    private $formation;
+    private $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -25,7 +25,7 @@ class ImportPrevisionnelType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add(
@@ -35,7 +35,7 @@ class ImportPrevisionnelType extends AbstractType
                     'class'         => Diplome::class,
                     'choice_label'  => 'display',
                     'query_builder' => function(DiplomeRepository $diplomeRepository) {
-                        return $diplomeRepository->findByFormationBuilder($this->formation);
+                        return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
                     'label'         => 'label.diplome'
                 ]
@@ -62,7 +62,7 @@ class ImportPrevisionnelType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => null,
             'translation_domain' => 'form',
-            'formation'          => null
+            'departement'          => null
         ]);
     }
 }

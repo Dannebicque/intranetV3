@@ -37,19 +37,19 @@ class TrelloTache extends BaseEntity
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="trelloTaches")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="trelloTaches")
      */
-    private $formation;
+    private $departement;
 
     /**
      * TrelloTache constructor.
      *
-     * @param Formation $formation
+     * @param Departement $departement
      */
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
         $this->deadline = new \DateTime('now');
-        $this->formation = $formation;
+        $this->departement = $departement;
         $this->personnels = new ArrayCollection();
     }
 
@@ -150,21 +150,21 @@ class TrelloTache extends BaseEntity
     }
 
     /**
-     * @return Formation|null
+     * @return Departement|null
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation|null $formation
+     * @param Departement|null $departement
      *
      * @return TrelloTache
      */
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

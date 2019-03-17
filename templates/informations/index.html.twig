@@ -16,7 +16,7 @@
                    href="{{ path('article_categorie', {categorie: 'c2i'}) }}"
                    role="tab">C2I</a>
             </li>
-            {% if user_data.formation.optInfos == true %}
+            {% if user_data.departement.optInfos == true %}
                 <li class="nav-item">
                     <a class="nav-link changeinformation" data-toggle="tab"
                        href="{{ path('article_categorie', {categorie: 'infos'}) }}"

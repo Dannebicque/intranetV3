@@ -31,13 +31,13 @@ class HrsController extends BaseController
      */
     public function index(Request $request, HrsRepository $hrsRepository, $annee = 0): Response
     {
-        if ($annee === 0 && $this->dataUserSession->getFormation() !== null) {
-            $annee = $this->dataUserSession->getFormation()->getOptAnneePrevisionnel();
+        if ($annee === 0 && $this->dataUserSession->getDepartement() !== null) {
+            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
-        $hrs = new Hrs($this->dataUserSession->getFormation());
+        $hrs = new Hrs($this->dataUserSession->getDepartement());
         $form = $this->createForm(HrsType::class, $hrs, [
-            'formation' => $this->dataUserSession->getFormation(),
+            'departement' => $this->dataUserSession->getDepartement(),
             'attr'      => [
                 'data-provide' => 'validation'
             ]
@@ -52,7 +52,7 @@ class HrsController extends BaseController
         }
 
         return $this->render('administration/hrs/index.html.twig', [
-            'hrs'   => $hrsRepository->findByFormation($this->dataUserSession->getFormation(), $annee),
+            'hrs'   => $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee),
             'annee' => $annee,
             'form'  => $form->createView()
         ]);
@@ -68,7 +68,7 @@ class HrsController extends BaseController
     public function edit(Request $request, Hrs $hrs): Response
     {
         $form = $this->createForm(HrsType::class, $hrs, [
-            'formation' => $this->dataUserSession->getFormation(),
+            'departement' => $this->dataUserSession->getDepartement(),
             'attr'      => [
                 'data-provide' => 'validation'
             ]
@@ -104,14 +104,14 @@ class HrsController extends BaseController
 
         //on efface, sauf si la case est cochée.
         if ($annee_concerver === null || $annee_concerver !== 'true') {
-            $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(), $annee_destination);
+            $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee_destination);
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);
             }
             $this->entityManager->flush();
         }
 
-        $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(), $anneeDepart);
+        $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $anneeDepart);
 
         /** @var Hrs $hr */
         foreach ($hrs as $hr) {
@@ -187,7 +187,7 @@ class HrsController extends BaseController
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $hrs = $hrsRepository->findByFormation($this->dataUserSession->getFormation(),
+            $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(),
                 $request->request->get('annee_supprimer'));
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);

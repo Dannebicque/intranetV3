@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class ImportEtudiantType extends AbstractType
 {
-    private $formation;
+    private $departement;
     private $semestre;
 
     /**
@@ -26,7 +26,7 @@ class ImportEtudiantType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
         $this->semestre = $options['semestre'];
 
         $builder
@@ -37,7 +37,7 @@ class ImportEtudiantType extends AbstractType
                     'class'         => Semestre::class,
                     'choice_label'  => 'libelle',
                     'query_builder' => function(SemestreRepository $semestreRepository) {
-                        return $semestreRepository->findByFormationBuilder($this->formation);
+                        return $semestreRepository->findByDepartementBuilder($this->departement);
                     },
                     'label'         => 'label.semestre',
                     'data' => $this->semestre
@@ -61,7 +61,7 @@ class ImportEtudiantType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => null,
             'translation_domain' => 'form',
-            'formation'          => null,
+            'departement'          => null,
             'semestre'          => null
         ]);
     }

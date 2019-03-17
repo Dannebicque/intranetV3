@@ -12,9 +12,9 @@ class MaterielPret extends BaseEntity
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="materielPrets")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="materielPrets")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="materielPrets")
@@ -68,14 +68,14 @@ class MaterielPret extends BaseEntity
 
 
 
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

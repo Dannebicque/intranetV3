@@ -1,15 +1,15 @@
 {% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.structure.formation.show.heading'|trans }}
+    {{ 'adm.structure.departement.show.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'formation', id: formation.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{formation:formation.id}}}) }}
+            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'departement', id: departement.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_formation', id: formation.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+            {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_departement', id: departement.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}
 
 
@@ -18,96 +18,96 @@
 
 {% block content %}
 <div class="card">
-    <h4 class="card-title">{{ 'adm.structure.formation.show.heading'|trans }}</h4>
+    <h4 class="card-title">{{ 'adm.structure.departement.show.heading'|trans }}</h4>
     <div class="card-body">
 
     <table class="table">
         <tbody>
             <tr>
                 <th>{{ 'table.id'|trans }}</th>
-                <td>{{ formation.id }}</td>
+                <td>{{ departement.id }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.libelle'|trans }}</th>
-                <td>{{ formation.libelle }}</td>
+                <td>{{ departement.libelle }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.site'|trans }}</th>
-                <td>{{ formation.site ? formation.site.libelle : 'non.defini'|trans }}</td>
+                <td>{{ departement.site ? departement.site.libelle : 'non.defini'|trans }}</td>
             </tr>
 
             <tr>
                 <th>{{ 'table.logo'|trans }}</th>
-                <td><img src="{{ vich_uploader_asset(formation, 'logoFile') }}" /></td>
+                <td><img src="{{ vich_uploader_asset(departement, 'logoFile') }}" /></td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_annee_previsionnel'|trans }}</th>
-                <td>{{ formation.optAnneePrevisionnel }}</td>
+                <td>{{ departement.optAnneePrevisionnel }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.tel_contact'|trans }}</th>
-                <td>{{ formation.telContact|tel_format }}</td>
+                <td>{{ departement.telContact|tel_format }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.fax'|trans }}</th>
-                <td>{{ formation.fax|tel_format }}</td>
+                <td>{{ departement.fax|tel_format }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.couleur'|trans }}</th>
                 <td><span class="carre"
-                          style="background-color: {{ formation.couleur }}">&nbsp;</span> {{ formation.couleur }} </td>
+                          style="background-color: {{ departement.couleur }}">&nbsp;</span> {{ departement.couleur }} </td>
             </tr>
             <tr>
                 <th>{{ 'table.site_web'|trans }}</th>
-                <td><a href="{{ formation.siteWeb }}" target="_blank">{{ formation.siteWeb }}</a></td>
+                <td><a href="{{ departement.siteWeb }}" target="_blank">{{ departement.siteWeb }}</a></td>
             </tr>
             <tr>
                 <th>{{ 'table.description'|trans }}</th>
-                <td>{{ formation.description }}</td>
+                <td>{{ departement.description }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_update_celcat'|trans }}</th>
-                <td>{{ formation.optUpdateCelcat ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optUpdateCelcat ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_agence'|trans }}</th>
-                <td>{{ formation.optAgence ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optAgence ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_materiel'|trans }}</th>
-                <td>{{ formation.optMateriel ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optMateriel ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_edt'|trans }}</th>
-                <td>{{ formation.optEdt ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optEdt ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_stage'|trans }}</th>
-                <td>{{ formation.optStage ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optStage ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_synthese'|trans }}</th>
-                <td>{{ formation.optSynthese ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optSynthese ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_messagerie'|trans }}</th>
-                <td>{{ formation.optMessagerie ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optMessagerie ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.respRi'|trans }}</th>
-                <td>{{ formation.respri ? formation.respri.display : 'non.defini'|trans }}</td>
+                <td>{{ departement.respri ? departement.respri.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_Infos'|trans }}</th>
-                <td>{{ formation.optInfos ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ departement.optInfos ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.created'|trans }}</th>
-                <td>{{ formation.created ? formation.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ departement.created ? departement.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ formation.updated ? formation.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ departement.updated ? departement.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
             </tr>
         </tbody>
     </table>

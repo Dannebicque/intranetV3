@@ -79,7 +79,7 @@ class StagePeriodeOffreController extends BaseController
     {
         $stagePeriodeOffre = new StagePeriodeOffre($stagePeriode);
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
-            'formation' => $this->dataUserSession->getFormation(),
+            'departement' => $this->dataUserSession->getDepartement(),
             'annee' => $stagePeriode->getAnneeUniversitaire(),
             'attr'      => [
                 'data-provide' => 'validation'
@@ -129,7 +129,7 @@ class StagePeriodeOffreController extends BaseController
     public function edit(Request $request, StagePeriodeOffre $stagePeriodeOffre): Response
     {
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
-            'formation' => $this->dataUserSession->getFormation(),
+            'departement' => $this->dataUserSession->getDepartement(),
             'attr'      => [
                 'data-provide' => 'validation'
             ]

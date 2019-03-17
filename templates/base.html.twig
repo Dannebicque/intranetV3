@@ -37,7 +37,7 @@
 
 <!-- Sidebar -->
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
-    <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.formation.couleur }}{% else %}#926DDF{% endif %}">
+    <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.departement.couleur }}{% else %}#926DDF{% endif %}">
         <span class="logo text-center">
           <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
                                                         alt="logo de l'intranet."></a>
@@ -89,7 +89,7 @@
                         <span class="title">{{ 'menu.informations'|trans }}</span>
                     </a>
                 </li>
-                {% if user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE') or user_data.isGoodFormation('ROLE_ASS') %}
+                {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                     <li class="menu-item" id="menu-administration">
                         <a class="menu-link" href="{{ path('administration_index') }}">
                             <span class="material-icons">build</span>
@@ -169,14 +169,14 @@
             </div>
         </div>
 
-        {% if (is_granted('ROLE_PERMANENT') and user_data.formationMultiple == true) %}
+        {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
         <div class="dropdown d-none d-md-block">
             <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
             <div class="dropdown-menu dropdown-grid">
-                {% for formation in user_data.user.getPersonnelFormations %}
-                <a class="dropdown-item" href="{{ path('security_change_formation', {formation: formation.formation.uuidString}) }}">
+                {% for departement in user_data.user.getPersonnelDepartements %}
+                <a class="dropdown-item" href="{{ path('security_change_departement', {departement: departement.departement.uuidString}) }}">
                     <span data-i8-icon="home"></span>
-                    <span class="title">{{ formation.formation.libelle }}</span>
+                    <span class="title">{{ departement.departement.libelle }}</span>
                 </a>
                 {% endfor %}
             </div>
@@ -266,7 +266,7 @@
             </li>
             <!-- END Notifications -->
 
-            {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.formation.optMessagerie == true) %}
+            {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.departement.optMessagerie == true) %}
                 <!-- Messages -->
                 <li class="dropdown d-none d-md-block">
                     <span class="topbar-btn" data-toggle="dropdown"><i class="ti-email"></i></span>

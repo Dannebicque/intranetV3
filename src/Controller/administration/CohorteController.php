@@ -29,9 +29,9 @@ class CohorteController extends BaseController
         if ($annee === 0) {
             $annee = date('Y')-1;
         }
-        //on ne récupère la cohorte que de la formation.
-        //$etudiants = $etudiantRepository->findEtudiantCohorte($annee, $this->dataUserSession->getFormation());
-        $parcours = $scolariteRepository->findEtudiantsFormation($annee, $this->dataUserSession->getFormation());
+        //on ne récupère la cohorte que de la departement.
+        //$etudiants = $etudiantRepository->findEtudiantCohorte($annee, $this->dataUserSession->getDepartement());
+        $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->dataUserSession->getDepartement());
            $etudiants = array();
 
            /** @var Scolarite $parcour */

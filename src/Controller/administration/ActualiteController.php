@@ -28,7 +28,7 @@ class ActualiteController extends BaseController
     {
         return $this->render(
             'administration/actualite/index.html.twig',
-            ['actualites' => $actualiteRepository->findByFormation($this->dataUserSession->getFormation())]
+            ['actualites' => $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement())]
         );
     }
 
@@ -44,13 +44,13 @@ class ActualiteController extends BaseController
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
-        $actualites = $actualiteRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $actualites = $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
         $response = $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'actualites',
             ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'formation' => ['libelle']]
+            ['titre', 'texte', 'departement' => ['libelle']]
         );
 
         return $response;
@@ -64,7 +64,7 @@ class ActualiteController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $actualite = new Actualite($this->dataUserSession->getFormation());
+        $actualite = new Actualite($this->dataUserSession->getDepartement());
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
                 'data-provide' => 'validation'

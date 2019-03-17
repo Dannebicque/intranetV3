@@ -61,5 +61,5 @@ class Events
     public const CHGT_ETAT_CONVENTION_RECUE = 'chgt.etat_stage.convention_recue';
 
     public const REDIRECT_TO_LOGIN = 'redirect.to.login';
-    public const CHOISIR_FORMATION_DEFAUT = 'choisir.formation.par.defaut';
+    public const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
 }

@@ -25,15 +25,15 @@ class TypeDocumentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return mixed
      */
-    public function findByFormation($formation)
+    public function findByDepartement($departement)
     {
         return $this->createQueryBuilder('t')
-            ->where('t.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->where('t.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('t.libelle', 'ASC')
             ->getQuery()
             ->getResult();

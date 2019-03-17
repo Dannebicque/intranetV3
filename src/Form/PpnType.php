@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PpnType extends AbstractType
 {
-    protected $formation;
+    protected $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -25,7 +25,7 @@ class PpnType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
@@ -37,7 +37,7 @@ class PpnType extends AbstractType
                     'class'         => Diplome::class,
                     'choice_label'  => 'display',
                     'query_builder' => function(DiplomeRepository $diplomeRepository) {
-                        return $diplomeRepository->findByFormationBuilder($this->formation);
+                        return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
                     'label'         => 'label.diplome'
                 ]
@@ -53,7 +53,7 @@ class PpnType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Ppn::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
 
         ]);

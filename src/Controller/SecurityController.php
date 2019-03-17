@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use App\Entity\Formation;
-use App\Repository\PersonnelFormationRepository;
+use App\Entity\Departement;
+use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -79,38 +79,40 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/change-formation/{formation}", name="security_change_formation")
-     * @param Request   $request
+     * @Route("/change-departement/{departement}", name="security_change_departement")
+     * @param Request     $request
      *
-     * @param Formation $formation
+     * @param Departement $departement
+     *
      * @return Response
      */
-    public function changeFormation(Request $request, Formation $formation): Response
+    public function changeDepartement(Request $request, Departement $departement): Response
     {
 
     }
 
     /**
-     * @Route("/choix-formation", name="security_choix_formation")
-     * @param TranslatorInterface          $translator
-     * @param Request                      $request
-     * @param PersonnelFormationRepository $personnelFormationRepository
+     * @Route("/choix-departement", name="security_choix_departement")
+     * @param TranslatorInterface            $translator
+     * @param Request                        $request
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
+     *
      * @return Response
      */
-    public function choixFormation(
+    public function choixDepartement(
         TranslatorInterface $translator,
         Request $request,
-        PersonnelFormationRepository $personnelFormationRepository
+        PersonnelDepartementRepository $personnelDepartementRepository
     ): Response {
         $user = $this->getUser();
-        $formations = $personnelFormationRepository->findByPersonnel($user);
+        $departements = $personnelDepartementRepository->findByPersonnel($user);
 
         if ($request->getMethod() === 'POST') {
-            $formation = $personnelFormationRepository->find($request->request->get('formation'));
-            if ($formation !== null) {
+            $departement = $personnelDepartementRepository->find($request->request->get('departement'));
+            if ($departement !== null) {
 
-                $formation->setDefaut(true);
-                $this->getDoctrine()->getManager()->persist($formation);
+                $departement->setDefaut(true);
+                $this->getDoctrine()->getManager()->persist($departement);
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', $translator->trans('formation.par.defaut.sauvegarde'));
 
@@ -121,7 +123,7 @@ class SecurityController extends AbstractController
 
         }
 
-        return $this->render('security/choix-formation.html.twig', ['formations' => $formations, 'user' => $user]);
+        return $this->render('security/choix-departement.html.twig', ['departements' => $departements, 'user' => $user]);
 
 
     }

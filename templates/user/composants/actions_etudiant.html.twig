@@ -45,14 +45,14 @@
             </div>
             {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <div class="form-group">
-                    <label class="col-sm-2" for="chgt_etudiant_formation">Formation actuelle</label>
+                    <label class="col-sm-2" for="chgt_etudiant_departement">Département actuelle</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="formation" id="chgt_etudiant_formation"
+                        <select class="form-control" name="departement" id="chgt_etudiant_departement"
                                 data-etudiant="{{ etudiant.id }}">
-                            {% for format in t.formations %}
-                                <option value="{{ format.id }}" {% if format.id == etudiant.semestre.annee.diplome.formation.id %} selected {% endif %}>{{ format.libelle }}</option>
+                            {% for format in t.departements %}
+                                <option value="{{ format.id }}" {% if format.id == etudiant.semestre.annee.diplome.departement.id %} selected {% endif %}>{{ format.libelle }}</option>
                             {% endfor %}
-                            <option value="null">Aucune formation</option>
+                            <option value="null">Aucun département</option>
                         </select>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
 
         ???
         Changement de groupe / suppression
-        Changement de semestre / formation
+        Changement de semestre / departement
         Export de releve de note des différents semestres
     </div>
 </div>

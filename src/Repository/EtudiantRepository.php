@@ -35,9 +35,9 @@ class EtudiantRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function getArrayEtudiantsByFormation($getId, $filters, $start, $length): array
+    public function getArrayEtudiantsByDepartement($getId, $filters, $start, $length): array
     {
-        $etudiants = $this->getByFormation($getId, $filters, $start, $length);
+        $etudiants = $this->getByDepartement($getId, $filters, $start, $length);
         $tab = array();
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
@@ -56,7 +56,7 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param      $formation
+     * @param      $departement
      * @param      $data
      * @param int  $page
      * @param null $max
@@ -64,7 +64,7 @@ class EtudiantRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\Query|mixed
      */
-    public function getByFormation($formation, $data, $page = 0, $max = null, $getResult = true)
+    public function getByDepartement($departement, $data, $page = 0, $max = null, $getResult = true)
     {
         $qb = $this->_em->createQueryBuilder();
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
@@ -75,10 +75,10 @@ class EtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('d.formation = :formation')
+            ->where('d.departement = :departement')
             // ->andWhere('u.visible = :visible')
             // ->andWhere('u.anneesortie = :anneesortie')
-            ->setParameters(array('formation' => $formation));
+            ->setParameters(array('departement' => $departement));
 
         /*switch ($order[0]['column']) {
             case 0:
@@ -199,13 +199,4 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-//    public function findEtudiantCohorte($annee, Formation $formation)
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->innerJoin('')
-//
-//            $this->findBy(array('promotion' => $annee, 'formation' => $formation->getId()),
-//            array('nom' => 'asc', 'prenom' => 'asc'));
-//    }
 }

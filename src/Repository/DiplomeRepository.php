@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Diplome;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -27,27 +27,27 @@ class DiplomeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return mixed
      */
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
-        return $this->findByFormationBuilder($formation->getId())
+        return $this->findByDepartementBuilder($departement->getId())
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @param $formation
+     * @param $departement
      *
      * @return QueryBuilder
      */
-    public function findByFormationBuilder($formation): QueryBuilder
+    public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('d')
-            ->where('d.formation = :formation')
-            ->setParameter('formation', $formation)
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement)
             ->orderBy('d.libelle');
     }
 }

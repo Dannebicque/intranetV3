@@ -37,7 +37,7 @@
 </div>
 
 
-{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
     <div class="card">
         <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
         <div class="card-body">

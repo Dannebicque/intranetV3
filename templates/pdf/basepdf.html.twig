@@ -113,12 +113,12 @@
         {% endblock %}
     </style>
 
-    <title>{% block title %}{% endblock %} - Intranet {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.formation.libelle }}{% endif %}</title>
+    <title>{% block title %}{% endblock %} - Intranet {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %}</title>
 </head>
 
 <body>
 {#<footer>
-    <div class="footer-left"> {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.formation.libelle }}{% endif %} | le {{ "now"|date('d/m/Y') }}</div>
+    <div class="footer-left"> {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %} | le {{ "now"|date('d/m/Y') }}</div>
     <div class="footer-right">Page <span class="pagenum"></span></div>
 </footer>#}
 <!--Conteneur principal -->

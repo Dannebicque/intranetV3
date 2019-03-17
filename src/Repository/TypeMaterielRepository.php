@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\TypeMateriel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -21,18 +21,18 @@ class TypeMaterielRepository extends ServiceEntityRepository
     }
 
 
-    public function findByFormation(Formation $formation)
+    public function findByDepartement(Departement $departement)
     {
-        return $this->findByFormationBuider($formation)
+        return $this->findByDepartementBuider($departement)
             ->getQuery()
             ->getResult();
 
     }
 
-    public function findByFormationBuider(Formation $formation): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuider(Departement $departement): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('m')
-            ->where('m.formation = :formation')
-            ->setParameter('formation', $formation->getId());
+            ->where('m.departement = :departement')
+            ->setParameter('departement', $departement->getId());
     }
 }

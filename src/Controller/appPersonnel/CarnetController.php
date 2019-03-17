@@ -79,7 +79,7 @@ class CarnetController extends BaseController
             CahierTexteType::class,
             $cahierTexte,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -128,7 +128,7 @@ class CarnetController extends BaseController
             CahierTexteType::class,
             $cahierTexte,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]

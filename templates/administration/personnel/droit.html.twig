@@ -1,5 +1,5 @@
 {% if not is_granted("ROLE_ETUDIANT") %}
-    {% if user_data.isGoodFormation("ROLE_CDD") or user_data.isGoodFormation("ROLE_DDE") %}
+    {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
         <h3 id="droit" class="titre_rub">Droits de {{ personnel.displayPr }}</h3>
         <form class="form">
             {# todo: ecrire le js pour la sauvegarde #}

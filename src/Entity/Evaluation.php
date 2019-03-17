@@ -87,13 +87,13 @@ class Evaluation extends BaseEntity
     /**
      * Evaluation constructor.
      *
-     * @param Personnel $personnel
-     * @param Matiere   $matiere
-     * @param Formation $formation
+     * @param Personnel   $personnel
+     * @param Matiere     $matiere
+     * @param Departement $departement
      *
      * @throws \Exception
      */
-    public function __construct(Personnel $personnel, Matiere $matiere, Formation $formation)
+    public function __construct(Personnel $personnel, Matiere $matiere, Departement $departement)
     {
         $this->uuid = Uuid::uuid4();
 

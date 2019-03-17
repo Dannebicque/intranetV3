@@ -40,7 +40,7 @@ class DateController extends BaseController
      */
     public function export(MyExport $myExport, DateRepository $dateRepository, $_format): Response
     {
-        $dates = $dateRepository->findByFormation($this->dataUserSession->getFormation(), 0);
+        $dates = $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
         $response = $myExport->genereFichierGenerique(
             $_format,
             $dates,
@@ -66,7 +66,7 @@ class DateController extends BaseController
             DatesType::class,
             $date,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]
@@ -112,7 +112,7 @@ class DateController extends BaseController
             DatesType::class,
             $date,
             [
-                'formation' => $this->dataUserSession->getFormation(),
+                'departement' => $this->dataUserSession->getDepartement(),
                 'attr'      => [
                     'data-provide' => 'validation'
                 ]

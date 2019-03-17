@@ -2,44 +2,44 @@
 
 namespace App\Repository;
 
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Personnel;
-use App\Entity\PersonnelFormation;
+use App\Entity\PersonnelDepartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method PersonnelFormation|null find($id, $lockMode = null, $lockVersion = null)
- * @method PersonnelFormation|null findOneBy(array $criteria, array $orderBy = null)
- * @method PersonnelFormation[]    findAll()
- * @method PersonnelFormation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PersonnelDepartement|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PersonnelDepartement|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PersonnelDepartement[]    findAll()
+ * @method PersonnelDepartement[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PersonnelFormationRepository extends ServiceEntityRepository
+class PersonnelDepartementRepository extends ServiceEntityRepository
 {
     /**
-     * PersonnelFormationRepository constructor.
+     * PersonnelDepartementRepository constructor.
      *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, PersonnelFormation::class);
+        parent::__construct($registry, PersonnelDepartement::class);
     }
 
     /**
      * @param $type
-     * @param $formation
+     * @param $departement
      *
      * @return array
      */
-    public function findByType($type, $formation): array
+    public function findByType($type, $departement): array
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
             ->where('p.typeUser = :type')
-            ->andWhere('f.formation = :formation')
+            ->andWhere('f.departement = :departement')
             ->setParameter('type', $type)
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->orderBy('p.nom', 'DESC')
             ->orderBy('p.prenom', 'DESC')
             ->getQuery()
@@ -50,7 +50,7 @@ class PersonnelFormationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
-            ->innerJoin(Formation::class, 'm', 'WITH', 'f.formation = m.id')
+            ->innerJoin(Departement::class, 'm', 'WITH', 'f.departement = m.id')
             ->where('f.personnel = :personnel')
             ->setParameter('personnel', $user)
             ->orderBy('m.libelle', 'DESC')
@@ -58,43 +58,43 @@ class PersonnelFormationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByPersonnelFormation(Personnel $personnel, Formation $formation)
+    public function findByPersonnelDepartement(Personnel $personnel, Departement $departement)
     {
         return $this->createQueryBuilder('f')
             ->where('f.personnel = :personnel')
-            ->andWhere('f.formation = :formation')
+            ->andWhere('f.departement = :departement')
             ->setParameter('personnel', $personnel)
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->getQuery()
             ->getResult();
     }
 
-    public function findDroitsByPersonnelFormation(Personnel $personnel, Formation $formation)
+    public function findDroitsByPersonnelDepartement(Personnel $personnel, Departement $departement)
     {
         return $this->createQueryBuilder('f')
             ->select('f.roles')
             ->where('f.personnel = :personnel')
-            ->andWhere('f.formation = :formation')
+            ->andWhere('f.departement = :departement')
             ->setParameter('personnel', $personnel)
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @param Personnel $personnel
-     * @param Formation $formation
+     * @param Personnel   $personnel
+     * @param Departement $departement
      *
-     * @return PersonnelFormation|null
+     * @return PersonnelDepartement|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByPersonnelFormation(Personnel $personnel, Formation $formation)
+    public function findOneByPersonnelDepartement(Personnel $personnel, Departement $departement)
     {
         return $this->createQueryBuilder('f')
             ->where('f.personnel = :personnel')
-            ->andWhere('f.formation = :formation')
+            ->andWhere('f.departement = :departement')
             ->setParameter('personnel', $personnel)
-            ->setParameter('formation', $formation)
+            ->setParameter('departement', $departement)
             ->getQuery()
             ->getOneOrNullResult();
     }

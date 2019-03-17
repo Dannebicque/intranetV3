@@ -4,10 +4,10 @@ namespace App\EventSubscriber;
 
 use App\Controller\TokenAuthenticatedController;
 use App\Entity\Etudiant;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Events;
-use App\Repository\FormationRepository;
+use App\Repository\DepartementRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -22,27 +22,27 @@ class TokenSubscriber implements EventSubscriberInterface
 {
     private $user;
 
-    /** @var Formation */
-    private $formation;
+    /** @var Departement */
+    private $departement;
 
     /** @var RouterInterface */
     private $router;
 
-    private $formationRepository;
+    private $departementRepository;
     private $session;
     private $eventDispatcher;
     private $authChecker;
 
     public function __construct(
         TokenStorageInterface $user,
-        FormationRepository $formationRepository,
+        DepartementRepository $departementRepository,
         EventDispatcherInterface $eventDispatcher,
         SessionInterface $session,
         RouterInterface $router,
         AuthorizationCheckerInterface $authChecker
     ) {
         $this->user = $user;
-        $this->formationRepository = $formationRepository;
+        $this->departementRepository = $departementRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->session = $session;
         $this->router = $router;
@@ -70,49 +70,49 @@ class TokenSubscriber implements EventSubscriberInterface
         if ($controller[0] instanceof TokenAuthenticatedController) {
 
             if ($this->getUser() instanceof Etudiant) {
-                $this->formation = $this->formationRepository->findFormationEtudiant($this->getUser());
-                if ($this->formation === null) {
+                $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
+                if ($this->departement === null) {
                     //On déclenche l'event
                     $event->setController(function() {
                         return new RedirectResponse($this->router->generate('security_login',
-                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-formation']));
+                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
                     });
                 }
             } elseif ($this->getUser() instanceof Personnel) {
                 if ($this->authChecker->isGranted('ROLE_PERMANENT')) {
 
-                    if ($this->session->get('formation') !== null) {
-                        $this->formation = $this->formationRepository->find($this->session->get('formation'));
+                    if ($this->session->get('departement') !== null) {
+                        $this->departement = $this->departementRepository->find($this->session->get('departement'));
                     }
 
-                    if ($this->formation === null) {
+                    if ($this->departement === null) {
                         echo 'pas de session';
-                        $formations = $this->formationRepository->findFormationPersonnelDefaut($this->getUser());
+                        $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->getUser());
 
-                        if (count($formations) > 1) {
-                            echo 'plus d une formation  par défaut';
+                        if (count($departements) > 1) {
+                            echo 'plus d une departement  par défaut';
 
                             $event->setController(function() {
-                                return new RedirectResponse($this->router->generate('security_choix_formation'));
+                                return new RedirectResponse($this->router->generate('security_choix_departement'));
                             });
-                        } elseif (count($formations) === 1) {
-                            echo 'une formation par defaut';
-                            $this->formation = $formations[0];
-                            $this->session->set('formation', $this->formation->getId()); //on sauvegarde
+                        } elseif (count($departements) === 1) {
+                            echo 'une departement par defaut';
+                            $this->departement = $departements[0];
+                            $this->session->set('departement', $this->departement->getId()); //on sauvegarde
                         } else {
-                            echo 'pas de formation par defaut';
-                            //pas de formation par défaut, ou pas de formation du tout.
-                            $formations = $this->formationRepository->findFormationPersonnel($this->getUser());
-                            if (count($formations) === 0) {
-                                echo 'aucune formation';
+                            echo 'pas de departement par defaut';
+                            //pas de departement par défaut, ou pas de departement du tout.
+                            $departements = $this->departementRepository->findDepartementPersonnel($this->getUser());
+                            if (count($departements) === 0) {
+                                echo 'aucune departement';
                                 //On déclenche l'event
 
                                 $event->setController(function() {
                                     return new RedirectResponse($this->router->generate('security_login',
-                                        ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-formation']));
+                                        ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
                                 });
                             } else {
-                                //donc il y a une formation, mais pas une par défaut.
+                                //donc il y a une departement, mais pas une par défaut.
                                 echo 'des formations, mais pas par défaut';
 
                                 $event->setController(function() {

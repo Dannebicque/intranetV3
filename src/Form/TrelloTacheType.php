@@ -38,7 +38,7 @@ class TrelloTacheType extends AbstractType
                 'label'         => 'label.personnel',
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByFormationBuilder($this->formation);
+                    return $personnelRepository->findByDepartementBuilder($this->formation);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -53,7 +53,7 @@ class TrelloTacheType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => TrelloTache::class,
-            'formation'          => null,
+            'departement'          => null,
             'translation_domain' => 'form'
         ]);
     }

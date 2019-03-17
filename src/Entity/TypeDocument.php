@@ -21,9 +21,9 @@ class TypeDocument extends BaseEntity
     private $libelle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="typeDocuments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="typeDocuments")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="typeDocument")
@@ -33,11 +33,11 @@ class TypeDocument extends BaseEntity
     /**
      * TypeDocument constructor.
      *
-     * @param Formation $formation
+     * @param Departement $departement
      */
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
-        $this->setFormation($formation);
+        $this->setDepartement($departement);
         $this->documents = new ArrayCollection();
     }
 
@@ -58,21 +58,21 @@ class TypeDocument extends BaseEntity
     }
 
     /**
-     * @return Formation|null
+     * @return Departement|null
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation|null $formation
+     * @param Departement|null $departement
      *
      * @return TypeDocument
      */
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

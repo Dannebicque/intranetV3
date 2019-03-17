@@ -22,7 +22,7 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
     {
-        if ($this->dataUserSession->getFormation() !== null && $this->dataUserSession->getFormation()->isOptUpdateCelcat() === true) {
+        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
             $myEdtCelcat->initPersonnel($this->dataUserSession->getUser());
 
             return $this->render('edt/intervenant.html.twig', array(
@@ -45,7 +45,7 @@ class EdtController extends BaseController
      */
     public function dashboardEtudiant(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
     {
-        if ($this->dataUserSession->getFormation() !== null && $this->dataUserSession->getFormation()->isOptUpdateCelcat() === true) {
+        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
             $myEdtCelcat->initEtudiant($this->dataUserSession->getUser());
 
             return $this->render('edt/etudiant.html.twig', array(

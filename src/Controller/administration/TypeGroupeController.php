@@ -108,7 +108,7 @@ class TypeGroupeController extends BaseController
      */
     public function edit(Request $request, TypeGroupe $typeGroupe): Response
     {
-        $form = $this->createForm(TypeGroupeType::class, $typeGroupe, ['formation' => $this->dataUserSession->getFormation()]);
+        $form = $this->createForm(TypeGroupeType::class, $typeGroupe, ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

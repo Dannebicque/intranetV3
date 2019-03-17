@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\CreneauCours;
+use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,13 +20,13 @@ class CreneauCoursRepository extends ServiceEntityRepository
         parent::__construct($registry, CreneauCours::class);
     }
 
-    public function findByAnneeFormation(\App\Entity\Formation $formation, $anneeUniversitaire)
+    public function findByAnneeDepartement(Departement $departement, $anneeUniversitaire)
     {
         return $this->createQueryBuilder('c')
             ->where('c.anneeUniversitaire = :annee')
-            ->andWhere('c.formation = :formation')
-            ->setParameter('annee', 9)
-            ->setParameter('formation', $formation->getId())
+            ->andWhere('c.departement = :departement')
+            ->setParameter('annee', 9)//todo: pourquoi 9?
+            ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
     }

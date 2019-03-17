@@ -24,20 +24,20 @@ class Actualite extends BaseEntity
     private $texte;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="actualites")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="actualites")
      * @MaxDepth(2)
      * @Groups({"actualite_administration"})
      */
-    private $formation;
+    private $departement;
 
     /**
      * Actualite constructor.
      *
-     * @param Formation $formation
+     * @param Departement $departement
      */
-    public function __construct(Formation $formation)
+    public function __construct(Departement $departement)
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
     }
 
     /**
@@ -81,21 +81,21 @@ class Actualite extends BaseEntity
     }
 
     /**
-     * @return Formation|null
+     * @return Departement|null
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation|null $formation
+     * @param Departement|null $departement
      *
      * @return Actualite
      */
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }

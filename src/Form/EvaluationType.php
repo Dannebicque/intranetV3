@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EvaluationType extends AbstractType
 {
-    private $formation;
+    private $departement;
     private $semestre;
     private $import = false;
     private $matiereDisabled = false;
@@ -36,7 +36,7 @@ class EvaluationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
         $this->locale = $options['locale'];
         $this->semestre = $options['semestre'];
         $this->import = $options['import'];
@@ -81,7 +81,7 @@ class EvaluationType extends AbstractType
                 'label'         => 'label.evaluation_personnelAutorise',
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByFormationBuilder($this->formation);
+                    return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
                 'required'      => true,
                 'expanded'      => true,
@@ -101,7 +101,7 @@ class EvaluationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Evaluation::class,
-            'formation'          => null,
+            'departement'          => null,
             'semestre'           => null,
             'import'             => null,
             'matiereDisabled'    => null,

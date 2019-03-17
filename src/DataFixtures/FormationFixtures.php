@@ -7,15 +7,16 @@ use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use App\Entity\Formation;
+use App\Entity\Departement;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
-use App\Entity\PersonnelFormation;
+use App\Entity\PersonnelDepartement;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Entity\Site;
 use App\Entity\TypeDiplome;
 use App\Entity\Ue;
+use App\Entity\Ufr;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -37,19 +38,41 @@ class FormationFixtures extends Fixture
         $adresse->setVille('Troyes');
         $manager->persist($adresse);
 
+        $reposanble = new Personnel();
+        $reposanble->setUsername('reposanble');
+        $password = $this->encoder->encodePassword($reposanble, 'test');
+        $reposanble->setPassword($password);
+        $reposanble->setMailUniv('reposanble@gmail.com');
+        $reposanble->setNom('Martin');
+        $reposanble->setPrenom('Martial');
+        $reposanble->setStatut('MCF');
+        $reposanble->setTypeUser('permanent');
+        $reposanble->setRoles(['ROLE_PERMANENT']);
+        $reposanble->setPhotoName('noimage.png');
+        $reposanble->setCreated(new \DateTime('now'));
+        $manager->persist($reposanble);
+
         $site = new Site();
         $site->setLibelle('IUT de Troyes');
         $site->setAdresse($adresse);
         $manager->persist($site);
 
-        $formation = new Formation();
-        $formation->setLibelle('MMI');
-        $formation->setActif(true);
-        $formation->setCouleur('blue');
-        $formation->setDescription('loreum ipsum');
-        $formation->setSite($site);
-        $formation->setLogoName('noimage.png');
-        $manager->persist($formation);
+        $ufr = new Ufr();
+        $ufr->setLibelle('IUT de Troyes');
+        $ufr->setSitePrincipal($site);
+        $ufr->setResponsable($reposanble);
+        $manager->persist($ufr);
+
+
+        $departement = new Departement();
+        $departement->setLibelle('MMI');
+        $departement->setActif(true);
+        $departement->setCouleur('blue');
+        $departement->setDescription('loreum ipsum');
+        $departement->setUfr($ufr);
+        $departement->setLogoName('noimage.png');
+        $departement->setPreparationAnnee(true);
+        $manager->persist($departement);
 
         $anneeu = new AnneeUniversitaire();
         $anneeu->setLibelle('2018');
@@ -65,7 +88,7 @@ class FormationFixtures extends Fixture
         $manager->persist($td);
         $manager->flush();
 
-        $diplome = new Diplome($formation);
+        $diplome = new Diplome($departement);
         $diplome->setLibelle('DUT MMI');
         $diplome->setSigle('DUT MMI');
         $diplome->setTypeDiplome($td);
@@ -138,7 +161,7 @@ class FormationFixtures extends Fixture
         $user->setCreated(new \DateTime('now'));
         $manager->persist($user);
 
-        $pf = new PersonnelFormation($user, $formation);
+        $pf = new PersonnelDepartement($user, $departement);
         $manager->persist($pf);
 
         $previ = new Previsionnel($matiere, $user, 2018);

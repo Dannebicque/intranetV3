@@ -3,10 +3,10 @@
 namespace App\Controller\api;
 
 use App\Controller\BaseController;
-use App\Entity\Formation;
-use App\Entity\PersonnelFormation;
+use App\Entity\Departement;
+use App\Entity\PersonnelDepartement;
 use App\MesClasses\MyPersonnel;
-use App\Repository\PersonnelFormationRepository;
+use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,11 +45,11 @@ class PersonnelApiController extends BaseController
     {
         $personnels = $this->personnelRepository->findByType(
             $type,
-            $this->dataUserSession->getFormationId()
+            $this->dataUserSession->getDepartementId()
         );
         $pers = array();
 
-        /** @var PersonnelFormation $p */
+        /** @var PersonnelDepartement $p */
         foreach ($personnels as $p) {
             $t = [];
             $t['nom'] = $p->getPersonnel() ? $p->getPersonnel()->getNom() : '';
@@ -89,29 +89,29 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param PersonnelFormationRepository $personnelFormationRepository
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
      * @param                              $slug
      *
-     * @param Formation                    $formation
+     * @param Departement                    $departement
      *
      * @return Response
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @Route("/personnel/formation/add/{slug}/{formation}", name="api_personnel_add_to_formation", options={"expose":true})
+     * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement", options={"expose":true})
      */
-    public function addPersonnelToFormation(
-        PersonnelFormationRepository $personnelFormationRepository,
+    public function addPersonnelToDepartement(
+        PersonnelDepartementRepository $personnelDepartementRepository,
         $slug,
-        Formation $formation
+        Departement $departement
     ): Response {
         $personnel = $this->personnelRepository->findOneBySlug($slug);
 
         if ($personnel !== null) {
-            $existe = $personnelFormationRepository->findOneBy([
-                'formation' => $formation->getId(),
+            $existe = $personnelDepartementRepository->findOneBy([
+                'departement' => $departement->getId(),
                 'personnel' => $personnel->getId()
             ]);
             if ($existe === null) {
-                $pf = new PersonnelFormation($personnel, $formation);
+                $pf = new PersonnelDepartement($personnel, $departement);
                 $this->entityManager->persist($pf);
                 $this->entityManager->flush();
 

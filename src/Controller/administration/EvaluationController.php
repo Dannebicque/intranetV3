@@ -37,7 +37,7 @@ class EvaluationController extends BaseController
             EvaluationType::class,
             $evaluation,
             [
-                'formation'       => $this->dataUserSession->getFormation(),
+                'departement'       => $this->dataUserSession->getDepartement(),
                 'semestre'        => $evaluation->getSemestre(),
                 'matiereDisabled' => true,
                 'locale' =>$request->getLocale(),

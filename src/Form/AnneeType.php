@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AnneeType extends AbstractType
 {
-    protected $formation;
+    protected $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -27,7 +27,7 @@ class AnneeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->formation = $options['formation'];
+        $this->departement = $options['departement'];
 
         $builder
             ->add('libelle', TextType::class, [
@@ -42,7 +42,7 @@ class AnneeType extends AbstractType
                 'choice_label'  => 'libelle',
                 'expanded'      => true,
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
-                    return $diplomeRepository->findByFormationBuilder($this->formation);
+                    return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
                 'label'         => 'label.diplome'
             ])
@@ -89,7 +89,7 @@ class AnneeType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => Annee::class,
             'translation_domain' => 'form',
-            'formation'          => null
+            'departement'          => null
         ]);
     }
 }

@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PersonnelFormationRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PersonnelDepartementRepository")
  */
-class PersonnelFormation
+class PersonnelDepartement
 {
     /**
      * @ORM\Id()
@@ -18,15 +18,15 @@ class PersonnelFormation
 
     /**
      * @var Personnel
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelFormations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelDepartements")
      */
     private $personnel;
 
     /**
-     * @var Formation
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formation", inversedBy="personnelFormations")
+     * @var Departement
+     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="personnelDepartements")
      */
-    private $formation;
+    private $departement;
 
     /**
      * @ORM\Column(type="integer")
@@ -44,14 +44,14 @@ class PersonnelFormation
     private $defaut = false;
 
     /**
-     * PersonnelFormation constructor.
+     * PersonnelDepartement constructor.
      *
-     * @param Personnel $personnel
-     * @param Formation $formation
+     * @param Personnel   $personnel
+     * @param Departement $departement
      */
-    public function __construct(Personnel $personnel, Formation $formation)
+    public function __construct(Personnel $personnel, Departement $departement)
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
         $this->personnel = $personnel;
         $this->addRole('ROLE_PERMANENT');
         $this->annee = (int)date('Y');
@@ -73,7 +73,7 @@ class PersonnelFormation
     /**
      * @param Personnel|null $personnel
      *
-     * @return PersonnelFormation
+     * @return PersonnelDepartement
      */
     public function setPersonnel(?Personnel $personnel): self
     {
@@ -83,21 +83,21 @@ class PersonnelFormation
     }
 
     /**
-     * @return Formation|null
+     * @return Departement|null
      */
-    public function getFormation(): ?Formation
+    public function getDepartement(): ?Departement
     {
-        return $this->formation;
+        return $this->departement;
     }
 
     /**
-     * @param Formation|null $formation
+     * @param Departement|null $departement
      *
-     * @return PersonnelFormation
+     * @return PersonnelDepartement
      */
-    public function setFormation(?Formation $formation): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->formation = $formation;
+        $this->departement = $departement;
 
         return $this;
     }
@@ -113,7 +113,7 @@ class PersonnelFormation
     /**
      * @param int $annee
      *
-     * @return PersonnelFormation
+     * @return PersonnelDepartement
      */
     public function setAnnee(int $annee): self
     {
@@ -133,7 +133,7 @@ class PersonnelFormation
     /**
      * @param string $role
      *
-     * @return PersonnelFormation
+     * @return PersonnelDepartement
      */
     public function addRole(string $role): self
     {
@@ -145,7 +145,7 @@ class PersonnelFormation
     }
 
     /**
-     * @return PersonnelFormation
+     * @return PersonnelDepartement
      */
     public function clearRole(): self
     {

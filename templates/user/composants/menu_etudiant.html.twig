@@ -11,7 +11,7 @@
    href="{{ path('profil_etudiant_absences', {slug: user.slug}) }}"
    id="profil-absences">{{ 'tab.absences'|trans }}</a>
 
-{% if user_data.formation.optStage == true %}
+{% if user_data.departement.optStage == true %}
     <a class="nav-link changeprofil {% if onglet == 'stages' %}active{% endif %}"
        href="{{ path('profil_etudiant_stages', {slug: user.slug}) }}"
        id="profil-stage">{{ 'tab.stages'|trans }}</a>
@@ -20,7 +20,7 @@
 <a class="nav-link changeprofil" href="{{ path('profil_etudiant_about', {slug: user.slug}) }}"
    id="profil-about">{{ 'tab.a-propos'|trans }}</a>
 
-{% if (user_data.isGoodFormation('ROLE_CDD') or user_data.isGoodFormation('ROLE_DDE')) %}
+{% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
     <a class="nav-link changeprofil" href="{{ path('profil_etudiant_action', {slug: user.slug}) }}"
        id="profil-actions">{{ 'tab.actions'|trans }}</a>
 {% endif %}
