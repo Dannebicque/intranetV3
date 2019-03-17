@@ -52,6 +52,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('badge', [$this, 'badge']),
             new TwigFilter('escapetitle', [$this, 'escapetitle']),
             new TwigFilter('chr', [$this, 'mychr']),
+            new TwigFilter('upper', [$this, 'upper']),
 
         );
     }
@@ -63,6 +64,15 @@ class AppExtension extends AbstractExtension
             new \Twig_SimpleFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
 
         );
+    }
+
+    /**
+     * @param $texte
+     * @return string
+     */
+    public function upper($texte)
+    {
+        return mb_strtoupper($texte);
     }
 
     /**

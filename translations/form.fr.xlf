@@ -1388,7 +1388,7 @@
       </notes>
       <segment>
         <source>label.sites</source>
-        <target>Sites</target>
+        <target>Autres Sites</target>
       </segment>
     </unit>
     <unit id="WkgPDEK" name="label.typehrs">
@@ -3363,6 +3363,12 @@
       <segment>
         <source>2023</source>
         <target>2023</target>
+      </segment>
+    </unit>
+    <unit id="ij7zC0r" name="label.site_principal">
+      <segment>
+        <source>label.site_principal</source>
+        <target>Site principal</target>
       </segment>
     </unit>
   </file>

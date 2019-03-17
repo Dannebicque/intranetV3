@@ -30,12 +30,26 @@
                     <td>{{ ufr.responsable ? ufr.responsable.displayPr : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
+                    <th>{{ 'table.site_principal'|trans }}</th>
+                    <td>
+                        {% if ufr.sitePrincipal != null %}
+                        <a href="{{ path('sa_site_show', {id:ufr.sitePrincipal.id}) }}" target="_blank">{{ ufr.sitePrincipal
+                            .libelle }}</a>
+                        {% else %}
+                        {{ 'non.defini'|trans }}
+                            {% endif %}
+                    </td>
+                </tr>
+                <tr>
                     <th>{{ 'table.sites'|trans }}</th>
                     <td>
-                        <ul>{% for site in ufr.sites %}
+                        {% for site in ufr.sites %}
+                                {% if loop.first %}<ul>{% endif %}
                                 <li><a href="{{ path('sa_site_show', {id:site.id}) }}" target="_blank">{{ site.libelle }}</a></li>
+                            {% if loop.last %}</ul>{% endif %}
+                            {% else %}
+                                -
                             {% endfor %}
-                        </ul>
                     </td>
                 </tr>
                 <tr>

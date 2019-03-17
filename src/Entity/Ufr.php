@@ -32,6 +32,11 @@ class Ufr extends BaseEntity
      */
     private $responsable;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="ufrPrincipales")
+     */
+    private $sitePrincipal;
+
     public function __construct()
     {
         $this->sites = new ArrayCollection();
@@ -105,6 +110,18 @@ class Ufr extends BaseEntity
     public function setResponsable(?Personnel $responsable): self
     {
         $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    public function getSitePrincipal(): ?Site
+    {
+        return $this->sitePrincipal;
+    }
+
+    public function setSitePrincipal(?Site $sitePrincipal): self
+    {
+        $this->sitePrincipal = $sitePrincipal;
 
         return $this;
     }

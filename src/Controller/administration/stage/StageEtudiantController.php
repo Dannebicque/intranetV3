@@ -116,13 +116,28 @@ class StageEtudiantController extends BaseController
      *
      * @return Response
      */
-    public function conventionPdf(StageEtudiant $stageEtudiant): Response
+    public function conventionPdf(StageEtudiant $stageEtudiant)
     {
         //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
         //2. Si oui envoyer
         //3. Si non générer et envoyer + sauvegarde
         //todo: prevoir bouton pour "regenerer" la convention
+        $html = $this->renderView('pdf/conventionStagePDF.html.twig', array(
+            'proposition' => $stageEtudiant,
+        ));
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', TRUE);
+        $options->set('isPhpEnabled', TRUE);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return new Response ($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(), array('Attachment' => 1)));
+
     }
+
 
     /**
      * @Route("/courrier/pdf/{id}", name="administration_stage_etudiant_courrier_pdf", methods="GET")

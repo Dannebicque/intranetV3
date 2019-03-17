@@ -3452,7 +3452,7 @@
       </notes>
       <segment>
         <source>table.sites</source>
-        <target>Sites</target>
+        <target>Autres Sites</target>
       </segment>
     </unit>
     <unit id="ROU9AfE" name="adm.gestion.des.etudiants.formation">
@@ -10699,6 +10699,18 @@
       <segment>
         <source>table.groupe_promo</source>
         <target>table.groupe_promo</target>
+      </segment>
+    </unit>
+    <unit id="AT1q8at" name="ufr.edit.success.flash">
+      <segment>
+        <source>ufr.edit.success.flash</source>
+        <target>ufr.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="s2XP51V" name="table.site_principal">
+      <segment>
+        <source>table.site_principal</source>
+        <target>Site principal</target>
       </segment>
     </unit>
   </file>

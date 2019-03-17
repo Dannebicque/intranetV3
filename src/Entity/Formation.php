@@ -49,10 +49,10 @@ class Formation extends BaseEntity
     private $libelle;
 
     /**
-     * @var Site
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site")
+     * @var Ufr
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ufr")
      */
-    private $site;
+    private $ufr;
 
     /**
      * @var string
@@ -259,19 +259,19 @@ class Formation extends BaseEntity
     }
 
     /**
-     * @return Site
+     * @return Ufr
      */
-    public function getSite(): ?Site
+    public function getUfr(): ?Ufr
     {
-        return $this->site;
+        return $this->ufr;
     }
 
     /**
-     * @param Site $site
+     * @param Ufr $ufr
      */
-    public function setSite(Site $site): void
+    public function setUfr(Ufr $ufr): void
     {
-        $this->site = $site;
+        $this->ufr = $ufr;
     }
 
     /**
