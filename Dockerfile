@@ -106,7 +106,6 @@ ARG COMPOSER_VERSION
 ARG XDEBUG_VERSION
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV APP_ENV=dev
 
 # Install paquet requirements
 RUN set -ex; \
@@ -155,7 +154,7 @@ RUN set -ex; \
         } >> /usr/local/etc/php/php.ini \
     ; fi
 
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["supervisord"]
 
 
 #####################################
@@ -201,4 +200,4 @@ COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["supervisord"]

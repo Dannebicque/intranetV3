@@ -5,9 +5,9 @@ PHPCSFIXER?=$(EXEC) php -d memory_limit=1024m vendor/bin/php-cs-fixer
 
 .DEFAULT_GOAL := help
 .PHONY: help start stop restart install uninstall reset clear-cache shell clear clean
-.PHONY: db-diff db-migrate db-rollback db-reset db-fixtures db-validate wait-for-db
+.PHONY: wait-for-db db-diff db-migrate db-rollback db-reset db-fixtures db-validate
 .PHONY: watch assets assets-build
-.PHONY: lint lint-symfony lint-yaml lint-twig lint-xliff lint-php lint-php-fix security-check test-schema test-all
+.PHONY: tests lint lint-symfony lint-yaml lint-twig lint-xliff lint-php lint-php-fix security-check test-schema test-all
 .PHONY: deps
 .PHONY: build up perm docker-compose.override.yml
 
@@ -121,10 +121,10 @@ lint-php-fix: vendor                                                            
 security-check: vendor                                                                                 ## Check for vulnerable dependencies
 	$(EXEC) vendor/bin/security-checker security:check
 
-test-schema: vendor                                                                                    ## Test the doctrine Schema
+test-schema: vendor                                                                                    ## Test the doctrine Schema
 	$(EXEC) $(CONSOLE) doctrine:schema:validate --skip-sync -vvv --no-interaction
 
-test-all: lint test-schema security-check tests                                                        ## Execute all tests
+test-all: lint test-schema security-check tests
 
 ##
 ## Dependencies
