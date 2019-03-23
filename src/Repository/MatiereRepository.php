@@ -6,6 +6,7 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Departement;
 use App\Entity\Matiere;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -95,7 +96,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $t = array();
+        $t = [];
 
         /** @var  $q Matiere */
         foreach ($query as $q) {

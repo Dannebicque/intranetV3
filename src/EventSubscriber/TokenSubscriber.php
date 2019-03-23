@@ -116,7 +116,7 @@ class TokenSubscriber implements EventSubscriberInterface
                                 echo 'des formations, mais pas par défaut';
 
                                 $event->setController(function() {
-                                    return new RedirectResponse($this->router->generate('security_choix_formation'));
+                                    return new RedirectResponse($this->router->generate('security_choix_departement'));
                                 });
                             }
                         }

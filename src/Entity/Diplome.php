@@ -140,14 +140,12 @@ class Diplome extends BaseEntity
     private $actif = true;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="diplomes")
      */
     private $anneeUniversitaire;
 
     public function __construct(Departement $departement)
     {
-
-        $this->anneeUniversitaire = date('Y');
         $this->departement = $departement;
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
@@ -607,25 +605,25 @@ class Diplome extends BaseEntity
         return $this;
     }
 
-    public function getAnneeUniversitaire(): ?int
-    {
-        return $this->anneeUniversitaire;
-    }
-
-    public function setAnneeUniversitaire(int $anneeUniversitaire): self
-    {
-        $this->anneeUniversitaire = $anneeUniversitaire;
-
-        return $this;
-    }
 
     /**
      * @return string
      */
     public function displayAnneeUniversitaire(): string
     {
-        $s = $this->getAnneeUniversitaire() + 1;
+        return $this->getAnneeUniversitaire() !== null ? $this->getAnneeUniversitaire()->displayAnneeUniversitaire() : 'err';
 
-        return $this->getAnneeUniversitaire() . ' | ' . $s;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
     }
 }

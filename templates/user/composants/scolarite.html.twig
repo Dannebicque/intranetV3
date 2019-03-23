@@ -20,7 +20,14 @@
                     <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
                     <td>{{ parcour.decision }}</td>
                     <td>{{ parcour.proposition }}</td>
-                    <td>{{ 'table.moyenneues'|trans }}</td>
+                    <td>
+                        {% if parcour.decision != 'EC' %}
+                            {% for ue in scolariteUes[parcour.id] %}
+                                {{ ue.ue.libelle }} : {{ ue.moyenne|number_format(3) }}
+                            {% endfor %}
+                        {% else %}
+                            EC
+                        {% endif %}</td>
                     <td>{{ parcour.moyenne }}</td>
                     <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"

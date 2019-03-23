@@ -35,8 +35,13 @@
                 <div class="text-white card-body bg-img text-center py-50"
                      style="background-image: url({{ asset('assets/bg/2.jpg') }});">
                     <a href="#">
-                        <img class="avatar avatar-xxl avatar-bordered"
-                             src="{{ asset('upload/photo/'~user.photoName) }}">
+                        {% if user.typeUser == 'permanent' %}
+                            <img class="avatar avatar-xxl avatar-bordered"
+                                 src="{{ asset('upload/personnels/'~user.photoName) }}">
+                        {% elseif user.typeUser == 'etudiant' %}
+                            <img class="avatar avatar-xxl avatar-bordered"
+                                 src="{{ asset('upload/etudiants/'~user.photoName) }}">
+                        {% endif %}
                     </a>
                     <h5 class="mt-2 mb-0"><a class="hover-primary text-white" href="#">{{ user.displayPr }}</a></h5>
                     {% if user.typeUser == 'etudiant' %}

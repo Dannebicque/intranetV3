@@ -7,9 +7,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EtudiantRepository")
+ * @Vich\Uploadable
  */
 class Etudiant extends Utilisateur implements \Serializable
 {
@@ -26,6 +30,21 @@ class Etudiant extends Utilisateur implements \Serializable
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50)
+     */
+    private $photoName = 'noimage.png';
+
+    /**
+     * @var UploadedFile
+     *
+     * @Vich\UploadableField(mapping="etudiant", fileNameProperty="photoName")
+     * @
+     */
+    private $photoFile;
 
     /**
      * @var Semestre
@@ -994,4 +1013,58 @@ class Etudiant extends Utilisateur implements \Serializable
 
         return $this;
     }
+
+    /**
+     * @ORM\PreUpdate()
+     * @ORM\PrePersist()
+     */
+    public function setUpdatedValue(): void
+    {
+        $this->updated = new \DateTime();
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param null|File $photo
+     */
+    public function setPhotoFile(?File $photo = null): void
+    {
+        $this->photoFile = $photo;
+
+        if (null !== $photo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdatedValue();
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoName(): ?string
+    {
+        return $this->photoName;
+    }
+
+    /**
+     * @param string $photoName
+     */
+    public function setPhotoName(string $photoName): void
+    {
+        $this->photoName = $photoName;
+    }
+
 }

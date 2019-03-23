@@ -126,20 +126,7 @@ abstract class Utilisateur implements UserInterface
      */
     private $adresse;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=50)
-     */
-    private $photoName = 'noimage.png';
 
-    /**
-     * @var UploadedFile
-     *
-     * @Vich\UploadableField(mapping="photo", fileNameProperty="photoName")
-     * @
-     */
-    private $photoFile;
 
     /**
      * @var string
@@ -158,7 +145,7 @@ abstract class Utilisateur implements UserInterface
      * @var \DateTime $updated
      * @ORM\Column(type="datetime")
      */
-    private $updated;
+    protected $updated;
 
     public function __construct()
     {
@@ -515,59 +502,6 @@ abstract class Utilisateur implements UserInterface
     public function getDisplay(): string
     {
         return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
-    }
-
-    /**
-     * @return null|File
-     */
-    public function getPhotoFile(): ?File
-    {
-        return $this->photoFile;
-    }
-
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param null|File $photo
-     */
-    public function setPhotoFile(?File $photo = null): void
-    {
-        $this->photoFile = $photo;
-
-        if (null !== $photo) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdatedValue();
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new \DateTime();
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhotoName(): ?string
-    {
-        return $this->photoName;
-    }
-
-    /**
-     * @param string $photoName
-     */
-    public function setPhotoName(string $photoName): void
-    {
-        $this->photoName = $photoName;
     }
 
     /**

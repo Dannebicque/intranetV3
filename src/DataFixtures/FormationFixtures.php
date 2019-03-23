@@ -8,6 +8,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Departement;
+use App\Entity\Groupe;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
@@ -15,6 +16,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Entity\Site;
 use App\Entity\TypeDiplome;
+use App\Entity\TypeGroupe;
 use App\Entity\Ue;
 use App\Entity\Ufr;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -70,13 +72,13 @@ class FormationFixtures extends Fixture
         $departement->setCouleur('blue');
         $departement->setDescription('loreum ipsum');
         $departement->setUfr($ufr);
-        $departement->setLogoName('noimage.png');
+        $departement->setLogoName('urca.jpeg');
         $departement->setPreparationAnnee(true);
         $manager->persist($departement);
 
         $anneeu = new AnneeUniversitaire();
-        $anneeu->setLibelle('2018');
-        $anneeu->setAnnee(2018);
+        $anneeu->setLibelle('2019');
+        $anneeu->setAnnee(2019);
         $manager->persist($anneeu);
 
         $td = new TypeDiplome();
@@ -93,7 +95,7 @@ class FormationFixtures extends Fixture
         $diplome->setSigle('DUT MMI');
         $diplome->setTypeDiplome($td);
         $diplome->setActif(true);
-        $diplome->setAnneeUniversitaire(2018);
+        $diplome->setAnneeUniversitaire($anneeu);
         $diplome->setCodeApogee('985DUTMMI');
         $diplome->setCodeDepartement('985');
         $diplome->setCodeVersion('402');
@@ -162,6 +164,7 @@ class FormationFixtures extends Fixture
         $manager->persist($user);
 
         $pf = new PersonnelDepartement($user, $departement);
+        $pf->addRole('ROLE_CDD');
         $manager->persist($pf);
 
         $previ = new Previsionnel($matiere, $user, 2018);
@@ -188,6 +191,20 @@ class FormationFixtures extends Fixture
         $user2->setSemestre($semestre);
         $user2->setCreated(new \DateTime('now'));
         $manager->persist($user2);
+
+        $typeGroupe = new TypeGroupe($semestre);
+        $typeGroupe->setLibelle('CM');
+        $typeGroupe->setDefaut(true);
+        $manager->persist($typeGroupe);
+
+        $groupe = new Groupe($typeGroupe);
+        $groupe->setLibelle('CM');
+        $groupe->setCodeApogee('12TWCM');
+        $manager->persist($groupe);
+
+        $groupe->addEtudiant($user2);
+        $user2->addGroupe($groupe);
+
 
         $manager->flush();
     }

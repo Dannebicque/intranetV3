@@ -229,6 +229,11 @@ class Semestre extends BaseEntity
      */
     private $stagePeriodes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromo", mappedBy="semestre")
+     */
+    private $scolaritePromos;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -241,6 +246,7 @@ class Semestre extends BaseEntity
         $this->ues = new ArrayCollection();
         $this->typeGroupes = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
+        $this->scolaritePromos = new ArrayCollection();
     }
 
     /**
@@ -1060,5 +1066,36 @@ class Semestre extends BaseEntity
     public function getAnneeUniversitaire(): int
     {
         return $this->getDiplome() ? $this->getDiplome()->getAnneeUniversitaire() : 0;
+    }
+
+    /**
+     * @return Collection|ScolaritePromo[]
+     */
+    public function getScolaritePromos(): Collection
+    {
+        return $this->scolaritePromos;
+    }
+
+    public function addScolaritePromo(ScolaritePromo $scolaritePromo): self
+    {
+        if (!$this->scolaritePromos->contains($scolaritePromo)) {
+            $this->scolaritePromos[] = $scolaritePromo;
+            $scolaritePromo->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolaritePromo(ScolaritePromo $scolaritePromo): self
+    {
+        if ($this->scolaritePromos->contains($scolaritePromo)) {
+            $this->scolaritePromos->removeElement($scolaritePromo);
+            // set the owning side to null (unless already changed)
+            if ($scolaritePromo->getSemestre() === $this) {
+                $scolaritePromo->setSemestre(null);
+            }
+        }
+
+        return $this;
     }
 }

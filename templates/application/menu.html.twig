@@ -38,6 +38,10 @@
                    href="{{ path('application_personnel_disponibilite_index') }}" role="tab">{{ 'menu.disponibilite'|trans
                     }}</a>
             </li>
+                <li class="nav-item">
+                    <a class="nav-link changeapplication {% if onglet == 'progression' %}active{% endif %}"
+                       href="{{ path('application_personnel_progression_index') }}" role="tab">{{ 'menu.progression'|trans }}</a>
+                </li>
                 {% endif %}
 
         {% else %}

@@ -46,4 +46,14 @@ class ScolariteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByEtudiant(Etudiant $etudiant)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.etudiant = :etudiant')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->orderBy('s.ordre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
 use App\Form\Type\YesNoType;
+use App\Repository\AnneeUniversitaireRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,9 +49,10 @@ class DiplomeType extends AbstractType
                 'choice_label' => 'display',
                 'label'        => 'label.assistant_diplome'
             ])
-            ->add('anneeUniversitaire', ChoiceType::class, [
-                'label'   => 'label.annee_courante',
-                'choices' => array_combine(range(date('Y') - 2, date('Y') + 4), range(date('Y') - 2, date('Y') + 4))
+            ->add('anneeUniversitaire', EntityType::class, [
+                'label'        => 'label.annee_courante',
+                'class'        => AnneeUniversitaire::class,
+                'choice_label' => 'displayAnneeUniversitaire'
             ])
             ->add('code_apogee', TextType::class, [
                 'label' => 'label.code_apogee'

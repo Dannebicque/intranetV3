@@ -52,12 +52,30 @@ class AnneeUniversitaire
      */
     private $creneauCours;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="anneeUniversitaire")
+     */
+    private $scolarites;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromo", mappedBy="anneeUniversitaire")
+     */
+    private $scolaritePromos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="anneeUniversitaire")
+     */
+    private $diplomes;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
         $this->departements = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
         $this->creneauCours = new ArrayCollection();
+        $this->scolarites = new ArrayCollection();
+        $this->scolaritePromos = new ArrayCollection();
+        $this->diplomes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,5 +210,110 @@ class AnneeUniversitaire
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Scolarite[]
+     */
+    public function getScolarites(): Collection
+    {
+        return $this->scolarites;
+    }
+
+    public function addScolarite(Scolarite $scolarite): self
+    {
+        if (!$this->scolarites->contains($scolarite)) {
+            $this->scolarites[] = $scolarite;
+            $scolarite->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolarite(Scolarite $scolarite): self
+    {
+        if ($this->scolarites->contains($scolarite)) {
+            $this->scolarites->removeElement($scolarite);
+            // set the owning side to null (unless already changed)
+            if ($scolarite->getAnneeUniversitaire() === $this) {
+                $scolarite->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScolaritePromo[]
+     */
+    public function getScolaritePromos(): Collection
+    {
+        return $this->scolaritePromos;
+    }
+
+    public function addScolaritePromo(ScolaritePromo $scolaritePromo): self
+    {
+        if (!$this->scolaritePromos->contains($scolaritePromo)) {
+            $this->scolaritePromos[] = $scolaritePromo;
+            $scolaritePromo->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolaritePromo(ScolaritePromo $scolaritePromo): self
+    {
+        if ($this->scolaritePromos->contains($scolaritePromo)) {
+            $this->scolaritePromos->removeElement($scolaritePromo);
+            // set the owning side to null (unless already changed)
+            if ($scolaritePromo->getAnneeUniversitaire() === $this) {
+                $scolaritePromo->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Diplome[]
+     */
+    public function getDiplomes(): Collection
+    {
+        return $this->diplomes;
+    }
+
+    public function addDiplome(Diplome $diplome): self
+    {
+        if (!$this->diplomes->contains($diplome)) {
+            $this->diplomes[] = $diplome;
+            $diplome->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiplome(Diplome $diplome): self
+    {
+        if ($this->diplomes->contains($diplome)) {
+            $this->diplomes->removeElement($diplome);
+            // set the owning side to null (unless already changed)
+            if ($diplome->getAnneeUniversitaire() === $this) {
+                $diplome->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function displayAnneeUniversitaire(): string
+    {
+
+        $s = $this->getAnnee() + 1;
+
+        return $this->getAnnee() . ' | ' . $s;
+
     }
 }

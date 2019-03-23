@@ -1,0 +1,136 @@
+{% for matiere in matieres if matiere.matiere.ue.semestre.moisDebut == debut %}
+    <h4>{{ matiere.matiere.libelle }}</h4>
+    <div class="alert alert-info">
+        <ul>
+            <li>CM: {{ matiere.nbHCm }} h x
+                <span id="nbgr_cm_{{ matiere.id }}">{{ matiere.nbGrCm }}</span>
+                groupe(s), soit {{ matiere
+                .nbHCm/1.5 }} séance(s) x {{ matiere.nbGrCm }} groupe(s),
+                soit {{ matiere.nbHCm/1.5*matiere
+                .nbGrCm }} sur le
+                bimestre/semestre
+            </li>
+            <li>TD: {{ matiere.nbHTd }} h x
+                <span id="nbgr_td_{{ matiere.id }}">{{ matiere.nbGrTd }}</span>
+                groupe
+                (s), soit {{ matiere.nbHTd/1.5 }}
+                séance(s) x {{ matiere.nbGrTd }} groupe(s), soit {{ matiere.nbHTd/1.5*matiere.nbGrTd }}
+                sur le
+                bimestre/semestre
+            </li>
+            <li>TP: {{ matiere.nbHTp }} h x
+                <span id="nbgr_tp_{{ matiere.id }}">{{ matiere.nbGrTp }}</span>
+                groupe
+                (s), soit {{ matiere.nbHTp/1.5 }}
+                séance(s) x {{ matiere.nbGrTp }} groupe(s), soit {{ matiere.nbHTp/1.5*matiere.nbGrTp }}
+                sur le
+                bimestre/semestre
+            </li>
+        </ul>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Semaines</th>
+            {% for i in 1..14 %}
+                <th>Sem. {{ i }}</th>
+            {% endfor %}
+            <th>Total</th>
+            <th>Total Gr.</th>
+            <th>Total H.</th>
+        </tr>
+        <tr>
+            <th>Mois</th>
+            {% for i in 1..14 %}
+                <th>mois</th>
+            {% endfor %}
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>CM</th>
+            {% for i in 1..14 %}
+                <td><input type="text" class="form-control updateProgression cm_{{ matiere.id }}"
+                           data-semaine="{{ i }}"
+                           data-type="cm" data-matiere="{{ matiere.id }}"
+                           id="tot_s{{ i }}_{{ matiere.id }}_cm"></td>
+            {% endfor %}
+            <td><span id="tot_cm_seance_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_cm_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_cm_h_{{ matiere.id }}">Tot.</span></td>
+        </tr>
+        <tr>
+            <th>TD</th>
+            {% for i in 1..14 %}
+                <td><input type="text" class="form-control updateProgression td_{{ matiere.id }}"
+                           data-semaine="{{ i }}"
+                           data-type="td" data-matiere="{{ matiere.id }}"
+                           id="tot_s{{ i }}_{{ matiere.id }}_td"></td>
+            {% endfor %}
+            <td><span id="tot_td_seance_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_td_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_td_h_{{ matiere.id }}">Tot.</span></td>
+        </tr>
+        <tr>
+            <th>TP</th>
+            {% for i in 1..14 %}
+                <td><input type="text" class="form-control updateProgression tp_{{ matiere.id }}"
+                           data-semaine="{{ i }}"
+                           data-type="tp" data-matiere="{{ matiere.id }}"
+                           id="tot_s{{ i }}_{{ matiere.id }}_tp"></td>
+            {% endfor %}
+            <td><span id="tot_tp_seance_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_tp_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_tp_h_{{ matiere.id }}">Tot.</span></td>
+        </tr>
+        <tr>
+            <th>Evaluations</th>
+            {% for i in 1..14 %}
+                <td><select class="form-control">
+                        <option value="">NON</option>
+                        <option value="CM">CM</option>
+                        <option value="CM">TD</option>
+                        <option value="CM">TP</option>
+                    </select></td>
+            {% endfor %}
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <th>Heures</th>
+            {% for i in 1..14 %}
+                <td><span id="tot_s{{ i }}_{{ matiere.id }}">Tot.</span></td>
+            {% endfor %}
+            <td><span id="tot_seance_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_{{ matiere.id }}">Tot.</span></td>
+            <td><span id="tot_h_{{ matiere.id }}">Tot.</span></td>
+        </tr>
+        </tbody>
+    </table>
+{% endfor %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Semaines</th>
+        {% for i in 1..14 %}
+            <th>Semaine {{ i }}</th>
+        {% endfor %}
+        <th>Total</th>
+        <th>Total H.</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Heures</th>
+        {% for i in 1..14 %}
+            <td><span id="tot_s{{ i }}">Tot.</span></td>
+        {% endfor %}
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+    </tbody>
+</table>

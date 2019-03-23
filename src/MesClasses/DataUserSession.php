@@ -176,7 +176,7 @@ class DataUserSession
     /**
      * @return Diplome[]
      */
-    public function getDiplomes(): array
+    public function getDiplomes(): ?array
     {
         return $this->diplomes;
     }

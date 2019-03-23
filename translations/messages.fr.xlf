@@ -10713,5 +10713,41 @@
         <target>Site principal</target>
       </segment>
     </unit>
+      <unit id="4iiMVSp" name="menu.progression">
+          <segment>
+              <source>menu.progression</source>
+              <target>menu.progression</target>
+          </segment>
+      </unit>
+      <unit id="4IV_WkH" name="application.progression.heading">
+          <segment>
+              <source>application.progression.heading</source>
+              <target>application.progression.heading</target>
+          </segment>
+      </unit>
+      <unit id="98QvGbd" name="adm.structure.departement">
+          <segment>
+              <source>adm.structure.departement</source>
+              <target>adm.structure.departement</target>
+          </segment>
+      </unit>
+      <unit id="qQ.yKx1" name="adm.parametres.departement">
+          <segment>
+              <source>adm.parametres.departement</source>
+              <target>adm.parametres.departement</target>
+          </segment>
+      </unit>
+      <unit id="oxbjZJ8" name="structure.de.la.departement.heading">
+          <segment>
+              <source>structure.de.la.departement.heading</source>
+              <target>structure.de.la.departement.heading</target>
+          </segment>
+      </unit>
+      <unit id="nVOmwKc" name="ajouter.diplome.departement">
+          <segment>
+              <source>ajouter.diplome.departement</source>
+              <target>ajouter.diplome.departement</target>
+          </segment>
+      </unit>
   </file>
 </xliff>
