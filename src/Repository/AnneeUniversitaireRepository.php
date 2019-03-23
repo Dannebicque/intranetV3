@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

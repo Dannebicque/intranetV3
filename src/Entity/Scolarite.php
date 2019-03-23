@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -23,7 +25,7 @@ class Scolarite extends BaseEntity
     private $ordre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", fetch="EAGER")
      */
     private $semestre;
 
@@ -43,7 +45,7 @@ class Scolarite extends BaseEntity
     private $moyenne = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites", fetch="EAGER")
      */
     private $etudiant;
 
@@ -58,12 +60,29 @@ class Scolarite extends BaseEntity
     private $commentaire;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneUe", mappedBy="scolarite")
+     */
+    private $scolariteMoyenneUes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="scolarites")
+     */
+    private $anneeUniversitaire;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneMatiere", mappedBy="scolarite")
+     */
+    private $scolariteMoyenneMatieres;
+
+    /**
      * Scolarite constructor.
      * @throws \Exception
      */
     public function __construct()
     {
         $this->uuid = Uuid::uuid4();
+        $this->scolariteMoyenneUes = new ArrayCollection();
+        $this->scolariteMoyenneMatieres = new ArrayCollection();
     }
 
     /**
@@ -231,6 +250,80 @@ class Scolarite extends BaseEntity
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScolariteMoyenneUe[]
+     */
+    public function getScolariteMoyenneUes(): Collection
+    {
+        return $this->scolariteMoyenneUes;
+    }
+
+    public function addScolariteMoyenneUe(ScolariteMoyenneUe $scolariteMoyenneUe): self
+    {
+        if (!$this->scolariteMoyenneUes->contains($scolariteMoyenneUe)) {
+            $this->scolariteMoyenneUes[] = $scolariteMoyenneUe;
+            $scolariteMoyenneUe->setScolarite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolariteMoyenneUe(ScolariteMoyenneUe $scolariteMoyenneUe): self
+    {
+        if ($this->scolariteMoyenneUes->contains($scolariteMoyenneUe)) {
+            $this->scolariteMoyenneUes->removeElement($scolariteMoyenneUe);
+            // set the owning side to null (unless already changed)
+            if ($scolariteMoyenneUe->getScolarite() === $this) {
+                $scolariteMoyenneUe->setScolarite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScolariteMoyenneMatiere[]
+     */
+    public function getScolariteMoyenneMatieres(): Collection
+    {
+        return $this->scolariteMoyenneMatieres;
+    }
+
+    public function addScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
+    {
+        if (!$this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
+            $this->scolariteMoyenneMatieres[] = $scolariteMoyenneMatiere;
+            $scolariteMoyenneMatiere->setScolarite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
+    {
+        if ($this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
+            $this->scolariteMoyenneMatieres->removeElement($scolariteMoyenneMatiere);
+            // set the owning side to null (unless already changed)
+            if ($scolariteMoyenneMatiere->getScolarite() === $this) {
+                $scolariteMoyenneMatiere->setScolarite(null);
+            }
+        }
 
         return $this;
     }

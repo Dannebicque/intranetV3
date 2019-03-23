@@ -13,7 +13,7 @@
 
     <!-- Styles -->
     {#<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"#}
-          {#rel="stylesheet"/>#}
+    {#rel="stylesheet"/>#}
 
     <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
     <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
@@ -96,6 +96,34 @@
                             <span class="title">{{ 'menu.administration'|trans }}</span>
                         </a>
                     </li>
+                {% elseif user_data.isGoodDepartement('ROLE_STA') %}
+                    <li class="menu-item" id="menu-administration">
+                        <a class="menu-link" href="{{ path('administration_index') }}">
+                            <span class="material-icons">build</span>
+                            <span class="title">{{ 'menu.administration_stage'|trans }}</span>
+                        </a>
+                    </li>
+                {% elseif user_data.isGoodDepartement('ROLE_EDT') %}
+                    <li class="menu-item" id="menu-administration">
+                        <a class="menu-link" href="{{ path('administration_index') }}">
+                            <span class="material-icons">build</span>
+                            <span class="title">{{ 'menu.administration_edt'|trans }}</span>
+                        </a>
+                    </li>
+                {% elseif user_data.isGoodDepartement('ROLE_ABS') %}
+                    <li class="menu-item" id="menu-administration">
+                        <a class="menu-link" href="{{ path('administration_index') }}">
+                            <span class="material-icons">build</span>
+                            <span class="title">{{ 'menu.administration_abs'|trans }}</span>
+                        </a>
+                    </li>
+                {% elseif user_data.isGoodDepartement('ROLE_NOTES') %}
+                    <li class="menu-item" id="menu-administration">
+                        <a class="menu-link" href="{{ path('administration_index') }}">
+                            <span class="material-icons">build</span>
+                            <span class="title">{{ 'menu.administration_notes'|trans }}</span>
+                        </a>
+                    </li>
                 {% endif %}
             {% endblock %}
         </ul>
@@ -170,17 +198,17 @@
         </div>
 
         {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
-        <div class="dropdown d-none d-md-block">
-            <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
-            <div class="dropdown-menu dropdown-grid">
-                {% for departement in user_data.user.getPersonnelDepartements %}
-                <a class="dropdown-item" href="{{ path('security_change_departement', {departement: departement.departement.uuidString}) }}">
-                    <span data-i8-icon="home"></span>
-                    <span class="title">{{ departement.departement.libelle }}</span>
-                </a>
-                {% endfor %}
+            <div class="dropdown d-none d-md-block">
+                <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
+                <div class="dropdown-menu dropdown-grid">
+                    {% for departement in user_data.user.getPersonnelDepartements %}
+                        <a class="dropdown-item" href="{{ path('security_change_departement', {departement: departement.departement.uuidString}) }}">
+                            <span data-i8-icon="home"></span>
+                            <span class="title">{{ departement.departement.libelle }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
         {% endif %}
 
         <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="{{ 'rechercher'|trans }}"
@@ -194,9 +222,12 @@
     <div class="topbar-right">
         <ul class="topbar-btns">
             <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown"><img class="avatar"
-                                                                         src="{{ asset('upload/photo/'~user_data.user.photoName) }}"
-                                                                         alt="Votre avatar"></span>
+                    <span class="topbar-btn" data-toggle="dropdown">
+                        <img class="avatar" src="{% if user_data.user.typeUser == 'permanent' %}
+{{ asset('upload/personnels/'~user_data.user.photoName) }}{% else %}
+{{ asset('upload/etudiants/'~user_data.user.photoName) }}
+                                {% endif %}
+                             " alt="Votre avatar"></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
                     <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
@@ -363,13 +394,14 @@
     </div><!--/.main-content -->
 
 
-    <!-- Footer -->
+          <!-- Footer -->
     <footer class="site-footer">
         <div class="row">
             <div class="col-md-6">
                 <p class="text-center text-md-left">Copyright © 2018 <a href="http://thetheme.io/theadmin">Template :
-                        TheAdmin</a> | <a href="https://www.davidannebicque.fr">@DavidAnnebicque</a>.
-                    All rights reserved.</p>
+                                                                                                           TheAdmin</a>
+                                                    | <a href="https://www.davidannebicque.fr">@DavidAnnebicque</a>.
+                                                    All rights reserved.</p>
             </div>
 
             <div class="col-md-6">
@@ -390,7 +422,7 @@
             </div>
         </div>
     </footer>
-    <!-- END Footer -->
+          <!-- END Footer -->
 
 </main>
 <!-- END Main container -->
@@ -464,9 +496,9 @@
 <script data-provide="sweetalert"></script>
 
 <script type="text/javascript">
-{% block javascript %}
+    {% block javascript %}
 
-{% endblock %}
+    {% endblock %}
 </script>
 </body>
 </html>

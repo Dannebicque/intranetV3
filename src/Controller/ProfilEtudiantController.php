@@ -6,6 +6,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\MesClasses\Calendrier;
 use App\Repository\AlternanceRepository;
+use App\Repository\ScolariteMoyenneUeRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -54,18 +55,25 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/scolarite", name="profil_etudiant_scolarite")
-     * @param ScolariteRepository $scolariteRepository
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     * @param Etudiant            $etudiant
+     * @param ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository
+     * @param ScolariteRepository          $scolariteRepository
+     * @param Etudiant                     $etudiant
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function scolarite(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
+    public function scolarite(
+        ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
+        ScolariteRepository $scolariteRepository,
+        Etudiant $etudiant
+    ): Response
     {
-        $scolarite = $scolariteRepository->findBy(array('etudiant' => $etudiant));
+        $scolarite = $scolariteRepository->findByEtudiant($etudiant);
+        $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
-            'scolarite' => $scolarite
+            'scolarite' => $scolarite,
+            'scolariteUes' => $scolariteUes
         ]);
     }
 

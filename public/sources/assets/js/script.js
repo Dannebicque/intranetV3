@@ -503,16 +503,16 @@ $(document).on('keyup', '#login_urca', function() {
 
 $(document).on('click', '.addpersonnel', function(){
   $.ajax({
-    url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug')}),
+    url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug')}),
     dataType: 'json',
     success: function(data) {
-      addCallout('Personnel ajouté à la departement !', 'success')
+      addCallout('Personnel ajouté au département !', 'success')
     }
   })
 });
 
 $(document).on('keyup', '#sa_login_urca', function () {
-  var formation = $(this).data('formation');
+  var departement = $(this).data('departement')
   var $val = $(this).val()
   console.log($val)
   if ($val.length > 2) {
@@ -527,7 +527,7 @@ $(document).on('keyup', '#sa_login_urca', function () {
             '<td>' + pers.prenom + '</td>' +
             '<td>' + pers.username + '</td>' +
             '<td>' + pers.mail_univ + '</td>' +
-            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la departement" data-slug="' + pers.slug + '" data-departement="' + formation + '"><i class="ti-plus"></i></a></td>' +
+            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '" data-departement="' + departement + '"><i class="ti-plus"></i></a></td>' +
             '</tr>'
           $('#result').append(html)
         })
@@ -538,10 +538,13 @@ $(document).on('keyup', '#sa_login_urca', function () {
 
 $(document).on('click', '.sa_addpersonnel', function () {
   $.ajax({
-    url: Routing.generate('api_personnel_add_to_formation', {slug: $(this).data('slug'), formation: $(this).data('formation')}),
+    url: Routing.generate('api_personnel_add_to_departement', {
+      slug: $(this).data('slug'),
+      departement: $(this).data('departement')
+    }),
     dataType: 'json',
     success: function (data) {
-      addCallout('Personnel ajouté à la departement !', 'success')
+      addCallout('Personnel ajouté au departement !', 'success')
 
     }
   })
@@ -598,7 +601,7 @@ $('#datatableRh').DataTable({
     {"data": "numero_harpege"},
     {"data": "nom"},
     {"data": "prenom"},
-    {"data": "formations"},
+    {'data': 'departements'},
     {"data": "deleted"},
     {
       "data": "id",
@@ -619,7 +622,7 @@ $('#datatableRh').DataTable({
 
 $(document).on('change','.change_droit_pf', function (){
   $.ajax({
-    url: Routing.generate('sa_personnel_formation_modifier_droit', {pf: $(this).data('pf')}),
+    url: Routing.generate('sa_personnel_departement_modifier_droit', {pf: $(this).data('pf')}),
     method: 'POST',
     data: {'droit': $(this).val()},
     success: function (data) {
@@ -639,7 +642,7 @@ $('#datatableEtudiants').DataTable({
   "language": langueFr,
   "processing": true,
   "serverSide": true,
-  "ajax": Routing.generate('api_etudiant_formation'),
+  'ajax': Routing.generate('api_etudiant_departement'),
   "sAjaxDataProp": "data",
   //"pageLength": 25,
   "columns": [
@@ -1416,6 +1419,7 @@ $(document).on('click', '.justificatif-annuler', function (e) {
   })
 })
 
+
 $('.savegroupe').click(function () {
   var groupe = $(this).attr('id')
   console.log(groupe)
@@ -1721,11 +1725,11 @@ function afficheUtilisateur (type) {
   }
 }
 
-$(document).on('change', '.formationParDefaut', function(e){
+  $(document).on('change', '.departementParDefaut', function (e) {
   $.ajax({
-    url: Routing.generate('user_change_formation_defaut'),
+    url: Routing.generate('user_change_departement_defaut'),
     data: {
-      formation: $(this.val())
+      departement: $(this.val())
     },
     method: 'POST',
     success: function(e) {
@@ -1969,6 +1973,109 @@ function updateCreneau($type, $cr, $semaine){
     method: 'POST'
   })
 }
+
+
+  $(document).on('change', '.updateProgression', function () {
+    console.log('update')
+    updateProgression($(this).data('semaine'), $(this).data('type'), $(this).data('matiere'))
+    calculProgression($(this).data('semaine'), $(this).data('type'), $(this).data('matiere'))
+  })
+
+  function updateProgression (semaine, typecours, matiere) {
+    $.ajax({
+      url: '',
+      data: {
+        semaine: semaine,
+        typecours: typecours,
+        matiere: matiere
+      }
+    })
+  }
+
+  function calculProgression (semaine, typecours, matiere) {
+    //update colonne
+    var $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
+    var $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
+    var $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
+
+    var $col = 'tot_s' + semaine + '_' + matiere
+
+    var cm = parseInt($('#' + $col + '_cm').val())
+    if (isNaN(cm)) {
+      cm = 0
+    }
+
+    var td = parseInt($('#' + $col + '_td').val())
+    if (isNaN(td)) {
+      td = 0
+    }
+
+    var tp = parseInt($('#' + $col + '_tp').val())
+    if (isNaN(tp)) {
+      tp = 0
+    }
+
+    var $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
+    $('#' + $col).text($total)
+
+    //update ligne
+    var $ztotCm = 'tot_cm_' + matiere
+    var $ztotTd = 'tot_td_' + matiere
+    var $ztotTp = 'tot_tp_' + matiere
+    var $ztotSCm = 'tot_cm_seance_' + matiere
+    var $ztotSTd = 'tot_td_seance_' + matiere
+    var $ztotSTp = 'tot_tp_seance_' + matiere
+    var $ztot = 'tot_' + matiere
+    var $ztotS = 'tot_seance_' + matiere
+    var $ztotCmH = 'tot_cm_h_' + matiere
+    var $ztotTdH = 'tot_td_h_' + matiere
+    var $ztotTpH = 'tot_tp_h_' + matiere
+    var $ztotH = 'tot_h_' + matiere
+
+    var $totCm = 0
+    var $totTd = 0
+    var $totTp = 0
+    //CM
+    $('.cm_' + matiere).each(function () {
+      var t = parseInt($(this).val())
+      if (isNaN(t)) {
+        t = 0
+      }
+      $totCm += t
+    })
+    console.log($totCm)
+    $('#' + $ztotSCm).text($totCm)
+    $('#' + $ztotCm).text($totCm * $nbGrCm)
+    $('#' + $ztotCmH).text($totCm * 1.5 * $nbGrCm)
+
+    //TD
+    $('.td_' + matiere).each(function () {
+      var t = parseInt($(this).val())
+      if (isNaN(t)) {
+        t = 0
+      }
+      $totTd += t
+    })
+    $('#' + $ztotSTd).text($totTd)
+    $('#' + $ztotTd).text($totTd * $nbGrTd)
+    $('#' + $ztotTdH).text($totTd * 1.5 * $nbGrTd)
+
+    //TP
+    $('.tp_' + matiere).each(function () {
+      var t = parseInt($(this).val())
+      if (isNaN(t)) {
+        t = 0
+      }
+      $totTp += t
+    })
+    $('#' + $ztotSTp).text($totTp)
+    $('#' + $ztotTp).text($totTp * $nbGrTp)
+    $('#' + $ztotTpH).text($totTp * 1.5 * $nbGrTp)
+
+    $('#' + $ztotS).text($totCm + $totTd + $totTp)
+    $('#' + $ztot).text($totCm * $nbGrCm + $totTd * $nbGrTd + $totTp * $nbGrTp)
+    $('#' + $ztotH).text($totCm * 1.5 * $nbGrCm + $totTd * 1.5 * $nbGrTd + $totTp * 1.5 * $nbGrTp)
+  }
 
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.

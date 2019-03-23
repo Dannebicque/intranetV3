@@ -202,12 +202,24 @@ class Matiere extends BaseEntity
      */
     private $matiereEnfants;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneMatiere", mappedBy="matiere")
+     */
+    private $scolariteMoyenneMatieres;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromoMatiere", mappedBy="matiere")
+     */
+    private $scolaritePromoMatieres;
+
     public function __construct()
     {
         $this->previsionnels = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
         $this->matiereEnfants = new ArrayCollection();
+        $this->scolariteMoyenneMatieres = new ArrayCollection();
+        $this->scolaritePromoMatieres = new ArrayCollection();
     }
 
     /**
@@ -814,6 +826,68 @@ class Matiere extends BaseEntity
     public function setMatiereParent(?Matiere $matiereParent): self
     {
         $this->matiereParent = $matiereParent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScolariteMoyenneMatiere[]
+     */
+    public function getScolariteMoyenneMatieres(): Collection
+    {
+        return $this->scolariteMoyenneMatieres;
+    }
+
+    public function addScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
+    {
+        if (!$this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
+            $this->scolariteMoyenneMatieres[] = $scolariteMoyenneMatiere;
+            $scolariteMoyenneMatiere->setMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
+    {
+        if ($this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
+            $this->scolariteMoyenneMatieres->removeElement($scolariteMoyenneMatiere);
+            // set the owning side to null (unless already changed)
+            if ($scolariteMoyenneMatiere->getMatiere() === $this) {
+                $scolariteMoyenneMatiere->setMatiere(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ScolaritePromoMatiere[]
+     */
+    public function getScolaritePromoMatieres(): Collection
+    {
+        return $this->scolaritePromoMatieres;
+    }
+
+    public function addScolaritePromoMatiere(ScolaritePromoMatiere $scolaritePromoMatiere): self
+    {
+        if (!$this->scolaritePromoMatieres->contains($scolaritePromoMatiere)) {
+            $this->scolaritePromoMatieres[] = $scolaritePromoMatiere;
+            $scolaritePromoMatiere->setMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScolaritePromoMatiere(ScolaritePromoMatiere $scolaritePromoMatiere): self
+    {
+        if ($this->scolaritePromoMatieres->contains($scolaritePromoMatiere)) {
+            $this->scolaritePromoMatieres->removeElement($scolaritePromoMatiere);
+            // set the owning side to null (unless already changed)
+            if ($scolaritePromoMatiere->getMatiere() === $this) {
+                $scolaritePromoMatiere->setMatiere(null);
+            }
+        }
 
         return $this;
     }
