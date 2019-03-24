@@ -68,9 +68,7 @@ class EtudiantGroupeController extends BaseController
         $id = explode('_', $t[0]);
 
         //récupére l'étudiant
-        dump($id[1]);
         $etu = $etudiantRepository->find($id[1]);
-        dump($etu);
         if ($etu !== null) {
             //efface l'ancien groupe
             if ($request->request->get('oldgroupe') !== 0) {

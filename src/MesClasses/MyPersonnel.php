@@ -47,16 +47,15 @@ class MyPersonnel
     public function getArrayAllPersonnel($filters, $start, $length): array
     {
         $personnels = $this->personnelRepository->getAllPersonnel($filters, $start, $length);
-        $tab = array();
+        $tab = [];
         /** @var Personnel $personnel */
         foreach ($personnels as $personnel) {
-            $t = array();
+            $t = [];
 
             $departements = '';
 
-            foreach ($personnel->getPersonnelDepartements() as $departement)
-            {
-                $departements .= $departement->getDepartement() ? $departement->getDepartement()->getLibelle().', ' : '';
+            foreach ($personnel->getPersonnelDepartements() as $departement) {
+                $departements .= $departement->getDepartement() ? $departement->getDepartement()->getLibelle() . ', ' : '';
             }
             $t['id'] = $personnel->getId();
             $t['departements'] = $departements;

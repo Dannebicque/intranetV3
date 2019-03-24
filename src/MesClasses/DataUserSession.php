@@ -132,9 +132,9 @@ class DataUserSession
         $this->security = $security;
 
         if ($this->getUser() instanceof Etudiant) {
-           $this->messagesRepository = $messageDestinataireEtudiantRepository;
+            $this->messagesRepository = $messageDestinataireEtudiantRepository;
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
-       } elseif ($this->getUser() instanceof Personnel) {
+        } elseif ($this->getUser() instanceof Personnel) {
             $this->messagesRepository = $messageDestinatairePersonnelRepository;
             if ($session->get('departement') !== null) {
                 $this->departement = $this->departementRepository->find($session->get('departement'));
@@ -153,9 +153,6 @@ class DataUserSession
         }
     }
 
-    /**
-     * @return \App\Entity\Personnel|\App\Entity\Etudiant|string
-     */
     public function getUser()
     {
         if ($this->user->getToken() !== null) {
@@ -244,7 +241,7 @@ class DataUserSession
     }
 
     /**
-     * @return null
+     * @return int
      */
     public function getDepartementId()
     {
@@ -252,7 +249,7 @@ class DataUserSession
             return $this->departement->getId();
         }
 
-        return null;
+        return 0;
     }
 
     /**
@@ -292,16 +289,20 @@ class DataUserSession
     /**
      * @return bool
      */
-    public function getDepartementMultiple() : bool
+    public function getDepartementMultiple(): bool
     {
         return count($this->getUser()->getPersonnelDepartements()) > 1;
     }
 
-    public function getAnneeUniversitaire() {
-        if ($this->getUser() !== null && $this->getUser() instanceof Etudiant) {
+    /**
+     * @return int
+     */
+    public function getAnneeUniversitaire()
+    {
+        if ($this->getUser() instanceof Etudiant) {
             return $this->getUser()->getAnneeUniversitaire();
         } else {
-            return date('Y'); //todo: a améliorer pour les non étudiants...
+            return (int)date('Y'); //todo: a améliorer pour les non étudiants...
         }
     }
 }

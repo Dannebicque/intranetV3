@@ -27,8 +27,8 @@ class MyEtudiantSousCommission
     /** @var Semestre */
     private $semestre;
 
-    /** @var MoyenneMatiereEtudiant[]  */
-    private $moyenneMatieres= [];
+    /** @var MoyenneMatiereEtudiant[] */
+    private $moyenneMatieres = [];
 
     /** @var MoyenneUeEtudiant[] */
     private $moyenneUes = [];
@@ -43,7 +43,7 @@ class MyEtudiantSousCommission
     /** @var ParcoursEtudiant[] */
     private $parcours = [];
 
-    /** @var  */
+    /** @var */
     private $notes = [];
 
     /**
@@ -65,7 +65,8 @@ class MyEtudiantSousCommission
             if ($matiere->getSuspendu() === false) {
                 $matId = $matiere->getId();
                 if (array_key_exists($matId, $this->notes)) {
-                    $this->moyenneMatieres[$matId] = new MoyenneMatiereEtudiant($etudiant, $matiere, $this->notes[$matId]);
+                    $this->moyenneMatieres[$matId] = new MoyenneMatiereEtudiant($etudiant, $matiere,
+                        $this->notes[$matId]);
                 } else {
                     $this->moyenneMatieres[$matId] = new MoyenneMatiereEtudiant($etudiant, $matiere, []);
                 }
@@ -106,7 +107,6 @@ class MyEtudiantSousCommission
     {
         return $this->moyenneMatieres;
     }
-
 
 
     /**

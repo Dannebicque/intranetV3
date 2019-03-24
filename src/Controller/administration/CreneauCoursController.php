@@ -65,7 +65,8 @@ class CreneauCoursController extends BaseController
      */
     public function export(MyExport $myExport, CreneauCoursRepository $creneauCoursRepository, $_format): Response
     {
-        $creneaux = $creneauCoursRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+            $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $creneaux,

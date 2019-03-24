@@ -72,8 +72,8 @@ class UserAjaxController extends BaseController
         PersonnelDepartementRepository $personnelDepartementRepository,
         Departement $departement
     ): ?JsonResponse {
-        if ($this->dataUserSession->getUser() !== null && $this->dataUserSession->getUser()->getTypeUser() === 'permanent') {
-            $pf = $personnelDepartementRepository->findByPersonnel($this->dataUserSession->getUser());
+        if ($this->getUser() !== null && $this->getUser()->getTypeUser() === 'permanent') {
+            $pf = $personnelDepartementRepository->findByPersonnel($this->getUser());
             /** @var PersonnelDepartement $p */
             foreach ($pf as $p) {
                 if ($p->getDepartement() !== null && $p->getDepartement()->getId() === $departement->getId()) {

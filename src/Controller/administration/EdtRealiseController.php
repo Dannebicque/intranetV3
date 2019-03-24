@@ -29,6 +29,7 @@ class EdtRealiseController extends BaseController
      */
     public function index(PersonnelRepository $personnelRepository, $source)
     {
+        //todo: a refaire
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtRealise/index.html.twig', array(

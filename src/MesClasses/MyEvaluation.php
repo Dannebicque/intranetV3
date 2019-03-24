@@ -279,7 +279,7 @@ class MyEvaluation
     private function insertNotes(Evaluation $evaluation, $data)
     {
         $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($evaluation->getSemestre());
-        $etudiants=[];
+        $etudiants = [];
         /** @var Etudiant $etu */
         foreach ($req as $etu) {
             $etudiants[$etu->getNumEtudiant()] = $etu;
@@ -317,14 +317,15 @@ class MyEvaluation
         }
 
         $nblignes = count($sheetData);
-        for($i=2; $i <= $nblignes; $i++) {
+        for ($i = 2; $i <= $nblignes; $i++) {
             //todo: on commence à 2 si ligne d'en-tete, 1 sinon. A detecter
-            $nb= count($sheetData[$i]);
-            for($j=1; $j<=$nb; $j++) {
-                $t[$ordre[$j-1]] = $sheetData[$i][chr($j+64)];
+            $nb = count($sheetData[$i]);
+            for ($j = 1; $j <= $nb; $j++) {
+                $t[$ordre[$j - 1]] = $sheetData[$i][chr($j + 64)];
             }
             $data[] = $t;
         }
+
         return $data;
     }
 
@@ -356,7 +357,7 @@ class MyEvaluation
                 /*On lit la ligne courante*/
                 $phrase = fgetcsv($handle, 1024, ';');
                 $nb = count($phrase);
-                for($i=0; $i<$nb; $i++) {
+                for ($i = 0; $i < $nb; $i++) {
                     $t[$ordre[$i]] = $phrase[$i];
                 }
                 $data[] = $t;

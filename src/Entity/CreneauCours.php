@@ -186,14 +186,17 @@ class CreneauCours
         return $this;
     }
 
-    public function getJourLong() {
-        $tabJour = [1 => 'Lundi',
-                 2 => 'Mardi',
-                 3 => 'Mercredi',
-                 4 => 'Jeudi',
-                 5 => 'Vendredi',
-                 6 => 'Samedi',
-                 7 => 'Dimanche'];
+    public function getJourLong()
+    {
+        $tabJour = [
+            1 => 'Lundi',
+            2 => 'Mardi',
+            3 => 'Mercredi',
+            4 => 'Jeudi',
+            5 => 'Vendredi',
+            6 => 'Samedi',
+            7 => 'Dimanche'
+        ];
 
         return $tabJour[$this->getJour()];
     }

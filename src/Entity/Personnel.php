@@ -239,7 +239,6 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     }
 
 
-
     /**
      * @return mixed
      */
@@ -795,11 +794,11 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     public function serialize(): string
     {
         // Ajouté pour le problème de connexion avec le usernametoken
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->password,
             $this->username
-        ));
+        ]);
     }
 
     /**

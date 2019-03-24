@@ -27,9 +27,6 @@ class CahierTexteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        //Todo: gérer par diplôme ?
-
         $this->departement = $options['departement'];
 
         $builder

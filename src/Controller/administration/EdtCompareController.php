@@ -5,6 +5,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\MesClasses\MyPrevisionnel;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleRepository;
@@ -27,6 +28,7 @@ class EdtCompareController extends BaseController
      */
     public function comparePersonnel(PersonnelRepository $personnelRepository, MyPrevisionnel $myPrevisionnel, $source)
     {
+        //todo: a refaire
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         if ($source === 'intranet') {

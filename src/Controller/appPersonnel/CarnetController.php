@@ -50,7 +50,7 @@ class CarnetController extends BaseController
      */
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {
-        $actualites = $cahierTexteRepository->findByPersonnel($this->dataUserSession->getUser());
+        $actualites = $cahierTexteRepository->findByPersonnel($this->getUser());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $actualites,

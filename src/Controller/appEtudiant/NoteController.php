@@ -26,12 +26,16 @@ class NoteController extends BaseController
      */
     public function details(MyEvaluation $myEvaluation, Note $note): Response
     {
-        $myEvaluation->setEvaluation($note->getEvaluation())->calculStatistiquesGlobales();
+        if ($note->getEvaluation() !== null) {
+            $myEvaluation->setEvaluation($note->getEvaluation())->calculStatistiquesGlobales();
 
-        return $this->render('appEtudiant/note/detail.html.twig', [
-            'statistiques' => $myEvaluation->getStatistiques(),
-            'classement'   => $myEvaluation->classement($note->getEtudiant()),
-            'note'         => $note
-        ]);
+            return $this->render('appEtudiant/note/detail.html.twig', [
+                'statistiques' => $myEvaluation->getStatistiques(),
+                'classement'   => $myEvaluation->classement($note->getEtudiant()),
+                'note'         => $note
+            ]);
+        }
+
+        return $this->render('erreur/666.html.twig');
     }
 }

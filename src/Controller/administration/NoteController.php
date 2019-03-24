@@ -52,7 +52,7 @@ class NoteController extends BaseController
         Semestre $semestre,
         $_format
     ): Response {
-        $notes = $noteRepository->findBySemestre($semestre);
+        $notes = $noteRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $notes,

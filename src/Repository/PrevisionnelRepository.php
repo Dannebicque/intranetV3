@@ -61,7 +61,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findPrevisionnelEnseignantComplet(Personnel $personnel, $annee) :array
+    public function findPrevisionnelEnseignantComplet(Personnel $personnel, $annee): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Matiere::class, 'e', 'WITH', 'p.matiere = e.id')
@@ -143,7 +143,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             ->andWhere('s.annee = :annee')
             ->setParameter('diplome', $diplome->getId())
-            ->setParameter('annee' ,$annee)
+            ->setParameter('annee', $annee)
             ->getQuery()
             ->getResult();
     }

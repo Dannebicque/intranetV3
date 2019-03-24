@@ -42,6 +42,7 @@ class ConfigurationController extends BaseController
         if ($myConfiguration->updateOption($type, $id, $name, $value)) {
             return new Response('', Response::HTTP_OK);
         }
+
         return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

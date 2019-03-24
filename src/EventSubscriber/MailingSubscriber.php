@@ -49,7 +49,7 @@ class MailingSubscriber implements EventSubscriberInterface
             Events::MAIL_NEW_TRANSCRIPT_RESPONSABLE    => 'onMailNewTranscriptResponsable',
             Events::MAIL_DECISION_RATTRAPAGE           => 'onMailDecisionRattrapage',
             Events::MAIL_DECISION_JUSTIFICATIF         => 'onMailDecisionJustificatif',
-            Events::MAIL_DELETE_JUSTIFICATIF         => 'onMailDeleteJustificatif',
+            Events::MAIL_DELETE_JUSTIFICATIF           => 'onMailDeleteJustificatif',
         ];
     }
 
@@ -62,7 +62,8 @@ class MailingSubscriber implements EventSubscriberInterface
         $absence = $event->getSubject();
         if ($absence->getEtudiant() !== null) {
             $this->myMailer->setTemplate('mails/absence_added.txt.twig', ['absence' => $absence]);
-            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée', ['from' => [$absence->getPersonnel()? $absence->getPersonnel()->getMailUniv() : null]]);
+            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
+                ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
     }
 
@@ -93,11 +94,15 @@ class MailingSubscriber implements EventSubscriberInterface
         $absenceJustificatif = $event->getSubject();
         if ($absenceJustificatif->getEtudiant() !== null) {
             if ($absenceJustificatif->getEtat() === 'A') {
-                $this->myMailer->setTemplate('mails/justificatif_accepted.txt.twig', ['justificatif' => $absenceJustificatif]);
-                $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(), 'Justificatif d\'absence accepté');
+                $this->myMailer->setTemplate('mails/justificatif_accepted.txt.twig',
+                    ['justificatif' => $absenceJustificatif]);
+                $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
+                    'Justificatif d\'absence accepté');
             } else {
-                $this->myMailer->setTemplate('mails/justificatif_refused.txt.twig', ['justificatif' => $absenceJustificatif]);
-                $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(), 'Justificatif d\'absence refusé');
+                $this->myMailer->setTemplate('mails/justificatif_refused.txt.twig',
+                    ['justificatif' => $absenceJustificatif]);
+                $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
+                    'Justificatif d\'absence refusé');
             }
         }
     }
@@ -110,8 +115,10 @@ class MailingSubscriber implements EventSubscriberInterface
         /** @var AbsenceJustificatif $absenceJustificatif */
         $absenceJustificatif = $event->getSubject();
         if ($absenceJustificatif->getEtudiant() !== null) {
-            $this->myMailer->setTemplate('mails/justificatif_deleted.txt.twig', ['justificatif' => $absenceJustificatif]);
-            $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(), 'Justificatif d\'absence supprimé');
+            $this->myMailer->setTemplate('mails/justificatif_deleted.txt.twig',
+                ['justificatif' => $absenceJustificatif]);
+            $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
+                'Justificatif d\'absence supprimé');
         }
     }
 
@@ -140,7 +147,8 @@ class MailingSubscriber implements EventSubscriberInterface
         $absence = $event->getSubject();
         if ($absence->getEtudiant() !== null) {
             $this->myMailer->setTemplate('mails/absence_removed.txt.twig', ['absence' => $absence]);
-            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Suppression d\'une absence enregistrée', ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Suppression d\'une absence enregistrée',
+                ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
     }
 

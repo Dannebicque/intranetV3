@@ -27,16 +27,16 @@ class StageController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_stage_index")
-     * @param StagePeriodeRepository  $stagePeriodeRepository
+     * @param StagePeriodeRepository $stagePeriodeRepository
      *
      * @return Response
      */
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->dataUserSession->getUser()->getSemestre());
-        $stageEtudiants = array();
+        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre());
+        $stageEtudiants = [];
 
-        foreach ($this->dataUserSession->getUser()->getStageEtudiants() as $stage) {
+        foreach ($this->getUser()->getStageEtudiants() as $stage) {
             if ($stage->getStagePeriode() !== null) {
                 $stageEtudiants[$stage->getStagePeriode()->getId()] = $stage;
             }
@@ -58,9 +58,12 @@ class StageController extends BaseController
      *
      * @return Response
      */
-    public function create(EventDispatcherInterface $eventDispatcher, Request $request, StageEtudiant $stageEtudiant): Response
-    {
-        if ( $stageEtudiant->getStagePeriode() !== null) {
+    public function create(
+        EventDispatcherInterface $eventDispatcher,
+        Request $request,
+        StageEtudiant $stageEtudiant
+    ): Response {
+        if ($stageEtudiant->getStagePeriode() !== null) {
             $form = $this->createForm(StageEtudiantEtudiantType::class, $stageEtudiant, [
                 'flexible' => $stageEtudiant->getStagePeriode()->getDatesFlexibles(),
                 'attr'     => [
@@ -88,6 +91,8 @@ class StageController extends BaseController
                 'form'          => $form->createView(),
             ]);
         }
+
+        return $this->render('erreur/500.html.twig');
     }
 
     /**
