@@ -53,7 +53,7 @@ class MyPrevisionnel
     /**
      * @var Semestre[]
      */
-    private $semestres = array();
+    private $semestres = [];
 
     private $totalCm = 0.0;
     private $totalTd = 0.0;
@@ -282,14 +282,14 @@ class MyPrevisionnel
     {
         $previsionnels = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($this->personnel, $annee);
 
-        $tprev = array();
+        $tprev = [];
         /** @var Previsionnel $pr */
         foreach ($previsionnels as $pr) {
             $sem = $pr->getSemestre() ? $pr->getSemestre()->getId() : null;
 
             if ($sem !== null) {
                 if (!array_key_exists($sem, $tprev)) {
-                    $tprev[$sem] = array();
+                    $tprev[$sem] = [];
                     $this->semestres[] = $pr->getSemestre();
                 }
                 $tprev[$sem][] = $pr;
@@ -524,7 +524,8 @@ class MyPrevisionnel
 //LIBELLE VET
             $colonne++;
 //CODE ELEMENT*
-            $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getTypeHrs() ? $previ->getTypeHrs()->getType() : 'non défini');
+            $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                $previ->getTypeHrs() ? $previ->getTypeHrs()->getType() : 'non défini');
             $colonne++;
 //LIBELLE ELEMENT
             if ($previ->getTypeHrs() !== null) {
@@ -612,7 +613,7 @@ class MyPrevisionnel
 
                 /* supprime la première ligne */
                 fgets($handle);
-                $annee= $data['annee'];
+                $annee = $data['annee'];
                 /*Tant que l'on est pas à la fin du fichier*/
                 while (!feof($handle)) {
                     /*On lit la ligne courante*/
@@ -634,8 +635,10 @@ class MyPrevisionnel
                 /*On ferme le fichier*/
                 fclose($handle);
                 unlink($dir . $nomfile); //suppression du fichier
+
                 return true;
             }
+
             return false;
         }
 
@@ -657,11 +660,11 @@ class MyPrevisionnel
     public function compareEdtPreviPersonnels($personnels, $planning, Departement $departement, $annee)
     {
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
-        $t = array();
+        $t = [];
 
         /** @var Personnel $ens */
         foreach ($personnels as $ens) {
-            $t[$ens->getId()] = array();
+            $t[$ens->getId()] = [];
         }
 
         /** @var  $p Previsionnel */
@@ -732,11 +735,11 @@ class MyPrevisionnel
      */
     public function compareEdtPreviMatiere($modules, $previModule, $planning)
     {
-        $t = array();
+        $t = [];
 
         /** @var Matieres $module */
         foreach ($modules as $module) {
-            $t[$module->getId()] = array();
+            $t[$module->getId()] = [];
         }
 
         /** @var  $p PersonnelMatiere */

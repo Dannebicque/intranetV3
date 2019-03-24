@@ -14,6 +14,7 @@ namespace App\Entity;
  */
 class Constantes
 {
+    //todo: vérifier avec base.html et administration/index.html
     public const ROLE_CDD = 'ROLE_CDD';
     public const ROLE_DDE = 'ROLE_DDE';
     public const ROLE_ASS = 'ROLE_ASS';
@@ -62,20 +63,20 @@ class Constantes
     public const CIVILITE_HOMME = 'M.';
     public const CIVILITE_FEMME = 'Mme';
 
-    public const ROLE_LISTE =  array(
-            self::ROLE_CDD,
-            self::ROLE_PERMANENT,
-            self::ROLE_DDE,
-            self::ROLE_ASS,
-            self::ROLE_RP,
-            self::ROLE_RDA,
-            self::ROLE_EDT,
-            self::ROLE_RDS,
-            self::ROLE_AUTEUR,
-            self::ROLE_MAT
-        );
+    public const ROLE_LISTE = [
+        self::ROLE_CDD,
+        self::ROLE_PERMANENT,
+        self::ROLE_DDE,
+        self::ROLE_ASS,
+        self::ROLE_RP,
+        self::ROLE_RDA,
+        self::ROLE_EDT,
+        self::ROLE_RDS,
+        self::ROLE_AUTEUR,
+        self::ROLE_MAT
+    ];
 
-    public const TAB_HEURES = array(
+    public const TAB_HEURES = [
         '',
         '8:00',
         '8:30',
@@ -103,7 +104,7 @@ class Constantes
         '19:30',
         '20:00',
         '20:30'
-    );
+    ];
 
     public const MOYENNE_MODULES = 'moymodules';
     public const MOYENNE_UES = 'moyues';

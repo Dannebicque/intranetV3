@@ -347,6 +347,10 @@ class Annee extends BaseEntity
     }
 
     public function getAnneeUniversitaire() {
-        return $this->getDiplome() ? $this->getDiplome()->getAnneeUniversitaire() : 0;
+        if ($this->getDiplome() !== null && $this->getDiplome()->getAnneeUniversitaire() !== null) {
+            return $this->getDiplome()->getAnneeUniversitaire()->getAnnee();
+        }
+
+        return 0;
     }
 }

@@ -70,7 +70,7 @@ class Article extends BaseEntity
      *
      * @param Personnel $personnel
      */
-    public function __construct(Personnel $personnel)
+    public function __construct(?Personnel $personnel)
     {
         $this->personnel = $personnel;
         $this->semestres = new ArrayCollection();

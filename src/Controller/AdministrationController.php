@@ -20,11 +20,12 @@ class AdministrationController extends BaseController
      *
      * @return Response
      */
-    public function index(StagePeriodeRepository $stagePeriodeRepository) :Response
+    public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $periodes = array();
+        $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $pers =  $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            $pers = $stagePeriodeRepository->findByDiplome($diplome,
+                $diplome->getAnneeUniversitaire() ? $diplome->getAnneeUniversitaire()->getAnnee() : date('Y'));
             foreach ($pers as $periode) {
                 $periodes[] = $periode;
             }

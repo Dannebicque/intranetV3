@@ -119,6 +119,7 @@ class AbsenceController extends BaseController
             $myEtudiant->setEtudiant($absence->getEtudiant());
             $myEtudiant->removeAbsence($absence);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.delete.success.flash');
+
             return $this->json($id, Response::HTTP_OK);
         }
 
@@ -138,13 +139,13 @@ class AbsenceController extends BaseController
     public function ajaxGetAbsencesMatiere(
         AbsenceRepository $absenceRepository,
         Matiere $matiere
-    ): \Symfony\Component\HttpFoundation\JsonResponse
-    {
+    ): \Symfony\Component\HttpFoundation\JsonResponse {
         $absences = $absenceRepository->getByMatiereArray(
             $matiere,
             $matiere->getSemestre()->getAnneeUniversitaire()
         );
-       // dump($absences);
+
+        // dump($absences);
         return $this->json($absences);
     }
 
@@ -169,13 +170,13 @@ class AbsenceController extends BaseController
     ) {
         $date = Tools::convertDateToObject($request->request->get('date'));
         $heure = Tools::convertTimeToObject($request->request->get('heure'));
-        $absence = $absenceRepository->findBy(array(
+        $absence = $absenceRepository->findBy([
             'matiere'            => $matiere->getId(),
             'etudiant'           => $etudiant->getId(),
             'date'               => $date,
             'heure'              => $heure,
-            'anneeuniversitaire' => $etudiant->getSemestre()->getAnneeUniversitaire()
-        ));
+            'anneeuniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire() : (int)date('Y')
+        ]);
 
         if ($request->get('action') === 'saisie' && \count($absence) === 0) {
             //if ($this->saisieAutorise($connect->getDepartement()->getPgNbjourssaisie(), $datesymfony)) {
@@ -185,12 +186,12 @@ class AbsenceController extends BaseController
                 $date,
                 $heure,
                 $matiere,
-                $this->dataUserSession->getUser()
+                $this->getUser()
             );
 
             $absences = $absenceRepository->getByMatiereArray(
                 $matiere,
-                $matiere->getSemestre()->getAnneeUniversitaire()
+                $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : (int)date('Y')
             );
 
             return $this->json($absences);

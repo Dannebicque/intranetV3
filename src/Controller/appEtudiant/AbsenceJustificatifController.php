@@ -38,7 +38,7 @@ class AbsenceJustificatifController extends BaseController
      */
     public function depot(Request $request): Response
     {
-        $absenceJustificatif = new AbsenceJustificatif($this->dataUserSession->getUser());
+        $absenceJustificatif = new AbsenceJustificatif($this->getUser());
         $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
         $form->handleRequest($request);
 

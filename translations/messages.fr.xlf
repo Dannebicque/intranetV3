@@ -5789,7 +5789,7 @@
       </notes>
       <segment>
         <source>default.heading</source>
-        <target><![CDATA[Intranet du département <strong>%formation%</strong>]]></target>
+        <target><![CDATA[Intranet du département <strong>%departement%</strong>]]></target>
       </segment>
     </unit>
     <unit id="_LQr0W4" name="voir.anciennes.actualites">

@@ -41,10 +41,10 @@ class MessagerieController extends BaseController
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         $filtre
     ): Response {
-        if ($this->dataUserSession->getUser() instanceof Etudiant) {
-            $messages = $messageEtudiantRepository->findLast($this->dataUserSession->getUser());
-        } elseif ($this->dataUserSession->getUser() instanceof Personnel) {
-            $messages = $messagePersonnelRepository->findLast($this->dataUserSession->getUser());
+        if ($this->getUser() instanceof Etudiant) {
+            $messages = $messageEtudiantRepository->findLast($this->getUser());
+        } elseif ($this->getUser() instanceof Personnel) {
+            $messages = $messagePersonnelRepository->findLast($this->getUser());
         } else {
             $messages = null;
         }
@@ -68,10 +68,10 @@ class MessagerieController extends BaseController
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         Message $message
     ): Response {
-        if ($this->dataUserSession->getUser() instanceof Etudiant) {
-            $messaged = $messageEtudiantRepository->findDest($this->dataUserSession->getUser(), $message);
-        } elseif ($this->dataUserSession->getUser() instanceof Personnel) {
-            $messaged = $messagePersonnelRepository->findDest($this->dataUserSession->getUser(), $message);
+        if ($this->getUser() instanceof Etudiant) {
+            $messaged = $messageEtudiantRepository->findDest($this->getUser(), $message);
+        } elseif ($this->getUser() instanceof Personnel) {
+            $messaged = $messagePersonnelRepository->findDest($this->getUser(), $message);
         } else {
             return $this->redirectToRoute('erreur_666');
         }
@@ -101,11 +101,11 @@ class MessagerieController extends BaseController
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         $page = 0
     ): Response {
-        if ($this->dataUserSession->getUser() instanceof Etudiant) {
-            $messages = $messageEtudiantRepository->findLast($this->dataUserSession->getUser());
-        } elseif ($this->dataUserSession->getUser() instanceof Personnel) {
+        if ($this->getUser() instanceof Etudiant) {
+            $messages = $messageEtudiantRepository->findLast($this->getUser());
+        } elseif ($this->getUser() instanceof Personnel) {
             echo 'coucou';
-            $messages = $messagePersonnelRepository->findLast($this->dataUserSession->getUser());
+            $messages = $messagePersonnelRepository->findLast($this->getUser());
         } else {
             $messages = null;
         }

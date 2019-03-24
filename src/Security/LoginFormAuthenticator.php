@@ -29,8 +29,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     private $csrfTokenManager;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface $urlGenerator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
@@ -73,12 +77,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
 
-        if ($userPersonnel !== null && $userEtudiant === null)
+        if ($userPersonnel !== null && $userEtudiant === null) {
             return $userPersonnel;
-        elseif ($userPersonnel === null && $userEtudiant !== null)
+        } elseif ($userPersonnel === null && $userEtudiant !== null) {
             return $userEtudiant;
-        else
+        } else {
             return null;
+        }
     }
 
     public function checkCredentials($credentials, UserInterface $user)
@@ -109,7 +114,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
             //c'est aucun des rôles...
-            $redirection = new RedirectResponse($this->urlGenerator->generate('security_login', ['message'=>'erreur_role']));
+            $redirection = new RedirectResponse($this->urlGenerator->generate('security_login',
+                ['message' => 'erreur_role']));
         }
 
         return $redirection;

@@ -16,7 +16,7 @@ class MyProfilerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-           'kernel.response' => 'onKernelResponse',
+            'kernel.response' => 'onKernelResponse',
         ];
     }
 }

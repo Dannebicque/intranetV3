@@ -24,27 +24,30 @@ class CohorteController extends BaseController
      *
      * @return Response
      */
-    public function index(EtudiantRepository $etudiantRepository, ScolariteRepository $scolariteRepository, $annee = 0): Response
-    {
+    public function index(
+        EtudiantRepository $etudiantRepository,
+        ScolariteRepository $scolariteRepository,
+        $annee = 0
+    ): Response {
         if ($annee === 0) {
-            $annee = date('Y')-1;
+            $annee = date('Y') - 1;
         }
         //on ne récupère la cohorte que de la departement.
         //$etudiants = $etudiantRepository->findEtudiantCohorte($annee, $this->dataUserSession->getDepartement());
         $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->dataUserSession->getDepartement());
-           $etudiants = array();
+        $etudiants = [];
 
-           /** @var Scolarite $parcour */
-        foreach ($parcours as $parcour)
-        {
-            if ($parcour->getEtudiant() !== null && ! array_key_exists($parcour->getEtudiant()->getId(), $etudiants)) {
+        /** @var Scolarite $parcour */
+        foreach ($parcours as $parcour) {
+            if ($parcour->getEtudiant() !== null && !array_key_exists($parcour->getEtudiant()->getId(), $etudiants)) {
                 $etudiants[$parcour->getEtudiant()->getId()] = $parcour->getEtudiant();
             }
         }
+
         return $this->render('administration/cohorte/index.html.twig', [
             'parcours'  => $parcours,
             'etudiants' => $etudiants,
-            'annee' => $annee
+            'annee'     => $annee
         ]);
     }
 

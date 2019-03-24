@@ -42,8 +42,7 @@ class TrombinoscopeController extends BaseController
         MyExportListing $myExportListing,
         TypeGroupe $typeGroupe,
         $_format
-    ): ?StreamedResponse
-    {
+    ): ?StreamedResponse {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_LISTE,
             $_format,
@@ -90,7 +89,8 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/{type}.{_format}", name="trombinoscope_personnel_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/{type}.{_format}", name="trombinoscope_personnel_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
      * @param PersonnelRepository $personnelRepository
      * @param                     $type
@@ -99,13 +99,17 @@ class TrombinoscopeController extends BaseController
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function trombiPersonnelExport(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
-    {
+    public function trombiPersonnelExport(
+        MyExport $myExport,
+        PersonnelRepository $personnelRepository,
+        $type,
+        $_format
+    ): Response {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $personnels,
-            'listing_'.$type,
+            'listing_' . $type,
             ['utilisateur'],
             ['nom', 'prenom']
         );

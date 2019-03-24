@@ -1053,11 +1053,13 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    public function getDiplome() {
+    public function getDiplome()
+    {
         if ($this->getAnnee() !== null && $this->getAnnee()->getDiplome() !== null) {
             return $this->getAnnee()->getDiplome();
         }
-            return null;
+
+        return null;
     }
 
     /**
@@ -1065,7 +1067,12 @@ class Semestre extends BaseEntity
      */
     public function getAnneeUniversitaire(): int
     {
-        return $this->getDiplome() ? $this->getDiplome()->getAnneeUniversitaire() : 0;
+        if ($this->getDiplome() !== null && $this->getDiplome()->getAnneeUniversitaire() !== null) {
+            return $this->getDiplome()->getAnneeUniversitaire()->getAnnee();
+        }
+
+        return 0;
+
     }
 
     /**

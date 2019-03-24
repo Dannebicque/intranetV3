@@ -31,7 +31,7 @@ class SiteController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_site_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
-     * @param SiteRepository $siteRepository
+     * @param SiteRepository      $siteRepository
      *
      * @param                     $_format
      *
@@ -46,7 +46,7 @@ class SiteController extends BaseController
             $sites,
             'sites',
             ['sites_administration', 'adresse'],
-            ['libelle', 'adresse'=> ['adresse1','adresse2','adresse3','codePostal', 'ville', 'pays']]
+            ['libelle', 'adresse' => ['adresse1', 'adresse2', 'adresse3', 'codePostal', 'ville', 'pays']]
         );
 
         return $response;
@@ -54,7 +54,7 @@ class SiteController extends BaseController
 
     /**
      * @Route("/new", name="sa_site_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -95,8 +95,8 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_site_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Site                   $site
+     * @param Request $request
+     * @param Site    $site
      *
      * @return Response
      */

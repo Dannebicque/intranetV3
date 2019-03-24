@@ -44,6 +44,8 @@ class CreneauBloqueController extends BaseController
                 'semaines'        => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare())
             ]);
         }
+
+        return $this->render('erreur/666.html.twig');
     }
 
     /**

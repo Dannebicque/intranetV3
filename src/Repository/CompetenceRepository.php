@@ -45,6 +45,8 @@ class CompetenceRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'c.diplome=d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('c.libelle', 'ASC');
+            ->orderBy('c.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

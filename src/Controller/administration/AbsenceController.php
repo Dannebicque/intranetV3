@@ -146,7 +146,7 @@ class AbsenceController extends BaseController
         Semestre $semestre,
         $_format
     ): Response {
-        $absences = $absenceRepository->findBySemestre($semestre);
+        $absences = $absenceRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $absences,

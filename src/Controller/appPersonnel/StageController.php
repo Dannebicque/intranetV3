@@ -32,13 +32,13 @@ class StageController extends BaseController
     ): Response {
         //todo: gérer les années universitaire par diplome
         return $this->render('appPersonnel/stage/index.html.twig', [
-            'stagesEnCours'         => $stageEtudiantRepository->findByPersonnelAnnee($this->dataUserSession->getUser(),
+            'stagesEnCours'         => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire()),
-            'stagesHistorique'      => $stageEtudiantRepository->findByPersonnelHistorique($this->dataUserSession->getUser(),
+            'stagesHistorique'      => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire()),
-            'alternancesEnCours'    => $alternanceRepository->findByPersonnelAnnee($this->dataUserSession->getUser(),
+            'alternancesEnCours'    => $alternanceRepository->findByPersonnelAnnee($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire()),
-            'alternancesHistorique' => $alternanceRepository->findByPersonnelHistorique($this->dataUserSession->getUser(),
+            'alternancesHistorique' => $alternanceRepository->findByPersonnelHistorique($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire()),
         ]);
     }

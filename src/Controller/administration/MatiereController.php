@@ -29,7 +29,8 @@ class MatiereController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_matiere_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_matiere_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      */
     public function export(): Response
     {
@@ -50,7 +51,7 @@ class MatiereController extends BaseController
         $matiere = new Matiere();
         $form = $this->createForm(MatiereType::class, $matiere, [
             'diplome' => $diplome,
-            'attr' => [
+            'attr'    => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -83,8 +84,8 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_matiere_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Matiere                $matiere
+     * @param Request $request
+     * @param Matiere $matiere
      *
      * @return Response
      */
@@ -92,7 +93,7 @@ class MatiereController extends BaseController
     {
         $form = $this->createForm(MatiereType::class, $matiere, [
             'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
-            'attr' => [
+            'attr'    => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -129,7 +130,7 @@ class MatiereController extends BaseController
         return $this->redirectToRoute('administration_matiere_edit', ['id' => $newMatiere->getId()]);
     }
 
-        /**
+    /**
      * @Route("/{id}", name="administration_matiere_delete", methods="DELETE")
      */
     public function delete(): void

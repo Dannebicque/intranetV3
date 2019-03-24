@@ -122,19 +122,20 @@ class StageEtudiantController extends BaseController
         //2. Si oui envoyer
         //3. Si non générer et envoyer + sauvegarde
         //todo: prevoir bouton pour "regenerer" la convention
-        $html = $this->renderView('pdf/conventionStagePDF.html.twig', array(
+        $html = $this->renderView('pdf/conventionStagePDF.html.twig', [
             'proposition' => $stageEtudiant,
-        ));
+        ]);
 
         $options = new Options();
-        $options->set('isRemoteEnabled', TRUE);
-        $options->set('isPhpEnabled', TRUE);
+        $options->set('isRemoteEnabled', true);
+        $options->set('isPhpEnabled', true);
 
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        return new Response ($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(), array('Attachment' => 1)));
+        return new Response ($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(),
+            ['Attachment' => 1]));
 
     }
 
@@ -159,18 +160,19 @@ class StageEtudiantController extends BaseController
     public function ficheEnseignant(StageEtudiant $stageEtudiant)
     {
         $html = $this->renderView('pdf/fichePDFStage.html.twig',
-            array(
+            [
                 'stageEtudiant' => $stageEtudiant
-            ));
+            ]);
 
         $options = new Options();
-        $options->set('isRemoteEnabled', TRUE);
-        $options->set('isPhpEnabled', TRUE);
+        $options->set('isRemoteEnabled', true);
+        $options->set('isPhpEnabled', true);
 
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        return new Response ($dompdf->stream('Fiche-Enseignant-stage-' . $stageEtudiant->getEtudiant()->getNom(), array('Attachment' => 1)));
+        return new Response ($dompdf->stream('Fiche-Enseignant-stage-' . $stageEtudiant->getEtudiant()->getNom(),
+            ['Attachment' => 1]));
     }
 }

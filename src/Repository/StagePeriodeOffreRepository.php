@@ -22,5 +22,10 @@ class StagePeriodeOffreRepository extends ServiceEntityRepository
 
     public function findByStagePeriode(StagePeriode $stagePeriode)
     {
+        return $this->createQueryBuilder('o')
+            ->where('o.stagePeriodes = :periode')
+            ->setParameter('periode', $stagePeriode->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

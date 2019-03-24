@@ -25,13 +25,15 @@ class MaterielController extends BaseController
      */
     public function index(MaterielRepository $materielRepository): Response
     {
-        return $this->render('administration/materiel/index.html.twig', ['materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
+        return $this->render('administration/materiel/index.html.twig',
+            ['materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_materiel_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_materiel_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
-     * @param MaterielRepository $materielRepository
+     * @param MaterielRepository  $materielRepository
      *
      * @param                     $_format
      *
@@ -61,11 +63,11 @@ class MaterielController extends BaseController
     public function create(Request $request): Response
     {
         $materiel = new Materiel();
-        $form = $this->createForm(MaterielType::class, $materiel,[
-                                                       'attr' => [
-        'data-provide' => 'validation'
-    ],
-                                                       'departement' => $this->dataUserSession->getDepartement()
+        $form = $this->createForm(MaterielType::class, $materiel, [
+            'attr'        => [
+                'data-provide' => 'validation'
+            ],
+            'departement' => $this->dataUserSession->getDepartement()
         ]);
         $form->handleRequest($request);
 
@@ -79,7 +81,7 @@ class MaterielController extends BaseController
 
         return $this->render('administration/materiel/new.html.twig', [
             'materiel' => $materiel,
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
         ]);
     }
 
@@ -103,8 +105,8 @@ class MaterielController extends BaseController
      */
     public function edit(Request $request, Materiel $materiel): Response
     {
-        $form = $this->createForm(MaterielType::class, $materiel,[
-            'attr' => [
+        $form = $this->createForm(MaterielType::class, $materiel, [
+            'attr'        => [
                 'data-provide' => 'validation'
             ],
             'departement' => $this->dataUserSession->getDepartement()
@@ -120,13 +122,14 @@ class MaterielController extends BaseController
 
         return $this->render('administration/materiel/edit.html.twig', [
             'materiel' => $materiel,
-            'form' => $form->createView(),
+            'form'     => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="administration_materiel_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Materiel              $materiel
+     * @param Request  $request
+     * @param Materiel $materiel
      *
      * @return Response
      */
@@ -145,6 +148,7 @@ class MaterielController extends BaseController
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'materiel.delete.error.flash');
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 

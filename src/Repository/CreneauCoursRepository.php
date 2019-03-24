@@ -25,9 +25,11 @@ class CreneauCoursRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.anneeUniversitaire = :annee')
             ->andWhere('c.departement = :departement')
-            ->setParameter('annee', 9)//todo: pourquoi 9?
+            ->setParameter('annee', $anneeUniversitaire)
             ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
     }
+
+
 }

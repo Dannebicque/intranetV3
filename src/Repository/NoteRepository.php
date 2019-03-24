@@ -36,7 +36,7 @@ class NoteRepository extends ServiceEntityRepository
             ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere=m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->where('u.semestre= :semestre')
-            ->andWhere( 'e.anneeuniversitaire = :annee')
+            ->andWhere('e.anneeuniversitaire = :annee')
             ->setParameter('semestre', $semestre)
             ->setParameter('annee', $annee)
             ->orderBy('e.id')
@@ -69,11 +69,11 @@ class NoteRepository extends ServiceEntityRepository
 
         $notes = $this->findBySemestre($semestre, $annee);
 
-        $t = array();
+        $t = [];
 
         /** @var  $etu Etudiant */
         foreach ($etudiants as $etu) {
-            $t[$etu->getId()] = array();
+            $t[$etu->getId()] = [];
 
             /** @var Note $note */
             foreach ($notes as $note) {
@@ -83,6 +83,7 @@ class NoteRepository extends ServiceEntityRepository
                 }
             }
         }
+
         return $t;
 
     }

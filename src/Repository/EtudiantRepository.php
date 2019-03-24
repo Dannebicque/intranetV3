@@ -38,10 +38,10 @@ class EtudiantRepository extends ServiceEntityRepository
     public function getArrayEtudiantsByDepartement($getId, $filters, $start, $length): array
     {
         $etudiants = $this->getByDepartement($getId, $filters, $start, $length);
-        $tab = array();
+        $tab = [];
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
-            $t = array();
+            $t = [];
 
             $t['numetudiant'] = $etudiant->getId();
             $t['nom'] = $etudiant->getNom();
@@ -78,7 +78,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             // ->andWhere('u.visible = :visible')
             // ->andWhere('u.anneesortie = :anneesortie')
-            ->setParameters(array('departement' => $departement));
+            ->setParameters(['departement' => $departement]);
 
         /*switch ($order[0]['column']) {
             case 0:
@@ -153,11 +153,11 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $t = array();
+        $t = [];
 
         /** @var Etudiant $etudiant */
         foreach ($query as $etudiant) {
-            $tt = array();
+            $tt = [];
             $tt['displayPr'] = $etudiant->getDisplayPr();
             $tt['slug'] = $etudiant->getSlug();
             $tt['photo'] = $etudiant->getPhotoName();
@@ -183,13 +183,17 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param Annee $annee
+     *
+     * @return mixed
+     */
     public function findByAnnee(Annee $annee)
     {
         $query = $this->createQueryBuilder('e');
-        //dump($annee->getSemestres());
-        $i=1;
+        $i = 1;
         foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?'.$i)
+            $query->orWhere('e.semestre = ?' . $i)
                 ->setParameter($i, $semestre->getId());
             $i++;
         }

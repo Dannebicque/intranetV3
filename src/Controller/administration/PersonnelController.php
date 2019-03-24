@@ -49,7 +49,7 @@ class PersonnelController extends BaseController
         $response = $myExport->genereFichierGenerique(
             $_format,
             $personnels,
-            'listing_'.$type,
+            'listing_' . $type,
             ['utilisateur'],
             ['nom', 'prenom']
         );
@@ -194,10 +194,14 @@ class PersonnelController extends BaseController
      *
      * @return Response
      */
-    public function gestionDroit(PersonnelDepartementRepository $personnelDepartementRepository, Personnel $personnel) {
+    public function gestionDroit(PersonnelDepartementRepository $personnelDepartementRepository, Personnel $personnel)
+    {
         //todo: tester si CDD ou DDE
 
-        $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
-        return $this->render('administration/personnel/droit.html.twig', ['personnel' => $personnel, 'droits' => $droits]);
+        $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
+            $this->dataUserSession->getDepartement());
+
+        return $this->render('administration/personnel/droit.html.twig',
+            ['personnel' => $personnel, 'droits' => $droits]);
     }
 }

@@ -29,7 +29,8 @@ class BorneController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_borne_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_borne_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport        $myExport
      * @param BorneRepository $borneRepository
      * @param                 $_format
@@ -45,7 +46,7 @@ class BorneController extends BaseController
             $bornes,
             'bornes',
             ['bornes_administration', 'semestre'],
-            ['message', 'icone', 'couleur','url','dateDebutPublication','dateFinPublication']
+            ['message', 'icone', 'couleur', 'url', 'dateDebutPublication', 'dateFinPublication']
         );
 
         return $response;
@@ -63,12 +64,13 @@ class BorneController extends BaseController
         $this->entityManager->persist($newBorne);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.duplicate.success.flash');
+
         return $this->redirectToRoute('administration_borne_edit', ['id' => $newBorne->getId()]);
     }
 
     /**
      * @Route("/new", name="administration_borne_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -80,7 +82,7 @@ class BorneController extends BaseController
             $borne,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -115,8 +117,8 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_borne_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Borne                  $borne
+     * @param Request $request
+     * @param Borne   $borne
      *
      * @return Response
      */
@@ -127,7 +129,7 @@ class BorneController extends BaseController
             $borne,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -149,8 +151,8 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Borne                  $borne
+     * @param Request $request
+     * @param Borne   $borne
      *
      * @return Response
      */
@@ -170,11 +172,13 @@ class BorneController extends BaseController
     }
 
     /**
-     *  @Route("/visibilite/{id}", name="administration_borne_visibilite", options={"expose"=true})
+     * @Route("/visibilite/{id}", name="administration_borne_visibilite", options={"expose"=true})
      */
-    public function visibilite(Borne $borne) {
+    public function visibilite(Borne $borne)
+    {
         $borne->setVisible(!$borne->getVisible());
         $this->entityManager->flush();
+
         return $this->json($borne->getVisible(), Response::HTTP_OK);
     }
 }

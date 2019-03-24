@@ -25,15 +25,17 @@ class TypeMaterielController extends BaseController
      */
     public function index(TypeMaterielRepository $typeMaterielRepository): Response
     {
-        return $this->render('administration/type_materiel/index.html.twig', ['type_materiels' => $typeMaterielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
+        return $this->render('administration/type_materiel/index.html.twig',
+            ['type_materiels' => $typeMaterielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_type_materiel_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
+     * @Route("/export.{_format}", name="administration_type_materiel_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport               $myExport
      * @param TypeMaterielRepository $type_materielRepository
      *
-     * @param                     $_format
+     * @param                        $_format
      *
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -55,12 +57,13 @@ class TypeMaterielController extends BaseController
     /**
      * @Route("/new", name="administration_type_materiel_new", methods="GET|POST")
      * @param Request $request
+     *
      * @return Response
      */
     public function create(Request $request): Response
     {
         $typeMateriel = new TypeMateriel($this->dataUserSession->getDepartement());
-        $form = $this->createForm(TypeMaterielType::class, $typeMateriel,[
+        $form = $this->createForm(TypeMaterielType::class, $typeMateriel, [
             'attr' => [
                 'data-provide' => 'validation'
             ]
@@ -72,18 +75,20 @@ class TypeMaterielController extends BaseController
             $this->entityManager->persist($typeMateriel);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_materiel.add.success.flash');
+
             return $this->redirectToRoute('administration_type_materiel_index');
         }
 
         return $this->render('administration/type_materiel/new.html.twig', [
             'type_materiel' => $typeMateriel,
-            'form' => $form->createView(),
+            'form'          => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}", name="administration_type_materiel_show", methods="GET")
      * @param TypeMateriel $typeMateriel
+     *
      * @return Response
      */
     public function show(TypeMateriel $typeMateriel): Response
@@ -95,11 +100,12 @@ class TypeMaterielController extends BaseController
      * @Route("/{id}/edit", name="administration_type_materiel_edit", methods="GET|POST")
      * @param Request      $request
      * @param TypeMateriel $typeMateriel
+     *
      * @return Response
      */
     public function edit(Request $request, TypeMateriel $typeMateriel): Response
     {
-        $form = $this->createForm(TypeMaterielType::class, $typeMateriel,[
+        $form = $this->createForm(TypeMaterielType::class, $typeMateriel, [
             'attr' => [
                 'data-provide' => 'validation'
             ]
@@ -115,13 +121,14 @@ class TypeMaterielController extends BaseController
 
         return $this->render('administration/type_materiel/edit.html.twig', [
             'type_materiel' => $typeMateriel,
-            'form' => $form->createView(),
+            'form'          => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="administration_type_materiel_delete", methods="DELETE")
-     * @param Request                $request
-     * @param TypeMateriel              $type_materiel
+     * @param Request      $request
+     * @param TypeMateriel $type_materiel
      *
      * @return Response
      */
@@ -140,6 +147,7 @@ class TypeMaterielController extends BaseController
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'type_materiel.delete.error.flash');
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 

@@ -64,11 +64,12 @@ class StagePeriodeRepository extends ServiceEntityRepository
 
     public function findStageEtudiant(Semestre $semestre)
     {
-        //todo: filter sur l'année universitaire ?
         //trouver les périodes de stage sur ce semestre et le suivant
         $query = $this->createQueryBuilder('s')
             ->where('s.semestre = :semestreCourant')
-            ->setParameter('semestreCourant', $semestre->getId());
+            ->andWhere('s.anneeUniversitaire = :annee')
+            ->setParameter('semestreCourant', $semestre->getId())
+            ->setParameter('annee', $semestre->getAnneeUniversitaire());
         if ($semestre->getSuivant() !== null) {
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
@@ -97,7 +98,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByDepartementBuilder(Departement $departement, $annee) {
+    public function findByDepartementBuilder(Departement $departement, $annee)
+    {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')

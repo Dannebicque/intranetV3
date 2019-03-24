@@ -45,10 +45,10 @@ class ProfilEtudiantController extends BaseController
      */
     public function actions(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
     {
-        $scolarite = $scolariteRepository->findBy(array('etudiant' => $etudiant));
+        $scolarite = $scolariteRepository->findBy(['etudiant' => $etudiant]);
 
         return $this->render('user/composants/actions_etudiant.html.twig', [
-            'etudiant' => $etudiant,
+            'etudiant'  => $etudiant,
             'scolarite' => $scolarite
         ]);
     }
@@ -66,13 +66,12 @@ class ProfilEtudiantController extends BaseController
         ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
         ScolariteRepository $scolariteRepository,
         Etudiant $etudiant
-    ): Response
-    {
+    ): Response {
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
         $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
-            'scolarite' => $scolarite,
+            'scolarite'    => $scolarite,
             'scolariteUes' => $scolariteUes
         ]);
     }
@@ -105,7 +104,7 @@ class ProfilEtudiantController extends BaseController
         //todo: gérer les mois, selon le semestre ?
         return $this->render('user/composants/absences.html.twig', [
             'tabPlanning' => Calendrier::getTabPlanning(),
-            'tabJour'     => array('', 'L', 'M', 'M', 'J', 'V', 'S', 'D'),
+            'tabJour'     => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],
             'tabFerie'    => Calendrier::getTabJoursFeries(),
             'tabFinMois'  => Calendrier::getTabFinMois(),
             'annee'       => $etudiant->getAnneeUniversitaire(),
@@ -121,21 +120,22 @@ class ProfilEtudiantController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function stages( StageEtudiantRepository $stageEtudiantRepository,
+    public function stages(
+        StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository,
-        Etudiant $etudiant): Response
-    {
+        Etudiant $etudiant
+    ): Response {
         return $this->render('user/composants/stages.html.twig', [
 
-                'stagesEnCours'         => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
-                    $etudiant->getAnneeUniversitaire()),
-                'stagesHistorique'      => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
-                    $etudiant->getAnneeUniversitaire()),
-                'alternancesEnCours'    => $alternanceRepository->findByEtudiantAnnee($etudiant,
-                    $etudiant->getAnneeUniversitaire()),
-                'alternancesHistorique' => $alternanceRepository->findByEtudiantHistorique($etudiant,
-                    $etudiant->getAnneeUniversitaire()),
-            ]);
+            'stagesEnCours'         => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
+                $etudiant->getAnneeUniversitaire()),
+            'stagesHistorique'      => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
+                $etudiant->getAnneeUniversitaire()),
+            'alternancesEnCours'    => $alternanceRepository->findByEtudiantAnnee($etudiant,
+                $etudiant->getAnneeUniversitaire()),
+            'alternancesHistorique' => $alternanceRepository->findByEtudiantHistorique($etudiant,
+                $etudiant->getAnneeUniversitaire()),
+        ]);
 
     }
 

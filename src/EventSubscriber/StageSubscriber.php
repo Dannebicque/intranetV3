@@ -176,7 +176,7 @@ class StageSubscriber implements EventSubscriberInterface
             //mail par défaut
             //todo: traiter le sujet avec la traduction ?
 
-            $this->myMailer->setTemplate('mails/stage_'.$codeEvent.'.txt.twig',
+            $this->myMailer->setTemplate('mails/stage_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant]);
             $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $codeEvent);
 
@@ -200,11 +200,11 @@ class StageSubscriber implements EventSubscriberInterface
             } else {
                 //sinon mail par défaut
                 //todo: traiter le sujet avec la traduction ?
-                    $this->myMailer->setTemplate('mails/stage_assistant_' . $codeEvent . '.txt.twig',
-                        ['stageEtudiant' => $stageEtudiant]);
-                    $this->myMailer->sendMessage($stageEtudiant->getStagePeriode()->getMailAssistant(),
-                        'copie ' . $codeEvent);
-                }
+                $this->myMailer->setTemplate('mails/stage_assistant_' . $codeEvent . '.txt.twig',
+                    ['stageEtudiant' => $stageEtudiant]);
+                $this->myMailer->sendMessage($stageEtudiant->getStagePeriode()->getMailAssistant(),
+                    'copie ' . $codeEvent);
+            }
         }
 
         //copie au RP lors du dépôt par l'étudiant

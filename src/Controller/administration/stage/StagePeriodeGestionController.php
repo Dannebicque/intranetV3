@@ -27,11 +27,14 @@ class StagePeriodeGestionController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function periode(StagePeriodeRepository $stagePeriodeRepository, MyStage $myStage, StagePeriode $stagePeriode): Response
-    {
-        $periodes = array();
+    public function periode(
+        StagePeriodeRepository $stagePeriodeRepository,
+        MyStage $myStage,
+        StagePeriode $stagePeriode
+    ): Response {
+        $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $pers =  $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            $pers = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire()->getAnnee());
             foreach ($pers as $periode) {
                 $periodes[] = $periode;
             }
@@ -39,8 +42,8 @@ class StagePeriodeGestionController extends BaseController
 
         return $this->render('administration/stage/stage_periode_gestion/index.html.twig', [
             'stagePeriode' => $stagePeriode,
-            'periodes' => $periodes,
-            'myStage' => $myStage->getDataPeriode($stagePeriode)
+            'periodes'     => $periodes,
+            'myStage'      => $myStage->getDataPeriode($stagePeriode)
         ]);
     }
 }

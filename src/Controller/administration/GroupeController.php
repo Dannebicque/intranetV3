@@ -40,28 +40,36 @@ class GroupeController extends BaseController
      */
     public function refreshListe(GroupeRepository $groupeRepository, Groupe $parent)
     {
-        if ($parent->getTypeGroupe()!== null) {
+        if ($parent->getTypeGroupe() !== null) {
             $semestre = $parent->getTypeGroupe()->getSemestre();
-            $groupes = $groupeRepository->findBySemestre($semestre);
+            if ($semestre !== null) {
+                $groupes = $groupeRepository->findBySemestre($semestre);
 
-            return $this->render('administration/groupe/_liste.html.twig', [
-                'groupes'  => $groupes,
-                'semestre' => $semestre
-            ]);
+                return $this->render('administration/groupe/_liste.html.twig', [
+                    'groupes'  => $groupes,
+                    'semestre' => $semestre
+                ]);
+            }
+
+            return $this->render('erreur/500.html.twig');
         }
+
+        return $this->render('erreur/500.html.twig');
     }
 
     /**
      * @Route("/new", name="administration_groupe_new", methods="POST", options={"expose"=true})
-     * @param Request    $request
+     * @param Request $request
      *
      *
      * @return Response
      */
-    public function create(TypeGroupeRepository $typeGroupeRepository,
-                            ParcourRepository $parcourRepository,
-                            GroupeRepository $groupeRepository, Request $request): Response
-    {
+    public function create(
+        TypeGroupeRepository $typeGroupeRepository,
+        ParcourRepository $parcourRepository,
+        GroupeRepository $groupeRepository,
+        Request $request
+    ): Response {
         $typeGroupe = $typeGroupeRepository->find($request->request->get('type'));
         if ($typeGroupe) {
             $groupe = new Groupe($typeGroupe);
@@ -82,8 +90,10 @@ class GroupeController extends BaseController
 
             $this->entityManager->persist($groupe);
             $this->entityManager->flush();
+
             return $this->json(true, Response::HTTP_OK);
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
 
     }
@@ -91,6 +101,7 @@ class GroupeController extends BaseController
     /**
      * @Route("/{id}", name="administration_groupe_show", methods="GET")
      * @param Groupe $groupe
+     *
      * @return Response
      */
     public function show(Groupe $groupe): Response

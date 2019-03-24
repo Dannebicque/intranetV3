@@ -44,7 +44,7 @@ class DepartementController extends BaseController
 
         return $this->render('structure/departement/new.html.twig', [
             'departement' => $departement,
-            'form'      => $form->createView(),
+            'form'        => $form->createView(),
         ]);
     }
 
@@ -84,7 +84,7 @@ class DepartementController extends BaseController
 
         return $this->render('structure/departement/new.html.twig', [
             'departement' => $departement,
-            'form'      => $form->createView(),
+            'form'        => $form->createView(),
         ]);
     }
 
@@ -107,7 +107,7 @@ class DepartementController extends BaseController
     {
         $departement->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.activate.'.$etat.'.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
 

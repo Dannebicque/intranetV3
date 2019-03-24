@@ -38,11 +38,9 @@ class RattrapageController extends BaseController
         Semestre $semestre
     ): Response {
         return $this->render('administration/rattrapage/index.html.twig', [
-            'rattrapages' => $rattrapageRepository->findBySemestre(
-                $semestre),
+            'rattrapages' => $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire()),
             'semestre'    => $semestre,
-            'absences'    => $absenceRepository->findBySemestreRattrapage(
-                $semestre)
+            'absences'    => $absenceRepository->findBySemestreRattrapage($semestre, $semestre->getAnneeUniversitaire())
         ]);
     }
 
@@ -63,8 +61,7 @@ class RattrapageController extends BaseController
         Semestre $semestre,
         $_format
     ): Response {
-        $rattrapages = $rattrapageRepository->findBySemestre(
-            $semestre);
+        $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $rattrapages,
