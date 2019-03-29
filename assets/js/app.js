@@ -1,14 +1,11 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+// Common JS
+require('../the_admin/src/assets/js/core.min');
+require('../the_admin/src/assets/js/app.min');
+require('../the_admin/src/assets/js/script.min');
+require('./jquery.collection');
 
-// any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
-
-// Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// const $ = require('jquery');
-
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+// Common styles
+require('../scss/app.scss');
+require('../the_admin/src/assets/css/core.min.css');
+require('../the_admin/src/assets/css/app.min.css');
+require('../the_admin/src/assets/css/style.min.css');

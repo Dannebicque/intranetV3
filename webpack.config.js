@@ -29,6 +29,21 @@ Encore
     .enableSingleRuntimeChunk()
 
     /*
+     * IMAGES CONFIG
+     *
+     * https://symfony.com/doc/current/frontend/encore/copy-files.html
+     */
+    .copyFiles({
+        from: './assets/images',
+
+        // if versioning is enabled, add the file hash too
+        to: 'images/[path][name].[hash:8].[ext]',
+
+        // only copy files matching this pattern
+        pattern: /\.(png|jpg|jpeg)$/
+    })
+
+    /*
      * FEATURE CONFIG
      *
      * Enable & configure other features below. For a full
@@ -39,16 +54,16 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+    .enableVersioning()
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

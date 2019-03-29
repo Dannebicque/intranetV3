@@ -1,7 +1,12 @@
 {
     "devDependencies": {
         "@symfony/webpack-encore": "^0.22.0",
-        "webpack-notifier": "^1.6.0"
+        "webpack-notifier": "^1.6.0",
+        "node-sass": "^4.10.0",
+        "sass-loader": "^7.1.0",
+        "css-loader": "^1.0.1",
+        "jquery": "^3.2.1",
+        "popper.js": "^1.12.9"
     },
     "license": "UNLICENSED",
     "private": true,

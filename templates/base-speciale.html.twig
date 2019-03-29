@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
-    <meta name="keywords" content="blank, starter">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
+        <meta name="keywords" content="blank, starter">
 
-    <title>Intranet - {{  block('header')  }}</title>
+        <title>Intranet - {{  block('header')  }}</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+        {% block stylesheets %}
+            <!-- Fonts -->
+            <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
-    <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
+            <!-- Styles -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
 
-</head>
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" href="{{ asset('build/images/apple-touch-icon.png') }}">
+        <link rel="icon" href="{{ asset('build/images/favicon.png') }}">
 
-<body {% block body %}{% endblock %}>
+    </head>
 
-{% block content %}
+    <body {% block body %}{% endblock %}>
 
-{% endblock %}
+        {% block content %}{% endblock %}
 
-
-
-<!-- Scripts -->
-<script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('sources/assets/js/app.js') }}"></script>
-<script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
-</body>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
 </html>
