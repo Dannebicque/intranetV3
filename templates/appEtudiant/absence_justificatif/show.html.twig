@@ -1,50 +1,50 @@
-
-    <table class="table">
-        <tbody>
-
+<table class="table">
+    <thead>
+    <tr>
         <th>{{ 'table.date_debut'|trans }}</th>
         <th>{{ 'table.date_fin'|trans }}</th>
         <th>{{ 'table.motif'|trans }}</th>
         <th>{{ 'table.absence_justificatif_etat'|trans }}</th>
         <th>{{ 'table.created'|trans }}</th>
         <th>{{ 'table.actions'|trans }}</th>
-        </tr>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>{{ 'table.date_debut'|trans }}</th>
+        <td>{{ absence_justificatif.dateDebut ? absence_justificatif.dateDebut|localizeddate('long',
+                'none', app.request.getLocale()) : '' }}, {{ absence_justificatif.heureDebut ?
+            absence_justificatif.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'table.date_fin'|trans }}</th>
+        <td>{{ absence_justificatif.dateFin ? absence_justificatif.dateFin|localizeddate('long', 'none',
+                app.request.getLocale()) : '' }}, {{ absence_justificatif.heureFin ? absence_justificatif
+            .heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+    </tr>
 
-            <tr>
-                <th>{{ 'table.date_debut'|trans }}</th>
-                <td>{{ absence_justificatif.dateDebut ? absence_justificatif.dateDebut|localizeddate('long',
-                        'none', app.request.getLocale()) : '' }}, {{ absence_justificatif.heureDebut ?
-                    absence_justificatif.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.date_fin'|trans }}</th>
-                <td>{{ absence_justificatif.dateFin ? absence_justificatif.dateFin|localizeddate('long', 'none',
-                        app.request.getLocale()) : '' }}, {{ absence_justificatif.heureFin ? absence_justificatif
-                    .heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
-            </tr>
+    <tr>
+        <th>{{ 'table.motif'|trans }}</th>
+        <td>{{ absence_justificatif.motif }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'table.absence_justificatif_etat'|trans }}</th>
+        <td>{{ absence_justificatif.etat }}</td>
+    </tr>
 
-            <tr>
-                <th>{{ 'table.motif'|trans }}</th>
-                <td>{{ absence_justificatif.motif }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.absence_justificatif_etat'|trans }}</th>
-                <td>{{ absence_justificatif.etat }}</td>
-            </tr>
+    <tr>
+        <th>FichierName</th>
+        <td>{{ absence_justificatif.fichierName }}</td>
+    </tr>
 
-            <tr>
-                <th>FichierName</th>
-                <td>{{ absence_justificatif.fichierName }}</td>
-            </tr>
-
-            <tr>
-                <th>Created</th>
-                <td>{{ absence_justificatif.created ? absence_justificatif.created|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{{ absence_justificatif.updated ? absence_justificatif.updated|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <tr>
+        <th>Created</th>
+        <td>{{ absence_justificatif.created ? absence_justificatif.created|date('Y-m-d H:i:s') : '' }}</td>
+    </tr>
+    <tr>
+        <th>Updated</th>
+        <td>{{ absence_justificatif.updated ? absence_justificatif.updated|date('Y-m-d H:i:s') : '' }}</td>
+    </tr>
+    </tbody>
+</table>
 

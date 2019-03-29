@@ -57,7 +57,8 @@ class AppExtension extends AbstractExtension
         );
     }
 
-    public function getFunctions() {
+    public function getFunctions(): array
+    {
         return array(
             new \Twig_SimpleFunction('settings', array($this, 'getSetting')),
             new \Twig_SimpleFunction('datedujourlong', array($this, 'dateDuJourLong')),
@@ -70,7 +71,7 @@ class AppExtension extends AbstractExtension
      * @param $texte
      * @return string
      */
-    public function upper($texte)
+    public function upper($texte): string
     {
         return mb_strtoupper($texte);
     }
@@ -80,15 +81,16 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function convertHeureEdt($duree)
+    public function convertHeureEdt($duree): string
     {
         return Constantes::TAB_HEURES[$duree];
     }
 
     /**
      * @return string
+     * @throws \Exception
      */
-    public function dateDuJourLong()
+    public function dateDuJourLong(): string
     {
         return $this->dateTexte(new \DateTime('now'));
     }
@@ -97,7 +99,7 @@ class AppExtension extends AbstractExtension
      * @param \DateTime $date
      * @return string
      */
-    public function dateTexte(\DateTime $date)
+    public function dateTexte(\DateTime $date): string
     {
         return $this->tabJour[$date->format('N')] . ' ' . $date->format('d') . ' ' . $this->tabMois[$date->format('m')] . ' ' . $date->format('Y');
     }
@@ -105,12 +107,13 @@ class AppExtension extends AbstractExtension
     /**
      * @param Configuration $config
      */
-    public function setConfig(Configuration $config) {
+    public function setConfig(Configuration $config): void
+    {
         $this->config = $config;
     }
 
     public function getSetting($name) {
-        return $this->config->get($name);
+        return $this->config::get($name);
     }
 
     /**

@@ -6,7 +6,7 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for sem in user_data.semestres %}
+        {% for sem in user_data.semestres if sem.actif == true %}
             <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
                class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'changer.de.semestre'|trans }}"
@@ -14,12 +14,35 @@
                data-placement="bottom"
             >{{ sem.libelle }}</a>
         {% endfor %}
+        {% for sem in user_data.semestres if sem.actif == false %}
+            <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
+               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'changer.de.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            ><i>{{ sem.libelle }}</i></a>
+        {% endfor %}
     </div>
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            {% if semestre.actif == true %}
+            <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:0}) }}" class="btn
+            btn-warning
+            btn-sm btn-float"
+               data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.masquer_semestre'|trans }}"><i class="ti-eye-slash"></i>
+                <span class="sr-only">{{ 'atitle.masquer_semestre'|trans }}</span></a>{# todo: vérifier l'icone #}
+            {% else %}
+                <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:1}) }}" class="btn
+            btn-info
+            btn-sm btn-float"
+                   data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.afficher_semestre'|trans }}"><i class="ti-eye"></i>
+                    <span class="sr-only">{{ 'atitle.afficher_semestre'|trans }}</span></a>
+            {% endif %}
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
         </div>
@@ -66,7 +89,8 @@
                         {{ 'afficher.les.absences'|trans }}</a>
                     <a href="{{ path('administration_absences_justificatif_semestre_liste',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        {{ 'liste.justificatifs'|trans }} (<span class="badge badge-pill badge-info">{{ nbJustificatifs }}</span> nouveaux)</a>
+                        {{ 'liste.justificatifs'|trans }}
+                        (<span class="badge badge-pill badge-info">{{ nbJustificatifs }}</span> nouveaux)</a>
                     <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
                         {{ 'justifier.les.absences'|trans }}</a>
@@ -106,7 +130,8 @@
                     </a>
                     <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">
-                        {{ 'demandes.rattrapages'|trans }} <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
+                        {{ 'demandes.rattrapages'|trans }}
+                        <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
                     </a>
                 </div>
             </div>
@@ -116,10 +141,10 @@
                 <header class="card-header"><h4 class="card-title">{{ 'gestion.des.etudiants'|trans|raw }}</h4>
                     <div class="card-header-actions">
                         <a href="{{ path('administration_etudiant_semestre_add', {semestre:semestre.id}) }}"
-                                class="btn btn-sm btn-primary btn-square btn-round"
-                                title="{{ 'Ajouter.des.etudiants'|trans }}"
-                                data-provide="tooltip"
-                                data-placement="bottom">
+                           class="btn btn-sm btn-primary btn-square btn-round"
+                           title="{{ 'Ajouter.des.etudiants'|trans }}"
+                           data-provide="tooltip"
+                           data-placement="bottom">
                             <i class="ti ti-plus"></i>
                         </a>
                         <ul class="card-controls">
@@ -169,9 +194,9 @@
                     </ul>
                 </header>
                 <div class="card-body">
-                    <a href="{{ path('administration_sous_comission_index',{semestre:semestre.id}) }}"
+                    <a href="{{ path('administration_sous_comission_live',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-primary">{{ 'simulation.sous-commission'|trans }}</a>
-                    <a href="{{ path('administration_sous_comission_index',{semestre:semestre.id}) }}"
+                    <a href="{{ path('administration_sous_comission_travail',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-warning"> {{ 'preparer.sous-commission'|trans }}</a>
                     <a href="{{ path('administration_fin_semestre_index',{semestre:semestre.id}) }}"
                        class="btn btn-block btn-danger"> {{ 'changement.semestre'|trans }}</a>

@@ -14,10 +14,11 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.article.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables" data-checkbox="true" >
+            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
                 <thead>
                 <tr>
-                    <th><input name="select_all" value="1" id="select_all" type="checkbox" /></th>
+                    <th><label class="sr-only" for="select_all">Tout selectionner</label>
+                        <input name="select_all" value="1" id="select_all" type="checkbox"/></th>
                     <th>{{ 'table.titre'|trans }}</th>
                     <th>{{ 'table.texte'|trans }}</th>
                     <th>{{ 'table.categorie'|trans }}</th>
@@ -31,7 +32,7 @@
                         <td></td>
                         <td>{{ article.titre }}</td>
                         <td>{{ article.texte }}</td>
-                        <td>{{ article.type|trans  }}</td>
+                        <td>{{ article.categorie ? article.categorie.libelle : 'non.defini'|trans }}</td>
                         <td>{{ article.updated ? article.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
@@ -72,6 +73,12 @@
             href:path('administration_article_new'),
             title: 'ajouter'|trans,
             icone: 'ti-plus'
+        },
+        {
+            type:'success',
+            href:path('administration_article_categories'),
+            title: 'article_categories'|trans,
+            icone: 'ti-tag'
         },
         {
             type:'info',

@@ -84,7 +84,7 @@ class MySousCommission
      * @param Semestre $semestre
      * @param          $annee
      */
-    public function init(Semestre $semestre, $annee)
+    public function init(Semestre $semestre, $annee): void
     {
         //récupérer les notes du semestre.
         //faire un tableau etudiant/matieres/notes
@@ -92,7 +92,14 @@ class MySousCommission
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
         $this->matieres = $this->matiereRepository->findBySemestre($semestre);
         $this->ues = $this->ueRepository->findBySemestre($semestre);
-        $this->semestres = $this->semestreRepository->findByDiplome($semestre->getDiplome());
+
+        //récupération des semestres précédents
+        $sem = $semestre;
+        while ($sem->getPrecedent() !== null) {
+            $this->semestres[] = $sem->getPrecedent();
+            $sem = $sem->getPrecedent();
+        }
+
         $notes = $this->noteRepository->findByEtudiantSemestreArray($semestre, $annee, $this->etudiants);
 
         foreach ($this->etudiants as $etudiant) {

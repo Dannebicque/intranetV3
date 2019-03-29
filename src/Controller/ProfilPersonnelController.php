@@ -53,7 +53,7 @@ class ProfilPersonnelController extends BaseController
     public function stages(Personnel $personnel): Response
     {
         return $this->render('user/composants/stages.html.twig', [
-            'stages' => $this->getUser()->getAbsences()
+            'stages' => $this->getConnectedUser()->getAbsences()
         ]);
     }
 

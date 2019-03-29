@@ -39,6 +39,8 @@ class PpnController extends BaseController
     /**
      * @Route("/copie", name="administration_ppn_copie_integrale", methods="POST")
      *
+     * @param Request $request
+     *
      * @return Response
      */
     public function copieIntegrale(Request $request): Response

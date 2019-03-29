@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\ArticleCategorie;
 use App\Entity\Semestre;
+use App\Repository\ArticleCategorieRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -37,15 +39,16 @@ class ArticleType extends AbstractType
                 'label' => 'label.texte',
                 'attr'  => ['data-provide' => 'quill', 'rows' => 20]
             ])
-            ->add('type', ChoiceType::class, [
-                'choices'                   => [
-                    'choice.ri'            => 'ri',
-                    'choice.c2i'           => 'C2I',
-                    'choice.info_pratique' => 'infos'
-                ],
-                'expanded'                  => true,
-                'label'                     => 'label.type_article',
-                'choice_translation_domain' => 'form'
+            ->add('categorie', EntityType::class, [
+                'class'         => ArticleCategorie::class,
+                'label'         => 'label.article_categorie',
+                'choice_label'  => 'libelle',
+                'query_builder' => function(ArticleCategorieRepository $articleCategorieRepository) {
+                    return $articleCategorieRepository->findByDepartementBuilder($this->departement);
+                },
+                'required'      => true,
+                'expanded'      => false,
+                'multiple'      => false
             ])
             ->add('semestres', EntityType::class, array(
                 'class'         => Semestre::class,

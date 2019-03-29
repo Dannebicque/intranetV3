@@ -41,7 +41,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return 'security_login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
@@ -79,14 +79,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         if ($userPersonnel !== null && $userEtudiant === null) {
             return $userPersonnel;
-        } elseif ($userPersonnel === null && $userEtudiant !== null) {
-            return $userEtudiant;
-        } else {
-            return null;
         }
+
+        if ($userPersonnel === null && $userEtudiant !== null) {
+            return $userEtudiant;
+        }
+            return null;
+
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
@@ -121,7 +123,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $redirection;
     }
 
-    protected function getLoginUrl()
+    protected function getLoginUrl(): string
     {
         return $this->urlGenerator->generate('security_login');
     }

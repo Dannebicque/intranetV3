@@ -17,6 +17,10 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/connexion/{message}", name="security_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @param string              $message
+     *
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
     {
@@ -31,7 +35,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/deconnexion", name="security_logout")
      */
-    public function logout()
+    public function logout(): RedirectResponse
     {
         return $this->redirectToRoute('security_login');
     }
@@ -88,7 +92,9 @@ class SecurityController extends AbstractController
      */
     public function changeDepartement(Request $request, Departement $departement): Response
     {
+        //todo: sauvegarder le nouveau département dans la session
 
+        return $this->redirectToRoute('default_homepage');
     }
 
     /**

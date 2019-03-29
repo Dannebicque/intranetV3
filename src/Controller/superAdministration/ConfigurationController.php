@@ -30,8 +30,9 @@ class ConfigurationController extends AbstractController
     /**
      *
      * @Route("/export/{_format}", name="sa_configuration_export", methods="GET")
+     * @param $_format
      */
-    public function export($_format)
+    public function export($_format): void
     {
 
     }

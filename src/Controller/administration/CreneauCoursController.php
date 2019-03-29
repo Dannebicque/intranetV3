@@ -31,14 +31,16 @@ class CreneauCoursController extends BaseController
         CreneauCoursRepository $creneauCoursRepository
     ): Response {
         return $this->render('administration/creneau_cours/index.html.twig', [
-            'creneau_cours'        => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $this->dataUserSession->getAnneeUniversitaire()),
+            'creneau_cours'        => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+                $this->dataUserSession->getAnneeUniversitaire()),
             'annee_universitaires' => $anneeUniversitaireRepository->findAll(),
-            'defaut' => $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare()
+            'defaut'               => $this->dataUserSession->getDepartement() !== null ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : date('Y')
         ]);
     }
 
     /**
-     * @Route("/liste/{annee_universitaire}", name="administration_creneau_cours_liste", methods={"GET"}, options={"expose"=true})
+     * @Route("/liste/{annee_universitaire}", name="administration_creneau_cours_liste", methods={"GET"},
+     *                                        options={"expose"=true})
      * @param AnneeUniversitaire     $annee_universitaire
      * @param CreneauCoursRepository $creneauCoursRepository
      *
@@ -49,7 +51,8 @@ class CreneauCoursController extends BaseController
         CreneauCoursRepository $creneauCoursRepository
     ): Response {
         return $this->render('administration/creneau_cours/_liste_creneaux.html.twig', [
-            'creneau_cours'        => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $annee_universitaire),
+            'creneau_cours' => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+                $annee_universitaire),
         ]);
     }
 
@@ -66,7 +69,7 @@ class CreneauCoursController extends BaseController
     public function export(MyExport $myExport, CreneauCoursRepository $creneauCoursRepository, $_format): Response
     {
         $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
-            $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare());
+            $this->dataUserSession->getDepartement() !== null ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : date('Y'));
         $response = $myExport->genereFichierGenerique(
             $_format,
             $creneaux,
@@ -80,6 +83,11 @@ class CreneauCoursController extends BaseController
 
     /**
      * @Route("/new", name="administration_creneau_cours_new", methods={"POST"}, options={"expose"=true})
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     * @param Request                      $request
+     *
+     * @return Response
+     * @throws \Exception
      */
     public function new(
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
@@ -94,10 +102,11 @@ class CreneauCoursController extends BaseController
             $creneauCour->setDepartement($this->dataUserSession->getDepartement());
             $creneauCour->setAnneeUniversitaire($annee);
             $creneauCour->setDebut(new \DateTime($request->request->get('debut')));
-            $creneauCour->setFin(new \DateTime(($request->request->get('fin'))));
+            $creneauCour->setFin(new \DateTime($request->request->get('fin')));
             $creneauCour->setJour($request->request->get('jour'));
             $this->entityManager->persist($creneauCour);
             $this->entityManager->flush();
+
             return $this->json(true, Response::HTTP_OK);
 
         }
@@ -107,6 +116,9 @@ class CreneauCoursController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_creneau_cours_show", methods={"GET"})
+     * @param CreneauCours $creneauCour
+     *
+     * @return Response
      */
     public function show(CreneauCours $creneauCour): Response
     {
@@ -117,6 +129,10 @@ class CreneauCoursController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_creneau_cours_edit", methods={"GET","POST"})
+     * @param Request      $request
+     * @param CreneauCours $creneauCour
+     *
+     * @return Response
      */
     public function edit(Request $request, CreneauCours $creneauCour): Response
     {
@@ -180,26 +196,32 @@ class CreneauCoursController extends BaseController
     /**
      * @Route("/annee/duplicate", name="administration_creneau_cour_duplicate_annee", methods="POST")
      *
-     * @param CreneauCoursRepository $creneauCoursRepository
-     * @param Request                $request
+     * @param CreneauCoursRepository       $creneauCoursRepository
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     * @param Request                      $request
      *
      * @return Response
      */
-    public function duplicateAnnee(CreneauCoursRepository $creneauCoursRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository, Request $request): Response
-    {
+    public function duplicateAnnee(
+        CreneauCoursRepository $creneauCoursRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        Request $request
+    ): Response {
         $annee_depart = $anneeUniversitaireRepository->find($request->request->get('annee_depart'));
         $annee_destination = $anneeUniversitaireRepository->find($request->request->get('annee_destination'));
 
         //on efface, sauf si la case est cochée.
         if ($annee_destination !== null) {
-            $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $annee_destination);
+            $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+                $annee_destination);
             foreach ($creneaux as $creneau) {
                 $this->entityManager->remove($creneau);
             }
             $this->entityManager->flush();
         }
 
-        $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(), $annee_depart);
+        $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+            $annee_depart);
 
 
         /** @var CreneauCours $creneau */

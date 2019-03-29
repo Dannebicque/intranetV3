@@ -31,16 +31,20 @@ class StageController extends BaseController
         AlternanceRepository $alternanceRepository
     ): Response {
         //todo: gérer les années universitaire par diplome
-        return $this->render('appPersonnel/stage/index.html.twig', [
-            'stagesEnCours'         => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire()),
-            'stagesHistorique'      => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire()),
-            'alternancesEnCours'    => $alternanceRepository->findByPersonnelAnnee($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire()),
-            'alternancesHistorique' => $alternanceRepository->findByPersonnelHistorique($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire()),
-        ]);
+        if ($this->getConnectedUser() !== null) {
+            return $this->render('appPersonnel/stage/index.html.twig', [
+                'stagesEnCours'         => $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                    $this->dataUserSession->getAnneeUniversitaire()),
+                'stagesHistorique'      => $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                    $this->dataUserSession->getAnneeUniversitaire()),
+                'alternancesEnCours'    => $alternanceRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                    $this->dataUserSession->getAnneeUniversitaire()),
+                'alternancesHistorique' => $alternanceRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                    $this->dataUserSession->getAnneeUniversitaire()),
+            ]);
+        }
+
+        return $this->render('erreur/500.html.twig');
     }
 
     /**

@@ -21,7 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class EtudiantSemestreController extends BaseController
 {
     /**
-     * @Route("/parcours/{semestre}", name="administration_etudiant_parcours_semestre_index", requirements={"semestre"="\d+"})
+     * @Route("/parcours/{semestre}", name="administration_etudiant_parcours_semestre_index",
+     *                                requirements={"semestre"="\d+"})
      * @param EtudiantRepository $etudiantRepository
      * @param Semestre           $semestre
      *
@@ -32,7 +33,7 @@ class EtudiantSemestreController extends BaseController
         $etudiants = $etudiantRepository->findBySemestre($semestre);
 
         return $this->render('administration/etudiant/parcours.html.twig', [
-            'semestre' => $semestre,
+            'semestre'  => $semestre,
             'etudiants' => $etudiants
         ]);
     }
@@ -44,7 +45,8 @@ class EtudiantSemestreController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function addEtudiant(Semestre $semestre = null){
+    public function addEtudiant(Semestre $semestre = null): Response
+    {
         if ($semestre === null) {
             $semestre = $this->dataUserSession->getSemestres()[0];
         }
@@ -54,11 +56,11 @@ class EtudiantSemestreController extends BaseController
             null,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'semestre' => $semestre,
-                'attr'      => [
+                'semestre'    => $semestre,
+                'attr'        => [
                     'data-provide' => 'validation'
                 ],
-                'action' => $this->generateUrl('administration_etudiant_import')
+                'action'      => $this->generateUrl('administration_etudiant_import')
             ]
         );
 
@@ -68,7 +70,7 @@ class EtudiantSemestreController extends BaseController
             EtudiantType::class,
             $etudiant,
             [
-                'attr'      => [
+                'attr'   => [
                     'data-provide' => 'validation'
                 ],
                 'action' => $this->generateUrl('administration_etudiant_add')
@@ -76,34 +78,37 @@ class EtudiantSemestreController extends BaseController
         );
 
         return $this->render('administration/etudiant/add.html.twig', [
-            'semestre' => $semestre,
-            'formImport' => $formImport->createView(),
+            'semestre'     => $semestre,
+            'formImport'   => $formImport->createView(),
             'formEtudiant' => $formEtudiant->createView()
         ]);
     }
 
 
-
     /**
-     * @Route("/import/photo/{semestre}", name="administration_etudiant_import_photo_zip", requirements={"semestre"="\d+"}, methods={"GET"})
+     * @Route("/import/photo/{semestre}", name="administration_etudiant_import_photo_zip",
+     *                                    requirements={"semestre"="\d+"}, methods={"GET"})
      * @param Semestre $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function importPhoto(Semestre $semestre){
+    public function importPhoto(Semestre $semestre): Response
+    {
         return $this->render('administration/etudiant/import_photo.html.twig', [
             'semestre' => $semestre
         ]);
     }
 
     /**
-     * @Route("/import/photo/zip/{semestre}", name="administration_etudiant_import_photo", requirements={"semestre"="\d+"}, methods={"GET|POST"})
+     * @Route("/import/photo/zip/{semestre}", name="administration_etudiant_import_photo",
+     *                                        requirements={"semestre"="\d+"}, methods={"GET|POST"})
      * @param Request  $request
      * @param Semestre $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function importPhotoZip(Request $request, Semestre $semestre){
+    public function importPhotoZip(Request $request, Semestre $semestre): Response
+    {
         return $this->render('administration/etudiant/import_photo.html.twig', [
             'semestre' => $semestre
         ]);
@@ -131,9 +136,9 @@ class EtudiantSemestreController extends BaseController
      *     "semestre"="\d+",
      *     "_format"="csv|xlsx|pdf"
      * })
-     * @param MyExport $myExport
+     * @param MyExport           $myExport
      * @param EtudiantRepository $etudiantRepository
-     * @param Semestre $semestre
+     * @param Semestre           $semestre
      * @param                    $_format
      *
      * @return Response

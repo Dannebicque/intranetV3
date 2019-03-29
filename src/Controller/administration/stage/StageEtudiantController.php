@@ -116,7 +116,7 @@ class StageEtudiantController extends BaseController
      *
      * @return Response
      */
-    public function conventionPdf(StageEtudiant $stageEtudiant)
+    public function conventionPdf(StageEtudiant $stageEtudiant): Response
     {
         //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
         //2. Si oui envoyer
@@ -134,7 +134,7 @@ class StageEtudiantController extends BaseController
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        return new Response ($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(),
+        return new Response($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(),
             ['Attachment' => 1]));
 
     }
@@ -157,7 +157,7 @@ class StageEtudiantController extends BaseController
      *
      * @return Response
      */
-    public function ficheEnseignant(StageEtudiant $stageEtudiant)
+    public function ficheEnseignant(StageEtudiant $stageEtudiant): Response
     {
         $html = $this->renderView('pdf/fichePDFStage.html.twig',
             [

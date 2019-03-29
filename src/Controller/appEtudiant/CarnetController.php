@@ -28,9 +28,9 @@ class CarnetController extends BaseController
     public function index(CahierTexteRepository $cahierTexteRepository, MatiereRepository $matiereRepository): Response
     {
         return $this->render('appEtudiant/carnet/index.html.twig', [
-            'carnets'    => $cahierTexteRepository->findBySemestre($this->getUser()->getSemestre()),
+            'carnets'    => $cahierTexteRepository->findBySemestre($this->getConnectedUser()->getSemestre()),
             'personnels' => $this->dataUserSession->getPersonnels(),
-            'matieres'   => $matiereRepository->findBySemestre($this->getUser()->getSemestre())
+            'matieres'   => $matiereRepository->findBySemestre($this->getConnectedUser()->getSemestre())
         ]);
     }
 

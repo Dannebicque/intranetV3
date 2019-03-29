@@ -29,7 +29,7 @@ class UserController extends BaseController
     public function monProfil($onglet = 'timeline'): Response
     {
         return $this->render('user/profil.html.twig', [
-            'user'      => $this->getUser(),
+            'user'      => $this->getConnectedUser(),
             'onglet'    => $onglet,
             'monprofil' => true
         ]);
@@ -86,7 +86,7 @@ class UserController extends BaseController
      */
     public function settings(Request $request): Response
     {
-        $user = $this->getUser();
+        $user = $this->getConnectedUser();
         if ($user instanceof Personnel) {
             $form = $this->createForm(
                 PersonnelProfilType::class,

@@ -92,6 +92,7 @@
                                             <div class="card-body text-center pt-1 pb-50">
                                                 <a href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}">
                                                     <img class="avatar avatar-xxl"
+                                                         alt="avatar de {{ etudiant.display }}"
                                                          src="{{ asset('upload/etudiants/'~etudiant.photoName) }}">
                                                 </a>
                                                 <h5 class="mt-3 mb-1">

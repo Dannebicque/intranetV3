@@ -20,6 +20,9 @@ class AnneeUniversitaireController extends BaseController
 {
     /**
      * @Route("/", name="sa_annee_universitaire_index", methods={"GET"})
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     *
+     * @return Response
      */
     public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
@@ -55,6 +58,9 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/new", name="sa_annee_universitaire_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -78,6 +84,9 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_universitaire_show", methods={"GET"})
+     * @param AnneeUniversitaire $anneeUniversitaire
+     *
+     * @return Response
      */
     public function show(AnneeUniversitaire $anneeUniversitaire): Response
     {
@@ -88,6 +97,10 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_annee_universitaire_edit", methods={"GET","POST"})
+     * @param Request            $request
+     * @param AnneeUniversitaire $anneeUniversitaire
+     *
+     * @return Response
      */
     public function edit(Request $request, AnneeUniversitaire $anneeUniversitaire): Response
     {

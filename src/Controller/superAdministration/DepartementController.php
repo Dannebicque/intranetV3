@@ -50,7 +50,7 @@ class DepartementController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_formation_show", methods="GET")
-     * @param Departement $formation
+     * @param Departement $departement
      *
      * @return Response
      */
@@ -62,7 +62,7 @@ class DepartementController extends BaseController
     /**
      * @Route("/{id}/edit", name="sa_formation_edit", methods="GET|POST")
      * @param Request     $request
-     * @param Departement $formation
+     * @param Departement $departement
      *
      * @return Response
      */

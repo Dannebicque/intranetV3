@@ -8,7 +8,9 @@
 
 namespace App\MesClasses;
 
+use App\Entity\AnneeUniversitaire;
 use App\Repository\AnneeRepository;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
@@ -42,6 +44,11 @@ class MyConfiguration
     private $semestreRepository;
 
     /**
+     * @var AnneeUniversitaireRepository
+     */
+    private $anneeUniversitaireRepository;
+
+    /**
      * @var PersonnelRepository
      */
     private $personnelRepository;
@@ -54,12 +61,13 @@ class MyConfiguration
     /**
      * MyConfiguration constructor.
      *
-     * @param DepartementRepository  $departementRepository
-     * @param DiplomeRepository      $diplomeRepository
-     * @param AnneeRepository        $anneeRepository
-     * @param SemestreRepository     $semestreRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param EntityManagerInterface $entityManager
+     * @param DepartementRepository        $departementRepository
+     * @param DiplomeRepository            $diplomeRepository
+     * @param AnneeRepository              $anneeRepository
+     * @param SemestreRepository           $semestreRepository
+     * @param PersonnelRepository          $personnelRepository
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     * @param EntityManagerInterface       $entityManager
      */
     public function __construct(
         DepartementRepository $departementRepository,
@@ -67,6 +75,7 @@ class MyConfiguration
         AnneeRepository $anneeRepository,
         SemestreRepository $semestreRepository,
         PersonnelRepository $personnelRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         EntityManagerInterface $entityManager
     ) {
         $this->departementRepository = $departementRepository;
@@ -74,6 +83,7 @@ class MyConfiguration
         $this->anneeRepository = $anneeRepository;
         $this->semestreRepository = $semestreRepository;
         $this->personnelRepository = $personnelRepository;
+        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
         $this->entityManager = $entityManager;
     }
 
@@ -126,7 +136,7 @@ class MyConfiguration
     /**
      * @param $value
      *
-     * @return \App\Entity\Personnel|bool|null
+     * @return \App\Entity\Personnel|bool|null|AnneeUniversitaire
      */
     private function transformeValue($value)
     {
@@ -140,6 +150,10 @@ class MyConfiguration
 
         if (0 === strpos($value, 'pers')) {
             return $this->personnelRepository->find(substr($value, 4, \strlen($value)));
+        }
+
+        if (0 === strpos($value, 'anneeuniv')) {
+            return $this->anneeUniversitaireRepository->find(substr($value, 9, \strlen($value)));
         }
 
         if (empty($value)) {

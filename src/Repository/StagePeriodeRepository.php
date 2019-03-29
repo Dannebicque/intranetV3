@@ -98,7 +98,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByDepartementBuilder(Departement $departement, $annee)
+    public function findByDepartementBuilder(Departement $departement, $annee): QueryBuilder
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')

@@ -45,6 +45,8 @@ class TrelloTache extends BaseEntity
      * TrelloTache constructor.
      *
      * @param Departement $departement
+     *
+     * @throws \Exception
      */
     public function __construct(Departement $departement)
     {

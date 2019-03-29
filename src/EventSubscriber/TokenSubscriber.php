@@ -54,7 +54,7 @@ class TokenSubscriber implements EventSubscriberInterface
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $controller = $event->getController();
 
@@ -141,7 +141,7 @@ class TokenSubscriber implements EventSubscriberInterface
         return null;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',

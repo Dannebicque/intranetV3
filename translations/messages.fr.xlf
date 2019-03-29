@@ -10749,5 +10749,47 @@
               <target>ajouter.diplome.departement</target>
           </segment>
       </unit>
+      <unit id="qkZmdda" name="article_categories">
+          <segment>
+              <source>article_categories</source>
+              <target>article_categories</target>
+          </segment>
+      </unit>
+      <unit id="OC6xwbs" name="atitle.retour.articles">
+          <segment>
+              <source>atitle.retour.articles</source>
+              <target>atitle.retour.articles</target>
+          </segment>
+      </unit>
+      <unit id="38dzWFf" name="table.nb_articles">
+          <segment>
+              <source>table.nb_articles</source>
+              <target>table.nb_articles</target>
+          </segment>
+      </unit>
+      <unit id="n4rS9NF" name="adm.configuration.tab.departement.menu">
+          <segment>
+              <source>adm.configuration.tab.departement.menu</source>
+              <target>adm.configuration.tab.departement.menu</target>
+          </segment>
+      </unit>
+      <unit id="b6qgwOv" name="adm.configuration.tab.departement.heading">
+          <segment>
+              <source>adm.configuration.tab.departement.heading</source>
+              <target>adm.configuration.tab.departement.heading</target>
+          </segment>
+      </unit>
+      <unit id="x34L_zH" name="atitle.afficher_semestre">
+          <segment>
+              <source>atitle.afficher_semestre</source>
+              <target>atitle.afficher_semestre</target>
+          </segment>
+      </unit>
+      <unit id="VGwtGUR" name="atitle.masquer_semestre">
+          <segment>
+              <source>atitle.masquer_semestre</source>
+              <target>atitle.masquer_semestre</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

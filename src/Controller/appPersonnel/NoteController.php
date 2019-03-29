@@ -61,7 +61,7 @@ class NoteController extends BaseController
     public function saisie(Request $request, Matiere $matiere)
     {
         if ($matiere !== null && $matiere->getUe() !== null) {
-            $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getDepartement());
+            $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
             $form = $this->createForm(
                 EvaluationType::class,
                 $evaluation,
@@ -154,7 +154,7 @@ class NoteController extends BaseController
      */
     public function import(Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Matiere $matiere): Response
     {
-        $evaluation = new Evaluation($this->getUser(), $matiere, $this->dataUserSession->getDepartement());
+        $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,

@@ -17,12 +17,12 @@ class MyEdtCelcat
     /**
      * @param Personnel $personnel
      */
-    public function initPersonnel(Personnel $personnel)
+    public function initPersonnel(Personnel $personnel): void
     {
 
     }
 
-    public function initEtudiant(Etudiant $etudiant)
+    public function initEtudiant(Etudiant $etudiant): void
     {
     }
 }

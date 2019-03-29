@@ -194,7 +194,10 @@ class PersonnelController extends BaseController
      *
      * @return Response
      */
-    public function gestionDroit(PersonnelDepartementRepository $personnelDepartementRepository, Personnel $personnel)
+    public function gestionDroit(
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        Personnel $personnel
+    ): Response
     {
         //todo: tester si CDD ou DDE
 

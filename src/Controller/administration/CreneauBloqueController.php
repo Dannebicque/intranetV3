@@ -20,6 +20,11 @@ class CreneauBloqueController extends BaseController
 {
     /**
      * @Route("/", name="administration_creneau_bloque_index", methods={"GET"})
+     * @param CreneauBloqueRepository $creneauBloqueRepository
+     * @param CreneauCoursRepository  $creneauCoursRepository
+     * @param CalendrierRepository    $calendrierRepository
+     *
+     * @return Response
      */
     public function index(
         CreneauBloqueRepository $creneauBloqueRepository,
@@ -51,13 +56,20 @@ class CreneauBloqueController extends BaseController
     /**
      * @Route("/modifie_etat", name="administration_creneau_bloque_modifie_etat", methods={"POST"},
      *                         options={"expose"=true})
+     * @param CreneauCoursRepository  $creneauCoursRepository
+     * @param CalendrierRepository    $calendrierRepository
+     * @param CreneauBloqueRepository $creneauBloqueRepository
+     * @param Request                 $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function modifieEtatCreneau(
         CreneauCoursRepository $creneauCoursRepository,
         CalendrierRepository $calendrierRepository,
         CreneauBloqueRepository $creneauBloqueRepository,
         Request $request
-    ) {
+    ): Response
+    {
         $cr = $creneauCoursRepository->find($request->request->get('creneau'));
         $semaine = $calendrierRepository->find($request->request->get('semaine'));
 

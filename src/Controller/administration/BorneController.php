@@ -8,6 +8,7 @@ use App\Entity\Constantes;
 use App\Form\BorneType;
 use App\MesClasses\MyExport;
 use App\Repository\BorneRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -173,8 +174,11 @@ class BorneController extends BaseController
 
     /**
      * @Route("/visibilite/{id}", name="administration_borne_visibilite", options={"expose"=true})
+     * @param Borne $borne
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function visibilite(Borne $borne)
+    public function visibilite(Borne $borne): JsonResponse
     {
         $borne->setVisible(!$borne->getVisible());
         $this->entityManager->flush();

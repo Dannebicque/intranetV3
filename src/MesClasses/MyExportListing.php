@@ -141,7 +141,7 @@ class MyExportListing
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
-                $this->name = 'emargement-'.$semestre;
+                $this->name = 'emargement-' . $semestre;
                 $this->titre = 'FEUILLE D\'EMARGEMENT - Semestre ' . $semestre;
                 for ($i = 0; $i < 5; $i++) {
                     $this->colonnesEnTete[] = '';
@@ -149,7 +149,7 @@ class MyExportListing
                 break;
             case Constantes::TYPEDOCUMENT_EVALUATION:
                 $this->titre = 'FEUILLE D\'EVALUATION - Semestre ' . $semestre;
-                $this->name = 'evaluation-'.$semestre;
+                $this->name = 'evaluation-' . $semestre;
                 $this->colonnesEnTete[] = 'Place';
                 $this->colonnesEnTete[] = 'Présence';
                 $this->colonnesEnTete[] = 'Note';
@@ -157,7 +157,7 @@ class MyExportListing
                 break;
             case Constantes::TYPEDOCUMENT_LISTE:
                 $this->titre = 'LISTING - Semestre ' . $semestre;
-                $this->name = 'listing-'.$semestre;
+                $this->name = 'listing-' . $semestre;
                 break;
         }
     }
@@ -205,7 +205,7 @@ class MyExportListing
 
             $this->myExcelWriter->writeCellName('A11', $id);
 
-            $this->myExcelWriter->borderCells('A12:H' . (string)$this->ligne);
+            $this->myExcelWriter->borderCells('A12:H' . $this->ligne);
 
             $this->myExcelWriter->getColumnDimension('A', 3);
             $this->myExcelWriter->getColumnAutoSize('B');
@@ -244,7 +244,8 @@ class MyExportListing
 
         $this->myExcelWriter->writeCellName('H1', 'Année Universitaire - ' . $dbt . ' - ' . $fin,
             ['style' => ['HORIZONTAL_RIGHT']]);
-        $this->myExcelWriter->writeCellName('H2', 'IUT de Troyes - ' . $this->dataUserSession->getDepartement()->getLibelle(),
+        $this->myExcelWriter->writeCellName('H2',
+            'IUT de Troyes - ' . $this->dataUserSession->getDepartement()->getLibelle(),
             ['style' => ['HORIZONTAL_RIGHT']]);
         $this->myExcelWriter->writeCellName('H4', $this->titre, ['style' => ['HORIZONTAL_RIGHT']]);
 

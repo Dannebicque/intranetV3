@@ -33,7 +33,8 @@ class ParcoursEtudiant
     }
 
 
-    public function getBadge() {
+    public function getBadge(): void
+    {
 //        {% if sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision == 'V' %}
 //        badge badge-success
 //                            {% elseif sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision ==
@@ -52,7 +53,8 @@ class ParcoursEtudiant
 //                            {% endif %}
     }
 
-    public function getDecision() {
+    public function getDecision(): string
+    {
         return '';
     }
 }

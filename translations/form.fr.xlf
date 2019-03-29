@@ -3371,5 +3371,11 @@
         <target>Site principal</target>
       </segment>
     </unit>
+      <unit id="u9xCs6L" name="label.article_categorie">
+          <segment>
+              <source>label.article_categorie</source>
+              <target>label.article_categorie</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

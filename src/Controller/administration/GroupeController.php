@@ -25,6 +25,9 @@ class GroupeController extends BaseController
 {
     /**
      * @Route("/", name="administration_groupe_index")
+     * @param GroupeRepository $groupeRepository
+     *
+     * @return Response
      */
     public function index(GroupeRepository $groupeRepository): Response
     {
@@ -37,8 +40,12 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/refresh/{parent}", name="administration_groupe_refresh", methods="GET", options={"expose"=true})
+     * @param GroupeRepository $groupeRepository
+     * @param Groupe           $parent
+     *
+     * @return Response
      */
-    public function refreshListe(GroupeRepository $groupeRepository, Groupe $parent)
+    public function refreshListe(GroupeRepository $groupeRepository, Groupe $parent): Response
     {
         if ($parent->getTypeGroupe() !== null) {
             $semestre = $parent->getTypeGroupe()->getSemestre();
@@ -59,7 +66,10 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/new", name="administration_groupe_new", methods="POST", options={"expose"=true})
-     * @param Request $request
+     * @param TypeGroupeRepository $typeGroupeRepository
+     * @param ParcourRepository    $parcourRepository
+     * @param GroupeRepository     $groupeRepository
+     * @param Request              $request
      *
      *
      * @return Response

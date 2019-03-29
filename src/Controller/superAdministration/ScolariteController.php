@@ -25,7 +25,7 @@ class ScolariteController extends BaseController
     /**
      * @Route("/scolarite/ajouter", name="sa_scolarite_ajouter")
      */
-    public function addEtudiants()
+    public function addEtudiants(): Response
     {
         return $this->render('super-administration/scolarite/ajouter.html.twig', [
 
@@ -35,7 +35,7 @@ class ScolariteController extends BaseController
     /**
      * @Route("/scolarite/recherche", name="sa_scolarite_recherche", options={"expose"=true})
      */
-    public function rechercheEtudiants()
+    public function rechercheEtudiants(): Response
     {
         $etudiants = null;
         return $this->render('super-administration/scolarite/recherche.html.twig', ['etudiants' => $etudiants]);

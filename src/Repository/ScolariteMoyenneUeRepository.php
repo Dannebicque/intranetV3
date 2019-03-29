@@ -21,7 +21,7 @@ class ScolariteMoyenneUeRepository extends ServiceEntityRepository
         parent::__construct($registry, ScolariteMoyenneUe::class);
     }
 
-    public function findByEtudiantArray(Etudiant $etudiant)
+    public function findByEtudiantArray(Etudiant $etudiant): array
     {
         $query = $this->createQueryBuilder('s')
             ->innerJoin(Scolarite::class, 'p', 'WITH', 's.scolarite = p.id')

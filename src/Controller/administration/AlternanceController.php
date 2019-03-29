@@ -49,8 +49,9 @@ class AlternanceController extends BaseController
 
     /**
      * @Route("/init/all/{annee}", name="administration_alternance_init_all")
-     * @param EtudiantRepository $etudiantRepository
-     * @param Annee              $annee
+     * @param EtudiantRepository   $etudiantRepository
+     * @param AlternanceRepository $alternanceRepository
+     * @param Annee                $annee
      *
      * @return RedirectResponse
      */

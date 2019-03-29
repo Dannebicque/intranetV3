@@ -4,6 +4,7 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\MesClasses\MyConfiguration;
+use App\Repository\AnneeUniversitaireRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,10 +18,14 @@ class ConfigurationController extends BaseController
 {
     /**
      * @Route("/configuration", name="administration_configuration")
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     *
+     * @return Response
      */
-    public function index(): Response
+    public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
         return $this->render('administration/configuration/index.html.twig', [
+            'anneeUniversitaire' => $anneeUniversitaireRepository->findAll()
         ]);
     }
 

@@ -50,7 +50,7 @@ class AbsenceController extends BaseController
      * @param MyAbsences $myAbsences
      * @param Semestre   $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Exception
      */
     public function liste(MyAbsences $myAbsences, Semestre $semestre): Response

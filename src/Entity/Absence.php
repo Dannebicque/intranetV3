@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
@@ -14,22 +15,22 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 class Absence extends BaseEntity
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
     protected $uuid;
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
     public function getUuidString(): string
     {

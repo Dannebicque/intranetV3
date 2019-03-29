@@ -22,7 +22,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         return $this->render('bloc_notes_absences/personnel.html.twig', [
             'previsionnel' => $myPrevisionnel->getPrevisionnelEnseignantDepartement(
-                $this->getUser(),
+                $this->getConnectedUser(),
                 $this->dataUserSession->getDepartement()
             )
         ]);
@@ -35,8 +35,9 @@ class BlocNotesAbsencesController extends BaseController
      */
     public function etudiant(MyEtudiant $myEtudiant): Response
     {
-        $myEtudiant->setEtudiant($this->getUser());
-        $myEtudiant->getNotesAbsences($this->getUser()->getSemestre(), $this->getUser()->getSemestre()->getAnneeUniversitaire());
+        $myEtudiant->setEtudiant($this->getConnectedUser());
+        $myEtudiant->getNotesAbsences($this->getConnectedUser()->getSemestre(),
+            $this->getConnectedUser()->getSemestre()->getAnneeUniversitaire());
 
         return $this->render('bloc_notes_absences/etudiant.html.twig', [
             'etudiant' => $myEtudiant,
@@ -46,7 +47,7 @@ class BlocNotesAbsencesController extends BaseController
     public function mccSemestre(MatiereRepository $matiereRepository): Response
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
-            'matieres' => $matiereRepository->findBySemestre($this->getUser()->getSemestre())
+            'matieres' => $matiereRepository->findBySemestre($this->getConnectedUser()->getSemestre())
         ]);
     }
 }

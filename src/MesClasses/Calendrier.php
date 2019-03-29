@@ -24,6 +24,8 @@ abstract class Calendrier
      * @param     $year
      * @param int $bonMois
      * @param int $nbMois
+     *
+     * @throws \Exception
      */
     public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
     {

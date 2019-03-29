@@ -28,7 +28,7 @@ trait SoftDeletableTrait
         return $this->deletedAt instanceof \DateTimeInterface;
     }
 
-    public function recover()
+    public function recover(): void
     {
         $this->deletedAt = null;
     }

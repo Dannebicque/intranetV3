@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class BacFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $bac = new Bac();
         $bac->setLibelle('S');

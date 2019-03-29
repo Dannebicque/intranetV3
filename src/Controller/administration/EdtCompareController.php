@@ -21,12 +21,19 @@ class EdtCompareController extends BaseController
 {
     /**
      *
-     * @param MyPrevisionnel $myPrevisionnel
+     * @param PersonnelRepository $personnelRepository
+     * @param MyPrevisionnel      $myPrevisionnel
+     *
+     * @param                     $source
      *
      * @return Response
      * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"}, requirements={"source"="intranet|celcat"})
      */
-    public function comparePersonnel(PersonnelRepository $personnelRepository, MyPrevisionnel $myPrevisionnel, $source)
+    public function comparePersonnel(
+        PersonnelRepository $personnelRepository,
+        MyPrevisionnel $myPrevisionnel,
+        $source
+    ): Response
     {
         //todo: a refaire
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
@@ -47,12 +54,19 @@ class EdtCompareController extends BaseController
 
     /**
      *
-     * @param MyPrevisionnel $myPrevisionnel
+     * @param MatiereRepository $matiereRepository
+     * @param MyPrevisionnel    $myPrevisionnel
+     *
+     * @param                   $source
      *
      * @return Response
      * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"}, requirements={"source"="intranet|celcat"})
      */
-    public function compareMatiereAction(MatiereRepository $matiereRepository, MyPrevisionnel $myPrevisionnel, $source)
+    public function compareMatiereAction(
+        MatiereRepository $matiereRepository,
+        MyPrevisionnel $myPrevisionnel,
+        $source
+    ): Response
     {
         $matieres = $matiereRepository->findByDepartement($this->dataUserSession->getDepartement());
 
@@ -73,10 +87,12 @@ class EdtCompareController extends BaseController
 
     /**
      *
+     * @param Matiere $matiere
+     *
      * @return Response
      * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info", methods={"POST"})
      */
-    public function comparePlusInfoAction(Matiere $matiere)
+    public function comparePlusInfoAction(Matiere $matiere) : Response
     {
         //tester si celcat ou intranet
         $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findBy(array('matiere' => $matiere->getId()));

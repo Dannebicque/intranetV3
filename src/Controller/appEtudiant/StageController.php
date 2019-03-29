@@ -33,10 +33,10 @@ class StageController extends BaseController
      */
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre());
+        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getConnectedUser()->getSemestre());
         $stageEtudiants = [];
 
-        foreach ($this->getUser()->getStageEtudiants() as $stage) {
+        foreach ($this->getConnectedUser()->getStageEtudiants() as $stage) {
             if ($stage->getStagePeriode() !== null) {
                 $stageEtudiants[$stage->getStagePeriode()->getId()] = $stage;
             }
@@ -52,11 +52,13 @@ class StageController extends BaseController
     /**
      * @Route("/formulaire/{stageEtudiant}", name="application_etudiant_stage_formulaire", methods="GET|POST")
      * @ParamConverter("stageEtudiant", options={"mapping": {"stageEtudiant": "uuid"}})
+     *
      * @param EventDispatcherInterface $eventDispatcher
      * @param Request                  $request
      * @param StageEtudiant            $stageEtudiant
      *
      * @return Response
+     * @throws \Exception
      */
     public function create(
         EventDispatcherInterface $eventDispatcher,

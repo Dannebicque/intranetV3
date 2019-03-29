@@ -243,7 +243,7 @@ class DataUserSession
     /**
      * @return int
      */
-    public function getDepartementId()
+    public function getDepartementId(): int
     {
         if ($this->departement !== null) {
             return $this->departement->getId();
@@ -291,18 +291,28 @@ class DataUserSession
      */
     public function getDepartementMultiple(): bool
     {
-        return count($this->getUser()->getPersonnelDepartements()) > 1;
+        if ($this->getUser() !== null) {
+            return count($this->getUser()->getPersonnelDepartements()) > 1;
+        }
+
+        return false; //todo: pas le plus judicieux peut etre?
     }
 
     /**
      * @return int
      */
-    public function getAnneeUniversitaire()
+    public function getAnneeUniversitaire(): ?int
     {
         if ($this->getUser() instanceof Etudiant) {
             return $this->getUser()->getAnneeUniversitaire();
-        } else {
-            return (int)date('Y'); //todo: a améliorer pour les non étudiants...
         }
+            return (int)date('Y'); //todo: a améliorer pour les non étudiants...
+
+    }
+
+    public function getArticlesCategories()
+    {
+
+        return $this->getDepartement() !== null ? $this->getDepartement()->getArticleCategories() : [];
     }
 }

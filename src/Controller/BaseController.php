@@ -75,11 +75,13 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
         $this->addFlash($niveau, $this->translator->trans($cleTraduction));
     }
 
-    public function getUser()
+    public function getConnectedUser()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        return parent::getUser();
+        return $this->getUser();
     }
+
+
 }
 

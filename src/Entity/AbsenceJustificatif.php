@@ -86,7 +86,7 @@ class AbsenceJustificatif extends BaseEntity
     {
         $this->etat = 'D';
         $this->uuid = Uuid::uuid4();
-        $this->anneeUniversitaire = $etudiant->getSemestre()->getAnneeUniversitaire();
+        $this->anneeUniversitaire = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getAnneeUniversitaire() : date('Y');
         $this->setEtudiant($etudiant);
     }
 
@@ -187,13 +187,9 @@ class AbsenceJustificatif extends BaseEntity
     }
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
+     * @param File|null $document
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $document
+     * @throws \Exception
      */
     public function setFichierFile(?File $document = null): void
     {
