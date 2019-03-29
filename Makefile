@@ -1,18 +1,19 @@
 DOCKER_COMPOSE?=docker-compose
 EXEC?=$(DOCKER_COMPOSE) exec app
-CONSOLE=bin/console
+CONSOLE=php bin/console
 PHPCSFIXER?=$(EXEC) php -d memory_limit=1024m vendor/bin/php-cs-fixer
 
 .DEFAULT_GOAL := help
 .PHONY: help start stop restart install uninstall reset clear-cache shell clear clean
 .PHONY: wait-for-db db-diff db-migrate db-rollback db-reset db-fixtures db-validate
 .PHONY: watch assets assets-build
-.PHONY: tests lint lint-symfony lint-yaml lint-twig lint-xliff lint-php lint-php-fix security-check test-schema test-all
+.PHONY: tests lint lint-symfony lint-yaml lint-twig lint-xliff php-cs php-cs-fix security-check test-schema test-all
 .PHONY: deps
 .PHONY: build up perm docker-compose.override.yml
 
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+
 
 ##
 ## Project setup
@@ -41,7 +42,7 @@ clear-cache: perm
 shell:                                                                                                 ## Run app container in interactive mode
 	$(EXEC) /bin/bash
 
-clear: perm                                                                                            ## Remove all the cache, the logs, the sessions and the built assets
+clear: perm                                                                                            ## Remove all the cache, the logs, and the built assets
 	$(EXEC) rm -rf var/cache/*
 	rm -rf var/log/*
 	rm -rf public/build
@@ -89,7 +90,7 @@ watch: node_modules                                                             
 assets: node_modules                                                                                   ## Build the development version of the assets
 	$(EXEC) yarn dev
 
-assets-build: node_modules                                                                              ## Build the production version of the assets
+assets-build: node_modules                                                                             ## Build the production version of the assets
 	$(EXEC) yarn build
 
 ##
@@ -99,7 +100,7 @@ assets-build: node_modules                                                      
 tests:                                                                                                 ## Run all the PHP tests
 	$(EXEC) bin/phpunit
 
-lint: lint-symfony lint-php                                                                            ## Run lint on Twig, YAML, PHP and Javascript files
+lint: lint-symfony php-cs                                                                              ## Run lint on Twig, YAML, XLIFF, and PHP files
 
 lint-symfony: lint-yaml lint-twig lint-xliff                                                           ## Lint Symfony (Twig and YAML) files
 
@@ -112,10 +113,10 @@ lint-twig:                                                                      
 lint-xliff:                                                                                            ## Lint Translation files
 	$(EXEC) $(CONSOLE) lint:xliff translations
 
-lint-php: vendor                                                                                       ## Lint PHP code
+php-cs: vendor                                                                                         ## Lint PHP code
 	$(PHPCSFIXER) fix --diff --dry-run --no-interaction -v
 
-lint-php-fix: vendor                                                                                   ## Lint and fix PHP code to follow the convention
+php-cs-fix: vendor                                                                                     ## Fix PHP code to follow the convention
 	$(PHPCSFIXER) fix
 
 security-check: vendor                                                                                 ## Check for vulnerable dependencies
@@ -124,13 +125,14 @@ security-check: vendor                                                          
 test-schema: vendor                                                                                    ## Test the doctrine Schema
 	$(EXEC) $(CONSOLE) doctrine:schema:validate --skip-sync -vvv --no-interaction
 
-test-all: lint test-schema security-check tests
+test-all: lint test-schema security-check tests                                                        ## Lint all, run schema and security check, then unit and functionnal tests
+
 
 ##
 ## Dependencies
 ##---------------------------------------------------------------------------
 
-deps: vendor assets                                                                                    ## Install the project PHP and JS dependencies
+deps: vendor assets                                                                                    ## Install the project dependencies
 
 
 ##
@@ -162,7 +164,7 @@ vendor: composer.lock
 	$(EXEC) composer install -n
 
 composer.lock: composer.json
-	@echo compose.lock is not up to date.
+	@echo composer.lock is not up to date.
 
 node_modules: yarn.lock
 	$(EXEC) yarn install
