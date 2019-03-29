@@ -8,19 +8,14 @@
 
     <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-    <!-- Styles -->
-    {#<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"#}
-    {#rel="stylesheet"/>#}
-
-    <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
-    <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('build/images/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('build/images/favicon.png') }}">
 </head>
 
 <body>
@@ -39,7 +34,7 @@
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
     <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.departement.couleur }}{% else %}#926DDF{% endif %}">
         <span class="logo text-center">
-          <a href="{{ path('default_homepage') }}"><img src="{{ asset('sources/assets/img/logo-icon-light.png') }}"
+          <a href="{{ path('default_homepage') }}"><img src="{{ asset('build/images/logo-icon-light.png') }}"
                                                         alt="logo de l'intranet."></a>
         </span>
     </header>
@@ -242,17 +237,17 @@
             <!-- Change language -->
             <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown"><img class="icon"
-                                                                         src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                         src="{{ asset('build/images/flag/en.png') }}"
                                                                          alt="fr"></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item active" href="#"><img class="icon"
-                                                                  src="{{ asset('sources/assets/img/flag/en.png') }}"
+                                                                  src="{{ asset('build/images/flag/en.png') }}"
                                                                   alt="version anglaise"></a>
                     <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('sources/assets/img/flag/de.png') }}"
+                                                           src="{{ asset('build/images/flag/de.png') }}"
                                                            alt="version allemande"></a>
                     <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('sources/assets/img/flag/es.png') }}"
+                                                           src="{{ asset('build/images/flag/es.png') }}"
                                                            alt="version espagnole"></a>
                 </div>
             </li>
@@ -481,24 +476,14 @@
 </div>
 <!-- END Global quickview -->
 
+{% block javascripts %}
+    <!-- Routing -->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-<!-- Scripts -->
-<!-- Routing -->
-<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {{ encore_entry_script_tags('app') }}
 
-<script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('sources/assets/js/app.js') }}"></script>
-{#<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>#}
-<script src="{{ asset('sources/assets/js/jquery.collection.js') }}"></script>
-<script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
-
-<script data-provide="sweetalert"></script>
-
-<script type="text/javascript">
-    {% block javascript %}
-
-    {% endblock %}
-</script>
+    <script data-provide="sweetalert"></script>
+{% endblock %}
 </body>
 </html>

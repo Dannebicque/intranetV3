@@ -1,56 +1,19 @@
 {
-  "name": "intranetv3",
-  "banner_name": "IntranetV3",
-  "description": "Some description about the project",
-  "version": "0.0.1",
-  "private": true,
-  "keywords": [
-    "project",
-    "admin",
-    "dashboard",
-    "webapp"
-  ],
-  "homepage": "http://thetheme.io/theadmin",
-  "author": "TheTheme.io / David Annebicque",
-  "devDependencies": {
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
-    "@symfony/webpack-encore": "^0.23.0",
-    "autoprefixer": "^7.1.4",
-    "babel-core": "^6.26.3",
-    "grunt": "^1.0.3",
-    "grunt-babel": "^7.0.0",
-    "grunt-browser-sync": "^2.2.0",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^1.0.0",
-    "grunt-contrib-uglify": "^2.2.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-neuter": "^0.6.0",
-    "grunt-postcss": "^0.9.0",
-    "grunt-sass": "^2.0.0",
-    "load-grunt-tasks": "^3.5.2",
-    "postcss-flexbugs-fixes": "^3.2.0",
-    "time-grunt": "^1.4.0"
-  },
-  "dependencies": {
-    "grunt-contrib-less": "^2.0.0",
-    "uglify-js": "^3.3.16"
-  },
-  "main": "gruntfile.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/Dannebicque/intranetv3.git"
-  },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/Dannebicque/intranetv3/issues"
-  }
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.22.0",
+        "webpack-notifier": "^1.6.0",
+        "node-sass": "^4.10.0",
+        "sass-loader": "^7.1.0",
+        "css-loader": "^1.0.1",
+        "jquery": "^3.2.1",
+        "popper.js": "^1.12.9"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    }
 }
