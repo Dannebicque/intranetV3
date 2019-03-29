@@ -20,21 +20,26 @@ class EdtController extends BaseController
      *
      * @return Response
      */
-    public function dashboardPersonnel(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
+    public function dashboardPersonnel(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat): Response
     {
-        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-            $myEdtCelcat->initPersonnel($this->getUser());
+        if ($this->getConnectedUser() !== null) {
 
-            return $this->render('edt/intervenant.html.twig', array(
-                'edt' => $myEdtCelcat
-            ));
+            if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
+                $myEdtCelcat->initPersonnel($this->getConnectedUser());
+
+                return $this->render('edt/intervenant.html.twig', [
+                    'edt' => $myEdtCelcat
+                ]);
+            }
+
+            $myEdt->initPersonnel($this->getConnectedUser());
+
+            return $this->render('edt/intervenant.html.twig', [
+                'edt' => $myEdt
+            ]);
         }
 
-        $myEdt->initPersonnel($this->getUser());
-
-        return $this->render('edt/intervenant.html.twig', array(
-            'edt' => $myEdt
-        ));
+        return $this->render('erreur/500.html.twig');
     }
 
     /**
@@ -43,49 +48,57 @@ class EdtController extends BaseController
      *
      * @return Response
      */
-    public function dashboardEtudiant(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
+    public function dashboardEtudiant(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat): Response
     {
-        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-            $myEdtCelcat->initEtudiant($this->getUser());
+        if ($this->getConnectedUser() !== null) {
+            if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
+                $myEdtCelcat->initEtudiant($this->getConnectedUser());
 
-            return $this->render('edt/etudiant.html.twig', array(
-                'edt' => $myEdtCelcat
-            ));
+                return $this->render('edt/etudiant.html.twig', [
+                    'edt' => $myEdtCelcat
+                ]);
+            }
+
+            $myEdt->initEtudiant($this->getConnectedUser());
+
+            return $this->render('edt/etudiant.html.twig', [
+                'edt' => $myEdt
+            ]);
         }
 
-        $myEdt->initEtudiant($this->getUser());
-
-        return $this->render('edt/etudiant.html.twig', array(
-            'edt' => $myEdt
-        ));
+        return $this->render('erreur/500.html.twig');
     }
 
     /**
      * @Route("/intervenant/export/semaine/{semaine}", name="edt_intervenant_export_semaine_courante")
      */
-    public function exportSemaine() {
+    public function exportSemaine()
+    {
 
     }
 
     /**
      * @Route("/intervenant/export/annee", name="edt_intervenant_export_annee")
      */
-    public function exportAnnee() {
+    public function exportAnnee()
+    {
 
     }
 
     /**
      * @Route("/intervenant/export/ical", name="edt_intervenant_export_ical")
      */
-    public function exportIcal() {
-
+    public function exportIcal()
+    {
+        //todo: a proposer aux étudiants également ? visibilité réduite?
     }
 
     /**
      * @Route("/intervenant/synchro/ical", name="edt_intervenant_synchro_ical")
      */
-    public function synchroIcal() {
-
+    public function synchroIcal()
+    {
+        //todo: a proposer aux étudiants également ? visibilité réduite?
     }
 
 

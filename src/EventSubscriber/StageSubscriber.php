@@ -223,6 +223,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function onMailChgtEtatStageConventionEnvoyee(GenericEvent $event): void
     {
@@ -233,6 +236,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function onMailChgtEtatStageConventionRecue(GenericEvent $event): void
     {
@@ -243,7 +249,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
-     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function onMailChgtEtatStageDepose(GenericEvent $event): void
     {
@@ -255,6 +263,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function onMailChgtEtatStageValide(GenericEvent $event): void
     {
@@ -265,6 +276,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function onMailChgtEtatStageImprime(GenericEvent $event): void
     {

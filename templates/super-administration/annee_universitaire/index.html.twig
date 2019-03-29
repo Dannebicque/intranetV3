@@ -13,41 +13,39 @@
 
 {% block content %}
     {# feature: création directement dans le datatable ??? #}
-<div class="card">
-    <h4 class="card-title">{{ 'adm.annee_universitaire.index.heading'|trans }}</h4>
-    <div class="card-body">
-        <table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>Annee</th>
-                <th>Commentaire</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for annee_universitaire in annee_universitaires %}
-            <tr>
-                <td>{{ annee_universitaire.id }}</td>
-                <td>{{ annee_universitaire.libelle }}</td>
-                <td>{{ annee_universitaire.annee }}</td>
-                <td>{{ annee_universitaire.commentaire }}</td>
-                <td>
-                    {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'annee_universitaire', id: annee_universitaire
-                        .id}) }}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.annee_universitaire.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Libelle</th>
+                    <th>Annee</th>
+                    <th>Commentaire</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for annee_universitaire in annee_universitaires %}
+                    <tr>
+                        <td>{{ annee_universitaire.libelle }}</td>
+                        <td>{{ annee_universitaire.annee }}</td>
+                        <td>{{ annee_universitaire.commentaire }}</td>
+                        <td>
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'annee_universitaire', id: annee_universitaire
+                                .id}) }}
 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block fabactions %}

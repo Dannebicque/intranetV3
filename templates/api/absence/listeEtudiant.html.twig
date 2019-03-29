@@ -20,8 +20,8 @@
                                 <div class="card card-trombi etudiant" id="etu_{{ etudiant.id }}">
                                     <div class="card-body text-center pt-1 pb-50">
                                         <a href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}">
-                                            <img class="avatar avatar-xxl"
-                                                 src="{{ asset('etudiants/'~etudiant.photoName) }}">
+                                            <img class="avatar avatar-xxl" src="{{ asset('etudiants/'~etudiant.photoName) }}"
+                                                 alt="avatar de {{ etudiant.display }}">
                                         </a>
                                         <h5 class="mt-3">
                                             <a class="hover-primary"

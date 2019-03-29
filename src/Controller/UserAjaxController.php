@@ -37,7 +37,7 @@ class UserAjaxController extends BaseController
         $action = $request->request->get('etat');
         $user = $etudiantRepository->findOneBySlug($request->request->get('user'));
         if ($user && $action === 'true') {
-            $fav = new Favori($this->getUser(), $user);
+            $fav = new Favori($this->getConnectedUser(), $user);
 
             $this->entityManager->persist($fav);
             $this->entityManager->flush();
@@ -47,7 +47,7 @@ class UserAjaxController extends BaseController
 
         if ($user && $action === 'false') {
             $fav = $favoriRepository->findBy(array(
-                'etudiantDemandeur' => $this->getUser()->getId(),
+                'etudiantDemandeur' => $this->getConnectedUser()->getId(),
                 'etudiantDemande'   => $user->getId()
             ));
             foreach ($fav as $f) {
@@ -72,8 +72,8 @@ class UserAjaxController extends BaseController
         PersonnelDepartementRepository $personnelDepartementRepository,
         Departement $departement
     ): ?JsonResponse {
-        if ($this->getUser() !== null && $this->getUser()->getTypeUser() === 'permanent') {
-            $pf = $personnelDepartementRepository->findByPersonnel($this->getUser());
+        if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getTypeUser() === 'permanent') {
+            $pf = $personnelDepartementRepository->findByPersonnel($this->getConnectedUser());
             /** @var PersonnelDepartement $p */
             foreach ($pf as $p) {
                 if ($p->getDepartement() !== null && $p->getDepartement()->getId() === $departement->getId()) {

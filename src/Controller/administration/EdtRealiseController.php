@@ -27,7 +27,7 @@ class EdtRealiseController extends BaseController
      * @Route("/{source}", name="administration_edt_service_realise", methods={"GET"},
      *                     requirements={"source"="intranet|celcat"})
      */
-    public function index(PersonnelRepository $personnelRepository, $source)
+    public function index(PersonnelRepository $personnelRepository, $source): Response
     {
         //todo: a refaire
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
@@ -43,11 +43,13 @@ class EdtRealiseController extends BaseController
      * @param Request $request
      *
      *
+     * @param         $source
+     *
      * @return Response
      * @Route("/affiche/{source}", name="administration_edt_service_realise_affiche", methods={"POST"},
      *                             requirements={"source"="intranet|celcat"})
      */
-    public function detailPersonnelMatiere(Request $request, $source)
+    public function detailPersonnelMatiere(Request $request, $source): Response
     {
         $matiere = $this->getDoctrine()->getRepository('DAKernelBundle:Matieres')->find($request->request->get('matiere'));
         $personnel = $this->getDoctrine()->getRepository('DAKernelBundle:Personnels')->find($request->request->get('personnel'));
@@ -69,7 +71,7 @@ class EdtRealiseController extends BaseController
             $p = $this->getDoctrine()->getRepository('DAKernelBundle:PersonnelMatiere')->findBy(array(
                 'personnel' => $personnel->getId(),
                 'matiere'   => $matiere->getId(),
-                'annee'     => $connect->getDepartement()->getAnneeprevi()
+                'annee'     => $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel()
             ));
 
             $t = array();
@@ -139,7 +141,7 @@ class EdtRealiseController extends BaseController
                 if ($m->getMatiere() !== null) {
                     $array['matiere' . $i]['id'] = $m->getMatiere()->getId();
                     $array['matiere' . $i]['nom'] = $m->getMatiere()->getCodeMatiere() . ' | ' . $m->getMatiere()->getLibelle();
-                    $array['matiere' . $i]['ue'] = $m->getMatiere()->getUE()->getNumeroue();
+                    $array['matiere' . $i]['ue'] = $m->getMatiere()->getUe() !== null ? $m->getMatiere()->getUe()->getNumeroUe() : 0;
                     $i++;
                 }
             }

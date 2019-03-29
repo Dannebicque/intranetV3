@@ -45,7 +45,7 @@ class ArticleController extends BaseController
             $articles,
             'articles',
             ['article_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            ['titre', 'texte', 'categorie' => ['libelle'], 'personnel' => ['nom', 'prenom']]
         );
 
         return $response;
@@ -59,8 +59,7 @@ class ArticleController extends BaseController
      */
     public function create(Request $request): Response
     {
-        $article = new Article($this->getUser());
-        $article->setDepartement($this->dataUserSession->getDepartement());
+        $article = new Article($this->getConnectedUser());
         $form = $this->createForm(
             ArticleType::class,
             $article,
@@ -169,5 +168,17 @@ class ArticleController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_article_edit', ['id' => $newArticle->getId()]);
+    }
+
+    /**
+     * @Route("/gestion/categories", name="administration_article_categories", methods="GET|POST")
+     *
+     * @return Response
+     */
+    public function gestionCategorie(): Response
+    {
+        return $this->render('administration/article/gestionCategorie.html.twig', [
+            'categories' => $this->dataUserSession->getArticlesCategories()
+        ]);
     }
 }

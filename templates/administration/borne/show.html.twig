@@ -49,7 +49,8 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.qrcode'|trans }}</th>
-                    <td>{{ borne.url }} {% if borne.url is defined %}<img src="{{ qr_code_data_uri(borne.url, { writer: 'svg', size: 150 }) }}" />{%
+                    <td>{{ borne.url }} {% if borne.url is defined %}<img src="{{ qr_code_data_uri(borne.url, {
+                            writer: 'svg', size: 150 }) }}" alt="QRcode de l'événement" />{%
                             endif %}</td>
                 </tr>
                 <tr>

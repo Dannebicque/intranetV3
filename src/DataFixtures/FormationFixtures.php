@@ -32,7 +32,7 @@ class FormationFixtures extends Fixture
         $this->encoder = $encoder;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $adresse = new Adresse();
         $adresse->setAdresse1('9 Rue de Québec');

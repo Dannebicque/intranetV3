@@ -88,10 +88,11 @@ class AbsenceRepository extends ServiceEntityRepository
 
         /** @var Absence $absence */
         foreach ($absences as $absence) {
-            if ($absence->getEtudiant() !== null && $absence->getDate() !== null && $absence->getHeure() !== null && array_key_exists($absence->getEtudiant()->getId(), $trattrapages)) {
-                if (array_key_exists(
-                    $absence->getDate()->format('Ymd'),
-                    $trattrapages[$absence->getEtudiant()->getId()]
+            if ($absence->getEtudiant() !== null &&
+                $absence->getDate() !== null &&
+                $absence->getHeure() !== null &&
+                array_key_exists($absence->getEtudiant()->getId(), $trattrapages) &&
+                array_key_exists($absence->getDate()->format('Ymd'), $trattrapages[$absence->getEtudiant()->getId()]
                 )) {
                     if (!array_key_exists(
                         $absence->getHeure()->format('Hi'),
@@ -100,9 +101,6 @@ class AbsenceRepository extends ServiceEntityRepository
                         $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
                     }
                 } else {
-                    $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
-                }
-            } else {
                 $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
             }
         }

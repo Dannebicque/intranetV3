@@ -19,41 +19,100 @@ class SousComissionController extends BaseController
 
 
     /**
-     * @Route("/{semestre}", name="administration_sous_comission_index")
+     * @Route("/live/{semestre}", name="administration_sous_comission_live")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(MySousCommission $mySousCommission, Semestre $semestre): Response
+    public function live(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
         $mySousCommission->init($semestre, $semestre->getAnneeUniversitaire());
 
 
-        return $this->render('administration/sous_commission/index.html.twig', [
+        return $this->render('administration/sous_commission/live.html.twig', [
             'semestre' => $semestre,
             'sousCommission' => $mySousCommission
         ]);
     }
 
-    /*
-     * $t = array();
-        $t['matieres'] = $this->getDoctrine()->getRepository('DAKernelBundle:Matieres')->getMatieresSemestre($semestre);
-        $t['etudiants'] = $this->getDoctrine()->getRepository('DAKernelBundle:Etudiants')->findEtudiantsSemestre($semestre->getId());
-        $t['ue'] = $this->getDoctrine()->getRepository('DAKernelBundle:UE')->findBy(array('semestre' => $semestre->getId()));
-        $t['notes'] = $this->getDoctrine()->getRepository('DAKernelBundle:Notes')->getNotesEtudiantsSemestre($semestre->getId(),
-            $t['etudiants']);
-        $absences = $this->getDoctrine()->getRepository('DAKernelBundle:Absences')->findAbsencesSemestre($semestre->getId());
-        $t['semestres'] = $this->calculSemestre($semestre);
-
-        $moyennes = $myEtudiants->calculMoyennesEtudiants($t['etudiants'], $t['matieres'], $t['notes'], $t['ue'],
-            $absences);
-
-        return $this->render('@DAKernel/SousCommission/synthese.html.twig', array(
-            't'        => $t,
-            'semestre' => $semestre,
-            'moyennes' => $moyennes,
-
-        ));
+    /**
+     * @Route("/travail/{semestre}", name="administration_sous_comission_travail")
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
+    public function travail(MySousCommission $mySousCommission, Semestre $semestre): Response
+    {
+        $mySousCommission->init($semestre, $semestre->getAnneeUniversitaire());
+
+
+        return $this->render('administration/sous_commission/travail.html.twig', [
+            'semestre' => $semestre,
+            //'sousCommission' => $mySousCommission
+        ]);
+    }
+
+    /**
+     * @Route("/purger/{semestre}", name="administration_sous_comission_purger")
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function purger(MySousCommission $mySousCommission, Semestre $semestre): Response
+    {
+
+        return $this->redirectToRoute('administration_sous_comission_travail', ['semestre' => $semestre->getId()]);
+    }
+
+    /**
+     * @Route("/recalculer/{semestre}", name="administration_sous_comission_recalculer")
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function recalculer(MySousCommission $mySousCommission, Semestre $semestre): Response
+    {
+        return $this->redirectToRoute('administration_sous_comission_travail', ['semestre' => $semestre->getId()]);
+    }
+
+    /**
+     * @Route("/publier/{semestre}", name="administration_sous_comission_publier")
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function publier(MySousCommission $mySousCommission, Semestre $semestre): Response
+    {
+        //mettre une notif + mail
+        return $this->redirectToRoute('administration_sous_comission_travail', ['semestre' => $semestre->getId()]);
+    }
+
+    /**
+     * @Route("/exporter/{semestre}", name="administration_sous_comission_exporter")
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function exporter(MySousCommission $mySousCommission, Semestre $semestre): Response
+    {
+
+    }
+
+    /**
+     * @Route("/grand-jury/{semestre}", name="administration_sous_comission_exporter_grand_jury")
+     * @param MySousCommission $mySousCommission
+     * @param Semestre         $semestre
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function grandJury(MySousCommission $mySousCommission, Semestre $semestre): Response
+    {
+
+    }
 }

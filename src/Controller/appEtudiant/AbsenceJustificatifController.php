@@ -38,22 +38,26 @@ class AbsenceJustificatifController extends BaseController
      */
     public function depot(Request $request): Response
     {
-        $absenceJustificatif = new AbsenceJustificatif($this->getUser());
-        $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
-        $form->handleRequest($request);
+        if ($this->getConnectedUser() !== null) {
+            $absenceJustificatif = new AbsenceJustificatif($this->getConnectedUser());
+            $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($absenceJustificatif);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.add.success.flash');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($absenceJustificatif);
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.add.success.flash');
 
-            return $this->redirectToRoute('application_index', ['onglet' => 'justificatif']);
+                return $this->redirectToRoute('application_index', ['onglet' => 'justificatif']);
+            }
+
+            return $this->render('appEtudiant/absence_justificatif/new.html.twig', [
+                'absence_justificatif' => $absenceJustificatif,
+                'form'                 => $form->createView(),
+            ]);
         }
 
-        return $this->render('appEtudiant/absence_justificatif/new.html.twig', [
-            'absence_justificatif' => $absenceJustificatif,
-            'form'                 => $form->createView(),
-        ]);
+        return $this->render('erreur/500.html.twig');
     }
 
     /**

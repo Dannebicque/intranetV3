@@ -75,7 +75,8 @@ class MyEtudiantSousCommission
 
         /** @var Ue $ue */
         foreach ($semestre->getUes() as $ue) {
-            $this->moyenneUes[$ue->getId()] = new MoyenneUeEtudiant($etudiant, $ue, $matieres, $this->moyenneMatieres);
+            $this->moyenneUes[$ue->getNumeroUe()] = new MoyenneUeEtudiant($etudiant, $ue, $matieres,
+                $this->moyenneMatieres);
 
         }
 

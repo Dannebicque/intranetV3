@@ -28,5 +28,91 @@
     </div>
 {% endblock %}
 {% block content %}
+    <div class="card">
 
+        <h2 class="card-title"><strong>Décision</strong> de fin de semestre | {{ semestre.display }}</h2>
+        <div class="card-body">
+            <div class="alert alert-info">La proposition est faîtes en fonction du calcul de la moyenne. Vous pouvez la
+                                          modifier. Toutes les modifications sont sauvegardées dans une table tempraire.
+            </div>
+            <br/>
+            <div class="alert alert-danger">Il est vivement recommandé de commencer les changements de semestre par le
+                                            semestre le plus elevé !
+            </div>
+            <br/>
+            <form action="{{ path('administration_fin_semestre_confirme',{semestre:semestre.id}) }}" method="post">
+                <table class="table table-stripped">
+                    <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Etudiant</th>
+                        <th>Attente</th>
+                        {% if semestre.precedent != null %}
+                            <th>{{ semestre.precedent.libelle }}</th>
+                        {% endif %}
+                        {# semestre décalé #}
+                        {% if semestre.decale != null %}
+                            <th>{{ semestre.decale.libelle }}</th>
+                        {% endif %}
+                        {#fin semestre decalé#}
+                        {% if semestre.suivant != null %}
+                            <th>{{ semestre.suivant.libelle }}</th>
+                        {% endif %}
+                        <th>Réo.</th>
+                        <th>Dem.</th>
+                        <th>Diplôme</th>
+                        <th colspan="2">Autre Formation*</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for etu in etudiants if etu.semestre == null or etu.semestre.id == semestre.id %}
+                        <tr>
+                            <td>#{{ etu.numetudiant }}</td>
+                            <td>{{ etu.display }}</td>
+                            <td><input type="radio" name="etu_{{ etu.id }}" value="ATT" checked></td>
+
+                            {% if semestre.precedent != null %}
+                                <td>
+                                    <input type="radio" name="etu_{{ etu.id }}" value="{{ semestre.precedent.id }}"
+                                            {% if tab[etu.id] != null and tab[etu.id].proposition == semestre
+                                                .precedent.libelle %} checked {% endif %}>
+                                </td>
+                            {% endif %}
+                            {% if semestre.decale != null %}
+                                <td>
+                                    <input type="radio" name="etu_{{ etu.id }}" value="{{ semestre.decale.id }}" {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.decale.libelle %} checked {% endif %}>
+                                </td>
+                            {% endif %}
+                            {% if semestre.suivant != null %}
+                                <td>
+                                    <input type="radio" name="etu_{{ etu.id }}" value="{{ semestre.suivant.id }}" {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.suivant.libelle %} checked {% endif %}>
+                                </td>
+                            {% endif %}
+                            <td>
+                                <input type="radio" name="etu_{{ etu.id }}" value="REO" {% if tab[etu.id] != null and tab[etu.id].proposition == 'REO' %} checked {% endif %}>
+                            </td>
+                            <td>
+                                <input type="radio" name="etu_{{ etu.id }}" value="DEM" {% if tab[etu.id] != null and tab[etu.id].proposition == 'DEM' %} checked {% endif %}>
+                            </td>
+                            <td>
+                                <input type="radio" name="etu_{{ etu.id }}" value="DUT" {% if tab[etu.id] != null and tab[etu.id].proposition == 'DUT' %} checked {% endif %} >
+                            </td>
+                            <td><input type="radio" name="etu_{{ etu.id }}" value="TRANSFERT"></td>
+                            <td><select
+                                        class="form-control">
+                                    {% for departement in departements %}
+                                        <option value="{{ departement.id }}" {% if departement.id == etu.departement.id %}selected{% endif %}>{% if departement.id != etu.departement.id %}=>{% else %}reste en {% endif %} {{ departement.libelle }}</option>
+                                    {% endfor %}
+                                </select></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+                <button type="submit" class="btn btn-block btn-danger">Confirmer changement de semestre (opéraiton
+                                                                       irreversible !)
+                </button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

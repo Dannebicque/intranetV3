@@ -15,6 +15,7 @@ use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -78,7 +79,7 @@ class AbsenceController extends BaseController
             'matiere'  => $matiere,
             'absences' => $this->myAbsences->getAbsencesMatiere(
                 $matiere,
-                $matiere->getSemestre()->getAnneeUniversitaire()
+                $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
             )
         ]);
     }
@@ -134,15 +135,15 @@ class AbsenceController extends BaseController
      * @param AbsenceRepository $absenceRepository
      * @param Matiere           $matiere
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function ajaxGetAbsencesMatiere(
         AbsenceRepository $absenceRepository,
         Matiere $matiere
-    ): \Symfony\Component\HttpFoundation\JsonResponse {
+    ): JsonResponse {
         $absences = $absenceRepository->getByMatiereArray(
             $matiere,
-            $matiere->getSemestre()->getAnneeUniversitaire()
+            $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
         );
 
         // dump($absences);
@@ -158,7 +159,7 @@ class AbsenceController extends BaseController
      * @param Matiere           $matiere
      * @param Etudiant          $etudiant
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|Response
+     * @return JsonResponse|Response
      * @throws \Exception
      */
     public function ajaxSaisie(
@@ -175,7 +176,7 @@ class AbsenceController extends BaseController
             'etudiant'           => $etudiant->getId(),
             'date'               => $date,
             'heure'              => $heure,
-            'anneeuniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire() : (int)date('Y')
+            'anneeuniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire() : 0
         ]);
 
         if ($request->get('action') === 'saisie' && \count($absence) === 0) {
@@ -186,12 +187,12 @@ class AbsenceController extends BaseController
                 $date,
                 $heure,
                 $matiere,
-                $this->getUser()
+                $this->getConnectedUser()
             );
 
             $absences = $absenceRepository->getByMatiereArray(
                 $matiere,
-                $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : (int)date('Y')
+                $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
             );
 
             return $this->json($absences);

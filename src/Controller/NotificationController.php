@@ -25,7 +25,7 @@ class NotificationController extends BaseController
     public function index(): Response
     {
         return $this->render('notification/index.html.twig', [
-            'notifications' => $this->getUser()->getNotifications(),
+            'notifications' => $this->getConnectedUser()->getNotifications(),
         ]);
     }
 
@@ -37,7 +37,7 @@ class NotificationController extends BaseController
     public function marquerCommeLu(): Response
     {
         //vérifier si c'est le bon user ?
-        $notifications = $this->getUser()->getNotifications(); //todo: améliorer en récupérant uniquement les nom lu.
+        $notifications = $this->getConnectedUser()->getNotifications(); //todo: améliorer en récupérant uniquement les nom lu.
 
         /** @var Notification $notif */
         foreach ($notifications as $notif) {

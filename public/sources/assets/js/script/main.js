@@ -7,7 +7,6 @@ require('./util');
 /** CSS **/
 require("../../css/style.scss");
 
-var locale = '.fr';
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready

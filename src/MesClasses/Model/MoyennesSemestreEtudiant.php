@@ -130,7 +130,7 @@ class MoyennesSemestreEtudiant
      * @param MoyenneUeEtudiant[] $moyenneUes
      * @param                     $ues
      */
-    public function calculMoyenneUes(array $moyenneUes, $ues)
+    public function calculMoyenneUes(array $moyenneUes, $ues): void
     {
         $totcoeff = 0;
         $totue = 0;
@@ -144,15 +144,15 @@ class MoyennesSemestreEtudiant
             $totcoeff += $ue->getCoefficient();
         }
 
-        $this->moyenne = $totue / $totcoeff + $this->bonif;
-        $this->moyennePenalisee = $totueP / $totcoeff + $this->bonif;
+        $totcoeff !== 0 ? $this->moyenne = $totue / $totcoeff + $this->bonif : $this->moyenne = 0;
+        $totcoeff !== 0 ? $this->moyennePenalisee = $totueP / $totcoeff + $this->bonif : $this->moyennePenalisee = 0;
     }
 
     /**
      * @param MoyenneMatiereEtudiant[] $moyenneMatieres
      * @param                          $matieres
      */
-    public function calculMoyenneModules(array $moyenneMatieres, $matieres)
+    public function calculMoyenneModules(array $moyenneMatieres, $matieres): void
     {
         $totcoeff = 0;
         $totmodules = 0;
@@ -167,12 +167,13 @@ class MoyennesSemestreEtudiant
             }
         }
 
-        $this->moyenne = $totmodules / $totcoeff + $this->bonif;
-        $this->moyennePenalisee = $totmodulesPenalisee / $totcoeff + $this->bonif;
+        $totcoeff !== 0 ? $this->moyenne = $totmodules / $totcoeff + $this->bonif : $this->moyenne = 0;
+        $totcoeff !== 0 ? $this->moyennePenalisee = $totmodulesPenalisee / $totcoeff + $this->bonif : $this->moyennePenalisee = 0;
     }
 
-    private function hasPoleFaible()
+    private function hasPoleFaible(): bool
     {
+        //todo: a finaliser
         return false;
     }
 
@@ -181,9 +182,8 @@ class MoyennesSemestreEtudiant
      */
     public function calculDecision($parcours): void
     {
-        if ((($this->semestre->isOptPenaliteAbsence() === true &&
-                    $this->moyennePenalisee >= 10) || ($this->semestre->isOptPenaliteAbsence() === false && $this->moyenne >= 10)) && $this->hasPoleFaible() === false
-        ) {
+        if ($this->hasPoleFaible() === false && (($this->semestre->isOptPenaliteAbsence() === true &&
+                    $this->moyennePenalisee >= 10) || ($this->semestre->isOptPenaliteAbsence() === false && $this->moyenne >= 10))) {
             //semestre >=10 et UE >=8
             $this->decision = 'V';
 

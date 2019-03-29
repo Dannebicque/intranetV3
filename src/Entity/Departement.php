@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="DepartementRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DepartementRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
@@ -25,126 +25,94 @@ class Departement extends BaseEntity
      * @ORM\Column(type="uuid_binary", unique=true)
      */
     protected $uuid;
-
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return $this->getUuid()->toString();
-    }
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"actualite_administration"})
      */
     private $libelle;
-
     /**
      * @var Ufr
      * @ORM\ManyToOne(targetEntity="App\Entity\Ufr")
      */
     private $ufr;
-
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50)
      */
     private $logoName;
-
     /**
      * @var UploadedFile
      *
      * @Vich\UploadableField(mapping="logo", fileNameProperty="logoName")
      */
     private $logoFile;
-
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=16, nullable=true)
      */
     private $telContact;
-
     /**
      * @var string
      *
      * @ORM\Column(name="fax", type="string", length=16, nullable=true)
      */
     private $fax;
-
     /**
      * @var string
      *
      * @ORM\Column(name="couleur", type="string", length=16, nullable=true)
      */
     private $couleur;
-
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $siteWeb;
-
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $optUpdateCelcat = false;
-
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $optAgence = false;
-
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $optMateriel = false;
-
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $optEdt = true;
-
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $optStage = true;
-
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
     private $optSynthese = true;
-
     /**
      * @var boolean
      *
@@ -153,90 +121,73 @@ class Departement extends BaseEntity
     private $optMessagerie = true;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optInfos = false;
-
-    /**
      * @var Personnel
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", fetch="EAGER")
      */
     private $respri;
-
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
      */
     private $optAnneePrevisionnel;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="departement")
      * @MaxDepth(1)
      */
     private $typeDocuments;
-
     /**
      * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="departement")
      */
     private $personnelDepartements;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
      */
     private $actualites;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="departement")
      */
     private $trelloTaches;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
      */
     private $diplomes;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="departement")
      */
     private $salleExamens;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="departement")
      */
     private $hrs;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeMateriel", mappedBy="departement")
      */
     private $typeMateriels;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MaterielPret", mappedBy="departement")
      */
     private $materielPrets;
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $actif = true;
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $preparationAnnee;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="departements")
      */
     private $anneeUniversitairePrepare;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="departement")
      */
     private $creneauCours;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategorie", mappedBy="departement")
+     */
+    private $articleCategories;
 
     /**
      * Departement constructor.
@@ -256,6 +207,23 @@ class Departement extends BaseEntity
         $this->typeMateriels = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
         $this->creneauCours = new ArrayCollection();
+        $this->articleCategories = new ArrayCollection();
+    }
+
+    /**
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    public function getUuidString(): string
+    {
+        return $this->getUuid()->toString();
+    }
+
+    /**
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    {
+        return $this->uuid;
     }
 
     /**
@@ -483,22 +451,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @return bool
-     */
-    public function isOptInfos(): bool
-    {
-        return $this->optInfos;
-    }
-
-    /**
-     * @param bool $optInfos
-     */
-    public function setOptInfos(bool $optInfos): void
-    {
-        $this->optInfos = $optInfos;
-    }
-
-    /**
      * @return Personnel
      */
     public function getRespri(): ?Personnel
@@ -580,13 +532,9 @@ class Departement extends BaseEntity
     }
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
+     * @param File|null $logo
      *
-     * @param null|File $logo
+     * @throws \Exception
      */
     public function setLogoFile(?File $logo = null): void
     {
@@ -977,6 +925,37 @@ class Departement extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($creneauCour->getDepartement() === $this) {
                 $creneauCour->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleCategorie[]
+     */
+    public function getArticleCategories(): Collection
+    {
+        return $this->articleCategories;
+    }
+
+    public function addArticleCategory(ArticleCategorie $articleCategory): self
+    {
+        if (!$this->articleCategories->contains($articleCategory)) {
+            $this->articleCategories[] = $articleCategory;
+            $articleCategory->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleCategory(ArticleCategorie $articleCategory): self
+    {
+        if ($this->articleCategories->contains($articleCategory)) {
+            $this->articleCategories->removeElement($articleCategory);
+            // set the owning side to null (unless already changed)
+            if ($articleCategory->getDepartement() === $this) {
+                $articleCategory->setDepartement(null);
             }
         }
 

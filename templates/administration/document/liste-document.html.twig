@@ -1,7 +1,9 @@
-<table class="table table-striped table-bordered" cellspacing="0" data-provide="datatables" data-checkbox="true" >
+<table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
     <thead>
     <tr>
-        <th><input name="select_all" value="1" id="select_all" type="checkbox" /></th>
+        <th>
+            <label class="sr-only" for="select_all">Tout selectionner</label>
+            <input name="select_all" value="1" id="select_all" type="checkbox"/></th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>{{ 'table.type_fichier'|trans }}</th>
         <th>{{ 'table.type_document'|trans }}</th>

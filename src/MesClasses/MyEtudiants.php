@@ -12,7 +12,7 @@ namespace App\MesClasses;
 class MyEtudiants
 {
 
-    public function getSousCommission()
+    public function getSousCommission(): void
     {
 
 

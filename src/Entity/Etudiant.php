@@ -188,6 +188,11 @@ class Etudiant extends Utilisateur implements \Serializable
     private $adresseSecuriteSociale;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $anneeSortie = 0;
+
+    /**
      * Etudiant constructor.
      * @throws \Exception
      */
@@ -1065,6 +1070,23 @@ class Etudiant extends Utilisateur implements \Serializable
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;
+    }
+
+    public function getDepartement()
+    {
+        return $this->getDiplome() !== null ? $this->getDiplome()->getDepartement() : null;
+    }
+
+    public function getAnneeSortie(): ?int
+    {
+        return $this->anneeSortie;
+    }
+
+    public function setAnneeSortie(int $anneeSortie): self
+    {
+        $this->anneeSortie = $anneeSortie;
+
+        return $this;
     }
 
 }

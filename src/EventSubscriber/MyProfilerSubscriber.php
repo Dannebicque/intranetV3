@@ -7,13 +7,13 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class MyProfilerSubscriber implements EventSubscriberInterface
 {
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         $response = $event->getResponse();
         $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'kernel.response' => 'onKernelResponse',

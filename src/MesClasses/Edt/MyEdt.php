@@ -49,7 +49,7 @@ class MyEdt
     /**
      * @param Personnel $personnel
      */
-    public function initPersonnel(Personnel $personnel)
+    public function initPersonnel(Personnel $personnel): void
     {
         $this->semaine = date('W');
         $calendrier = $this->celcatCalendrierRepository->findOneBy(['semaineReelle' => $this->semaine]);
@@ -62,7 +62,7 @@ class MyEdt
     /**
      * @param Etudiant $etudiant
      */
-    public function initEtudiant(Etudiant $etudiant)
+    public function initEtudiant(Etudiant $etudiant): void
     {
 
     }

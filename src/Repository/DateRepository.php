@@ -51,6 +51,7 @@ class DateRepository extends ServiceEntityRepository
      * @param $annee
      *
      * @return array
+     * @throws \Exception
      */
     public function findByDepartementPlanning($departement, $annee): array
     {

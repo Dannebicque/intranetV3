@@ -203,7 +203,7 @@ class MyEvaluation
     /**
      * @param Note $note
      */
-    public function deleteNote(Note $note)
+    public function deleteNote(Note $note): void
     {
         foreach ($note->getModificationNotes() as $modif) {
             $this->entityManager->remove($modif);
@@ -214,7 +214,7 @@ class MyEvaluation
     /**
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $this->notes = $this->evaluation->getNotes();
         foreach ($this->notes as $note) {
@@ -226,7 +226,7 @@ class MyEvaluation
         return true;
     }
 
-    public function exportReleve($_format, $groupes)
+    public function exportReleve($_format, $groupes): void
     {
         $notes = $this->getNotesTableau();
         $name = 'releve';
@@ -249,7 +249,7 @@ class MyEvaluation
      * @return bool
      * @throws \Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier)
+    public function importEvaluation(Evaluation $evaluation, string $fichier): ?bool
     {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
@@ -268,6 +268,8 @@ class MyEvaluation
             default:
                 return false; //erreur
         }
+
+        return false; //erreur
     }
 
     /**
@@ -276,7 +278,7 @@ class MyEvaluation
      *
      * @throws \Exception
      */
-    private function insertNotes(Evaluation $evaluation, $data)
+    private function insertNotes(Evaluation $evaluation, $data): void
     {
         $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($evaluation->getSemestre());
         $etudiants = [];
@@ -306,7 +308,7 @@ class MyEvaluation
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    private function importXlsx(string $fichier)
+    private function importXlsx(string $fichier): array
     {
         $excel = IOFactory::load($fichier);
         $sheetData = $excel->getActiveSheet()->toArray(null, true, true, true);
@@ -329,7 +331,7 @@ class MyEvaluation
         return $data;
     }
 
-    private function importCsv(string $fichier)
+    private function importCsv(string $fichier): array
     {
         $handle = fopen($fichier, 'rb');
         $data = [];

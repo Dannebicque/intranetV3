@@ -34,7 +34,7 @@ class DatabaseTwigLoader implements \Twig_LoaderInterface
      *
      * @throws \Twig_Error_Loader When $name is not found
      */
-    public function getSourceContext($name)
+    public function getSourceContext($name): \Twig_Source
     {
         if (false === $source = $this->getValue($name)->getSource()) {
             throw new \Twig_Error_Loader(sprintf('Template "%s" does not exist.', $name));
@@ -65,7 +65,7 @@ class DatabaseTwigLoader implements \Twig_LoaderInterface
         return $lastModified <= $time;
     }
 
-    protected function getValue($name)
+    protected function getValue($name): void
     {
         //return $this->twigTemplateRepository->findOneBy(['name' => $name]);
         //todo: SI je laisse cette ligne ca plante Travis et le composer install ???

@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbsenceJustificatifType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('dateDebut', DateType::class, ['label' => 'label.date_debut', 'widget' => 'single_text'])
@@ -29,7 +29,7 @@ class AbsenceJustificatifType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => AbsenceJustificatif::class,

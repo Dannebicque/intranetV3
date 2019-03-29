@@ -24,7 +24,7 @@ class PrevisionnelController extends BaseController
      */
     public function index(MyPrevisionnel $myPrevisionnel): Response
     {
-        $myPrevisionnel->setPersonnel($this->getUser());
+        $myPrevisionnel->setPersonnel($this->getConnectedUser());
         $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
         $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
 

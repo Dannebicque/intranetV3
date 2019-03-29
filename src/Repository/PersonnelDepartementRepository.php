@@ -88,7 +88,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
      * @return PersonnelDepartement|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByPersonnelDepartement(Personnel $personnel, Departement $departement)
+    public function findOneByPersonnelDepartement(Personnel $personnel, Departement $departement): ?PersonnelDepartement
     {
         return $this->createQueryBuilder('f')
             ->where('f.personnel = :personnel')

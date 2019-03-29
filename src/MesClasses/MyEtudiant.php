@@ -11,6 +11,7 @@ namespace App\MesClasses;
 use App\Entity\Absence;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
+use App\Entity\Groupe;
 use App\Entity\Matiere;
 use App\Entity\Note;
 use App\Entity\Personnel;
@@ -162,13 +163,13 @@ class MyEtudiant
      * @return void
      * @throws \Exception
      */
-    public function addAbsence($date, $heure, Matiere $matiere, Personnel $personnel): void
+    public function addAbsence($date, $heure, Matiere $matiere, ?Personnel $personnel): void
     {
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
         $absence->setPersonnel($personnel);
         $absence->setDate($date);
-        $absence->setAnneeuniversitaire($matiere->getSemestre()->getAnneeUniversitaire());
+        $absence->setAnneeuniversitaire($matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0);
         $absence->setDuree(new \DateTime('01:30'));
         $absence->setHeure($heure);
         $absence->setMatiere($matiere);
@@ -236,6 +237,19 @@ class MyEtudiant
     }
 
     /**
+     *
+     */
+    public function suppressionNotes(): void
+    {
+        $ml = $this->noteRepository->findBy(['etudiant' => $this->etudiant->getId()]);
+        foreach ($ml as $a) {
+            $this->entityManager->remove($a);
+        }
+        $this->entityManager->flush();
+
+    }
+
+    /**
      * @param Semestre $semestre
      */
     public function exportReleveProvisoire(Semestre $semestre): void
@@ -249,5 +263,18 @@ class MyEtudiant
                 'syntheses' => $this->myEvaluations->getStatistiques(),
                 'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
             ), 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf');
+    }
+
+    public function suppressionGroupes(): void
+    {
+        /** @var Groupe $groupe */
+        foreach ($this->etudiant->getGroupes() as $groupe) {
+            //suppression des groupes
+            //suppression des groupes
+            $this->etudiant->removeGroupe($groupe);
+            $groupe->removeEtudiant($this->etudiant);
+            $this->entityManager->persist($groupe);
+        }
+        $this->entityManager->flush();
     }
 }

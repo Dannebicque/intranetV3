@@ -17,7 +17,7 @@ class RoutesTest extends WebTestCase
         $session = $this->client->getContainer()->get('session');
 
 
-        $token = new UsernamePasswordToken('permanent@gmail.com', 'test', 'main', ['ROLE_PERMANENT']);
+        $token = new UsernamePasswordToken('permanent', 'test', 'main', ['ROLE_PERMANENT']);
         $session->set('_security_main', serialize($token));
         $session->save();
 

@@ -126,7 +126,8 @@ class MatiereType extends AbstractType
      * @param FormInterface $form
      * @param Semestre|null $semestre
      */
-    protected function addElements(FormInterface $form, Semestre $semestre = null) {
+    protected function addElements(FormInterface $form, Semestre $semestre = null): void
+    {
         $form->add('semestre', EntityType::class, array(
             'required' => true,
             'choice_label' => 'libelle',
@@ -172,7 +173,8 @@ class MatiereType extends AbstractType
                 ]);
     }
 
-    protected function onPreSubmit(FormEvent $event) {
+    protected function onPreSubmit(FormEvent $event): void
+    {
         $form = $event->getForm();
         $data = $event->getData();
 
@@ -180,7 +182,8 @@ class MatiereType extends AbstractType
         $this->addElements($form, $semestre);
     }
 
-    protected function onPreSetData(FormEvent $event) {
+    protected function onPreSetData(FormEvent $event): void
+    {
         $matiere = $event->getData();
         $form = $event->getForm();
 

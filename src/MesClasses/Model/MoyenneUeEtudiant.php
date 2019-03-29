@@ -50,7 +50,7 @@ class MoyenneUeEtudiant
         $this->calcul();
     }
 
-    private function calcul()
+    private function calcul(): void
     {
         $totue = 0;
         $totueP = 0;
@@ -58,31 +58,31 @@ class MoyenneUeEtudiant
 
         /** @var Matiere $matiere */
         foreach ($this->matieres as $matiere) {
-            if (($matiere->isPac() === false) && $this->moyenneMatieres[$matiere->getId()]->isPasOption() === false) {
-                if ($matiere->getUe() !== null && $matiere->getUe()->getId() === $this->ue->getId()) {
-                    $totue += $this->moyenneMatieres[$matiere->getId()]->getMoyenne() * $matiere->getCoefficient();
-                    /* penalite */
-                    $totueP += $this->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee() * $matiere->getCoefficient();
-                    /*fin penalite */
-                    $totcoeff += $matiere->getCoefficient();
-                }
+            if ($matiere->getUe() !== null &&
+                $matiere->isPac() === false &&
+                $this->moyenneMatieres[$matiere->getId()]->isPasOption() === false &&
+                $matiere->getUe()->getId() === $this->ue->getId()) {
+                $totue += $this->moyenneMatieres[$matiere->getId()]->getMoyenne() * $matiere->getCoefficient();
+                /* penalite */
+                $totueP += $this->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee() * $matiere->getCoefficient();
+                /*fin penalite */
+                $totcoeff += $matiere->getCoefficient();
             }
         }
 
         /** @var UE $ue */
-        $this->moyenne = $totue / $totcoeff;
-        $this->moyennePenalisee = $totueP / $totcoeff;
+        $totcoeff !== 0 ? $this->moyenne = $totue / $totcoeff : $this->moyenne = 0;
+        $totcoeff !== 0 ? $this->moyennePenalisee = $totueP / $totcoeff : $this->moyennePenalisee = 0;
     }
 
-    public function isPoleFaible() {
+    public function isPoleFaible(): bool
+    {
         if ($this->ue->getSemestre() !== null && $this->ue->getSemestre()->isOptPenaliteAbsence()) {
             if ($this->moyennePenalisee < 8) {
                 return true;
             }
-        } else {
-            if ($this->moyenne < 8) {
-                return true;
-            }
+        } else if ($this->moyenne < 8) {
+            return true;
         }
 
         return false;

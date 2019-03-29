@@ -197,7 +197,6 @@ function addCallout (message, label) {
 /** CSS **/
 
 
-var locale = '.fr';
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready
@@ -1053,8 +1052,17 @@ $(document).on('click', '.changeinformation', function(e) {
   $('.changeinformation').removeClass('active show');
   $(this).addClass('active show');
   $('#mainContent').empty().load($(this).attr('href'));
-
 });
+
+  $('.edit').editable('fichier.php', {
+    type: 'text',
+    cancel: 'Cancel',
+    cancelcssclass: 'btn btn-danger',
+    submitcssclass: 'btn btn-success',
+    submit: 'Save',
+    tooltip: 'Click to edit...'
+  })
+
 
 $(document).on('change', '.changeOption', function (e) {
   e.preventDefault();

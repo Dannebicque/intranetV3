@@ -17,6 +17,7 @@ use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -218,12 +219,12 @@ class PrevisionnelController extends BaseController
      * @param MyPrevisionnel $myPrevisionnel
      * @param                $annee
      *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     * @return StreamedResponse
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @Route("/{annee}/export_omega", name="administration_previsionnel_export_omega", methods="GET")
      *
      */
-    public function exportOmega(MyPrevisionnel $myPrevisionnel, $annee)
+    public function exportOmega(MyPrevisionnel $myPrevisionnel, $annee): StreamedResponse
     {
         return $myPrevisionnel->exportOmegaDepartement($this->dataUserSession->getDepartement(), $annee);
     }

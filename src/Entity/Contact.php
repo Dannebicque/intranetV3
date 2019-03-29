@@ -126,7 +126,7 @@ class Contact extends BaseEntity
         return $this;
     }
 
-    public function getDisplay()
+    public function getDisplay(): string
     {
         return $this->civilite . ' ' . ucfirst($this->getPrenom()) . ' ' . mb_strtoupper($this->getNom());
     }

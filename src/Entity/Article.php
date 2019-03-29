@@ -32,20 +32,6 @@ class Article extends BaseEntity
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"article_administration"})
-     */
-    private $type;
-
-    /**
-     * @var Departement
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement")
-     * @MaxDepth(2)
-     * @Groups({"article_administration"})
-     */
-    private $departement;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="articles")
      * @MaxDepth(2)
      * @Groups({"article_administration"})
@@ -64,6 +50,12 @@ class Article extends BaseEntity
      */
     private $likes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ArticleCategorie", inversedBy="articles")
+     * @Groups({"article_administration"})
+     */
+    private $categorie;
+
 
     /**
      * Article constructor.
@@ -75,22 +67,6 @@ class Article extends BaseEntity
         $this->personnel = $personnel;
         $this->semestres = new ArrayCollection();
         $this->likes = new ArrayCollection();
-    }
-
-    /**
-     * @return Departement
-     */
-    public function getDepartement(): Departement
-    {
-        return $this->departement;
-    }
-
-    /**
-     * @param Departement $departement
-     */
-    public function setDepartement(Departement $departement): void
-    {
-        $this->departement = $departement;
     }
 
     /**
@@ -182,26 +158,6 @@ class Article extends BaseEntity
     }
 
     /**
-     * @return null|string
-     */
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return Article
-     */
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Semestre[]
      */
     public function getSemestres(): Collection
@@ -289,6 +245,18 @@ class Article extends BaseEntity
         if ($this->likes->contains($like)) {
             $this->likes->removeElement($like);
         }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?ArticleCategorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?ArticleCategorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

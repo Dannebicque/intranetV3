@@ -25,7 +25,7 @@ class AdministrationController extends BaseController
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $pers = $stagePeriodeRepository->findByDiplome($diplome,
-                $diplome->getAnneeUniversitaire() ? $diplome->getAnneeUniversitaire()->getAnnee() : date('Y'));
+                $diplome->getAnneeUniversitaire() ? $diplome->getAnneeUniversitaire()->getAnnee() : (int)date('Y'));
             foreach ($pers as $periode) {
                 $periodes[] = $periode;
             }

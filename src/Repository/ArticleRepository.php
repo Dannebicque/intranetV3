@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\ArticleCategorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -64,9 +65,10 @@ class ArticleRepository extends ServiceEntityRepository
     public function findByTypeDepartementBuilder($type, $departement): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('a')
-            ->where('a.type = :type')
-            ->andWhere('a.departement = :departement')
-            ->setParameter('type', $type)
+            ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
+            ->where('c.id = :idType')
+            ->andWhere('c.departement = :departement')
+            ->setParameter('idType', $type)
             ->setParameter('departement', $departement)
             ->orderBy('a.updated', 'DESC');
     }
@@ -80,7 +82,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function findByDepartement($departement, $nbResult = 2): array
     {
         $q = $this->createQueryBuilder('a')
-            ->andWhere('a.departement = :departement')
+            ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
+            ->andWhere('c.departement = :departement')
             ->setParameter('departement', $departement)
             ->orderBy('a.created', 'DESC');
 

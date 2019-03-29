@@ -86,7 +86,7 @@ class AlternanceRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findByAnneeArray(Annee $annee, int $getAnneeUniversitaire)
+    public function findByAnneeArray(Annee $annee, int $getAnneeUniversitaire): array
     {
         $alternances = $this->findByAnnee($annee, $getAnneeUniversitaire);
 

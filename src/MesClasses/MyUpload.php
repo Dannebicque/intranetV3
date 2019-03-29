@@ -52,7 +52,7 @@ class MyUpload
      *
      * @return string
      */
-    public function getExtension(UploadedFile $fichier)
+    public function getExtension(UploadedFile $fichier): string
     {
         return $fichier->getClientOriginalExtension();
     }

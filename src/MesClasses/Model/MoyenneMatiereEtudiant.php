@@ -54,7 +54,7 @@ class MoyenneMatiereEtudiant
         $this->calcul();
     }
 
-    private function isOption()
+    private function isOption(): bool
     {
         if ($this->matiere->getParcours() === null) {
             return true;
@@ -69,7 +69,7 @@ class MoyenneMatiereEtudiant
         return false;
     }
 
-    private function calcul()
+    private function calcul(): void
     {
         $total = 0;
         $totcoeff = 0;
@@ -108,7 +108,7 @@ class MoyenneMatiereEtudiant
 
         //clacul de la bonification
         if ($this->moyenne !== -0.01 && $this->moyenne > 0 && $this->matiere->isPac() === true) {
-            if ($this->matiere->getUe()->getSemestre()->isOptPenaliteAbsence() === true) {
+            if ($this->matiere->getSemestre() !== null && $this->matiere->getSemestre()->isOptPenaliteAbsence() === true) {
                 $this->bonif += ($this->moyennePenalisee - 10) / 20;
             } else {
                 $this->bonif += ($this->moyenne - 10) / 20;
@@ -137,7 +137,7 @@ class MoyenneMatiereEtudiant
      *
      * @return string
      */
-    public function getStyle()
+    public function getStyle(): string
     {
         if ($this->moyenne < 0) {
             return 'pasdenote';

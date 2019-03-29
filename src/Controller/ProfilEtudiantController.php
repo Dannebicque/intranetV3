@@ -116,7 +116,9 @@ class ProfilEtudiantController extends BaseController
     /**
      * @Route("/profil/{slug}/stages", name="profil_etudiant_stages")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     * @param Etudiant $etudiant
+     * @param StageEtudiantRepository $stageEtudiantRepository
+     * @param AlternanceRepository    $alternanceRepository
+     * @param Etudiant                $etudiant
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

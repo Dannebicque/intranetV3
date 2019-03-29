@@ -207,7 +207,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\IndisponibilitePersonnel", mappedBy="personnel")
      */
-    private $indisponibilitePersonnels;//todo: a gérer
+    private $indisponibilitePersonnels; //todo: a gérer
 
     public function __construct()
     {

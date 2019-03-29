@@ -19,10 +19,13 @@ class ProgressionController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_progression_index")
+     * @param PrevisionnelRepository $previsionnelRepository
+     *
+     * @return Response
      */
     public function index(PrevisionnelRepository $previsionnelRepository): Response
     {
-        $matieres = $previsionnelRepository->findPrevisionnelEnseignantDepartement($this->getUser(),
+        $matieres = $previsionnelRepository->findPrevisionnelEnseignantDepartement($this->getConnectedUser(),
             $this->dataUserSession->getDepartement());
 
         return $this->render('appPersonnel/progression/index.html.twig', [

@@ -36,6 +36,8 @@ class Favori
      *
      * @param $etudiantDemandeur
      * @param $etudiantDemande
+     *
+     * @throws \Exception
      */
     public function __construct($etudiantDemandeur, $etudiantDemande)
     {

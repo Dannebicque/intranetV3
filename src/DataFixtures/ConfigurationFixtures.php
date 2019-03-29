@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class ConfigurationFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // $product = new Product();
         // $manager->persist($product);

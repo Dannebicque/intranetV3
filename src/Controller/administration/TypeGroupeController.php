@@ -54,8 +54,12 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/refresh/{semestre}", name="administration_type_groupe_refresh", methods="GET", options={"expose"=true})
+     * @param Semestre $semestre
+     *
+     * @return Response
      */
-    public function refreshListe(Semestre $semestre) {
+    public function refreshListe(Semestre $semestre): Response
+    {
 
         return $this->render('_liste.html.twig', ['semestre' => $semestre]);
     }

@@ -64,7 +64,7 @@ class NoteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantSemestreArray(Semestre $semestre, $annee, $etudiants)
+    public function findByEtudiantSemestreArray(Semestre $semestre, $annee, $etudiants): array
     {
 
         $notes = $this->findBySemestre($semestre, $annee);

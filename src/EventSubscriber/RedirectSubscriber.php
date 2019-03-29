@@ -22,7 +22,7 @@ class RedirectSubscriber implements EventSubscriberInterface
         $this->router = $router;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Events::REDIRECT_TO_LOGIN => 'onRedirectToLogin',
@@ -30,13 +30,13 @@ class RedirectSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onRedirectToLogin($event)
+    public function onRedirectToLogin($event): RedirectResponse
     {
         //logout
         return new RedirectResponse($this->router->generate('security_login', ['message' => $event->getSubject()]));
     }
 
-    public function onChoixDepartementDefaut($event)
+    public function onChoixDepartementDefaut($event): RedirectResponse
     {
         //logout
         return new RedirectResponse($this->router->generate('security_choix_departement', ['message' => $event->getSubject()]));

@@ -17,7 +17,7 @@ class ErreurController extends AbstractController
      */
     public function erreur404(): Response
     {
-        return $this->render('erreur/404.html.twig', [
+        return $this->render('bundles/TwigBundle/Exception/error404.html.twig', [
         ]);
     }
 
@@ -26,7 +26,7 @@ class ErreurController extends AbstractController
      */
     public function erreur500() : Response
     {
-        return $this->render('erreur/500.html.twig', [
+        return $this->render('bundles/TwigBundle/Exception/error500.html.twig', [
         ]);
     }
 
@@ -35,7 +35,7 @@ class ErreurController extends AbstractController
      */
     public function erreur666() : Response
     {
-        return $this->render('erreur/666.html.twig', [
+        return $this->render('bundles/TwigBundle/Exception/error666.html.twig', [
         ]);
     }
 }

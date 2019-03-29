@@ -42,13 +42,13 @@ class EtudiantGroupeController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function affecte(EtudiantRepository $etudiantRepository,  TypeGroupe $typeGroupe): Response
+    public function affecte(EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
     {
         $etudiants = $etudiantRepository->findBySemestre($typeGroupe->getSemestre());
 
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [
             'typeGroupe' => $typeGroupe,
-            'etudiants' => $etudiants
+            'etudiants'  => $etudiants
         ]);
     }
 
@@ -58,10 +58,14 @@ class EtudiantGroupeController extends BaseController
      * @param Request            $request
      * @param EtudiantRepository $etudiantRepository
      * @param GroupeRepository   $groupeRepository
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function change(Request $request, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository): Response
-    {
+    public function change(
+        Request $request,
+        EtudiantRepository $etudiantRepository,
+        GroupeRepository $groupeRepository
+    ): Response {
         $cle = $request->request->get('id');
 
         $t = explode('-', $cle);
@@ -94,6 +98,7 @@ class EtudiantGroupeController extends BaseController
 
             return new Response('true', Response::HTTP_OK);
         }
+
         return new Response('false', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 

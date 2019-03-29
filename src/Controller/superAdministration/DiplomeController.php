@@ -61,32 +61,38 @@ class DiplomeController extends BaseController
     }
 
     /**
+     * @param Request $request
+     * @param Diplome $diplome
      * @Route("/{id}/edit", name="sa_diplome_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Diplome                $diplome
      *
      * @return Response
+     * @throws \Exception
      */
     public function edit(Request $request, Diplome $diplome): Response
     {
-        $form = $this->createForm(DiplomeType::class, $diplome, [
-            'attr' => [
-                'data-provide' => 'validation'
-            ]
-        ]);
-        $form->handleRequest($request);
+        if ($diplome->getDepartement() !== null) {
+            $form = $this->createForm(DiplomeType::class, $diplome, [
+                'attr' => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.edit.success.flash');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.edit.success.flash');
 
-            return $this->redirectToRoute('sa_structure_index', ['departement' => $diplome->getDepartement()->getId()]);
+                return $this->redirectToRoute('sa_structure_index',
+                    ['departement' => $diplome->getDepartement()->getId()]);
+            }
+
+            return $this->render('structure/diplome/edit.html.twig', [
+                'diplome' => $diplome,
+                'form'    => $form->createView(),
+            ]);
         }
 
-        return $this->render('structure/diplome/edit.html.twig', [
-            'diplome' => $diplome,
-            'form'    => $form->createView(),
-        ]);
+        throw new \Exception('Le diplôme n\'est pas attaché à un département');
     }
 
     /**

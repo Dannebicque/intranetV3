@@ -34,7 +34,7 @@ class CarnetController extends BaseController
     {
         return $this->render(
             'appPersonnel/carnet/index.html.twig',
-            ['cahierTextes' => $cahierRepository->findByPersonnel($this->getUser()->getId())]
+            ['cahierTextes' => $cahierRepository->findByPersonnel($this->getConnectedUser()->getId())]
         );
     }
 
@@ -50,7 +50,7 @@ class CarnetController extends BaseController
      */
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {
-        $actualites = $cahierTexteRepository->findByPersonnel($this->getUser());
+        $actualites = $cahierTexteRepository->findByPersonnel($this->getConnectedUser());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $actualites,
@@ -74,7 +74,7 @@ class CarnetController extends BaseController
         EventDispatcherInterface $eventDispatcher
     ): Response {
         $cahierTexte = new CahierTexte();
-        $cahierTexte->setPersonnel($this->getUser());
+        $cahierTexte->setPersonnel($this->getConnectedUser());
         $form = $this->createForm(
             CahierTexteType::class,
             $cahierTexte,

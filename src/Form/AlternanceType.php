@@ -18,7 +18,7 @@ class AlternanceType extends AbstractType
 {
     private $departement;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -73,7 +73,7 @@ class AlternanceType extends AbstractType
             });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Alternance::class,

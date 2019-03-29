@@ -18,7 +18,7 @@
                         <a class="nav-link" href="#">{{ 'report.problem'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ 'retour.666'|trans }}</a>
+                        <a class="nav-link" href="{{ path('default_homepage') }}">{{ 'retour.666'|trans }}</a>
                     </li>
                 </ul>
             </div>
@@ -26,7 +26,18 @@
 
 
         <footer class="col-12 align-self-end text-center fs-13">
-            <p>Copyright © 2018 <a href="http://thetheme.io/theadmin">TheAdmin</a>. All rights reserved.</p>
+            <p>Copyright © 2018 <a href="http://thetheme.io/theadmin" target="_blank">Template : TheAdmin</a> |
+                <a href="https://www
+            .davidannebicque.fr" target="_blank">@DavidAnnebicque</a>.
+               All rights reserved.
+                <a class="nav-dotted" href="{{ path('help_index') }}">{{ 'menu.documentation'|trans }}</a>
+               |
+                <a class="" href="{{ path('faq_index') }}">{{ 'menu.faq'|trans }}</a>
+               |
+                <a class="" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+               |
+                <a class="" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+            </p>
         </footer>
     </div>
 {% endblock %}

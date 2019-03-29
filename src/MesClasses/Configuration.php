@@ -24,7 +24,7 @@ class Configuration
         self::$configurationRepository = $configurationRepository;
     }
 
-    public static function get($name)
+    public static function get($name): \App\Entity\Configuration
     {
         if (count(self::$settings) === 0) {
             self::getAllSettings();
@@ -33,7 +33,7 @@ class Configuration
         return self::$settings[$name];
     }
 
-    public static function getAllSettings()
+    public static function getAllSettings(): void
     {
         $settings = self::$configurationRepository->findAll();
 
