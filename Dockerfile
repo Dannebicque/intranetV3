@@ -29,6 +29,9 @@ RUN export PHP_CPPFLAGS="${PHP_CPPFLAGS} -std=c++11"; \
             nginx \
             supervisor \
             libzip-dev \
+            libfreetype6-dev \
+            libjpeg62-turbo-dev \
+            libpng-dev \
     ; \
     # Compile ICU (required by intl php extension)
     curl -L -o /tmp/icu.tar.gz http://download.icu-project.org/files/icu4c/${ICU_VERSION}/icu4c-$(echo ${ICU_VERSION} | sed s/\\./_/g)-src.tgz; \
@@ -40,12 +43,14 @@ RUN export PHP_CPPFLAGS="${PHP_CPPFLAGS} -std=c++11"; \
     make install; \
     #Install the PHP extensions
     docker-php-ext-configure intl --with-icu-dir=/usr/local; \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/; \
     docker-php-ext-install -j "$(nproc)" \
             intl \
             pdo \
             pdo_mysql \
             zip \
             bcmath \
+            gd \
     ; \
     pecl install \
             apcu-${APCU_VERSION} \
