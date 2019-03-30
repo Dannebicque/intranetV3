@@ -1,3 +1,17 @@
+/*
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/the_admin/src/assets/js/script/util.js
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 3/30/19 12:08 PM
+ *  * @lastUpdate 3/30/19 12:07 PM
+ *  *
+ *
+ */
+
 function readUrlMenu ($url) {
   var $elt = $url.split('/')
   var $firstElt = 2

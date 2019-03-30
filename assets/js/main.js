@@ -3,11 +3,11 @@
  *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
  *  *
  *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/the_admin/src/assets/js/script/main.js
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/main.js
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 3/30/19 11:58 AM
- *  * @lastUpdate 3/30/19 11:54 AM
+ *  * @date 3/30/19 12:08 PM
+ *  * @lastUpdate 3/30/19 12:07 PM
  *  *
  *
  */
