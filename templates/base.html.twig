@@ -8,19 +8,14 @@
 
     <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-    <!-- Styles -->
-    {#<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"#}
-    {#rel="stylesheet"/>#}
-
-    <link href="{{ asset('sources/assets/css/core.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/app.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('sources/assets/css/style.min.css') }}" rel="stylesheet">
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('sources/assets/img/apple-touch-icon.png') }}">
-    <link rel="icon" href="{{ asset('sources/assets/img/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('build/images/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('build/images/favicon.png') }}">
 </head>
 
 <body>
@@ -482,24 +477,14 @@
 </div>
 <!-- END Global quickview -->
 
+{% block javascripts %}
+    <!-- Routing -->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-<!-- Scripts -->
-<!-- Routing -->
-<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {{ encore_entry_script_tags('app') }}
 
-<script src="{{ asset('sources/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('sources/assets/js/app.js') }}"></script>
-<script src="{{ asset('sources/assets/vendor/jquery-jeditable/dist/jquery.jeditable.min.js') }}"></script>
-<script src="{{ asset('sources/assets/js/jquery.collection.js') }}"></script>
-<script src="{{ asset('sources/assets/js/script.min.js') }}"></script>
-
-<script data-provide="sweetalert"></script>
-
-<script type="text/javascript">
-    {% block javascript %}
-
-    {% endblock %}
-</script>
+    <script data-provide="sweetalert"></script>
+{% endblock %}
 </body>
 </html>

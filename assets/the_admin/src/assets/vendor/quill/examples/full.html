@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Full Editor - Quill Rich Text Editor</title>
+  <meta charset="utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="english" name="language">
+<meta content="width=device-width" name="viewport">
+
+<meta content="Quill is a free, open source WYSIWYG editor built for the modern web. Completely customize it for any need with its modular architecture and expressive API." name="description">
+
+<meta content="summary" name="twitter:card">
+<meta content="@quilljs" name="twitter:site">
+
+<meta content="Full Editor - Quill" name="twitter:title">
+
+<meta content="Quill is a free, open source rich text editor built for the modern web." name="twitter:description">
+<meta content="https://quilljs.com/assets/images/brand-asset.png" name="twitter:image">
+<meta content="website" property="og:type">
+<meta content="https://quilljs.com/standalone/full/" property="og:url">
+<meta content="https://quilljs.com/assets/images/brand-asset.png" property="og:image">
+<meta content="Full Editor - Quill" property="og:title">
+<meta content="Quill" property="og:site_name">
+
+<link href="https://quilljs.com/standalone/full/" rel="canonical">
+<link href="https://quilljs.com/feed.xml" rel="alternate" title="Quill - Your powerful rich text editor" type="application/atom+xml" />
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" rel="stylesheet" />
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet" />
+
+<link href="../quill.snow.css" rel="stylesheet" />
+
+<style>
+  body > #standalone-container {
+    margin: 50px auto;
+    max-width: 720px;
+  }
+  #editor-container {
+    height: 350px;
+  }
+</style>
+
+
+</head>
+<body>
+
+<div id="standalone-container">
+  <div id="toolbar-container">
+    <span class="ql-formats">
+      <select class="ql-font"></select>
+      <select class="ql-size"></select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-bold"></button>
+      <button class="ql-italic"></button>
+      <button class="ql-underline"></button>
+      <button class="ql-strike"></button>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-color"></select>
+      <select class="ql-background"></select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-script" value="sub"></button>
+      <button class="ql-script" value="super"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-header" value="1"></button>
+      <button class="ql-header" value="2"></button>
+      <button class="ql-blockquote"></button>
+      <button class="ql-code-block"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-list" value="ordered"></button>
+      <button class="ql-list" value="bullet"></button>
+      <button class="ql-indent" value="-1"></button>
+      <button class="ql-indent" value="+1"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-direction" value="rtl"></button>
+      <select class="ql-align"></select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-link"></button>
+      <button class="ql-image"></button>
+      <button class="ql-video"></button>
+      <button class="ql-formula"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-clean"></button>
+    </span>
+  </div>
+  <div id="editor-container"></div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+<script src="../quill.min.js"></script>
+
+<script>
+  var quill = new Quill('#editor-container', {
+    modules: {
+      formula: true,
+      syntax: true,
+      toolbar: '#toolbar-container'
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow'
+  });
+</script>
+
+
+</body>
+</html>
