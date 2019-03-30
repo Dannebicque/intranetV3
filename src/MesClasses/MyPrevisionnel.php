@@ -45,6 +45,11 @@ class MyPrevisionnel
      */
     private $servicePrevisionnelBySemestre;
 
+    /**
+     * @var Previsionnel[]
+     */
+    private $servicePrevisionnelByDepartement;
+
     /** @var Hrs[] */
     private $hrs;
 
@@ -54,6 +59,11 @@ class MyPrevisionnel
      * @var Semestre[]
      */
     private $semestres = [];
+
+    /**
+     * @var Departement[]
+     */
+    private $departements = [];
 
     private $totalCm = 0.0;
     private $totalTd = 0.0;
@@ -68,6 +78,14 @@ class MyPrevisionnel
 
     /** @var Semestre */
     private $semestre;
+
+    /**
+     * @return Departement[]
+     */
+    public function getDepartements(): array
+    {
+        return $this->departements;
+    }
 
     /** @var Previsionnel[] */
     private $previsionnels;
@@ -134,6 +152,14 @@ class MyPrevisionnel
     public function getServicePrevisionnelBySemestre(): array
     {
         return $this->servicePrevisionnelBySemestre;
+    }
+
+    /**
+     * @return Previsionnel[]
+     */
+    public function getServicePrevisionnelByDepartement(): array
+    {
+        return $this->servicePrevisionnelByDepartement;
     }
 
     /**
@@ -272,6 +298,33 @@ class MyPrevisionnel
     public function getPrevisionnelEnseignantComplet(Personnel $personnel, $annee): array
     {
         return $this->previsionnelRepository->findPrevisionnelEnseignantComplet($personnel, $annee);
+    }
+
+    /**
+     * @param $annee
+     *
+     */
+    public function getPrevisionnelEnseignantByDepartement($annee): void
+    {
+        $previsionnels = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($this->personnel, $annee);
+
+        $tprev = [];
+        /** @var Previsionnel $pr */
+        foreach ($previsionnels as $pr) {
+            $departement = $pr->getDepartement() ? $pr->getDepartement()->getId() : null;
+            if ($departement !== null) {
+                if (!array_key_exists($departement, $tprev)) {
+                    $tprev[$departement] = [];
+                    $this->departements[] = $pr->getDepartement();
+                }
+                $tprev[$departement][] = $pr;
+                $this->totalCm += $pr->getTotalHCm();
+                $this->totalTd += $pr->getTotalHTd();
+                $this->totalTp += $pr->getTotalHTp();
+            }
+        }
+
+        $this->servicePrevisionnelByDepartement = $tprev;
     }
 
     /**

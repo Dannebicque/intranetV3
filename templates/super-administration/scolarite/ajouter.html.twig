@@ -12,7 +12,7 @@
         </div>
     </div>
 {% endblock %}
-
+{# todo: a fusionner avec la partie administration/etudiant #}
 {% block content %}
     <div class="row">
         <div class="col-md-6 col-lg-6 col-sm-12">
@@ -27,18 +27,19 @@
             <div class="card">
                 <h4 class="card-title">{{ 'sadm.scolarite.import.listing.heading'|trans }}</h4>
                 <div class="card-body">
-                    <div class="form-group">
-                        <label class="control-label" for="etudiant">Login URCA, nom, prénom, numéro étudiant ou numéro INE
-                            de l'étudiant</label>
-
-                        <input type="file" name="login_urca" id="etudiant" class="form-control"
-                               placeholder="Saisissez les premiers caractères">
-
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-block btn-warning">Recherchez l'étudiant
-                        </button>
-                    </div>
+                    <form method="POST" action="{{ path('sa_scolarite_importer') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="control-label" for="importer_etudiant">Selectionnez le fichier en
+                                                                                 respectant le format</label>
+                            <input type="file" name="fichier_import" id="importer_etudiant" class="form-control">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-block btn-warning">Importer les étudiants</button>
+                        </div>
+                        <div class="alert alert-info">Le fichier doit contenir les données suivantes et les en-têtes
+                                                      correctement nommées (<a href="">voir le fichier d'exemple</a>)
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

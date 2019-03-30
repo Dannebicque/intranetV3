@@ -2,7 +2,7 @@
     <header class="card-header">
         <h4 class="card-title"><strong>{{ 'hrs.suivis.responsabilite.heading'|trans }}</strong>
             | {{ previsionnel.personnel.display }} |
-            ({{ 'periode'|trans }} : {{ user_data.departement.optAnneePrevisionnel }})</h4>
+            ({{ 'periode'|trans }} : {{ annee }})</h4>
     </header>
 
     <div class="card-body">
@@ -10,7 +10,7 @@
             <thead>
             <tr>
                 <th>{{ 'table.type_responsabilite'|trans }}</th>
-                <th>{{ 'table.semestre'|trans }}</th>
+                <th>{{ 'table.diplome_Semestre'|trans }}</th>
                 <th>{{ 'table.type_hrs'|trans }}</th>
                 <th>{{ 'table.nb_heures_eq_td'|trans }}</th>
             </tr>
@@ -19,7 +19,8 @@
             {% for hr in previsionnel.hrs %}
                 <tr>
                     <td>{{ hr.libelle }}</td>
-                    <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
+                    <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non
+                    .defini'|trans) }}</td>
                     <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
                     <td>{{ hr.nbHeuresTd }} h</td>
                 </tr>

@@ -82,4 +82,13 @@ class DepartementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findActifs()
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.actif = 1')
+            ->orderBy('d.libelle')
+            ->getQuery()
+            ->getResult();
+    }
 }

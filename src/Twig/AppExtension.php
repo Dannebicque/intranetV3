@@ -53,6 +53,8 @@ class AppExtension extends AbstractExtension
             new TwigFilter('escapetitle', [$this, 'escapetitle']),
             new TwigFilter('chr', [$this, 'mychr']),
             new TwigFilter('upper', [$this, 'upper']),
+            new TwigFilter('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
+            new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
 
         );
     }
@@ -65,6 +67,16 @@ class AppExtension extends AbstractExtension
             new \Twig_SimpleFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
 
         );
+    }
+
+    public function mailto($email): string
+    {
+        return '<a href="mailto:' . $email . '" target="_blank">' . $email . '</a>';
+    }
+
+    public function link($link): string
+    {
+        return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
     }
 
     /**

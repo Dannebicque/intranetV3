@@ -142,16 +142,7 @@ class EtudiantRepository extends ServiceEntityRepository
      */
     public function search($needle): array
     {
-        $query = $this->createQueryBuilder('p')
-            ->where('p.nom LIKE :needle')
-            ->orWhere('p.prenom LIKE :needle')
-            ->orWhere('p.username LIKE :needle')
-            ->orWhere('p.mailUniv LIKE :needle')
-            ->setParameter('needle', '%' . $needle . '%')
-            ->orderBy('p.nom', 'ASC')
-            ->orderBy('p.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
+        $query = $this->searchObject($needle);
 
         $t = [];
 
@@ -200,6 +191,22 @@ class EtudiantRepository extends ServiceEntityRepository
 
         return $query->orderBy('e.nom', 'ASC')
             ->orderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchObject($needle)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.nom LIKE :needle')
+            ->orWhere('p.prenom LIKE :needle')
+            ->orWhere('p.username LIKE :needle')
+            ->orWhere('p.mailUniv LIKE :needle')
+            ->orWhere('p.numEtudiant LIKE :needle')
+            ->orWhere('p.numIne LIKE :needle')
+            ->setParameter('needle', '%' . $needle . '%')
+            ->orderBy('p.nom', 'ASC')
+            ->orderBy('p.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
