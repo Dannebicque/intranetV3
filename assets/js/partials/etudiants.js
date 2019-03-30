@@ -1,3 +1,17 @@
+/*
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/etudiants.js
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 3/30/19 12:11 PM
+ *  * @lastUpdate 3/30/19 12:11 PM
+ *  *
+ *
+ */
+
 var table = $('#datatableEtudiants').DataTable({});
 table.clear(); //effacer le datatable
 table.destroy(); //supprimer le datatable

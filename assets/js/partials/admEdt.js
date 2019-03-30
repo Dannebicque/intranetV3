@@ -1,4 +1,18 @@
 
+/*
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/admEdt.js
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 3/30/19 12:11 PM
+ *  * @lastUpdate 3/30/19 12:11 PM
+ *  *
+ *
+ */
+
 var Cells = [];
 var Ind = 0;
 
