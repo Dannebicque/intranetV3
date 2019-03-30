@@ -3,6 +3,8 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Repository\DepartementRepository;
+use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,11 +35,32 @@ class ScolariteController extends BaseController
     }
 
     /**
-     * @Route("/scolarite/recherche", name="sa_scolarite_recherche", options={"expose"=true})
+     * @Route("/importer", name="sa_scolarite_importer")
      */
-    public function rechercheEtudiants(): Response
+    public function importerScolarite()
     {
-        $etudiants = null;
-        return $this->render('super-administration/scolarite/recherche.html.twig', ['etudiants' => $etudiants]);
+        //déjà dans administration ?
+    }
+
+    /**
+     * @Route("/scolarite/recherche/{needle}", name="sa_scolarite_recherche", options={"expose"=true})
+     * @param DepartementRepository $departementRepository
+     * @param EtudiantRepository    $etudiantRepository
+     * @param                       $needle
+     *
+     * @return Response
+     */
+    public function rechercheEtudiants(
+        DepartementRepository $departementRepository,
+        EtudiantRepository $etudiantRepository,
+        $needle
+    ): Response
+    {
+        $etudiants = $etudiantRepository->searchObject($needle);
+
+        return $this->render('super-administration/scolarite/recherche.html.twig', [
+            'etudiants' => $etudiants,
+            'departements' => $departementRepository->findActifs()
+        ]);
     }
 }

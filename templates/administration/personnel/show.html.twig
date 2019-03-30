@@ -72,7 +72,10 @@
             </tr>
             <tr>
                 <th>Cv</th>
-                <td>{{ personnel.cvName }}</td>
+                <td>{% if personnel.cvName != '' %}<a href="{{ asset('upload/cv/' ~personnel.cvName) }}"
+                                                      target="_blank">Voir le
+                                                                      CV</a>{% else %} Pas de CV fourni{% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Created</th>
@@ -104,23 +107,23 @@
             </tr>
             <tr>
                 <th>Mail_univ</th>
-                <td>{{ personnel.mailUniv }}</td>
+                <td>{{ personnel.mailUniv|mailto }}</td>
             </tr>
             <tr>
                 <th>Site_univ</th>
-                <td>{{ personnel.siteUniv }}</td>
+                <td>{{ personnel.siteUniv|link }}</td>
             </tr>
             <tr>
                 <th>Mail_perso</th>
-                <td>{{ personnel.mailPerso }}</td>
+                <td>{{ personnel.mailPerso|mailto }}</td>
             </tr>
             <tr>
                 <th>Site_perso</th>
-                <td>{{ personnel.sitePerso }}</td>
+                <td>{{ personnel.sitePerso|link }}</td>
             </tr>
             <tr>
                 <th>Sexe</th>
-                <td>{{ personnel.sexe }}</td>
+                <td>{{ personnel.civilite }}</td>
             </tr>
             <tr>
                 <th>Date_naissance</th>
@@ -148,7 +151,9 @@
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ personnel.photoName }}</td>
+                <td>
+                    <img src="{{ asset('upload/personnels/'~personnel.photoName) }}" alt="Photo de {{ personnel.display }}"/>
+                </td>
             </tr>
         </tbody>
     </table>

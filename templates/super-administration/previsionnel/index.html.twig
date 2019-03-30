@@ -1,31 +1,50 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block header %}
+    {{ 'sadm.previsionnel.index.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
-
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
-
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code><a href="{{ 'src/Controller/ScolariteController.php'|file_link(0) }}">src/Controller/ScolariteController.php</a></code>
-            </li>
-            <li>Your template at <code><a href="{{ 'templates/scolarite/index.html.twig'|file_link(0) }}">templates/scolarite/index.html.twig</a></code>
-            </li>
-        </ul>
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            exporter / importer
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
     </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'sadm.previsionnel.index.par_enseignant'|trans }}</h4>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="sr-only" for="sadm_previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
+                        <select class="form-control" data-live-search="true" data-provide="selectpicker" data-annee="{{ annee }}"
+                                id="sadm_previPersonnel">
+                            <option value="">{{ 'choisir.intervenant'|trans }}</option>
+                            {% for personnel in personnels %}
+                                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sadm_change_annee_temp_previsionnel">{{ 'change_annee_temp_previsionnel'|trans }}</label>
+                        <select id="sadm_change_annee_temp_previsionnel" class="form-control">
+                            <option value="0">{{ 'change_annee_temp_previsionnel'|trans }}</option>
+                            {% for anne in 2017..'now'|date('Y')+4 %}
+                                <option value="{{ anne }}" {% if annee == anne %}selected{% endif %}>{{ anne }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ render(controller('App\\Controller\\superAdministration\\PrevisionnelController::personnel', {'personnel':6,
+        'annee':2019})
+    ) }}
 {% endblock %}

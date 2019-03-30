@@ -10066,25 +10066,25 @@
     <unit id="i.MMJXR" name="sadm.scolarite.ajouter.heading">
       <segment>
         <source>sadm.scolarite.ajouter.heading</source>
-        <target>sadm.scolarite.ajouter.heading</target>
+          <target>Ajouter/Importer des étudiants</target>
       </segment>
     </unit>
     <unit id="7KHiEQs" name="sadm.scolarite.ajouter.un.heading">
       <segment>
         <source>sadm.scolarite.ajouter.un.heading</source>
-        <target>sadm.scolarite.ajouter.un.heading</target>
+          <target>Ajouter un étudiant</target>
       </segment>
     </unit>
     <unit id="77oDvTA" name="sadm.scolarite.synchro.apogee.heading">
       <segment>
         <source>sadm.scolarite.synchro.apogee.heading</source>
-        <target>sadm.scolarite.synchro.apogee.heading</target>
+          <target>Synchroniser avec Apogée</target>
       </segment>
     </unit>
     <unit id="JlkvYL8" name="sadm.scolarite.import.listing.heading">
       <segment>
         <source>sadm.scolarite.import.listing.heading</source>
-        <target>sadm.scolarite.import.listing.heading</target>
+          <target>Importer une liste d'étudiants</target>
       </segment>
     </unit>
     <unit id="crIumOh" name="gestion.cohorte.choix.annee.heading">
@@ -10789,6 +10789,66 @@
           <segment>
               <source>atitle.masquer_semestre</source>
               <target>atitle.masquer_semestre</target>
+          </segment>
+      </unit>
+      <unit id="bi2s2DK" name="departements.heading">
+          <segment>
+              <source>departements.heading</source>
+              <target>departements.heading</target>
+          </segment>
+      </unit>
+      <unit id="9g1W2Av" name="creation.departement.manuellement">
+          <segment>
+              <source>creation.departement.manuellement</source>
+              <target>creation.departement.manuellement</target>
+          </segment>
+      </unit>
+      <unit id="CL42c1d" name="assistant.creation.departement">
+          <segment>
+              <source>assistant.creation.departement</source>
+              <target>assistant.creation.departement</target>
+          </segment>
+      </unit>
+      <unit id="c_a8Ms0" name="super-admin.personnel-departement.heading">
+          <segment>
+              <source>super-admin.personnel-departement.heading</source>
+              <target>super-admin.personnel-departement.heading</target>
+          </segment>
+      </unit>
+      <unit id="MSKqMCs" name="atitle.retirer_departement">
+          <segment>
+              <source>atitle.retirer_departement</source>
+              <target>atitle.retirer_departement</target>
+          </segment>
+      </unit>
+      <unit id="mGr5eBs" name="super-admin.add.personnel-departement.heading">
+          <segment>
+              <source>super-admin.add.personnel-departement.heading</source>
+              <target>super-admin.add.personnel-departement.heading</target>
+          </segment>
+      </unit>
+      <unit id="DV1gmkP" name="table.departements">
+          <segment>
+              <source>table.departements</source>
+              <target>table.departements</target>
+          </segment>
+      </unit>
+      <unit id="I8vULlP" name="sadm.service.previsionnel.heading">
+          <segment>
+              <source>sadm.service.previsionnel.heading</source>
+              <target>sadm.service.previsionnel.heading</target>
+          </segment>
+      </unit>
+      <unit id="ts7vvcP" name="sadm.previsionnel.index.heading">
+          <segment>
+              <source>sadm.previsionnel.index.heading</source>
+              <target>sadm.previsionnel.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="g5I5g6z" name="sadm.previsionnel.index.par_enseignant">
+          <segment>
+              <source>sadm.previsionnel.index.par_enseignant</source>
+              <target>sadm.previsionnel.index.par_enseignant</target>
           </segment>
       </unit>
   </file>

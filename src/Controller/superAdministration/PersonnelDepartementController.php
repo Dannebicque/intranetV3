@@ -32,7 +32,7 @@ class PersonnelDepartementController extends BaseController
     }
 
     /**
-     * @Route("/remove/{pf}", name="sa_personnel_formation_remove", methods="DELETE")
+     * @Route("/remove/{pf}", name="sa_personnel_departement_remove", methods="DELETE")
      * @param Request              $request
      * @param PersonnelDepartement $pf
      *
@@ -57,7 +57,7 @@ class PersonnelDepartementController extends BaseController
     }
 
     /**
-     * @Route("/modifier-droit/{pf}", name="sa_personnel_formation_modifier_droit", options={"expose":true})
+     * @Route("/modifier-droit/{pf}", name="sa_personnel_departement_modifier_droit", options={"expose":true})
      * @param Request              $request
      * @param PersonnelDepartement $pf
      *

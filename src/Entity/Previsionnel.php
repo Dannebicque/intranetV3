@@ -352,4 +352,15 @@ class Previsionnel extends BaseEntity
     {
         return $this->nbHCm + $this->nbHTd + $this->nbHTp;
     }
+
+    public function getDepartement()
+    {
+        if ($this->getSemestre() !== null &&
+            $this->getSemestre()->getDiplome() !== null &&
+            $this->getSemestre()->getDiplome()->getDepartement() !== null) {
+            return $this->getSemestre()->getDiplome()->getDepartement();
+        }
+
+        return null;
+    }
 }
