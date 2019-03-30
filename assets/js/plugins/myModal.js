@@ -1,3 +1,17 @@
+/*
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/plugins/myModal.js
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 3/30/19 12:11 PM
+ *  * @lastUpdate 3/30/19 12:11 PM
+ *  *
+ *
+ */
+
 var idModal = 1;
 
 function openModal(titre)
