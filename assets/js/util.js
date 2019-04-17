@@ -20,6 +20,10 @@ function readUrlMenu($url) {
   $('#menu-' + $elt[$firstElt]).addClass('active');
 }
 
+//colorise le bon menu
+readUrlMenu($(location).attr('pathname'))
+
+
 //pop up de confirmation de suppression
 $(document).on('click', '.supprimer', function (e) {
   e.preventDefault();

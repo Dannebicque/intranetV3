@@ -332,6 +332,9 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mime": {
+        "version": "4.3-dev"
+    },
     "symfony/monolog-bridge": {
         "version": "v4.2.2"
     },
@@ -380,6 +383,9 @@
     },
     "symfony/polyfill-php72": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "1.11-dev"
     },
     "symfony/process": {
         "version": "v4.2.4"
@@ -483,15 +489,6 @@
             "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
         }
     },
-    "symfony/webpack-encore-bundle": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "1b88cff897d383c45522a457ea9daba85a9b9ab2"
-        }
-    },
     "symfony/yaml": {
         "version": "v4.2.1"
     },
@@ -524,8 +521,5 @@
     },
     "zendframework/zend-code": {
         "version": "3.3.1"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
     }
 }

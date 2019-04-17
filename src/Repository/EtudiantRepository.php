@@ -6,6 +6,7 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -207,6 +208,16 @@ class EtudiantRepository extends ServiceEntityRepository
             ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemestreCodeApogee($codeSemestre)
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->where('s.codeApogee = :code')
+            ->setParameter('code', $codeSemestre)
             ->getQuery()
             ->getResult();
     }

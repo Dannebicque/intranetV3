@@ -41,6 +41,11 @@ class Message extends BaseEntity
      */
     private $messagePieceJointes;
 
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $etat = 'D';
+
     public function __construct()
     {
         $this->messageDestinataires = new ArrayCollection();
@@ -153,6 +158,18 @@ class Message extends BaseEntity
                 $messagePieceJointe->setMessage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }

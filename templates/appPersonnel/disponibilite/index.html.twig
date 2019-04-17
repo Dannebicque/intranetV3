@@ -2,7 +2,31 @@
     <h4 class="card-title">{{ 'application.disponibilite.heading'|trans }}</h4>
 
     <div class="card-body">
-        <div class="alert alert-info">Cette fonctionnalité sera bientôt disponible.</div>
-        {#        {{ include('composants/planning_creneaux.html.twig') }}#}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Lundi</th>
+                <th>Mardi</th>
+                <th>Mercredi</th>
+                <th>Jeudi</th>
+                <th>Vendredi</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, creneau in creneaux %}
+                <tr>
+                    <th>{{ creneau }}</th>
+                    {% for i in 1..5 %}
+                        <td id="{{ key }}_{{ i }}" class="creneau">&nbsp;</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p id="nb_interdit">0</p>
+        <p id="nb_eviter">0</p>
+        <p id="nb_dispo">30</p>
     </div>
 </div>
+

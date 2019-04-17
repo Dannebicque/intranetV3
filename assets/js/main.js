@@ -1,22 +1,4 @@
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/main.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:08 PM
- *  * @lastUpdate 3/30/19 12:07 PM
- *  *
- *
- */
-
 'use strict'
-
-
-require('./config')
-require('./util')
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +11,9 @@ require('./util')
 |
 */
 
-app.ready(function () {
-  const basePath = 'http://newintranet:7888/upload/' //chemin de base pour les images
+$(document).ready(function () {
+  let preloader = $('.preloader')
+
 
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
@@ -41,8 +24,7 @@ app.ready(function () {
     $(this).next('.custom-file-label').html(files.join(', '))
   })
 
-  //colorise le bon menu
-  readUrlMenu($(location).attr('pathname'))
+
 
   /*
   |--------------------------------------------------------------------------
@@ -143,7 +125,7 @@ app.ready(function () {
     //var editor = loadQuill('#editCourrier', ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'])
   }
 
-  var preloader = $('.preloader')
+
   if (preloader.length) {
     var speed = preloader.dataAttr('hide-spped', 600)
     preloader.fadeOut(speed)

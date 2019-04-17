@@ -1,38 +1,40 @@
 <!-- Page aside -->
 <aside class=""
-       style="background-color: white; margin-left: -30px;margin-top: -60px; padding-bottom: -30px; height: 100%; padding-left: 10px; padding-right: 10px">
+       style="background-color: white; margin-left: -30px;margin-top: -30px; margin-bottom: 30px; height: 100%;
+       padding-left: 10px; padding-right: 10px">
     <div class="aside-body">
         {% if is_granted('ROLE_PERMANENT') %}
-            <a href="#dock-compose" class="btn btn-primary" data-toggle="dock">
+            <button id="new-message" class="btn btn-primary">
                 <i class="fa fa-plus"></i>
                 {{ 'nouveau.message'|trans }}
-            </a>
+            </button>
         {% endif %}
         <ul class="nav nav-lg nav-pills flex-column">
             <li class="nav-item active">
                 <i class="fa fa-inbox"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="all">Inbox</a>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="all">{{ 'messagerie.boite.reception'|trans }}</a>
                 <span class="badge badge-pill badge-info">6</span>
             </li>
 
             <li class="nav-item">
                 <i class="fa fa-envelope"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="sent">Sent</a>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="sent">{{ 'messagerie.boite.envoyes'|trans
+                    }}</a>
             </li>
 
             <li class="nav-item">
                 <i class="fa fa-file"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="draft">Draft</a>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="draft">{{ 'messagerie.boite.brouillons'|trans }}</a>
             </li>
 
             <li class="nav-item">
                 <i class="{{ iconDelete }}"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="trash">Trash</a>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="trash">{{ 'messagerie.boite.corbeille'|trans }}</a>
             </li>
 
             <li class="nav-item">
                 <i class="fa fa-star"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="starred">Starred</a>
+                <a class="nav-link messagerie-filtre" href="#" data-filtre="starred">{{ 'messagerie.boite.epingles'|trans }}</a>
             </li>
         </ul>
 

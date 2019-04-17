@@ -1,3 +1,4 @@
+require('./core.min')
 // Check if an element has a specific data attribute
 //
 jQuery.fn.hasDataAttr = function (name) {
@@ -58,7 +59,8 @@ jQuery.fn.scrollToEnd = function () {
   var app = {
     name: 'TheAdmin',
     version: '1.1.5',
-    corejs: $('script[src*="core.min.js"]').attr('src'),
+    //corejs: $('script[src*="core.min.js"]').attr('src'),
+    corejs: './core.min.js',
     cacheBust: ''
   }
 
@@ -131,8 +133,6 @@ jQuery.fn.scrollToEnd = function () {
       markerIcon: '',
       style: ''
     }
-
-
   }
 
 
@@ -143,10 +143,13 @@ jQuery.fn.scrollToEnd = function () {
     app.corejs = app.corejs.substring(0, app.corejs.indexOf('?'))
   }
 
+  assets_dir = '../../'
   app.dir = {
     home: app.corejs.replace('assets/js/core.min.js', ''),
-    assets: app.corejs.replace('js/core.min.js', ''),
-    vendor: app.corejs.replace('js/core.min.js', 'vendor/')
+    assets: assets_dir,
+    vendor: assets_dir + 'build/vendor/'
+    //assets: app.corejs.replace('js/core.min.js', ''),
+    //vendor: app.corejs.replace('js/core.min.js', 'vendor/')
   }
 
 
@@ -158,7 +161,7 @@ jQuery.fn.scrollToEnd = function () {
     if ('/' !== assets_dir.slice(-1)) {
       assets_dir += '/'
     }
-
+    assets_dir = '../'
     app.dir.assets = assets_dir
     app.dir.vendor = assets_dir + 'vendor/'
   }
@@ -202,6 +205,7 @@ jQuery.fn.scrollToEnd = function () {
 
   app.initAll = function () {
     $(document).ready(function () {
+      console.log('init')
       app.init()
       topbar.init()
       sidebar.init()
@@ -261,10 +265,15 @@ jQuery.fn.scrollToEnd = function () {
 
 
   app.provide = function (vendors) {
+    console.log('app-provide')
+    console.log(vendors)
+
     if (Array.isArray(vendors)) {
       var len = vendors.length
       for (var i = 0; i < len; i++) {
+        console.log(vendors[i])
         provider.inject(vendors[i])
+        console.log('injecte')
       }
     } else {
       provider.inject(vendors)
@@ -273,7 +282,7 @@ jQuery.fn.scrollToEnd = function () {
 
 
   app.init = function () {
-
+    console.log('provider init')
     provider.init()
 
     app.initCorePlugins()
@@ -420,6 +429,7 @@ jQuery.fn.scrollToEnd = function () {
     }
 
 
+
     // Provide required plugins
     //
     if (app.defaults.provide) {
@@ -474,8 +484,7 @@ jQuery.fn.scrollToEnd = function () {
         topbar.fix()
       }
     }
-
-
+    console.log('debut init');
     app.initAll()
 
   }
@@ -647,8 +656,8 @@ jQuery.fn.scrollToEnd = function () {
     $LAB.setGlobalDefaults({
       BasePath: app.dir.vendor,
       AlwaysPreserveOrder: true,
-      AllowDuplicates: false
-      //Debug: true
+      AllowDuplicates: false,
+      Debug: true
     })
 
     provider.inject()
@@ -699,14 +708,16 @@ jQuery.fn.scrollToEnd = function () {
 
 
   provider.inject = function (pluginName) {
-
+    console.log('app-inject')
+    console.log(pluginName)
+    console.log('dir ' + app.dir.vendor)
     if (!app.defaults.autoload) {
       return
     }
 
     if (pluginName !== undefined) {
       var vendor = provider.list[pluginName]
-
+      console.log(vendor)
 
       if (vendor === undefined) {
         return
@@ -734,20 +745,22 @@ jQuery.fn.scrollToEnd = function () {
       // Load js files
       if ('js' in vendor) {
         var js = vendor.js
-
+        console.log('js')
         if (Array.isArray(js)) {
+          console.log('js array')
           for (var i = 0; i < js.length; i++) {
             provider.queueScript(js[i])
           }
         } else {
+          console.log('js string')
           provider.queueScript(js)
         }
+        console.log('js chargé')
       }
 
 
       // Queue callbacks
       if ('callback' in vendor) {
-        //console.log(vendor.callback);
         $LAB.queueWait(function () {
           app.call('provider.' + vendor.callback)
         })
@@ -984,6 +997,8 @@ jQuery.fn.scrollToEnd = function () {
 
 
   provider.queueScript = function (js) {
+    console.log('queue ' + js)
+    console.log('-lab'+$LAB)
     $LAB.queueScript(js + app.defaults.cacheBust)
   }
 
@@ -1528,7 +1543,6 @@ jQuery.fn.scrollToEnd = function () {
 // =====================
 //
 +function ($) {
-
 
   provider.initCharts = function () {
 

@@ -1,0 +1,13 @@
+Copie du message envoyé a {{ numEtudiant }} personnes. Au total {{ nb }} messages ont été envoyés (mail université et mail perso lorsque disponible).
+====
+
+{{ message }}
+
+
+{% if expediteur.signature=="" %}
+    {{ expediteur.displayPr  }}
+{% else %}
+    {{ expediteur.signature }}
+{% endif %}
+
+Ce message est envoyé depuis l'intranet.

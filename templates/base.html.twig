@@ -10,7 +10,10 @@
 
     {% block stylesheets %}
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
-        {{ encore_entry_link_tags('app') }}
+        <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">
+{#        {{ encore_entry_link_tags('app') }}#}
     {% endblock %}
 
     <!-- Favicons -->
@@ -482,8 +485,12 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    {{ encore_entry_script_tags('app') }}
-
+{#    {{ encore_entry_script_tags('app') }}#}
+    <script src="{{ asset('src/assets/js/core.min.js') }}"></script>
+    <script src="{{ asset('src/assets/js/app.js') }}"></script>
+    <script src="{{ asset('src/assets/vendor/jquery-jeditable/dist/jquery.jeditable.min.js') }}"></script>
+    <script src="{{ asset('src/assets/vendor/jquery.collection.js') }}"></script>
+    <script src="{{ asset('src/assets/js/script.min.js') }}"></script>
     <script data-provide="sweetalert"></script>
 {% endblock %}
 </body>

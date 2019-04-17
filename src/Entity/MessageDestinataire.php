@@ -16,20 +16,30 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class MessageDestinataire extends BaseEntity
 {
+    public const UNREAD = 'U';
+    public const READ = 'R';
+    public const STARRED = 'S';
+    public const DELETED = 'D';
+
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateLu;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $etat;
+    private $etat = 'U';
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messageDestinataires")
      */
     private $message;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $starred;
 
 
     public function getDateLu(): ?\DateTimeInterface
@@ -64,6 +74,18 @@ abstract class MessageDestinataire extends BaseEntity
     public function setMessage(?Message $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getStarred(): ?bool
+    {
+        return $this->starred;
+    }
+
+    public function setStarred(bool $starred): self
+    {
+        $this->starred = $starred;
 
         return $this;
     }

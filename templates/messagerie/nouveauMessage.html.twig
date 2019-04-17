@@ -1,0 +1,123 @@
+
+<div class="card card-body">
+            <form>
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-lg"
+                           placeholder="{{ 'message.to'|trans }}" id="messageTo" name="destinataires">
+                    <span class="input-group-append">
+                        <button class="btn btn-light" type="button" data-toggle="modal" data-target="#modalUsers"><i
+                                    class="fa fa-users"></i></button>
+                      </span>
+                </div>
+                <div>Saisissez les premières lettre d'un nom d'étudiant, d'un enseignant, d'un vacataire, d'un
+                     groupe ou d'un semestre.</div>
+                <div class="form-group">
+                    <input type="text" class="form-control"
+                           placeholder="{{ 'message.copy'|trans }}" id="messageCopy" name="copie">
+                </div>
+                <input class="form-control form-control-lg" type="text"
+                       placeholder="{{ 'message.subject'|trans }}" id="messageSubject">
+                <br>
+                <div class="quill">
+                    <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..."
+                         style="height: 206px" id="messageMessage"></div>
+                </div>
+                <div class="gap-items-2 text-right p-10 bg-lightest bt-1">
+                    <button class="btn btn-light" type="button" data-toggle="modal" data-target="#modalPj"><i
+                                class="fa fa-paperclip" title="Ajouter des pièces jointes"></i></button>
+                    <button class="btn btn-light" type="button" title="Sauvegarder le brouillon"><i
+                                class="fa fa-save"></i></button>
+
+                    <button class="btn btn-secondary" type="button" data-dock="close">{{ 'annuler'|trans }}</button>
+                    <button class="btn btn-primary" type="submit" id="messageSent">{{ 'envoyer'|trans }}</button>
+                </div>
+            </form>
+        </div>
+
+    <div id="modalUsers" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div tabindex="-1" class="modal-content">
+                <header class="modal-header"><h5 class="modal-title">
+                        {{ 'liste.destinataires'|trans }}</h5>
+                    <button type="button" data-dismiss="modal" class="close">×</button>
+                </header>
+                <div class="modal-body">
+                    <div class="row">
+
+                        {% for semestre in user_data.semestres %}
+                            <div class="col-sm-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="sem_{{ semestre.id }}" id="sem_{{ semestre.id }}">
+                                    <label class="form-check-label" for="sem_{{ semestre.id }}">
+                                        {{ semestre.libelle }}
+                                    </label>
+                                </div>
+
+                                {% for type_groupe in semestre.typeGroupes %}
+                                    <div class="form-check">
+                                        &nbsp;&nbsp;<input class="form-check-input" type="checkbox" value="typ_{{ type_groupe.id }}" id="typ_{{ type_groupe.id }}">
+                                        <label class="form-check-label" for="typ_{{ type_groupe.id }}">
+                                            {{ type_groupe.libelle }}
+                                        </label>
+                                    </div>
+
+                                    {% for groupe in type_groupe.groupes %}
+                                        <div class="form-check">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" type="checkbox" value="gro_{{ groupe.id }}" id="gro_{{ groupe.id }}">
+                                            <label class="form-check-label" for="gro_{{ groupe.id }}">
+                                                {{ groupe.libelle }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            </div>
+                        {% endfor %}
+
+
+                        <div class="col-sm-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="permanents" id="permanents">
+                                <label class="form-check-label" for="permanents">
+                                    Permanents
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="vacataires" id="vacataires">
+                                <label class="form-check-label" for="vacataires">
+                                    Vacataires
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'fermer'|trans }}</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="valideDestinataires">{{
+                        'valider'|trans }}</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalPj" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div tabindex="-1" class="modal-content">
+                <header class="modal-header"><h5 class="modal-title">
+                        {{ 'message.ajouter.piece.jointe'|trans }}</h5>
+                    <button type="button" data-dismiss="modal" class="close">×</button>
+                </header>
+                <div class="modal-body">
+                    <div data-provide="dropzone" data-url="path/to/file-uploader.php">
+
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'fermer'|trans }}</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">{{ 'valider'|trans }}</button>
+                </footer>
+            </div>
+        </div>
+    </div>

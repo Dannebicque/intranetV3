@@ -28,6 +28,21 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
             ->setParameter('etudiant', $user->getId())
             ->orderBy('m.created', 'DESC');
 
+        switch ($filtre){
+            case 'all':
+                $query->andWhere('m.etat = :read or m.etat = :unread')
+                    ->setParameter('read', 'R')
+                    ->setParameter('unread', 'U');
+                break;
+            case 'trash':
+                $query->andWhere('m.etat = :delete')
+                    ->setParameter('delete', 'D');
+                break;
+            case 'starred':
+                $query->andWhere('m.starred = 1');
+                break;
+        }
+
         if ($nbMessage > 0) {
             $query->setMaxResults($nbMessage);
         }
