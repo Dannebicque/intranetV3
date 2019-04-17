@@ -1,0 +1,15 @@
+/*!
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/css/style.scss
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/10/19 2:22 PM
+ *  * @lastUpdate 3/30/19 11:44 AM
+ *  *
+ *
+ */#planning thead{height:30px}#planning tbody{height:300px;overflow:auto}.card-trombi{background-color:#f5f6f7}a .btn-round{color:white}.afficheDocuments{cursor:pointer}.preloader{opacity:0.7}.lignehover:hover{background-color:#f5f6fa}.previtd{background-color:#e3fcf2}.previtp{background-color:#fcf0e3}fieldset{border:1px solid #4d5259;padding:10px}fieldset legend{font-weight:400;padding:5px}.absent{background-color:#f96868}.carre{display:inline-block;height:20px;width:20px}.alternance{background-color:red}.stage{background-color:green}.bloquercreneau_eviter{background-color:orange}.bloquercreneau_interdit{background-color:red}.message-unread{background-color:#f3f9ff}
+
+/*# sourceMappingURL=style.min.css.map */

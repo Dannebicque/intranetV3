@@ -10396,13 +10396,13 @@
     <unit id="Lx2QPfR" name="application.disponibilite.heading">
       <segment>
         <source>application.disponibilite.heading</source>
-        <target>__application.disponibilite.heading</target>
+        <target>Vos disponibilités</target>
       </segment>
     </unit>
     <unit id="T4nBAr0" name="change_annee_temp_hrs">
       <segment>
         <source>change_annee_temp_hrs</source>
-        <target>__change_annee_temp_hrs</target>
+        <target>Changer temporairement d'année pour les HRS et Primes</target>
       </segment>
     </unit>
     <unit id="3AAya12" name="adm.hrs.supprimer.annee.heading">
@@ -10414,13 +10414,13 @@
     <unit id="1xpeMY6" name="change_annee_temp_previsionnel">
       <segment>
         <source>change_annee_temp_previsionnel</source>
-        <target>__change_annee_temp_previsionnel</target>
+        <target>Changer temporairement d'année pour le prévisionnel</target>
       </segment>
     </unit>
     <unit id="NIhf9NW" name="choisir.matiere">
       <segment>
         <source>choisir.matiere</source>
-        <target>__choisir.matiere</target>
+        <target>Choisir matière</target>
       </segment>
     </unit>
     <unit id="aMUUxt3" name="adm.previsionnel.supprimer.annee.heading">
