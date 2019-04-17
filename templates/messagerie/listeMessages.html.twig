@@ -16,20 +16,20 @@
 
         <span class="divider-line mx-1"></span>
 
-        <div class="dropdown">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Labels"
-               data-provide="tooltip"><i class="fa fa-tag pr-1"></i></a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#"><span
-                            class="badge badge-ring badge-danger mr-2"></span> Family</a>
-                <a class="dropdown-item" href="#"><span
-                            class="badge badge-ring badge-warning mr-2"></span> Friends</a>
-                <a class="dropdown-item" href="#"><span class="badge badge-ring badge-info mr-2"></span>
-                    Work</a>
-                <a class="dropdown-item" href="#"><span
-                            class="badge badge-ring badge-purple mr-2"></span> Bills</a>
-            </div>
-        </div>
+{#        <div class="dropdown">#}
+{#            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Labels"#}
+{#               data-provide="tooltip"><i class="fa fa-tag pr-1"></i></a>#}
+{#            <div class="dropdown-menu">#}
+{#                <a class="dropdown-item" href="#"><span#}
+{#                            class="badge badge-ring badge-danger mr-2"></span> Family</a>#}
+{#                <a class="dropdown-item" href="#"><span#}
+{#                            class="badge badge-ring badge-warning mr-2"></span> Friends</a>#}
+{#                <a class="dropdown-item" href="#"><span class="badge badge-ring badge-info mr-2"></span>#}
+{#                    Work</a>#}
+{#                <a class="dropdown-item" href="#"><span#}
+{#                            class="badge badge-ring badge-purple mr-2"></span> Bills</a>#}
+{#            </div>#}
+{#        </div>#}
 
         <span class="divider-line mx-1 d-none d-md-block"></span>
 
@@ -56,47 +56,89 @@
 
 
 <div class="media-list-body bg-white b-1">
+    {% if filtre == 'sent' or filtre=='draft' %}
+        {% for message in messages %}
+            <div class="media align-items-center">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <label class="custom-control-label"></label>
+                </div>
 
-    {% for message in messages %}
-        <div class="media align-items-center">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input">
-                <label class="custom-control-label"></label>
+{#                <label class="toggler ml-20 fs-16">#}
+{#                    <input type="checkbox">#}
+{#                    <i class="fa fa-star"></i>#}
+{#                </label>#}
+
+                {% if message.important == true %}
+                    <span class="badge badge-dot badge-danger"></span>
+                {% else %}
+                    <span class="badge badge-dot opacity-0"></span>
+                {% endif %}
+
+                <a class="media-body text-truncate" href="#" data-message="{{ message.id }}">
+                    <h6>To: {{ message.expediteur.displayPr }}</h6>
+                    <small>
+                        <strong>{{ message.sujet }}</strong>
+                        <span class="fw-300 opacity-80">{{ message.message }}</span>
+                    </small>
+                </a>
+
+                {% if message.messagePieceJointes|length > 0 %}
+                    <a class="text-lighter fs-18" href="#" data-message="{{ message.id }}"><i
+                                class="ti-clip"></i></a>
+                {% else %}
+                    <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
+                {% endif %}
+                {% if filtre=='draft' %}
+                    Modifier / Envoyer
+                {% else %}
+                    <time datetime="2018">{{ message.created|time_ago }}</time>
+                {% endif %}
             </div>
+        {% endfor %}
+    {% else %}
+        {% for message in messages %}
+            <div class="media {% if message.etat == 'U' %}media-new{% endif %} align-items-center message-read" data-message="{{ message.message.id }}">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <label class="custom-control-label"></label>
+                </div>
 
-            <label class="toggler ml-20 fs-16">
-                <input type="checkbox">
-                <i class="fa fa-star"></i>
-            </label>
+                <label class="toggler ml-20 fs-16">
+                    <input type="checkbox" class="starred" data-message="{{ message.id }}" {% if message.starred == true
+                    %}checked{% endif %}>
+                    <i class="fa fa-star" ></i>
+                </label>
 
-            {% if message.message.important == true %}
-                <span class="badge badge-dot badge-danger"></span>
-            {% else %}
-                <span class="badge badge-dot opacity-0"></span>
-            {% endif %}
+                {% if message.message.important == true %}
+                    <span class="badge badge-dot badge-danger"></span>
+                {% else %}
+                    <span class="badge badge-dot opacity-0"></span>
+                {% endif %}
 
-            <a href="#" class="message-read" data-message="{{ message.message.id }}"><img class="avatar"
-                                                                                          src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
-                                                                                          alt="..."></a>
+                <a href="#" ><img class="avatar"
+                                                                                                      src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
+                                                                                                      alt="..."></a>
 
-            <a class="media-body text-truncate message-read" href="#" data-message="{{ message.message.id }}">
-                <h6>{{ message.message.expediteur.displayPr }}</h6>
-                <small>
-                    <strong>{{ message.message.sujet }}</strong>
-                    <span class="fw-300 opacity-80">{{ message.message.message }}</span>
-                </small>
-            </a>
+                <a class="media-body text-truncate" href="#">
+                    <h6>{{ message.message.expediteur.displayPr }}</h6>
+                    <small>
+                        <strong>{{ message.message.sujet }}</strong>
+                        <span class="fw-300 opacity-80">{{ message.message.message }}</span>
+                    </small>
+                </a>
 
-            {% if message.message.messagePieceJointes|length > 0 %}
-                <a class="text-lighter fs-18 message-read" href="#" data-message="{{ message.message.id }}"><i
-                            class="ti-clip"></i></a>
-            {% else %}
-                <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
-            {% endif %}
+                {% if message.message.messagePieceJointes|length > 0 %}
+                    <a class="text-lighter fs-18" href="#"><i
+                                class="ti-clip"></i></a>
+                {% else %}
+                    <a class="text-lighter fs-18 opacity-0" href="#"><i class="ti-clip"></i></a>
+                {% endif %}
 
-            <time datetime="2018">{{ message.message.created|time_ago }}</time>
-        </div>
-    {% endfor %}
+                <time datetime="2018">{{ message.message.created|time_ago }}</time>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 
