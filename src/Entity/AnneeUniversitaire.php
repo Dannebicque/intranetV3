@@ -67,6 +67,11 @@ class AnneeUniversitaire
      */
     private $diplomes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Disponibilite", mappedBy="anneeUniversitaire")
+     */
+    private $disponibilites;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
@@ -76,6 +81,7 @@ class AnneeUniversitaire
         $this->scolarites = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -315,5 +321,36 @@ class AnneeUniversitaire
 
         return $this->getAnnee() . ' | ' . $s;
 
+    }
+
+    /**
+     * @return Collection|Disponibilite[]
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilite $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites[] = $disponibilite;
+            $disponibilite->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilite $disponibilite): self
+    {
+        if ($this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites->removeElement($disponibilite);
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getAnneeUniversitaire() === $this) {
+                $disponibilite->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
     }
 }

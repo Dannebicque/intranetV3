@@ -207,7 +207,12 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\IndisponibilitePersonnel", mappedBy="personnel")
      */
-    private $indisponibilitePersonnels; //todo: a gérer
+    private $indisponibilitePersonnels;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Disponibilite", mappedBy="personnel")
+     */
+    private $disponibilites; //todo: a gérer
 
     public function __construct()
     {
@@ -228,6 +233,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         $this->alternances = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
         $this->indisponibilitePersonnels = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
     /**
@@ -1160,6 +1166,37 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;
+    }
+
+    /**
+     * @return Collection|Disponibilite[]
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilite $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites[] = $disponibilite;
+            $disponibilite->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilite $disponibilite): self
+    {
+        if ($this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites->removeElement($disponibilite);
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getPersonnel() === $this) {
+                $disponibilite->setPersonnel(null);
+            }
+        }
+
+        return $this;
     }
 
 }
