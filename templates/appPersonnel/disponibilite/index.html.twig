@@ -1,36 +1,36 @@
 <div class="card">
     <h4 class="card-title">{{ 'application.disponibilite.heading'|trans }}</h4>
-    <div class="card-body">
-        <table class="table">
-            <thead>
+    <p class="card-body">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Lundi</th>
+            <th>Mardi</th>
+            <th>Mercredi</th>
+            <th>Jeudi</th>
+            <th>Vendredi</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, creneau in creneaux %}
             <tr>
-                <th>&nbsp;</th>
-                <th>Lundi</th>
-                <th>Mardi</th>
-                <th>Mercredi</th>
-                <th>Jeudi</th>
-                <th>Vendredi</th>
+                <th>{{ creneau }}</th>
+                {% for i in 1..5 %}
+                    <td id="{{ key }}_{{ i }}" class="creneau {% if disponibilites[i][creneau] is defined %}
+{% if disponibilites[i][creneau] == 'E' %}bloquercreneau_eviter{% elseif disponibilites[i][creneau] == 'I' %}bloquercreneau_interdit{% endif %}{% endif %}"
+                        data-jour="{{ i }}"
+                        data-heure="{{ creneau }}"
+                    >&nbsp;
+                    </td>
+                {% endfor %}
             </tr>
-            </thead>
-            <tbody>
-            {% for key, creneau in creneaux %}
-                <tr>
-                    <th>{{ creneau }}</th>
-                    {% for i in 1..5 %}
-                        <td id="{{ key }}_{{ i }}" class="creneau {% if disponibilites[i][creneau] is defined %}
-{% if disponibilites[i][creneau] == 'E' %}bloquercreneau_eviter{% elseif disponibilites[i][creneau] == 'I'
-                        %}bloquercreneau_interdit{% endif %}{% endif %}"
-                            data-jour="{{ i }}"
-                            data-heure="{{ creneau }}"
-                        >&nbsp;</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <p id="nb_interdit">{{ nb_interdit }}</p>
-        <p id="nb_eviter">{{ nb_eviter }}</p>
-        <p id="nb_dispo">{{ 30-nb_interdit-nb_eviter }}</p>
-    </div>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# todo: gérer le max d'interdit selon le status #}
+    <p>Nb Créneaux interdits : <span id="nb_interdit">{{ nb_interdit }}</span></p>
+    <p>Nb Créneaux à éviter : <span id="nb_eviter">{{ nb_eviter }}</span></p>
+    <p>Nb Créneaux disponibles : <span id="nb_dispo">{{ 30-nb_interdit-nb_eviter }}</span></p>
 </div>
 

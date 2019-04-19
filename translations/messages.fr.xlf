@@ -10408,7 +10408,7 @@
     <unit id="3AAya12" name="adm.hrs.supprimer.annee.heading">
       <segment>
         <source>adm.hrs.supprimer.annee.heading</source>
-        <target>__adm.hrs.supprimer.annee.heading</target>
+        <target>Supprimer les HRS et primes pour une année</target>
       </segment>
     </unit>
     <unit id="1xpeMY6" name="change_annee_temp_previsionnel">
@@ -10426,7 +10426,7 @@
     <unit id="aMUUxt3" name="adm.previsionnel.supprimer.annee.heading">
       <segment>
         <source>adm.previsionnel.supprimer.annee.heading</source>
-        <target>__adm.previsionnel.supprimer.annee.heading</target>
+        <target>Supprimer le prévisionnel pour une année</target>
       </segment>
     </unit>
     <unit id="MZptk9f" name="adm.gerer.creneaux">
@@ -10450,7 +10450,7 @@
     <unit id="zfl5s7B" name="change_annee_universitiare_temp">
       <segment>
         <source>change_annee_universitiare_temp</source>
-        <target>__change_annee_universitiare_temp</target>
+        <target>Changer temporairement d'année universitaire</target>
       </segment>
     </unit>
     <unit id="q2ve3k_" name="adm.creneau_cour.duplicate.annee.heading">
