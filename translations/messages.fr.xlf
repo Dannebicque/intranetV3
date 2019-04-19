@@ -5687,16 +5687,6 @@
         <target>Exporter (pdf)</target>
       </segment>
     </unit>
-    <unit id="opwHR3p" name="assistant.creation.formation">
-      <notes>
-        <note priority="1">templates/super-administration/super_admin_homepage.html.twig:22
-          </note>
-      </notes>
-      <segment>
-        <source>assistant.creation.formation</source>
-        <target>Assistant création d'une formation</target>
-      </segment>
-    </unit>
     <unit id="JmrUowU" name="creation.formation.manuellement">
       <notes>
         <note priority="1">templates/super-administration/super_admin_homepage.html.twig:14
@@ -6977,7 +6967,7 @@
       </notes>
       <segment>
         <source>label.typesalle</source>
-        <target>label.typesalle</target>
+        <target>Type de salle</target>
       </segment>
     </unit>
     <unit id="X_zrZv." name="0">
@@ -7055,7 +7045,7 @@
       </notes>
       <segment>
         <source>afficher_masquer</source>
-        <target>afficher_masquer</target>
+        <target>afficher/masquer</target>
       </segment>
     </unit>
     <unit id="jTkXepy" name="verouiller_deverouiller">
@@ -7331,7 +7321,7 @@
       </notes>
       <segment>
         <source>atitle.save_pdf</source>
-        <target>atitle.save_pdf</target>
+        <target>Sauvegarder en PDF</target>
       </segment>
     </unit>
     <unit id="yB0kqJr" name="mcc">
@@ -7456,7 +7446,7 @@
       </notes>
       <segment>
         <source>absence.delete.success.flash</source>
-        <target>absence.delete.success.flash</target>
+        <target>Absence supprimée avec succès</target>
       </segment>
     </unit>
     <unit id="95ijfK1" name="absence.removed">
@@ -7511,7 +7501,7 @@
       </notes>
       <segment>
         <source>numero.harpege</source>
-        <target>numero.harpege</target>
+        <target>Numéro harpège</target>
       </segment>
     </unit>
     <unit id="I4f8m9h" name="settins.vos.informations">
@@ -7556,7 +7546,7 @@
       </notes>
       <segment>
         <source>bloc.actions.personnel.heading</source>
-        <target>bloc.actions.personnel.heading</target>
+        <target>Actions</target>
       </segment>
     </unit>
     <unit id="IQdg_6g" name="bureau">
@@ -7601,7 +7591,7 @@
       </notes>
       <segment>
         <source>Year</source>
-        <target>Year</target>
+        <target>Année</target>
       </segment>
     </unit>
     <unit id="MQylA_8" name="Month">
@@ -7610,7 +7600,7 @@
       </notes>
       <segment>
         <source>Month</source>
-        <target>Month</target>
+        <target>Mois</target>
       </segment>
     </unit>
     <unit id="jyNk4Ru" name="Day">
@@ -7619,7 +7609,7 @@
       </notes>
       <segment>
         <source>Day</source>
-        <target>Day</target>
+        <target>Jour</target>
       </segment>
     </unit>
     <unit id="8AY7gIc" name="Hour">
@@ -7628,7 +7618,7 @@
       </notes>
       <segment>
         <source>Hour</source>
-        <target>Hour</target>
+        <target>Heure</target>
       </segment>
     </unit>
     <unit id="S3hmW_x" name="Minute">
@@ -7648,7 +7638,7 @@
       </notes>
       <segment>
         <source>label.envoyer.demande</source>
-        <target>label.envoyer.demande</target>
+        <target>Envoyer la demande</target>
       </segment>
     </unit>
     <unit id="W9.GBe_" name="atitle.accepter.la.demande">
@@ -7658,7 +7648,7 @@
       </notes>
       <segment>
         <source>atitle.accepter.la.demande</source>
-        <target>atitle.accepter.la.demande</target>
+        <target>Accepter la demande</target>
       </segment>
     </unit>
     <unit id="VNswwXg" name="decision.rattrapage.acceptee">
@@ -7694,7 +7684,7 @@
       </notes>
       <segment>
         <source>date.duplicate.success.flash</source>
-        <target>date.duplicate.success.flash</target>
+        <target>Evénement dupliqué avec succès</target>
       </segment>
     </unit>
     <unit id="wqu21Dr" name="date.edit.success.flash">
@@ -7703,7 +7693,7 @@
       </notes>
       <segment>
         <source>date.edit.success.flash</source>
-        <target>date.edit.success.flash</target>
+        <target>Evénement modifié avec succès</target>
       </segment>
     </unit>
     <unit id="1..Lpql" name="septembre">
@@ -7936,7 +7926,7 @@
     <unit id="GZYC.UL" name="article.add.success.flash">
       <segment>
         <source>article.add.success.flash</source>
-        <target>article.add.success.flash</target>
+        <target>Article ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="ssEkU20" name="Nom">
@@ -8038,25 +8028,25 @@
     <unit id="jf0RtiA" name="menu.salle_examen">
       <segment>
         <source>menu.salle_examen</source>
-        <target>menu.salle_examen</target>
+        <target>Salle d'examens</target>
       </segment>
     </unit>
     <unit id="mIA2AJT" name="desposer.un.justificatif">
       <segment>
         <source>desposer.un.justificatif</source>
-        <target>desposer.un.justificatif</target>
+        <target>Déposer un justificatif</target>
       </segment>
     </unit>
     <unit id="XOL9sGc" name="absence_justificatif_deposer">
       <segment>
         <source>absence_justificatif_deposer</source>
-        <target>absence_justificatif_deposer</target>
+        <target>Déposer un justificatif d'absence</target>
       </segment>
     </unit>
     <unit id="RRW_8uU" name="absence_justificatif_etat">
       <segment>
         <source>absence_justificatif_etat</source>
-        <target>absence_justificatif_etat</target>
+        <target>Etat du justificatif d'absence</target>
       </segment>
     </unit>
     <unit id="RSjX2pM" name="adm.edt.index.heading">
@@ -8200,7 +8190,7 @@
     <unit id="GYo_DhY" name="atitle.annuler">
       <segment>
         <source>atitle.annuler</source>
-        <target>atitle.annuler</target>
+        <target>Annuler</target>
       </segment>
     </unit>
     <unit id="6DSQ9qQ" name="adm.stage_periode.index.heading">
@@ -8212,7 +8202,7 @@
     <unit id="0iJvB78" name="adm.stage_periode.new.heading">
       <segment>
         <source>adm.stage_periode.new.heading</source>
-        <target>adm.stage_periode.new.heading</target>
+        <target>Création d'une période de stage</target>
       </segment>
     </unit>
     <unit id="z8NPhv." name="table.mumeroPeriode">
@@ -8260,7 +8250,7 @@
     <unit id="IHbnI45" name="adm.stage_periode.show.heading">
       <segment>
         <source>adm.stage_periode.show.heading</source>
-        <target>adm.stage_periode.show.heading</target>
+        <target>Détails d'une période de stage</target>
       </segment>
     </unit>
     <unit id="drx.AkN" name="table.numeroPeriode">
@@ -8344,7 +8334,7 @@
     <unit id="N3axLgP" name="adm.stage_periode.modification.heading">
       <segment>
         <source>adm.stage_periode.modification.heading</source>
-        <target>adm.stage_periode.modification.heading</target>
+        <target>Modification d'une période de stage</target>
       </segment>
     </unit>
     <unit id="KRjjtwI" name="stage_periode_gestion.heading">
@@ -8362,7 +8352,7 @@
     <unit id="quy2U57" name="atitle.settings">
       <segment>
         <source>atitle.settings</source>
-        <target>atitle.settings</target>
+        <target>Paramètres</target>
       </segment>
     </unit>
     <unit id="meec3A8" name="flexibles">
@@ -8404,7 +8394,7 @@
     <unit id="G_quk4P" name="adm.stage_periode_offre.index.heading">
       <segment>
         <source>adm.stage_periode_offre.index.heading</source>
-        <target>adm.stage_periode_offre.index.heading</target>
+        <target>Gestion des offres de stage pour la période</target>
       </segment>
     </unit>
     <unit id="rbJMoVs" name="table.entreprise">
@@ -8428,13 +8418,13 @@
     <unit id="SBXV.l2" name="adm.stage_periode_offre.new.heading">
       <segment>
         <source>adm.stage_periode_offre.new.heading</source>
-        <target>adm.stage_periode_offre.new.heading</target>
+        <target>Ajout d'une offre de stage pour la période</target>
       </segment>
     </unit>
     <unit id="FIFQMkr" name="atitle.retour.stage_periode_offre">
       <segment>
         <source>atitle.retour.stage_periode_offre</source>
-        <target>atitle.retour.stage_periode_offre</target>
+        <target>Retour aux offres de stage de la période</target>
       </segment>
     </unit>
     <unit id="3wHmPSZ" name="stage_periode_offre.create.success.flash">
@@ -8452,19 +8442,19 @@
     <unit id="X6QHDri" name="adm.stage_periode_offre.show.heading">
       <segment>
         <source>adm.stage_periode_offre.show.heading</source>
-        <target>adm.stage_periode_offre.show.heading</target>
+        <target>Détails d'une offre de stage pour la période</target>
       </segment>
     </unit>
     <unit id="vqonb8W" name="atitle.stage_periode_offre">
       <segment>
         <source>atitle.stage_periode_offre</source>
-        <target>atitle.stage_periode_offre</target>
+        <target>Offres de stage de la période</target>
       </segment>
     </unit>
     <unit id=".cd1MNI" name="adm.stage_entreprise.index.heading">
       <segment>
         <source>adm.stage_entreprise.index.heading</source>
-        <target>adm.stage_entreprise.index.heading</target>
+        <target>Gestion des entreprises pour stage</target>
       </segment>
     </unit>
     <unit id="6KCXLmx" name="table.responsale">
@@ -8494,7 +8484,7 @@
     <unit id="VgRvTep" name="label.update">
       <segment>
         <source>label.update</source>
-        <target>label.update</target>
+        <target>Mise à jour</target>
       </segment>
     </unit>
     <unit id="tb81anI" name="stage_periode.edit.success.flash">
@@ -8530,13 +8520,13 @@
     <unit id="DYYqftE" name="borne.add.success.flash">
       <segment>
         <source>borne.add.success.flash</source>
-        <target>borne.add.success.flash</target>
+        <target>Message pour les bornes ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="QgSp5gE" name="borne.edit.success.flash">
       <segment>
         <source>borne.edit.success.flash</source>
-        <target>borne.edit.success.flash</target>
+        <target>Message pour les bornes modifié avec succès</target>
       </segment>
     </unit>
     <unit id="NDZ8uR_" name="type_document.add.success.flash">
@@ -8548,7 +8538,7 @@
     <unit id="iopVV5B" name="document.add.success.flash">
       <segment>
         <source>document.add.success.flash</source>
-        <target>document.add.success.flash</target>
+        <target>Document ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="5NQ1B3f" name="form_date">
@@ -8578,7 +8568,7 @@
     <unit id="1u_CKPH" name="borne.delete.success.flash">
       <segment>
         <source>borne.delete.success.flash</source>
-        <target>borne.delete.success.flash</target>
+        <target>Message pour les bornes supprimé avec succès</target>
       </segment>
     </unit>
     <unit id="2Lh32Xe" name="M.">
@@ -8602,13 +8592,13 @@
     <unit id="CEOKYgD" name="adm.hrs.duplicate.annee.heading">
       <segment>
         <source>adm.hrs.duplicate.annee.heading</source>
-        <target>adm.hrs.duplicate.annee.heading</target>
+        <target>Dupliquer les HRS et Primes pour une année</target>
       </segment>
     </unit>
     <unit id="dK5ZkCS" name="hrs.duplicate_annee.success.flash">
       <segment>
         <source>hrs.duplicate_annee.success.flash</source>
-        <target>hrs.duplicate_annee.success.flash</target>
+        <target>HRS et Primes dupliqués avec succès</target>
       </segment>
     </unit>
     <unit id=".XlBsMT" name="administration.previsionnel.heading">
@@ -8620,19 +8610,19 @@
     <unit id="wHi.lbd" name="adm.previsionnel.duplicate.annee.heading">
       <segment>
         <source>adm.previsionnel.duplicate.annee.heading</source>
-        <target>adm.previsionnel.duplicate.annee.heading</target>
+        <target>Dupliquer un prévisionnel</target>
       </segment>
     </unit>
     <unit id="YsxB2xD" name="previsionnel.duplicate_annee.success.flash">
       <segment>
         <source>previsionnel.duplicate_annee.success.flash</source>
-        <target>previsionnel.duplicate_annee.success.flash</target>
+        <target>Prévisionnel complet dupliqué avec succès</target>
       </segment>
     </unit>
     <unit id="1pkNEkL" name="atitle.refresh">
       <segment>
         <source>atitle.refresh</source>
-        <target>atitle.refresh</target>
+        <target>Actualiser</target>
       </segment>
     </unit>
     <unit id="DyOCuPC" name="aucun.groupe.dans.typegroupe">
@@ -8656,7 +8646,7 @@
     <unit id="qGoDWo." name="application.vos.stages.et.alternances.heading">
       <segment>
         <source>application.vos.stages.et.alternances.heading</source>
-        <target>application.vos.stages.et.alternances.heading</target>
+        <target>Vos stages et alternances</target>
       </segment>
     </unit>
     <unit id="PBKgpKb" name="menu.about">
@@ -8668,7 +8658,7 @@
     <unit id="kW4usH_" name="about.heading">
       <segment>
         <source>about.heading</source>
-        <target>about.heading</target>
+        <target>A propos</target>
       </segment>
     </unit>
     <unit id="5rnlJV7" name="absence.added">
@@ -8680,13 +8670,13 @@
     <unit id="E_P76z_" name="administration.evaluation.details.heading">
       <segment>
         <source>administration.evaluation.details.heading</source>
-        <target>administration.evaluation.details.heading</target>
+        <target>Détails d'une évaluation</target>
       </segment>
     </unit>
     <unit id="QjfZfSB" name="evaluation.edit.success.flash">
       <segment>
         <source>evaluation.edit.success.flash</source>
-        <target>evaluation.edit.success.flash</target>
+        <target>Evaluation modifié avec sccès</target>
       </segment>
     </unit>
     <unit id="wpBkzoV" name="a.saisir">
@@ -8740,7 +8730,7 @@
     <unit id="hf7had4" name="app.personnel.note.saisie.titre">
       <segment>
         <source>app.personnel.note.saisie.titre</source>
-        <target>app.personnel.note.saisie.titre</target>
+        <target>Saisir des notes</target>
       </segment>
     </unit>
     <unit id="OuHoUBo" name="calloutsuccess">
@@ -8758,31 +8748,31 @@
     <unit id="2RvYuXg" name="adm.structure.parcour.new.heading">
       <segment>
         <source>adm.structure.parcour.new.heading</source>
-        <target>adm.structure.parcour.new.heading</target>
+        <target>Ajout d'un parcours/option</target>
       </segment>
     </unit>
     <unit id="J3RGrdp" name="parcour.duplicate.success.flash">
       <segment>
         <source>parcour.duplicate.success.flash</source>
-        <target>parcour.duplicate.success.flash</target>
+        <target>Parcours ou option dupliquée avec succès</target>
       </segment>
     </unit>
     <unit id="TAL_1Fi" name="adm.structure.parcour.modification.heading">
       <segment>
         <source>adm.structure.parcour.modification.heading</source>
-        <target>adm.structure.parcour.modification.heading</target>
+        <target>Modification des parcours/options</target>
       </segment>
     </unit>
     <unit id="6twzesk" name="adm.structure.parcour.show.heading">
       <segment>
         <source>adm.structure.parcour.show.heading</source>
-        <target>adm.structure.parcour.show.heading</target>
+        <target>Détail d'un parcours/option</target>
       </segment>
     </unit>
     <unit id="qjcPSl." name="matiere.add.success.flash">
       <segment>
         <source>matiere.add.success.flash</source>
-        <target>matiere.add.success.flash</target>
+        <target>Matière ajoutée avec succès</target>
       </segment>
     </unit>
     <unit id="isumpwF" name="table.code_matiere">
@@ -8890,7 +8880,7 @@
     <unit id="5Nvke36" name="matiere.edit.success.flash">
       <segment>
         <source>matiere.edit.success.flash</source>
-        <target>matiere.edit.success.flash</target>
+        <target>Matière modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="LGflpXe" name="heading.edt.dashboard">
@@ -8902,7 +8892,7 @@
     <unit id="kE3iADk" name="edt.actions.heading">
       <segment>
         <source>edt.actions.heading</source>
-        <target>edt.actions.heading</target>
+        <target>Actions sur l'EDT</target>
       </segment>
     </unit>
     <unit id="xrK9Z9s" name="edt.actions.calendrier">
@@ -8938,7 +8928,7 @@
     <unit id="2fO8Bag" name="atitle.creer_nouvelle_annee">
       <segment>
         <source>atitle.creer_nouvelle_annee</source>
-        <target>atitle.creer_nouvelle_annee</target>
+        <target>Créer une nouvelle année</target>
       </segment>
     </unit>
     <unit id="mDQrUU." name="formation.add.success.flash">
@@ -8956,7 +8946,7 @@
     <unit id="8pkgat5" name="adm.etudiant.import.photo.heading">
       <segment>
         <source>adm.etudiant.import.photo.heading</source>
-        <target>adm.etudiant.import.photo.heading</target>
+        <target>Importer une photo</target>
       </segment>
     </unit>
     <unit id="4j5.OsN" name="adm.etudiant.add.heading">
@@ -9064,7 +9054,7 @@
     <unit id="e2XnSUL" name="app.etudiant.absence.justificatif.edit.heading">
       <segment>
         <source>app.etudiant.absence.justificatif.edit.heading</source>
-        <target>aModifier un justificatif d'absence</target>
+        <target>Modifier un justificatif d'absence</target>
       </segment>
     </unit>
     <unit id="v5w2Gyw" name="adm.materiels">
@@ -9106,13 +9096,13 @@
     <unit id="T5cD_Y1" name="materiel.duplicate.success.flash">
       <segment>
         <source>materiel.duplicate.success.flash</source>
-        <target>materiel.duplicate.success.flash</target>
+        <target>Matériel dupliqué avec succès</target>
       </segment>
     </unit>
     <unit id="97XuJmW" name="adm.materiel.modification.heading">
       <segment>
         <source>adm.materiel.modification.heading</source>
-        <target>adm.materiel.modification.heading</target>
+        <target>Modification d'un matériel</target>
       </segment>
     </unit>
     <unit id="KUBVuW_" name="adm.alternance.index.heading">
@@ -9196,7 +9186,7 @@
     <unit id="1YhpUnt" name="personnel.droit.access">
       <segment>
         <source>personnel.droit.access</source>
-        <target>personnel.droit.access</target>
+        <target>Droit d'accès</target>
       </segment>
     </unit>
     <unit id="rCneeU2" name="gestion.personnel.droit.access">
@@ -9286,13 +9276,13 @@
     <unit id="9qyvek5" name="atitle.deposer_nouvelle_actualite">
       <segment>
         <source>atitle.deposer_nouvelle_actualite</source>
-        <target>atitle.deposer_nouvelle_actualite</target>
+        <target>Déposer une nouvelle actualité</target>
       </segment>
     </unit>
     <unit id="BGPWJOD" name="atitle.deposer_nouvel_evenement">
       <segment>
         <source>atitle.deposer_nouvel_evenement</source>
-        <target>atitle.deposer_nouvel_evenement</target>
+        <target>Déposer un nouvel événement</target>
       </segment>
     </unit>
     <unit id="Nwr4vS." name="table.duree_demi_journee">
@@ -9316,13 +9306,13 @@
     <unit id="VvPix9i" name="bloc.stage.etu.heading">
       <segment>
         <source>bloc.stage.etu.heading</source>
-        <target>bloc.stage.etu.heading</target>
+        <target>Stage(s)</target>
       </segment>
     </unit>
     <unit id="B8wjOoQ" name="bloc.stage.histo.etu.heading">
       <segment>
         <source>bloc.stage.histo.etu.heading</source>
-        <target>bloc.stage.histo.etu.heading</target>
+        <target>Historique des stages</target>
       </segment>
     </unit>
     <unit id=".Dsq4AB" name="atitle.initialiser">
@@ -9463,18 +9453,10 @@
         <target>Fichier</target>
       </segment>
     </unit>
-    <unit id="Lw5.adT" name="non&#10;                    .defini">
-      <segment>
-        <source>non
-                    .defini</source>
-        <target>non
-                    .defini</target>
-      </segment>
-    </unit>
     <unit id="dO4anzW" name="amenagements.particuliers">
       <segment>
         <source>amenagements.particuliers</source>
-        <target>amenagements.particuliers</target>
+        <target>Aménagements particuliers</target>
       </segment>
     </unit>
     <unit id="vh1GkiR" name="adm.trello">
@@ -9504,7 +9486,7 @@
     <unit id="L4ZzJ1N" name="atitle.board">
       <segment>
         <source>atitle.board</source>
-        <target>atitle.board</target>
+        <target>Board</target>
       </segment>
     </unit>
     <unit id="yRKq9pt" name="adm.trello_tache.board.heading">
@@ -9516,7 +9498,7 @@
     <unit id="5FtU7qG" name="adm.stage_periode_courrier.index.heading">
       <segment>
         <source>adm.stage_periode_courrier.index.heading</source>
-        <target>adm.stage_periode_courrier.index.heading</target>
+        <target>Gestion des courriers pour la période de stage</target>
       </segment>
     </unit>
     <unit id="fBmJyG9" name="periode.de.soutenance.prevue.le">
@@ -9592,7 +9574,7 @@
       <segment>
         <source>convention.en.attente.de.retour</source>
         <target>Conventions en attente
-          de
+        de
           retour
         </target>
       </segment>
@@ -9630,7 +9612,7 @@
     <unit id=".7zPe1r" name="rapport.pour.le">
       <segment>
         <source>rapport.pour.le</source>
-        <target>rapport.pour.le</target>
+        <target>Rapport pour le</target>
       </segment>
     </unit>
     <unit id="7kMrLkA" name="table.periode">
@@ -9731,18 +9713,10 @@
         <target>Formation en apprentissage</target>
       </segment>
     </unit>
-    <unit id="LUpmeYH" name="convention.en&#10;                        .attente.de.retour">
-      <segment>
-        <source>convention.en
-                        .attente.de.retour</source>
-        <target>convention.en
-                        .attente.de.retour</target>
-      </segment>
-    </unit>
     <unit id="5Lp.pRN" name="atitle.modifier.la.periode">
       <segment>
         <source>atitle.modifier.la.periode</source>
-        <target>atitle.modifier.la.periode</target>
+        <target>Modifier la période</target>
       </segment>
     </unit>
     <unit id="EMzCvNT" name="saisie.autorise.formulaire.non.completee">
@@ -9820,7 +9794,7 @@
     <unit id="UdQ4.mn" name="atitle.import_personnel">
       <segment>
         <source>atitle.import_personnel</source>
-        <target>atitle.import_personnel</target>
+        <target>Importer personnels</target>
       </segment>
     </unit>
     <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
@@ -9838,7 +9812,7 @@
     <unit id=".0s.MiM" name="diplome.add.success.flash">
       <segment>
         <source>diplome.add.success.flash</source>
-        <target>diplome.add.success.flash</target>
+        <target>Diplôme ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
@@ -9856,13 +9830,13 @@
     <unit id="BJ5_JHI" name="diplome.delete.success.flash">
       <segment>
         <source>diplome.delete.success.flash</source>
-        <target>diplome.delete.success.flash</target>
+        <target>Diplôme supprimé avec succès</target>
       </segment>
     </unit>
     <unit id="b9nBoQA" name="annee.add.success.flash">
       <segment>
         <source>annee.add.success.flash</source>
-        <target>annee.add.success.flash</target>
+        <target>Année ajoutée avec succès</target>
       </segment>
     </unit>
     <unit id="UsylaK_" name="semestre.add.success.flash">
@@ -9907,12 +9881,6 @@
         <target>rh.add.success.flash</target>
       </segment>
     </unit>
-    <unit id="TEcC9wu" name="atitle.retirer_formation">
-      <segment>
-        <source>atitle.retirer_formation</source>
-        <target>Retirer de la formation</target>
-      </segment>
-    </unit>
     <unit id="BLeBkva" name="ROLE_PERMANENT">
       <segment>
         <source>ROLE_PERMANENT</source>
@@ -9928,13 +9896,13 @@
     <unit id="2cOTHPo" name="diplome.create.success.flash">
       <segment>
         <source>diplome.create.success.flash</source>
-        <target>diplome.create.success.flash</target>
+        <target>Diplôme créé avec succès</target>
       </segment>
     </unit>
     <unit id="MrLp2Hn" name="annee.create.success.flash">
       <segment>
         <source>annee.create.success.flash</source>
-        <target>annee.create.success.flash</target>
+        <target>Année créée avec succès</target>
       </segment>
     </unit>
     <unit id="0RNVUyJ" name="semestre.create.success.flash">
@@ -9958,7 +9926,7 @@
     <unit id="_Sk3WhF" name="adm.salle_examen.modification.heading">
       <segment>
         <source>adm.salle_examen.modification.heading</source>
-        <target>adm.salle_examen.modification.heading</target>
+        <target>Modifier une salle d'examen</target>
       </segment>
     </unit>
     <unit id="_fvVtrT" name="salle_examen.edit.success.flash">
@@ -9970,25 +9938,25 @@
     <unit id="8f5iKKb" name="adm.salle_examen.show.heading">
       <segment>
         <source>adm.salle_examen.show.heading</source>
-        <target>adm.salle_examen.show.heading</target>
+        <target>Détails d'une salle d'examen</target>
       </segment>
     </unit>
     <unit id="SkGEET8" name="borne.duplicate.success.flash">
       <segment>
         <source>borne.duplicate.success.flash</source>
-        <target>borne.duplicate.success.flash</target>
+        <target>Message pour les bornes dupliqué avec succès</target>
       </segment>
     </unit>
     <unit id="izugDs." name="actualite.add.success.flash">
       <segment>
         <source>actualite.add.success.flash</source>
-        <target>actualite.add.success.flash</target>
+        <target>Actualité ajoutée avec succès</target>
       </segment>
     </unit>
     <unit id="9nE8wKm" name="actualite.duplicate.success.flash">
       <segment>
         <source>actualite.duplicate.success.flash</source>
-        <target>actualite.duplicate.success.flash</target>
+        <target>Actualité dupliquée avec succès</target>
       </segment>
     </unit>
     <unit id="4JSJKds" name="C2I">
@@ -10012,7 +9980,7 @@
     <unit id="t3zKZHM" name="date.create.success.flash">
       <segment>
         <source>date.create.success.flash</source>
-        <target>date.create.success.flash</target>
+        <target>Evénement ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="ucDhBuW" name="toute.la.journee">
@@ -10024,19 +9992,19 @@
     <unit id="LpW47cF" name="competence.add.success.flash">
       <segment>
         <source>competence.add.success.flash</source>
-        <target>competence.add.success.flash</target>
+        <target>Compétence ajoutée avec succès</target>
       </segment>
     </unit>
     <unit id="z6_Zpxf" name="competence.duplicate.success.flash">
       <segment>
         <source>competence.duplicate.success.flash</source>
-        <target>competence.duplicate.success.flash</target>
+        <target>Compétence dupliquée avec succès</target>
       </segment>
     </unit>
     <unit id="Lh0liH7" name="competence.edit.success.flash">
       <segment>
         <source>competence.edit.success.flash</source>
-        <target>competence.edit.success.flash</target>
+        <target>Compétence modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="IZ1jidQ" name="type_groupe.add.success.flash">
@@ -10096,13 +10064,13 @@
     <unit id="xJn3FX6" name="ppn.add.success.flash">
       <segment>
         <source>ppn.add.success.flash</source>
-        <target>ppn.add.success.flash</target>
+        <target>PPN ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="YGglwVH" name="adm.etudiant.semestre.parcours.heading">
       <segment>
         <source>adm.etudiant.semestre.parcours.heading</source>
-        <target>adm.etudiant.semestre.parcours.heading</target>
+        <target>Parcours d'un étudiant</target>
       </segment>
     </unit>
     <unit id="MVIu471" name="label.fichier">
@@ -10144,79 +10112,79 @@
     <unit id="beAwuoh" name="etudiant.add.success.flash">
       <segment>
         <source>etudiant.add.success.flash</source>
-        <target>etudiant.add.success.flash</target>
+        <target>Etudiant ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="IpzPGOC" name="adm.bac.index.heading">
       <segment>
         <source>adm.bac.index.heading</source>
-        <target>adm.bac.index.heading</target>
+        <target>Gestion des diplômes du  bac</target>
       </segment>
     </unit>
     <unit id="HRNlflh" name="adm.bac.new.heading">
       <segment>
         <source>adm.bac.new.heading</source>
-        <target>adm.bac.new.heading</target>
+        <target>Création d'un diplôme du  bac</target>
       </segment>
     </unit>
     <unit id="1wueJLy" name="Created">
       <segment>
         <source>Created</source>
-        <target>Created</target>
+        <target>Créé le</target>
       </segment>
     </unit>
     <unit id="Ol7MoYj" name="Updated">
       <segment>
         <source>Updated</source>
-        <target>Updated</target>
+        <target>Mise à jour</target>
       </segment>
     </unit>
     <unit id="gmmXFxu" name="Libelle">
       <segment>
         <source>Libelle</source>
-        <target>Libelle</target>
+        <target>Libellé</target>
       </segment>
     </unit>
     <unit id="T3bQerK" name="Libelle long">
       <segment>
         <source>Libelle long</source>
-        <target>Libelle long</target>
+        <target>Libellé long</target>
       </segment>
     </unit>
     <unit id="lGfCviC" name="bac.add.success.flash">
       <segment>
         <source>bac.add.success.flash</source>
-        <target>bac.add.success.flash</target>
+        <target>Diplôme de bac ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="PZkGCJQ" name="adm.bac.modification.heading">
       <segment>
         <source>adm.bac.modification.heading</source>
-        <target>adm.bac.modification.heading</target>
+        <target>Modification d'un diplôme du  bac</target>
       </segment>
     </unit>
     <unit id="l6ynKT_" name="bac.edit.success.flash">
       <segment>
         <source>bac.edit.success.flash</source>
-        <target>bac.edit.success.flash</target>
+        <target>Diplôme de bac modifié avec succès</target>
       </segment>
     </unit>
     <unit id="GFecUuX" name="previsionnel.add.success.flash">
       <segment>
         <source>previsionnel.add.success.flash</source>
-        <target>previsionnel.add.success.flash</target>
+        <target>Prévisionnel ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="W2IhDkZ" name="app.personnel.note.import.titre">
       <segment>
         <source>app.personnel.note.import.titre</source>
-        <target>app.personnel.note.import.titre</target>
+        <target>Importer des notes</target>
       </segment>
     </unit>
     <unit id="53s7Rm6" name="label.import">
       <segment>
         <source>label.import</source>
-        <target>label.import</target>
+        <target>Import</target>
       </segment>
     </unit>
     <unit id="hTDwEwU" name="ETU">
@@ -10234,13 +10202,13 @@
     <unit id="i1r30MP" name="annee.promotion">
       <segment>
         <source>annee.promotion</source>
-        <target>__annee.promotion</target>
+        <target>Promotion</target>
       </segment>
     </unit>
     <unit id="Yh9cfdk" name="app.personnel.note.confirme.import.titre">
       <segment>
         <source>app.personnel.note.confirme.import.titre</source>
-        <target>__app.personnel.note.confirme.import.titre</target>
+        <target>Confirmer l'import des notes</target>
       </segment>
     </unit>
     <unit id="bODTn0B" name="adm.type_materiel.modification.heading">
@@ -10252,13 +10220,13 @@
     <unit id="hZHz36U" name="adm.type_materiel.show.heading">
       <segment>
         <source>adm.type_materiel.show.heading</source>
-        <target>__adm.type_materiel.show.heading</target>
+        <target>Détails d'une type de matériel</target>
       </segment>
     </unit>
     <unit id="jjIaxvb" name="adm.materiel.show.heading">
       <segment>
         <source>adm.materiel.show.heading</source>
-        <target>__adm.materiel.show.heading</target>
+        <target>Détails d'un matériel</target>
       </segment>
     </unit>
     <unit id="iNnhEfr" name="table.stage">
@@ -10336,25 +10304,25 @@
     <unit id="NN6ufTQ" name="adm.stage_periode_soutenance.index.heading">
       <segment>
         <source>adm.stage_periode_soutenance.index.heading</source>
-        <target>__adm.stage_periode_soutenance.index.heading</target>
+        <target>Gestion des soutenances pour la période</target>
       </segment>
     </unit>
     <unit id="kFqwv3W" name="adm.stage_periode_offre.modification.heading">
       <segment>
         <source>adm.stage_periode_offre.modification.heading</source>
-        <target>__adm.stage_periode_offre.modification.heading</target>
+        <target>Modification d'une offre de stage pour la période</target>
       </segment>
     </unit>
     <unit id="kUuiMOa" name="nest.pas.en.copie">
       <segment>
         <source>nest.pas.en.copie</source>
-        <target>__nest.pas.en.copie</target>
+        <target>N'est pas en copie</target>
       </segment>
     </unit>
     <unit id="iIDellJ" name="adm.bac.show.heading">
       <segment>
         <source>adm.bac.show.heading</source>
-        <target>__adm.bac.show.heading</target>
+        <target>Détails d'un diplôme du  bac</target>
       </segment>
     </unit>
     <unit id="5KxPH2d" name="situation.par.semestre.notes">
@@ -10366,13 +10334,13 @@
     <unit id="IMwsYoB" name="adm.edt.comparaison.personnels">
       <segment>
         <source>adm.edt.comparaison.personnels</source>
-        <target>__adm.edt.comparaison.personnels</target>
+        <target>Comparaison de l'emploi du temps et du prévisionnel en fonction des personnels</target>
       </segment>
     </unit>
     <unit id="Z0D.BqS" name="adm.edt.comparaison.matieres">
       <segment>
         <source>adm.edt.comparaison.matieres</source>
-        <target>__adm.edt.comparaison.matieres</target>
+        <target>Comparaison de l'emploi du temps et du prévisionnel en fonction des matières</target>
       </segment>
     </unit>
     <unit id="GCt2N84" name="table.tuteur">
@@ -10384,13 +10352,13 @@
     <unit id="GB8I7Pb" name="commentaire.evaluation">
       <segment>
         <source>commentaire.evaluation</source>
-        <target>__commentaire.evaluation</target>
+        <target>Commentaire évaluation</target>
       </segment>
     </unit>
     <unit id="jfwyZ_s" name="coefficient.dans.la.matiere">
       <segment>
         <source>coefficient.dans.la.matiere</source>
-        <target>__coefficient.dans.la.matiere</target>
+        <target>Coefficient dans la matière</target>
       </segment>
     </unit>
     <unit id="Lx2QPfR" name="application.disponibilite.heading">
@@ -10444,7 +10412,7 @@
     <unit id="RM3Mu44" name="adm.creneau_cours.index.heading">
       <segment>
         <source>adm.creneau_cours.index.heading</source>
-        <target>__adm.creneau_cours.index.heading</target>
+        <target>Gestion des créneaux de cours</target>
       </segment>
     </unit>
     <unit id="zfl5s7B" name="change_annee_universitiare_temp">
@@ -10456,19 +10424,19 @@
     <unit id="q2ve3k_" name="adm.creneau_cour.duplicate.annee.heading">
       <segment>
         <source>adm.creneau_cour.duplicate.annee.heading</source>
-        <target>__adm.creneau_cour.duplicate.annee.heading</target>
+        <target>Dupliquer un créneau de cours</target>
       </segment>
     </unit>
     <unit id="XVAnXDo" name="atitle.afficher.visibile">
       <segment>
         <source>atitle.afficher.visibile</source>
-        <target>__atitle.afficher.visibile</target>
+        <target>Afficher visible</target>
       </segment>
     </unit>
     <unit id="wA8Btv9" name="atitle.afficher.invisibile">
       <segment>
         <source>atitle.afficher.invisibile</source>
-        <target>__atitle.afficher.invisibile</target>
+        <target>Afficher invisible</target>
       </segment>
     </unit>
     <unit id="Eu4PUJh" name="table.message_visible">
@@ -10486,19 +10454,19 @@
     <unit id="pTkkPq1" name="adm.edt.realise.index.heading">
       <segment>
         <source>adm.edt.realise.index.heading</source>
-        <target>__adm.edt.realise.index.heading</target>
+        <target>Emploi du temps réalisé</target>
       </segment>
     </unit>
     <unit id="m.eblwi" name="adm.edt.realise.chronologique.heading">
       <segment>
         <source>adm.edt.realise.chronologique.heading</source>
-        <target>__adm.edt.realise.chronologique.heading</target>
+        <target>Emploi du temps réalisé réalisé chronologique</target>
       </segment>
     </unit>
     <unit id="MfDvQKi" name="adm.edt.compare.personnels.heading">
       <segment>
         <source>adm.edt.compare.personnels.heading</source>
-        <target>__adm.edt.compare.personnels.heading</target>
+        <target>Comparaison de l'emploi du temps et du prévisionnel en fonction des personnels</target>
       </segment>
     </unit>
     <unit id="rnZk.tU" name="compare.plusinfos.details">
@@ -10516,19 +10484,19 @@
     <unit id="19oK39D" name="adm.edt.compare.matieres.heading">
       <segment>
         <source>adm.edt.compare.matieres.heading</source>
-        <target>__adm.edt.compare.matieres.heading</target>
+        <target>Comparaison de l'emploi du temps et du prévisionnel en fonction des matières</target>
       </segment>
     </unit>
     <unit id="ArX.xNG" name="adm.stage_etudiant.modification.heading">
       <segment>
         <source>adm.stage_etudiant.modification.heading</source>
-        <target>__adm.stage_etudiant.modification.heading</target>
+        <target>Modification d'une entreprise</target>
       </segment>
     </unit>
     <unit id="aULbtpt" name="adm.ppn.copie.heading">
       <segment>
         <source>adm.ppn.copie.heading</source>
-        <target>__adm.ppn.copie.heading</target>
+        <target>Copie d'un PPN</target>
       </segment>
     </unit>
     <unit id="dYL_2VP" name="adm.groupes.index.titre">
@@ -10552,7 +10520,7 @@
     <unit id="J.fCtLc" name="adm.configuration.new.heading">
       <segment>
         <source>adm.configuration.new.heading</source>
-        <target>__adm.configuration.new.heading</target>
+        <target>Nouveau paramètre de configuration</target>
       </segment>
     </unit>
     <unit id="Md_OvUD" name="sadm.configuration.index.heading">
@@ -10576,25 +10544,25 @@
     <unit id="xZB.zm3" name="adm.configuration.show.heading">
       <segment>
         <source>adm.configuration.show.heading</source>
-        <target>__adm.configuration.show.heading</target>
+        <target>Détail d'un paramètre de configuration</target>
       </segment>
     </unit>
     <unit id="jusVjOz" name="adm.annee_universitaire.modification.heading">
       <segment>
         <source>adm.annee_universitaire.modification.heading</source>
-        <target>__adm.annee_universitaire.modification.heading</target>
+        <target>Modification d'une année universitaire</target>
       </segment>
     </unit>
     <unit id="Y_cUYya" name="adm.annee_universitaire.new.heading">
       <segment>
         <source>adm.annee_universitaire.new.heading</source>
-        <target>__adm.annee_universitaire.new.heading</target>
+        <target>Création d'une année universitaire</target>
       </segment>
     </unit>
     <unit id="UKlrtuL" name="adm.annee_universitaire.index.heading">
       <segment>
         <source>adm.annee_universitaire.index.heading</source>
-        <target>__adm.annee_universitaire.index.heading</target>
+        <target>Gestion des années universitaires</target>
       </segment>
     </unit>
     <unit id="tT2nxN7" name="sadm.celcat_calendrier.modification.heading">
@@ -10606,19 +10574,19 @@
     <unit id="KHPnWCB" name="adm.celcat_calendrier.new.heading">
       <segment>
         <source>adm.celcat_calendrier.new.heading</source>
-        <target>__adm.celcat_calendrier.new.heading</target>
+        <target>Création d'un nouveau calendrier Celcat</target>
       </segment>
     </unit>
     <unit id="HTA8ZXq" name="adm.celcat_calendrier.show.heading">
       <segment>
         <source>adm.celcat_calendrier.show.heading</source>
-        <target>__adm.celcat_calendrier.show.heading</target>
+        <target>Détails du calendrier Celcat</target>
       </segment>
     </unit>
     <unit id="R0us3UC" name="annee.universitaire">
       <segment>
         <source>annee.universitaire</source>
-        <target>__annee.universitaire</target>
+        <target>Année Universitaire</target>
       </segment>
     </unit>
     <unit id="C.Js5Xw" name="details.groupes.groupe">
@@ -10648,25 +10616,25 @@
     <unit id="Jcp8zNA" name="applications.etudiant.quizz.heading">
       <segment>
         <source>applications.etudiant.quizz.heading</source>
-        <target>applications.etudiant.quizz.heading</target>
+        <target>Quizz</target>
       </segment>
     </unit>
     <unit id="jRFacAY" name="applications.etudiant.emprunt.heading">
       <segment>
         <source>applications.etudiant.emprunt.heading</source>
-        <target>applications.etudiant.emprunt.heading</target>
+        <target>Vos emprunts</target>
       </segment>
     </unit>
     <unit id="vHKjqki" name="absence_justificatif.add.success.flash">
       <segment>
         <source>absence_justificatif.add.success.flash</source>
-        <target>absence_justificatif.add.success.flash</target>
+        <target>Justificatif d'absence ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="Un9jlZ4" name="atitle.voir_fichier">
       <segment>
         <source>atitle.voir_fichier</source>
-        <target>atitle.voir_fichier</target>
+        <target>Voir fichier</target>
       </segment>
     </unit>
     <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
@@ -10722,7 +10690,7 @@
     <unit id="4IV_WkH" name="application.progression.heading">
       <segment>
         <source>application.progression.heading</source>
-        <target>application.progression.heading</target>
+        <target>Progression pédagogique</target>
       </segment>
     </unit>
     <unit id="98QvGbd" name="adm.structure.departement">
@@ -10734,7 +10702,7 @@
     <unit id="qQ.yKx1" name="adm.parametres.departement">
       <segment>
         <source>adm.parametres.departement</source>
-        <target>adm.parametres.departement</target>
+        <target>Paramètres du département</target>
       </segment>
     </unit>
     <unit id="oxbjZJ8" name="structure.de.la.departement.heading">
@@ -10746,19 +10714,19 @@
     <unit id="nVOmwKc" name="ajouter.diplome.departement">
       <segment>
         <source>ajouter.diplome.departement</source>
-        <target>ajouter.diplome.departement</target>
+        <target>Ajouter un diplôme</target>
       </segment>
     </unit>
     <unit id="qkZmdda" name="article_categories">
       <segment>
         <source>article_categories</source>
-        <target>article_categories</target>
+        <target>Catégories d'article</target>
       </segment>
     </unit>
     <unit id="OC6xwbs" name="atitle.retour.articles">
       <segment>
         <source>atitle.retour.articles</source>
-        <target>atitle.retour.articles</target>
+        <target>Retour aux articles</target>
       </segment>
     </unit>
     <unit id="38dzWFf" name="table.nb_articles">
@@ -10770,25 +10738,25 @@
     <unit id="n4rS9NF" name="adm.configuration.tab.departement.menu">
       <segment>
         <source>adm.configuration.tab.departement.menu</source>
-        <target>adm.configuration.tab.departement.menu</target>
+        <target>Configuration du département</target>
       </segment>
     </unit>
     <unit id="b6qgwOv" name="adm.configuration.tab.departement.heading">
       <segment>
         <source>adm.configuration.tab.departement.heading</source>
-        <target>adm.configuration.tab.departement.heading</target>
+        <target>Configuration du département</target>
       </segment>
     </unit>
     <unit id="x34L_zH" name="atitle.afficher_semestre">
       <segment>
         <source>atitle.afficher_semestre</source>
-        <target>atitle.afficher_semestre</target>
+        <target>Afficher semestre</target>
       </segment>
     </unit>
     <unit id="VGwtGUR" name="atitle.masquer_semestre">
       <segment>
         <source>atitle.masquer_semestre</source>
-        <target>atitle.masquer_semestre</target>
+        <target>Masquer semestre</target>
       </segment>
     </unit>
     <unit id="bi2s2DK" name="departements.heading">
@@ -10806,7 +10774,7 @@
     <unit id="CL42c1d" name="assistant.creation.departement">
       <segment>
         <source>assistant.creation.departement</source>
-        <target>assistant.creation.departement</target>
+        <target>Assistant pour la création d'un nouveau département</target>
       </segment>
     </unit>
     <unit id="c_a8Ms0" name="super-admin.personnel-departement.heading">
@@ -10818,7 +10786,7 @@
     <unit id="MSKqMCs" name="atitle.retirer_departement">
       <segment>
         <source>atitle.retirer_departement</source>
-        <target>atitle.retirer_departement</target>
+        <target>Retirer du département</target>
       </segment>
     </unit>
     <unit id="mGr5eBs" name="super-admin.add.personnel-departement.heading">
@@ -10860,7 +10828,7 @@
     <unit id="7wCpV.h" name="message.copy">
       <segment>
         <source>message.copy</source>
-        <target>message.copy</target>
+        <target>Cc</target>
       </segment>
     </unit>
     <unit id="4hr_vC8" name="messagerie.boite.reception">
@@ -10879,24 +10847,21 @@
       <segment>
         <source>messagerie.boite
                 .brouillons</source>
-        <target>messagerie.boite
-                .brouillons</target>
+        <target>Brouillons</target>
       </segment>
     </unit>
     <unit id="le5wJ.S" name="messagerie.boite&#10;                .corbeille">
       <segment>
         <source>messagerie.boite
                 .corbeille</source>
-        <target>messagerie.boite
-                .corbeille</target>
+        <target>Corbeille</target>
       </segment>
     </unit>
     <unit id="amYnZN1" name="messagerie.boite&#10;                .epingles">
       <segment>
         <source>messagerie.boite
                 .epingles</source>
-        <target>messagerie.boite
-                .epingles</target>
+        <target>Epinglés</target>
       </segment>
     </unit>
     <unit id="sdpQiGI" name="messagerie.boite.brouillons">
