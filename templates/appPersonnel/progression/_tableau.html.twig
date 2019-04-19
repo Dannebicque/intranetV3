@@ -1,6 +1,8 @@
+<button id="refresh">Refresh</button>
+
 {% for matiere in matieres if matiere.matiere.ue.semestre.moisDebut == debut %}
     <h4>{{ matiere.matiere.libelle }}</h4>
-    <div class="alert alert-info">
+    <div class="alert alert-info une_matiere" data-matiere="{{ matiere.id }}">
         <ul>
             <li>CM: {{ matiere.nbHCm }} h x
                 <span id="nbgr_cm_{{ matiere.id }}">{{ matiere.nbGrCm }}</span>
@@ -56,7 +58,12 @@
                 <td><input type="text" class="form-control updateProgression cm_{{ matiere.id }}"
                            data-semaine="{{ i }}"
                            data-type="cm" data-matiere="{{ matiere.id }}"
-                           id="tot_s{{ i }}_{{ matiere.id }}_cm"></td>
+                           id="tot_s{{ i }}_{{ matiere.id }}_cm"
+                           {% if progressions[matiere.id] is defined and progressions[matiere.id][i] is defined and
+                            progressions[matiere.id][i]['cm'] is defined %}
+                                value="{{ progressions[matiere.id][i]['cm'] }}"
+                           {% endif %}
+                    ></td>
             {% endfor %}
             <td><span id="tot_cm_seance_{{ matiere.id }}">Tot.</span></td>
             <td><span id="tot_cm_{{ matiere.id }}">Tot.</span></td>
@@ -68,7 +75,12 @@
                 <td><input type="text" class="form-control updateProgression td_{{ matiere.id }}"
                            data-semaine="{{ i }}"
                            data-type="td" data-matiere="{{ matiere.id }}"
-                           id="tot_s{{ i }}_{{ matiere.id }}_td"></td>
+                           id="tot_s{{ i }}_{{ matiere.id }}_td"
+                            {% if progressions[matiere.id] is defined and progressions[matiere.id][i] is defined and
+                                progressions[matiere.id][i]['td'] is defined %}
+                                value="{{ progressions[matiere.id][i]['td'] }}"
+                            {% endif %}
+                    ></td>
             {% endfor %}
             <td><span id="tot_td_seance_{{ matiere.id }}">Tot.</span></td>
             <td><span id="tot_td_{{ matiere.id }}">Tot.</span></td>
@@ -80,7 +92,12 @@
                 <td><input type="text" class="form-control updateProgression tp_{{ matiere.id }}"
                            data-semaine="{{ i }}"
                            data-type="tp" data-matiere="{{ matiere.id }}"
-                           id="tot_s{{ i }}_{{ matiere.id }}_tp"></td>
+                           id="tot_s{{ i }}_{{ matiere.id }}_tp"
+                            {% if progressions[matiere.id] is defined and progressions[matiere.id][i] is defined and
+                                progressions[matiere.id][i]['tp'] is defined %}
+                                value="{{ progressions[matiere.id][i]['tp'] }}"
+                            {% endif %}
+                    ></td>
             {% endfor %}
             <td><span id="tot_tp_seance_{{ matiere.id }}">Tot.</span></td>
             <td><span id="tot_tp_{{ matiere.id }}">Tot.</span></td>
@@ -120,6 +137,7 @@
             <th>Semaine {{ i }}</th>
         {% endfor %}
         <th>Total</th>
+        <th>Total Gr.</th>
         <th>Total H.</th>
     </tr>
     </thead>
@@ -129,8 +147,9 @@
         {% for i in 1..14 %}
             <td><span id="tot_s{{ i }}">Tot.</span></td>
         {% endfor %}
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th><span id="tot_seance">Tot.</span></th>
+        <th><span id="tot_global_groupe">Tot.</span></th>
+        <th><span id="tot_global_heure">Tot.</span></th>
     </tr>
     </tbody>
 </table>

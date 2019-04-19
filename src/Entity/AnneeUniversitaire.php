@@ -72,6 +72,11 @@ class AnneeUniversitaire
      */
     private $disponibilites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="anneeUniversitaire")
+     */
+    private $progressionPedagogiques;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
@@ -82,6 +87,7 @@ class AnneeUniversitaire
         $this->scolaritePromos = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
+        $this->progressionPedagogiques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -348,6 +354,37 @@ class AnneeUniversitaire
             // set the owning side to null (unless already changed)
             if ($disponibilite->getAnneeUniversitaire() === $this) {
                 $disponibilite->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgressionPedagogique[]
+     */
+    public function getProgressionPedagogiques(): Collection
+    {
+        return $this->progressionPedagogiques;
+    }
+
+    public function addProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
+    {
+        if (!$this->progressionPedagogiques->contains($progressionPedagogique)) {
+            $this->progressionPedagogiques[] = $progressionPedagogique;
+            $progressionPedagogique->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
+    {
+        if ($this->progressionPedagogiques->contains($progressionPedagogique)) {
+            $this->progressionPedagogiques->removeElement($progressionPedagogique);
+            // set the owning side to null (unless already changed)
+            if ($progressionPedagogique->getAnneeUniversitaire() === $this) {
+                $progressionPedagogique->setAnneeUniversitaire(null);
             }
         }
 

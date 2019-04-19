@@ -212,7 +212,12 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Disponibilite", mappedBy="personnel")
      */
-    private $disponibilites; //todo: a gérer
+    private $disponibilites;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="personnel")
+     */
+    private $progressionPedagogiques; //todo: a gérer
 
     public function __construct()
     {
@@ -234,6 +239,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
         $this->materielPrets = new ArrayCollection();
         $this->indisponibilitePersonnels = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
+        $this->progressionPedagogiques = new ArrayCollection();
     }
 
     /**
@@ -1193,6 +1199,37 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
             // set the owning side to null (unless already changed)
             if ($disponibilite->getPersonnel() === $this) {
                 $disponibilite->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgressionPedagogique[]
+     */
+    public function getProgressionPedagogiques(): Collection
+    {
+        return $this->progressionPedagogiques;
+    }
+
+    public function addProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
+    {
+        if (!$this->progressionPedagogiques->contains($progressionPedagogique)) {
+            $this->progressionPedagogiques[] = $progressionPedagogique;
+            $progressionPedagogique->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
+    {
+        if ($this->progressionPedagogiques->contains($progressionPedagogique)) {
+            $this->progressionPedagogiques->removeElement($progressionPedagogique);
+            // set the owning side to null (unless already changed)
+            if ($progressionPedagogique->getPersonnel() === $this) {
+                $progressionPedagogique->setPersonnel(null);
             }
         }
 

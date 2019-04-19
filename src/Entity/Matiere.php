@@ -212,6 +212,11 @@ class Matiere extends BaseEntity
      */
     private $scolaritePromoMatieres;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="matiere")
+     */
+    private $progressionPedagogiques;
+
     public function __construct()
     {
         $this->previsionnels = new ArrayCollection();
@@ -220,6 +225,7 @@ class Matiere extends BaseEntity
         $this->matiereEnfants = new ArrayCollection();
         $this->scolariteMoyenneMatieres = new ArrayCollection();
         $this->scolaritePromoMatieres = new ArrayCollection();
+        $this->progressionPedagogiques = new ArrayCollection();
     }
 
     /**
@@ -886,6 +892,37 @@ class Matiere extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($scolaritePromoMatiere->getMatiere() === $this) {
                 $scolaritePromoMatiere->setMatiere(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProgressionPedagogique[]
+     */
+    public function getProgressionPedagogiques(): Collection
+    {
+        return $this->progressionPedagogiques;
+    }
+
+    public function addProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
+    {
+        if (!$this->progressionPedagogiques->contains($progressionPedagogique)) {
+            $this->progressionPedagogiques[] = $progressionPedagogique;
+            $progressionPedagogique->setMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
+    {
+        if ($this->progressionPedagogiques->contains($progressionPedagogique)) {
+            $this->progressionPedagogiques->removeElement($progressionPedagogique);
+            // set the owning side to null (unless already changed)
+            if ($progressionPedagogique->getMatiere() === $this) {
+                $progressionPedagogique->setMatiere(null);
             }
         }
 

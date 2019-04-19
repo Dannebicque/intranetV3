@@ -53,6 +53,7 @@ class DisponibiliteController extends BaseController
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function updateDisponibilites(Request $request, DisponibiliteRepository $disponibiliteRepository) {
+        //todo: a gérer année universitaire
         $jour = $request->request->get('jour');
         $heure = $request->request->get('heure');
         $etat = $request->request->get('etat');
@@ -64,7 +65,6 @@ class DisponibiliteController extends BaseController
                 $this->entityManager->remove($disponibilite);
             } else {
                 $disponibilite->setEtat($etat);
-
             }
             $this->entityManager->flush();
             return $this->json(true, Response::HTTP_OK);
