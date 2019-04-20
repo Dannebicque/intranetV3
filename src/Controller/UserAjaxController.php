@@ -8,6 +8,7 @@ use App\Entity\PersonnelDepartement;
 use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
 use App\Repository\PersonnelDepartementRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +66,7 @@ class UserAjaxController extends BaseController
      * @Route("/change-defaut/{departement}", name="user_change_departement_defaut", options={"expose":true})
      * @param PersonnelDepartementRepository $personnelDepartementRepository
      * @param Departement                    $departement
-     *
+     * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
      * @return JsonResponse
      */
     public function changeDepartementDefaut(

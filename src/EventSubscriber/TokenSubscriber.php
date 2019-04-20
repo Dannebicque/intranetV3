@@ -82,7 +82,7 @@ class TokenSubscriber implements EventSubscriberInterface
                 if ($this->authChecker->isGranted('ROLE_PERMANENT')) {
 
                     if ($this->session->get('departement') !== null) {
-                        $this->departement = $this->departementRepository->find($this->session->get('departement'));
+                        $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->session->get('departement')]);
                     }
 
                     if ($this->departement === null) {
@@ -98,7 +98,8 @@ class TokenSubscriber implements EventSubscriberInterface
                         } elseif (count($departements) === 1) {
                             echo 'une departement par defaut';
                             $this->departement = $departements[0];
-                            $this->session->set('departement', $this->departement->getId()); //on sauvegarde
+                            dump($this->departement->getUuidString());
+                            $this->session->set('departement', $this->departement->getUuidString()); //on sauvegarde
                         } else {
                             echo 'pas de departement par defaut';
                             //pas de departement par défaut, ou pas de departement du tout.

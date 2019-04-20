@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\Departement;
 use App\Repository\PersonnelDepartementRepository;
@@ -65,11 +69,11 @@ class SecurityController extends AbstractController
      *
      * @return Response
      */
-    public function lock(Request $request): Response
+    public function lock(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         if ($request->isMethod('POST')) {
             $credential = $request->request->get('password');
-            $isPasswordValid = $this->encoder->isPasswordValid($this->getUser(), $credential);
+            $isPasswordValid = $passwordEncoder->isPasswordValid($this->getUser(), $credential);
 
             if ($isPasswordValid) {
                 return new RedirectResponse($this->generateUrl('default_homepage')); //todo: gérer selon le rôle...
@@ -84,16 +88,17 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/change-departement/{departement}", name="security_change_departement")
-     * @param Request     $request
-     *
+     * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
+
      * @param Departement $departement
      *
      * @return Response
      */
-    public function changeDepartement(Request $request, Departement $departement): Response
+    public function changeDepartement(
+        SessionInterface $session,
+        Departement $departement): Response
     {
-        //todo: sauvegarder le nouveau département dans la session
-
+        $session->set('departement', $departement->getUuidString());
         return $this->redirectToRoute('default_homepage');
     }
 
@@ -130,7 +135,5 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/choix-departement.html.twig', ['departements' => $departements, 'user' => $user]);
-
-
     }
 }

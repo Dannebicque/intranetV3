@@ -2149,7 +2149,7 @@
       </notes>
       <segment>
         <source>choice.mcf</source>
-        <target>choice.mcf</target>
+        <target>Maître de Conférences</target>
       </segment>
     </unit>
     <unit id="f.dmV00" name="choice.pr">
@@ -2960,7 +2960,7 @@
     <unit id="7inZ5_j" name="Si erreur contacté les RH">
       <segment>
         <source>Si erreur contacté les RH</source>
-        <target>Si erreur contacté les RH</target>
+        <target>Si erreur, veuillez contacter les RH</target>
       </segment>
     </unit>
     <unit id="2m4vU5c" name="2016">

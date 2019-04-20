@@ -25,7 +25,7 @@
       </notes>
       <segment>
         <source>label.cv</source>
-        <target>label.cv</target>
+        <target>CV</target>
       </segment>
     </unit>
     <unit id="F_My2fP" name="label.photo">
@@ -43,7 +43,7 @@
       </notes>
       <segment>
         <source>label.apercu</source>
-        <target>label.apercu</target>
+        <target>Aperçu</target>
       </segment>
     </unit>
     <unit id="lgWCmBh" name="help.ficheRenseignement">
@@ -62,6 +62,12 @@
       <segment>
         <source>Photo</source>
         <target>Photo</target>
+      </segment>
+    </unit>
+    <unit id="5IbBWql" name="Votre CV">
+      <segment>
+        <source>Votre CV</source>
+        <target>Votre CV</target>
       </segment>
     </unit>
   </file>
