@@ -13,6 +13,7 @@
         <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('src/assets/vendor/flag-icon/css/flag-icon.css') }}" rel="stylesheet">
 {#        {{ encore_entry_link_tags('app') }}#}
     {% endblock %}
 
@@ -242,19 +243,17 @@
 
             <!-- Change language -->
             <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown"><img class="icon"
-                                                                         src="{{ asset('build/images/flag/en.png') }}"
-                                                                         alt="fr"></span>
+                    <span class="topbar-btn" data-toggle="dropdown"><i class="ti-flag-alt-2"></i><span
+                                class="sr-only">Changer de langue</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item active" href="#"><img class="icon"
-                                                                  src="{{ asset('build/images/flag/en.png') }}"
-                                                                  alt="version anglaise"></a>
-                    <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('build/images/flag/de.png') }}"
-                                                           alt="version allemande"></a>
-                    <a class="dropdown-item" href="#"><img class="icon"
-                                                           src="{{ asset('build/images/flag/es.png') }}"
-                                                           alt="version espagnole"></a>
+                    <a class="dropdown-item active" href="{{ path('default_homepage',{'_locale':'en'}) }}"><span
+                                class="flag-icon flag-icon-gb"></span> English</a>
+                    <a class="dropdown-item" href="{{ path('default_homepage',{'_locale':'fr'}) }}"><span
+                                class="flag-icon flag-icon-fr"></span> Français</a>
+                    <a class="dropdown-item" href="{{ path('default_homepage',{'_locale':'de'}) }}"><span
+                                class="flag-icon flag-icon-de"></span> German</a>
+                    <a class="dropdown-item" href="{{ path('default_homepage',{'_locale':'es'}) }}"><span
+                                class="flag-icon flag-icon-es"></span> Espagnol</a>
                 </div>
             </li>
             <!-- END Change language -->

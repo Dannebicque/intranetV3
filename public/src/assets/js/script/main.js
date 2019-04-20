@@ -7,6 +7,7 @@ require('./util');
 /** CSS **/
 require("../../css/style.scss");
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready

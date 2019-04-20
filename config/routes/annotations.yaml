@@ -26,4 +26,4 @@ controllers:
     defaults:
         _locale: fr
     requirements:
-        _locale: fr|en
+        _locale: fr|en|de|es
