@@ -2021,10 +2021,7 @@ function afficheUtilisateur (type) {
 
 $(document).on('change', '.departementParDefaut', function(e){
   $.ajax({
-    url: Routing.generate('user_change_departement_defaut'),
-    data: {
-      departement: $(this.val())
-    },
+    url: Routing.generate('user_change_departement_defaut', {departement: $(this).val()}),
     method: 'POST',
     success: function(e) {
       addCallout('Mofification enregistrée !', 'success')

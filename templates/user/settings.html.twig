@@ -55,9 +55,9 @@
                                     <td>
                                         <div class="form-check">
                                             <input class="form-check-input departementParDefaut" type="radio" name="pardefaut"
-                                                   value="{{ departement.departement.id }}"
+                                                   value="{{ departement.departement.uuidString }}"
                                                    {% if departement.defaut == true %}checked{% endif %}>
-                                        </div>{# todo: A TESTER ! gérer le changement de departement par défaut. #}
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}

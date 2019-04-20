@@ -7519,7 +7519,7 @@
       </notes>
       <segment>
         <source>settins.vos.parametres</source>
-        <target>settins.vos.parametres</target>
+        <target>Vos paramètres</target>
       </segment>
     </unit>
     <unit id="G4eGyQ0" name="table.diplomes">
@@ -7528,7 +7528,7 @@
       </notes>
       <segment>
         <source>table.diplomes</source>
-        <target>table.diplomes</target>
+        <target>Diplômes</target>
       </segment>
     </unit>
     <unit id="RqmkWR9" name="table.par.defaut">
@@ -7537,7 +7537,7 @@
       </notes>
       <segment>
         <source>table.par.defaut</source>
-        <target>table.par.defaut</target>
+        <target>Par défaut</target>
       </segment>
     </unit>
     <unit id="NCvWq52" name="bloc.actions.personnel.heading">
@@ -8586,7 +8586,7 @@
     <unit id="pap_txp" name="settings.vos.informations">
       <segment>
         <source>settings.vos.informations</source>
-        <target>settings.vos.informations</target>
+        <target>Vos informations</target>
       </segment>
     </unit>
     <unit id="CEOKYgD" name="adm.hrs.duplicate.annee.heading">
@@ -10880,6 +10880,18 @@
       <segment>
         <source>messagerie.boite.epingles</source>
         <target>Epinglés</target>
+      </segment>
+    </unit>
+    <unit id="x7vVhiW" name="label.cv">
+      <segment>
+        <source>label.cv</source>
+        <target>Votre CV</target>
+      </segment>
+    </unit>
+    <unit id="lM1NbgD" name="table.departement">
+      <segment>
+        <source>table.departement</source>
+        <target>Département</target>
       </segment>
     </unit>
   </file>

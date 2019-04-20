@@ -41,6 +41,7 @@ class MailingSubscriber implements EventSubscriberInterface
         return [
             // le nom de l'event et le nom de la fonction qui sera déclenché
             //Events::USER_REGISTERED => 'onUserRegistrated',
+
             Events::MAIL_ABSENCE_ADDED                 => 'onMailAbsenceAdded',
             Events::MAIL_ABSENCE_ADDED_RESPONSABLE     => 'onMailAbsenceAddedResponsable',
             Events::MAIL_ABSENCE_REMOVED               => 'onMailAbsenceRemoved',
@@ -50,6 +51,17 @@ class MailingSubscriber implements EventSubscriberInterface
             Events::MAIL_DECISION_RATTRAPAGE           => 'onMailDecisionRattrapage',
             Events::MAIL_DECISION_JUSTIFICATIF         => 'onMailDecisionJustificatif',
             Events::MAIL_DELETE_JUSTIFICATIF           => 'onMailDeleteJustificatif',
+
+
+            /*Events::MAIL_ABSENCE_ADDED                 => 'onMailAbsenceAdded',
+            Events::MAIL_ABSENCE_ADDED_RESPONSABLE     => 'onMailAbsenceAddedResponsable',
+            Events::MAIL_ABSENCE_REMOVED               => 'onMailAbsenceRemoved',
+            Events::MAIL_ABSENCE_REMOVED_RESPONSABLE   => 'onMailAbsenceRemovedResponsable',
+            Events::MAIL_NOTE_MODIFICATION_RESPONSABLE => 'onMailNoteModificationResponsable',
+            Events::MAIL_NEW_TRANSCRIPT_RESPONSABLE    => 'onMailNewTranscriptResponsable',
+            Events::MAIL_DECISION_RATTRAPAGE           => 'onMailDecisionRattrapage',
+            Events::MAIL_DECISION_JUSTIFICATIF         => 'onMailDecisionJustificatif',
+            Events::MAIL_DELETE_JUSTIFICATIF           => 'onMailDeleteJustificatif',*/
         ];
     }
 

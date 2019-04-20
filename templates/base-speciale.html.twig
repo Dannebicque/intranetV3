@@ -9,12 +9,10 @@
     <title>Intranet - {{  block('header')  }}</title>
 
     {% block stylesheets %}
-        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
-
-        <!-- Styles -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-{#        {{ encore_entry_link_tags('app') }}#}
+        <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">
     {% endblock %}
 
     <!-- Favicons -->
@@ -32,7 +30,8 @@
 
 
 {% block javascripts %}
-{#    {{ encore_entry_script_tags('app') }}#}
+    <script src="{{ asset('src/assets/js/core.min.js') }}"></script>
+    <script src="{{ asset('src/assets/js/app.js') }}"></script>
 {% endblock %}
 </body>
 </html>

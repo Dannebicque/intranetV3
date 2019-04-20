@@ -26,7 +26,7 @@ use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -137,12 +137,12 @@ class DataUserSession
         } elseif ($this->getUser() instanceof Personnel) {
             $this->messagesRepository = $messageDestinatairePersonnelRepository;
             if ($session->get('departement') !== null) {
-                $this->departement = $this->departementRepository->find($session->get('departement'));
+                $this->departement = $this->departementRepository->findOneBy(['uuid' => $session->get('departement')]);
             }
         } else {
             //ni étudiant, ni personnel... étrange
             $event = new GenericEvent('erreur-type-user');
-            $eventDispatcher->dispatch(Events::REDIRECT_TO_LOGIN, $event);
+            $eventDispatcher->dispatch($event, Events::REDIRECT_TO_LOGIN);
         }
 
         if ($this->departement !== null) {

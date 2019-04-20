@@ -200,7 +200,10 @@
                 <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
                 <div class="dropdown-menu dropdown-grid">
                     {% for departement in user_data.user.getPersonnelDepartements %}
-                        <a class="dropdown-item" href="{{ path('security_change_departement', {departement: departement.departement.uuidString}) }}">
+                        <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}" href="{{ path
+                            ('security_change_departement',
+                            {departement:
+                            departement.departement.uuidString}) }}">
                             <span data-i8-icon="home"></span>
                             <span class="title">{{ departement.departement.libelle }}</span>
                         </a>
