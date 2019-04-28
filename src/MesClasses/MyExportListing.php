@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyExportListing.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 12/07/2018
@@ -16,6 +30,7 @@ use App\Entity\TypeGroupe;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\MesClasses\Pdf\MyPDF;
 use App\Repository\TypeGroupeRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -86,7 +101,7 @@ class MyExportListing
      * @param Matiere|null $matiere
      *
      * @return null|StreamedResponse
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function genereFichier(
         $exportTypeDocument,
@@ -180,7 +195,7 @@ class MyExportListing
 
     /**
      * @return StreamedResponse
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     private function exportExcel(): StreamedResponse
     {
@@ -234,7 +249,7 @@ class MyExportListing
     /**
      * @param Groupe $groupe
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     private function writeSpecialHeader(Groupe $groupe): void
     {

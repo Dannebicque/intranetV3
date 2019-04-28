@@ -1,7 +1,21 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Calendrier.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -75,12 +89,12 @@ class Calendrier extends BaseEntity
         return $this;
     }
 
-    public function getDateLundi(): ?\DateTimeInterface
+    public function getDateLundi(): ?DateTimeInterface
     {
         return $this->dateLundi;
     }
 
-    public function setDateLundi(\DateTimeInterface $dateLundi): self
+    public function setDateLundi(DateTimeInterface $dateLundi): self
     {
         $this->dateLundi = $dateLundi;
 

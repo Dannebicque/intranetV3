@@ -34,7 +34,10 @@
         "symfony/validator": "4.3.x-dev",
         "symfony/yaml": "4.3.x-dev",
         "twig/extensions": "^1.5",
-        "vich/uploader-bundle": "^1.8"
+        "vich/uploader-bundle": "^1.8",
+        "ext-calendar": "*",
+        "ext-bcmath": "*",
+        "ext-json": "*"
     },
     "config": {
         "preferred-install": {

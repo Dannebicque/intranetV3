@@ -1,15 +1,28 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/MatiereRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Matiere;
-use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -45,9 +58,9 @@ class MatiereRepository extends ServiceEntityRepository
     /**
      * @param $departement
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findByDepartementBuilder(Departement $departement): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
@@ -63,9 +76,9 @@ class MatiereRepository extends ServiceEntityRepository
     /**
      * @param Semestre $semestre
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findBySemestreBuilder(Semestre $semestre): \Doctrine\ORM\QueryBuilder
+    public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')

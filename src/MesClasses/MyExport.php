@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyExport.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 12/07/2018
@@ -8,7 +22,9 @@
 namespace App\MesClasses;
 
 use App\MesClasses\Excel\MyExcelMultiExport;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
@@ -44,8 +60,8 @@ class MyExport
      * @param array  $groups
      * @param array  $colonne
      *
-     * @return \Symfony\Component\HttpFoundation\Response|bool
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @return Response|bool
+     * @throws Exception
      */
     public function genereFichierGenerique($format, $data, $nomFichier, array $groups, array $colonne): ?Response
     {
@@ -68,8 +84,8 @@ class MyExport
      * @param $myAbsences
      * @param $nomFichier
      *
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse|bool
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @return StreamedResponse|bool
+     * @throws Exception
      */
     public function genereFichierAbsence($format, $myAbsences, $nomFichier): ?Response
     {

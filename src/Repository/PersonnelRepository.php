@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PersonnelRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
@@ -7,6 +20,9 @@ use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -86,7 +102,7 @@ class PersonnelRepository extends ServiceEntityRepository
      * @param $slug
      *
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
     {
@@ -112,9 +128,9 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @param $departement
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findByDepartementBuilder($departement): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
@@ -127,9 +143,9 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @param Semestre $semestre
      *
-     * @return \Doctrine\ORM\QueryBuilder|null
+     * @return QueryBuilder|null
      */
-    public function findBySemestreBuilder(Semestre $semestre): ?\Doctrine\ORM\QueryBuilder
+    public function findBySemestreBuilder(Semestre $semestre): ?QueryBuilder
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
             return $this->findByDepartementBuilder($semestre->getAnnee()->getDiplome()->getFormation());
@@ -144,7 +160,7 @@ class PersonnelRepository extends ServiceEntityRepository
      * @param null $max
      * @param bool $getResult
      *
-     * @return \Doctrine\ORM\Query|mixed
+     * @return Query|mixed
      */
     public function getAllPersonnel($data, $page = 0, $max = null, $getResult = true)
     {

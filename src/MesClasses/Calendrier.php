@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Calendrier.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 31/05/2018
@@ -7,6 +21,9 @@
  */
 
 namespace App\MesClasses;
+
+use DateTime;
+use Exception;
 
 /**
  * Class Calendrier
@@ -25,7 +42,7 @@ abstract class Calendrier
      * @param int $bonMois
      * @param int $nbMois
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
     {
@@ -44,7 +61,7 @@ abstract class Calendrier
             self::$tabFinMois[$mois] = date('t', mktime(0, 0, 0, $bonMois, 1, $year));
 
             for ($jour = 1; $jour <= self::$tabFinMois[$mois]; $jour++) {
-                self::$tabPlanning[$mois][$jour] = new \DateTime($year . '-' . $bonMois . '-' . $jour);
+                self::$tabPlanning[$mois][$jour] = new DateTime($year . '-' . $bonMois . '-' . $jour);
             }
             $bonMois++;
         }

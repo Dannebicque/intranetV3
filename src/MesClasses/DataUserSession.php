@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/DataUserSession.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 01/04/2018
@@ -9,9 +23,9 @@
 namespace App\MesClasses;
 
 use App\Entity\Annee;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use App\Entity\Departement;
 use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\Personnel;
@@ -19,18 +33,20 @@ use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use App\Events;
 use App\Repository\AnneeRepository;
-use App\Repository\DiplomeRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use function in_array;
 
 /**
  * Récupère les données d'une session utilisateur
@@ -104,7 +120,7 @@ class DataUserSession
      * @param EventDispatcherInterface               $eventDispatcher
      * @param SessionInterface                       $session
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function __construct(
         SemestreRepository $semestreRepository,
@@ -263,7 +279,7 @@ class DataUserSession
             /** @var PersonnelDepartement $rf */
             foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
                 if ($rf->getDepartement() !== null &&
-                    \in_array($role, $rf->getRoles(), true) !== false &&
+                    in_array($role, $rf->getRoles(), true) !== false &&
                     $rf->getDepartement()->getId() === $this->departement->getId()) {
                     return true;
                 }

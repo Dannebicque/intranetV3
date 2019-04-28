@@ -1,13 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/FormationFixtures.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\Adresse;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use App\Entity\Departement;
 use App\Entity\Groupe;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
@@ -19,6 +32,7 @@ use App\Entity\TypeDiplome;
 use App\Entity\TypeGroupe;
 use App\Entity\Ue;
 use App\Entity\Ufr;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -51,7 +65,7 @@ class FormationFixtures extends Fixture
         $reposanble->setTypeUser('permanent');
         $reposanble->setRoles(['ROLE_PERMANENT']);
         $reposanble->setPhotoName('noimage.png');
-        $reposanble->setCreated(new \DateTime('now'));
+        $reposanble->setCreated(new DateTime('now'));
         $manager->persist($reposanble);
 
         $site = new Site();
@@ -160,7 +174,7 @@ class FormationFixtures extends Fixture
         $user->setTypeUser('permanent');
         $user->setRoles(['ROLE_PERMANENT']);
         $user->setPhotoName('noimage.png');
-        $user->setCreated(new \DateTime('now'));
+        $user->setCreated(new DateTime('now'));
         $manager->persist($user);
 
         $pf = new PersonnelDepartement($user, $departement);
@@ -189,7 +203,7 @@ class FormationFixtures extends Fixture
         $user2->setNumEtudiant('21800000');
         $user2->setNumIne('21800000A');
         $user2->setSemestre($semestre);
-        $user2->setCreated(new \DateTime('now'));
+        $user2->setCreated(new DateTime('now'));
         $manager->persist($user2);
 
         $typeGroupe = new TypeGroupe($semestre);

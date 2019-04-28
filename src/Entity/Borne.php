@@ -1,7 +1,22 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Borne.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,8 +80,8 @@ class Borne extends BaseEntity
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
-        $this->dateDebutPublication = new \DateTime();
-        $this->dateFinPublication = new \DateTime();
+        $this->dateDebutPublication = new DateTime();
+        $this->dateFinPublication = new DateTime();
     }
 
     /**
@@ -150,19 +165,19 @@ class Borne extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDateDebutPublication(): ?\DateTimeInterface
+    public function getDateDebutPublication(): ?DateTimeInterface
     {
         return $this->dateDebutPublication;
     }
 
     /**
-     * @param \DateTimeInterface $dateDebutPublication
+     * @param DateTimeInterface $dateDebutPublication
      *
      * @return Borne
      */
-    public function setDateDebutPublication(\DateTimeInterface $dateDebutPublication): self
+    public function setDateDebutPublication(DateTimeInterface $dateDebutPublication): self
     {
         $this->dateDebutPublication = $dateDebutPublication;
 
@@ -170,19 +185,19 @@ class Borne extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDateFinPublication(): ?\DateTimeInterface
+    public function getDateFinPublication(): ?DateTimeInterface
     {
         return $this->dateFinPublication;
     }
 
     /**
-     * @param \DateTimeInterface $dateFinPublication
+     * @param DateTimeInterface $dateFinPublication
      *
      * @return Borne
      */
-    public function setDateFinPublication(\DateTimeInterface $dateFinPublication): self
+    public function setDateFinPublication(DateTimeInterface $dateFinPublication): self
     {
         $this->dateFinPublication = $dateFinPublication;
 

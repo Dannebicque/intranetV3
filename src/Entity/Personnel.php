@@ -1,10 +1,25 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Personnel.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -15,7 +30,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  *
  */
-class Personnel extends Utilisateur implements \Serializable // implements SerializerInterface
+class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
     /**
      * @ORM\Id()
@@ -418,7 +433,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $cv
+     * @param File|UploadedFile $cv
      */
     public function setCvFile(?File $cv = null): void
     {
@@ -1127,7 +1142,7 @@ class Personnel extends Utilisateur implements \Serializable // implements Seria
      */
     public function setUpdatedValue(): void
     {
-        $this->updated = new \DateTime();
+        $this->updated = new DateTime();
     }
 
     /**

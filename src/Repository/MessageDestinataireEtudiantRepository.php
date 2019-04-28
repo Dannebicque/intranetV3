@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/MessageDestinataireEtudiantRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
@@ -6,6 +19,7 @@ use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -56,7 +70,7 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
      * @param $message
      *
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findDest(Etudiant $user, Message $message): ?MessageDestinataireEtudiant
     {

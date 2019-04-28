@@ -1,9 +1,25 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Rattrapage.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -16,7 +32,7 @@ class Rattrapage extends BaseEntity
     public const DEMANDE_REFUSEE = 'r';
 
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -92,7 +108,7 @@ class Rattrapage extends BaseEntity
      *
      * @param Etudiant $etudiant
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Etudiant $etudiant)
     {
@@ -103,13 +119,12 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
-
 
 
     /**
@@ -173,19 +188,19 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDateEval(): ?\DateTimeInterface
+    public function getDateEval(): ?DateTimeInterface
     {
         return $this->dateEval;
     }
 
     /**
-     * @param \DateTimeInterface $dateEval
+     * @param DateTimeInterface $dateEval
      *
      * @return Rattrapage
      */
-    public function setDateEval(\DateTimeInterface $dateEval): self
+    public function setDateEval(DateTimeInterface $dateEval): self
     {
         $this->dateEval = $dateEval;
 
@@ -193,19 +208,19 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getHeureEval(): ?\DateTimeInterface
+    public function getHeureEval(): ?DateTimeInterface
     {
         return $this->heureEval;
     }
 
     /**
-     * @param \DateTimeInterface $heureEval
+     * @param DateTimeInterface $heureEval
      *
      * @return Rattrapage
      */
-    public function setHeureEval(\DateTimeInterface $heureEval): self
+    public function setHeureEval(DateTimeInterface $heureEval): self
     {
         $this->heureEval = $heureEval;
 
@@ -233,19 +248,19 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDateRattrapage(): ?\DateTimeInterface
+    public function getDateRattrapage(): ?DateTimeInterface
     {
         return $this->dateRattrapage;
     }
 
     /**
-     * @param \DateTimeInterface $dateRattrapage
+     * @param DateTimeInterface $dateRattrapage
      *
      * @return Rattrapage
      */
-    public function setDateRattrapage(\DateTimeInterface $dateRattrapage): self
+    public function setDateRattrapage(DateTimeInterface $dateRattrapage): self
     {
         $this->dateRattrapage = $dateRattrapage;
 
@@ -253,19 +268,19 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getHeureRattrapage(): ?\DateTimeInterface
+    public function getHeureRattrapage(): ?DateTimeInterface
     {
         return $this->heureRattrapage;
     }
 
     /**
-     * @param \DateTimeInterface|null $heureRattrapage
+     * @param DateTimeInterface|null $heureRattrapage
      *
      * @return Rattrapage
      */
-    public function setHeureRattrapage(?\DateTimeInterface $heureRattrapage): self
+    public function setHeureRattrapage(?DateTimeInterface $heureRattrapage): self
     {
         $this->heureRattrapage = $heureRattrapage;
 

@@ -1,11 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/Type/DateRangeType.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
 // src/Form/Type/ShippingType.php
 namespace App\Form\Type;
 
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class YesNoType
@@ -33,7 +48,7 @@ class DateRangeType extends AbstractType
                 'from_date_options' => array('widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'),
                 //todo: il faudrait caller le format en fonction de la locale?
                 'to_date_options'   => array('widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'),
-                'date_data'         => ['from' => new \DateTime('now'), 'to' => new \DateTime('now')]
+                'date_data'         => ['from' => new DateTime('now'), 'to' => new DateTime('now')]
             ));
     }
 

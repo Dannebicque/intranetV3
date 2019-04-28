@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelMultiExport.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 21/06/2018
@@ -12,11 +26,12 @@ use App\MesClasses\MyAbsences;
 use App\MesClasses\MySerializer;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function is_array;
 
 /**
  * Class MyExcelMultiExport
@@ -151,7 +166,7 @@ class MyExcelMultiExport
         $i = 1;
         $ligne = 1;
         foreach ($colonne as $value) {
-            if (\is_array($value)) {
+            if (is_array($value)) {
                 foreach ($value as $col) {
 
                     $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
@@ -171,7 +186,7 @@ class MyExcelMultiExport
         $ligne++;
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
-                if (\is_array($value)) {
+                if (is_array($value)) {
                     foreach ($value as $col) {
                         $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
                         $i++;

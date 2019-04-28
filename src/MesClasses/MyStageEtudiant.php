@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyStageEtudiant.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 06/08/2018
@@ -13,7 +27,10 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Events;
 use App\Repository\StageEtudiantRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -50,7 +67,7 @@ class MyStageEtudiant
      * @param Etudiant     $etudiant
      * @param              $etat
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function changeEtat(StagePeriode $stagePeriode, Etudiant $etudiant, $etat): void
     {
@@ -62,31 +79,31 @@ class MyStageEtudiant
         switch ($etat) {
             case StageEtudiant::ETAT_STAGE_AUTORISE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
-                $this->stageEtudiant->setDateAutorise(new \DateTime('now'));
+                $this->stageEtudiant->setDateAutorise(new DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_AUTORISE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_AUTORISE;
                 break;
             case StageEtudiant::ETAT_STAGE_DEPOSE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
-                $this->stageEtudiant->setDateDepotFormulaire(new \DateTime('now'));
+                $this->stageEtudiant->setDateDepotFormulaire(new DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_DEPOSE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_DEPOSE;
                 break;
             case StageEtudiant::ETAT_STAGE_VALIDE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_VALIDE);
-                $this->stageEtudiant->setDateValidation(new \DateTime('now'));
+                $this->stageEtudiant->setDateValidation(new DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_VALIDE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_VALIDE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE);
-                $this->stageEtudiant->setDateConventionEnvoyee(new \DateTime('now'));
+                $this->stageEtudiant->setDateConventionEnvoyee(new DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
                 $eventNotif = Events::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_RECUE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_RECUE);
-                $this->stageEtudiant->setDateConventionRecu(new \DateTime('now'));
+                $this->stageEtudiant->setDateConventionRecu(new DateTime('now'));
                 $eventMail = Events::MAIL_CHGT_ETAT_CONVENTION_RECUE;
                 $eventNotif = Events::CHGT_ETAT_CONVENTION_RECUE;
                 break;
@@ -103,11 +120,11 @@ class MyStageEtudiant
 
         $event = new GenericEvent($this->stageEtudiant);
         if ($eventMail !== '') {
-            $this->eventDispatcher->dispatch($eventMail, $event);
+            $this->eventDispatcher->dispatch($event, $eventMail);
         }
 
         if ($eventNotif !== '') {
-            $this->eventDispatcher->dispatch($eventNotif, $event);
+            $this->eventDispatcher->dispatch($event, $eventNotif);
         }
 
         $this->entityManger->persist($this->stageEtudiant);
@@ -119,8 +136,8 @@ class MyStageEtudiant
      * @param Etudiant     $etudiant
      *
      * @return StageEtudiant|mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Exception
+     * @throws NonUniqueResultException
+     * @throws Exception
      */
     private function checkStageEtudiantExist(StagePeriode $stagePeriode, Etudiant $etudiant)
     {
@@ -138,7 +155,7 @@ class MyStageEtudiant
      * @param Etudiant     $etudiant
      *
      * @return StageEtudiant
-     * @throws \Exception
+     * @throws Exception
      */
     private function createStageEtudiant(StagePeriode $stagePeriode, Etudiant $etudiant): StageEtudiant
     {

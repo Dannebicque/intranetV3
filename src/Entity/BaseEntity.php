@@ -1,7 +1,21 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/BaseEntity.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -20,47 +34,47 @@ abstract class BaseEntity
     private $id;
 
     /**
-     * @var \DateTime $created
+     * @var DateTime $created
      * @ORM\Column(type="datetime")
      * @Groups({"acutalite_administration"})
      */
     private $created;
 
     /**
-     * @var \DateTime $updated
+     * @var DateTime $updated
      * @ORM\Column(type="datetime")
      * @Groups({"acutalite_administration"})
      */
     private $updated;
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
 
     /**
-     * @param \DateTime $created
+     * @param DateTime $created
      */
-    public function setCreated(\DateTime $created): void
+    public function setCreated(DateTime $created): void
     {
         $this->created = $created;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUpdated(): ?\DateTime
+    public function getUpdated(): ?DateTime
     {
         return $this->updated;
     }
 
     /**
-     * @param \DateTime $updated
+     * @param DateTime $updated
      */
-    public function setUpdated(\DateTime $updated): void
+    public function setUpdated(DateTime $updated): void
     {
         $this->updated = $updated;
     }
@@ -71,7 +85,7 @@ abstract class BaseEntity
      */
     public function setUpdatedValue(): void
     {
-        $this->updated = new \DateTime();
+        $this->updated = new DateTime();
     }
 
     /**
@@ -79,7 +93,7 @@ abstract class BaseEntity
      */
     public function setCreatedValue(): void
     {
-        $this->created = new \DateTime();
+        $this->created = new DateTime();
     }
 
     public function getId()

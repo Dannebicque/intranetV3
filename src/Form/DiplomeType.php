@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DiplomeType.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Form;
 
@@ -7,12 +20,12 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
 use App\Form\Type\YesNoType;
-use App\Repository\AnneeUniversitaireRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -127,7 +140,7 @@ class DiplomeType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      *
-     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
+     * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

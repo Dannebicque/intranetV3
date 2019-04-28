@@ -1,9 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AbsenceJustificatif.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -15,7 +32,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class AbsenceJustificatif extends BaseEntity
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -80,7 +97,7 @@ class AbsenceJustificatif extends BaseEntity
      *
      * @param Etudiant $etudiant
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Etudiant $etudiant)
     {
@@ -90,48 +107,48 @@ class AbsenceJustificatif extends BaseEntity
         $this->setEtudiant($etudiant);
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
         return $this;
     }
 
-    public function getHeureDebut(): ?\DateTimeInterface
+    public function getHeureDebut(): ?DateTimeInterface
     {
         return $this->heureDebut;
     }
 
-    public function setHeureDebut(\DateTimeInterface $heureDebut): self
+    public function setHeureDebut(DateTimeInterface $heureDebut): self
     {
         $this->heureDebut = $heureDebut;
 
         return $this;
     }
 
-    public function getHeureFin(): ?\DateTimeInterface
+    public function getHeureFin(): ?DateTimeInterface
     {
         return $this->heureFin;
     }
 
-    public function setHeureFin(\DateTimeInterface $heureFin): self
+    public function setHeureFin(DateTimeInterface $heureFin): self
     {
         $this->heureFin = $heureFin;
 
@@ -189,7 +206,7 @@ class AbsenceJustificatif extends BaseEntity
     /**
      * @param File|null $document
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setFichierFile(?File $document = null): void
     {
@@ -198,7 +215,7 @@ class AbsenceJustificatif extends BaseEntity
         if (null !== $document) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new \DateTime());
+            $this->setUpdated(new DateTime());
         }
     }
 
@@ -227,15 +244,15 @@ class AbsenceJustificatif extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
     public function getUuidString(): string
     {

@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyUpload.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 27/12/2018
@@ -8,6 +22,7 @@
 
 namespace App\MesClasses;
 
+use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -27,7 +42,7 @@ class MyUpload
      * @param array        $extensions
      *
      * @return bool|string
-     * @throws \Exception
+     * @throws Exception
      */
     public function upload(UploadedFile $fichier, $destination, $extensions = [])
     {

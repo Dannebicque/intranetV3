@@ -1,7 +1,21 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/CelcatEvents.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -98,24 +112,24 @@ class CelcatEvents extends BaseEntity
         return $this;
     }
 
-    public function getDebut(): ?\DateTimeInterface
+    public function getDebut(): ?DateTimeInterface
     {
         return $this->debut;
     }
 
-    public function setDebut(\DateTimeInterface $debut): self
+    public function setDebut(DateTimeInterface $debut): self
     {
         $this->debut = $debut;
 
         return $this;
     }
 
-    public function getFin(): ?\DateTimeInterface
+    public function getFin(): ?DateTimeInterface
     {
         return $this->fin;
     }
 
-    public function setFin(\DateTimeInterface $fin): self
+    public function setFin(DateTimeInterface $fin): self
     {
         $this->fin = $fin;
 

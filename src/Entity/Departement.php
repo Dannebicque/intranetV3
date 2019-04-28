@@ -1,16 +1,34 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Departement.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use function chr;
+use function ord;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DepartementRepository")
@@ -20,7 +38,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Departement extends BaseEntity
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -191,7 +209,7 @@ class Departement extends BaseEntity
 
     /**
      * Departement constructor.
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -211,7 +229,7 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
     public function getUuidString(): string
     {
@@ -219,9 +237,9 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
@@ -534,7 +552,7 @@ class Departement extends BaseEntity
     /**
      * @param File|null $logo
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setLogoFile(?File $logo = null): void
     {
@@ -543,7 +561,7 @@ class Departement extends BaseEntity
         if (null !== $logo) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new \DateTime());
+            $this->setUpdated(new DateTime());
         }
     }
 
@@ -651,7 +669,7 @@ class Departement extends BaseEntity
      */
     public function update($name, $value): void
     {
-        $name[0] = \chr(\ord($name[0]) - 32);
+        $name[0] = chr(ord($name[0]) - 32);
         $method = 'set' . $name;
         if (method_exists($this, $method)) {
             $this->$method($value);

@@ -1,10 +1,24 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PpnRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
 use App\Entity\Diplome;
 use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -28,9 +42,9 @@ class PpnRepository extends ServiceEntityRepository
     /**
      * @param Diplome $diplome
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findByDiplomeBuilder(Diplome $diplome): \Doctrine\ORM\QueryBuilder
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->where('p.diplome = :diplome')

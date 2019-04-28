@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluation.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 10/06/2018
@@ -14,7 +28,9 @@ use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\MesClasses\Pdf\MyPDF;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use function count;
 
 /**
  * Class MyEvaluation
@@ -96,16 +112,16 @@ class MyEvaluation
 
         foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
             $grid = $groupe->getId();
-            $this->statistiques[$grid]['min'] = \count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['max'] = \count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['moyenne'] = \count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / \count($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['ecart_type'] = \count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
         }
 
-        $this->statistiques['promo']['min'] = \count($t) > 0 ? min($t) : -0.01;
-        $this->statistiques['promo']['max'] = \count($t) > 0 ? max($t) : -0.01;
-        $this->statistiques['promo']['moyenne'] = \count($t) > 0 ? array_sum($t) / \count($t) : -0.01;
-        $this->statistiques['promo']['ecart_type'] = \count($t) > 0 ? $this->ecartType($t) : -0.01;
+        $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
+        $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
+        $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
+        $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
         $this->statistiques['promo']['rang'] = $this->classement; //todo: intéret ? On sauvegarde juste des notes ?
 
         return $this;
@@ -119,7 +135,7 @@ class MyEvaluation
     private function ecartType($donnees)
     {
         //0 - Nombre d’éléments dans le tableau
-        $population = \count($donnees);
+        $population = count($donnees);
         if ($population !== 0) {
             //1 - somme du tableau
             $somme_tableau = array_sum($donnees);
@@ -306,7 +322,7 @@ class MyEvaluation
      *
      * @return array
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     private function importXlsx(string $fichier): array
     {

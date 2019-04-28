@@ -1,8 +1,23 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Materiel.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -83,7 +98,7 @@ class Materiel extends BaseEntity
     /**
      * @param File|null $document
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setPhotoFile(?File $document = null): void
     {
@@ -92,7 +107,7 @@ class Materiel extends BaseEntity
         if (null !== $document) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new \DateTime());
+            $this->setUpdated(new DateTime());
         }
     }
 

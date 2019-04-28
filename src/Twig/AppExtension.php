@@ -1,11 +1,29 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/AppExtension.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Twig;
 
 use App\Entity\Constantes;
 use App\MesClasses\Configuration;
+use DateTime;
+use Exception;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig_SimpleFunction;
+use function chr;
+use function strlen;
 
 /**
  * Class AppExtension
@@ -62,9 +80,9 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return array(
-            new \Twig_SimpleFunction('settings', array($this, 'getSetting')),
-            new \Twig_SimpleFunction('datedujourlong', array($this, 'dateDuJourLong')),
-            new \Twig_SimpleFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
+            new Twig_SimpleFunction('settings', array($this, 'getSetting')),
+            new Twig_SimpleFunction('datedujourlong', array($this, 'dateDuJourLong')),
+            new Twig_SimpleFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
 
         );
     }
@@ -100,18 +118,19 @@ class AppExtension extends AbstractExtension
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public function dateDuJourLong(): string
     {
-        return $this->dateTexte(new \DateTime('now'));
+        return $this->dateTexte(new DateTime('now'));
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
+     *
      * @return string
      */
-    public function dateTexte(\DateTime $date): string
+    public function dateTexte(DateTime $date): string
     {
         return $this->tabJour[$date->format('N')] . ' ' . $date->format('d') . ' ' . $this->tabMois[$date->format('m')] . ' ' . $date->format('Y');
     }
@@ -134,7 +153,7 @@ class AppExtension extends AbstractExtension
      */
     public function mychr($var):string
     {
-        return \chr($var);
+        return chr($var);
     }
 
     public function escapetitle($texte): ?string
@@ -172,7 +191,7 @@ class AppExtension extends AbstractExtension
     public function telFormat($number): ?string
     {
         str_replace(['.', '-', ' '], '', $number);
-        if (\strlen($number) === 10) {
+        if (strlen($number) === 10) {
             $str = chunk_split($number, 2, ' ');
         } else {
             $str = $number;

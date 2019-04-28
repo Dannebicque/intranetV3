@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Csv/Csv.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 18/05/2018
@@ -8,15 +22,20 @@
 
 namespace App\MesClasses\Csv;
 
+use DateTime;
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Exception\RuntimeException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use UnexpectedValueException;
 
 /**
  * Class Csv
@@ -34,8 +53,8 @@ class Csv
      * @param array  $data
      * @param array  $groups
      *
-     * @throws \Symfony\Component\Serializer\Exception\RuntimeException
-     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws RuntimeException
+     * @throws AnnotationException
      */
     public function export(string $filename, array $data, array $groups): void
     {
@@ -66,7 +85,7 @@ class Csv
         //$normalizer->setCallbacks(array('updated' => $callback));
 
         $serializer = new Serializer(array(
-            new DateTimeNormalizer(\DateTime::ATOM),
+            new DateTimeNormalizer(DateTime::ATOM),
             new DataUriNormalizer(),
             $normalizer
         ), array($encoder));
@@ -77,8 +96,8 @@ class Csv
 
     /**
      * @return Response
-     * @throws \UnexpectedValueException
-     * @throws \InvalidArgumentException
+     * @throws UnexpectedValueException
+     * @throws InvalidArgumentException
      */
     public function response(): Response
     {

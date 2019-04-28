@@ -1,8 +1,24 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Favori.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FavoriRepository")
@@ -37,13 +53,13 @@ class Favori
      * @param $etudiantDemandeur
      * @param $etudiantDemande
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($etudiantDemandeur, $etudiantDemande)
     {
         $this->setEtudiantDemandeur($etudiantDemandeur);
         $this->setEtudiantDemande($etudiantDemande);
-        $this->dateAjout = new \DateTime('now');
+        $this->dateAjout = new DateTime('now');
     }
 
 
@@ -93,19 +109,19 @@ class Favori
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDateAjout(): ?\DateTimeInterface
+    public function getDateAjout(): ?DateTimeInterface
     {
         return $this->dateAjout;
     }
 
     /**
-     * @param \DateTimeInterface $dateAjout
+     * @param DateTimeInterface $dateAjout
      *
      * @return Favori
      */
-    public function setDateAjout(\DateTimeInterface $dateAjout): self
+    public function setDateAjout(DateTimeInterface $dateAjout): self
     {
         $this->dateAjout = $dateAjout;
 

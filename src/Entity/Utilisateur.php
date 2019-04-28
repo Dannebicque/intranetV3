@@ -1,14 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Utilisateur.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\MappedSuperclass
@@ -127,7 +139,6 @@ abstract class Utilisateur implements UserInterface
     private $adresse;
 
 
-
     /**
      * @var string
      *
@@ -136,13 +147,13 @@ abstract class Utilisateur implements UserInterface
     private $roles = '';
 
     /**
-     * @var \DateTime $created
+     * @var DateTime $created
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @var \DateTime $updated
+     * @var DateTime $updated
      * @ORM\Column(type="datetime")
      */
     protected $updated;
@@ -172,29 +183,29 @@ abstract class Utilisateur implements UserInterface
      */
     public function setCreatedValue(): void
     {
-        $this->created = new \DateTime();
+        $this->created = new DateTime();
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreated(): \DateTime
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
 
     /**
-     * @param \DateTime $created
+     * @param DateTime $created
      */
-    public function setCreated(\DateTime $created): void
+    public function setCreated(DateTime $created): void
     {
         $this->created = $created;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getUpdated(): \DateTime
+    public function getUpdated(): DateTime
     {
         return $this->updated;
     }
