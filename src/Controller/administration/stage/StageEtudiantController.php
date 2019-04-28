@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StageEtudiantController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration\stage;
 
@@ -9,13 +22,14 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Form\StageEtudiantType;
 use App\MesClasses\MyStageEtudiant;
+use Doctrine\ORM\NonUniqueResultException;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Dompdf\Options;
-use Dompdf\Dompdf;
 
 /**
  *  * @Route("/administration/stage/etudiant")
@@ -49,7 +63,7 @@ class StageEtudiantController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.create.success.flash');
 
             return $this->redirectToRoute('administration_stage_etudiant_edit', ['id' => $stageEtudiant->getId()]);
@@ -92,8 +106,8 @@ class StageEtudiantController extends BaseController
      * @param Etudiant        $etudiant
      * @param                 $etat
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return RedirectResponse
+     * @throws NonUniqueResultException
      * @Route("/change-etat/{stagePeriode}/{etudiant}/{etat}", name="administration_stage_etudiant_change_etat")
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */

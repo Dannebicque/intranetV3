@@ -54,7 +54,12 @@
                                     <td>{% for diplome in departement.departement.diplomes %}{{ diplome.display }}, {% endfor %}</td>
                                     <td>
                                         <div class="form-check">
+                                            <label for="pardefaut_{{ departement.departement.uuidString }}"
+                                                   class="sr-only">
+                                                {{ departement.departement.libelle }} par défaut
+                                            </label>
                                             <input class="form-check-input departementParDefaut" type="radio" name="pardefaut"
+                                                   id="pardefaut_{{ departement.departement.uuidString }}"
                                                    value="{{ departement.departement.uuidString }}"
                                                    {% if departement.defaut == true %}checked{% endif %}>
                                         </div>

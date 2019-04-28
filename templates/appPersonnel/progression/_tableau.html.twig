@@ -55,7 +55,9 @@
         <tr>
             <th>CM</th>
             {% for i in 1..14 %}
-                <td><input type="text" class="form-control updateProgression cm_{{ matiere.id }}"
+                <td>
+                    <label for="tot_s{{ i }}_{{ matiere.id }}_cm" class="sr-only">Tot heure CM semaine {{ i }}</label>
+                    <input type="text" class="form-control updateProgression cm_{{ matiere.id }}"
                            data-semaine="{{ i }}"
                            data-type="cm" data-matiere="{{ matiere.id }}"
                            id="tot_s{{ i }}_{{ matiere.id }}_cm"
@@ -72,7 +74,8 @@
         <tr>
             <th>TD</th>
             {% for i in 1..14 %}
-                <td><input type="text" class="form-control updateProgression td_{{ matiere.id }}"
+                <td><label for="tot_s{{ i }}_{{ matiere.id }}_td" class="sr-only">Tot heure TD semaine {{ i }}</label>
+                    <input type="text" class="form-control updateProgression td_{{ matiere.id }}"
                            data-semaine="{{ i }}"
                            data-type="td" data-matiere="{{ matiere.id }}"
                            id="tot_s{{ i }}_{{ matiere.id }}_td"
@@ -89,7 +92,9 @@
         <tr>
             <th>TP</th>
             {% for i in 1..14 %}
-                <td><input type="text" class="form-control updateProgression tp_{{ matiere.id }}"
+                <td>
+                    <label for="tot_s{{ i }}_{{ matiere.id }}_tp" class="sr-only">Tot heure TP semaine {{ i }}</label>
+                    <input type="text" class="form-control updateProgression tp_{{ matiere.id }}"
                            data-semaine="{{ i }}"
                            data-type="tp" data-matiere="{{ matiere.id }}"
                            id="tot_s{{ i }}_{{ matiere.id }}_tp"
@@ -106,7 +111,9 @@
         <tr>
             <th>Evaluations</th>
             {% for i in 1..14 %}
-                <td><select class="form-control">
+                <td><label for="tot_s{{ i }}_{{ matiere.id }}_eval" class="sr-only">Evaluation semaine {{ i }}</label>
+                    <select class="form-control"
+                            id="tot_s{{ i }}_{{ matiere.id }}_eval">
                         <option value="">NON</option>
                         <option value="CM">CM</option>
                         <option value="CM">TD</option>

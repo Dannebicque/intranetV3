@@ -64,7 +64,8 @@
                            <td>{{ personnel.personnel.numeroHarpege }}</td>
                            <td>{{ personnel.personnel.username }}</td>
                            <td>
-                               <select class="form-control change_droit_pf" data-pf="{{ personnel.id }}">
+                               <label class="sr-only" for="droit_{{ personnel.id }}">Role(s)/droit(s)</label>
+                               <select class="form-control change_droit_pf" data-pf="{{ personnel.id }}" id="droit_{{ personnel.id }}">
                                    {% for role in constant('App\\Entity\\Constantes::ROLE_LISTE') %}
                                    <option value="{{ role }}" {% if role in personnel.roles %}selected{% endif %}>{{
                                        role|trans
@@ -110,8 +111,8 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="control-label" for="login_urca">Login URCA, nom ou prénom du nouvel intervenant :</label>
-
+                <label class="control-label" for="sa_login_urca">Login URCA, nom ou prénom du nouvel intervenant
+                                                                 :</label>
                 <input type="text" name="login_urca" id="sa_login_urca" class="form-control"
                        placeholder="Saisissez les premiers caractères" data-departement="{{ departement.id }}">
 

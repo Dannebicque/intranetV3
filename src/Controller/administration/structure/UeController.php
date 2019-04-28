@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/UeController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration\structure;
 
@@ -7,6 +20,7 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,7 +84,7 @@ class UeController extends BaseController
      * @param Ue      $ue
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws LogicException
      */
     public function edit(Request $request, Ue $ue): Response
     {
@@ -96,7 +110,8 @@ class UeController extends BaseController
             ]);
         }
 
-        return $this->render('erreur/404.html.twig');
+        return $this->redirectToRoute('erreur_666');
+
     }
 
     /**

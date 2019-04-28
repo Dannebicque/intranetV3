@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatCalendrierController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -10,6 +23,7 @@ use App\MesClasses\Celcat\Connect;
 use App\MesClasses\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CalendrierRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,7 +51,7 @@ class CelcatCalendrierController extends BaseController
      * @param                   $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
     {
@@ -66,9 +80,8 @@ class CelcatCalendrierController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($celcatCalendrier);
-            $em->flush();
+            $this->entityManager->persist($celcatCalendrier);
+            $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.create.success.flash');
 
             return $this->redirectToRoute('sa_celcat_calendrier_index');
@@ -128,7 +141,7 @@ class CelcatCalendrierController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_celcat_calendrier_edit', ['id' => $celcatCalendrier->getId()]);
         }

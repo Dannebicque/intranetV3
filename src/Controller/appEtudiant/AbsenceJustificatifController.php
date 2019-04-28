@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/AbsenceJustificatifController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -7,6 +20,7 @@ use App\Entity\AbsenceJustificatif;
 use App\Entity\Constantes;
 use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +48,7 @@ class AbsenceJustificatifController extends BaseController
      * @param Request $request
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function depot(Request $request): Response
     {
@@ -74,7 +88,7 @@ class AbsenceJustificatifController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_etudiant_absence_justificatif_edit',
                 ['id' => $absenceJustificatif->getId()]);

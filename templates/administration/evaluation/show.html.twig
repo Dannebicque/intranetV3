@@ -92,13 +92,17 @@
                             {% for etudiant in groupe.etudiants %}
                                 <tr {% if not(notes[etudiant.id] is defined) or notes[etudiant.id].note == '-0.01' %}class="bg-pale-warning"{% endif %}>
                                     <td>{{ etudiant.nom|capitalize }} {{ etudiant.prenom|capitalize }}  </td>
-                                    <td><input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
+                                    <td>
+                                        <label for="no_{{ etudiant.uuidString }}" class="sr-only">Note</label>
+                                        <input type="text" name="no_{{ etudiant.uuidString }}" tabindex="{{ tab }}"
                                                id="no_{{ etudiant.uuidString }}" data-etudiant="{{ etudiant.uuidString }}"
                                                class="form-control noteetudiant groupe_{{ groupe.id }}"
                                                value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
                                     </td>
-                                    <td>Absent.</td>
-                                    <td><input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
+                                    <td>Absent.</td>{# todo: a gérer comme dans la saisie #}
+                                    <td>
+                                        <label for="com_{{ etudiant.uuidString }}" class="sr-only">Commentaire</label>
+                                        <input type="text" name="com_{{ etudiant.uuidString }}" id="com_{{ etudiant.uuidString }}"
                                                class="form-control groupe_{{ groupe.id }}"/></td>
                                 </tr>
                                 {% set tab=tab+1 %}

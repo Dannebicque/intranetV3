@@ -1,11 +1,24 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ConfigurationController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Controller\BaseController;
 use App\Entity\Configuration;
 use App\Form\ConfigurationType;
 use App\Repository\ConfigurationRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/super-administration/configuration")
  */
-class ConfigurationController extends AbstractController
+class ConfigurationController extends BaseController
 {
     /**
      * @Route("/", name="sa_configuration_index", methods="GET")
@@ -50,9 +63,8 @@ class ConfigurationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($configuration);
-            $em->flush();
+            $this->entityManager->persist($configuration);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_configuration_index');
         }
@@ -87,7 +99,7 @@ class ConfigurationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('sa_configuration_edit', ['id' => $configuration->getId()]);
         }

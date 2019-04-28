@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ParcourController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 6:23 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -37,9 +50,8 @@ class ParcourController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($parcour);
-                $em->flush();
+                $this->entityManager->persist($parcour);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('sa_structure_index',
                     ['departement' => $parcour->getDiplome()->getDepartement()->getId()]);
@@ -83,7 +95,7 @@ class ParcourController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('sa_parcour_edit', ['id' => $parcour->getId()]);
             }
@@ -94,7 +106,7 @@ class ParcourController extends BaseController
             ]);
         }
 
-        return $this->render('erreur/404.html.twig');
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**

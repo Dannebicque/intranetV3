@@ -37,6 +37,7 @@
         <div class="row gap-y">
             {#<input type="hidden" name="semainereelle" id="semainereelle" value="{{ edt.semaine }}"/>#}
             <div class="col-sm-2">
+                <label for="affichejour" class="sr-only">Jour de la semaine</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichejour" name="affichejour">
                     <option value="">{{ 'edt.filtrer.jour'|trans }}</option>
                     <option value="1">Lundi</option>
@@ -47,6 +48,7 @@
                 </select>
             </div>
             <div class="col-sm-2">
+                <label for="affichesalle" class="sr-only">Salle</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichesalle" name="affichesalle">
                     <option value="">{{ 'edt.filtrer.salle'|trans }}</option>
                     {% for salle in salles %}
@@ -55,6 +57,7 @@
                 </select>
             </div>
             <div class="col-sm-2">
+                <label for="affichepersonnel" class="sr-only">Personnel</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichepersonnel" name="affichepersonnel">
                     <option value="">{{ 'edt.filtrer.personnel'|trans }}</option>
                     {% for personnel in personnels %}
@@ -63,6 +66,7 @@
                 </select>
             </div>
             <div class="col-sm-3">
+                <label for="affichematiere" class="sr-only">Matière</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichematiere" id="affichematiere">
                     <option value="">{{ 'edt.filtrer.matiere'|trans }}</option>
                     {% for matiere in matieres %}
@@ -71,6 +75,7 @@
                 </select>
             </div>
             <div class="col-sm-3">
+                <label for="affichesemaine" class="sr-only">Semaine</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichesemaine" id="affichesemaine">
                     <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
                         {#{% for sem in edt.semaines %}#}

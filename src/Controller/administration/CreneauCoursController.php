@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/CreneauCoursController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -10,6 +23,8 @@ use App\Form\CreneauCoursType;
 use App\MesClasses\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CreneauCoursRepository;
+use DateTime;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -87,7 +102,7 @@ class CreneauCoursController extends BaseController
      * @param Request                      $request
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function new(
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
@@ -101,8 +116,8 @@ class CreneauCoursController extends BaseController
             $creneauCour = new CreneauCours();
             $creneauCour->setDepartement($this->dataUserSession->getDepartement());
             $creneauCour->setAnneeUniversitaire($annee);
-            $creneauCour->setDebut(new \DateTime($request->request->get('debut')));
-            $creneauCour->setFin(new \DateTime($request->request->get('fin')));
+            $creneauCour->setDebut(new DateTime($request->request->get('debut')));
+            $creneauCour->setFin(new DateTime($request->request->get('fin')));
             $creneauCour->setJour($request->request->get('jour'));
             $this->entityManager->persist($creneauCour);
             $this->entityManager->flush();
@@ -140,7 +155,7 @@ class CreneauCoursController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('administration_creneau_cours_index', [
                 'id' => $creneauCour->getId(),

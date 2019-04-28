@@ -1,34 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}AnneeUniversitaire{% endblock %}
+{% block header %}
+    {{ 'adm.annee_universitaire.show.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>AnneeUniversitaire</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'annee_universitaire', id: annee_universitaire.id}) }}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ annee_universitaire.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ annee_universitaire.libelle }}</td>
-            </tr>
-            <tr>
-                <th>Annee</th>
-                <td>{{ annee_universitaire.annee }}</td>
-            </tr>
-            <tr>
-                <th>Commentaire</th>
-                <td>{{ annee_universitaire.commentaire }}</td>
-            </tr>
-        </tbody>
-    </table>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('annee_universitaire_index') }}">back to list</a>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.annee_universitaire.show.heading'|trans }}</h4>
+        <div class="card-body">
 
-    <a href="{{ path('annee_universitaire_edit', {'id': annee_universitaire.id}) }}">edit</a>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ annee_universitaire.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.annee'|trans }}</th>
+                    <td>{{ annee_universitaire.annee }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.commentaire'|trans }}</th>
+                    <td>{{ annee_universitaire.commentaire }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    {{ include('annee_universitaire/_delete_form.html.twig') }}
+    {# todo: afficher les formations étant sur cette année. #}
 {% endblock %}

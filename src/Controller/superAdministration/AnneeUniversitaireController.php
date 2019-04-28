@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 8:32 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -8,7 +21,7 @@ use App\Entity\Constantes;
 use App\Form\AnneeUniversitaireType;
 use App\MesClasses\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,7 +52,7 @@ class AnneeUniversitaireController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, $_format): Response
     {
@@ -69,9 +82,9 @@ class AnneeUniversitaireController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($anneeUniversitaire);
-            $entityManager->flush();
+            $this->entityManager->persist($anneeUniversitaire);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.add.success.flash');
 
             return $this->redirectToRoute('sa_annee_universitaire_index');
         }
@@ -108,7 +121,8 @@ class AnneeUniversitaireController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.edit.success.flash');
 
             return $this->redirectToRoute('sa_annee_universitaire_index', [
                 'id' => $anneeUniversitaire->getId(),
@@ -133,6 +147,7 @@ class AnneeUniversitaireController extends BaseController
 
         $this->entityManager->persist($newAnneeUniversitaire);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_annee_universitaire_edit', ['id' => $newAnneeUniversitaire->getId()]);
     }

@@ -69,41 +69,96 @@
                         <tr>
                             <td>#{{ etu.numetudiant }}</td>
                             <td>{{ etu.display }}</td>
-                            <td><input type="radio" name="etu_{{ etu.id }}" value="ATT" checked></td>
+                            <td>
+                                <label class="sr-only" for="etu_{{ etu.id }}_ATT">{{ etu.display }} ATT</label>
+                                <input type="radio" name="etu_{{ etu.id }}" id="etu_{{ etu.id }}_ATT" value="ATT"
+                                       checked>
+                            </td>
 
                             {% if semestre.precedent != null %}
                                 <td>
-                                    <input type="radio" name="etu_{{ etu.id }}" value="{{ semestre.precedent.id }}"
+                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ semestre.precedent.id }}">
+                                        {{ etu.display }} {{ semestre.precedent.libelle }}
+                                    </label>
+                                    <input type="radio"
+                                           name="etu_{{ etu.id }}"
+                                           id="etu_{{ etu.id }}_{{ semestre.precedent.id }}"
+                                           value="{{ semestre.precedent.id }}"
                                             {% if tab[etu.id] != null and tab[etu.id].proposition == semestre
                                                 .precedent.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             {% if semestre.decale != null %}
                                 <td>
-                                    <input type="radio" name="etu_{{ etu.id }}" value="{{ semestre.decale.id }}" {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.decale.libelle %} checked {% endif %}>
+                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ semestre.decale.id }}">
+                                        {{ etu.display }} {{ semestre.decale.libelle }}
+                                    </label>
+                                    <input type="radio"
+                                           id="etu_{{ etu.id }}_{{ semestre.decale.id }}"
+                                           name="etu_{{ etu.id }}"
+                                           value="{{ semestre.decale.id }}"
+                                            {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.decale.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             {% if semestre.suivant != null %}
                                 <td>
-                                    <input type="radio" name="etu_{{ etu.id }}" value="{{ semestre.suivant.id }}" {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.suivant.libelle %} checked {% endif %}>
+                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ semestre.suivant.id }}">
+                                        {{ etu.display }} {{ semestre.suivant.libelle }}
+                                    </label>
+                                    <input type="radio"
+                                           id="etu_{{ etu.id }}_{{ semestre.suivant.id }}"
+                                           name="etu_{{ etu.id }}"
+                                           value="{{ semestre.suivant.id }}"
+                                            {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.suivant.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             <td>
-                                <input type="radio" name="etu_{{ etu.id }}" value="REO" {% if tab[etu.id] != null and tab[etu.id].proposition == 'REO' %} checked {% endif %}>
+                                <label class="sr-only" for="etu_{{ etu.id }}_REO">
+                                    {{ etu.display }} {{ semestre.precedent.libelle }}
+                                </label>
+                                <input type="radio"
+                                       id="etu_{{ etu.id }}_REO"
+                                       name="etu_{{ etu.id }}" value="REO"
+                                        {% if tab[etu.id] != null and tab[etu.id].proposition == 'REO' %} checked {% endif %}>
                             </td>
                             <td>
-                                <input type="radio" name="etu_{{ etu.id }}" value="DEM" {% if tab[etu.id] != null and tab[etu.id].proposition == 'DEM' %} checked {% endif %}>
+                                <label class="sr-only" for="etu_{{ etu.id }}_DEM">
+                                    {{ etu.display }} {{ semestre.precedent.libelle }}
+                                </label>
+                                <input type="radio"
+                                       id="etu_{{ etu.id }}_DEM"
+                                       name="etu_{{ etu.id }}"
+                                       value="DEM"
+                                        {% if tab[etu.id] != null and tab[etu.id].proposition == 'DEM' %} checked {% endif %}>
                             </td>
                             <td>
-                                <input type="radio" name="etu_{{ etu.id }}" value="DUT" {% if tab[etu.id] != null and tab[etu.id].proposition == 'DUT' %} checked {% endif %} >
+                                <label class="sr-only" for="etu_{{ etu.id }}_DIPLOME">
+                                    {{ etu.display }} {{ semestre.precedent.libelle }}
+                                </label>
+                                <input type="radio"
+                                       id="etu_{{ etu.id }}_DIPLOME"
+                                       name="etu_{{ etu.id }}"
+                                       value="DUT" {# TODO: devrait petre diplome ? sinon ne fonctionne pas pour la LP #}
+                                        {% if tab[etu.id] != null and tab[etu.id].proposition == 'DUT' %} checked {% endif %} >
                             </td>
-                            <td><input type="radio" name="etu_{{ etu.id }}" value="TRANSFERT"></td>
-                            <td><select
+                            <td><label class="sr-only" for="etu_{{ etu.id }}_TRANSFERT">
+                                    {{ etu.display }} {{ semestre.precedent.libelle }}
+                                </label>
+                                <input type="radio"
+                                       id="etu_{{ etu.id }}_TRANSFERT"
+                                       name="etu_{{ etu.id }}"
+                                       value="TRANSFERT"></td>
+                            <td><label class="sr-only" for="etu_{{ etu.id }}_DEPARTEMENT">
+                                    {{ etu.display }} {{ semestre.precedent.libelle }}
+                                </label>
+                                <select
+                                        id="etu_{{ etu.id }}_DEPARTEMENT"
                                         class="form-control">
                                     {% for departement in departements %}
                                         <option value="{{ departement.id }}" {% if departement.id == etu.departement.id %}selected{% endif %}>{% if departement.id != etu.departement.id %}=>{% else %}reste en {% endif %} {{ departement.libelle }}</option>
                                     {% endfor %}
-                                </select></td>
+                                </select>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

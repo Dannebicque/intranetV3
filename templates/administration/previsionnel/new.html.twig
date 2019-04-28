@@ -89,29 +89,42 @@
                     <tbody>
                     <tr>
                         <td>
-                            <select class="form-control" name="intervenant_1">
+                            <label for="intervenant_1" class="sr-only">intervenant 1</label>
+                            <select class="form-control" name="intervenant_1" id="intervenant_1">
                                 <option value="">{{ 'choisir.intervenant'|trans }}</option>
                                 {% for personnel in user_data.personnels %}
                                     <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
                                 {% endfor %}
                             </select>
                         </td>
-                        <td><input type="text" value="0" name="cm_1" id="cm_1" data-ligne="1"
+                        <td>
+                            <label for="cm_1" class="sr-only">Nb Heures CM</label>
+                            <input type="text" value="0" name="cm_1" id="cm_1" data-ligne="1"
                                    class="form-control chgcm"></td>
-                        <td><input type="number" value="0" name="gr_cm_1" id="gr_cm_1" data-ligne="1"
+                        <td>
+                            <label for="gr_cm_1" class="sr-only">Nb groupe CM</label>
+                            <input type="number" value="0" name="gr_cm_1" id="gr_cm_1" data-ligne="1"
                                    class="form-control chgcm">
                         </td>
                         <td id="ind_cm_1">0</td>
-                        <td style="background-color: #68C39F"><input type="text" value="0" name="td_1" id="td_1"
+                        <td style="background-color: #68C39F">
+                            <label for="td_1" class="sr-only">Nb Heures TD</label>
+                            <input type="text" value="0" name="td_1" id="td_1"
                                                                      data-ligne="1"
                                                                      class="form-control chgtd"></td>
-                        <td style="background-color: #68C39F"><input type="number" value="0" name="gr_td_1" id="gr_td_1"
+                        <td style="background-color: #68C39F">
+                            <label for="gr_td_1" class="sr-only">Nb groupe TD</label>
+                            <input type="number" value="0" name="gr_td_1" id="gr_td_1"
                                                                      data-ligne="1" class="form-control chgtd"></td>
                         <td style="background-color: #68C39F" id="ind_td_1">0</td>
-                        <td style="background-color: #FFC052"><input type="text" value="0" name="tp_1" id="tp_1"
+                        <td style="background-color: #FFC052">
+                            <label for="tp_1" class="sr-only">Nb Heures TP</label>
+                            <input type="text" value="0" name="tp_1" id="tp_1"
                                                                      data-ligne="1"
                                                                      class="form-control chgtp"></td>
-                        <td style="background-color: #FFC052"><input type="number" value="0" name="gr_tp_1" id="gr_tp_1"
+                        <td style="background-color: #FFC052">
+                            <label for="gr_tp_1" class="sr-only">Nb groupe TP</label>
+                            <input type="number" value="0" name="gr_tp_1" id="gr_tp_1"
                                                                      data-ligne="1" class="form-control chgtp"></td>
                         <td style="background-color: #FFC052" id="ind_tp_1">0</td>
                     </tr>
