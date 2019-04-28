@@ -1,24 +1,41 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Etudiant.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Ramsey\Uuid\UuidInterface;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EtudiantRepository")
  * @Vich\Uploadable
  */
-class Etudiant extends Utilisateur implements \Serializable
+class Etudiant extends Utilisateur implements Serializable
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -194,7 +211,7 @@ class Etudiant extends Utilisateur implements \Serializable
 
     /**
      * Etudiant constructor.
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -221,9 +238,9 @@ class Etudiant extends Utilisateur implements \Serializable
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
@@ -906,6 +923,7 @@ class Etudiant extends Utilisateur implements \Serializable
         if ($this->getSemestre() !== null && $this->getSemestre()->getAnnee() !== null && $this->getSemestre()->getAnnee()->getDiplome() !== null) {
             return $this->getSemestre()->getAnnee()->getDiplome();
         }
+
         return null;
     }
 
@@ -992,6 +1010,7 @@ class Etudiant extends Utilisateur implements \Serializable
         if ($this->getSemestre() !== null) {
             return $this->getSemestre()->getAnneeUniversitaire();
         }
+
         return 0;
     }
 
@@ -1025,7 +1044,7 @@ class Etudiant extends Utilisateur implements \Serializable
      */
     public function setUpdatedValue(): void
     {
-        $this->updated = new \DateTime();
+        $this->updated = new DateTime();
     }
 
     /**

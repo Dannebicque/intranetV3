@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyPagination.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 23/06/2018
@@ -11,6 +25,7 @@ namespace App\MesClasses;
 use App\Entity\Constantes;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Routing\RouterInterface;
+use function count;
 
 /**
  * Class MyPagination
@@ -50,7 +65,7 @@ class MyPagination
 
         $debut = $page * Constantes::NB_RESULTS_PER_PAGE - 2;
 
-        $this->nbMaxResult = \count($queryBuilder->getQuery()->getArrayResult());
+        $this->nbMaxResult = count($queryBuilder->getQuery()->getArrayResult());
         $this->data = $queryBuilder->setFirstResult($debut)
             ->setMaxResults(Constantes::NB_RESULTS_PER_PAGE)
             ->getQuery()

@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Security;
 
@@ -13,8 +26,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,6 +36,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use function in_array;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -121,16 +135,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return $role->getRole();
         }, $roles);
 
-        if (\in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
+        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
             $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
-        } elseif (\in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
+        } elseif (in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
             // c'est un administratif : on le rediriger vers l'espace administration
             $redirection = new RedirectResponse($this->urlGenerator->generate('administratif_homepage'));
-        } elseif (\in_array('ROLE_PERMANENT', $rolesTab, true) || \in_array('ROLE_ETUDIANT', $rolesTab, true)) {
+        } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {
             // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
 
-            if (\in_array('ROLE_PERMANENT', $rolesTab, true)) {
+            if (in_array('ROLE_PERMANENT', $rolesTab, true)) {
                 //init de la session departement
                 $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
                 if (count($departements) > 1) {

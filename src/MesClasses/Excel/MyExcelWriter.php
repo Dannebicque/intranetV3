@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelWriter.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 15/07/2018
@@ -9,6 +23,7 @@
 namespace App\MesClasses\Excel;
 
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -16,6 +31,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function is_array;
 
 class MyExcelWriter
 {
@@ -33,7 +49,7 @@ class MyExcelWriter
      *
      * @param TranslatorInterface $translator
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function __construct(TranslatorInterface $translator)
     {
@@ -61,7 +77,7 @@ class MyExcelWriter
     /**
      * @param $libelle
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function createSheet($libelle): void
     {
@@ -103,13 +119,13 @@ class MyExcelWriter
      * @param       $value
      * @param array $options
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function writeCellName($adresse, $value, array $options = []): void
     {
         $this->sheet->setCellValue($adresse, $value);
 
-        if (\is_array($options) && array_key_exists('style', $options)) {
+        if (is_array($options) && array_key_exists('style', $options)) {
             switch ($options['style']) {
                 case 'HORIZONTAL_RIGHT':
                     $this->sheet->getStyle($adresse)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
@@ -133,7 +149,7 @@ class MyExcelWriter
      * @param $lig
      * @param $couleur
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function colorCellRange($col, $lig, $couleur): void
     {
@@ -145,7 +161,7 @@ class MyExcelWriter
      * @param $cells
      * @param $couleur
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function colorCells($cells, $couleur): void
     {
@@ -160,7 +176,7 @@ class MyExcelWriter
      * @param $col2
      * @param $lig2
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function borderCellsRange($col1, $lig1, $col2, $lig2): void
     {
@@ -172,7 +188,7 @@ class MyExcelWriter
     /**
      * @param $cells
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function borderCells($cells): void
     {
@@ -215,7 +231,7 @@ class MyExcelWriter
      * @param $col2
      * @param $lig2
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function mergeCellsCaR($col1, $lig1, $col2, $lig2): void
     {
@@ -227,7 +243,7 @@ class MyExcelWriter
     /**
      * @param $cells
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function mergeCells($cells): void
     {

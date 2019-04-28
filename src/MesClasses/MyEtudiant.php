@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 12/05/2018
@@ -21,10 +35,14 @@ use App\MesClasses\Pdf\MyPDF;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use function count;
 
 /**
  * Class MyEtudiant
@@ -147,7 +165,7 @@ class MyEtudiant
     /**
      * @param $uuid
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function setUuidEtudiant($uuid): void
     {
@@ -161,7 +179,7 @@ class MyEtudiant
      * @param Personnel $personnel
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function addAbsence($date, $heure, Matiere $matiere, ?Personnel $personnel): void
     {
@@ -170,7 +188,7 @@ class MyEtudiant
         $absence->setPersonnel($personnel);
         $absence->setDate($date);
         $absence->setAnneeuniversitaire($matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0);
-        $absence->setDuree(new \DateTime('01:30'));
+        $absence->setDuree(new DateTime('01:30'));
         $absence->setHeure($heure);
         $absence->setMatiere($matiere);
 
@@ -179,9 +197,9 @@ class MyEtudiant
 
         //On déclenche les events
         $event = new GenericEvent($absence);
-        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_ADDED, $event);
-        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_ADDED_RESPONSABLE, $event);
-        $this->eventDispatcher->dispatch(Events::ABSENCE_ADDED, $event);
+        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED);
+        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED_RESPONSABLE);
+        $this->eventDispatcher->dispatch($event, Events::ABSENCE_ADDED);
     }
 
     /**
@@ -189,7 +207,7 @@ class MyEtudiant
      * @param            $data
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function addNote(Evaluation $evaluation, $data): bool
     {
@@ -199,13 +217,13 @@ class MyEtudiant
             'etudiant'   => $this->etudiant->getId()
         ));
 
-        if (\count($note) === 1) {
+        if (count($note) === 1) {
             //update
             $note[0]->setNote(Tools::convertToFloat($data['note']));
             $note[0]->setCommentaire($data['commentaire']);
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
-        } elseif (\count($note) === 0) {
+        } elseif (count($note) === 0) {
             //creation
 
             $newnote = new Note();
@@ -231,9 +249,9 @@ class MyEtudiant
         $this->entityManager->flush();
 
         //On déclenche les events
-        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED, $event);
-        $this->eventDispatcher->dispatch(Events::MAIL_ABSENCE_REMOVED_RESPONSABLE, $event);
-        $this->eventDispatcher->dispatch(Events::ABSENCE_REMOVED, $event);
+        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_REMOVED);
+        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_REMOVED_RESPONSABLE);
+        $this->eventDispatcher->dispatch($event, Events::ABSENCE_REMOVED);
     }
 
     /**

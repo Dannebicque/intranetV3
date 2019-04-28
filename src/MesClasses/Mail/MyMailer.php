@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Mail/MyMailer.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 24/05/2018
@@ -10,7 +24,14 @@ namespace App\MesClasses\Mail;
 
 use App\MesClasses\Configuration;
 use App\Twig\DatabaseTwigLoader;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig_Environment;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
+use function count;
 
 /**
  * Class MyMailer
@@ -18,7 +39,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
  */
 class MyMailer
 {
-    /** @var \Swift_Mailer */
+    /** @var Swift_Mailer */
     private $mailer;
 
     /** @var EngineInterface */
@@ -32,11 +53,15 @@ class MyMailer
     /**
      * MyMailer constructor.
      *
-     * @param \Swift_Mailer      $mailer
+     * @param Swift_Mailer       $mailer
      * @param EngineInterface    $templating
      * @param DatabaseTwigLoader $databaseTwigLoader
      */
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, DatabaseTwigLoader $databaseTwigLoader)
+    public function __construct(
+        Swift_Mailer $mailer,
+        EngineInterface $templating,
+        DatabaseTwigLoader $databaseTwigLoader
+    )
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
@@ -50,7 +75,7 @@ class MyMailer
      */
     public function sendMessage(array $to, $subject, array $options = []): void
     {
-        $mail = new \Swift_Message();
+        $mail = new Swift_Message();
 
         $mail
             ->setFrom($this->getFrom($options))
@@ -99,7 +124,7 @@ class MyMailer
      */
     private function getFrom(array $options): array
     {
-        if (array_key_exists('from', $options) && \count($options['from']) > 0) {
+        if (array_key_exists('from', $options) && count($options['from']) > 0) {
             return $this->checkTo($options['from']);
         }
 
@@ -113,7 +138,7 @@ class MyMailer
      */
     private function getReplyTo(array $options)
     {
-        if (array_key_exists('replyTofrom', $options) && \count($options['replyTo']) > 0) {
+        if (array_key_exists('replyTofrom', $options) && count($options['replyTo']) > 0) {
             return $this->checkTo($options['replyTo']);
         }
 
@@ -138,13 +163,13 @@ class MyMailer
      * @param string $templateName
      * @param array  $array
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
      */
     public function setTemplateFromDatabase(string $templateName, array $array): void
     {
-        $twig = new \Twig_Environment($this->databaseTwigLoader);
+        $twig = new Twig_Environment($this->databaseTwigLoader);
 
         $this->template = $twig->render($templateName, $array);
     }

@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySalleExamen.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 25/07/2018
@@ -21,6 +35,9 @@ use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
+use Doctrine\Common\Collections\Collection;
+use function chr;
+use function in_array;
 
 class MySalleExamen
 {
@@ -155,7 +172,7 @@ class MySalleExamen
     /**
      * @param $semestre
      *
-     * @return \App\Entity\Groupe[]|bool|\Doctrine\Common\Collections\Collection
+     * @return Groupe[]|bool|Collection
      */
     private function groupeDefaut($semestre)
     {
@@ -185,12 +202,12 @@ class MySalleExamen
         for ($i = 0; $i < $nbCol; $i++) {
             for ($j = 0; $j < $nbRang; $j++) {
                 if ($j + 1 < 10) {
-                    $place = \chr(65 + $i) . '0' . ($j + 1);
+                    $place = chr(65 + $i) . '0' . ($j + 1);
                 } else {
-                    $place = \chr(65 + $i) . ($j + 1);
+                    $place = chr(65 + $i) . ($j + 1);
                 }
 
-                if (!\in_array($place, $tabinterdit)) {
+                if (!in_array($place, $tabinterdit)) {
                     $tabplace[$k] = $place;
                 }
                 $k++;

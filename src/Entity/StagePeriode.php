@@ -1,11 +1,28 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/StagePeriode.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -18,7 +35,7 @@ class StagePeriode extends BaseEntity
 {
 
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -136,7 +153,7 @@ class StagePeriode extends BaseEntity
     /**
      * StagePeriode constructor.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -150,7 +167,7 @@ class StagePeriode extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
     public function getUuidString(): string
     {
@@ -158,9 +175,9 @@ class StagePeriode extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
@@ -213,24 +230,24 @@ class StagePeriode extends BaseEntity
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -471,7 +488,7 @@ class StagePeriode extends BaseEntity
     /**
      * @param File|null $document
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setDocumentFile(?File $document = null): void
     {
@@ -480,7 +497,7 @@ class StagePeriode extends BaseEntity
         if (null !== $document) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new \DateTime());
+            $this->setUpdated(new DateTime());
         }
     }
 
@@ -594,6 +611,7 @@ class StagePeriode extends BaseEntity
         if ($this->getSemestre() !== null && $this->getSemestre()->getDiplome() !== null && $this->getSemestre()->getDiplome()->getAssistantDiplome() !== null && $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv() !== null && $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv() !== '') {
             return [$this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv()];
         }
+
         return null;
     }
 }

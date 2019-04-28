@@ -1,9 +1,25 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/StageEtudiant.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StageEtudiantRepository")
@@ -142,7 +158,7 @@ class StageEtudiant extends BaseEntity
     private $dateAutorise;
 
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -170,7 +186,7 @@ class StageEtudiant extends BaseEntity
 
     /**
      * StageEtudiant constructor.
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -178,15 +194,15 @@ class StageEtudiant extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
     public function getUuidString(): string
     {
@@ -256,48 +272,48 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateDepotFormulaire(): ?\DateTimeInterface
+    public function getDateDepotFormulaire(): ?DateTimeInterface
     {
         return $this->dateDepotFormulaire;
     }
 
-    public function setDateDepotFormulaire(\DateTimeInterface $dateDepotFormulaire): self
+    public function setDateDepotFormulaire(DateTimeInterface $dateDepotFormulaire): self
     {
         $this->dateDepotFormulaire = $dateDepotFormulaire;
 
         return $this;
     }
 
-    public function getDateValidation(): ?\DateTimeInterface
+    public function getDateValidation(): ?DateTimeInterface
     {
         return $this->dateValidation;
     }
 
-    public function setDateValidation(\DateTimeInterface $dateValidation): self
+    public function setDateValidation(DateTimeInterface $dateValidation): self
     {
         $this->dateValidation = $dateValidation;
 
         return $this;
     }
 
-    public function getDateConventionEnvoyee(): ?\DateTimeInterface
+    public function getDateConventionEnvoyee(): ?DateTimeInterface
     {
         return $this->dateConventionEnvoyee;
     }
 
-    public function setDateConventionEnvoyee(\DateTimeInterface $dateConventionEnvoyee): self
+    public function setDateConventionEnvoyee(DateTimeInterface $dateConventionEnvoyee): self
     {
         $this->dateConventionEnvoyee = $dateConventionEnvoyee;
 
         return $this;
     }
 
-    public function getDateConventionRecu(): ?\DateTimeInterface
+    public function getDateConventionRecu(): ?DateTimeInterface
     {
         return $this->dateConventionRecu;
     }
 
-    public function setDateConventionRecu(\DateTimeInterface $dateConventionRecu): self
+    public function setDateConventionRecu(DateTimeInterface $dateConventionRecu): self
     {
         $this->dateConventionRecu = $dateConventionRecu;
 
@@ -316,24 +332,24 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateDebutStage(): ?\DateTimeInterface
+    public function getDateDebutStage(): ?DateTimeInterface
     {
         return $this->dateDebutStage;
     }
 
-    public function setDateDebutStage(\DateTimeInterface $dateDebutStage): self
+    public function setDateDebutStage(DateTimeInterface $dateDebutStage): self
     {
         $this->dateDebutStage = $dateDebutStage;
 
         return $this;
     }
 
-    public function getDateFinStage(): ?\DateTimeInterface
+    public function getDateFinStage(): ?DateTimeInterface
     {
         return $this->dateFinStage;
     }
 
-    public function setDateFinStage(\DateTimeInterface $dateFinStage): self
+    public function setDateFinStage(DateTimeInterface $dateFinStage): self
     {
         $this->dateFinStage = $dateFinStage;
 
@@ -460,24 +476,24 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateAutorise(): ?\DateTimeInterface
+    public function getDateAutorise(): ?DateTimeInterface
     {
         return $this->dateAutorise;
     }
 
-    public function setDateAutorise(\DateTimeInterface $dateAutorise): self
+    public function setDateAutorise(DateTimeInterface $dateAutorise): self
     {
         $this->dateAutorise = $dateAutorise;
 
         return $this;
     }
 
-    public function getDateImprime(): ?\DateTimeInterface
+    public function getDateImprime(): ?DateTimeInterface
     {
         return $this->dateImprime;
     }
 
-    public function setDateImprime(\DateTimeInterface $dateImprime): self
+    public function setDateImprime(DateTimeInterface $dateImprime): self
     {
         $this->dateImprime = $dateImprime;
 

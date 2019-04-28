@@ -1,11 +1,28 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Evaluation.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")
@@ -13,7 +30,7 @@ use Ramsey\Uuid\Uuid;
 class Evaluation extends BaseEntity
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var UuidInterface
      *
      * @ORM\Column(type="uuid_binary", unique=true)
      */
@@ -91,7 +108,7 @@ class Evaluation extends BaseEntity
      * @param Matiere     $matiere
      * @param Departement $departement
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Personnel $personnel, Matiere $matiere, Departement $departement)
     {
@@ -105,7 +122,7 @@ class Evaluation extends BaseEntity
             $this->setVisible($matiere->getUe()->getSemestre()->isOptEvaluationVisible());
         }
 
-        $this->dateEvaluation = new \DateTime('now');
+        $this->dateEvaluation = new DateTime('now');
 
         $this->personnelAutorise = new ArrayCollection();
         $this->notes = new ArrayCollection();
@@ -153,9 +170,9 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return UuidInterface
      */
-    public function getUuid(): \Ramsey\Uuid\UuidInterface
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
@@ -197,19 +214,19 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDateEvaluation(): ?\DateTimeInterface
+    public function getDateEvaluation(): ?DateTimeInterface
     {
         return $this->dateEvaluation;
     }
 
     /**
-     * @param \DateTimeInterface $dateEvaluation
+     * @param DateTimeInterface $dateEvaluation
      *
      * @return Evaluation
      */
-    public function setDateEvaluation(\DateTimeInterface $dateEvaluation): self
+    public function setDateEvaluation(DateTimeInterface $dateEvaluation): self
     {
         $this->dateEvaluation = $dateEvaluation;
 
@@ -451,6 +468,7 @@ class Evaluation extends BaseEntity
         if ($this->matiere !== null && $this->matiere->getUe() !== null) {
             return $this->matiere->getUe()->getSemestre();
         }
+
         return null;
     }
 }

@@ -1,12 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/SemestreRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -30,9 +44,9 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * @param $departement
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findByDepartementBuilder($departement): \Doctrine\ORM\QueryBuilder
+    public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
@@ -44,9 +58,9 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * @param $diplome
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findByDiplomeBuilder($diplome): \Doctrine\ORM\QueryBuilder
+    public function findByDiplomeBuilder($diplome): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')

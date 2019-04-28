@@ -1,7 +1,21 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Date.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,28 +49,28 @@ class Date extends BaseEntity
     private $texte;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="date")
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      */
     private $heureDebut;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="date")
      */
     private $dateFin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
      */
@@ -162,65 +176,65 @@ class Date extends BaseEntity
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDateDebut(): ?\DateTime
+    public function getDateDebut(): ?DateTime
     {
         return $this->dateDebut;
     }
 
     /**
-     * @param \DateTime $dateDebut
+     * @param DateTime $dateDebut
      */
-    public function setDateDebut(\DateTime $dateDebut): void
+    public function setDateDebut(DateTime $dateDebut): void
     {
         $this->dateDebut = $dateDebut;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getHeureDebut(): ?\DateTime
+    public function getHeureDebut(): ?DateTime
     {
         return $this->heureDebut;
     }
 
     /**
-     * @param \DateTime $heureDebut
+     * @param DateTime $heureDebut
      */
-    public function setHeureDebut(\DateTime $heureDebut): void
+    public function setHeureDebut(DateTime $heureDebut): void
     {
         $this->heureDebut = $heureDebut;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDateFin(): ?\DateTime
+    public function getDateFin(): ?DateTime
     {
         return $this->dateFin;
     }
 
     /**
-     * @param \DateTime $dateFin
+     * @param DateTime $dateFin
      */
-    public function setDateFin(\DateTime $dateFin): void
+    public function setDateFin(DateTime $dateFin): void
     {
         $this->dateFin = $dateFin;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getHeureFin(): ?\DateTime
+    public function getHeureFin(): ?DateTime
     {
         return $this->heureFin;
     }
 
     /**
-     * @param \DateTime $heureFin
+     * @param DateTime $heureFin
      */
-    public function setHeureFin(\DateTime $heureFin): void
+    public function setHeureFin(DateTime $heureFin): void
     {
         $this->heureFin = $heureFin;
     }

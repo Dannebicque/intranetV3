@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyAbsences.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 02/04/2018
@@ -13,6 +27,9 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
+use DateInterval;
+use DateTime;
+use Exception;
 
 /**
  * Class MyAbsences
@@ -88,7 +105,7 @@ class MyAbsences
     /**
      * @param Semestre $semestre
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAbsencesSemestre(Semestre $semestre): void
     {
@@ -99,7 +116,7 @@ class MyAbsences
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
             $this->statistiques[$etudiant->getId()]['nbCoursManques'] = 0;
-            $this->statistiques[$etudiant->getId()]['totalDuree'] = new \DateTime('00:00');
+            $this->statistiques[$etudiant->getId()]['totalDuree'] = new DateTime('00:00');
             $this->statistiques[$etudiant->getId()]['nbNonJustifie'] = 0;
             $this->statistiques[$etudiant->getId()]['nbDemiJournee'] = 0; //todo: a gérer dans le calcul
             $this->statistiques[$etudiant->getId()]['nbJustifie'] = 0;
@@ -112,7 +129,7 @@ class MyAbsences
                 $this->statistiques[$etuId]['nbCoursManques']++;
 
                 if ($absence->getDuree() !== null) {
-                    $this->statistiques[$etuId]['totalDuree']->add(new \DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
+                    $this->statistiques[$etuId]['totalDuree']->add(new DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
                 }
 
                 $absence->isJustifie() ? $this->statistiques[$etuId]['nbJustifie']++ : $this->statistiques[$etuId]['nbNonJustifie']++;

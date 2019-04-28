@@ -1,18 +1,32 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/TokenSubscriber.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\EventSubscriber;
 
 use App\Controller\TokenAuthenticatedController;
-use App\Entity\Etudiant;
 use App\Entity\Departement;
+use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Events;
 use App\Repository\DepartementRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -52,7 +66,7 @@ class TokenSubscriber implements EventSubscriberInterface
     /**
      * @param FilterControllerEvent $event
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function onKernelController(FilterControllerEvent $event): void
     {

@@ -1,7 +1,21 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/MaterielPret.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,7 +81,6 @@ class MaterielPret extends BaseEntity
     private $justification;
 
 
-
     public function getDepartement(): ?Departement
     {
         return $this->departement;
@@ -104,48 +117,48 @@ class MaterielPret extends BaseEntity
         return $this;
     }
 
-    public function getDateDemande(): ?\DateTimeInterface
+    public function getDateDemande(): ?DateTimeInterface
     {
         return $this->dateDemande;
     }
 
-    public function setDateDemande(\DateTimeInterface $dateDemande): self
+    public function setDateDemande(DateTimeInterface $dateDemande): self
     {
         $this->dateDemande = $dateDemande;
 
         return $this;
     }
 
-    public function getDateDebutEmprunt(): ?\DateTimeInterface
+    public function getDateDebutEmprunt(): ?DateTimeInterface
     {
         return $this->dateDebutEmprunt;
     }
 
-    public function setDateDebutEmprunt(\DateTimeInterface $dateDebutEmprunt): self
+    public function setDateDebutEmprunt(DateTimeInterface $dateDebutEmprunt): self
     {
         $this->dateDebutEmprunt = $dateDebutEmprunt;
 
         return $this;
     }
 
-    public function getDateFinEmprunt(): ?\DateTimeInterface
+    public function getDateFinEmprunt(): ?DateTimeInterface
     {
         return $this->dateFinEmprunt;
     }
 
-    public function setDateFinEmprunt(\DateTimeInterface $dateFinEmprunt): self
+    public function setDateFinEmprunt(DateTimeInterface $dateFinEmprunt): self
     {
         $this->dateFinEmprunt = $dateFinEmprunt;
 
         return $this;
     }
 
-    public function getDateValidation(): ?\DateTimeInterface
+    public function getDateValidation(): ?DateTimeInterface
     {
         return $this->dateValidation;
     }
 
-    public function setDateValidation(\DateTimeInterface $dateValidation): self
+    public function setDateValidation(DateTimeInterface $dateValidation): self
     {
         $this->dateValidation = $dateValidation;
 

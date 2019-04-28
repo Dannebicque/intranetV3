@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/DatabaseTwigLoader.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 07/08/2018
@@ -8,8 +22,11 @@
 namespace App\Twig;
 
 use App\Repository\TwigTemplateRepository;
+use Twig_Error_Loader;
+use Twig_LoaderInterface;
+use Twig_Source;
 
-class DatabaseTwigLoader implements \Twig_LoaderInterface
+class DatabaseTwigLoader implements Twig_LoaderInterface
 {
     /** @var TwigTemplateRepository */
     private $twigTemplateRepository;
@@ -30,17 +47,17 @@ class DatabaseTwigLoader implements \Twig_LoaderInterface
      *
      * @param string $name The template logical name
      *
-     * @return \Twig_Source
+     * @return Twig_Source
      *
-     * @throws \Twig_Error_Loader When $name is not found
+     * @throws Twig_Error_Loader When $name is not found
      */
-    public function getSourceContext($name): \Twig_Source
+    public function getSourceContext($name): Twig_Source
     {
         if (false === $source = $this->getValue($name)->getSource()) {
-            throw new \Twig_Error_Loader(sprintf('Template "%s" does not exist.', $name));
+            throw new Twig_Error_Loader(sprintf('Template "%s" does not exist.', $name));
         }
 
-        return new \Twig_Source($source, $name);
+        return new Twig_Source($source, $name);
     }
 
     public function exists($name): bool

@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyConfiguration.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 19/05/2018
@@ -9,13 +23,15 @@
 namespace App\MesClasses;
 
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Personnel;
 use App\Repository\AnneeRepository;
 use App\Repository\AnneeUniversitaireRepository;
-use App\Repository\DiplomeRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use function strlen;
 
 /**
  * Class MyConfiguration
@@ -136,7 +152,7 @@ class MyConfiguration
     /**
      * @param $value
      *
-     * @return \App\Entity\Personnel|bool|null|AnneeUniversitaire
+     * @return Personnel|bool|null|AnneeUniversitaire
      */
     private function transformeValue($value)
     {
@@ -149,11 +165,11 @@ class MyConfiguration
         }
 
         if (0 === strpos($value, 'pers')) {
-            return $this->personnelRepository->find(substr($value, 4, \strlen($value)));
+            return $this->personnelRepository->find(substr($value, 4, strlen($value)));
         }
 
         if (0 === strpos($value, 'anneeuniv')) {
-            return $this->anneeUniversitaireRepository->find(substr($value, 9, \strlen($value)));
+            return $this->anneeUniversitaireRepository->find(substr($value, 9, strlen($value)));
         }
 
         if (empty($value)) {

@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
@@ -6,8 +19,9 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -63,7 +77,7 @@ class EtudiantRepository extends ServiceEntityRepository
      * @param null $max
      * @param bool $getResult
      *
-     * @return \Doctrine\ORM\Query|mixed
+     * @return Query|mixed
      */
     public function getByDepartement($departement, $data, $page = 0, $max = null, $getResult = true)
     {
@@ -125,7 +139,7 @@ class EtudiantRepository extends ServiceEntityRepository
      * @param $slug
      *
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
     {
@@ -163,7 +177,7 @@ class EtudiantRepository extends ServiceEntityRepository
      * @param $uuid
      *
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneByUuid($uuid)
     {

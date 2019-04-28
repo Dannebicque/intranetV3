@@ -1,11 +1,25 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AnneeRepository.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:45 PM
+ *  *
+ *
+ */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -29,9 +43,9 @@ class AnneeRepository extends ServiceEntityRepository
     /**
      * @param $diplome
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function findByDiplomeBuilder($diplome): \Doctrine\ORM\QueryBuilder
+    public function findByDiplomeBuilder($diplome): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->where('a.diplome = :diplome')

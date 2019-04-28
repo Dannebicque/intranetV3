@@ -1,8 +1,23 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Absence.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -38,7 +53,7 @@ class Absence extends BaseEntity
     }
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="date", type="date")
      * @Groups({"absences_administration"})
@@ -46,7 +61,7 @@ class Absence extends BaseEntity
     private $date;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="heure", type="time")
      * @Groups({"absences_administration"})
@@ -54,7 +69,7 @@ class Absence extends BaseEntity
     private $heure;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="duree", type="time")
      * @Groups({"absences_administration"})
@@ -99,7 +114,7 @@ class Absence extends BaseEntity
 
     /**
      * Absence constructor.
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct()
     {
@@ -108,49 +123,49 @@ class Absence extends BaseEntity
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): ?\DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
-    public function setDate(\DateTime $date): void
+    public function setDate(DateTime $date): void
     {
         $this->date = $date;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getHeure(): ?\DateTime
+    public function getHeure(): ?DateTime
     {
         return $this->heure;
     }
 
     /**
-     * @param \DateTime $heure
+     * @param DateTime $heure
      */
-    public function setHeure(\DateTime $heure): void
+    public function setHeure(DateTime $heure): void
     {
         $this->heure = $heure;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDuree(): ?\DateTime
+    public function getDuree(): ?DateTime
     {
         return $this->duree;
     }
 
     /**
-     * @param \DateTime $duree
+     * @param DateTime $duree
      */
-    public function setDuree(\DateTime $duree): void
+    public function setDuree(DateTime $duree): void
     {
         $this->duree = $duree;
     }

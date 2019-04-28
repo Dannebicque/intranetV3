@@ -1,10 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/TrelloTache.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -46,11 +62,11 @@ class TrelloTache extends BaseEntity
      *
      * @param Departement $departement
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Departement $departement)
     {
-        $this->deadline = new \DateTime('now');
+        $this->deadline = new DateTime('now');
         $this->departement = $departement;
         $this->personnels = new ArrayCollection();
     }
@@ -76,19 +92,19 @@ class TrelloTache extends BaseEntity
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTimeInterface|null
      */
-    public function getDeadline(): ?\DateTimeInterface
+    public function getDeadline(): ?DateTimeInterface
     {
         return $this->deadline;
     }
 
     /**
-     * @param \DateTimeInterface $deadline
+     * @param DateTimeInterface $deadline
      *
      * @return TrelloTache
      */
-    public function setDeadline(\DateTimeInterface $deadline): self
+    public function setDeadline(DateTimeInterface $deadline): self
     {
         $this->deadline = $deadline;
 

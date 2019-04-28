@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySousCommission.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:46 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 24/12/2018
@@ -19,7 +33,7 @@ use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 
 /**
- * @property \App\Entity\Ue[] ues
+ * @property Ue[] ues
  */
 class MySousCommission
 {
