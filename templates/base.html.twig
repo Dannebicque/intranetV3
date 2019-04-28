@@ -259,8 +259,13 @@
             <!-- END Change language -->
 
             <!-- Notifications -->
+            {% set newNotification = false %}
+            {% for notification in user_data.notifications if notification.lu == false %}
+                {% set newNotification = true %}
+            {% endfor %}
             <li class="dropdown d-none d-md-block">
-                <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i><span
+                <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i
+                            class="ti-bell"></i><span
                             class="sr-only">Notifications</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="media-list media-list-hover media-list-divided media-list-xs">
@@ -275,7 +280,7 @@
                                 </div>
                             </a>
                         {% else %}
-                            {{ 'aucune.notification'|trans }}
+                            <a class="media notification">{{ 'aucune.notification'|trans }}</a>
                         {% endfor %}
                     </div>
 
@@ -307,7 +312,7 @@
                              style="height: 290px">
                             {% for message in user_data.messages %}
                                 <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
-                                   href="{{ path('messagerie_message',{message:message.message.id}) }}">
+                                   href="{{ path('application_index',{onglet: 'message', message:message.message.id}) }}">
                   <span class="avatar status-success">
                     <img src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
                          alt="{{ message.message.expediteur.displayPr }}">
@@ -326,7 +331,7 @@
 
                         <div class="dropdown-footer">
                             <div class="left">
-                                <a href="{{ path('messagerie_index') }}">{{ 'voir.tous.les.messages'|trans }}</a>
+                                <a href="{{ path('application_index', {onglet: 'messagerie'}) }}">{{ 'voir.tous.les.messages'|trans }}</a>
                             </div>
 
                             <div class="right">
