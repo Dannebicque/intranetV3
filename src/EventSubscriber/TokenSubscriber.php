@@ -80,7 +80,7 @@ class TokenSubscriber implements EventSubscriberInterface
                 }
             } elseif ($this->getUser() instanceof Personnel) {
                 if ($this->authChecker->isGranted('ROLE_PERMANENT')) {
-
+                    //todo: maintenant toute cette partie est faire dans le guard... Encore utile ? Si pas de département déconnexion?
                     if ($this->session->get('departement') !== null) {
                         $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->session->get('departement')]);
                     }
