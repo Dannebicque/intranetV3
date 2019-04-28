@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeOffreController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration\stage;
 
@@ -9,6 +22,7 @@ use App\Entity\StagePeriodeOffre;
 use App\Form\StagePeriodeOffreType;
 use App\MesClasses\MyExport;
 use App\Repository\StagePeriodeOffreRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +60,7 @@ class StagePeriodeOffreController extends BaseController
      * @param                             $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
     public function export(

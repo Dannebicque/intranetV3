@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/UserController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
@@ -9,6 +22,8 @@ use App\Form\EtudiantProfilType;
 use App\Form\PersonnelProfilType;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,8 +59,8 @@ class UserController extends BaseController
      *
      * @param string              $onglet
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
     public function index(
         EtudiantRepository $etudiantRepository,

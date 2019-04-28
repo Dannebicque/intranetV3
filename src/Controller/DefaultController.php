@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/DefaultController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
@@ -19,7 +32,7 @@ class DefaultController extends BaseController
      * @param ActualiteRepository $actualiteRepository
      * @param DateRepository      $dateRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository): Response
     {
@@ -33,7 +46,7 @@ class DefaultController extends BaseController
      * @Route("/super-administration/", name="super_admin_homepage")
      * @param DepartementRepository $departementRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function superAdminHomepage(DepartementRepository $departementRepository): Response
     {

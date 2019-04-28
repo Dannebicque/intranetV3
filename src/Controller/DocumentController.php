@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/DocumentController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
@@ -27,7 +40,7 @@ class DocumentController extends BaseController
      * @Route("/ajax/typedocument", name="typedocument_ajax", options={"expose": true})
      * @param TypeDocumentRepository $typeDocumentRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function typeDocument(TypeDocumentRepository $typeDocumentRepository): Response
     {
@@ -43,7 +56,7 @@ class DocumentController extends BaseController
      *
      * @param                    $typedocument
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @Route("/ajax/document/{typedocument}", name="document_ajax", options={"expose": true})
      */
     public function documents(DocumentRepository $documentRepository, $typedocument): Response

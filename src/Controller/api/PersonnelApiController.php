@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/PersonnelApiController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\api;
 
@@ -8,11 +21,14 @@ use App\Entity\PersonnelDepartement;
 use App\MesClasses\MyPersonnel;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use function count;
 
 /**
  * Class AgendaController
@@ -72,7 +88,7 @@ class PersonnelApiController extends BaseController
      *
      * @return Response
      * @Route("/personnel/recherche/{needle}", name="api_personnel_recherche", options={"expose":true})
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function searchPersonnel(
         SerializerInterface $serialize,
@@ -95,7 +111,7 @@ class PersonnelApiController extends BaseController
      * @param Departement                    $departement
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement", options={"expose":true})
      */
     public function addPersonnelToDepartement(
@@ -153,12 +169,12 @@ class PersonnelApiController extends BaseController
         $output = [
             'draw'            => 1,
             'data'            => $users,
-            'recordsFiltered' => \count($this->personnelRepository->getAllPersonnel(
+            'recordsFiltered' => count($this->personnelRepository->getAllPersonnel(
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => \count($this->personnelRepository->getAllPersonnel(
+            'recordsTotal'    => count($this->personnelRepository->getAllPersonnel(
                 [],
                 0,
                 false

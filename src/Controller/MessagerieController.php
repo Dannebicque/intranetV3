@@ -1,15 +1,30 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
 use App\Entity\Etudiant;
 use App\Entity\Message;
-use App\Entity\MessageDestinataire;
 use App\Entity\Personnel;
 use App\MesClasses\MyMessagerie;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\MessageRepository;
+use DateTime;
+use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,7 +85,7 @@ class MessagerieController extends BaseController
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
      * @param                                        $filtre
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose"=true})
      *
      */
@@ -107,7 +122,7 @@ class MessagerieController extends BaseController
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
      * @param int                                    $page
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function listeMessages(
         MessageRepository $messageRepository,
@@ -165,8 +180,8 @@ class MessagerieController extends BaseController
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
      * @param Message                                $message
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return Response
+     * @throws NonUniqueResultException
      */
     public function message(
         MessageDestinatairePersonnelRepository $messagePersonnelRepository,
@@ -183,7 +198,7 @@ class MessagerieController extends BaseController
 
         if ($messaged->getEtat() === 'U') {
             $messaged->setEtat('R');
-            $messaged->setDateLu(new \DateTime('now'));
+            $messaged->setDateLu(new DateTime('now'));
             $this->entityManager->persist($messaged);
             $this->entityManager->flush();
         }

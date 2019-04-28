@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -10,11 +23,14 @@ use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluation;
 use App\MesClasses\MyEvaluations;
 use App\MesClasses\MyUpload;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * Class NotesController
@@ -55,8 +71,8 @@ class NoteController extends BaseController
      * @param Request $request
      * @param Matiere $matiere
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function saisie(Request $request, Matiere $matiere)
     {
@@ -121,19 +137,19 @@ class NoteController extends BaseController
      * @param Evaluation $evaluation
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      * @Route("/sauvegarde/{uuid}",
      *     name="application_personnel_note_ajax_saisie",
      *     methods={"POST|GET"},
      *     options={"expose":true})
-     * @throws \Exception
+     * @throws Exception
      */
     public function enregistreNoteAction(MyEtudiant $myEtudiant, Request $request, Evaluation $evaluation)
     {
         //vérifier $this->get('request')->request->get('notes)['notes']
         $tnote = $request->request->get('notes')['notes'];
 
-        $nbNotes = \count($tnote);
+        $nbNotes = count($tnote);
         for ($i = 0; $i < $nbNotes; $i++) {
             $myEtudiant->setIdEtudiant($tnote[$i]['id']);
             $myEtudiant->addNote($evaluation, $tnote[$i]);
@@ -150,7 +166,7 @@ class NoteController extends BaseController
      * @param Matiere      $matiere
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function import(Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Matiere $matiere): Response
     {

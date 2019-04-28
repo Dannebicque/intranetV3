@@ -1,11 +1,23 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/SousComissionController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\MesClasses\MySousCommission;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,7 +35,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function live(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
@@ -41,7 +53,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function travail(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
@@ -59,7 +71,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function purger(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
@@ -72,7 +84,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function recalculer(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
@@ -84,7 +96,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function publier(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
@@ -97,7 +109,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function exporter(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
@@ -109,7 +121,7 @@ class SousComissionController extends BaseController
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function grandJury(MySousCommission $mySousCommission, Semestre $semestre): Response
     {

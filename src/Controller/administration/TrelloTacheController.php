@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TrelloTacheController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -8,6 +21,9 @@ use App\Entity\TrelloTache;
 use App\Form\TrelloTacheType;
 use App\MesClasses\MyExport;
 use App\Repository\TrelloTacheRepository;
+use DateInterval;
+use DateTimeImmutable;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,12 +59,12 @@ class TrelloTacheController extends BaseController
     public function board(TrelloTacheRepository $trelloTacheRepository): Response
     {
         $jourDuJour = date('N');
-        $dateDuJour = new \DateTimeImmutable();
+        $dateDuJour = new DateTimeImmutable();
         $dp = $dateDuJour;
 
         $tab = array();
         for ($i = $jourDuJour - 1; $i > 0; $i--) {
-            $tab[$i] = $dp->sub(new \DateInterval('P1D'));
+            $tab[$i] = $dp->sub(new DateInterval('P1D'));
             $dp = $tab[$i];
         }
         $tab[$jourDuJour] = $dateDuJour;
@@ -57,7 +73,7 @@ class TrelloTacheController extends BaseController
 
         for ($i = $jourDuJour + 1; $i < $end; $i++) {
             //le 32 dépend du jour de début ...
-            $tab[$i] = $dp->add(new \DateInterval('P1D'));
+            $tab[$i] = $dp->add(new DateInterval('P1D'));
             $dp = $tab[$i];
         }
 
@@ -78,7 +94,7 @@ class TrelloTacheController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(MyExport $myExport, TrelloTacheRepository $trelloTacheRepository, $_format): Response
     {

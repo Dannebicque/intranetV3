@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EvaluationController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -66,7 +79,7 @@ class EvaluationController extends BaseController
      * @param                      $etat
      * @param Semestre             $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @Route("/visibilite/semestre/{semestre}/{etat}", name="administration_evaluation_visibilite_all",
      *                                                  methods={"GET"})
      */
@@ -96,7 +109,7 @@ class EvaluationController extends BaseController
      * @param                      $etat
      * @param Semestre             $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @Route("/modifiable/semestre/{semestre}/{etat}", name="administration_evaluation_modifiable_all",
      *                                                  methods={"GET"})
      */

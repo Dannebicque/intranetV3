@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/RattrapageController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -10,6 +23,7 @@ use App\Events;
 use App\MesClasses\MyExport;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -30,7 +44,7 @@ class RattrapageController extends BaseController
      * @param RattrapageRepository $rattrapageRepository
      * @param Semestre             $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(
         AbsenceRepository $absenceRepository,
@@ -53,7 +67,7 @@ class RattrapageController extends BaseController
      * @param                      $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(
         MyExport $myExport,
@@ -101,8 +115,8 @@ class RattrapageController extends BaseController
             $this->entityManager->flush();
 
             $event = new GenericEvent($rattrapage);
-            $eventDispatcher->dispatch(Events::MAIL_DECISION_RATTRAPAGE, $event);
-            $eventDispatcher->dispatch(Events::DECISION_RATTRAPAGE, $event);
+            $eventDispatcher->dispatch($event, Events::MAIL_DECISION_RATTRAPAGE);
+            $eventDispatcher->dispatch($event, Events::DECISION_RATTRAPAGE);
 
             return new Response('', Response::HTTP_OK);
         }

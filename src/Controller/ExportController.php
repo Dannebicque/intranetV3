@@ -1,11 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ExportController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
 use App\MesClasses\MyExportListing;
 use App\Repository\MatiereRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,8 +36,8 @@ class ExportController extends AbstractController
      * @param MyExportListing   $myExport
      * @param Request           $request
      *
-     * @return bool|null|\Symfony\Component\HttpFoundation\StreamedResponse
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @return bool|null|StreamedResponse
+     * @throws Exception
      */
     public function listing(MatiereRepository $matiereRepository, MyExportListing $myExport, Request $request)
     {

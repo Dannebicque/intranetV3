@@ -1,13 +1,24 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/DisponibiliteController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
-use App\Entity\CreneauCours;
 use App\Entity\Disponibilite;
-use App\Repository\CalendrierRepository;
-use App\Repository\CreneauCoursRepository;
 use App\Repository\DisponibiliteRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +61,7 @@ class DisponibiliteController extends BaseController
 
     /**
      * @Route("/update", name="application_personnel_disponibilite_update", options={"expose"=true})
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function updateDisponibilites(Request $request, DisponibiliteRepository $disponibiliteRepository) {
         //todo: a gérer année universitaire

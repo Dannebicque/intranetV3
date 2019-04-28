@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -10,6 +23,8 @@ use App\MesClasses\MyAbsences;
 use App\MesClasses\MyExport;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
+use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -51,7 +66,7 @@ class AbsenceController extends BaseController
      * @param Semestre   $semestre
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function liste(MyAbsences $myAbsences, Semestre $semestre): Response
     {
@@ -67,7 +82,7 @@ class AbsenceController extends BaseController
      * @Route("/semestre/{semestre}/justifier", name="administration_absences_semestre_justifier")
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function justifier(Semestre $semestre): Response
     {
@@ -80,7 +95,7 @@ class AbsenceController extends BaseController
      * @Route("/semestre/{semestre}/saisie", name="administration_absences_semestre_saisie")
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function saisie(Semestre $semestre): Response
     {
@@ -97,7 +112,7 @@ class AbsenceController extends BaseController
      *
      * @param                               $_format
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportJustificatif(MyExport $myExport, AbsenceJustificatifRepository $absenceJustificatifRepository, Semestre $semestre, $_format): Response
@@ -117,9 +132,9 @@ class AbsenceController extends BaseController
      *
      * @param            $_format
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \Exception
+     * @throws Exception
      */
     public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
     {
@@ -137,7 +152,7 @@ class AbsenceController extends BaseController
      *
      * @param                   $_format
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportAllAbsences(
@@ -171,9 +186,9 @@ class AbsenceController extends BaseController
      * @param         $etat
      * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
-    public function justifie(Absence $absence, bool $etat): \Symfony\Component\HttpFoundation\JsonResponse
+    public function justifie(Absence $absence, bool $etat): JsonResponse
     {
         $absence->setJustifie($etat);
         $this->entityManager->flush();

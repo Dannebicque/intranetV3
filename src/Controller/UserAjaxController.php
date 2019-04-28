@@ -1,13 +1,27 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/UserAjaxController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
-use App\Entity\Favori;
 use App\Entity\Departement;
+use App\Entity\Favori;
 use App\Entity\PersonnelDepartement;
 use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
 use App\Repository\PersonnelDepartementRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +41,7 @@ class UserAjaxController extends BaseController
      * @param Request $request
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      * @Route("/add-favori", name="user_add_favori", options={"expose":true})
      */
     public function addFavori(

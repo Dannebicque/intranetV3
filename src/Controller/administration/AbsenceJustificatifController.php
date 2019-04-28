@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceJustificatifController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -9,6 +22,7 @@ use App\Entity\Semestre;
 use App\Events;
 use App\MesClasses\MyExport;
 use App\Repository\AbsenceJustificatifRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -30,7 +44,7 @@ class AbsenceJustificatifController extends BaseController
      * @param AbsenceJustificatifRepository $absenceJustificatifRepository
      * @param Semestre                      $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function justificatif(
         AbsenceJustificatifRepository $absenceJustificatifRepository,
@@ -52,8 +66,8 @@ class AbsenceJustificatifController extends BaseController
      *
      * @param                               $_format
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @return Response
+     * @throws Exception
      */
     public function exportJustificatif(
         MyExport $myExport,
@@ -83,7 +97,7 @@ class AbsenceJustificatifController extends BaseController
 
 
             $event = new GenericEvent($absenceJustificatif);
-            $eventDispatcher->dispatch(Events::MAIL_DELETE_JUSTIFICATIF, $event);
+            $eventDispatcher->dispatch($event, Events::MAIL_DELETE_JUSTIFICATIF);
             $this->entityManager->remove($absenceJustificatif);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.justificatif.delete.success.flash');
@@ -130,8 +144,8 @@ class AbsenceJustificatifController extends BaseController
 
         if ($etat === 'A' || $etat === 'R') {
             $event = new GenericEvent($absenceJustificatif);
-            $eventDispatcher->dispatch(Events::MAIL_DECISION_JUSTIFICATIF, $event);
-            $eventDispatcher->dispatch(Events::DECISION_JUSTIFICATIF, $event);
+            $eventDispatcher->dispatch($event, Events::MAIL_DECISION_JUSTIFICATIF);
+            $eventDispatcher->dispatch($event, Events::DECISION_JUSTIFICATIF);
         }
 
         return new Response('', Response::HTTP_OK);

@@ -1,12 +1,26 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/DiplomeController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration\structure;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Form\DiplomeType;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,7 +80,7 @@ class DiplomeController extends BaseController
      * @param Diplome $diplome
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws LogicException
      */
     public function edit(Request $request, Diplome $diplome): Response
     {

@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PrevisionnelController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -14,7 +27,9 @@ use App\MesClasses\Tools;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -142,7 +157,7 @@ class PrevisionnelController extends BaseController
      * @param MatiereRepository   $matiereRepository
      * @param Request             $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @return RedirectResponse|Response
      */
     public function create(
         PersonnelRepository $personnelRepository,
@@ -220,7 +235,7 @@ class PrevisionnelController extends BaseController
      * @param                $annee
      *
      * @return StreamedResponse
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      * @Route("/{annee}/export_omega", name="administration_previsionnel_export_omega", methods="GET")
      *
      */
