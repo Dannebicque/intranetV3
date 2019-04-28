@@ -1,4 +1,4 @@
-<table width="100%">
+<table style="width:100%">
     <tr>
         <td style="text-align: center; width:20%"><img
                     src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"
@@ -19,7 +19,7 @@
 <h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|date('d/m/Y') }}
 <p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
     <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
-<table class="table table-bordered" width="100%">
+<table class="table table-bordered" style="width:100%">
     <thead>
     <tr>
         <th>N° Eval.</th>
@@ -71,11 +71,11 @@
     </tbody>
 </table>
 <br/><br/><br/>
-<table width="100%">
+<table style="width:100%">
     <tr>
-        <td width="50%">{{ settings('VILLE_IUT') }},
-            le {{ "now"|date('d/m/Y') }}</td>
-        <td width="50%">Le responsable du diplôme<br/>
+        <td style="width:50%">{{ settings('VILLE_IUT') }},
+                                                         le {{ "now"|date('d/m/Y') }}</td>
+        <td style="width:50%">Le responsable du diplôme<br/>
             {{ etudiant.diplome.respDiplome.displayPr }}</td>
     </tr>
     <tr>

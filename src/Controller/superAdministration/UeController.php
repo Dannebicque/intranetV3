@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/UeController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:32 PM
+ *  * @lastUpdate 4/28/19 6:23 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -101,7 +114,8 @@ class UeController extends BaseController
             ]);
         }
 
-        return $this->render('erreur/404.html.twig');
+        return $this->redirectToRoute('erreur_666');
+
     }
 
     /**

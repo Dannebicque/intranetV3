@@ -2,6 +2,7 @@
 <div class="card card-body">
             <form>
                 <div class="input-group">
+                    <label for="messageTo" class="sr-only">Destinataire(s)</label>
                     <input type="text" class="form-control form-control-lg"
                            placeholder="{{ 'message.to'|trans }}" id="messageTo" name="destinataires">
                     <span class="input-group-append">
@@ -12,9 +13,13 @@
                 <div>Saisissez les premières lettre d'un nom d'étudiant, d'un enseignant, d'un vacataire, d'un
                      groupe ou d'un semestre.</div>
                 <div class="form-group">
+                    <label for="messageCopy" class="sr-only">Copie(s)</label>
+
                     <input type="text" class="form-control"
                            placeholder="{{ 'message.copy'|trans }}" id="messageCopy" name="copie">
                 </div>
+                <label for="messageSubject" class="sr-only">Sujet</label>
+
                 <input class="form-control form-control-lg" type="text"
                        placeholder="{{ 'message.subject'|trans }}" id="messageSubject">
                 <br>

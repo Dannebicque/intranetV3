@@ -157,13 +157,19 @@
                             {% for etudiant in groupe.etudiants %}
                                 <tr {% if not(notes[etudiant.id] is defined) or notes[etudiant.id].note == '-0.01' %}class="bg-pale-warning"{% endif %}>
                                     <td>{{ etudiant.nom|capitalize }} {{ etudiant.prenom|capitalize }}  </td>
-                                    <td><input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
+                                    <td>
+                                        <label class="sr-only" for="no_{{ etudiant.id }}">Note
+                                                                                          pour {{ etudiant.display }}</label>
+                                        <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
                                                id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
                                                class="form-control noteetudiant groupe_{{ groupe.id }}"
                                                value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
                                     </td>
-                                    <td>Absent.</td>
-                                    <td><input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
+                                    <td>Absent.</td>{# todo: a gérer #}
+                                    <td>
+                                        <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
+                                            .display }}</label>
+                                        <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
                                                class="form-control groupe_{{ groupe.id }}"/></td>
                                 </tr>
                                 {% set tab=tab+1 %}
@@ -184,6 +190,8 @@
             </div>
         </div>
     </div>
+
+    {# todo: gérer le modal pour ajotuer des enseignants dans les notes #}
 {% endblock %}
 
 

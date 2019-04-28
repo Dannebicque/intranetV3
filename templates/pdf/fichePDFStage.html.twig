@@ -1,13 +1,13 @@
 {% extends "pdf/basepdf.html.twig" %}
 
 {% block content %}
-    <table border="0">
+    <table style="border:0">
         <tr>
-            <td width="15%">
+            <td style="width:15%">
                 <img src="{{ linuxpath~'img/logo/urcapetit.jpg' }}" alt="logo" width="100px" />
             </td>
-            <td width="70%">&nbsp;</td>
-            <td width="15%" style="text-align: right">
+            <td style="width:70%">&nbsp;</td>
+            <td style="text-align: right; width: 15%">
                 <img src="{{ linuxpath~'img/logo/'~user_data.departement.logoName }}" alt="logo"
                      width="100px"/>
             </td>

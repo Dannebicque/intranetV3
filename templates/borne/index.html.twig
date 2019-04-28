@@ -330,7 +330,7 @@
             <img src="{{ asset('upload/logo/univ_reims.png') }}" alt="logo Université" width="100px"/>
         </div>
         <div style="width:25%; text-align: center; float: left; padding-top: 20px">
-            <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                  width="30%" height="30%" viewBox="0 0 1811.638 1426" enable-background="new 0 0 1811.638 1426" xml:space="preserve">
 <g>
     <path class="pt1b" fill="#333333" d="M380.607,160.948c-47.971,0-86.855,38.885-86.855,86.855c0,47.697,38.451,86.398,86.045,86.834
@@ -655,7 +655,7 @@
         </div>
         <div style="width:25%; text-align: center; float: left; padding-top:20px">
             <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg"
-                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 x="0px" y="0px"
                  width="30%" height="30%" viewBox="0 0 376.481 277.486"
                  enable-background="new 0 0 376.481 277.486"
                  xml:space="preserve">
@@ -724,26 +724,26 @@
 <script src="{{ asset('assets/bornes/materialize/js/materialize.min.js') }}"></script>
 <script src="{{ asset('assets/bornes/js/main.js') }}"></script>
 <script>
-  var select = function (s) {
-    return document.querySelector(s);
-  };
+  const select = function (s) {
+    return document.querySelector(s)
+  }
 
 
-  var bt1b = select('.bt1b');
-  var bt2b = select('.bt2b');
-  var bt3b = select('.bt3b');
-  var bt4b = select('.bt4b');
-  var bt5b = select('.bt5b');
-  var pt1b = select('.pt1b');
-  var pt2b = select('.pt2b');
-  var pt3b = select('.pt3b');
+  const bt1b = select('.bt1b')
+  const bt2b = select('.bt2b')
+  const bt3b = select('.bt3b')
+  const bt4b = select('.bt4b')
+  const bt5b = select('.bt5b')
+  const pt1b = select('.pt1b')
+  const pt2b = select('.pt2b')
+  const pt3b = select('.pt3b')
 
-  var time = 900;
+  const time = 900
 
   setInterval(function () {
-    var colors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e']
+    const colors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e']
 
-    var rand = Math.floor(Math.random() * colors.length);
+    let rand = Math.floor(Math.random() * colors.length)
     bt1b.style.fill = colors[rand];
 
     rand = Math.floor(Math.random() * colors.length);

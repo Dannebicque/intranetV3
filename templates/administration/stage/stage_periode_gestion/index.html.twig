@@ -389,7 +389,9 @@
                                         {{ stageEtudiant.stage.dateDebutStage|localizeddate('long', 'none', app.request.getLocale()) }}
                                         <br/> {{ stageEtudiant.stage.dateFinStage|localizeddate('long', 'none', app.request.getLocale()) }}
                                     </td>
-                                    <td><select name="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{
+                                    <td>
+                                        <label for="tuteur_{{ stageEtudiant.etudiant.id }}" class="sr-only"></label>
+                                        <select name="tuteur_{{ stageEtudiant.etudiant.id }}" id="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{
                                         stageEtudiant.stage.id }}"
                                                 class="changetuteur form-control">
                                             <option>{{ 'table.tuteur_universitaire'|trans }}</option>

@@ -30,9 +30,11 @@
                 </h6>
                 <div class="gap-items-2 gap-y">
                     {% for pj in message.messagePieceJointes %}
-                        <a class="d-inline-block" href="#"><img class="w-140px" src="{{ asset
-                                ('assets/img/gallery/thumb-sm/10.jpg') }}
-                                                                alt=" ..."></a>
+                        <a class="d-inline-block" href="#">
+                            <img class="w-140px"
+                                 src="{{ asset('assets/img/gallery/thumb-sm/10.jpg') }}"
+                                 alt="...">
+                        </a>
                     {% endfor %}
                 </div>
             {% endif %}
