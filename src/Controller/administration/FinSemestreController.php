@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/FinSemestreController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -10,6 +23,7 @@ use App\MesClasses\MyEtudiant;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +41,7 @@ class FinSemestreController extends BaseController
      * @param EtudiantRepository    $etudiantRepository
      * @param Semestre              $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(
         DepartementRepository $departementRepository,
@@ -68,7 +82,7 @@ class FinSemestreController extends BaseController
      * @param Semestre           $semestre
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function confirme(
         EtudiantRepository $etudiantRepository,

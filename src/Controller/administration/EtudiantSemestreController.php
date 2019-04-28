@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantSemestreController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -9,6 +22,7 @@ use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
 use App\MesClasses\MyExport;
 use App\Repository\EtudiantRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +40,7 @@ class EtudiantSemestreController extends BaseController
      * @param EtudiantRepository $etudiantRepository
      * @param Semestre           $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function parcoursSemestre(EtudiantRepository $etudiantRepository, Semestre $semestre): Response
     {
@@ -42,7 +56,7 @@ class EtudiantSemestreController extends BaseController
      * @Route("/add/{semestre}", name="administration_etudiant_semestre_add", requirements={"semestre"="\d+"})
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Exception
      */
     public function addEtudiant(Semestre $semestre = null): Response
@@ -90,7 +104,7 @@ class EtudiantSemestreController extends BaseController
      *                                    requirements={"semestre"="\d+"}, methods={"GET"})
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function importPhoto(Semestre $semestre): Response
     {
@@ -105,7 +119,7 @@ class EtudiantSemestreController extends BaseController
      * @param Request  $request
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function importPhotoZip(Request $request, Semestre $semestre): Response
     {
@@ -118,7 +132,7 @@ class EtudiantSemestreController extends BaseController
      * @Route("/{semestre}", name="administration_etudiant_semestre_index", requirements={"semestre"="\d+"})
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function semestre(Semestre $semestre): Response
     {
@@ -142,7 +156,7 @@ class EtudiantSemestreController extends BaseController
      * @param                    $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function exportAllAbsences(
         MyExport $myExport,

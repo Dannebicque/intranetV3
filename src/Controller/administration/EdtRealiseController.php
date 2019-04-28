@@ -1,12 +1,25 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtRealiseController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\Matiere;
 use App\Entity\Previsionnel;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -120,7 +133,7 @@ class EdtRealiseController extends BaseController
     /**
      * @param Request $request
      *
-     * @return JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      * @Route("/ajax/enseignant/modules", name="administration_edt_realise_ajax_modules", options={"expose"=true},
      *                                    methods={"POST"})
      */

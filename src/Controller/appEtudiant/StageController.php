@@ -1,14 +1,28 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/StageController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StageEtudiant;
-use App\Entity\StagePeriode;
 use App\Events;
 use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
+use DateTime;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -58,7 +72,7 @@ class StageController extends BaseController
      * @param StageEtudiant            $stageEtudiant
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(
         EventDispatcherInterface $eventDispatcher,
@@ -76,12 +90,12 @@ class StageController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
-                $stageEtudiant->setDateDepotFormulaire(new \DateTime('now'));
+                $stageEtudiant->setDateDepotFormulaire(new DateTime('now'));
                 $this->entityManager->flush();
 
                 $event = new GenericEvent($stageEtudiant);
-                $eventDispatcher->dispatch(Events::CHGT_ETAT_STAGE_DEPOSE, $event);
-                $eventDispatcher->dispatch(Events::MAIL_CHGT_ETAT_STAGE_DEPOSE, $event);
+                $eventDispatcher->dispatch($event, Events::CHGT_ETAT_STAGE_DEPOSE);
+                $eventDispatcher->dispatch($event, Events::MAIL_CHGT_ETAT_STAGE_DEPOSE);
 
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.formulaire.success.flash');
 

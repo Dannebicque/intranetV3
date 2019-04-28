@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/UfrController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -8,6 +21,7 @@ use App\Entity\Ufr;
 use App\Form\UfrType;
 use App\MesClasses\MyExport;
 use App\Repository\UfrRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +50,7 @@ class UfrController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(MyExport $myExport, UfrRepository $ufrRepository, $_format): Response
     {

@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/CarnetController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -9,6 +22,7 @@ use App\Events;
 use App\Form\CahierTexteType;
 use App\MesClasses\MyExport;
 use App\Repository\CahierTexteRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -46,7 +60,7 @@ class CarnetController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {
@@ -93,7 +107,7 @@ class CarnetController extends BaseController
 
             //On déclenche l'event
             $event = new GenericEvent($cahierTexte);
-            $eventDispatcher->dispatch(Events::CARNET_ADDED, $event);
+            $eventDispatcher->dispatch($event, Events::CARNET_ADDED);
 
             return $this->redirectToRoute('application_index', ['onglet' => 'carnet']);
         }

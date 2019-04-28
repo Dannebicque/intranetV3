@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantGroupeController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -25,7 +38,7 @@ class EtudiantGroupeController extends BaseController
      * @Route("/semestre/{semestre}", name="administration_etudiant_groupe_semestre_index")
      * @param Semestre $semestre
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(Semestre $semestre): Response
     {
@@ -40,7 +53,7 @@ class EtudiantGroupeController extends BaseController
      * @param EtudiantRepository $etudiantRepository
      * @param TypeGroupe         $typeGroupe
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function affecte(EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
     {
@@ -59,7 +72,7 @@ class EtudiantGroupeController extends BaseController
      * @param EtudiantRepository $etudiantRepository
      * @param GroupeRepository   $groupeRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function change(
         Request $request,

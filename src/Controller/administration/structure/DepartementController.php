@@ -1,10 +1,24 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/DepartementController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration\structure;
 
 use App\Controller\BaseController;
 use App\Entity\Departement;
 use App\Form\DepartementType;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +45,7 @@ class DepartementController extends BaseController
      * @param Departement $departement
      *
      * @return Response
-     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws LogicException
      */
     public function edit(Request $request, Departement $departement): Response
     {

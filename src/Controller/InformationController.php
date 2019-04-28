@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/InformationController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
@@ -11,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * Class InformationController
@@ -37,7 +51,7 @@ class InformationController extends BaseController
      *
      * @param int               $page
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function categorie(
         MyPagination $myPagination,
@@ -65,7 +79,7 @@ class InformationController extends BaseController
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
      * @param Article $article
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function show(Article $article): Response
     {
@@ -79,7 +93,7 @@ class InformationController extends BaseController
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
      * @param Article $article
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      * @IsGranted("ROLE_ETUDIANT")
      */
     public function like(Article $article): JsonResponse
@@ -89,6 +103,6 @@ class InformationController extends BaseController
         $article->addLike($this->getConnectedUser());
         $this->entityManager->flush();
 
-        return $this->json(\count($article->getLikes()), Response::HTTP_OK);
+        return $this->json(count($article->getLikes()), Response::HTTP_OK);
     }
 }

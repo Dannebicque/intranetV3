@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/PersonnelDepartementController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -9,6 +22,7 @@ use App\Entity\PersonnelDepartement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function in_array;
 
 /**
  * Class PersonnelDepartementController
@@ -66,7 +80,7 @@ class PersonnelDepartementController extends BaseController
     public function modifierDroits(Request $request, PersonnelDepartement $pf): Response
     {
         $droit = $request->request->get('droit');
-        if ($pf !== null && \in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if ($pf !== null && in_array($droit, Constantes::ROLE_LISTE, true)) {
             $pf->clearRole();
             $pf->addRole($droit);
             $this->entityManager->flush();

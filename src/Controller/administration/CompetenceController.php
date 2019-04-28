@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/CompetenceController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:42 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -9,6 +22,7 @@ use App\Entity\Diplome;
 use App\Form\CompetenceType;
 use App\MesClasses\Csv\Csv;
 use App\Repository\CompetenceRepository;
+use Doctrine\Common\Annotations\AnnotationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -71,7 +85,7 @@ class CompetenceController extends BaseController
      * @param CompetenceRepository $competenceRepository
      *
      * @return Response
-     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws AnnotationException
      */
     public function export(Csv $csv, CompetenceRepository $competenceRepository): Response
     {

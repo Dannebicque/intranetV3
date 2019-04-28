@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/EtudiantApiController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\api;
 
@@ -6,10 +19,12 @@ use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * Class AgendaController
@@ -62,7 +77,7 @@ class EtudiantApiController extends BaseController
      *
      * @return Response
      * @Route("/departement", name="api_etudiant_departement", options={"expose":true})
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function getEtudiantsByDepartement(Request $request): Response
     {
@@ -87,13 +102,13 @@ class EtudiantApiController extends BaseController
         $output = [
             'draw'            => 1,
             'data'            => $users,
-            'recordsFiltered' => \count($this->etudiantRepository->getByDepartement(
+            'recordsFiltered' => count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => \count($this->etudiantRepository->getByDepartement(
+            'recordsTotal'    => count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
                 [],
                 0,

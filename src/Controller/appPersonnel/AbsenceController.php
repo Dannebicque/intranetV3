@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/AbsenceController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:46 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -13,12 +26,14 @@ use App\MesClasses\Tools;
 use App\Repository\AbsenceRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * Class AbsenceController
@@ -160,7 +175,7 @@ class AbsenceController extends BaseController
      * @param Etudiant          $etudiant
      *
      * @return JsonResponse|Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function ajaxSaisie(
         MyEtudiant $myEtudiant,
@@ -179,7 +194,7 @@ class AbsenceController extends BaseController
             'anneeuniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire() : 0
         ]);
 
-        if ($request->get('action') === 'saisie' && \count($absence) === 0) {
+        if ($request->get('action') === 'saisie' && count($absence) === 0) {
             //if ($this->saisieAutorise($connect->getDepartement()->getPgNbjourssaisie(), $datesymfony)) {
             $myEtudiant->setEtudiant($etudiant);
 
@@ -203,7 +218,7 @@ class AbsenceController extends BaseController
             //return new response('out', 500);
         }
 
-        if (\count($absence) === 1) {
+        if (count($absence) === 1) {
 
 
             //un tableau, donc une absence ?

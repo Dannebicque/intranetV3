@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
 
 namespace App\Controller;
 
@@ -25,7 +38,7 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      * @param Etudiant $etudiant
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function timeline(Etudiant $etudiant): Response
     {
@@ -39,7 +52,7 @@ class ProfilEtudiantController extends BaseController
      * @param ScolariteRepository $scolariteRepository
      * @param Etudiant            $etudiant
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      *
      */
@@ -59,7 +72,7 @@ class ProfilEtudiantController extends BaseController
      * @param ScolariteRepository          $scolariteRepository
      * @param Etudiant                     $etudiant
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function scolarite(
@@ -81,7 +94,7 @@ class ProfilEtudiantController extends BaseController
      * @param Etudiant $etudiant
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function notes(Etudiant $etudiant): Response
     {
@@ -95,7 +108,7 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      * @param Etudiant $etudiant
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function absences(Etudiant $etudiant): Response
     {
@@ -120,7 +133,7 @@ class ProfilEtudiantController extends BaseController
      * @param AlternanceRepository    $alternanceRepository
      * @param Etudiant                $etudiant
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function stages(
         StageEtudiantRepository $stageEtudiantRepository,
@@ -147,7 +160,7 @@ class ProfilEtudiantController extends BaseController
      *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function about(Etudiant $etudiant): Response
     {
