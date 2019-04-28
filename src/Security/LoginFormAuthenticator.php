@@ -2,11 +2,15 @@
 
 namespace App\Security;
 
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use App\Events;
+use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -28,17 +32,27 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $session;
+    private $user;
+
+    /** @var DepartementRepository */
+    private $departementRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        DepartementRepository $departementRepository,
+        SessionInterface $session
+
     ) {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->departementRepository = $departementRepository;
+        $this->session = $session;
     }
 
     public function supports(Request $request): bool
@@ -78,10 +92,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         if ($userPersonnel !== null && $userEtudiant === null) {
+            $this->user = $userPersonnel;
             return $userPersonnel;
         }
 
         if ($userPersonnel === null && $userEtudiant !== null) {
+            $this->user = $userEtudiant;
             return $userEtudiant;
         }
             return null;
@@ -113,6 +129,31 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             $redirection = new RedirectResponse($this->urlGenerator->generate('administratif_homepage'));
         } elseif (\in_array('ROLE_PERMANENT', $rolesTab, true) || \in_array('ROLE_ETUDIANT', $rolesTab, true)) {
             // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
+
+            if (\in_array('ROLE_PERMANENT', $rolesTab, true)) {
+                //init de la session departement
+                $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
+                if (count($departements) > 1) {
+                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
+                }
+
+                if (count($departements) === 1) {
+                    /** @var Departement $departement */
+                    $departement = $departements[0];
+                    $this->session->set('departement', $departement->getUuidString()); //on sauvegarde
+                } else {
+                    echo 'pas de departement par defaut';
+                    //pas de departement par défaut, ou pas de departement du tout.
+                    $departements = $this->departementRepository->findDepartementPersonnel($this->user);
+                    if (count($departements) === 0) {
+                        return new RedirectResponse($this->urlGenerator->generate('security_login',
+                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
+                    }
+                    //donc il y a une departement, mais pas une par défaut.
+                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
+                }
+            }
+
             $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
             //c'est aucun des rôles...
