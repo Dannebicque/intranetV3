@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/PrevisionnelController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 2:11 PM
+ *  * @lastUpdate 4/28/19 2:11 PM
+ *  *
+ *
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -20,10 +33,11 @@ class PrevisionnelController extends BaseController
      * @Route("/", name="previsionnel_index")
      * @param MyPrevisionnel $myPrevisionnel
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(MyPrevisionnel $myPrevisionnel): Response
     {
+        //todo: afficher prévisionnel uniquement du département dans application, et prévisionnel global dans le profil (message pour expliquer)
         $myPrevisionnel->setPersonnel($this->getConnectedUser());
         $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
         $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
