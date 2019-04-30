@@ -18,28 +18,27 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ celcat_calendrier.id }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{{ celcat_calendrier.created ? celcat_calendrier.created|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{{ celcat_calendrier.updated ? celcat_calendrier.updated|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>SemaineFormation</th>
+                <th>{{ 'table.semaineFormation'|trans }}</th>
                 <td>{{ celcat_calendrier.semaineFormation }}</td>
             </tr>
             <tr>
-                <th>SemaineReelle</th>
+                <th>{{ 'table.semaineReelle'|trans }}</th>
                 <td>{{ celcat_calendrier.semaineReelle }}</td>
             </tr>
             <tr>
-                <th>DateLundi</th>
-                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|date('Y-m-d H:i:s') : '' }}</td>
+                <th>{{ 'table.dateLundi'|trans }}</th>
+                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|localizeddate('long', 'none', app
+                        .request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ celcat_calendrier.created ? celcat_calendrier.dateLundi|localizeddate('long', 'short', app
+                        .request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ celcat_calendrier.updated ? celcat_calendrier.dateLundi|localizeddate('long', 'short', app
+                        .request.getLocale()) : '' }}</td>
             </tr>
         </tbody>
     </table>

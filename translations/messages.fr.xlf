@@ -7,8 +7,8 @@
   ~  * @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~  * @author     David annebicque
   ~  * @project intranetv3
-  ~  * @date 4/28/19 8:32 PM
-  ~  * @lastUpdate 4/28/19 8:32 PM
+  ~  * @date 4/30/19 4:47 PM
+  ~  * @lastUpdate 4/30/19 4:46 PM
   ~  *
   ~  */
   -->
@@ -8918,37 +8918,31 @@
     <unit id="DapLQpE" name="sadm.celcat_calendrier.index.heading">
       <segment>
         <source>sadm.celcat_calendrier.index.heading</source>
-        <target>sadm.celcat_calendrier.index.heading</target>
+        <target>Calendrier de correspondance Celcat</target>
       </segment>
     </unit>
     <unit id="TOILASj" name="table.semaineFormation">
       <segment>
         <source>table.semaineFormation</source>
-        <target>table.semaineFormation</target>
+        <target>Semaine de Formation</target>
       </segment>
     </unit>
     <unit id="pGOv5np" name="table.semaineReelle">
       <segment>
         <source>table.semaineReelle</source>
-        <target>table.semaineReelle</target>
+        <target>Semaine réelle</target>
       </segment>
     </unit>
     <unit id=".l5A__N" name="table.dateLundi">
       <segment>
         <source>table.dateLundi</source>
-        <target>table.dateLundi</target>
+        <target>Date du lundi</target>
       </segment>
     </unit>
     <unit id="2fO8Bag" name="atitle.creer_nouvelle_annee">
       <segment>
         <source>atitle.creer_nouvelle_annee</source>
         <target>Créer une nouvelle année</target>
-      </segment>
-    </unit>
-    <unit id="mDQrUU." name="formation.add.success.flash">
-      <segment>
-        <source>formation.add.success.flash</source>
-        <target>formation.add.success.flash</target>
       </segment>
     </unit>
     <unit id="TKKngfr" name="importer.photo">
@@ -10582,7 +10576,7 @@
     <unit id="tT2nxN7" name="sadm.celcat_calendrier.modification.heading">
       <segment>
         <source>sadm.celcat_calendrier.modification.heading</source>
-        <target>__sadm.celcat_calendrier.modification.heading</target>
+        <target>Modification d'un élément du calendrier Celcat</target>
       </segment>
     </unit>
     <unit id="KHPnWCB" name="adm.celcat_calendrier.new.heading">
@@ -10908,21 +10902,57 @@
         <target>Département</target>
       </segment>
     </unit>
-      <unit id="ozDhCB0" name="voir.tous.les&#10;                  .messages&#10;              ">
-          <segment>
-              <source>voir.tous.les
+    <unit id="ozDhCB0" name="voir.tous.les&#10;                  .messages&#10;              ">
+      <segment>
+        <source>voir.tous.les
                   .messages
               </source>
-              <target>voir.tous.les
+        <target>voir.tous.les
                   .messages
               </target>
-          </segment>
-      </unit>
-      <unit id="uXn35Qq" name="adm.annee_universitaire.show.heading">
-          <segment>
-              <source>adm.annee_universitaire.show.heading</source>
-              <target>adm.annee_universitaire.show.heading</target>
-          </segment>
-      </unit>
+      </segment>
+    </unit>
+    <unit id="uXn35Qq" name="adm.annee_universitaire.show.heading">
+      <segment>
+        <source>adm.annee_universitaire.show.heading</source>
+        <target>Détails d'une année universitaire</target>
+      </segment>
+    </unit>
+    <unit id="XXU7PEA" name="label.semaineFormation">
+      <segment>
+        <source>label.semaineFormation</source>
+        <target>Numéro Semaine Formation</target>
+      </segment>
+    </unit>
+    <unit id="WvfdrV3" name="label.semaineReelle">
+      <segment>
+        <source>label.semaineReelle</source>
+        <target>Numéro Semaine Réelle</target>
+      </segment>
+    </unit>
+    <unit id="xmAzuNe" name="label.dateLundi">
+      <segment>
+        <source>label.dateLundi</source>
+        <target>Date du lundi</target>
+      </segment>
+    </unit>
+    <unit id="3y._XYn" name="label.annee_universitaire">
+      <segment>
+        <source>label.annee_universitaire</source>
+        <target>Année universitaire</target>
+      </segment>
+    </unit>
+    <unit id="qpMLFz8" name="celcat_calendrier.create.success.flash">
+      <segment>
+        <source>celcat_calendrier.create.success.flash</source>
+        <target>Element de correspondance Celcat ajouté avec succès.</target>
+      </segment>
+    </unit>
+    <unit id="MMr_3fW" name="celcat_calendrier.edit.success.flash">
+      <segment>
+        <source>celcat_calendrier.edit.success.flash</source>
+        <target>celcat_calendrier.edit.success.flash</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

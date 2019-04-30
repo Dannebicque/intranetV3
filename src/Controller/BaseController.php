@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/BaseController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 4:47 PM
+ *  * @lastUpdate 4/30/19 4:47 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 01/05/2018
@@ -11,7 +25,6 @@ namespace App\Controller;
 use App\MesClasses\DataUserSession;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -22,9 +35,6 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
 {
     /** @var DataUserSession */
     protected $dataUserSession;
-
-    /** @var FlashBagInterface */
-//    protected $flashBag;
 
     /** @var EntityManagerInterface */
     protected $entityManager;
@@ -40,16 +50,6 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
     {
         $this->dataUserSession = $dataUserSession;
     }
-
-//    /**
-//     * @param FlashBagInterface $flashBag
-//     *
-//     * @required
-//     */
-//    public function setFlashBag(FlashBagInterface $flashBag): void
-//    {
-//        $this->flashBag = $flashBag;
-//    }
 
     /**
      * @param EntityManagerInterface $entityManager
@@ -81,7 +81,5 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
 
         return $this->getUser();
     }
-
-
 }
 
