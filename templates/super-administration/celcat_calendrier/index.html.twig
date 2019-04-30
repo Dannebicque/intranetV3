@@ -41,7 +41,8 @@
                 <td>{{ celcat_calendrier.id }}</td>
                 <td>{{ celcat_calendrier.semaineFormation }}</td>
                 <td>{{ celcat_calendrier.semaineReelle }}</td>
-                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|localizeddate('long', 'none', app
+                        .request.getLocale()) : '' }}</td>
                 <td>
                     {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'celcat_calendrier', id: celcat_calendrier.id}) }}
                 </td>

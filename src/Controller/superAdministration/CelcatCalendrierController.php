@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatCalendrierController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:32 PM
- *  * @lastUpdate 4/28/19 8:32 PM
+ *  * @date 4/30/19 4:47 PM
+ *  * @lastUpdate 4/30/19 4:27 PM
  *  *
  *
  */
@@ -113,8 +113,7 @@ class CelcatCalendrierController extends BaseController
             }
         }
 
-        return $this->render('super-administration/celcat_calendrier/create_new_year.html.twig',
-            ['annees' => $anneeUniversitaireRepository->findAll()]);
+        return $this->redirectToRoute('sa_celcat_calendrier_index');
     }
 
     /**
@@ -142,6 +141,7 @@ class CelcatCalendrierController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.edit.success.flash');
 
             return $this->redirectToRoute('sa_celcat_calendrier_edit', ['id' => $celcatCalendrier->getId()]);
         }
