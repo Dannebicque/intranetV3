@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/30/19 3:11 PM
- *  * @lastUpdate 4/30/19 3:11 PM
+ *  * @date 4/30/19 3:13 PM
+ *  * @lastUpdate 4/30/19 3:13 PM
  *  *
  *
  */
@@ -130,6 +130,7 @@ class SecurityController extends AbstractController
     public function choixDepartement(
         TranslatorInterface $translator,
         FlashBagInterface $flashBag,
+        SessionInterface $session,
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository
     ): Response {
@@ -145,7 +146,7 @@ class SecurityController extends AbstractController
                 $em->persist($departement);
                 $em->flush();
                 $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
-
+                $session->set('departement', $departement->getUuidString()); //on sauvegarde
                 return $this->redirectToRoute('default_homepage');
             }
 
