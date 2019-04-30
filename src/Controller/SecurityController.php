@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 10:30 AM
+ *  * @date 4/30/19 3:06 PM
+ *  * @lastUpdate 4/30/19 3:04 PM
  *  *
  *
  */
@@ -18,6 +18,7 @@ namespace App\Controller;
 use App\Entity\Departement;
 use App\Repository\PersonnelDepartementRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SecurityController extends BaseController
+class SecurityController extends AbstractController
 {
     /**
      * @Route("/connexion/{message}", name="security_login")
