@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/Connect.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 3:23 PM
+ *  * @lastUpdate 4/30/19 3:22 PM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 14/02/2019
@@ -10,6 +24,7 @@ namespace App\MesClasses\Celcat;
 
 
 use App\Entity\Calendrier;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 abstract class Connect
@@ -35,7 +50,7 @@ abstract class Connect
             $cal = new Calendrier();
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
             $cal->setSemaineReelle(date('W', strtotime($date)));
-            $cal->setDateLundi($date);
+            $cal->setDateLundi(new DateTime($date));
             $entityManager->persist($cal);
         }
         $entityManager->flush();
