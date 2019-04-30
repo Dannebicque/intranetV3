@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/30/19 3:06 PM
- *  * @lastUpdate 4/30/19 3:04 PM
+ *  * @date 4/30/19 3:11 PM
+ *  * @lastUpdate 4/30/19 3:11 PM
  *  *
  *
  */
@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -45,7 +46,8 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig',
+            ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -110,8 +112,8 @@ class SecurityController extends AbstractController
      */
     public function changeDepartement(
         SessionInterface $session,
-        Departement $departement): Response
-    {
+        Departement $departement
+    ): Response {
         $session->set('departement', $departement->getUuidString());
 
         return $this->redirectToRoute('default_homepage');
@@ -127,6 +129,7 @@ class SecurityController extends AbstractController
      */
     public function choixDepartement(
         TranslatorInterface $translator,
+        FlashBagInterface $flashBag,
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository
     ): Response {
@@ -138,17 +141,19 @@ class SecurityController extends AbstractController
             if ($departement !== null) {
 
                 $departement->setDefaut(true);
-                $this->entityManager->persist($departement);
-                $this->entityManager->flush();
-                $this->addFlash('success', $translator->trans('formation.par.defaut.sauvegarde'));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($departement);
+                $em->flush();
+                $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
 
                 return $this->redirectToRoute('default_homepage');
-            } else {
-                //todo: plusieurs ??
             }
 
+            return $this->render('security/choix-departement.html.twig',
+                ['departements' => $departements, 'user' => $user]);
         }
 
-        return $this->render('security/choix-departement.html.twig', ['departements' => $departements, 'user' => $user]);
+        return $this->render('security/choix-departement.html.twig',
+            ['departements' => $departements, 'user' => $user]);
     }
 }
