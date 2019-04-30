@@ -22,6 +22,5 @@ docker-compose.override.yml
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-/public/assets/
-/public/src/assets/vendor/
+
 /.idea/dataSources.xml
