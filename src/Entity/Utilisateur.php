@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Utilisateur.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:48 PM
+ *  * @lastUpdate 4/30/19 2:47 PM
  *  *
  *
  */
@@ -184,6 +184,14 @@ abstract class Utilisateur implements UserInterface
     public function setCreatedValue(): void
     {
         $this->created = new DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedValue(): void
+    {
+        $this->updated = new DateTime();
     }
 
     /**

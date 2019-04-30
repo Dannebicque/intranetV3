@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/FormationFixtures.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:45 PM
+ *  * @date 4/30/19 2:48 PM
+ *  * @lastUpdate 4/30/19 2:48 PM
  *  *
  *
  */
@@ -204,6 +204,7 @@ class FormationFixtures extends Fixture
         $user2->setNumIne('21800000A');
         $user2->setSemestre($semestre);
         $user2->setCreated(new DateTime('now'));
+        $user2->setUpdatedValue();
         $manager->persist($user2);
 
         $typeGroupe = new TypeGroupe($semestre);
