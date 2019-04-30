@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/StageEtudiant.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:24 AM
  *  *
  *
  */
@@ -206,7 +206,7 @@ class StageEtudiant extends BaseEntity
      */
     public function getUuidString(): string
     {
-        return $this->getUuid()->toString();
+        return (string)$this->getUuid();
     }
 
     /**

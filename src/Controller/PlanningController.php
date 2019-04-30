@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/PlanningController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
  *  *
  *
  */
@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use App\MesClasses\Calendrier;
 use App\Repository\DateRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -33,6 +34,7 @@ class PlanningController extends BaseController
      * @param int            $annee
      *
      * @return Response
+     * @throws Exception
      */
     public function index(DateRepository $dateRepository, int $annee = 0): Response
     {

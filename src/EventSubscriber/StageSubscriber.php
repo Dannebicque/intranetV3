@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/StageSubscriber.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:45 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
  *  *
  *
  */
@@ -26,9 +26,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Routing\RouterInterface;
-use Twig_Error_Loader;
-use Twig_Error_Runtime;
-use Twig_Error_Syntax;
+
 
 class StageSubscriber implements EventSubscriberInterface
 {
@@ -155,9 +153,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function onMailChgtEtatStageAutorise(GenericEvent $event): void
     {
@@ -168,10 +163,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      * @param              $codeEvent
      *
-     * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function sendMail(GenericEvent $event, $codeEvent): void
     {
@@ -239,10 +230,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
-     * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function onMailChgtEtatStageConventionEnvoyee(GenericEvent $event): void
     {
@@ -251,11 +238,6 @@ class StageSubscriber implements EventSubscriberInterface
 
     /**
      * @param GenericEvent $event
-     *
-     * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function onMailChgtEtatStageConventionRecue(GenericEvent $event): void
     {
@@ -265,10 +247,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
-     * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function onMailChgtEtatStageDepose(GenericEvent $event): void
     {
@@ -279,10 +257,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
-     * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function onMailChgtEtatStageValide(GenericEvent $event): void
     {
@@ -292,10 +266,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
-     * @throws NonUniqueResultException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
      */
     public function onMailChgtEtatStageImprime(GenericEvent $event): void
     {

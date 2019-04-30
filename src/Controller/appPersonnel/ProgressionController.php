@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/ProgressionController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
  *  *
  *
  */
@@ -22,6 +22,7 @@ use App\Repository\PrevisionnelRepository;
 use App\Repository\ProgressionPedagogiqueRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,7 +37,9 @@ class ProgressionController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_progression_index")
-     * @param PrevisionnelRepository $previsionnelRepository
+     * @param PrevisionnelRepository           $previsionnelRepository
+     *
+     * @param ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
      *
      * @return Response
      */
@@ -57,6 +60,11 @@ class ProgressionController extends BaseController
 
     /**
      * @Route("/update/{matiere}", name="application_personnel_progression_update", options={"expose"=true})
+     * @param Request                          $request
+     * @param Matiere                          $matiere
+     * @param ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
+     *
+     * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function updateDisponibilites(

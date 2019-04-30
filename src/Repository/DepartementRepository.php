@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/DepartementRepository.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:45 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:15 AM
  *  *
  *
  */
@@ -67,7 +67,6 @@ class DepartementRepository extends ServiceEntityRepository
      * @param Personnel $personnel
      *
      * @return mixed
-     * @throws NonUniqueResultException
      */
     public function findDepartementPersonnelDefaut(Personnel $personnel)
     {
@@ -85,7 +84,6 @@ class DepartementRepository extends ServiceEntityRepository
      * @param Personnel $personnel
      *
      * @return mixed
-     * @throws NonUniqueResultException
      */
     public function findDepartementPersonnel(Personnel $personnel)
     {

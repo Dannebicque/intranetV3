@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/BorneType.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:30 AM
+ *  *
+ *
+ */
 
 namespace App\Form;
 
@@ -38,7 +51,7 @@ class BorneType extends AbstractType
                 'attr'        => ['data-provide' => 'selectpicker'],
                 'label'       => 'label.icone',
                 'choices'     => Borne::ICONES,
-                'choice_attr' => function($choiceValue, $key, $value) {
+                'choice_attr' => static function($choiceValue, $key, $value) {
                     return ['data-icon' => Borne::ICONES[$key] . ' mr-2'];
                 },
             ])
@@ -71,14 +84,14 @@ class BorneType extends AbstractType
                 'expanded'      => true,
                 'multiple'      => true
             ))
-            ->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $borne = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $borne->setDateDebutPublication($dateRange['from_date']);
                 $borne->setDateFinPublication($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $borne = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [

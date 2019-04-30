@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/DatabaseTwigLoader.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:20 AM
  *  *
  *
  */
@@ -22,11 +22,11 @@
 namespace App\Twig;
 
 use App\Repository\TwigTemplateRepository;
-use Twig_Error_Loader;
-use Twig_LoaderInterface;
-use Twig_Source;
+use Twig\Error\LoaderError;
+use Twig\Loader\LoaderInterface;
+use Twig\Source;
 
-class DatabaseTwigLoader implements Twig_LoaderInterface
+class DatabaseTwigLoader implements LoaderInterface
 {
     /** @var TwigTemplateRepository */
     private $twigTemplateRepository;
@@ -47,17 +47,17 @@ class DatabaseTwigLoader implements Twig_LoaderInterface
      *
      * @param string $name The template logical name
      *
-     * @return Twig_Source
+     * @return Source
      *
-     * @throws Twig_Error_Loader When $name is not found
+     * @throws LoaderError When $name is not found
      */
-    public function getSourceContext($name): Twig_Source
+    public function getSourceContext($name): Source
     {
         if (false === $source = $this->getValue($name)->getSource()) {
-            throw new Twig_Error_Loader(sprintf('Template "%s" does not exist.', $name));
+            throw new LoaderError(sprintf('Template "%s" does not exist.', $name));
         }
 
-        return new Twig_Source($source, $name);
+        return new Source($source, $name);
     }
 
     public function exists($name): bool
@@ -82,7 +82,7 @@ class DatabaseTwigLoader implements Twig_LoaderInterface
         return $lastModified <= $time;
     }
 
-    protected function getValue($name): void
+    protected function getValue($name)
     {
         //return $this->twigTemplateRepository->findOneBy(['name' => $name]);
         //todo: SI je laisse cette ligne ca plante Travis et le composer install ???

@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:45 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:30 AM
  *  *
  *
  */
@@ -129,9 +129,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $roles = $token->getRoles();
+        $roles = $token->getRoleNames();
 
-        $rolesTab = array_map(function($role) {
+        $rolesTab = array_map(static function($role) {
             return $role->getRole();
         }, $roles);
 

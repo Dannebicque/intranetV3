@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:32 PM
- *  * @lastUpdate 4/28/19 8:32 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:30 AM
  *  *
  *
  */
@@ -76,7 +76,9 @@ class SecurityController extends BaseController
 
     /**
      * @Route("/verouiller", name="security_lock")
-     * @param Request $request
+     * @param Request                      $request
+     *
+     * @param UserPasswordEncoderInterface $passwordEncoder
      *
      * @return Response
      */
@@ -100,7 +102,8 @@ class SecurityController extends BaseController
     /**
      * @Route("/change-departement/{departement}", name="security_change_departement")
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
-     * @param Departement $departement
+     * @param SessionInterface $session
+     * @param Departement      $departement
      *
      * @return Response
      */

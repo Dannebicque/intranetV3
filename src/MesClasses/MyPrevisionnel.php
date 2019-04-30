@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyPrevisionnel.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:45 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:30 AM
  *  *
  *
  */
@@ -477,7 +477,7 @@ class MyPrevisionnel
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            function() use ($writer) {
+            static function() use ($writer) {
                 $writer->save('php://output');
             },
             200,
@@ -800,7 +800,7 @@ class MyPrevisionnel
      * @param $previModule
      * @param $planning
      *
-     * @return array
+     * @return Array
      */
     public function compareEdtPreviMatiere($modules, $previModule, $planning): Array
     {
