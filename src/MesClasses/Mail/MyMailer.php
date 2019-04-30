@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Mail/MyMailer.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
  *  *
  *
  */
@@ -27,10 +27,10 @@ use App\Twig\DatabaseTwigLoader;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Twig_Environment;
-use Twig_Error_Loader;
-use Twig_Error_Runtime;
-use Twig_Error_Syntax;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use function count;
 
 /**
@@ -163,13 +163,13 @@ class MyMailer
      * @param string $templateName
      * @param array  $array
      *
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function setTemplateFromDatabase(string $templateName, array $array): void
     {
-        $twig = new Twig_Environment($this->databaseTwigLoader);
+        $twig = new Environment($this->databaseTwigLoader);
 
         $this->template = $twig->render($templateName, $array);
     }

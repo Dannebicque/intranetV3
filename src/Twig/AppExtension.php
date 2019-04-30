@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/AppExtension.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:20 AM
  *  *
  *
  */
@@ -21,7 +21,7 @@ use DateTime;
 use Exception;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig_SimpleFunction;
+use Twig\TwigFunction;
 use function chr;
 use function strlen;
 
@@ -80,9 +80,9 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return array(
-            new Twig_SimpleFunction('settings', array($this, 'getSetting')),
-            new Twig_SimpleFunction('datedujourlong', array($this, 'dateDuJourLong')),
-            new Twig_SimpleFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
+            new TwigFunction('settings', array($this, 'getSetting')),
+            new TwigFunction('datedujourlong', array($this, 'dateDuJourLong')),
+            new TwigFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
 
         );
     }

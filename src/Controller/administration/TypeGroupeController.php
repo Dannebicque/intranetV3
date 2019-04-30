@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TypeGroupeController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:58 AM
+ *  *
+ *
+ */
 
 namespace App\Controller\administration;
 
@@ -61,7 +74,7 @@ class TypeGroupeController extends BaseController
     public function refreshListe(Semestre $semestre): Response
     {
 
-        return $this->render('_liste.html.twig', ['semestre' => $semestre]);
+        return $this->render('administration/groupe/_liste.html.twig', ['semestre' => $semestre]);
     }
 
     /**

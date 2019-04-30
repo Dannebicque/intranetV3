@@ -1,15 +1,28 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/StagePeriodeSoutenanceType.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
+ *  *
+ *
+ */
 
 namespace App\Form;
 
 use App\Entity\StagePeriodeSoutenance;
+use App\Form\Type\DateRangeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Form\Type\DateRangeType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StagePeriodeSoutenanceType extends AbstractType
 {
@@ -20,14 +33,14 @@ class StagePeriodeSoutenanceType extends AbstractType
                 ['label' => 'dateRange.soutenance', 'mapped' => false, 'required' => true])
             ->add('dateRenduRapport', DateTimeType::class,
                 ['widget' => 'single_text', 'label' => 'label.dateRenduRapport'])
-            ->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $stagePeriodeSoutenance->setDateDebut($dateRange['from_date']);
                 $stagePeriodeSoutenance->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();
                 $form = $event->getForm();
                 if ($stagePeriodeSoutenance !== null) {

@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/DisponibiliteController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
  *  *
  *
  */
@@ -20,6 +20,7 @@ use App\Entity\Disponibilite;
 use App\Repository\DisponibiliteRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,6 +35,9 @@ class DisponibiliteController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_disponibilite_index")
+     * @param DisponibiliteRepository $disponibiliteRepository
+     *
+     * @return Response
      */
     public function index(DisponibiliteRepository $disponibiliteRepository): Response
     {
@@ -61,6 +65,10 @@ class DisponibiliteController extends BaseController
 
     /**
      * @Route("/update", name="application_personnel_disponibilite_update", options={"expose"=true})
+     * @param Request                 $request
+     * @param DisponibiliteRepository $disponibiliteRepository
+     *
+     * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function updateDisponibilites(Request $request, DisponibiliteRepository $disponibiliteRepository) {

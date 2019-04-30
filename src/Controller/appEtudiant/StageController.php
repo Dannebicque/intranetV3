@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/StageController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:58 AM
  *  *
  *
  */
@@ -108,7 +108,7 @@ class StageController extends BaseController
             ]);
         }
 
-        return $this->render('erreur/500.html.twig');
+        return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
 
     /**

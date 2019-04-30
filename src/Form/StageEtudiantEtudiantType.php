@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/StageEtudiantEtudiantType.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
+ *  *
+ *
+ */
 
 namespace App\Form;
 
@@ -6,13 +19,13 @@ use App\Entity\StageEtudiant;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class StageEtudiantEtudiantType extends AbstractType
 {
@@ -95,7 +108,7 @@ class StageEtudiantEtudiantType extends AbstractType
                     TextType::class,
                     ['label' => 'label.dureeJoursStage', 'help' => 'help.dureeJoursStage']
                 )
-                ->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+                ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                     /** @var StageEtudiant $stageEtudiant */
                     $stageEtudiant = $event->getData();
                     $form = $event->getForm();
@@ -103,7 +116,7 @@ class StageEtudiantEtudiantType extends AbstractType
                     $stageEtudiant->setDateDebutStage($dateRange['from_date']);
                     $stageEtudiant->setDateFinStage($dateRange['to_date']);
                 })
-                ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                     /** @var StageEtudiant $stageEtudiant */
                     $stageEtudiant = $event->getData();
                     $form = $event->getForm();

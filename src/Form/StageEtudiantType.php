@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/StageEtudiantType.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:30 AM
+ *  *
+ *
+ */
 
 namespace App\Form;
 
@@ -45,7 +58,7 @@ class StageEtudiantType extends AbstractType
             ->add('gratificationMontant', TextType::class, ['label' => 'label.gratificationMontant'])
             ->add('gratificationPeriode', ChoiceType::class, ['label' => 'label.gratificationPeriode'])
             ->add('avantages', TextareaType::class, ['label' => 'label.avantages'])
-            ->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
                 $stageEtudiant = $event->getData();
                 $form = $event->getForm();
@@ -53,7 +66,7 @@ class StageEtudiantType extends AbstractType
                 $stageEtudiant->setDateDebutStage($dateRange['from_date']);
                 $stageEtudiant->setDateFinStage($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
                 $stageEtudiant = $event->getData();
                 $form = $event->getForm();

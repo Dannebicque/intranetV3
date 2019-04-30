@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/StageController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:58 AM
+ *  *
+ *
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -44,7 +57,7 @@ class StageController extends BaseController
             ]);
         }
 
-        return $this->render('erreur/500.html.twig');
+        return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
 
     /**

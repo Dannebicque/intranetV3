@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/NoteController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:57 AM
  *  *
  *
  */
@@ -49,6 +49,6 @@ class NoteController extends BaseController
             ]);
         }
 
-        return $this->render('erreur/666.html.twig');
+        return $this->redirectToRoute('erreur_666');
     }
 }

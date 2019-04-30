@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 2:35 PM
  *  *
  *
  */
@@ -57,11 +57,16 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/starred", name="messagerie_starred", options={"expose":true})
+     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
+     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
+     * @param Request                                $request
+     *
+     * @return JsonResponse
      */
     public function starred(MessageDestinatairePersonnelRepository $messagePersonnelRepository,
         MessageDestinataireEtudiantRepository $messageEtudiantRepository, Request $request) {
         $message = $request->request->get('message');
-        $valeur = $request->request->get('valeur') === 'false' ? false : true;
+        $valeur = $request->request->get('valeur') !== 'false';
 
 
         if ($this->getConnectedUser() instanceof Etudiant) {
@@ -80,14 +85,15 @@ class MessagerieController extends BaseController
         }
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
     /**
+     * @param MessageRepository                      $messageRepository
      * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
      * @param                                        $filtre
      *
      * @return JsonResponse
      * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose"=true})
-     *
      */
     public function filtre(
         MessageRepository $messageRepository,
@@ -100,14 +106,12 @@ class MessagerieController extends BaseController
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
         } elseif ($filtre === 'draft') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
+        } else if ($this->getConnectedUser() instanceof Etudiant) {
+            $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
+        } elseif ($this->getConnectedUser() instanceof Personnel) {
+            $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
         } else {
-            if ($this->getConnectedUser() instanceof Etudiant) {
-                $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
-            } elseif ($this->getConnectedUser() instanceof Personnel) {
-                $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
-            } else {
-                $messages = null;
-            }
+            $messages = null;
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
@@ -118,8 +122,10 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/liste-messages/{filtre}/{page}", name="messagerie_liste_messages", options={"expose":true})
+     * @param MessageRepository                      $messageRepository
      * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
+     * @param string                                 $filtre
      * @param int                                    $page
      *
      * @return Response
@@ -135,14 +141,12 @@ class MessagerieController extends BaseController
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
         } elseif ($filtre === 'draft') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
+        } else if ($this->getConnectedUser() instanceof Etudiant) {
+            $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
+        } elseif ($this->getConnectedUser() instanceof Personnel) {
+            $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
         } else {
-            if ($this->getConnectedUser() instanceof Etudiant) {
-                $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
-            } elseif ($this->getConnectedUser() instanceof Personnel) {
-                $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
-            } else {
-                $messages = null;
-            }
+            $messages = null;
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
@@ -153,6 +157,10 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/envoyer", name="messagerie_sent", methods={"POST"}, options={"expose":true})
+     * @param Request      $request
+     * @param MyMessagerie $messagerie
+     *
+     * @return JsonResponse
      */
     public function messageSend(Request $request, MyMessagerie $messagerie) {
         //todo: mercure pour notification...

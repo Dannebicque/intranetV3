@@ -1,5 +1,19 @@
 <?php
 /**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Model/MoyennesSemestreEtudiant.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/30/19 2:35 PM
+ *  * @lastUpdate 4/30/19 10:54 AM
+ *  *
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 24/12/2018
@@ -201,7 +215,7 @@ class MoyennesSemestreEtudiant
 
             /** @var ParcoursEtudiant $prec */
             $prec = $parcours[$this->semestre->getOrdreLmd() - 1];
-            if ($prec->getDecision() === 'V' || $prec->getDecision() === 'NV') {
+            if ($prec->getDecision() === ('V' || 'NV')) {
                 //donc pas utilisé pour VCA ou VCJ
                 if ($this->semestre->isOptPenaliteAbsence() === true) {
                     $moyenneS = ($this->moyennePenalisee + $prec->getMoyenne()) / 2;
