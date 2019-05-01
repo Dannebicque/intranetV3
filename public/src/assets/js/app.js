@@ -1,4 +1,18 @@
 
+/*
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/app.js
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 5/1/19 8:38 AM
+ *  * @lastUpdate 5/1/19 8:38 AM
+ *  *
+ *
+ */
+
 // Check if an element has a specific data attribute
 //
 jQuery.fn.hasDataAttr = function(name) {
@@ -1923,7 +1937,7 @@ jQuery.fn.scrollToEnd = function() {
   //
   provider.initMorris = function() {
     if ( !window['Morris'] != undefined ) {
-      return;
+
     }
 
   };
@@ -2880,7 +2894,32 @@ jQuery.fn.scrollToEnd = function() {
     }
 
     provider.provide('datatables', function(){
-      $(this).DataTable();
+      $(this).DataTable({
+        'language': {
+          'decimal': '',
+          'emptyTable': 'Aucune donn&eacute;e disponible dans le tableau',
+          'info': 'Affichage de l\'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments',
+          'infoEmpty': 'Affichage de l\'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment',
+          'infoFiltered': '(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)',
+          'infoPostFix': '',
+          'thousands': ',',
+          'lengthMenu': 'Afficher _MENU_ &eacute;l&eacute;ments',
+          'loadingRecords': 'Chargement en cours...',
+          'processing': 'Traitement en cours...',
+          'search': 'Rechercher&nbsp;:',
+          'zeroRecords': 'Aucun &eacute;l&eacute;ment &agrave; afficher',
+          'paginate': {
+            'first': 'Premier',
+            'last': 'Dernier',
+            'next': 'Suivant',
+            'previous': 'Pr&eacute;c&eacute;dent'
+          },
+          'aria': {
+            'sortAscending': ': activer pour trier la colonne par ordre croissant',
+            'sortDescending': ': activer pour trier la colonne par ordre d&eacute;croissant'
+          }
+        }
+      })
     });
 
   };
@@ -3275,7 +3314,7 @@ jQuery.fn.scrollToEnd = function() {
 
   provider.initFullcalendar = function() {
     if ( ! $.fn.fullCalendar ) {
-      return;
+
     }
 
   };

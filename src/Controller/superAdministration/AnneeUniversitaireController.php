@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:32 PM
- *  * @lastUpdate 4/28/19 8:32 PM
+ *  * @date 5/1/19 8:38 AM
+ *  * @lastUpdate 5/1/19 8:22 AM
  *  *
  *
  */
@@ -161,14 +161,26 @@ class AnneeUniversitaireController extends BaseController
      */
     public function delete(Request $request, AnneeUniversitaire $annee_universitaire): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $annee_universitaire->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($annee_universitaire);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.delete.success.flash');
+        $id = $annee_universitaire->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            if (count($annee_universitaire->getDepartements()) === 0) {
+                $this->entityManager->remove($annee_universitaire);
+                $this->entityManager->flush();
+                $this->addFlashBag(
+                    Constantes::FLASHBAG_SUCCESS,
+                    'annee_universitaire.delete.success.flash'
+                );
+
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee_universitaire.delete.error.non-vide.flash');
+
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee_universitaire.delete.error.flash');
 
-        return $this->redirectToRoute('sa_annee_universitaire_index');
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

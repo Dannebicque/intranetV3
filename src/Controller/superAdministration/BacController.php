@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/BacController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 5/1/19 8:38 AM
+ *  * @lastUpdate 5/1/19 8:38 AM
  *  *
  *
  */
@@ -152,14 +152,20 @@ class BacController extends BaseController
      */
     public function delete(Request $request, Bac $bac): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $bac->getId(), $request->request->get('_token'))) {
+        $id = $bac->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($bac);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.delete.success.flash');
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'bac.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'bac.delete.error.flash');
 
-        return $this->redirectToRoute('sa_bac_index');
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatCalendrierController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/30/19 4:47 PM
- *  * @lastUpdate 4/30/19 4:27 PM
+ *  * @date 5/1/19 8:38 AM
+ *  * @lastUpdate 5/1/19 8:03 AM
  *  *
  *
  */
@@ -61,7 +61,7 @@ class CelcatCalendrierController extends BaseController
             $articles,
             'celcat',
             ['celcat_administration'],
-            ['semaineDepartement', 'semaineReelle', 'dateLundi']
+            ['semaineFormation', 'semaineReelle', 'dateLundi']
         );
 
         return $response;

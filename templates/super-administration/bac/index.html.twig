@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                 {% for bac in bacs %}
-                    <tr>
+                    <tr id="ligne_{{ bac.id }}">
                         <td>{{ bac.libelle }}</td>
                         <td>{{ bac.libelleLong }}</td>
                         <td>
