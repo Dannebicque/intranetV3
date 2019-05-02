@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 5/1/19 8:38 AM
- *  * @lastUpdate 5/1/19 8:22 AM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 8:59 AM
  *  *
  *
  */
@@ -166,20 +166,12 @@ class AnneeUniversitaireController extends BaseController
             if (count($annee_universitaire->getDepartements()) === 0) {
                 $this->entityManager->remove($annee_universitaire);
                 $this->entityManager->flush();
-                $this->addFlashBag(
-                    Constantes::FLASHBAG_SUCCESS,
-                    'annee_universitaire.delete.success.flash'
-                );
 
                 return $this->json($id, Response::HTTP_OK);
             }
 
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee_universitaire.delete.error.non-vide.flash');
-
-            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
         }
-
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee_universitaire.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

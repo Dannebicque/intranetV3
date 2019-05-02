@@ -1,4 +1,17 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Ufr.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/2/19 4:03 AM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
@@ -13,7 +26,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Ufr extends BaseEntity
 {
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="ufr")
+     */
+    private $departements;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,6 +56,7 @@ class Ufr extends BaseEntity
     public function __construct()
     {
         $this->sites = new ArrayCollection();
+        $this->departements = new ArrayCollection();
     }
 
     /**
@@ -122,6 +139,37 @@ class Ufr extends BaseEntity
     public function setSitePrincipal(?Site $sitePrincipal): self
     {
         $this->sitePrincipal = $sitePrincipal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Departement[]
+     */
+    public function getDepartements(): Collection
+    {
+        return $this->departements;
+    }
+
+    public function addDepartement(Departement $departement): self
+    {
+        if (!$this->departements->contains($departement)) {
+            $this->departements[] = $departement;
+            $departement->setUfr($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepartement(Departement $departement): self
+    {
+        if ($this->departements->contains($departement)) {
+            $this->departements->removeElement($departement);
+            // set the owning side to null (unless already changed)
+            if ($departement->getUfr() === $this) {
+                $departement->setUfr(null);
+            }
+        }
 
         return $this;
     }

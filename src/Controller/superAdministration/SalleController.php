@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SalleController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 8:59 AM
  *  *
  *
  */
@@ -161,14 +161,14 @@ class SalleController extends BaseController
      */
     public function delete(Request $request, Salle $salle): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $salle->getId(), $request->request->get('_token'))) {
+        $id = $salle->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($salle);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.delete.success.flash');
+
+            return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.delete.error.flash');
-
-        return $this->redirectToRoute('sa_salle_index');
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

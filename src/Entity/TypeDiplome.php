@@ -1,7 +1,22 @@
 <?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/TypeDiplome.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 4:39 PM
+ *  *
+ *
+ */
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -11,7 +26,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class TypeDiplome extends BaseEntity
 {
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="typeDiplome")
+     */
+    private $diplomes;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -50,6 +68,11 @@ class TypeDiplome extends BaseEntity
      * @Groups({"type_diplome_administration"})
      */
     private $niveauSortie = 2;
+
+    public function __construct()
+    {
+        $this->diplomes = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -129,5 +152,36 @@ class TypeDiplome extends BaseEntity
     public function setNiveauSortie(int $niveauSortie): void
     {
         $this->niveauSortie = $niveauSortie;
+    }
+
+    /**
+     * @return Collection|Diplome[]
+     */
+    public function getDiplomes(): Collection
+    {
+        return $this->diplomes;
+    }
+
+    public function addDiplome(Diplome $diplome): self
+    {
+        if (!$this->diplomes->contains($diplome)) {
+            $this->diplomes[] = $diplome;
+            $diplome->setTypeDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiplome(Diplome $diplome): self
+    {
+        if ($this->diplomes->contains($diplome)) {
+            $this->diplomes->removeElement($diplome);
+            // set the owning side to null (unless already changed)
+            if ($diplome->getTypeDiplome() === $this) {
+                $diplome->setTypeDiplome(null);
+            }
+        }
+
+        return $this;
     }
 }

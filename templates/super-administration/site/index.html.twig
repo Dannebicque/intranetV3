@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                 {% for site in sites %}
-                    <tr>
+                    <tr id="ligne_{{ site.id }}">
                         <td>{{ site.id }}</td>
                         <td>{{ site.libelle }}</td>
                         <td>{{ site.updated ? site.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>

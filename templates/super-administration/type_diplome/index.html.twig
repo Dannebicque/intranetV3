@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                 {% for type_diplome in type_diplomes %}
-                    <tr>
+                    <tr id="ligne_{{ type_diplome.id }}">
                         <td>{{ type_diplome.id }}</td>
                         <td>{{ type_diplome.libelle }}</td>
                         <td>{{ type_diplome.sigle }}</td>

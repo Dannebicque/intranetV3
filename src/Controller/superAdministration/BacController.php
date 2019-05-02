@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/BacController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 5/1/19 8:38 AM
- *  * @lastUpdate 5/1/19 8:38 AM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 9:00 AM
  *  *
  *
  */
@@ -156,15 +156,9 @@ class BacController extends BaseController
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($bac);
             $this->entityManager->flush();
-            $this->addFlashBag(
-                Constantes::FLASHBAG_SUCCESS,
-                'bac.delete.success.flash'
-            );
 
             return $this->json($id, Response::HTTP_OK);
         }
-
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'bac.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

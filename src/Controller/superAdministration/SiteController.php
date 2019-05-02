@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SiteController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/2/19 4:16 AM
  *  *
  *
  */
@@ -145,9 +145,11 @@ class SiteController extends BaseController
     public function duplicate(Site $site): Response
     {
         $newSite = clone $site;
+        $newSite->setAdresse(null);
 
         $this->entityManager->persist($newSite);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'site.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_site_edit', ['id' => $newSite->getId()]);
     }
@@ -155,7 +157,20 @@ class SiteController extends BaseController
     /**
      * @Route("/{id}", name="sa_site_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Site $site): Response
     {
+        $id = $site->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            if (count($site->getUfrs()) === 0 && count($site->getUfrPrincipales()) === 0) {
+                $this->entityManager->remove($site);
+                $this->entityManager->flush();
+
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:46 PM
- *  * @lastUpdate 4/28/19 8:45 PM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 4:37 PM
  *  *
  *
  */
@@ -52,7 +52,7 @@ class Diplome extends BaseEntity
     //todo: faire une collection avec personnel + role
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeDiplome")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeDiplome", inversedBy="diplomes")
      */
     private $typeDiplome;
 

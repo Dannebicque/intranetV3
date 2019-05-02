@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 {% for ufr in ufrs %}
-                    <tr>
+                    <tr id="ligne_{{ ufr.id }}">
                         <td>{{ ufr.id }}</td>
                         <td>{{ ufr.libelle }}</td>
                         <td>{{ ufr.responsable ? ufr.responsable.displayPr : 'non.defini'|trans }}</td>
