@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/UfrController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/2/19 4:03 AM
  *  *
  *
  */
@@ -148,6 +148,7 @@ class UfrController extends BaseController
 
         $this->entityManager->persist($newUfr);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ufr.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_ufr_edit', ['id' => $newUfr->getId()]);
     }
@@ -155,7 +156,20 @@ class UfrController extends BaseController
     /**
      * @Route("/{id}", name="sa_ufr_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Ufr $ufr): Response
     {
+        $id = $ufr->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            if (count($ufr->getDepartements()) === 0) {
+                $this->entityManager->remove($ufr);
+                $this->entityManager->flush();
+
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

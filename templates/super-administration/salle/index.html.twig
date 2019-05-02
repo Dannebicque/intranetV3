@@ -28,11 +28,11 @@
         </thead>
         <tbody>
         {% for salle in salles %}
-            <tr>
+            <tr id="ligne_{{ salle.id }}">
                 <td>{{ salle.libelle }}</td>
                 <td>{{ salle.capacite }}</td>
-                <td>{{ salle.site ? salle.site.libelle : 'non.defini'|trans }}</td>
                 <td>{{ salle.type }}</td>
+                <td>{{ salle.site ? salle.site.libelle : 'non.defini'|trans }}</td>
                 <td>
                     {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'salle', id: salle.id}) }}
                 </td>

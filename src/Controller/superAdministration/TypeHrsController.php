@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/TypeHrsController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 8:59 AM
  *  *
  *
  */
@@ -155,7 +155,22 @@ class TypeHrsController extends BaseController
     /**
      * @Route("/{id}", name="sa_type_hrs_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, TypeHrs $typeHrs): Response
     {
+        $id = $typeHrs->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            if (count($typeHrs->getHrs()) === 0) {
+                $this->entityManager->remove($typeHrs);
+                $this->entityManager->flush();
+
+
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
+        }
+
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

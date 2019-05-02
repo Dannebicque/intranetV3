@@ -7,8 +7,8 @@
  *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/TypeDiplomeController.php
  *  * @author     David annebicque
  *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
+ *  * @date 5/2/19 4:18 AM
+ *  * @lastUpdate 5/1/19 4:50 PM
  *  *
  *
  */
@@ -148,6 +148,7 @@ class TypeDiplomeController extends BaseController
 
         $this->entityManager->persist($newTypeDiplome);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_diplome.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_type_diplome_edit', ['id' => $newTypeDiplome->getId()]);
     }
@@ -155,7 +156,20 @@ class TypeDiplomeController extends BaseController
     /**
      * @Route("/{id}", name="sa_type_diplome_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, TypeDiplome $typeDiplome): Response
     {
+        $id = $typeDiplome->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            if (count($typeDiplome->getDiplomes()) === 0) {
+                $this->entityManager->remove($typeDiplome);
+                $this->entityManager->flush();
+
+                return $this->json($id, Response::HTTP_OK);
+            }
+
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

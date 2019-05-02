@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 {% for type_hr in type_hrs %}
-                    <tr>
+                    <tr id="ligne_{{ type_hr.id }}">
                         <td>{{ type_hr.id }}</td>
                         <td>{{ type_hr.libelle }}</td>
                         <td>{{ type_hr.type }}</td>
@@ -39,7 +39,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

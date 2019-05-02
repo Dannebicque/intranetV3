@@ -7,8 +7,8 @@
   ~  * @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~  * @author     David annebicque
   ~  * @project intranetv3
-  ~  * @date 5/1/19 8:38 AM
-  ~  * @lastUpdate 5/1/19 8:38 AM
+  ~  * @date 5/2/19 4:18 AM
+  ~  * @lastUpdate 5/2/19 4:17 AM
   ~  *
   ~  */
   -->
@@ -10954,47 +10954,107 @@
         <target>celcat_calendrier.edit.success.flash</target>
       </segment>
     </unit>
-      <unit id="OhVRtLW" name="celcat_calendrier.delete.success.flash">
-          <segment>
-              <source>celcat_calendrier.delete.success.flash</source>
-              <target>celcat_calendrier.delete.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="ppqVYUw" name="annee_universitaire.duplicate.success.flash">
-          <segment>
-              <source>annee_universitaire.duplicate.success.flash</source>
-              <target>annee_universitaire.duplicate.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="EiGFmTm" name="annee_universitaire.edit.success.flash">
-          <segment>
-              <source>annee_universitaire.edit.success.flash</source>
-              <target>annee_universitaire.edit.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="re2NxHK" name="annee_universitaire.delete.success.flash">
-          <segment>
-              <source>annee_universitaire.delete.success.flash</source>
-              <target>annee_universitaire.delete.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="fyGK4vP" name="annee_universitaire.delete.error.flash">
-          <segment>
-              <source>annee_universitaire.delete.error.flash</source>
-              <target>annee_universitaire.delete.error.flash</target>
-          </segment>
-      </unit>
-      <unit id="ESBrLpT" name="bac.delete.success.flash">
-          <segment>
-              <source>bac.delete.success.flash</source>
-              <target>bac.delete.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="w_ubJ.Q" name="bac.delete.error.flash">
-          <segment>
-              <source>bac.delete.error.flash</source>
-              <target>bac.delete.error.flash</target>
-          </segment>
-      </unit>
+    <unit id="OhVRtLW" name="celcat_calendrier.delete.success.flash">
+      <segment>
+        <source>celcat_calendrier.delete.success.flash</source>
+        <target>celcat_calendrier.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="ppqVYUw" name="annee_universitaire.duplicate.success.flash">
+      <segment>
+        <source>annee_universitaire.duplicate.success.flash</source>
+        <target>annee_universitaire.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="EiGFmTm" name="annee_universitaire.edit.success.flash">
+      <segment>
+        <source>annee_universitaire.edit.success.flash</source>
+        <target>annee_universitaire.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="re2NxHK" name="annee_universitaire.delete.success.flash">
+      <segment>
+        <source>annee_universitaire.delete.success.flash</source>
+        <target>annee_universitaire.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="fyGK4vP" name="annee_universitaire.delete.error.flash">
+      <segment>
+        <source>annee_universitaire.delete.error.flash</source>
+        <target>annee_universitaire.delete.error.flash</target>
+      </segment>
+    </unit>
+    <unit id="ESBrLpT" name="bac.delete.success.flash">
+      <segment>
+        <source>bac.delete.success.flash</source>
+        <target>bac.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="w_ubJ.Q" name="bac.delete.error.flash">
+      <segment>
+        <source>bac.delete.error.flash</source>
+        <target>bac.delete.error.flash</target>
+      </segment>
+    </unit>
+    <unit id="kKYjA.f" name="amphi">
+      <segment>
+        <source>amphi</source>
+        <target>amphi</target>
+      </segment>
+    </unit>
+    <unit id="Bicbr0l" name="info">
+      <segment>
+        <source>info</source>
+        <target>info</target>
+      </segment>
+    </unit>
+    <unit id="EpABHLL" name="salle.add.success.flash">
+      <segment>
+        <source>salle.add.success.flash</source>
+        <target>salle.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="xEaqhp." name="salle.edit.success.flash">
+      <segment>
+        <source>salle.edit.success.flash</source>
+        <target>salle.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="5Q00Ez8" name="salle.delete.success.flash">
+      <segment>
+        <source>salle.delete.success.flash</source>
+        <target>salle.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="9dyTYjJ" name="type_hrs.delete.success.flash">
+      <segment>
+        <source>type_hrs.delete.success.flash</source>
+        <target>type_hrs.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="Yuunc8z" name="type_diplome.edit.success.flash">
+      <segment>
+        <source>type_diplome.edit.success.flash</source>
+        <target>type_diplome.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="jupNcFH" name="type_diplome.duplicate.success.flash">
+      <segment>
+        <source>type_diplome.duplicate.success.flash</source>
+        <target>type_diplome.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="cocRc3Y" name="site.duplicate.success.flash">
+      <segment>
+        <source>site.duplicate.success.flash</source>
+        <target>site.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="vDcaI4z" name="site.edit.success.flash">
+      <segment>
+        <source>site.edit.success.flash</source>
+        <target>site.edit.success.flash</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
