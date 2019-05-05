@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        <img src="{{ asset('upload/personnels/'~personnel.photoName) }}" alt="Photo de {{ personnel.display }}"/></div>
+    <div class="col-sm-12 col-md-8"><h3>{{ personnel.civilite }} {{ personnel.displayPr }}</h3>
+        <p>{{ personnel.statut }} ({{ personnel.typeUser }})</p>
+        <p>Numero_harpege : {{ personnel.numeroHarpege }}</p>
+        <p>{{ personnel.mailUniv|mailto }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>{{ 'table.poste_interne'|trans }}</th>
+                <td>{{ personnel.posteInterne }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.tel_bureau'|trans }}</th>
+                <td>{{ personnel.telBureau }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.telephones'|trans }}</th>
+                <td>{{ personnel.tel1 }} {{ personnel.tel2 }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.bureaux'|trans }}</th>
+                <td>{{ personnel.bureau1 }} {{ personnel.bureau2 }}</td>
+            </tr>
+
+
+            <tr>
+                <th>{{ 'table.mail_perso'|trans }}</th>
+                <td>{{ personnel.mailPerso|mailto }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.site_univ_perso'|trans }}</th>
+                <td>{{ personnel.siteUniv|link }} | {{ personnel.sitePerso|link }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.responsabilite'|trans }}</th>
+                <td>{{ personnel.responsabilites }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.domaines'|trans }}</th>
+                <td>{{ personnel.domaines }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.signature'|trans }}</th>
+                <td>{{ personnel.signature }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.entreprise_vacataire'|trans }}</th>
+                <td>{{ personnel.entreprise }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.cv'|trans }}</th>
+                <td>{% if personnel.cvName != '' %}<a href="{{ asset('upload/cv/' ~personnel.cvName) }}"
+                                                      target="_blank">Voir le
+                                                                      CV</a>{% else %} Pas de CV fourni{% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">Infos</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.created'|trans }}</th>
+                <td>{{ personnel.created ? personnel.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.updated'|trans }}</th>
+                <td>{{ personnel.updated ? personnel.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.login'|trans }}</th>
+                <td>{{ personnel.username }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'table.slug'|trans }}</th>
+                <td>{{ personnel.slug }}</td>
+            </tr>
+
+
+            <tr>
+                <th>{{ 'table.datenaissance'|trans }}</th>
+                <td>{{ personnel.dateNaissance ? personnel.dateNaissance|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.remarques'|trans }}</th>
+                <td>{{ personnel.remarque }}</td>
+            </tr>
+
+            <tr>
+                <th>{{ 'table.visible'|trans }}</th>
+                <td>{{ personnel.visible ? 'Yes'|trans : 'No'|trans }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

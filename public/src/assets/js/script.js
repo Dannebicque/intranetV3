@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 05/05/2019 11:55
+ *
+ */
+
 'use strict'
 
 
@@ -201,6 +212,30 @@ function addCallout (message, label) {
 /** CSS **/
 
 
+const langueFr = {
+  'decimal': '',
+  'emptyTable': 'Aucune donn&eacute;e disponible dans le tableau',
+  'info': 'Affichage de l\'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments',
+  'infoEmpty': 'Affichage de l\'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment',
+  'infoFiltered': '(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)',
+  'infoPostFix': '',
+  'thousands': ',',
+  'lengthMenu': 'Afficher _MENU_ &eacute;l&eacute;ments',
+  'loadingRecords': 'Chargement en cours...',
+  'processing': 'Traitement en cours...',
+  'search': 'Rechercher&nbsp;:',
+  'zeroRecords': 'Aucun &eacute;l&eacute;ment &agrave; afficher',
+  'paginate': {
+    'first': 'Premier',
+    'last': 'Dernier',
+    'next': 'Suivant',
+    'previous': 'Pr&eacute;c&eacute;dent'
+  },
+  'aria': {
+    'sortAscending': ': activer pour trier la colonne par ordre croissant',
+    'sortDescending': ': activer pour trier la colonne par ordre d&eacute;croissant'
+  }
+}
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready
@@ -224,7 +259,6 @@ app.ready(function () {
   })
 
 
-
   /*
   |--------------------------------------------------------------------------
   | Plugins
@@ -234,30 +268,7 @@ app.ready(function () {
   |
   */
 
-  var langueFr = {
-    'decimal': '',
-    'emptyTable': 'Aucune donn&eacute;e disponible dans le tableau',
-    'info': 'Affichage de l\'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments',
-    'infoEmpty': 'Affichage de l\'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment',
-    'infoFiltered': '(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)',
-    'infoPostFix': '',
-    'thousands': ',',
-    'lengthMenu': 'Afficher _MENU_ &eacute;l&eacute;ments',
-    'loadingRecords': 'Chargement en cours...',
-    'processing': 'Traitement en cours...',
-    'search': 'Rechercher&nbsp;:',
-    'zeroRecords': 'Aucun &eacute;l&eacute;ment &agrave; afficher',
-    'paginate': {
-      'first': 'Premier',
-      'last': 'Dernier',
-      'next': 'Suivant',
-      'previous': 'Pr&eacute;c&eacute;dent'
-    },
-    'aria': {
-      'sortAscending': ': activer pour trier la colonne par ordre croissant',
-      'sortDescending': ': activer pour trier la colonne par ordre d&eacute;croissant'
-    }
-  }
+
 
   //require('./plugins/documents.js'
 
@@ -643,14 +654,14 @@ $(document).on('click', '.personnel_index_change', function(){
           "                        <td>"+pers.mailUniv+"</td>\n" +
           "                        <td>\n" +
           "<a href=\""+Routing.generate('administration_personnel_show', {id: pers.id})+"\" class=\"btn btn-info btn-outline btn-square\" data-provide=\"tooltip\"\n" +
-          "   data-placement=\"bottom\" title=\"Détails\"><i class=\"ti-eye\"></i></a>\n" +
+          '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
           "<a href=\""+Routing.generate('administration_personnel_edit', {id: pers.id})+"\"\n" +
-          "   class=\"btn btn-warning btn-outline btn-square\"><i class=\"ti-pencil\"\n" +
+          '   class="btn btn-warning btn-outline btn-square"><i class="fa fa-edit"\n' +
           "                                                     data-provide=\"tooltip\"\n" +
           "                                                     data-placement=\"bottom\"\n" +
           "                                                     title=\"Modifier\"></i></a>\n" +
           "<a href=\""+Routing.generate('administration_personnel_delete', {id: pers.id})+"\" class=\"btn btn-danger btn-outline btn-square supprimer\" data-id=\"id\"><i\n" +
-          "            class=\"ti-close\" data-provide=\"tooltip\" data-placement=\"bottom\"\n" +
+          '            class="fa fa-trash" data-provide="tooltip" data-placement="bottom"\n' +
           "            title=\"Supprimer\"></i></a>"
           "                        </td>\n" +
           "                    </tr>";
@@ -665,6 +676,7 @@ $(document).on('click', '.personnel_index_change', function(){
 $('#datatableRh').DataTable({
   "processing": true,
   "serverSide": true,
+  'langue': langueFr,
   "ajax": Routing.generate('api_all_personnel'),
   "sAjaxDataProp": "data",
   "pageLength": 25,
@@ -677,16 +689,18 @@ $('#datatableRh').DataTable({
     {
       "data": "id",
       "sortable": false,
-      "mRender": function (data, type, full) { return "<a href=\""+Routing.generate('administration_personnel_show', {id: data})+"\" class=\"btn btn-info btn-outline btn-square\" data-provide=\"tooltip\"\n" +
-        "   data-placement=\"bottom\" title=\"Détails\"><i class=\"ti-eye\"></i></a>\n" +
-        "<a href=\""+Routing.generate('administration_personnel_edit', {id: data})+"\"\n" +
-        "   class=\"btn btn-warning btn-outline btn-square\"><i class=\"ti-pencil\"\n" +
+      'mRender': function (data, type, full) {
+        return '<a href="' + Routing.generate('sa_rh_personnel_show', {id: data}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
+          '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
+          '<a href="' + Routing.generate('sa_rh_personnel_edit', {id: data}) + '"\n' +
+          '   class="btn btn-warning btn-outline btn-square"\n' +
         "                                                     data-provide=\"tooltip\"\n" +
         "                                                     data-placement=\"bottom\"\n" +
-        "                                                     title=\"Modifier\"></i></a>\n" +
-        "<a href=\""+Routing.generate('administration_personnel_delete', {id: data})+"\" class=\"btn btn-danger btn-outline btn-square supprimer\" data-id=\"id\"><i\n" +
-        "            class=\"ti-close\" data-provide=\"tooltip\" data-placement=\"bottom\"\n" +
-        "            title=\"Supprimer\"></i></a>"}
+          '                                                     title="Modifier"><i class="fa fa-edit"></i></a>\n' +
+          '<a href="' + Routing.generate('sa_rh_delete_personnel', {id: data}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"' +
+          '            data-provide="tooltip" data-placement="bottom"\n' +
+          '            title="Supprimer"><i class="fa fa-trash"></i></a>'
+      }
     }]
   //todo: gérer scrf sur le delete
 });
@@ -2138,7 +2152,7 @@ $(document).on('change', '#tuteurUniversitaire', function (e) {
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
-  }) 
+  })
 })
 
 

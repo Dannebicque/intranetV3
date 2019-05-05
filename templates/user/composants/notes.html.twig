@@ -18,6 +18,7 @@
       data: {
         labels: ["Mx101", "Mx102", "Mx201", "Mx203", "Mx202", "Mx204", "Moyenne"],
         datasets: [
+            {% for semestre in semestres %}
           {
             label: "S1",
             backgroundColor: "rgba(51,202,185,0.7)",
@@ -27,17 +28,8 @@
             pointHoverBackgroundColor: "#fff",
             pointHoverBorderColor: "rgba(51,202,185,0.7)",
             data: [10, 9, 19, 8, 15, 16, 8.5]
-          },
-          {
-            label: "S2",
-            backgroundColor: "rgba(72,176,247,0.7)",
-            borderColor: "rgba(0,0,0,0)",
-            pointBackgroundColor: "rgba(72,176,247,0.7)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(72,176,247,0.7)",
-            data: [12, 10, 14, 9, 13, 12.5, 4]
-          }
+          }{% if not loop.last %},{% endif %}
+            {% endfor %}
         ]
       },
 

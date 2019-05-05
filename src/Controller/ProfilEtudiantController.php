@@ -1,15 +1,12 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 2:35 PM
- *  *
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 05/05/2019 11:55
  *
  */
 
@@ -97,10 +94,13 @@ class ProfilEtudiantController extends BaseController
      *
      * @return Response
      */
-    public function notes(Etudiant $etudiant): Response
+    public function notes(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
     {
+        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
+            $etudiant->getDepartement()); //les semestres dans lesquels l'étudiant est passé dans le département...
         return $this->render('user/composants/notes.html.twig', [
-            'notes' => $etudiant->getNotes()
+            'notes'     => $etudiant->getNotes(),
+            'semestres' => $semestres
         ]);
     }
 

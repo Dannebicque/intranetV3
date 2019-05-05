@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ /**
-  ~  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
-  ~  *
-  ~  *
-  ~  * @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
-  ~  * @author     David annebicque
-  ~  * @project intranetv3
-  ~  * @date 5/2/19 4:18 AM
-  ~  * @lastUpdate 5/2/19 4:17 AM
-  ~  *
-  ~  */
+  ~ Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+  ~
+  ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
+  ~ @author David annebicque
+  ~ @project intranetv3
+  ~ @date  05/05/2019 11:55
+  ~ @lastUpdate 05/05/2019 11:55
+  ~
   -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
@@ -11056,5 +11053,89 @@
         <target>site.edit.success.flash</target>
       </segment>
     </unit>
+      <unit id="MXmC33V" name="personnel.delete.error.flash">
+          <segment>
+              <source>personnel.delete.error.flash</source>
+              <target>personnel.delete.error.flash</target>
+          </segment>
+      </unit>
+      <unit id="g_8ALMb" name="table.telephones">
+          <segment>
+              <source>table.telephones</source>
+              <target>table.telephones</target>
+          </segment>
+      </unit>
+      <unit id="dw9dkve" name="table.bureaux">
+          <segment>
+              <source>table.bureaux</source>
+              <target>table.bureaux</target>
+          </segment>
+      </unit>
+      <unit id="aULTCUn" name="table.mail_perso">
+          <segment>
+              <source>table.mail_perso</source>
+              <target>table.mail_perso</target>
+          </segment>
+      </unit>
+      <unit id="aKN3lHg" name="table.site_univ_perso">
+          <segment>
+              <source>table.site_univ_perso</source>
+              <target>table.site_univ_perso</target>
+          </segment>
+      </unit>
+      <unit id="6nn.nQQ" name="table.responsabilite">
+          <segment>
+              <source>table.responsabilite</source>
+              <target>table.responsabilite</target>
+          </segment>
+      </unit>
+      <unit id="zZRx.ec" name="table.domaines">
+          <segment>
+              <source>table.domaines</source>
+              <target>table.domaines</target>
+          </segment>
+      </unit>
+      <unit id="UPSLGws" name="table.signature">
+          <segment>
+              <source>table.signature</source>
+              <target>table.signature</target>
+          </segment>
+      </unit>
+      <unit id="8iGiD4v" name="table.entreprise_vacataire">
+          <segment>
+              <source>table.entreprise_vacataire</source>
+              <target>table.entreprise_vacataire</target>
+          </segment>
+      </unit>
+      <unit id="lRPxR.H" name="table.cv">
+          <segment>
+              <source>table.cv</source>
+              <target>table.cv</target>
+          </segment>
+      </unit>
+      <unit id="ye4m8wo" name="table.slug">
+          <segment>
+              <source>table.slug</source>
+              <target>table.slug</target>
+          </segment>
+      </unit>
+      <unit id="EPuKULz" name="table.datenaissance">
+          <segment>
+              <source>table.datenaissance</source>
+              <target>table.datenaissance</target>
+          </segment>
+      </unit>
+      <unit id="s09ZTiM" name="table.remarques">
+          <segment>
+              <source>table.remarques</source>
+              <target>table.remarques</target>
+          </segment>
+      </unit>
+      <unit id="lMQWYcc" name="sadm.personnel.edit.heading">
+          <segment>
+              <source>sadm.personnel.edit.heading</source>
+              <target>sadm.personnel.edit.heading</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

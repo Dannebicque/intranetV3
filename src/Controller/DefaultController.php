@@ -1,15 +1,12 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/DefaultController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/DefaultController.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 02/05/2019 12:12
  *
  */
 
@@ -43,10 +40,12 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @Route("/super-administration/", name="super_admin_homepage")
+     *
      * @param DepartementRepository $departementRepository
      *
      * @return Response
+     *
+     * @Route("/super-administration/", name="super_admin_homepage")
      */
     public function superAdminHomepage(DepartementRepository $departementRepository): Response
     {

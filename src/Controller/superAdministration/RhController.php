@@ -1,4 +1,14 @@
 <?php
+/**
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/RhController.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 02/05/2019 12:06
+ *
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -6,6 +16,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
+use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +38,16 @@ class RhController extends BaseController
     }
 
     /**
+     * @Route("/show/{id}", name="sa_rh_personnel_show", options={"expose"=true})
+     */
+    public function show(Personnel $personnel): Response
+    {
+        return $this->render('super-administration/rh/show.html.twig', [
+            'personnel' => $personnel
+        ]);
+    }
+
+    /**
      * @Route("/import", name="sa_rh_import_personnel")
      */
     public function import(): Response
@@ -36,8 +57,37 @@ class RhController extends BaseController
     }
 
     /**
+     * @Route("/{id}/edit", name="sa_rh_personnel_edit", methods="GET|POST", options={"expose":true})
+     * @param Request   $request
+     * @param Personnel $personnel
+     *
+     * @return Response
+     */
+    public function edit(Request $request, Personnel $personnel): Response
+    {
+        $form = $this->createForm(PersonnelType::class, $personnel, [
+            'attr' => [
+                'data-provide' => 'validation'
+            ]
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.edit.success.flash');
+
+            return $this->redirectToRoute('sa_rh_personnel_edit', ['id' => $personnel->getId()]);
+        }
+
+        return $this->render('super-administration/rh/edit.html.twig', [
+            'personnel' => $personnel,
+            'form'      => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/create", name="sa_rh_add_personnel", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -65,5 +115,31 @@ class RhController extends BaseController
             'personnel' => $personnel,
             'form'      => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="sa_rh_delete_personnel", methods="DELETE", options={"expose"=true})
+     */
+    public function delete(
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        Request $request,
+        Personnel $personnel
+    ): Response {
+        $id = $personnel->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            //retirer le personnel des départements
+            $departements = $personnelDepartementRepository->findByPersonnel($personnel);
+            foreach ($departements as $departement) {
+                $this->entityManager->remove($departement);
+            }
+            //suspendre le personnel (ne jamais effacer)
+            $personnel->setVisible(false);
+            $this->entityManager->persist($personnel);
+            $this->entityManager->flush();
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
