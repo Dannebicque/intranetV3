@@ -1,4 +1,14 @@
 <?php
+/**
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/EvaluationType.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 05/05/2019 11:55
+ *
+ */
 
 namespace App\Form;
 
@@ -43,6 +53,8 @@ class EvaluationType extends AbstractType
         $this->matiereDisabled = $options['matiereDisabled'];
 
         $builder
+            ->add('libelle', TextType::class,
+                ['label' => 'label.libelle_evaluation', 'help' => 'help.libelle_evaluation', 'required' => false])
             ->add('dateEvaluation', DateType::class, [
                 'label'  => 'label.date_evaluation',
                 'format' => 'dd/MM/yyyy',

@@ -4,6 +4,7 @@
         <table class="table table-border">
             <thead>
             <tr>
+                <th>{{ 'evaluation'|trans }}</th>
                 <th>{{ 'matiere'|trans }}</th>
                 <th>{{ 'date'|trans }}</th>
                 <th>{{ 'com_eval'|trans }}</th>
@@ -15,6 +16,8 @@
             <tbody>
             {% for note in notes %}
                 <tr>
+                    {# todo: afficher le nom de l'évaluation ou? son id?#}
+                    <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                     <td>{{ note.evaluation.matiere.codeMatiere }}</td>
                     <td>{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                     <td>{{ note.evaluation.commentaire }}</td>

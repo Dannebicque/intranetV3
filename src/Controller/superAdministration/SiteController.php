@@ -1,15 +1,12 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SiteController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/2/19 4:18 AM
- *  * @lastUpdate 5/2/19 4:16 AM
- *  *
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SiteController.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 05/05/2019 11:55
  *
  */
 

@@ -1,15 +1,12 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Evaluation.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 10:24 AM
- *  *
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Evaluation.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 02/05/2019 15:37
  *
  */
 
@@ -100,6 +97,11 @@ class Evaluation extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeGroupe")
      */
     private $typeGroupe;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $libelle;
 
     /**
      * Evaluation constructor.
@@ -470,5 +472,17 @@ class Evaluation extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(?string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
     }
 }

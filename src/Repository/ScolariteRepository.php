@@ -1,15 +1,25 @@
 <?php
+/**
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ScolariteRepository.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 05/05/2019 11:55
+ *
+ */
 
 namespace App\Repository;
 
+use App\Entity\Annee;
+use App\Entity\Departement;
+use App\Entity\Diplome;
+use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use App\Entity\Annee;
-use App\Entity\Diplome;
-use App\Entity\Etudiant;
-use App\Entity\Departement;
 
 /**
  * @method Scolarite|null find($id, $lockMode = null, $lockVersion = null)
@@ -53,6 +63,24 @@ class ScolariteRepository extends ServiceEntityRepository
             ->where('s.etudiant = :etudiant')
             ->setParameter('etudiant', $etudiant->getId())
             ->orderBy('s.ordre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByEtudiantDepartement(Etudiant $etudiant, Departement $departement)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'p.etudiant = e.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.departement = :departement')
+            ->andWhere('p.etudiant = :etudiant')
+            ->setParameter('departement', $departement->getId())
+            ->setParameter('etudiant', $etudiant->getId())
+            ->orderBy('e.nom', 'asc')
+            ->orderBy('e.prenom', 'asc')
+            ->orderBy('p.ordre', 'asc')
             ->getQuery()
             ->getResult();
     }
