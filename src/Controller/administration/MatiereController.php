@@ -17,16 +17,32 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MatiereController extends BaseController
 {
+
     /**
      * @Route("/", name="administration_matiere_index", methods="GET")
      * @param MatiereRepository $matiereRepository
      *
      * @return Response
      */
-    public function index(MatiereRepository $matiereRepository): Response
+    public function index(): Response
     {
-        return $this->render('administration/matiere/index.html.twig', ['matieres' => $matiereRepository->findAll()]);
+        return $this->render('administration/matiere/index.html.twig');
     }
+
+    /**
+     * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose"=true})
+     * @param MatiereRepository $matiereRepository
+     *
+     * @return Response
+     */
+    public function diplome(Diplome $diplome): Response
+    {
+        return $this->render('administration/matiere/_tableau.html.twig', [
+            'diplome' => $diplome,
+            'matieres' => $this->getDoctrine()->getRepository(Matiere::class)->findByDiplome($diplome)]);
+    }
+
+
 
     /**
      * @Route("/export.{_format}", name="administration_matiere_export", methods="GET",

@@ -91,3 +91,21 @@ $('#matiere_semestre').change(function () {
     }
   })
 })
+
+$(document).on('click', '.change-diplome', function (e) {
+  e.preventDefault()
+  $('.change-diplome').removeClass('active show')
+  $(this).addClass('active show')
+  $.ajax({
+    url: Routing.generate('administration_matiere_diplome', {diplome:$(this).data('diplome')}),
+    dataType: 'HTML',
+    type: 'GET',
+    success: function (data) {
+      $('#content_diplome').slideUp().empty().append(data).slideDown()
+      $('.datatable_matieres').dataTable({
+        language:langueFr
+      })
+    }
+  })
+
+})
