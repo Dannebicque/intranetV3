@@ -297,6 +297,28 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.opt_nb_semaines_visibles'|trans }}</strong></p>
+                                            <p>{{ 'help.opt_nb_semaines_visibles'|trans }}</p>
+                                        </div>
+                                        <label class="sr-only" for="optNbSemainesVisibles_{{ diplome.id }}">optNbSemainesVisibles_{{ diplome.id }}</label>
+                                        <select class="form-control col-sm-6 changeOptionSelect"
+                                                name="optNbSemainesVisibles_{{ diplome.id }}"
+                                                id="optNbSemainesVisibles_{{ diplome.id }}"
+                                                data-type="diplome"
+                                                data-id="{{ diplome.id }}"
+                                        >
+                                            <option value="0" selected>{{ 'non.selectione'|trans }}
+                                                / {{ 'afficher.toutes.les.semaines'|trans }}</option>
+                                            {% for i in 1 .. 30 %}
+                                                <option value="{{ i }}"
+                                                        {% if diplome.optNbSemainesVisibles == i %}selected{% endif %}>{{ i }}
+                                                    jour(s)
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
 
                                     <div class="media">
                                         <div class="media-body">

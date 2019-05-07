@@ -1,5 +1,16 @@
 <?php
 /**
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdt.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  07/05/2019 10:42
+ * @lastUpdate 07/05/2019 10:42
+ *
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 05/09/2018
@@ -9,27 +20,19 @@
 namespace App\MesClasses\Edt;
 
 
-use App\Entity\Calendrier;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 
-class MyEdt
+class MyEdt extends BaseEdt
 {
-
-    protected $semaine;
-
-    /** @var Calendrier */
-    protected $calendrier;
-
-    protected $semaineFormation;
-
     /** @var EdtPlanningRepository */
     protected $edtPlanningRepository;
 
-    /** @var CalendrierRepository */
-    protected $celcatCalendrierRepository;
+    protected $semaines;
+
+
 
     /**
      * MyEdt constructor.
@@ -38,11 +41,11 @@ class MyEdt
      * @param CalendrierRepository  $celcatCalendrierRepository
      */
     public function __construct(
-        EdtPlanningRepository $edtPlanningRepository,
-        CalendrierRepository $celcatCalendrierRepository
+        CalendrierRepository $celcatCalendrierRepository,
+        EdtPlanningRepository $edtPlanningRepository
     ) {
+        parent::__construct($celcatCalendrierRepository);
         $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->celcatCalendrierRepository = $celcatCalendrierRepository;
     }
 
 
@@ -52,11 +55,9 @@ class MyEdt
     public function initPersonnel(Personnel $personnel): void
     {
         $this->semaine = date('W');
-        $calendrier = $this->celcatCalendrierRepository->findOneBy(['semaineReelle' => $this->semaine]);
-
-        if ($calendrier !== null) {
-            $this->calendrier = $calendrier;
-        }
+        $this->init($personnel);
+        $this->semaines = $this->calculSemaines();
+        $this->calculEdt();
     }
 
     /**
@@ -64,23 +65,35 @@ class MyEdt
      */
     public function initEtudiant(Etudiant $etudiant): void
     {
+        $this->semaine = date('W');
+        $this->init($etudiant);
+    }
+
+    public function calculEdt()
+    {
 
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getSemaineFormation()
+    private function calculSemaines()
     {
-        return $this->calendrier ? $this->calendrier->getSemaineFormation() : 0;
-    }
+        $allsemaine = $this->calendrierRepository->findAll();
 
-    /**
-     * @return mixed
-     */
-    public function getSemaine()
-    {
-        return $this->semaine;
+        $t = [];
+        $i = 0;
+        foreach ($allsemaine as $s) {
+            $t[$i]['semaineReelle'] = $s->getSemaineReelle();
+            $t[$i]['semaineIUT'] = $s->getSemaineFormation();
+            $t[$i]['debut'] = $s->getDatelundi();
+            $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
+            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), date('j', $date1) + 7, date('Y', $date1)));
+            $t[$i]['fin'] = $fin;
+            $i++;
+        }
+
+        return $t;
     }
 
 

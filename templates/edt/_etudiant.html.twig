@@ -1,0 +1,100 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} | {{ user_data.user.displayPr }} |
+                                                                   Semaine {{ edt.semaine }}
+                                                                   (semaine formation {{ edt.semaineFormation }})</h4>
+
+        <div class="card-header-actions">
+
+            <div class="btn-toolbar pull-right">
+                <div class="btn-group mr-2">
+                    <a class="btn btn-primary" href="" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
+                </div>
+
+                <div class="btn-group mr-2">
+                    {# todo: a gerer selon la configuration du diplome #}
+                    <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaine précédente"
+                       id="semainePrecedente"><i
+                                class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                    <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaie suivante"
+                       id="semaineSuivante"><i
+                                class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                </div>
+            </div>
+            <ul class="card-controls">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i
+                                class="ti-more-alt rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{{ path('edt_etudiant_export_semaine_courante', {semaine:12}) }}"
+                           class="dropdown-item"><i
+                                    class="fa fa-file-pdf-o"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>
+                        <a href="{{ path('edt_etudiant_export_ical') }}"
+                           class="dropdown-item"><i
+                                    class="ti-export"></i>{{ 'edt.etudiant.export.ical'|trans }}</a>
+                        <a href="{{ path('edt_etudiant_synchro_ical') }}"
+                           class="dropdown-item"><i
+                                    class="ti-export"></i>{{ 'edt.etudiant.synchro.ical'|trans }}</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="card-body">
+
+        <div class="wrapper-edt-etudiant">
+            <div class="edt-etudiant-col1 col-edt-header">&nbsp;</div>
+            <div class="edt-etudiant-col1 col-edt-header">Lundi {{ edt.tabJour.lundi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header">Mardi {{ edt.tabJour.mardi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header">Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header">Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header">Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</div>
+            {% for ligne in 1..15 %}
+                <div class="edt-etudiant-col1 col-edt-heure">&nbsp;</div>
+                <div class="edt-etudiant-col5 col-edt-heure">cours</div>
+            {% endfor %}
+        </div>
+
+
+        <div style="overflow-x: auto" class="table-responsive">
+
+
+            <table class="table-edt">
+                <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m') }}</th>
+                    <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m') }}</th>
+                    <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</th>
+                    <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</th>
+                    <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ligne in 1..27 %}
+                    {% set heure=(ligne/2+7.5)|number_format(0) %}
+
+                    <tr>
+                        <td class="heures">{% if(ligne/2+7.5)-heure!=0 %}{{ heure-1 }}h30{% else %}{{ heure }}h00{% endif %}</td>
+                        {% for jour in 1..5 %}
+                            {% if edt.planning[jour][ligne] is defined %}
+                                {% if edt.planning[jour][ligne].texte!='xx' %}
+                                    <td class="center td-edt" rowspan="{{ edt.planning[jour][ligne].duree }}" style="background-color:{{ edt.planning[jour][ligne].couleur }}; color:{{ edt.planning[jour][ligne].couleurTexte }};padding:0;">
+                                    <a href="#modalEdt" title="plus d'infos" class="lienedt" data-toggle="modal" data-idedt="{{ edt.planning[jour][ligne].pl }}" style="color:{{ edt.planning[jour][ligne].couleurTexte }};">{{ edt.planning[jour][ligne].texte|raw }} {% if edt.planning[jour][ligne].commentaire==true %}
+                                            <i class="icon-info-circled-1"></i>{% endif %}</a>
+                                {% endif %}
+                            {% else %}
+                                <td>&nbsp;</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

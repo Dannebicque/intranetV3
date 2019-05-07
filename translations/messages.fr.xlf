@@ -5,8 +5,8 @@
   ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~ @author David annebicque
   ~ @project intranetv3
-  ~ @date  05/05/2019 11:55
-  ~ @lastUpdate 05/05/2019 11:55
+  ~ @date  07/05/2019 10:42
+  ~ @lastUpdate 07/05/2019 10:42
   ~
   -->
 
@@ -10713,7 +10713,7 @@
     <unit id="oxbjZJ8" name="structure.de.la.departement.heading">
       <segment>
         <source>structure.de.la.departement.heading</source>
-        <target>structure.de.la.departement.heading</target>
+          <target>Structure du département</target>
       </segment>
     </unit>
     <unit id="nVOmwKc" name="ajouter.diplome.departement">
@@ -11135,6 +11135,18 @@
           <segment>
               <source>sadm.personnel.edit.heading</source>
               <target>sadm.personnel.edit.heading</target>
+          </segment>
+      </unit>
+      <unit id="yAlZQ0Z" name="edt.etudiant.export.ical">
+          <segment>
+              <source>edt.etudiant.export.ical</source>
+              <target>edt.etudiant.export.ical</target>
+          </segment>
+      </unit>
+      <unit id="2e7SxC." name="edt.etudiant.synchro.ical">
+          <segment>
+              <source>edt.etudiant.synchro.ical</source>
+              <target>edt.etudiant.synchro.ical</target>
           </segment>
       </unit>
   </file>

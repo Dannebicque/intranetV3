@@ -1,15 +1,12 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/2/19 4:18 AM
- *  * @lastUpdate 5/1/19 4:37 PM
- *  *
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
+ * @author David annebicque
+ * @project intranetv3
+ * @date  07/05/2019 10:42
+ * @lastUpdate 05/05/2019 17:03
  *
  */
 
@@ -158,6 +155,11 @@ class Diplome extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="diplomes")
      */
     private $anneeUniversitaire;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $optSemainesVisibles = 2;
 
     public function __construct(Departement $departement)
     {
@@ -638,6 +640,18 @@ class Diplome extends BaseEntity
     public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
     {
         $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
+
+    public function getOptSemainesVisibles(): ?int
+    {
+        return $this->optSemainesVisibles;
+    }
+
+    public function setOptSemainesVisibles(int $optSemainesVisibles): self
+    {
+        $this->optSemainesVisibles = $optSemainesVisibles;
 
         return $this;
     }
