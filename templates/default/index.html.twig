@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12 col-md-8">
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-12 col-md-4">
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-
+        <div class="col-sm-12">
         {% if user_data.departement.optEdt == true %}
             {% if is_granted('ROLE_PERMANENT') %}
                 {{ render(controller(
@@ -87,7 +87,7 @@
                 erreur
             {% endif %}
         {% endif %}
-
+        </div>
 
         {% if is_granted('ROLE_PERMANENT') %}
             {{ render(controller(

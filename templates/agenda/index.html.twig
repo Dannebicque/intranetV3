@@ -19,11 +19,18 @@
 
 {% block content %}
 
-    <div class="card">
-        <h4 class="card-title">{{ 'agenda.heading'|trans }}</h4>
 
-        <div class="card-body">
-
-        </div>
-    </div>
+    {% if user_data.departement.optEdt == true %}
+        {% if is_granted('ROLE_PERMANENT') %}
+            {{ render(controller(
+                'App\\Controller\\EdtController::dashboardPersonnel'
+            )) }}
+        {% elseif is_granted('ROLE_ETUDIANT') %}
+            {{ render(controller(
+                'App\\Controller\\EdtController::dashboardEtudiant'
+            )) }}
+        {% else %}
+            erreur
+        {% endif %}
+    {% endif %}
 {% endblock %}
