@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  *
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
  * @author David annebicque
  * @project intranetv3
  * @date  05/05/2019 11:55
@@ -549,16 +549,13 @@ $(document).on('click', '.enseignanttrombi', function(e) {
 
 
 /*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/personnel.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
+ * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ *
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/personnel.js
+ * @author David annebicque
+ * @project intranetv3
+ * @date  05/05/2019 11:55
+ * @lastUpdate 05/05/2019 11:55
  *
  */
 
@@ -2142,6 +2139,24 @@ $('#matiere_semestre').change(function () {
   })
 })
 
+$(document).on('click', '.change-diplome', function (e) {
+  e.preventDefault()
+  $('.change-diplome').removeClass('active show')
+  $(this).addClass('active show')
+  $.ajax({
+    url: Routing.generate('administration_matiere_diplome', {diplome:$(this).data('diplome')}),
+    dataType: 'HTML',
+    type: 'GET',
+    success: function (data) {
+      $('#content_diplome').slideUp().empty().append(data).slideDown()
+      $('.datatable_matieres').dataTable({
+        language:langueFr
+      })
+    }
+  })
+
+})
+
 
 $(document).on('change', '#tuteurUniversitaire', function (e) {
   $.ajax({
@@ -2152,7 +2167,7 @@ $(document).on('change', '#tuteurUniversitaire', function (e) {
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
-  })
+  }) 
 })
 
 

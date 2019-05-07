@@ -119,4 +119,18 @@ class MatiereRepository extends ServiceEntityRepository
         return $t;
     }
 
+    public function findByDiplome(Diplome $diplome)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
+            ->innerJoin(Semestre::class, 's', 'WITH', 's.id = u.semestre')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->where('a.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId())
+            ->orderBy('m.codeMatiere', 'ASC')
+            ->orderBy('m.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
