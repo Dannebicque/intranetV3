@@ -48,13 +48,15 @@ class RattrapageType extends AbstractType
             ->add('matiere', EntityType::class, array(
                 'class'         => Matiere::class,
                 'label'         => 'label.matiere',
-                'choice_label'  => 'libelle',
+                'choice_label'  => 'display',
                 'query_builder' => function(MatiereRepository $matiereRepository) {
                     return $matiereRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => false,
                 'expanded'      => false,
-                'multiple'      => false
+                'multiple'      => false,
+                'attr'     => ['data-live-search' => 'true', 'data-provide' => 'selectpicker']
+
             ))
             ->add('personnel', EntityType::class, array(
                 'class'         => Personnel::class,
@@ -65,7 +67,9 @@ class RattrapageType extends AbstractType
                 },
                 'required'      => false,
                 'expanded'      => false,
-                'multiple'      => false
+                'multiple'      => false,
+                'attr'     => ['data-live-search' => 'true', 'data-provide' => 'selectpicker']
+
             ));
     }
 

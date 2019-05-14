@@ -34,14 +34,10 @@ Abstract class BaseEdt
     /**
      * @var int|null
      */
-    protected $semaineFormationReelle;
     protected $semaineFormationIUT;
     protected $semaineFormationLundi;
     protected $filtre;
     protected $valeur;
-
-    /** @var Personnel|Etudiant */
-    protected $user;
 
     /**
      * MyEdt constructor.
@@ -59,7 +55,7 @@ Abstract class BaseEdt
      */
     public function getSemaineFormation()
     {
-        return $this->calendrier ? $this->calendrier->getSemaineFormation() : 0;
+        return $this->semaineFormationIUT;
     }
 
     /**
@@ -78,10 +74,8 @@ Abstract class BaseEdt
         return $this->tabJour;
     }
 
-    public function init($user, $filtre = '', $valeur = '', $semaine = '')
+    public function init($filtre = '', $valeur = '', $semaine = 0)
     {
-        $this->user = $user;
-
         //$this->syncCelcat = $formation->getOptUpdateCelcat();
         $this->total['CM'] = 0;
         $this->total['TD'] = 0;
@@ -92,8 +86,8 @@ Abstract class BaseEdt
             $semaine = 35;
         }
 
-        if ($semaine === '') {
-            $semaine = date('W');
+        if ($semaine === 0) {
+            $semaine = (int)date('W');
 
             if ($semaine >= 29 && $semaine < 35) {
                 $semaine = 35;
@@ -115,19 +109,17 @@ Abstract class BaseEdt
         }
 
 
-        $temp = $this->calendrierRepository->findOneBy(['semaineReelle' => $this->semaine]);
-        if ($temp !== null) {
-            $this->semaineFormationReelle = $temp->getSemaineReelle();
-            $this->semaineFormationIUT = $temp->getSemaineFormation();
-            $this->semaineFormationLundi = $temp->getDatelundi();
+        $this->calendrier = $this->calendrierRepository->findOneBy(['semaineReelle' => $this->semaine]);
+        if ($this->calendrier !== null) {
+            $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
+            $this->semaineFormationLundi = $this->calendrier->getDatelundi();
         } else {
             //si la requete est vide, on prend la première...
-            $temp = $this->calendrierRepository->findOneBy(['semaineFormation' => 1]);
-            if ($temp !== null) {
-                $this->semaineFormationReelle = $temp->getSemaineReelle();
-                $this->semaineFormationIUT = $temp->getSemaineFormation();
-                $this->semaineFormationLundi = $temp->getDatelundi();
-                $this->semaine = $temp->getSemaineReelle();
+            $this->calendrier = $this->calendrierRepository->findOneBy(['semaineFormation' => 1]);
+            if ($this->calendrier !== null) {
+                $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
+                $this->semaineFormationLundi = $this->calendrier->getDatelundi();
+                $this->semaine = $this->calendrier->getSemaineReelle();
             } else {
                 //todo: lever une exception 500
             }
@@ -162,4 +154,22 @@ Abstract class BaseEdt
         $this->tabJour['jeudi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 3, $annee));
         $this->tabJour['vendredi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 4, $annee));
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFiltre()
+    {
+        return $this->filtre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValeur()
+    {
+        return $this->valeur;
+    }
+
+
 }

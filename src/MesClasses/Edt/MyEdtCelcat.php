@@ -53,4 +53,8 @@ class MyEdtCelcat extends BaseEdt
     public function initEtudiant(Etudiant $etudiant): void
     {
     }
+
+    public function initAdministration()
+    {
+    }
 }

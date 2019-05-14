@@ -42,58 +42,25 @@
         </div>
     </header>
     <div class="card-body">
-
         <div class="wrapper-edt-etudiant">
             <div class="edt-etudiant-col1 col-edt-header">&nbsp;</div>
-            <div class="edt-etudiant-col1 col-edt-header">Lundi {{ edt.tabJour.lundi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header">Mardi {{ edt.tabJour.mardi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header">Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header">Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header">Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</div>
-            {% for ligne in 1..15 %}
-                <div class="edt-etudiant-col1 col-edt-heure">&nbsp;</div>
-                <div class="edt-etudiant-col5 col-edt-heure">cours</div>
+            <div class="edt-etudiant-col1 col-edt-header jour">Lundi {{ edt.tabJour.lundi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header jour">Mardi {{ edt.tabJour.mardi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header jour">Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header jour">Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</div>
+            <div class="edt-etudiant-col1 col-edt-header jour">Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</div>
+            {% for ligne in 1..7 %}
+                <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}<br>{{ tabHeures[ligne][1]
+                    }}</div>
+                {% for j in 1..5 %}
+                    {% if ligne != j %}
+                        <div class="edt-etudiant-col1 edt-cours">cours {{ ligne }} {{ j }}</div>
+                        {% else %}
+                            <div class="edt-etudiant-col1 edt-cours"></div>
+
+                    {% endif %}
+                    {% endfor %}
             {% endfor %}
-        </div>
-
-
-        <div style="overflow-x: auto" class="table-responsive">
-
-
-            <table class="table-edt">
-                <thead>
-                <tr>
-                    <th>&nbsp;</th>
-                    <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m') }}</th>
-                    <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m') }}</th>
-                    <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</th>
-                    <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</th>
-                    <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for ligne in 1..27 %}
-                    {% set heure=(ligne/2+7.5)|number_format(0) %}
-
-                    <tr>
-                        <td class="heures">{% if(ligne/2+7.5)-heure!=0 %}{{ heure-1 }}h30{% else %}{{ heure }}h00{% endif %}</td>
-                        {% for jour in 1..5 %}
-                            {% if edt.planning[jour][ligne] is defined %}
-                                {% if edt.planning[jour][ligne].texte!='xx' %}
-                                    <td class="center td-edt" rowspan="{{ edt.planning[jour][ligne].duree }}" style="background-color:{{ edt.planning[jour][ligne].couleur }}; color:{{ edt.planning[jour][ligne].couleurTexte }};padding:0;">
-                                    <a href="#modalEdt" title="plus d'infos" class="lienedt" data-toggle="modal" data-idedt="{{ edt.planning[jour][ligne].pl }}" style="color:{{ edt.planning[jour][ligne].couleurTexte }};">{{ edt.planning[jour][ligne].texte|raw }} {% if edt.planning[jour][ligne].commentaire==true %}
-                                            <i class="icon-info-circled-1"></i>{% endif %}</a>
-                                {% endif %}
-                            {% else %}
-                                <td>&nbsp;</td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-
-
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

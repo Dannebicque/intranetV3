@@ -41,6 +41,8 @@
     <div class="card">
         <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
         <div class="card-body">
+            <div class="alert alert-info">Ces informations ne sont visibles que de vous et de la direction du
+                                          département. N'hésitez pas à signaler les erreurs éventuelles.</div>
             {% if user.typeUser == 'permanent' %}
                 <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
             {% endif %}
@@ -62,6 +64,8 @@
     <div class="card">
         <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
         <div class="card-body">
+            <div class="alert alert-info">Ces informations ne sont visibles que de vous et de l'équipe pédagogique.
+                                          N'hésitez pas à signaler les erreurs éventuelles.</div>
                 <p>{{ user.amenagementsParticuliers }}</p>
         </div>
     </div>
@@ -71,7 +75,8 @@
         <div class="card-body">
             <dl class="row">
                 <dt class="col-sm-3">{{ 'bac'|trans }} :</dt>
-                <dd class="col-sm-9">{{ user.bac }} {{ 'obtenu.en'|trans }} {{ user.anneeBac }}</dd>
+                <dd class="col-sm-9">{{ user.bac ? user.bac.libelle : 'non-defini'|trans }} {{ 'obtenu.en'|trans }} {{
+                    user.anneeBac }}</dd>
             </dl>
         </div>
     </div>

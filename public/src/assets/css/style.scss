@@ -126,7 +126,7 @@ fieldset legend {
 /* Grid EDT Etudiant */
 .wrapper-edt-etudiant {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 100px repeat(5, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 1em;
 }
@@ -156,5 +156,21 @@ fieldset legend {
   padding: 1em;
   color: #ffa94d;
   text-align: center;
+  grid-column: 1/2;
+
+}
+
+.edt-cours {
+  border: 2px solid #ddffcc;
+  border-radius: 5px;
+  background-color: #ffd8a8;
+}
+
+.wrapper-edt-etudiant :nth-child(3),
+.wrapper-edt-etudiant :nth-child(4),
+.wrapper-edt-etudiant :nth-child(5),
+.wrapper-edt-etudiant :nth-child(6)
+{
+  display:none;
 }
 

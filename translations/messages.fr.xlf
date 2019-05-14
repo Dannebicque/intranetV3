@@ -9311,13 +9311,13 @@
     <unit id="VvPix9i" name="bloc.stage.etu.heading">
       <segment>
         <source>bloc.stage.etu.heading</source>
-        <target>Stage(s)</target>
+        <target>Stage(s) / Alternance(s)</target>
       </segment>
     </unit>
     <unit id="B8wjOoQ" name="bloc.stage.histo.etu.heading">
       <segment>
         <source>bloc.stage.histo.etu.heading</source>
-        <target>Historique des stages</target>
+        <target>Historique des stages / alternances</target>
       </segment>
     </unit>
     <unit id=".Dsq4AB" name="atitle.initialiser">

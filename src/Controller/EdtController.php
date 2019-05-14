@@ -73,6 +73,15 @@ class EdtController extends BaseController
     public function dashboardEtudiant(): Response
     {
         if ($this->getConnectedUser() !== null) {
+            $tabHeures = [
+                1  => ['8h00', '9h30'],
+                2  => ['9h30', '11h00'],
+                3  => ['11h00', '12h30'],
+                4 => ['12h30', '14h00'],
+                5 => ['14h00', '15h30'],
+                6 => ['15h30', '17h00'],
+                7 => ['17h00', '18h30']];
+
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser());
 
@@ -84,7 +93,8 @@ class EdtController extends BaseController
             $this->myEdt->initEtudiant($this->getConnectedUser());
 
             return $this->render('edt/_etudiant.html.twig', [
-                'edt' => $this->myEdt
+                'edt' => $this->myEdt,
+                'tabHeures' => $tabHeures
             ]);
         }
 

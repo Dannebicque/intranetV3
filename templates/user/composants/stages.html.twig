@@ -29,6 +29,10 @@
                     </td>
                     <td>{% if stage.tuteur != null %}{{ stage.tuteur.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4"><div class="alert alert-info">Pas de stage en cours</div></td>
+                </tr>
             {% endfor %}
 
             {% for alternance in alternancesEnCours %}
@@ -46,6 +50,10 @@
                     </td>
                     <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
                     .defini'|trans }}{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4"><div class="alert alert-info">Pas d'alternance en cours</div></td>
                 </tr>
             {% endfor %}
         </table>
@@ -88,6 +96,10 @@
                     </td>
                     <td>{% if stage.tuteur != null %}{{ stage.tuteur.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5"><div class="alert alert-info">Pas de stage réalisé</div></td>
+                </tr>
             {% endfor %}
 
             {% for alternance in alternancesHistorique %}
@@ -106,6 +118,10 @@
                     </td>
                     <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
                     .defini'|trans }}{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5"><div class="alert alert-info">Pas d'alternance réalisée</div></td>
                 </tr>
             {% endfor %}
         </table>

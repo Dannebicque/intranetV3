@@ -84,7 +84,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->where('u.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.ue', 'ASC')
+            //->orderBy('m.ue', 'ASC')
             ->orderBy('m.codeMatiere', 'ASC');
     }
 
@@ -131,6 +131,28 @@ class MatiereRepository extends ServiceEntityRepository
             ->orderBy('m.libelle', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function tableauMatieres(Departement $departement): array
+    {
+        $query = $this->createQueryBuilder('m')
+            ->innerJoin(Ue::class, 'u', 'with', 'u.id=m.ue')
+            ->innerJoin(Semestre::class, 's', 'with', 's.id=u.semestre')
+            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
+            ->innerJoin(Diplome::class, 'd', 'with', 'd.id=a.diplome')
+            ->where('d.departement= :departement')
+            ->setParameter('departement', $departement->getId())
+            ->getQuery()
+            ->getResult();
+
+        $t = array();
+
+        /** @var  $q Matiere */
+        foreach ($query as $q) {
+            $t[$q->getCodeMatiere()] = $q;
+        }
+
+        return $t;
     }
 
 }

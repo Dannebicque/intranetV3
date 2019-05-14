@@ -29,7 +29,7 @@ class EdtPlanning
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $ordre;
+    private $ordre = 0;
 
     /**
      * @ORM\Column(type="integer")
@@ -50,6 +50,36 @@ class EdtPlanning
      * @ORM\Column(type="boolean")
      */
     private $evaluation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
+     */
+    private $semestre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
+     */
+    private $matiere;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
+     */
+    private $intervenant;
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    private $texte;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $groupe;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $type;
 
     public function getId(): ?int
     {
@@ -136,6 +166,78 @@ class EdtPlanning
     public function setEvaluation(bool $evaluation): self
     {
         $this->evaluation = $evaluation;
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    public function getMatiere(): ?Matiere
+    {
+        return $this->matiere;
+    }
+
+    public function setMatiere(?Matiere $matiere): self
+    {
+        $this->matiere = $matiere;
+
+        return $this;
+    }
+
+    public function getIntervenant(): ?Personnel
+    {
+        return $this->intervenant;
+    }
+
+    public function setIntervenant(?Personnel $intervenant): self
+    {
+        $this->intervenant = $intervenant;
+
+        return $this;
+    }
+
+    public function getTexte(): ?string
+    {
+        return $this->texte;
+    }
+
+    public function setTexte(?string $texte): self
+    {
+        $this->texte = $texte;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?int
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(int $groupe): self
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

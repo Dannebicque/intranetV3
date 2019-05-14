@@ -57,9 +57,10 @@ class MyUpload
 
             $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.' . $extension;
             $fichier->move($this->dir, $nomfile);
+            return $this->dir . $nomfile;
         }
 
-        return $this->dir . $nomfile;
+        return null;
     }
 
     /**

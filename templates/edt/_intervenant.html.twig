@@ -29,23 +29,27 @@
         </header>
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-4">
+                    <select class="form-control " data-provide="selectpicker"
+                            data-live-search="true"
+                    >
+                        <option value="">Choisir</option>
+                        {% for sem in edt.semaines %}
+                            <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle
+                            }}">
+                                du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem
+                                .semaineIUT }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="col-sm-8">
 
 
                     <div class="btn-toolbar pull-right">
                         <div class="btn-group mr-2">
                         <a class="btn btn-primary" href="" data-provide="tooltip" title="Cette semaine"><i class="fa
 	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
-                        </div>
-
-                        <div class="btn-group mr-2">
-                            <a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Choisissez une semaine <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                {#{% for sem in edt.semaines %}#}
-                                <li><a href="">du </a>
-                                    {#{% endfor %}#}
-
-                            </ul>
                         </div>
                         <div class="btn-group mr-2">
                             <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaine précédente"><i

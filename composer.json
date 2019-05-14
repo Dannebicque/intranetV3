@@ -37,8 +37,7 @@
         "vich/uploader-bundle": "^1.8",
         "ext-calendar": "*",
         "ext-bcmath": "*",
-      "ext-json": "*",
-      "ext-odbc": "*"
+      "ext-json": "*"
     },
     "config": {
         "preferred-install": {

@@ -15,6 +15,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
@@ -148,7 +149,7 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findBySemestreBuilder(Semestre $semestre): ?QueryBuilder
     {
         if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
-            return $this->findByDepartementBuilder($semestre->getAnnee()->getDiplome()->getFormation());
+            return $this->findByDepartementBuilder($semestre->getAnnee()->getDiplome()->getDepartement());
         }
 
         return null;
@@ -205,13 +206,33 @@ class PersonnelRepository extends ServiceEntityRepository
      */
     public function tableauPersonnelHarpege(Diplome $diplome): array
     {
-        $p = $this->findByDepartement($diplome->getFormation());
+        $p = $this->findByDepartement($diplome->getDepartement());
 
         $t = array();
 
         /** @var  $pers Personnel */
         foreach ($p as $pers) {
             $t[$pers->getNumeroHarpege()] = $pers;
+        }
+
+        return $t;
+    }
+
+    public function tableauIntervenants(Departement $departement): array
+    {
+        $query = $this->createQueryBuilder('s')
+            ->innerJoin(PersonnelDepartement::class, 'p', 'WITH', 's.id = p.personnel')
+            ->where('p.departement = :departement')
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('s.nom,s.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $t = array();
+
+        /** @var  $q Personnel */
+        foreach ($query as $q) {
+            $t[$q->getInitiales()] = $q;
         }
 
         return $t;

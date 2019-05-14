@@ -78,71 +78,70 @@ $(document).click(function () {
   $contextMenuEdt.hide();
 });
 
-//une fois la selection terminée
-function selectfin() {
-  console.log('fin');
-  var valeur;
-  for (var i = 0; i < Cells.length; i++) {
-    console.log(Cells[i]);
-  }
-  console.log("cell0 " + Cells[0]);
-  console.log("cell-fin " + Cells[Cells.length - 1]);
-  var tabdbt = Cells[0].split('_');
-  $('#hdbt').val(tabdbt[1]);
-  var tabfin = Cells[Cells.length - 1].split('_');
-
-  var fin = parseInt(tabfin[1]) + 1;
-  $('#hfin').val(fin);
-  $('#jourc' + tabdbt[2]).iCheck('check');
-  var diff = parseInt(tabfin[3]) - parseInt(tabdbt[3]);
-  if (diff === 0)//donc sur la même colonne
-  {
-    valeur = 'TP-' + tabdbt[3];
-  }
-  else if (diff === 1)//donc sur 2 colonnes)
-  {
-    valeur = 'TD-' + tabdbt[3];
-  }
-  else {
-    valeur = 'CM-1';
-  }
-  console.log(valeur);
-  $('#typecours').val(valeur);
-  $('#salle').val('');
-  $('#texte').val('');
-
-  $('#blocadd').show();
-  $('#zoneaction').hide();
-}
-
-//au debut de la selection
-function debut() {
-  Cells = [];
-  Ind = 0;
-  console.log('debut');
-}
-
-$(document).ready(function () {
-
-  //mémoriser les celulles selectionnées
-  $('#selectable').selectable({
-    filter: 'th,td:not(.modedt)',
-    start: function (event, ui) {
-      debut()
-    },
-    stop: function (event, ui) {
-      selectfin()
-    },
-    selected: function (event, ui) {
-      var s = $(this).find('.ui-selected');
-
-      Cells[Ind] = $(ui.selected).attr('id');
-      console.log('case' + Cells);
-      Ind = Ind + 1;
-
-    }
-  });
-
+// //une fois la selection terminée
+// function selectfin() {
+//   console.log('fin');
+//   var valeur;
+//   for (var i = 0; i < Cells.length; i++) {
+//     console.log(Cells[i]);
+//   }
+//   console.log("cell0 " + Cells[0]);
+//   console.log("cell-fin " + Cells[Cells.length - 1]);
+//   var tabdbt = Cells[0].split('_');
+//   $('#hdbt').val(tabdbt[1]);
+//   var tabfin = Cells[Cells.length - 1].split('_');
+//
+//   var fin = parseInt(tabfin[1]) + 1;
+//   $('#hfin').val(fin);
+//   $('#jourc' + tabdbt[2]).iCheck('check');
+//   var diff = parseInt(tabfin[3]) - parseInt(tabdbt[3]);
+//   if (diff === 0)//donc sur la même colonne
+//   {
+//     valeur = 'TP-' + tabdbt[3];
+//   }
+//   else if (diff === 1)//donc sur 2 colonnes)
+//   {
+//     valeur = 'TD-' + tabdbt[3];
+//   }
+//   else {
+//     valeur = 'CM-1';
+//   }
+//   console.log(valeur);
+//   $('#typecours').val(valeur);
+//   $('#salle').val('');
+//   $('#texte').val('');
+//
+//   $('#blocadd').show();
+//   $('#zoneaction').hide();
+// }
+//
+// //au debut de la selection
+// function debut() {
+//   Cells = [];
+//   Ind = 0;
+//   console.log('debut');
+// }
+//
+//
+//   //mémoriser les celulles selectionnées
+//   $('#selectable').selectable({
+//     filter: 'th,td:not(.modedt)',
+//     start: function (event, ui) {
+//       debut()
+//     },
+//     stop: function (event, ui) {
+//       selectfin()
+//     },
+//     selected: function (event, ui) {
+//       var s = $(this).find('.ui-selected');
+//
+//       Cells[Ind] = $(ui.selected).attr('id');
+//       console.log('case' + Cells);
+//       Ind = Ind + 1;
+//
+//     }
+//   });
+//
 
 
   //suppression d'une semaine
@@ -174,12 +173,12 @@ $(document).ready(function () {
   $('#foc').scroll();
 
   //importer semaine
-  $('#idimportsemaine').click(function () {
+  $(document).on('click', '#idimportsemaine', function () {
+    console.log('ok')
     var za = $('#zoneaction');
-    za.empty();
-    //za.load("{{ path('da_kernel_administration_edt_za_importsemaine') }}");
+    za.empty()
+    za.load(Routing.generate('administration_edt_za_importsemaine'))
     za.fadeIn(1000);
-    $('#load-page').hide();
   });
 
   //zones
@@ -210,7 +209,6 @@ $(document).ready(function () {
 
   });
 
-});//document ready
 
 $(document).on('click', '.closeza', function (e) {
   e.preventDefault();
@@ -298,33 +296,33 @@ $(document).on('change', '#affichemodule', function () {
 
 });
 
-$(document).ajaxComplete(function (event, xhr, settings) {
-  // actions
-
-
-  $('#selectmatiere').select2();
-  $('#selectenseignant').select2();
-  $('#typecours').select2();
-
-  //bouton journée entière
-  $("#allday").on("ifChecked ifUnchecked", function (event) {
-    if (event.type == 'ifChecked') {
-      var hdbt = $("#hdbt");
-      hdbt.prop('disabled', 'disabled');
-      hdbt.val(1);
-
-      var hfin = $("#hfin");
-      hfin.prop('disabled', 'disabled');
-      hfin.val(26);
-    }
-    else {
-      $("#hdbt").removeAttr('disabled');
-      $("#hfin").removeAttr('disabled');
-
-    }
-  });
-
-  $('.select2').select2();
-
-});
+// $(document).ajaxComplete(function (event, xhr, settings) {
+//   // actions
+//
+//
+//   $('#selectmatiere').select2();
+//   $('#selectenseignant').select2();
+//   $('#typecours').select2();
+//
+//   //bouton journée entière
+//   $("#allday").on("ifChecked ifUnchecked", function (event) {
+//     if (event.type == 'ifChecked') {
+//       var hdbt = $("#hdbt");
+//       hdbt.prop('disabled', 'disabled');
+//       hdbt.val(1);
+//
+//       var hfin = $("#hfin");
+//       hfin.prop('disabled', 'disabled');
+//       hfin.val(26);
+//     }
+//     else {
+//       $("#hdbt").removeAttr('disabled');
+//       $("#hfin").removeAttr('disabled');
+//
+//     }
+//   });
+//
+//   $('.select2').select2();
+//
+// });
 
