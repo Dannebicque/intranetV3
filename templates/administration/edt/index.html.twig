@@ -13,9 +13,17 @@
 {% block content %}
 
     {% if user_data.departement.optUpdateCelcat %}
-        {{ include('administration/edt/edt-celcat.html.twig') }}
+        {{ render(controller(
+            'App\\Controller\\administration\\EdtController::edtCelcat', {
+                semaine:semaine, valeur:valeur, filtre:filtre
+            }
+        )) }}
     {% else %}
-        {{ include('administration/edt/edt-intranet.html.twig') }}
+        {{ render(controller(
+            'App\\Controller\\administration\\EdtController::edtIntranet', {
+                semaine:semaine, valeur:valeur, filtre:filtre
+            }
+        )) }}
     {% endif %}
 {% endblock %}
 

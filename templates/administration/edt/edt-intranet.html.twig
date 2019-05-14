@@ -1,4 +1,3 @@
-
 <div class="card">
     <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
     <div class="card-body">
@@ -24,13 +23,13 @@
             <div class="col-md-6 col-sm-6">
                 <div class="btn-toolbar">
                     <div class="btn-group">
-                            {% for semestre in user_data.semestres %}
-                                <a class="btn"
-                                   href="">{{ semestre.libelle }}</a>
-                            {% endfor %}
+                        {% for semestre in user_data.semestres %}
+                            <a class="btn"
+                               href="">{{ semestre.libelle }}</a>
+                        {% endfor %}
 
-                        </div>
                     </div>
+                </div>
             </div>
         </div>
 
@@ -78,13 +77,12 @@
                 <label for="affichesemaine" class="sr-only">Semaine</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichesemaine" id="affichesemaine">
                     <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
-                        {#{% for sem in edt.semaines %}#}
-                    {#<option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">#}
-                        {#du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem.semaineIUT }}</option>#}
-                    {#{% endfor %}#}
+                    {% for sem in edt.semaines %}
+                    <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
+                    du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem.semaineIUT }}</option>
+                    {% endfor %}
                 </select>
             </div>
-        </div>
 
     </div>
 </div>
@@ -96,8 +94,8 @@
     <div class="card-body">
         <div class="row gap-y">
             <div class="col-md-4 col-sm-12">
-                <div><a href="{{ path('administration_structure_index') }}"
-                        class="btn btn-block btn-primary"> {{ 'adm.edt.import.semaine'|trans }}</a></div>
+                <div><button id="idimportsemaine"
+                        class="btn btn-block btn-primary"> {{ 'adm.edt.import.semaine'|trans }}</button></div>
             </div>
 
             <div class="col-md-4 col-sm-12">
@@ -107,3 +105,9 @@
         </div>
     </div>
 </div>
+
+<div class="card" id="zoneaction">
+
+</div>
+
+

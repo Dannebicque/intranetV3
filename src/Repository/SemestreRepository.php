@@ -82,4 +82,32 @@ class SemestreRepository extends ServiceEntityRepository
     {
         return $this->findByDepartementBuilder($departement->getId())->getQuery()->getResult();
     }
+
+    public function tableauSemestres(Departement $departement)
+    {
+        $semestres = $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('s.libelle')
+            ->getQuery()
+            ->getResult();
+
+        $tabsemestre = [];
+
+        /** @var Semestre $semestre */
+        foreach ($semestres as $semestre) {
+            $index = substr($semestre->getLibelle(), 1, strlen($semestre->getLibelle()) - 1);
+
+            if (strlen($index) === 1) {
+                $index = '0' . $index;
+            }
+
+            $tabsemestre[$index] = $semestre;
+        }
+
+
+        return $tabsemestre;
+    }
 }

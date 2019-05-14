@@ -61,6 +61,16 @@ class MyEdt extends BaseEdt
     }
 
     /**
+     * @return mixed
+     */
+    public function getSemaines()
+    {
+        return $this->semaines;
+    }
+
+
+
+    /**
      * @param Etudiant $etudiant
      */
     public function initEtudiant(Etudiant $etudiant): void
@@ -79,7 +89,7 @@ class MyEdt extends BaseEdt
      */
     private function calculSemaines()
     {
-        $allsemaine = $this->calendrierRepository->findAll();
+        $allsemaine = $this->calendrierRepository->findAll();//todo: pour une anneeuniversitaire donnée
 
         $t = [];
         $i = 0;
@@ -94,6 +104,14 @@ class MyEdt extends BaseEdt
         }
 
         return $t;
+    }
+
+    public function initAdministration($semaine, $filtre, $valeur)
+    {
+        $this->init($semaine, $filtre, $valeur);
+        $this->semaines = $this->calculSemaines();
+        $this->calculEdt();
+        return $this;
     }
 
 
