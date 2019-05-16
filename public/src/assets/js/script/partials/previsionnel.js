@@ -16,13 +16,13 @@ var nbLignePrevisionnel = 1;
 
 //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
 //todo: pourquoi ajaxcomplete?
-// $(document).ajaxComplete(function () {
-//   $('.editPrevi').editable({
-//     type: 'text',
-//     url: Routing.generate('administration_previsionnel_edit')
-//     //todo: si success recalculer toute la ligne.
-//   })
-// })
+$(document).ajaxComplete(function () {
+  $('.editPrevi').editable({
+    type: 'text',
+    url: Routing.generate('administration_previsionnel_edit')
+    //todo: si success recalculer toute la ligne.
+  })
+})
 
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault();

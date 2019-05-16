@@ -47,7 +47,7 @@ class MyUpload
     public function upload(UploadedFile $fichier, $destination, $extensions = [])
     {
         $extension = $this->getExtension($fichier);
-        $this->dir .= $destination;
+        $this->dir .= $this->valideDir($destination);
 
         if ($fichier !== null) {
 
@@ -63,6 +63,17 @@ class MyUpload
         return null;
     }
 
+    private function valideDir($dir){
+        if ($dir[0] === '/') {
+            $dir = substr($dir, 1, strlen($dir));
+        }
+
+        if ($dir[strlen($dir)-1] !== '/') {
+            $dir .= '/';
+        }
+
+        return $dir;
+    }
     /**
      * @param UploadedFile $fichier
      *

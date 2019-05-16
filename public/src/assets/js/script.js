@@ -320,8 +320,6 @@ $(document).on('click', '.page-link', function (e) {
   zone.load($(this).attr('href'));
 });
 
-  //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
-  // $.fn.editable.defaults.mode = 'inline'
   // $.fn.editableform.buttons =
   //   '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
   //   '<i class="fa fa-fw fa-check"></i>' +
@@ -903,13 +901,13 @@ var nbLignePrevisionnel = 1;
 
 //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
 //todo: pourquoi ajaxcomplete?
-// $(document).ajaxComplete(function () {
-//   $('.editPrevi').editable({
-//     type: 'text',
-//     url: Routing.generate('administration_previsionnel_edit')
-//     //todo: si success recalculer toute la ligne.
-//   })
-// })
+$(document).ajaxComplete(function () {
+  $('.editPrevi').editable({
+    type: 'text',
+    url: Routing.generate('administration_previsionnel_edit')
+    //todo: si success recalculer toute la ligne.
+  })
+})
 
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault();
