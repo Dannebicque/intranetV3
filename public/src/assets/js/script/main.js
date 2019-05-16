@@ -80,8 +80,7 @@ app.ready(function () {
   require('./plugins/myModal.js')
   require('./plugins/pagination')
 
-  //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
-  // $.fn.editable.defaults.mode = 'inline'
+
   // $.fn.editableform.buttons =
   //   '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
   //   '<i class="fa fa-fw fa-check"></i>' +

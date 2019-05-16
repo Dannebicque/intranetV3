@@ -93,6 +93,10 @@ class MyPrevisionnel
 
     /** @var Semestre */
     private $semestre;
+    /**
+     * @var MyUpload
+     */
+    private $myUpload;
 
     /**
      * @return Departement[]
@@ -120,12 +124,14 @@ class MyPrevisionnel
         EntityManagerInterface $entityManager,
         PrevisionnelRepository $previsionnelRepository,
         HrsRepository $hrsRepository,
-        MyExcelWriter $myExcelWriter
+        MyExcelWriter $myExcelWriter,
+        MyUpload $myUpload
     ) {
         $this->previsionnelRepository = $previsionnelRepository;
         $this->hrsRepository = $hrsRepository;
         $this->entityManager = $entityManager;
         $this->myExcelWriter = $myExcelWriter;
+        $this->myUpload = $myUpload;
     }
 
     /**
@@ -643,36 +649,13 @@ class MyPrevisionnel
     public function importCsv($data): bool
     {
 
-        //récupérer le fichier
-
-        /** @var UploadedFile $file */
-        $file = $data['fichier'];
-        $dir = '';
-        $nomfile = '';
-
+        $file = $this->myUpload->upload($data['fichier'], 'temp');;
 
         if ($data['diplome'] !== null) {
             $matieres = $this->entityManager->getRepository(Matiere::class)->tableauMatieresApogees($data['diplome']);
             $personnels = $this->entityManager->getRepository(Personnel::class)->tableauPersonnelHarpege($data['diplome']);
 
-
-            /* necessaire ? */
-            if ($file !== null) {
-                //todo: faire un service pour gérer l'upload et le renommage
-
-                // générer un nom aléatoire et essayer de deviner l'extension (plus sécurisé)
-                $extension = $file->guessExtension();
-                if (!$extension) {
-                    // l'extension n'a pas été trouvée
-                    $extension = 'bin';
-                }
-                $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.csv';
-                $dir = $this->get('kernel')->getRootDir() . '/public/uploads/temp/';
-                $file->move($dir, $nomfile);
-            }
-            /* fin necessaire ? */
-
-            $handle = fopen($dir . $nomfile, 'rb');
+            $handle = fopen($file, 'rb');
 
             /*Si on a réussi à ouvrir le fichier*/
             if ($handle) {
@@ -680,21 +663,21 @@ class MyPrevisionnel
                 $this->supprPrevisionnel($data['diplome'], $data['annee']);
 
                 /* supprime la première ligne */
-                fgets($handle);
+                fgetcsv($handle, 1024, ';');
                 $annee = $data['annee'];
                 /*Tant que l'on est pas à la fin du fichier*/
                 while (!feof($handle)) {
                     /*On lit la ligne courante*/
-                    $phrase = fgets($handle);
-                    $t = explode(';', $phrase);
+                    $ligne = fgetcsv($handle, 1024, ';');
 
-                    if (array_key_exists($t[4], $personnels) && array_key_exists($t[2], $matieres)) {
-                        $pr = new Previsionnel($matieres[$t[2]], $personnels[$t[4]], $annee);
-                        $pr->setNbHCm(str_replace(',', '.', $t[6]));
-                        $pr->setNbHTd(str_replace(',', '.', $t[8]));
-                        $pr->setNbGrTp($t[9]);
-                        $pr->setNbHTp(str_replace(',', '.', $t[10]));
-                        $pr->setNbGrTp($t[11]);
+                    if (array_key_exists($ligne[4], $personnels) && array_key_exists($ligne[2], $matieres)) {
+                        $pr = new Previsionnel($matieres[$ligne[2]], $personnels[$ligne[4]], $annee);
+                        $pr->setNbHCm(str_replace(',', '.', $ligne[6]));
+                        $pr->setNbGrCm(trim($ligne[7]));
+                        $pr->setNbHTd(str_replace(',', '.', $ligne[8]));
+                        $pr->setNbGrTp(trim($ligne[9]));
+                        $pr->setNbHTp(str_replace(',', '.', $ligne[10]));
+                        $pr->setNbGrTp(trim($ligne[11]));
                         $this->entityManager->persist($pr);
                     }
                 }
@@ -702,7 +685,7 @@ class MyPrevisionnel
 
                 /*On ferme le fichier*/
                 fclose($handle);
-                unlink($dir . $nomfile); //suppression du fichier
+                unlink($file); //suppression du fichier
 
                 return true;
             }
@@ -716,7 +699,6 @@ class MyPrevisionnel
     private function supprPrevisionnel(Diplome $diplome, $annee): void
     {
         $pr = $this->previsionnelRepository->findByDiplome($diplome, $annee);
-
         /** @var Previsionnel $p */
         foreach ($pr as $p) {
             $this->entityManager->remove($p);

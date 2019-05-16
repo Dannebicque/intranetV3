@@ -55,7 +55,7 @@ class MyEdt extends BaseEdt
     public function initPersonnel(Personnel $personnel): void
     {
         $this->semaine = date('W');
-        $this->init($personnel);
+        $this->init();
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
     }

@@ -35,32 +35,32 @@ class Previsionnel extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHCm;
+    private $nbHCm = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHTd;
+    private $nbHTd = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHTp;
+    private $nbHTp = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbGrCm;
+    private $nbGrCm = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbGrTd;
+    private $nbGrTd = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbGrTp;
+    private $nbGrTp = 0;
 
     /**
      * Previsionnel constructor.
@@ -170,7 +170,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbHCm(float $nbHCm): self
+    public function setNbHCm(?float $nbHCm = 0): self
     {
         $this->nbHCm = $nbHCm;
 
@@ -190,7 +190,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbHTd(float $nbHTd): self
+    public function setNbHTd(?float $nbHTd = 0): self
     {
         $this->nbHTd = $nbHTd;
 
@@ -210,7 +210,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbHTp(float $nbHTp): self
+    public function setNbHTp(?float $nbHTp = 0): self
     {
         $this->nbHTp = $nbHTp;
 
@@ -230,7 +230,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbGrCm(int $nbGrCm): self
+    public function setNbGrCm(?int $nbGrCm = 0): self
     {
         $this->nbGrCm = $nbGrCm;
 
@@ -250,7 +250,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbGrTd(int $nbGrTd): self
+    public function setNbGrTd(?int $nbGrTd = 0): self
     {
         $this->nbGrTd = $nbGrTd;
 
@@ -270,7 +270,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbGrTp(int $nbGrTp): self
+    public function setNbGrTp(?int $nbGrTp = 0): self
     {
         $this->nbGrTp = $nbGrTp;
 

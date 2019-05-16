@@ -223,6 +223,7 @@ class PrevisionnelController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $myPrevisionnel->importCsv($form->getData());
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.import.success.flash');
         }
 
         return $this->render('administration/previsionnel/import.html.twig', [
