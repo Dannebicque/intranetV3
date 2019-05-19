@@ -23,7 +23,7 @@ Bouton pour Synchro avec Celcat ou pour Synchro avec Fils (2 TP donne  TD)
             <td>{{ etudiant.numetudiant }}</td>
             <td>{{ etudiant.nom|upper }}</td>
             <td>{{ etudiant.prenom|capitalize }}</td>
-            <td>{{ etudiant.bac }}</td>
+            <td>{{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
             {% for groupe in typeGroupe.groupes %}
                 <td><label class="sr-only" for="etu_{{ etudiant.id }}_{{ groupe.id }}">{{ etudiant.displayPr }}
                         => {{ groupe.libelle }}</label>
@@ -33,7 +33,7 @@ Bouton pour Synchro avec Celcat ou pour Synchro avec Fils (2 TP donne  TD)
                            id="etu_{{ etudiant.id }}_{{ groupe.id }}"
                            class="changegroupe"
                            value="{{ groupe.id }}"
-                            {% for etuin groupe.etudiants %}
+                            {% for etu in groupe.etudiants %}
                                 {% if etu==etudiant %}checked {% set grp='ok' %}{% set grp_etu=groupe.id %}{% endif %}
                             {% endfor %} />
                 </td>

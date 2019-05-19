@@ -326,6 +326,16 @@ class DataUserSession
 
     }
 
+    /**
+     * @return string
+     */
+    public function displayAnneeUniversitaire(): string
+    {
+        $fin = $this->getAnneeUniversitaire()+1;
+        return $this->getAnneeUniversitaire().' | '.$fin;
+
+    }
+
     public function getArticlesCategories()
     {
 

@@ -107,6 +107,11 @@ class Annee extends BaseEntity
      */
     private $alternances;
 
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $couleur;
+
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
@@ -367,5 +372,17 @@ class Annee extends BaseEntity
         }
 
         return 0;
+    }
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(string $couleur): self
+    {
+        $this->couleur = $couleur;
+
+        return $this;
     }
 }

@@ -73,6 +73,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('upper', [$this, 'upper']),
             new TwigFilter('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
             new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
+            new TwigFilter('border', [$this, 'border']),
 
         );
     }
@@ -85,6 +86,20 @@ class AppExtension extends AbstractExtension
             new TwigFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
 
         );
+    }
+
+    public function border($statut): string
+    {
+        switch ($statut){
+            case 'TEC':
+            case 'ASS':
+                return 'card-outline-warning';
+            case 'MCF':
+            case 'PU':
+                return 'card-outline-primary';
+            default:
+                return 'card-outline-info';
+        }
     }
 
     public function mailto($email): string

@@ -10,12 +10,16 @@
     </thead>
     <tbody>
     {% import 'macros/tree-groupe.html.twig' as m %}
-    {% for groupe in groupes if (groupe.parent == null) %}
+    {% for groupe in groupes if (groupe.parent == null and groupe.typeGroupe.semestre.id == semestre.id) %}
         {{ include('administration/groupe/_ligne_groupe.html.twig') }}
         {{ m.tree(groupe.enfants, 1, semestre) }}
         {{ include('administration/groupe/_ligne_add_groupe.html.twig', {parent:groupe,
             semestre:semestre
         }) }}
+        {% else %}
+            {{ include('administration/groupe/_ligne_add_groupe.html.twig', {
+                semestre:semestre
+            }) }}
     {% endfor %}
 
     </tbody>

@@ -18,6 +18,7 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
+use App\Form\EvaluationsPersonnelsType;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluation;
@@ -230,5 +231,27 @@ class NoteController extends BaseController
     public function help(): Response
     {
         return new Response('', Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/ajax/gere/{uuid}", name="application_personnel_note_ajax_autorise", methods="GET")
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     */
+    public function ajaxAddPersonneAction(Evaluation $evaluation)
+    {
+        if ($evaluation !== null) //todo: tester si c'est le prof ou un admin...
+        {
+            $form = $this->createForm(EvaluationsPersonnelsType::class, $evaluation, array(
+                'attr'     => array('id' => 'formPersonne', 'class' => 'form-horizontal'),
+                'semestre' => $evaluation->getMatiere()->getUE()->getSemestre()
+            ));
+
+            return $this->render('appPersonnel/note/addPersonne.html.twig',
+                [
+                    'form' => $form->createView(),
+                    'eval' => $evaluation
+                ]);
+        }
+        return $this->render('bundles/TwigBundle/Exception/error666.html.twig');
     }
 }

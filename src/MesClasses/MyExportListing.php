@@ -326,7 +326,7 @@ class MyExportListing
 
     private function exportPdf()
     {
-        $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name);
+        $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name, $this->dataUserSession->getDepartement()->getLibelle());
 
         return null;
     }
