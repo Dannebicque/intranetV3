@@ -82,32 +82,29 @@
             border-bottom: dotted 1px;
         }
 
-        footer {
-            bottom:0;
-            position: fixed;
-            border-top: 1px solid black;
-        }
 
+        footer { position: fixed; bottom: -80px; left: 0px; right: 0px; border-top:1px solid black; height: 80px;
+            padding: 5px }
 
-        .footer-right{
-            position:fixed;
-            bottom:0;
-            right:0;
-            width: 40%;
-            text-align: right;
-        }
+        /*https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/*/
+        /*footer .pagenum:before {*/
+        /*    content: "Page " counter(page) " sur " counter(pages);*/
+        /*}*/
 
-        .footer-left{
-            position:fixed;
-            bottom:0;
-            left:0;
-            width: 40%;
-        }
+        /*.footer-right{*/
+        /*    position:fixed;*/
+        /*    bottom:0;*/
+        /*    right:0;*/
+        /*    width: 40%;*/
+        /*    text-align: right;*/
+        /*}*/
 
-
-        footer .pagenum:before {
-            content: counter(page);
-        }
+        /*.footer-left{*/
+        /*    position:fixed;*/
+        /*    bottom:0;*/
+        /*    left:0;*/
+        /*    width: 40%;*/
+        /*}*/
 
         {% block style %}
         {% endblock %}

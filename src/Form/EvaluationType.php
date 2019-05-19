@@ -2,10 +2,10 @@
 /**
  * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  *
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/EvaluationType.php
- * @author David annebicque
- * @project intranetv3
- * @date  05/05/2019 11:55
+ * @file       /Users/davidannebicque/htdocs/intranetv3/src/Form/EvaluationType.php
+ * @author     David annebicque
+ * @project    intranetv3
+ * @date       05/05/2019 11:55
  * @lastUpdate 05/05/2019 11:55
  *
  */
@@ -63,11 +63,11 @@ class EvaluationType extends AbstractType
                 'attr'   => ['data-provide' => 'datepicker', 'data-language' => $this->locale]
             ])
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient', 'help' => 'help.coefficient'])
-            ->add('commentaire', TextType::class, ['label' => 'label.commentaire'])
-            ->add('matiere', EntityType::class, array(
+            ->add('commentaire', TextType::class, ['label' => 'label.commentaire', 'help' => 'help.commentaire_evaluation'])
+            ->add('matiere', EntityType::class, [
                 'class'         => Matiere::class,
                 'label'         => 'label.evaluation_matiere',
-                'choice_label'  => 'libelle',
+                'choice_label'  => 'display',
                 'query_builder' => function(MatiereRepository $matiereRepository) {
                     return $matiereRepository->findBySemestreBuilder($this->semestre);
                 },
@@ -75,8 +75,8 @@ class EvaluationType extends AbstractType
                 'expanded'      => false,
                 'multiple'      => false,
                 'disabled'      => $this->matiereDisabled
-            ))
-            ->add('typeGroupe', EntityType::class, array(
+            ])
+            ->add('typeGroupe', EntityType::class, [
                 'class'         => TypeGroupe::class,
                 'label'         => 'label.evaluation_type_groupe',
                 'choice_label'  => 'libelle',
@@ -86,19 +86,20 @@ class EvaluationType extends AbstractType
                 'required'      => true,
                 'expanded'      => true,
                 'multiple'      => false,
-            ))
-            ->add('personnelAutorise', EntityType::class, array(
+            ])
+            ->add('personnelAutorise', EntityType::class, [
                 'class'         => Personnel::class,
                 'help'          => 'help.personnelAutorise',
                 'label'         => 'label.evaluation_personnelAutorise',
                 'choice_label'  => 'display',
+                'attr'          => ['class' => ''],
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
                 'required'      => true,
                 'expanded'      => true,
                 'multiple'      => true
-            ))//->add('parent')
+            ])//->add('parent')
         ;
 
         if ($this->import === true) {
@@ -113,7 +114,7 @@ class EvaluationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Evaluation::class,
-            'departement'          => null,
+            'departement'        => null,
             'semestre'           => null,
             'import'             => null,
             'matiereDisabled'    => null,

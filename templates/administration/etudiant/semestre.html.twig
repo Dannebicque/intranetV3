@@ -41,7 +41,7 @@
 {% block content %}
 
     <div class="card">
-        <h4 class="card-title">{{ 'adm.gestion.des.etudiants.departement'|trans }}</h4>
+        <h4 class="card-title">{{ 'liste.etudiants.semestre'|trans({'%libelle%':semestre.libelle})|raw }}</h4>
         <div class="card-body">
             <table class="table table-striped table-bordered"
                    data-provide="datatables">
@@ -50,6 +50,7 @@
                     <th>{{ 'table.numetudiant'|trans }}</th>
                     <th>{{ 'table.nom'|trans }}</th>
                     <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.bac'|trans }}</th>
                     <th>{{ 'table.groupes'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
@@ -60,8 +61,28 @@
                         <td>{{ etudiant.numEtudiant }}</td>
                         <td>{{ etudiant.nom }}</td>
                         <td>{{ etudiant.prenom }}</td>
-                        <td>{% for groupe in etudiant.groupes %}{{ groupe.libelle }}, {% endfor %}</td>
-                        <td>...</td>
+                        <td>{{ etudiant.bac ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
+                        <td>{% for groupe in etudiant.groupes %}{{ groupe.libelle }}, {% else %}-{% endfor %}</td>
+                        <td>
+
+
+                            <a href="{{ path('user_profil', {type: 'etudiant', slug:etudiant.slug}) }}"
+                               class="btn btn-info btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.profil'|trans }}">
+                                <i class="{{ iconShow }}"></i>
+                                <span class="sr-only">{{ 'atitle.profil'|trans }}</span>
+                            </a>
+                            <a href="{{ path('administration_etudiant_edit', {id: etudiant.id}) }}"
+                               class="btn btn-warning btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.modifier'|trans }}">
+                                <i class="{{ iconEdit }}"></i>
+                                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

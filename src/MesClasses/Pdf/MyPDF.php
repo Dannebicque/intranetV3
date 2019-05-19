@@ -8,6 +8,7 @@
 
 namespace App\MesClasses\Pdf;
 
+use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -34,6 +35,7 @@ class MyPDF
 
         self::$options->set('isRemoteEnabled', true);
         self::$options->set('isPhpEnabled', true);
+        self::$options->set('defaultPaperSize', 'A4');
     }
 
     /**
@@ -49,13 +51,18 @@ class MyPDF
      * @param $name
      *
      */
-    public static function generePdf($template, $data, $name):void
+    public static function generePdf($template, $data, $name, $departement):void
     {
         $html = self::$templating->render($template, $data);
 
         self::$domPdf = new Dompdf(self::$options);
         self::$domPdf->loadHtml($html);
         self::$domPdf->render();
+
+        $date = new DateTime('now');
+        $canvas = self::$domPdf->getCanvas();
+        $canvas->page_text(500, 800, "Page {PAGE_NUM} sur {PAGE_COUNT}", 'Arial', 10, array(0,0,0));
+        $canvas->page_text(43, 800, $departement. ' | '.$date->format('d/m/Y').'. Généré depuis l\'intranet', 'Arial', 10, array(0,0,0));
 
         self::$domPdf->stream($name, array('Attachment' => 1));
     }

@@ -43,14 +43,6 @@ class EtudiantController extends BaseController
         ]);
     }
 
-//    /**
-//     * @Route("/ajouter", name="administration_etudiant_new", methods="GET|POST")
-//     */
-//    public function create(): Response
-//    {
-//        return $this->render('administration/etudiant/new.html.twig');
-//    }
-
     /**
      * @Route("/import", name="administration_etudiant_import", methods="POST")
      * @param Request $request
@@ -80,6 +72,41 @@ class EtudiantController extends BaseController
 
         return $this->redirectToRoute('administration_etudiant_semestre_add');
     }
+
+    /**
+     * @Route("/edit/{id}", name="administration_etudiant_edit", methods="{GET|POST}")
+     * @param Request $request
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function edit(Request $request, Etudiant $etudiant): Response
+    {
+        $form = $this->createForm(
+            EtudiantType::class,
+            $etudiant,
+            [
+                'attr'      => [
+                    'data-provide' => 'validation'
+                ]
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($etudiant);
+            $this->entityManager->flush();
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.add.success.flash');
+            //todo: redirection
+        }
+        return $this->render('administration/etudiant/edit.html.twig', [
+            'etudiant' => $etudiant,
+            'form' => $form->createView()
+        ]);
+    }
+
 
     /**
      * @Route("/add", name="administration_etudiant_add", methods="POST")

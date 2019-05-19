@@ -1933,7 +1933,7 @@
       </notes>
       <segment>
         <source>label.evaluation_personnelAutorise</source>
-        <target>label.evaluation_personnelAutorise</target>
+        <target>Personne(s) autorisée(s) pour modifier ou compléter l'évaluation</target>
       </segment>
     </unit>
     <unit id="AOFrd.j" name="label.date_evaluation">
@@ -1960,7 +1960,7 @@
       </notes>
       <segment>
         <source>help.personnelAutorise</source>
-        <target>help.personnelAutorise</target>
+        <target>Vous pouvez donner l'autorisation à d'autres enseignants pour modifier ou compléter votre évaluation</target>
       </segment>
     </unit>
     <unit id=".UaO6lm" name="label.codeApogee">
@@ -3375,6 +3375,486 @@
       <segment>
         <source>label.article_categorie</source>
         <target>label.article_categorie</target>
+      </segment>
+    </unit>
+    <unit id="pyZz5V9" name="label.libelle_evaluation">
+      <segment>
+        <source>label.libelle_evaluation</source>
+        <target>Libellé de l'évaluation</target>
+      </segment>
+    </unit>
+    <unit id="Fudyti0" name="help.libelle_evaluation">
+      <segment>
+        <source>help.libelle_evaluation</source>
+        <target>Vous pouvez nommer vos évaluations. Ce nom sera visible des étudiants</target>
+      </segment>
+    </unit>
+    <unit id="1MclTh0" name="ANNEBICQUE David">
+      <segment>
+        <source>ANNEBICQUE David</source>
+        <target>ANNEBICQUE David</target>
+      </segment>
+    </unit>
+    <unit id="vKogjXB" name="ARRIGONI Michael">
+      <segment>
+        <source>ARRIGONI Michael</source>
+        <target>ARRIGONI Michael</target>
+      </segment>
+    </unit>
+    <unit id="hf0vZkh" name="AURIBOT Jérémy">
+      <segment>
+        <source>AURIBOT Jérémy</source>
+        <target>AURIBOT Jérémy</target>
+      </segment>
+    </unit>
+    <unit id="D1qR2s5" name="BAUSER Thierry">
+      <segment>
+        <source>BAUSER Thierry</source>
+        <target>BAUSER Thierry</target>
+      </segment>
+    </unit>
+    <unit id="b8bG203" name="BOGLIETTI Alan">
+      <segment>
+        <source>BOGLIETTI Alan</source>
+        <target>BOGLIETTI Alan</target>
+      </segment>
+    </unit>
+    <unit id="8qFIOE0" name="BOUDIAF Brahim">
+      <segment>
+        <source>BOUDIAF Brahim</source>
+        <target>BOUDIAF Brahim</target>
+      </segment>
+    </unit>
+    <unit id="gcLxqbs" name="BOUDIER Fanny">
+      <segment>
+        <source>BOUDIER Fanny</source>
+        <target>BOUDIER Fanny</target>
+      </segment>
+    </unit>
+    <unit id="PDUq8mb" name="BOULET Hervé">
+      <segment>
+        <source>BOULET Hervé</source>
+        <target>BOULET Hervé</target>
+      </segment>
+    </unit>
+    <unit id="od6lLzd" name="BOURBON Adrien">
+      <segment>
+        <source>BOURBON Adrien</source>
+        <target>BOURBON Adrien</target>
+      </segment>
+    </unit>
+    <unit id="GoJGPsQ" name="BOURGEOIS Karen">
+      <segment>
+        <source>BOURGEOIS Karen</source>
+        <target>BOURGEOIS Karen</target>
+      </segment>
+    </unit>
+    <unit id="Gv4_pQC" name="BRANDT Frédéric">
+      <segment>
+        <source>BRANDT Frédéric</source>
+        <target>BRANDT Frédéric</target>
+      </segment>
+    </unit>
+    <unit id="TGlAn0I" name="BUTET Julien">
+      <segment>
+        <source>BUTET Julien</source>
+        <target>BUTET Julien</target>
+      </segment>
+    </unit>
+    <unit id="_pouQvE" name="CARRÉ Sandrine">
+      <segment>
+        <source>CARRÉ Sandrine</source>
+        <target>CARRÉ Sandrine</target>
+      </segment>
+    </unit>
+    <unit id="0pAapP8" name="CATERINO Paula">
+      <segment>
+        <source>CATERINO Paula</source>
+        <target>CATERINO Paula</target>
+      </segment>
+    </unit>
+    <unit id="PD3E8xA" name="CHÉRAIN Olivier">
+      <segment>
+        <source>CHÉRAIN Olivier</source>
+        <target>CHÉRAIN Olivier</target>
+      </segment>
+    </unit>
+    <unit id="wJ76awf" name="DA SILVA André">
+      <segment>
+        <source>DA SILVA André</source>
+        <target>DA SILVA André</target>
+      </segment>
+    </unit>
+    <unit id="IiMV0MG" name="DETREZ Elodie">
+      <segment>
+        <source>DETREZ Elodie</source>
+        <target>DETREZ Elodie</target>
+      </segment>
+    </unit>
+    <unit id="F7.b4c6" name="DIAS Valentin">
+      <segment>
+        <source>DIAS Valentin</source>
+        <target>DIAS Valentin</target>
+      </segment>
+    </unit>
+    <unit id="Kh19.dl" name="DOE Jane">
+      <segment>
+        <source>DOE Jane</source>
+        <target>DOE Jane</target>
+      </segment>
+    </unit>
+    <unit id="iAhsk09" name="DOE John">
+      <segment>
+        <source>DOE John</source>
+        <target>DOE John</target>
+      </segment>
+    </unit>
+    <unit id="eUuP8_Z" name="DUMAS Samuel">
+      <segment>
+        <source>DUMAS Samuel</source>
+        <target>DUMAS Samuel</target>
+      </segment>
+    </unit>
+    <unit id="h3zlfq3" name="EDOU NZE Charles">
+      <segment>
+        <source>EDOU NZE Charles</source>
+        <target>EDOU NZE Charles</target>
+      </segment>
+    </unit>
+    <unit id="3hVBKLN" name="FAUCHET Ludovic">
+      <segment>
+        <source>FAUCHET Ludovic</source>
+        <target>FAUCHET Ludovic</target>
+      </segment>
+    </unit>
+    <unit id="ZWpJqk." name="FOISSEY Emeline">
+      <segment>
+        <source>FOISSEY Emeline</source>
+        <target>FOISSEY Emeline</target>
+      </segment>
+    </unit>
+    <unit id="AxvJ4l." name="FORT Danièle">
+      <segment>
+        <source>FORT Danièle</source>
+        <target>FORT Danièle</target>
+      </segment>
+    </unit>
+    <unit id="oQEJ5v." name="GALVAN Elena">
+      <segment>
+        <source>GALVAN Elena</source>
+        <target>GALVAN Elena</target>
+      </segment>
+    </unit>
+    <unit id="ji9pQin" name="GOBEAUT Noemie">
+      <segment>
+        <source>GOBEAUT Noemie</source>
+        <target>GOBEAUT Noemie</target>
+      </segment>
+    </unit>
+    <unit id="rSvmVTM" name="GOBERT Olivier">
+      <segment>
+        <source>GOBERT Olivier</source>
+        <target>GOBERT Olivier</target>
+      </segment>
+    </unit>
+    <unit id="8zqDa2B" name="GOMMERY Patrice">
+      <segment>
+        <source>GOMMERY Patrice</source>
+        <target>GOMMERY Patrice</target>
+      </segment>
+    </unit>
+    <unit id="0w3wN2b" name="GROSDOIT-ARTUR Gilles">
+      <segment>
+        <source>GROSDOIT-ARTUR Gilles</source>
+        <target>GROSDOIT-ARTUR Gilles</target>
+      </segment>
+    </unit>
+    <unit id="9f0rv5y" name="HARAOUBIA Mohamed amine">
+      <segment>
+        <source>HARAOUBIA Mohamed amine</source>
+        <target>HARAOUBIA Mohamed amine</target>
+      </segment>
+    </unit>
+    <unit id="1llnqpY" name="HELLE Ines">
+      <segment>
+        <source>HELLE Ines</source>
+        <target>HELLE Ines</target>
+      </segment>
+    </unit>
+    <unit id="fO8n4uW" name="HUEZ Régis">
+      <segment>
+        <source>HUEZ Régis</source>
+        <target>HUEZ Régis</target>
+      </segment>
+    </unit>
+    <unit id="EcUe3v." name="JASMIN Guillaume">
+      <segment>
+        <source>JASMIN Guillaume</source>
+        <target>JASMIN Guillaume</target>
+      </segment>
+    </unit>
+    <unit id="NLzLBr7" name="LALLEMENT Fabien">
+      <segment>
+        <source>LALLEMENT Fabien</source>
+        <target>LALLEMENT Fabien</target>
+      </segment>
+    </unit>
+    <unit id="M7QESzK" name="LANDRÉ Jérôme">
+      <segment>
+        <source>LANDRÉ Jérôme</source>
+        <target>LANDRÉ Jérôme</target>
+      </segment>
+    </unit>
+    <unit id="p.qaH9r" name="LE BRAS Alain">
+      <segment>
+        <source>LE BRAS Alain</source>
+        <target>LE BRAS Alain</target>
+      </segment>
+    </unit>
+    <unit id="YIS5KMa" name="LE BRETON Alexandre">
+      <segment>
+        <source>LE BRETON Alexandre</source>
+        <target>LE BRETON Alexandre</target>
+      </segment>
+    </unit>
+    <unit id="J1FA_tj" name="LE SAULNIER Guillaume">
+      <segment>
+        <source>LE SAULNIER Guillaume</source>
+        <target>LE SAULNIER Guillaume</target>
+      </segment>
+    </unit>
+    <unit id="UaF4nLR" name="LEBRUN Sylvie">
+      <segment>
+        <source>LEBRUN Sylvie</source>
+        <target>LEBRUN Sylvie</target>
+      </segment>
+    </unit>
+    <unit id="Mi8MZoB" name="LESAGE Cyrielle">
+      <segment>
+        <source>LESAGE Cyrielle</source>
+        <target>LESAGE Cyrielle</target>
+      </segment>
+    </unit>
+    <unit id="9ptAAdO" name="LEULLIER Guillaume">
+      <segment>
+        <source>LEULLIER Guillaume</source>
+        <target>LEULLIER Guillaume</target>
+      </segment>
+    </unit>
+    <unit id="7YpuOLM" name="LIBBRECHT Florent">
+      <segment>
+        <source>LIBBRECHT Florent</source>
+        <target>LIBBRECHT Florent</target>
+      </segment>
+    </unit>
+    <unit id="uwyqBO1" name="LIMA Juliette">
+      <segment>
+        <source>LIMA Juliette</source>
+        <target>LIMA Juliette</target>
+      </segment>
+    </unit>
+    <unit id="xZJUxKW" name="LOCURCIO Laurent">
+      <segment>
+        <source>LOCURCIO Laurent</source>
+        <target>LOCURCIO Laurent</target>
+      </segment>
+    </unit>
+    <unit id="FX1nOxd" name="MACHKOURI Brahim">
+      <segment>
+        <source>MACHKOURI Brahim</source>
+        <target>MACHKOURI Brahim</target>
+      </segment>
+    </unit>
+    <unit id="DMN9JWh" name="MARIOT Valerie">
+      <segment>
+        <source>MARIOT Valerie</source>
+        <target>MARIOT Valerie</target>
+      </segment>
+    </unit>
+    <unit id="90OpQq6" name="MATOSIN Marina">
+      <segment>
+        <source>MATOSIN Marina</source>
+        <target>MATOSIN Marina</target>
+      </segment>
+    </unit>
+    <unit id="uv7t8iQ" name="MATRAN Christophe">
+      <segment>
+        <source>MATRAN Christophe</source>
+        <target>MATRAN Christophe</target>
+      </segment>
+    </unit>
+    <unit id="Cph0cpw" name="MEUNIER Marie-Astrid">
+      <segment>
+        <source>MEUNIER Marie-Astrid</source>
+        <target>MEUNIER Marie-Astrid</target>
+      </segment>
+    </unit>
+    <unit id="LL5cZJo" name="MEURVILLE Vianney">
+      <segment>
+        <source>MEURVILLE Vianney</source>
+        <target>MEURVILLE Vianney</target>
+      </segment>
+    </unit>
+    <unit id="d7MMMT6" name="MEUZERET Fabrice">
+      <segment>
+        <source>MEUZERET Fabrice</source>
+        <target>MEUZERET Fabrice</target>
+      </segment>
+    </unit>
+    <unit id="wC2_.br" name="MORDIN Thomas">
+      <segment>
+        <source>MORDIN Thomas</source>
+        <target>MORDIN Thomas</target>
+      </segment>
+    </unit>
+    <unit id="CGJ2e9V" name="ONDERNARD Florent">
+      <segment>
+        <source>ONDERNARD Florent</source>
+        <target>ONDERNARD Florent</target>
+      </segment>
+    </unit>
+    <unit id="C0DAWEr" name="PALLOT Marc">
+      <segment>
+        <source>PALLOT Marc</source>
+        <target>PALLOT Marc</target>
+      </segment>
+    </unit>
+    <unit id="piqaUV1" name="PESCHEUX Benjamin">
+      <segment>
+        <source>PESCHEUX Benjamin</source>
+        <target>PESCHEUX Benjamin</target>
+      </segment>
+    </unit>
+    <unit id="fWmWRyx" name="PETIT Michel">
+      <segment>
+        <source>PETIT Michel</source>
+        <target>PETIT Michel</target>
+      </segment>
+    </unit>
+    <unit id="QDFtXs1" name="PETRIGNET Thomas">
+      <segment>
+        <source>PETRIGNET Thomas</source>
+        <target>PETRIGNET Thomas</target>
+      </segment>
+    </unit>
+    <unit id="nfp7JY8" name="PIAT-MILLOT Sandrine">
+      <segment>
+        <source>PIAT-MILLOT Sandrine</source>
+        <target>PIAT-MILLOT Sandrine</target>
+      </segment>
+    </unit>
+    <unit id="nvK7G3a" name="POMMIER Eric">
+      <segment>
+        <source>POMMIER Eric</source>
+        <target>POMMIER Eric</target>
+      </segment>
+    </unit>
+    <unit id="Aue4h8g" name="PRIEUR-CORONADO Mariana">
+      <segment>
+        <source>PRIEUR-CORONADO Mariana</source>
+        <target>PRIEUR-CORONADO Mariana</target>
+      </segment>
+    </unit>
+    <unit id="FLKuAK4" name="ROUSSEAU Marjorie">
+      <segment>
+        <source>ROUSSEAU Marjorie</source>
+        <target>ROUSSEAU Marjorie</target>
+      </segment>
+    </unit>
+    <unit id="4WGuhR7" name="SAINT LOUIS Marie">
+      <segment>
+        <source>SAINT LOUIS Marie</source>
+        <target>SAINT LOUIS Marie</target>
+      </segment>
+    </unit>
+    <unit id="n9nXup_" name="SEULLIET Tristan">
+      <segment>
+        <source>SEULLIET Tristan</source>
+        <target>SEULLIET Tristan</target>
+      </segment>
+    </unit>
+    <unit id="Tsvpgz." name="SÉVERIN-LIGABUE Julie">
+      <segment>
+        <source>SÉVERIN-LIGABUE Julie</source>
+        <target>SÉVERIN-LIGABUE Julie</target>
+      </segment>
+    </unit>
+    <unit id="_WH7QEA" name="STIOT Ludovic">
+      <segment>
+        <source>STIOT Ludovic</source>
+        <target>STIOT Ludovic</target>
+      </segment>
+    </unit>
+    <unit id="dgQp_To" name="THIROINE Damien">
+      <segment>
+        <source>THIROINE Damien</source>
+        <target>THIROINE Damien</target>
+      </segment>
+    </unit>
+    <unit id="l06zzhB" name="THOMAS Jérôme">
+      <segment>
+        <source>THOMAS Jérôme</source>
+        <target>THOMAS Jérôme</target>
+      </segment>
+    </unit>
+    <unit id="Gh8FHh5" name="VAN DE WINKEL Aurore">
+      <segment>
+        <source>VAN DE WINKEL Aurore</source>
+        <target>VAN DE WINKEL Aurore</target>
+      </segment>
+    </unit>
+    <unit id="2_a3UQD" name="VEBER Maxime">
+      <segment>
+        <source>VEBER Maxime</source>
+        <target>VEBER Maxime</target>
+      </segment>
+    </unit>
+    <unit id="EIZrsAo" name="VENET Delphine">
+      <segment>
+        <source>VENET Delphine</source>
+        <target>VENET Delphine</target>
+      </segment>
+    </unit>
+    <unit id="pI7d1JP" name="VILLAIN Philippe">
+      <segment>
+        <source>VILLAIN Philippe</source>
+        <target>VILLAIN Philippe</target>
+      </segment>
+    </unit>
+    <unit id="hp0GUpB" name="VUILLEMARD Bastien">
+      <segment>
+        <source>VUILLEMARD Bastien</source>
+        <target>VUILLEMARD Bastien</target>
+      </segment>
+    </unit>
+    <unit id="kG5Q1Gd" name="ZILIOLI Simon">
+      <segment>
+        <source>ZILIOLI Simon</source>
+        <target>ZILIOLI Simon</target>
+      </segment>
+    </unit>
+    <unit id="nuO3wDo" name="CM">
+      <segment>
+        <source>CM</source>
+        <target>CM</target>
+      </segment>
+    </unit>
+    <unit id="tqUcKqD" name="TD">
+      <segment>
+        <source>TD</source>
+        <target>TD</target>
+      </segment>
+    </unit>
+    <unit id="I3JnCeQ" name="TP">
+      <segment>
+        <source>TP</source>
+        <target>TP</target>
+      </segment>
+    </unit>
+    <unit id="fTpLsHY" name="help.commentaire_evaluation">
+      <segment>
+        <source>help.commentaire_evaluation</source>
+        <target>help.commentaire_evaluation</target>
       </segment>
     </unit>
   </file>

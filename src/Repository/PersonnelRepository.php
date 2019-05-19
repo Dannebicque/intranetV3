@@ -58,6 +58,8 @@ class PersonnelRepository extends ServiceEntityRepository
             ->andWhere('f.departement = :departement')
             ->setParameter('type', $type)
             ->setParameter('departement', $departement)
+            ->orderBy('p.nom', 'ASC')
+            ->addOrderBy('p.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -76,7 +78,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', 'ASC')
-            ->orderBy('p.prenom', 'ASC')
+            ->addOrderBy('p.prenom', 'ASC')
             ->getQuery()
             ->getResult();
 

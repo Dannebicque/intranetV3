@@ -31,7 +31,7 @@
                             <tbody>
                             {% for matiere in previsionnel if matiere.matiere.ue.semestre.id == semestre.id %}
                                 <tr>
-                                    <td>{{ matiere.matiere.libelle }}</td>
+                                    <td>{{ matiere.matiere.display }}</td>
                                     <td>
                                         <button data-provide="modaler tooltip"
                                                 data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.matiere.id}) }}"
