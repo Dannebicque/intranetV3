@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
  * Class StageController
  * @package App\Controller
@@ -43,6 +44,7 @@ class StageController extends BaseController
         StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository
     ): Response {
+
         //todo: gérer les années universitaire par diplome
         if ($this->getConnectedUser() !== null) {
             return $this->render('appPersonnel/stage/index.html.twig', [
