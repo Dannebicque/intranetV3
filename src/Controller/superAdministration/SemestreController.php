@@ -5,8 +5,11 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -155,5 +158,23 @@ class SemestreController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @param Semestre $semestre
+     * @param bool        $etat
+     * @Route("/activate/{semestre}/{etat}", methods={"GET"}, name="sa_semestre_activate")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @return RedirectResponse
+     */
+    public function activate(Semestre $semestre, bool $etat): RedirectResponse
+    {
+        $semestre->setActif($etat);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.activate.' . $etat . '.flash');
+
+        return $this->redirectToRoute('super_admin_homepage');
+
     }
 }

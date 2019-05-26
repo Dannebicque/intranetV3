@@ -11789,5 +11789,31 @@
         <target>Fiches de suivi pour l'alternance de %etudiant%</target>
       </segment>
     </unit>
+    <unit id="NkTSZ6J" name="actualite.edit.success.flash">
+      <segment>
+        <source>actualite.edit.success.flash</source>
+        <target>actualite.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="slRDKDI" name="menu&#10;                        .documentation">
+      <segment>
+        <source>menu
+                        .documentation</source>
+        <target>menu
+                        .documentation</target>
+      </segment>
+    </unit>
+    <unit id="jaLV0d4" name="menu.rgpd">
+      <segment>
+        <source>menu.rgpd</source>
+        <target>menu.rgpd</target>
+      </segment>
+    </unit>
+    <unit id="nuQFilM" name="atitle.desactiver">
+      <segment>
+        <source>atitle.desactiver</source>
+        <target>atitle.desactiver</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
