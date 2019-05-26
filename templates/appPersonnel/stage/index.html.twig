@@ -1,3 +1,4 @@
+
 <div class="card">
     <h4 class="card-title">{{ 'application.vos.stages.et.alternances.heading'|trans }}</h4>
 
@@ -98,7 +99,10 @@
                             {% else %}
                                 <td>-</td>
                                 <td>-</td>{% endif %}
-                            <td></td>
+                            <td>
+                                <a href="{{ path('application_personnel_alternance_fiche_suivi_alternance',{'alternance': alternance.id})
+                                }}" class="btn btn-info">Suivi</a>
+                            </td>
                         </tr>
                     {% else %}
                         <tr>
@@ -203,3 +207,4 @@
         </div>
     </div>
 </div>
+

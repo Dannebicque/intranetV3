@@ -1,0 +1,65 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+ {% block style %}
+     .cadre {
+     border: 1px solid black;
+     padding: 10px;
+     margin-bottom: 15px;
+     }
+
+     .center {
+     text-align:center;
+     }
+ {% endblock %}
+
+{% block content %}
+    <table style="width: 100%; border:0;">
+        <tr>
+            <td style="text-align: center; width:20%"><img src="{{ linuxpath~'img/logo/'~user_data.departement.logoName }}" alt="logo"height="70px"/></td>
+            <td style="text-align: center; width:60%">&nbsp;</td>
+            <td style="text-align: center; width:20%"><img
+                        src="{{ linuxpath~'img/logo/urcapetit.jpg' }}"
+                        alt="logo"
+                        height="70px"/></td>
+        </tr>
+    </table>
+
+    <h1 class="cadre center">
+        VISITE ENTREPRISE - Formation {{ alternance_fiche_suivi.alternance.etudiant.semestre.annee.diplome.display }}<br/>
+        Année universitaire {{ user_data.anneeUniversitaire }}
+    </h1>
+
+    <p><strong>Nom de l'étudiant :</strong> {{ alternance_fiche_suivi.alternance.etudiant.displayPr }}</p>
+    <p><strong>Entreprise :</strong> {{ alternance_fiche_suivi.alternance.entreprise.libelle }}</p>
+    <p><strong>Tuteur universitaire :</strong> {{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
+
+    <div class="cadre">
+        <p><strong>Date de la visite :</strong> {{ alternance_fiche_suivi.date|date('d/m/Y') }}. {{
+            alternance_fiche_suivi.methodeLong }}</p>
+    </div>
+
+    <div class="cadre">
+        <p><strong>Personne rencontrée / contactée :</strong> {{ alternance_fiche_suivi.alternance.tuteur ? alternance_fiche_suivi.alternance.tuteur.display }}</p>
+    </div>
+    <div class="cadre">
+        <p><strong>Thème du stage :</strong> {{ alternance_fiche_suivi.missions }}</p>
+    </div>
+    <div class="cadre">
+        <p><strong>Commentaires :</strong> {{ alternance_fiche_suivi.commentaire }}</p>
+    </div>
+    <div class="cadre">
+        <p><strong>Evaluation de l'atlernance :</strong></p>
+        <ul>
+            <li>Intégration dans l'entreprise : {{ alternance_fiche_suivi.integrationLong }}</li>
+            <li>Prise d'initiative : {{ alternance_fiche_suivi.initiativeLong }}</li>
+            <li>Capacité d'adaptation : {{ alternance_fiche_suivi.adaptationLong }}</li>
+            <li>Niveau de performances : {{ alternance_fiche_suivi.performanceLong }}</li>
+            <li>Respect des délais : {{ alternance_fiche_suivi.delaisLong }}</li>
+            <li>Comportement de manière globale : {{ alternance_fiche_suivi.comportementLong }}</li>
+        </ul>
+
+    </div>
+    <p>Signature du tuteur :</p>
+    <p>{{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
+
+{% endblock %}

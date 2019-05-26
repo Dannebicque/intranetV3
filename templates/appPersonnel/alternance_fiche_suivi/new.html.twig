@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.personnel.alternance_fiche_suivi.new.heading'|trans }}
+{% endblock %}
+
+{%block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+                <a href="{{ path('application_personnel_alternance_fiche_suivi_alternance',{alternance:alternance.id})
+                }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom">
+                    <i class="ti-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.personnel.alternance_fiche_suivi.new.heading'|trans }}</h4>
+        <div class="card-body">
+            <p>Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans l'entreprise <strong>{{ alternance
+                    .entreprise.libelle }}</strong>.</p>{# todo: plus d'infos ?#}
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

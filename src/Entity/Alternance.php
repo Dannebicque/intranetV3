@@ -16,6 +16,8 @@
 namespace App\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -83,9 +85,15 @@ class Alternance extends BaseEntity
      */
     private $dateFin;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AlternanceFicheSuivi", mappedBy="alternance")
+     */
+    private $alternanceFicheSuivis;
+
     public function __construct()
     {
         $this->typeContrat = self::ALTERNANCE_PROFESSIONALISATION;
+        $this->alternanceFicheSuivis = new ArrayCollection();
     }
 
     public function getEntreprise(): ?Entreprise
@@ -204,6 +212,37 @@ class Alternance extends BaseEntity
     public function setDateFin(DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AlternanceFicheSuivi[]
+     */
+    public function getAlternanceFicheSuivis(): Collection
+    {
+        return $this->alternanceFicheSuivis;
+    }
+
+    public function addAlternanceFicheSuivi(AlternanceFicheSuivi $alternanceFicheSuivi): self
+    {
+        if (!$this->alternanceFicheSuivis->contains($alternanceFicheSuivi)) {
+            $this->alternanceFicheSuivis[] = $alternanceFicheSuivi;
+            $alternanceFicheSuivi->setAlternance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlternanceFicheSuivi(AlternanceFicheSuivi $alternanceFicheSuivi): self
+    {
+        if ($this->alternanceFicheSuivis->contains($alternanceFicheSuivi)) {
+            $this->alternanceFicheSuivis->removeElement($alternanceFicheSuivi);
+            // set the owning side to null (unless already changed)
+            if ($alternanceFicheSuivi->getAlternance() === $this) {
+                $alternanceFicheSuivi->setAlternance(null);
+            }
+        }
 
         return $this;
     }

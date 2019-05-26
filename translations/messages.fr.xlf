@@ -11639,5 +11639,155 @@
         <target>atitle.profil</target>
       </segment>
     </unit>
+    <unit id="resGnKf" name="app.personnel.alternance.fiche-suivi.index.heading">
+      <segment>
+        <source>app.personnel.alternance.fiche-suivi.index.heading</source>
+        <target>app.personnel.alternance.fiche-suivi.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="8kcbThr" name="retour_applications">
+      <segment>
+        <source>retour_applications</source>
+        <target>retour_applications</target>
+      </segment>
+    </unit>
+    <unit id="fK_x0uq" name="app.alternance_fiche_suivi.new.heading">
+      <segment>
+        <source>app.alternance_fiche_suivi.new.heading</source>
+        <target>app.alternance_fiche_suivi.new.heading</target>
+      </segment>
+    </unit>
+    <unit id="1OkLG6D" name="Date de l\entretien">
+      <segment>
+        <source>Date de l\entretien</source>
+        <target>Date de l\entretien</target>
+      </segment>
+    </unit>
+    <unit id="TRM.cu4" name="Méthode de l\entretien">
+      <segment>
+        <source>Méthode de l\entretien</source>
+        <target>Méthode de l\entretien</target>
+      </segment>
+    </unit>
+    <unit id="zExCS1c" name="Téléphone">
+      <segment>
+        <source>Téléphone</source>
+        <target>Téléphone</target>
+      </segment>
+    </unit>
+    <unit id="YhooEiF" name="Visite">
+      <segment>
+        <source>Visite</source>
+        <target>Visite</target>
+      </segment>
+    </unit>
+    <unit id="k._4zpj" name="Missions">
+      <segment>
+        <source>Missions</source>
+        <target>Missions</target>
+      </segment>
+    </unit>
+    <unit id="xhcrqXM" name="Intégration dans l'entreprise">
+      <segment>
+        <source>Intégration dans l'entreprise</source>
+        <target>Intégration dans l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="9y1Sh_M" name="Faible">
+      <segment>
+        <source>Faible</source>
+        <target>Faible</target>
+      </segment>
+    </unit>
+    <unit id="twAzf8R" name="Bonne">
+      <segment>
+        <source>Bonne</source>
+        <target>Bonne</target>
+      </segment>
+    </unit>
+    <unit id="RAw8G45" name="Très Bonne">
+      <segment>
+        <source>Très Bonne</source>
+        <target>Très Bonne</target>
+      </segment>
+    </unit>
+    <unit id="KMZ5EC4" name="Excellente">
+      <segment>
+        <source>Excellente</source>
+        <target>Excellente</target>
+      </segment>
+    </unit>
+    <unit id="6h.anhJ" name="Prise d'initiative">
+      <segment>
+        <source>Prise d'initiative</source>
+        <target>Prise d'initiative</target>
+      </segment>
+    </unit>
+    <unit id="p.xVzGF" name="Capacité d'adaptation">
+      <segment>
+        <source>Capacité d'adaptation</source>
+        <target>Capacité d'adaptation</target>
+      </segment>
+    </unit>
+    <unit id=".cyl0S2" name="Niveau de performances">
+      <segment>
+        <source>Niveau de performances</source>
+        <target>Niveau de performances</target>
+      </segment>
+    </unit>
+    <unit id="PDqd5NM" name="Respect des délais">
+      <segment>
+        <source>Respect des délais</source>
+        <target>Respect des délais</target>
+      </segment>
+    </unit>
+    <unit id="ABO7Qid" name="Comportement de manière globale">
+      <segment>
+        <source>Comportement de manière globale</source>
+        <target>Comportement de manière globale</target>
+      </segment>
+    </unit>
+    <unit id=".9hmDc8" name="Commentaire libre">
+      <segment>
+        <source>Commentaire libre</source>
+        <target>Commentaire libre</target>
+      </segment>
+    </unit>
+    <unit id="QTqA884" name="Date de l'entretien">
+      <segment>
+        <source>Date de l'entretien</source>
+        <target>Date de l'entretien</target>
+      </segment>
+    </unit>
+    <unit id="QRF3fOL" name="Méthode de l'entretien">
+      <segment>
+        <source>Méthode de l'entretien</source>
+        <target>Méthode de l'entretien</target>
+      </segment>
+    </unit>
+    <unit id="H.3Xz4I" name="app.alternance_fiche_suivi.show.heading">
+      <segment>
+        <source>app.alternance_fiche_suivi.show.heading</source>
+        <target>Détail de la fiche de suivi d'alternance de %etudiant%</target>
+      </segment>
+    </unit>
+    <unit id="sA7LLn_" name="atitle.print">
+      <segment>
+        <source>atitle.print</source>
+        <target>Imprimer</target>
+      </segment>
+    </unit>
+    <unit id="ErKwfty" name="app.personnel.alternance_fiche_suivi.edit.heading">
+      <segment>
+        <source>app.personnel.alternance_fiche_suivi.edit.heading</source>
+        <target>app.personnel.alternance_fiche_suivi.edit.heading</target>
+      </segment>
+    </unit>
+    <unit id="PxPBPq3" name="app.personnel.alternance_fiche_suivi.index.heading">
+      <segment>
+        <source>app.personnel.alternance_fiche_suivi.index.heading</source>
+        <target>Fiches de suivi pour l'alternance de %etudiant%</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

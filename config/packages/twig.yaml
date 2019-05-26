@@ -9,5 +9,6 @@ twig:
         iconShow: 'fa fa-info'
         iconEdit: 'fa fa-edit'
         iconDelete: 'fa fa-trash'
+        iconPrint: 'fa fa-print'
         iconDuplicate: 'fa fa-copy'
         linuxpath: 'http://newintranet:8888/public'

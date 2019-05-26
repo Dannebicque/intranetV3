@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AlternanceFicheSuivi{% endblock %}
+
+{% block body %}
+    <h1>AlternanceFicheSuivi</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ alternance_fiche_suivi.id }}</td>
+            </tr>
+            <tr>
+                <th>Methode</th>
+                <td>{{ alternance_fiche_suivi.methode }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td>{{ alternance_fiche_suivi.commentaire }}</td>
+            </tr>
+            <tr>
+                <th>Missions</th>
+                <td>{{ alternance_fiche_suivi.missions }}</td>
+            </tr>
+            <tr>
+                <th>Integration</th>
+                <td>{{ alternance_fiche_suivi.integration }}</td>
+            </tr>
+            <tr>
+                <th>Initiative</th>
+                <td>{{ alternance_fiche_suivi.initiative }}</td>
+            </tr>
+            <tr>
+                <th>Adaptation</th>
+                <td>{{ alternance_fiche_suivi.adaptation }}</td>
+            </tr>
+            <tr>
+                <th>Performance</th>
+                <td>{{ alternance_fiche_suivi.performance }}</td>
+            </tr>
+            <tr>
+                <th>Delais</th>
+                <td>{{ alternance_fiche_suivi.delais }}</td>
+            </tr>
+            <tr>
+                <th>Comportement</th>
+                <td>{{ alternance_fiche_suivi.comportement }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('alternance_fiche_suivi_index') }}">back to list</a>
+
+    <a href="{{ path('alternance_fiche_suivi_edit', {'id': alternance_fiche_suivi.id}) }}">edit</a>
+
+    {{ include('alternance_fiche_suivi/_delete_form.html.twig') }}
+{% endblock %}
