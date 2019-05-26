@@ -16,11 +16,14 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -155,5 +158,23 @@ class DiplomeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @param Diplome $annee
+     * @param bool        $etat
+     * @Route("/activate/{diplome}/{etat}", methods={"GET"}, name="sa_diplome_activate")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @return RedirectResponse
+     */
+    public function activate(Diplome $diplome, bool $etat): RedirectResponse
+    {
+        $diplome->setActif($etat);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.' . $etat . '.flash');
+
+        return $this->redirectToRoute('super_admin_homepage');
+
     }
 }

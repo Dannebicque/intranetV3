@@ -67,11 +67,4 @@ class DepartementController extends BaseController
             'form'      => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="administration_structure_departement_delete", methods="DELETE")
-     */
-    public function delete(): void
-    {
-    }
 }

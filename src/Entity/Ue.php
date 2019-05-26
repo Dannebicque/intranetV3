@@ -62,6 +62,11 @@ class Ue extends BaseEntity
     private $scolaritePromoUes;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif = true;
+
+    /**
      * Ue constructor.
      *
      * @param Semestre $semestre
@@ -269,6 +274,18 @@ class Ue extends BaseEntity
                 $scolaritePromoUe->setUe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
 
         return $this;
     }

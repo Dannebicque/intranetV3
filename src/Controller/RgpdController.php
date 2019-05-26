@@ -18,7 +18,6 @@ class RgpdController extends BaseController
     public function index(): Response
     {
         return $this->render('rgpd/index.html.twig', [
-            'controller_name' => 'RgpdController',
         ]);
     }
 }

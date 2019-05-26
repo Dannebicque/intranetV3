@@ -20,6 +20,8 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -164,5 +166,23 @@ class UeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @param Ue $ue
+     * @param bool        $etat
+     * @Route("/activate/{ue}/{etat}", methods={"GET"}, name="sa_ue_activate")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @return RedirectResponse
+     */
+    public function activate(Ue $ue, bool $etat): RedirectResponse
+    {
+        $ue->setActif($etat);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.activate.' . $etat . '.flash');
+
+        return $this->redirectToRoute('super_admin_homepage');
+
     }
 }

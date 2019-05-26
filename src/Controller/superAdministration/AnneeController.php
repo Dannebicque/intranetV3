@@ -20,6 +20,7 @@ use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -172,5 +173,23 @@ class AnneeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @param Annee $annee
+     * @param bool        $etat
+     * @Route("/activate/{annee}/{etat}", methods={"GET"}, name="sa_annee_activate")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @return RedirectResponse
+     */
+    public function activate(Annee $annee, bool $etat): RedirectResponse
+    {
+        $annee->setActif($etat);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee.activate.' . $etat . '.flash');
+
+        return $this->redirectToRoute('super_admin_homepage');
+
     }
 }
