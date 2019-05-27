@@ -80,4 +80,18 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
             ;
     }
+
+    public function findJustificatifByAbsence(\App\Entity\Absence $absence)
+    {
+        //regarde si un justificatif valide existe pour l'absence
+        //todo: a tester.
+        $query = $this->createQueryBuilder('j')
+            ->where('j.dateDebut <= :date')
+            ->andWhere('j.dateFin >= :date')
+            ->setParameter('date', $absence->getDate())
+            ->getQuery()
+            ->getResult();
+
+        return count($query) >= 1;
+    }
 }

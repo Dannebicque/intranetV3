@@ -64,6 +64,19 @@ class StageController extends BaseController
     }
 
     /**
+     * @Route("/details/{id}", name="application_etudiant_stage_detail", methods={"GET"}, requirements={"id"="\d+"})
+     * @param StageEtudiant $stageEtudiant
+     *
+     * @return Response
+     */
+    public function detailsStage(StageEtudiant $stageEtudiant): Response
+    {
+        return $this->render('appEtudiant/stage/details.html.twig', [
+            'stageEtudiant' => $stageEtudiant
+        ]);
+    }
+
+    /**
      * @Route("/formulaire/{stageEtudiant}", name="application_etudiant_stage_formulaire", methods="GET|POST")
      * @ParamConverter("stageEtudiant", options={"mapping": {"stageEtudiant": "uuid"}})
      *
@@ -112,7 +125,7 @@ class StageController extends BaseController
     }
 
     /**
-     * @Route("/stage/periode/info/{id}", name="application_etudiant_stage_periode_info")
+     * @Route("/periode/info/{id}", name="application_etudiant_stage_periode_info")
      * @param StageEtudiant $stageEtudiant
      *
      * @return Response
@@ -126,7 +139,7 @@ class StageController extends BaseController
     }
 
     /**
-     * @Route("/stage/entreprise/info/{id}", name="application_etudiant_stage_entreprise_info")
+     * @Route("/entreprise/info/{id}", name="application_etudiant_stage_entreprise_info")
      * @param StageEtudiant $stageEtudiant
      *
      * @return Response

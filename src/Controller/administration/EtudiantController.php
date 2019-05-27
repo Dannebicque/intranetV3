@@ -88,7 +88,8 @@ class EtudiantController extends BaseController
             [
                 'attr'      => [
                     'data-provide' => 'validation'
-                ]
+                ],
+                'departement' => $this->dataUserSession->getDepartement()
             ]
         );
 
@@ -99,7 +100,7 @@ class EtudiantController extends BaseController
             $this->entityManager->flush();
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.add.success.flash');
-            //todo: redirection
+            $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestre()->getId()]);
         }
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
@@ -125,7 +126,8 @@ class EtudiantController extends BaseController
             [
                 'attr'      => [
                     'data-provide' => 'validation'
-                ]
+                ],
+                'departement' => $this->dataUserSession->getDepartement()
             ]
         );
 

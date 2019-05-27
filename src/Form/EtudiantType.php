@@ -20,6 +20,7 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Form\Type\CiviliteType;
 use App\Form\Type\YesNoType;
+use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -36,12 +37,18 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class EtudiantType extends AbstractType
 {
+    private $departement;
+
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->departement = $options['departement'];
+
+
         $builder
             ->add('civilite', CiviliteType::class, [
                 'label'                     => 'label.civilite'
@@ -63,7 +70,14 @@ class EtudiantType extends AbstractType
             ->add('numEtudiant', TextType::class, ['label' => 'label.num_etudiant'])
             ->add('numIne', TextType::class, ['label' => 'label.num_ine', 'required' => false])
             ->add('bac', EntityType::class, ['label' => 'label.bac', 'class' => Bac::class, 'choice_label' => 'libelle', 'required' => false])
-            ->add('semestre', EntityType::class, ['label' => 'label.semestre', 'class' => Semestre::class, 'choice_label' => 'libelle']) //todo: en finction de la departement
+            ->add('semestre', EntityType::class, [
+                'label'         => 'label.semestre',
+                'class'         => Semestre::class,
+                'query_builder' => function(SemestreRepository $semestreRepository) {
+                    return $semestreRepository->findByDepartementBuilder($this->departement);
+                },
+                'choice_label'  => 'libelle'
+            ])
             ->add('anneeBac', TextType::class, ['label' => 'label.annee_bac'])
             ->add('username', TextType::class, ['label' => 'label.username'])
             ->add('demandeurEmploi', YesNoType::class, ['label' => 'label.demandeurEmploi'])
@@ -82,7 +96,8 @@ class EtudiantType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => Etudiant::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
+            'departement'        => null,
         ]);
     }
 }

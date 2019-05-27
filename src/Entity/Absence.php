@@ -113,6 +113,11 @@ class Absence extends BaseEntity
     private $etudiant;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateJustifie;
+
+    /**
      * Absence constructor.
      * @throws Exception
      */
@@ -251,6 +256,18 @@ class Absence extends BaseEntity
     public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;
+
+        return $this;
+    }
+
+    public function getDateJustifie(): ?\DateTimeInterface
+    {
+        return $this->dateJustifie;
+    }
+
+    public function setDateJustifie(\DateTimeInterface $dateJustifie): self
+    {
+        $this->dateJustifie = $dateJustifie;
 
         return $this;
     }

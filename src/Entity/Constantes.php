@@ -14,7 +14,6 @@ namespace App\Entity;
  */
 class Constantes
 {
-    //todo: vérifier avec base.html et administration/index.html
     public const ROLE_CDD = 'ROLE_CDD';
     public const ROLE_DDE = 'ROLE_DDE';
     public const ROLE_ASS = 'ROLE_ASS';

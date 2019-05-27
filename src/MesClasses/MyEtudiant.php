@@ -198,6 +198,8 @@ class MyEtudiant
         //On déclenche les events
         $event = new GenericEvent($absence);
         $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED);
+        $this->eventDispatcher->dispatch($event,
+            Events::VERIFICATION_JUSTIFICATIF); //on vérifie s'il faut la valider ou pas
         $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED_RESPONSABLE);
         $this->eventDispatcher->dispatch($event, Events::ABSENCE_ADDED);
     }

@@ -52,115 +52,58 @@
                             {% if groupe.etudiants|length >0 %}
                                 {% for etudiant in groupe.etudiants %}
                                     <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
-                                        <div class="text-{{ semestre.annee.couleurTexte }} card-body bg-{{ semestre.annee.couleur
-                                        }}
+                                    <div class="text-{{ semestre.annee.couleurTexte }} card-body bg-{{ semestre.annee.couleur }}
                                         py-20"
-                                             style="min-height: 230px">
-                                            <div class="flexbox">
-                                                <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
-                                                    <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
-                                                        ('upload/etudiants/'~etudiant.photoName) }}" alt="photo de {{
-                                                    etudiant.displayPr }}">
-                                                </a>
-                                                <div class="flex-grow pl-20">
-                                                    <h4><a class="text-white" data-provide="tooltip"
-                                                           target="_blank"
-                                                           data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
-                                                            {{ etudiant.displayPr }}
-                                                        </a></h4>
-                                                    <div><i class="fa fa-fw fa-map-marker w-20px"></i>
-                                {% for groupe in etudiant.groupes %}{{ groupe.libelle }} {% endfor %}
-                                                    </div>
+                                         style="min-height: 230px">
+                                        <div class="flexbox">
+                                            <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                                <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
+                                                    ('upload/etudiants/'~etudiant.photoName) }}" alt="photo de {{ etudiant.displayPr }}">
+                                            </a>
+                                            <div class="flex-grow pl-20">
+                                                <h4><a class="text-white" data-provide="tooltip"
+                                                       target="_blank"
+                                                       data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                                        {{ etudiant.displayPr }}
+                                                    </a></h4>
+                                                <div><i class="fa fa-fw fa-map-marker w-20px"></i>
+                                                    {% for groupe in etudiant.groupes %}{{ groupe.libelle }} {% endfor %}
+                                                </div>
+                                                <div>
+                                                    <i class="fa fa-fw fa-globe w-20px"></i>
+                                                    <a href="{{ etudiant.siteUniv }}"
+                                                       {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
+                                                       class="text-white"
+                                                       target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                                       data-placement="bottom">{{ etudiant.siteUniv|slice(0,20) }}</a>
+                                                </div>
+                                                <div>
+                                                    <i class="fa fa-fw fa-envelope w-20px"></i>
+                                                    <a href="mailto:{{ etudiant.mailUniv }}" target="_blank" #}
+                                                       class="text-white"
+                                                       title="Contacter" data-provide="tooltip"
+                                                       data-placement="bottom">Contacter
+                                                    </a>
+                                                </div>
+                                                {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
                                                     <div>
-                                                        <i class="fa fa-fw fa-globe w-20px"></i>
-                                                        <a href="{{ etudiant.siteUniv }}"
-                                                           {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
+                                                        <i class="fa fa-fw fa-link"></i>
+                                                        <a href="{{ etudiant.sitePerso }}"
                                                            class="text-white"
-                                                           target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                                           data-placement="bottom">{{ etudiant.siteUniv|slice(0,20) }}</div>
-                                                    {#                                                    <div><i class="fa fa-fw fa-envelope w-20px"></i> info@thetheme.io#}
-                                                    {#                                                    </div>#}
-                                                    <div>
-                                                        <i class="fa fa-fw fa-envelope w-20px"></i>
-                                                        <a href="mailto:{{ etudiant.mailUniv }}" target="_blank" #}
-                                                           class="text-white"
-                                                           title="Contacter" data-provide="tooltip"
-                                                           data-placement="bottom">Contacter
+                                                           target="_blank" title="Site personnel" data-provide="tooltip"
+                                                           data-placement="bottom">{{ etudiant.sitePerso|slice(0,20) }}
                                                         </a>
                                                     </div>
-                                                    {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
-                                                        <div>
-                                                            <i class="fa fa-fw fa-link"></i>
-                                                            <a href="{{ etudiant.sitePerso }}"
-                                                               class="text-white"
-                                                               target="_blank" title="Site personnel" data-provide="tooltip"
-                                                               data-placement="bottom">{{ etudiant.sitePerso|slice(0,20) }}
-                                                            </a>
-
-                                                        </div>
-                                                    {% endif %}
-                                                    <label class="toggler toggler-danger fs-16">
-                                                        <input type="checkbox" checked class="addfavori"
-                                                               value="{{ etudiant.slug }}">
-                                                        <i class="fa fa-heart"></i>
-                                                    </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>{#todo: a finaliser#}
-
-                                                        {#                                    <div class="col-sm-6 col-md-3 col-lg-3">#}
-                                    {#                                        <div class="card card-trombi">#}
-                                    {#                                            <div class="flexbox align-items-center px-20">#}
-                                    {#                                                <label class="toggler toggler-danger fs-16">#}
-                                    {#                                                    <input type="checkbox" checked class="addfavori"#}
-                                    {#                                                           value="{{ etudiant.slug }}">#}
-                                    {#                                                    <i class="fa fa-heart"></i>#}
-                                    {#                                                </label>#}
-                                    {#                                                <nav class="nav mt-2">#}
-                                    {#                                                    <a href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}"#}
-                                    {#                                                       class="nav-link"#}
-                                    {#                                                       data-provide="tooltip"#}
-                                    {#                                                       target="_blank"#}
-                                    {#                                                       data-placement="bottom" title="Profil"><i#}
-                                    {#                                                                class="fa fa-user"></i> </a>#}
-                                    {#                                                    <a href="{{ etudiant.sitePerso }}"#}
-                                    {#                                                       {% if etudiant.sitePerso == '' or etudiant.sitePerso == null %}disabled{% endif %}#}
-                                    {#                                                       class="nav-link"#}
-                                    {#                                                       target="_blank" title="Site personnel" data-provide="tooltip"#}
-                                    {#                                                       data-placement="bottom"><i class="fa fa-picture-o"></i> </a>#}
-                                    {#                                                    <a href="{{ etudiant.siteUniv }}"#}
-                                    {#                                                       {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}#}
-                                    {#                                                       class="nav-link"#}
-                                    {#                                                       target="_blank" title="Site Universitaire" data-provide="tooltip"#}
-                                    {#                                                       data-placement="bottom"><i class="ti-world"></i> </a>#}
-                                    {#                                                    <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"#}
-                                    {#                                                       class="nav-link"#}
-                                    {#                                                       title="Contacter" data-provide="tooltip"#}
-                                    {#                                                       data-placement="bottom"><i class="ti-email"></i></a>#}
-                                    {#                                                </nav>#}
-
-                                    {#                                                #}{#<div class="dropdown">#}
-                                    {#                                                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90 text-muted"></i></a>#}
-                                    {#                                                    <div class="dropdown-menu dropdown-menu-right">#}
-
-                                    {#                                                #}{# </div>#}
-                                    {#                                             </div>#}
-                                    {#                                            </div>#}
-                                    {#                                            <div class="card-body text-center pt-1 pb-50">#}
-                                    {#                                                <a href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}">#}
-                                    {#                                                    <img class="avatar avatar-xxl"#}
-                                    {#                                                         alt="avatar de {{ etudiant.display }}"#}
-                                    {#                                                         src="{{ asset('upload/etudiants/'~etudiant.photoName) }}">#}
-                                    {#                                                </a>#}
-                                    {#                                                <h5 class="mt-3 mb-1">#}
-                                    {#                                                    <a class="hover-primary"#}
-                                    {#                                                       href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}">{{ etudiant.displayPr }}#}
-                                    {#                                                    </a>#}
-                                    {#                                                </h5>#}
-                                    {#                                            </div>#}
-                                    {#                                        </div>#}
-                                    {#                                    </div>#}
+                                                {% endif %}
+                                                <label class="toggler toggler-danger fs-16">
+                                                    <input type="checkbox" checked class="addfavori"
+                                                           value="{{ etudiant.slug }}">
+                                                    <i class="fa fa-heart"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>{#todo: a finaliser#}
                                 {% endfor %}
                             {% else %}
                                 <div class="col-sm-12">

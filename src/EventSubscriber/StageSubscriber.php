@@ -97,10 +97,9 @@ class StageSubscriber implements EventSubscriberInterface
             $notif->setTypeUser(Notification::ETUDIANT);
             $notif->setType($codeEvent);
             $notif->setUrl($this->router->generate(
-                'user_mon_profil',
-                ['onglet' => 'absence']
+                'application_etudiant_stage_detail',
+                ['id' => $stageEtudiant->getId()]
             ));
-            //todo: lien vers detail du stage
             $this->entityManager->persist($notif);
             $this->entityManager->flush();
         }
@@ -127,10 +126,9 @@ class StageSubscriber implements EventSubscriberInterface
                 $notif->setTypeUser(Notification::PERSONNEL);
                 $notif->setType(Events::CHGT_ETAT_STAGE_DEPOSE);
                 $notif->setUrl($this->router->generate(
-                    'user_mon_profil',
-                    ['onglet' => 'absence']
+                    'application_etudiant_stage_detail',
+                    ['id' => $stageEtudiant->getId()]
                 ));
-                //todo: lien vers detail du stage
                 $this->entityManager->persist($notif);
             }
             $this->entityManager->flush();
@@ -182,8 +180,6 @@ class StageSubscriber implements EventSubscriberInterface
             $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $mailTemplate->getSubject());
         } else {
             //mail par défaut
-            //todo: traiter le sujet avec la traduction ?
-
             $this->myMailer->setTemplate('mails/stage_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant]);
             $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $codeEvent);
@@ -207,7 +203,6 @@ class StageSubscriber implements EventSubscriberInterface
                 );
             } else {
                 //sinon mail par défaut
-                //todo: traiter le sujet avec la traduction ?
                 $this->myMailer->setTemplate('mails/stage_assistant_' . $codeEvent . '.txt.twig',
                     ['stageEtudiant' => $stageEtudiant]);
                 $this->myMailer->sendMessage($stageEtudiant->getStagePeriode()->getMailAssistant(),
@@ -250,7 +245,6 @@ class StageSubscriber implements EventSubscriberInterface
      */
     public function onMailChgtEtatStageDepose(GenericEvent $event): void
     {
-        //todo: ajouter un mail au RP de stage
         $this->sendMail($event, Events::MAIL_CHGT_ETAT_STAGE_DEPOSE);
     }
 

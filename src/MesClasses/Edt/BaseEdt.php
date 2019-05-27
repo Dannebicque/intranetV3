@@ -14,9 +14,8 @@ namespace App\MesClasses\Edt;
 
 
 use App\Entity\Calendrier;
-use App\Entity\Etudiant;
-use App\Entity\Personnel;
 use App\Repository\CalendrierRepository;
+use Exception;
 
 Abstract class BaseEdt
 {
@@ -121,7 +120,7 @@ Abstract class BaseEdt
                 $this->semaineFormationLundi = $this->calendrier->getDatelundi();
                 $this->semaine = $this->calendrier->getSemaineReelle();
             } else {
-                //todo: lever une exception 500
+                throw new Exception('Erreur de semaine');
             }
         }
 
