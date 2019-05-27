@@ -45,12 +45,14 @@
                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         {% if departement.actif == true %}
-                            <a href="{{ path(baseurl ~ '_departement_activate', {'departement': departement.id, etat:false}) }}"
+                            <a href="{{ path(baseurl ~ '_departement_activate', {'departement': departement.id,
+                                etat:0}) }}"
                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                         {% else %}
-                            <a href="{{ path(baseurl ~ '_departement_activate', {'departement': departement.id, etat:true}) }}"
+                            <a href="{{ path(baseurl ~ '_departement_activate', {'departement': departement.id,
+                                etat:1}) }}"
                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
@@ -79,12 +81,12 @@
                                                                                     title="{{ 'atitle.modifier'|trans }}"></i></a>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if diplome.actif == true %}
-                                <a href="{{ path(baseurl ~ '_diplome_activate', {'diplome': diplome.id, etat:false}) }}"
+                                <a href="{{ path(baseurl ~ '_diplome_activate', {'diplome': diplome.id, etat:0}) }}"
                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                    data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                             {% else %}
-                                <a href="{{ path(baseurl ~ '_diplome_activate', {'diplome': diplome.id, etat:true}) }}"
+                                <a href="{{ path(baseurl ~ '_diplome_activate', {'diplome': diplome.id, etat:1}) }}"
                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                    data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
@@ -118,12 +120,12 @@
                                                                                         title="{{ 'atitle.modifier'|trans }}"></i></a>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 {% if annee.actif == true %}
-                                    <a href="{{ path(baseurl ~ '_annee_activate', {'annee': annee.id, etat:false}) }}"
+                                    <a href="{{ path(baseurl ~ '_annee_activate', {'annee': annee.id, etat:0}) }}"
                                        class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                 {% else %}
-                                    <a href="{{ path(baseurl ~ '_annee_activate', {'annee': annee.id, etat:true}) }}"
+                                    <a href="{{ path(baseurl ~ '_annee_activate', {'annee': annee.id, etat:1}) }}"
                                        class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
@@ -161,12 +163,14 @@
 
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                     {% if semestre.actif == true %}
-                                        <a href="{{ path(baseurl ~ '_semestre_activate', {'semestre': semestre.id, etat:false}) }}"
+                                        <a href="{{ path(baseurl ~ '_semestre_activate', {'semestre': semestre.id,
+                                            etat:0}) }}"
                                            class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                            data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                     {% else %}
-                                        <a href="{{ path(baseurl ~ '_semestre_activate', {'semestre': semestre.id, etat:true}) }}"
+                                        <a href="{{ path(baseurl ~ '_semestre_activate', {'semestre': semestre.id,
+                                            etat:1}) }}"
                                            class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                            data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
@@ -204,12 +208,12 @@
                                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                                         {% if semestre.actif == true %}
-                                            <a href="{{ path(baseurl ~ '_ue_activate', {'ue': ue.id, etat:false}) }}"
+                                            <a href="{{ path(baseurl ~ '_ue_activate', {'ue': ue.id, etat:0}) }}"
                                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                         {% else %}
-                                            <a href="{{ path(baseurl ~ '_ue_activate', {'ue': ue.id, etat:true}) }}"
+                                            <a href="{{ path(baseurl ~ '_ue_activate', {'ue': ue.id, etat:1}) }}"
                                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
