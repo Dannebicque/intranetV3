@@ -63,7 +63,7 @@ class DepartementController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="sa_formation_show", methods="GET")
+     * @Route("/{id}", name="sa_departement_show", methods="GET")
      * @param Departement $departement
      *
      * @return Response
@@ -74,7 +74,7 @@ class DepartementController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="sa_formation_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="sa_departement_edit", methods="GET|POST")
      * @param Request     $request
      * @param Departement $departement
      *
@@ -103,7 +103,7 @@ class DepartementController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="sa_formation_delete", methods="DELETE")
+     * @Route("/{id}", name="sa_departement_delete", methods="DELETE")
      */
     public function delete(): void
     {
