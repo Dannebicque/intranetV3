@@ -142,4 +142,18 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAbsencesAJustifer(\App\Entity\AbsenceJustificatif $justificatif)
+    {
+        //recherche toutes les absences sur la période du justificatif
+
+        //todo: a tester. Prise en compte de l'heure sur le justificatif ? Peut être juste un champs ? Idem pour absence... reconstruire un champs date-heure
+        return $this->createQueryBuilder('a')
+            ->where('a.date')
+            ->where('a.date <= :dateFin')
+            ->setParameter('dateDebut', $justificatif->getDateDebut())
+            ->setParameter('dateFin', $justificatif->getDateFin())
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -34,7 +34,54 @@
                         <td>{{ ppn.diplome ? ppn.diplome.display : 'non.defini'|trans }}</td>
                         <td>{{ ppn.updated ? ppn.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                         <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'ppn', id:ppn.id}) }}
+                            <a href="{{ path('administration_ppn_duplicate', {'id': ppn.id}) }}"
+                               class="btn btn-success btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.dupliquer'|trans }}">
+                                <i class="{{ iconDuplicate }}"></i>
+                                <span class="sr-only">{{ 'atitle.dupliquer'|trans }}</span>
+                            </a>
+                            <a href="{{ path('administration_ppn_show', {'id': ppn.id}) }}"
+                               class="btn btn-info btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.details'|trans }}">
+                                <i class="{{ iconShow }}"></i>
+                                <span class="sr-only">{{ 'atitle.details'|trans }}</span>
+                            </a>
+
+                            <a href="{{ path('administration_ppn_edit', {'id': ppn.id}) }}"
+                               class="btn btn-warning btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.modifier'|trans }}">
+                                <i class="{{ iconEdit }}"></i>
+                                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+                            </a>
+
+                            {% if ppn.matieres|length != 0 %}
+                                <button
+                                        class="btn btn-secondary btn-outline btn-square"
+                                        data-provide="tooltip"
+                                        data-placement="bottom"
+                                        title="{{ 'atitle.supprimer.impossible'|trans }}">
+                                    <i class="{{ iconDelete }}"></i>
+                                    <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+                                </button>
+                            {% else %}
+                                <a href="{{ path('administration_ppn_delete', {id: ppn.id}) }}"
+                                   data-csrf="{{ csrf_token('delete' ~ ppn.id) }}"
+                                   class="btn btn-danger btn-outline btn-square supprimer"
+                                   data-provide="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ 'atitle.supprimer'|trans }}">
+                                    <i class="{{ iconDelete }}"></i>
+                                    <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+                                </a>
+                            {% endif %}
+
+
                         </td>
                     </tr>
                 {% else %}
@@ -49,7 +96,9 @@
     <div class="card card-warning">
         <h4 class="card-title">{{ 'adm.ppn.copie.heading'|trans }}</h4>
         <div class="card-body">
-            <div class="alert alert-info">Vous pouvez copier le contenu d'un PPN (matières) d'une version à une autre ici</div>
+            <div class="alert alert-info">Vous pouvez copier le contenu d'un PPN (matières) d'une version à une autre
+                                          ici
+            </div>
 
             {% if ppns|length < 2 %}
                 <div class="alert alert-warning">Vous devez avoir un PPN de destination pour copier un PPN vers un

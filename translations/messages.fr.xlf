@@ -11815,5 +11815,17 @@
         <target>atitle.desactiver</target>
       </segment>
     </unit>
+      <unit id="IM_p9Ih" name="ppn.copie.integrale.success.flash">
+          <segment>
+              <source>ppn.copie.integrale.success.flash</source>
+              <target>ppn.copie.integrale.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="dYWOiEz" name="atitle.supprimer.impossible">
+          <segment>
+              <source>atitle.supprimer.impossible</source>
+              <target>atitle.supprimer.impossible</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

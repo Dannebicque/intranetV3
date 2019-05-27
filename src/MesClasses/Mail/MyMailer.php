@@ -26,7 +26,8 @@ use App\MesClasses\Configuration;
 use App\Twig\DatabaseTwigLoader;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -50,6 +51,9 @@ class MyMailer
     /** @var DatabaseTwigLoader */
     protected $databaseTwigLoader;
 
+    /** @var TranslatorInterface */
+    protected $translator;
+
     /**
      * MyMailer constructor.
      *
@@ -60,10 +64,12 @@ class MyMailer
     public function __construct(
         Swift_Mailer $mailer,
         EngineInterface $templating,
-        DatabaseTwigLoader $databaseTwigLoader
+        DatabaseTwigLoader $databaseTwigLoader,
+        TranslatorInterface $translator
     )
     {
         $this->mailer = $mailer;
+        $this->translator = $translator;
         $this->templating = $templating;
         $this->databaseTwigLoader = $databaseTwigLoader;
     }
@@ -80,7 +86,7 @@ class MyMailer
         $mail
             ->setFrom($this->getFrom($options))
             ->setTo($this->checkTo($to))
-            ->setSubject($subject)
+            ->setSubject($this->translator->trans($subject))
             ->setBody($this->template)
             ->setReplyTo($this->getReplyTo($options))
             ->setContentType($this->getContentType($options));

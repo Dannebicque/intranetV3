@@ -44,6 +44,10 @@ class Events
     public const MAIL_DECISION_JUSTIFICATIF = 'mail.decision.justificatif';
     public const MAIL_DELETE_JUSTIFICATIF = 'mail.delete.justificatif';
 
+    /* ABSENCES */
+    public const JUSTIFIE_ABSENCES = 'justifie.absences';
+    public const VERIFICATION_JUSTIFICATIF = 'verification.justificatif.absences';
+
     /* STAGE */
 
     public const MAIL_CHGT_ETAT_STAGE_AUTORISE = 'mail.chgt.etat_stage.autorise';

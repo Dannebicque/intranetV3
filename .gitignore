@@ -24,3 +24,4 @@ docker-compose.override.yml
 ###< symfony/phpunit-bridge ###
 
 /.idea/dataSources.xml
+/public/upload/

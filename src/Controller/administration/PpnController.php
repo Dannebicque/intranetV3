@@ -7,6 +7,7 @@ use App\Entity\Constantes;
 use App\Entity\Ppn;
 use App\Form\PpnType;
 use App\Repository\PpnRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,16 +43,36 @@ class PpnController extends BaseController
      * @param Request $request
      *
      * @return Response
+     * @throws Exception
      */
-    public function copieIntegrale(Request $request): Response
+    public function copieIntegrale(PpnRepository $ppnRepository, Request $request): Response
     {
-        //effacer contenu PPN de destination
-        //todo: a finaliser
-        //Copie PPN
+        $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
+        $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.copie.integrale.success.flash');
+        if ($ppnDest !== null && $ppnOrigine !== null) {
+            //effacer contenu PPN de destination
+            foreach ($ppnDest->getMatieres() as $matiere) {
+                $this->entityManager->remove($matiere);
+            }
+            $this->entityManager->flush();
 
-        return $this->redirectToRoute('administration_ppn_index');
+            //Copie PPN
+            foreach ($ppnOrigine->getMatieres() as $matiere) {
+                $newMatiere = clone $matiere;
+                $newMatiere->setPpn($ppnDest);
+                $ppnDest->addMatiere($newMatiere);
+                $this->entityManager->persist($newMatiere);
+                $this->entityManager->persist($ppnDest);
+            }
+            $this->entityManager->flush();
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.copie.integrale.success.flash');
+
+            return $this->redirectToRoute('administration_ppn_index');
+        }
+
+        throw new Exception('Pas de PPN trouvé');
     }
 
     /**
@@ -129,9 +150,22 @@ class PpnController extends BaseController
     /**
      * @Route("/{id}", name="administration_ppn_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Ppn $ppn): Response
     {
-        //todo: comment gérer les matièrs ?
+        //suppression uniquement si vide.
+        //feature: gérer une suppression plus complete en super-admin
+        $id = $ppn->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            $this->entityManager->remove($ppn);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.delete.success.flash');
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'ppn.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

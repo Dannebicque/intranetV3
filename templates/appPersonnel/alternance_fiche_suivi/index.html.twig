@@ -36,9 +36,10 @@
                 .displayPr }) }}
         </h4>
         <div class="card-body">
-            <p>Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans l'entreprise
-                <strong>{{ alternance
-                    .entreprise.libelle }}</strong>.</p>{# todo: plus d'infos ?#}
+            <div class="alert alert-info">Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans
+                                          l'entreprise
+                <strong>{{ alternance.entreprise.libelle }}</strong>.
+            </div>
             <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
 
                 <thead>

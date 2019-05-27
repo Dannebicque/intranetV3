@@ -35,5 +35,19 @@
         </div>
     </div>
 
-    {# todo: afficher les formations étant sur cette année. #}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.annee_universitaire.formation.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                {% for departement in annee_universitaire.departements %}
+                    <tr>
+                        <th>{{ 'table.libelle'|trans }}</th>
+                        <td>{{ departement.libelle }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

@@ -26,8 +26,10 @@
     <div class="card">
         <h4 class="card-title">{{ 'app.personnel.alternance_fiche_suivi.new.heading'|trans }}</h4>
         <div class="card-body">
-            <p>Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans l'entreprise <strong>{{ alternance
-                    .entreprise.libelle }}</strong>.</p>{# todo: plus d'infos ?#}
+            <div class="alert alert-info">Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans
+                                          l'entreprise
+                <strong>{{ alternance.entreprise.libelle }}</strong>.
+            </div>
             {{ include('composants/adm-form.html.twig') }}
         </div>
     </div>

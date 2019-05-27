@@ -62,7 +62,6 @@ class DateController extends BaseController
             ['date_administration', 'utilisateur'],
             ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
         );
-        //todo: définir les colonnes. copier/coller ici
 
         return $response;
     }

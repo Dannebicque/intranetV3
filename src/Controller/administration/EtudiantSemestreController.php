@@ -84,10 +84,11 @@ class EtudiantSemestreController extends BaseController
             EtudiantType::class,
             $etudiant,
             [
-                'attr'   => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ],
-                'action' => $this->generateUrl('administration_etudiant_add')
+                'departement' => $this->dataUserSession->getDepartement(),
+                'action'      => $this->generateUrl('administration_etudiant_add')
             ]
         );
 
