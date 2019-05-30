@@ -14,8 +14,8 @@
                 <tbody>
                 {% for matiere in matieres %}
                     <tr>
-                        <td>{{ matiere.libelle }}</td>
-                        <td>{{ matiere.ue ? matiere.ue.libelle : 'non.defini'|trans }}</td>
+                        <td>{{ matiere.display }}</td>
+                        <td>{{ matiere.ue ? matiere.ue.display : 'non.defini'|trans }}</td>
                         <td>{{ matiere.nbNotes }}</td>
                         <th>{{ matiere.coefficient }}</th>
                     </tr>

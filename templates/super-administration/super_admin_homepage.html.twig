@@ -10,7 +10,7 @@
         <header class="card-header">
             <h4 class="card-title"><strong>{{ 'departements.heading'|trans }}</strong></h4>
             <div class="card-header-actions">
-                <a class="btn btn-sm btn-primary btn-square btn-round"
+                <a class="btn btn-sm btn-primary"
                    title="{{ 'creation.departement.manuellement'|trans }}"
                    data-provide="tooltip"
                    data-placement="bottom"
@@ -18,7 +18,7 @@
                 >
                     <i class="ti ti-plus"></i>
                 </a>
-                <a class="btn btn-sm btn-primary btn-square btn-round"
+                <a class="btn btn-sm btn-primary"
                    title="{{ 'assistant.creation.departement'|trans }}"
                    data-provide="tooltip"
                    data-placement="bottom"
@@ -51,7 +51,8 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item"
                                    href="{{ path('sa_structure_index', {departement:departement.id}) }}">Structure</a>
-                                <a class="dropdown-item" href="#">Etudiants</a>
+                                <a class="dropdown-item" href="{{ path('sa_etudiant_departement_index',
+                                    {departement:departement.id}) }}">Etudiants</a>
                                 <a class="dropdown-item"
                                    href="{{ path('sa_personnel_departement_index', {departement:departement.id}) }}">Personnels</a>
                                 <div class="dropdown-divider"></div>

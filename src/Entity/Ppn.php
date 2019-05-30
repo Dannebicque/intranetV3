@@ -36,10 +36,16 @@ class Ppn extends BaseEntity
      */
     private $diplome;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="ppn_actif")
+     */
+    private $semestres;
+
     public function __construct()
     {
         $this->annee = (int)date('Y');
         $this->matieres = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
 
@@ -133,6 +139,37 @@ class Ppn extends BaseEntity
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Semestre[]
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres[] = $semestre;
+            $semestre->setPpnActif($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        if ($this->semestres->contains($semestre)) {
+            $this->semestres->removeElement($semestre);
+            // set the owning side to null (unless already changed)
+            if ($semestre->getPpnActif() === $this) {
+                $semestre->setPpnActif(null);
+            }
+        }
 
         return $this;
     }

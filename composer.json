@@ -15,24 +15,24 @@
         "ramsey/uuid-doctrine": "^1.5",
         "sensio/framework-extra-bundle": "^5.2",
         "stof/doctrine-extensions-bundle": "^1.3",
-        "symfony/asset": "4.3.x-dev",
-        "symfony/console": "4.3.x-dev",
-        "symfony/dotenv": "4.3.x-dev",
-        "symfony/event-dispatcher": "4.3.x-dev",
+        "symfony/asset": "^4.3",
+        "symfony/console": "^4.3",
+        "symfony/dotenv": "^4.3",
+        "symfony/event-dispatcher": "^4.3",
         "symfony/flex": "^1.1",
-        "symfony/form": "4.3.x-dev",
-        "symfony/framework-bundle": "4.3.x-dev",
-        "symfony/mime": "^4.3@dev",
+        "symfony/form": "^4.3",
+        "symfony/framework-bundle": "^4.3",
+        "symfony/mime": "^4.3",
         "symfony/monolog-bundle": "^3.3",
         "symfony/orm-pack": "^1.0",
-        "symfony/routing": "4.3.x-dev",
-        "symfony/security-bundle": "4.3.x-dev",
+        "symfony/routing": "^4.3",
+        "symfony/security-bundle": "^4.3",
         "symfony/swiftmailer-bundle": "^3.2",
-        "symfony/translation": "4.3.x-dev",
-        "symfony/twig-bridge": "4.3.x-dev",
-        "symfony/twig-bundle": "4.3.x-dev",
-        "symfony/validator": "4.3.x-dev",
-        "symfony/yaml": "4.3.x-dev",
+        "symfony/translation": "^4.3",
+        "symfony/twig-bridge": "^4.3",
+        "symfony/twig-bundle": "^4.3",
+        "symfony/validator": "^4.3",
+        "symfony/yaml": "^4.3",
         "twig/extensions": "^1.5",
         "vich/uploader-bundle": "^1.8",
         "ext-calendar": "*",
@@ -54,7 +54,7 @@
             "App\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "replace": {
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
@@ -81,7 +81,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.3.x-dev"
+            "require": "^4.3"
         }
     },
     "require-dev": {
@@ -90,6 +90,6 @@
         "php-translation/symfony-bundle": "^0.8.1",
         "symfony/maker-bundle": "^1.11",
         "symfony/test-pack": "^1.0",
-        "symfony/web-profiler-bundle": "4.2.*"
+        "symfony/web-profiler-bundle": "4.3.*"
     }
 }

@@ -19,6 +19,7 @@ use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
+use App\Entity\Ppn;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -68,6 +69,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
+            ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('departement', $departement->getId())
             ->orderBy('m.codeMatiere', 'ASC')
             ->orderBy('m.libelle', 'ASC');
@@ -82,10 +84,12 @@ class MatiereRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->where('u.semestre = :semestre')
+            ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            //->orderBy('m.ue', 'ASC')
-            ->orderBy('m.codeMatiere', 'ASC');
+            ->orderBy('u.numeroUe', 'ASC')
+            ->addOrderBy('m.codeMatiere', 'ASC');
     }
 
     public function findByDepartement(Departement $departement)

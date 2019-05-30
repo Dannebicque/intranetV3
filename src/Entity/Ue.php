@@ -289,4 +289,8 @@ class Ue extends BaseEntity
 
         return $this;
     }
+
+    public function getDisplay() {
+        return 'UE '.$this->getNumeroUe().' | '.$this->getLibelle();
+    }
 }
