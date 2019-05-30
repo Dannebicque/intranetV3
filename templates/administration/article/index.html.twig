@@ -31,7 +31,7 @@
                     <tr id="ligne_{{ article.id }}">
                         <td></td>
                         <td>{{ article.titre }}</td>
-                        <td>{{ article.texte }}</td>
+                        <td>{{ article.texte|truncate(50) }}</td>
                         <td>{{ article.categorie ? article.categorie.libelle : 'non.defini'|trans }}</td>
                         <td>{{ article.updated ? article.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
                         <td>

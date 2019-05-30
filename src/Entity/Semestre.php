@@ -249,6 +249,11 @@ class Semestre extends BaseEntity
      */
     private $scolaritePromos;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="semestres")
+     */
+    private $ppn_actif;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -1117,6 +1122,18 @@ class Semestre extends BaseEntity
                 $scolaritePromo->setSemestre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPpnActif(): ?Ppn
+    {
+        return $this->ppn_actif;
+    }
+
+    public function setPpnActif(?Ppn $ppn_actif): self
+    {
+        $this->ppn_actif = $ppn_actif;
 
         return $this;
     }

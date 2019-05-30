@@ -26,7 +26,8 @@
                         </div>
                         <div class="timeline-content">
                             <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|localizeddate('short', 'short', app.request.getLocale()) }}</time>
-                            <p>{{ actualite.titre }} : {{ actualite.texte }}</p>
+                            <h5>{{ actualite.titre }}</h5>
+                            <p>{{ actualite.texte }}</p>
                         </div>
                     </li>
                 {% else %}

@@ -1,0 +1,81 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'super-admin.etudiant-departement.heading'|trans({"%departement%": departement.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title"><strong>{{ 'super-admin.etudiant-departement.heading'|trans({"%departement%": departement.libelle}) }}</strong></h4>
+            <div class="card-header-actions">
+                <a class="btn btn-sm btn-primary"
+                   title="{{ 'sa.ajouter.personnel'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   href="{{ path('sa_etudiant_departement_add', {departement:departement.id}) }}"
+                >
+                    <i class="ti ti-plus"></i>
+                </a>
+                <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i
+                                    class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xls'|trans }}
+                            </a>
+                            <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i>{{ 'exporter.pdf'|trans }}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="card-body">
+            <table class="table table-striped table-bordered" data-provide="datatable" id="etudiantsdepartement">
+                   <thead>
+                   <tr>
+                       <th>Nom Prénom</th>
+                       <th>Semestre</th>
+                       <th>Login URCA</th>
+                       <th>Actions</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   {% for etudiant in etudiants %}
+                       <tr>
+                           <td>{{ etudiant.display }}</td>
+                           <td>{{ etudiant.semestre.display }}</td>
+                           <td>{{ etudiant.username }}</td>
+
+                           <td>
+                               {# todo: peut être créer des pages spécifiques pour show et edit... #}
+                               <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}"
+                                  class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                                  data-placement="bottom" title="{{ 'atitle.details'|trans }}" target="_blank"><i class="{{ iconShow }}"></i></a>
+                               <a href="{{ path('administration_etudiant_edit', {'id': etudiant.id}) }}"
+                                  class="btn btn-warning btn-outline btn-square" data-provide="tooltip"
+                                  data-placement="bottom" title="{{ 'atitle.modifier'|trans }}" target="_blank"><i
+                                           class="{{ iconEdit }}"></i></a>
+                               <a href="{{ path('sa_etudiant_remove', {id: etudiant.id}) }}" data-csrf="{{
+                               csrf_token('delete' ~ etudiant.id) }}"
+                                  class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip" data-placement="bottom"
+                                  title="{{ 'atitle.retirer_departement'|trans }}"><i class="{{ iconDelete }}"></i></a>
+                           </td>
+                       </tr>
+                   {% endfor %}
+                   </tbody>
+               </table>
+        </div>
+    </div>
+{% endblock %}

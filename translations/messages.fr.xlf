@@ -9375,7 +9375,7 @@
     <unit id="JF2xbpF" name="Type contrat">
       <segment>
         <source>Type contrat</source>
-        <target>Type contrat</target>
+        <target>Type de contrat</target>
       </segment>
     </unit>
     <unit id="WNM8a3N" name="Etat">
@@ -9387,13 +9387,13 @@
     <unit id="XIKWKPm" name="Date debut">
       <segment>
         <source>Date debut</source>
-        <target>Date debut</target>
+        <target>Date de début</target>
       </segment>
     </unit>
     <unit id="I4Kmk6." name="Date fin">
       <segment>
         <source>Date fin</source>
-        <target>Date fin</target>
+        <target>Date de fin</target>
       </segment>
     </unit>
     <unit id="ZbLaAeK" name="apprentissage">
@@ -10723,7 +10723,7 @@
     <unit id="38dzWFf" name="table.nb_articles">
       <segment>
         <source>table.nb_articles</source>
-        <target>table.nb_articles</target>
+        <target>Nb. Articles</target>
       </segment>
     </unit>
     <unit id="n4rS9NF" name="adm.configuration.tab.departement.menu">
@@ -10753,13 +10753,13 @@
     <unit id="bi2s2DK" name="departements.heading">
       <segment>
         <source>departements.heading</source>
-        <target>departements.heading</target>
+        <target>Départements</target>
       </segment>
     </unit>
     <unit id="9g1W2Av" name="creation.departement.manuellement">
       <segment>
         <source>creation.departement.manuellement</source>
-        <target>creation.departement.manuellement</target>
+        <target>Création d'un département</target>
       </segment>
     </unit>
     <unit id="CL42c1d" name="assistant.creation.departement">
@@ -11660,13 +11660,13 @@
     <unit id="1OkLG6D" name="Date de l\entretien">
       <segment>
         <source>Date de l\entretien</source>
-        <target>Date de l\entretien</target>
+        <target>Date de l\'entretien</target>
       </segment>
     </unit>
     <unit id="TRM.cu4" name="Méthode de l\entretien">
       <segment>
         <source>Méthode de l\entretien</source>
-        <target>Méthode de l\entretien</target>
+        <target>Méthode de l\'entretien</target>
       </segment>
     </unit>
     <unit id="zExCS1c" name="Téléphone">
@@ -11806,7 +11806,7 @@
     <unit id="jaLV0d4" name="menu.rgpd">
       <segment>
         <source>menu.rgpd</source>
-        <target>menu.rgpd</target>
+        <target>Données personnelles</target>
       </segment>
     </unit>
     <unit id="nuQFilM" name="atitle.desactiver">
@@ -11815,17 +11815,29 @@
         <target>atitle.desactiver</target>
       </segment>
     </unit>
-      <unit id="IM_p9Ih" name="ppn.copie.integrale.success.flash">
-          <segment>
-              <source>ppn.copie.integrale.success.flash</source>
-              <target>ppn.copie.integrale.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="dYWOiEz" name="atitle.supprimer.impossible">
-          <segment>
-              <source>atitle.supprimer.impossible</source>
-              <target>atitle.supprimer.impossible</target>
-          </segment>
-      </unit>
+    <unit id="IM_p9Ih" name="ppn.copie.integrale.success.flash">
+      <segment>
+        <source>ppn.copie.integrale.success.flash</source>
+        <target>ppn.copie.integrale.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="dYWOiEz" name="atitle.supprimer.impossible">
+      <segment>
+        <source>atitle.supprimer.impossible</source>
+        <target>atitle.supprimer.impossible</target>
+      </segment>
+    </unit>
+    <unit id="FpRCwnL" name="atitle.active">
+      <segment>
+        <source>atitle.active</source>
+        <target>atitle.active</target>
+      </segment>
+    </unit>
+    <unit id="EWa8_.D" name="super-admin.etudiant-departement.heading">
+      <segment>
+        <source>super-admin.etudiant-departement.heading</source>
+        <target>super-admin.etudiant-departement.heading</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
