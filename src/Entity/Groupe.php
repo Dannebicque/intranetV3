@@ -46,6 +46,11 @@ class Groupe extends BaseEntity
      */
     private $enfants;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordre;
+
     public function __construct(TypeGroupe $typeGroupe)
     {
         $this->typeGroupe = $typeGroupe;
@@ -208,6 +213,18 @@ class Groupe extends BaseEntity
                 $groupe->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrdre(): ?int
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(int $ordre): self
+    {
+        $this->ordre = $ordre;
 
         return $this;
     }

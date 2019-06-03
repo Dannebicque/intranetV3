@@ -1,0 +1,50 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+    <table style="width: 100%; border:none;">
+        <tr>
+            <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/></td>
+            <td style="text-align: center; width:60%"><h2>Emploi du temps</h2>
+                <h2>{{ user_data.user.displayPr  }}</h2>
+                <h3>Semaine {{ edt.semaine }} ({{ user_data.departement.libelle }}: semaine {{ edt.semaineFormation }})</h3></td>
+            <td style="text-align: center; width:20%"><img
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
+                        alt="logo"
+                        height="75px"/></td>
+        </tr>
+    </table>
+
+    <table id="table-edt">
+        <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
+            <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
+            <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
+            <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
+            <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ligne in 1..7 %}
+            <tr>
+                <td class="heures">{{ tabHeures[ligne][0] }}<br>{{ tabHeures[ligne][1] }}</td>
+                {% for jour in 1..5 %}
+                    {% if edt.planning[jour][ligne] is defined %}
+                        {% if edt.planning[jour][ligne].texte!='xx' %}
+                            <td class="center td-edt" style="background:{{ edt.planning[jour][ligne].couleur }}">{{ edt.planning[jour][ligne].texte|raw }}</td>
+                        {% else %}
+                            <td>&nbsp;</td>
+                        {% endif %}
+                    {% else %}
+                        <td>&nbsp;</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,5 +1,6 @@
 <div class="card">
-    <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
+    <h4 class="card-title"><strong>Semaine {{ edt.semaine }}
+                                   (semaine formation {{ edt.semaineFormation }})</strong></h4>
     <div class="card-body">
 
         <div class="row gap-y">
@@ -9,13 +10,16 @@
                 <div class="btn-toolbar">
                     <div class="btn-group">
                         <a class="btn btn-primary"
-                           href="" title="{{ 'semaine.precedente'|trans }}"><i
+                           href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
+                               semaine:edt.semainePrecedente}) }}" title="{{ 'semaine.precedente'|trans }}"><i
                                     class="material-icons">keyboard_arrow_left</i></a>
                         <a class="btn btn-primary"
-                           href="" title="{{ 'semaine.courante'|trans }}"><i
+                           href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
+                               semaine:'now'|date('W')}) }}" title="{{ 'semaine.courante'|trans }}"><i
                                     class="material-icons">perm_contact_calendar</i></a>
                         <a class="btn btn-primary"
-                           href="" title="{{ 'semaine.suivante'|trans }}"><i
+                           href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
+                               semaine:edt.semaineSuivante}) }}" title="{{ 'semaine.suivante'|trans }}"><i
                                     class="material-icons">keyboard_arrow_right</i></a>
                     </div>
                 </div>
@@ -24,8 +28,11 @@
                 <div class="btn-toolbar">
                     <div class="btn-group">
                         {% for semestre in user_data.semestres %}
-                            <a class="btn"
-                               href="">{{ semestre.libelle }}</a>
+                            <a class="btn {% if edt.semestre.id == semestre.id %}btn-primary{% endif %}"
+                               href="{{ path('administration_edt_index',{valeur:semestre.id, filtre:'promo',
+                                   semaine:edt.semaine}) }}" >{{ semestre
+                                .libelle
+                                }}</a>
                         {% endfor %}
 
                     </div>
@@ -85,6 +92,63 @@
             </div>
 
     </div>
+
+        <div class="row gap-y">
+            <div class="col-sm-12">
+                <table class="table-edt" id="selectable">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                            Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
+                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                            Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
+                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                            Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
+                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                            Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
+                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                            Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        {% for jour in 1..5 %}
+                            {% for group in 1..edt.semestre.nbgroupeTPEDT %}
+                                <th>{{ edt.groupes[group] }}</th>
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ligne in 1..27 %}
+                        {% set heure=(ligne/2+7.5)|number_format(0) %}
+
+                        <tr>
+                            <td class="heures"
+                                style="height: 20px; padding:0;">{% if(ligne/2+7.5)-heure!=0 %}{{ heure-1 }}h30{% else %}{{ heure }}h00{% endif %}</td>
+                            {% for jour in 1..5 %}
+                                {% for group in 1..edt.semestre.nbgroupeTPEDT %}
+                                    {% if edt.planning[jour][ligne][group] is defined %}
+                                        {% if edt.planning[jour][ligne][group].texte!='xx' %}
+                                            <td class="center td-edt edt_cours"
+                                                id="cell_{{ ligne }}_{{ jour }}_{{ group }}_{{ edt.planning[jour][ligne][group].planning.id }}"
+                                                rowspan="{{ edt.planning[jour][ligne][group].duree }}"
+                                                style="background:{{ edt.planning[jour][ligne][group].couleur }};color:{{ edt.planning[jour][ligne][group].couleurTexte }}; padding:0;"
+                                                colspan="{{ edt.planning[jour][ligne][group].largeur }}">{{ edt.planning[jour][ligne][group].texte|raw }}</td>
+                                        {% endif %}
+                                    {% else %}
+                                        <td id="cell_{{ ligne }}_{{ jour }}_{{ group }}">&nbsp;</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
 </div>
 
 {{ include('composants/edt.html.twig', {source: 'intranet'}) }}
@@ -99,7 +163,7 @@
             </div>
 
             <div class="col-md-4 col-sm-12">
-                <div><a href="{{ path('administration_structure_index') }}"
+                <div><a href=""
                         class="btn btn-block btn-primary"> {{ 'adm.edt.effacer.semestre'|trans }}</a></div>
             </div>
         </div>

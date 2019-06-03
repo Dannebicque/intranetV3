@@ -81,6 +81,11 @@ class EdtPlanning
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $commentaire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -238,6 +243,75 @@ class EdtPlanning
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayGroupe()
+    {
+        switch ($this->type) {
+            case 'cm':
+            case 'CM':
+                return 'CM TOUS';
+            case 'TD':
+            case 'td':
+                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+
+                return 'TD ' . $tab[$this->groupe];
+            case 'TP':
+            case 'tp':
+                return 'TP ' . chr($this->groupe + 64);
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getIntervenantEdt()
+    {
+        if ($this->getIntervenant() !== null) {
+            return $this->getIntervenant()->getPrenom()[0] . '. ' . $this->getIntervenant()->getNom();
+        }
+
+        return '*';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDureeTexte()
+    {
+        $d = $this->fin - $this->debut;
+        $td = array('0h00', '0h30', '1h00', '1h30', '2h00', '2h30', '3h00', '3h30', '4h00', '4h30', '5h00');
+
+        return $td[$d];
+    }
+
+
+    /**
+     * @return integer|double
+     */
+    public function getDureeInt()
+    {
+        $d = $this->fin - $this->debut;
+        $td = array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5);
+
+        return $td[$d];
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }

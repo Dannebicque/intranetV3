@@ -17,7 +17,12 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Previsionnel;
+use App\Repository\CalendrierRepository;
+use App\Repository\EdtPlanningRepository;
+use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\PrevisionnelRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +36,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EdtRealiseController extends BaseController
 {
+    /** @var EdtPlanningRepository */
+    protected $edtPlanningRepository;
+
+    /** @var CalendrierRepository */
+    protected $calendrierRepository;
+
+    /**
+     * EdtRealiseController constructor.
+     *
+     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param CalendrierRepository  $calendrierRepository
+     */
+    public function __construct(
+        EdtPlanningRepository $edtPlanningRepository,
+        CalendrierRepository $calendrierRepository
+    ) {
+        $this->edtPlanningRepository = $edtPlanningRepository;
+        $this->calendrierRepository = $calendrierRepository;
+    }
+
+
     /**
      *
      * @param PersonnelRepository $personnelRepository
@@ -62,14 +88,17 @@ class EdtRealiseController extends BaseController
      * @Route("/affiche/{source}", name="administration_edt_service_realise_affiche", methods={"POST"},
      *                             requirements={"source"="intranet|celcat"})
      */
-    public function detailPersonnelMatiere(Request $request, $source): Response
+    public function detailPersonnelMatiere(MatiereRepository $matiereRepository,
+        PersonnelRepository $personnelRepository,
+        PrevisionnelRepository $previsionnelRepository,
+        Request $request, $source): Response
     {
-        $matiere = $this->getDoctrine()->getRepository('DAKernelBundle:Matieres')->find($request->request->get('matiere'));
-        $personnel = $this->getDoctrine()->getRepository('DAKernelBundle:Personnels')->find($request->request->get('personnel'));
+        $matiere = $matiereRepository->find($request->request->get('matiere'));
+        $personnel = $personnelRepository->find($request->request->get('personnel'));
 
         if ($matiere && $personnel) {
             //todo: mettre dans un service MyEDT ?
-            $m = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findBy(array(
+            $m = $this->edtPlanningRepository->findBy(array(
                 'matiere'     => $matiere->getId(),
                 'intervenant' => $personnel->getId()
             ),
@@ -79,9 +108,9 @@ class EdtRealiseController extends BaseController
                     'debut'   => 'ASC'
                 ));
 
-            $calendrier = $this->getDoctrine()->getRepository('DAKernelBundle:Calendrier')->findCalendrier();
+            $calendrier = $this->calendrierRepository->findCalendrier();
 
-            $p = $this->getDoctrine()->getRepository('DAKernelBundle:PersonnelMatiere')->findBy(array(
+            $p = $previsionnelRepository->findBy(array(
                 'personnel' => $personnel->getId(),
                 'matiere'   => $matiere->getId(),
                 'annee'     => $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel()
@@ -137,13 +166,17 @@ class EdtRealiseController extends BaseController
      * @Route("/ajax/enseignant/modules", name="administration_edt_realise_ajax_modules", options={"expose"=true},
      *                                    methods={"POST"})
      */
-    public function modulesEnseignantAction(Request $request)
+    public function modulesEnseignantAction(
+        SemestreRepository $semestreRepository,
+        PersonnelRepository $personnelRepository,
+        PrevisionnelRepository $previsionnelRepository,
+        Request $request)
     {
-        $semestre = $this->getDoctrine()->getRepository('DAKernelBundle:Semestre')->find($request->request->get('semestre'));
-        $personnel = $this->getDoctrine()->getRepository('DAKernelBundle:Personnels')->find($request->request->get('personnel'));
+        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        $personnel = $personnelRepository->find($request->request->get('personnel'));
 
         if ($semestre !== null && $personnel !== null) {
-            $matieres = $this->getDoctrine()->getRepository('DAKernelBundle:PersonnelMatiere')->findServiceSemestre($personnel->getId(),
+            $matieres = $previsionnelRepository->findServiceSemestre($personnel->getId(),
                 $semestre->getId(), $semestre->getAnnee()->getDiplome()->getDepartement()->getAnneeprevi());
 
             $array = array();
