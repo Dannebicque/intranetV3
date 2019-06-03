@@ -91,6 +91,13 @@ class Semestre extends BaseEntity
      *
      * @ORM\Column(type="integer")
      */
+    private $nbGroupesCm = 1;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
     private $nbGroupesTd = 1;
 
     /**
@@ -267,6 +274,7 @@ class Semestre extends BaseEntity
         $this->typeGroupes = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
     }
 
     /**
@@ -1134,6 +1142,117 @@ class Semestre extends BaseEntity
     public function setPpnActif(?Ppn $ppn_actif): self
     {
         $this->ppn_actif = $ppn_actif;
+
+        return $this;
+    }
+
+    /**
+     * Get nbgroupeTP
+     *
+     * @return integer
+     */
+    public function getNbgroupeTpEdt()
+    {
+        if ($this->nbGroupesTP % 2 === 0) {
+            return $this->nbGroupesTP;
+        }
+        return $this->nbGroupesTP + 1;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function getNbGroupesCm(): ?int
+    {
+        return $this->nbGroupesCm;
+    }
+
+    public function setNbGroupesCm(int $nbGroupesCm): self
+    {
+        $this->nbGroupesCm = $nbGroupesCm;
+
+        return $this;
+    }
+
+    public function getOptMailReleve(): ?bool
+    {
+        return $this->optMailReleve;
+    }
+
+    public function getOptMailModificationNote(): ?bool
+    {
+        return $this->optMailModificationNote;
+    }
+
+    public function getOptEvaluationVisible(): ?bool
+    {
+        return $this->optEvaluationVisible;
+    }
+
+    public function getOptEvaluationModifiable(): ?bool
+    {
+        return $this->optEvaluationModifiable;
+    }
+
+    public function getOptPenaliteAbsence(): ?bool
+    {
+        return $this->optPenaliteAbsence;
+    }
+
+    public function getOptMailAbsenceResp(): ?bool
+    {
+        return $this->optMailAbsenceResp;
+    }
+
+    public function getOptMailAbsenceEtudiant(): ?bool
+    {
+        return $this->optMailAbsenceEtudiant;
+    }
+
+    public function addEtudiant(Etudiant $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiant $etudiant): self
+    {
+        if ($this->etudiants->contains($etudiant)) {
+            $this->etudiants->removeElement($etudiant);
+            // set the owning side to null (unless already changed)
+            if ($etudiant->getSemestre() === $this) {
+                $etudiant->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addHr(Hrs $hr): self
+    {
+        if (!$this->hrs->contains($hr)) {
+            $this->hrs[] = $hr;
+            $hr->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHr(Hrs $hr): self
+    {
+        if ($this->hrs->contains($hr)) {
+            $this->hrs->removeElement($hr);
+            // set the owning side to null (unless already changed)
+            if ($hr->getSemestre() === $this) {
+                $hr->setSemestre(null);
+            }
+        }
 
         return $this;
     }

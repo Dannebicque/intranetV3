@@ -141,36 +141,29 @@ fieldset legend {
 }
 
 .col-edt-header {
-  border: 2px solid #ffa94d;
+  border: 2px solid #302929;
   border-radius: 5px;
-  background-color: #ffd8a8;
+  background-color: #998E8E;
   padding: 1em;
-  color: #d9480f;
+  color: #EBEAEA;
   text-align: center;
 }
 
 .col-edt-heure {
-  border: 2px solid #d9480f;
+  border: 2px solid #302929;
   border-radius: 5px;
-  background-color: #ffd8a8;
+  background-color: #998E8E;
   padding: 1em;
-  color: #ffa94d;
+  color: #EBEAEA;
   text-align: center;
   grid-column: 1/2;
 
 }
 
 .edt-cours {
-  border: 2px solid #ddffcc;
+  border: 2px solid #302929;
   border-radius: 5px;
-  background-color: #ffd8a8;
-}
-
-.wrapper-edt-etudiant :nth-child(3),
-.wrapper-edt-etudiant :nth-child(4),
-.wrapper-edt-etudiant :nth-child(5),
-.wrapper-edt-etudiant :nth-child(6)
-{
-  display:none;
+  background-color: #EBEAEA;
+  text-align: center;
 }
 

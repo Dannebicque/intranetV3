@@ -45,12 +45,12 @@ class MyEdtCelcat extends BaseEdt
     /**
      * @param Personnel $personnel
      */
-    public function initPersonnel(Personnel $personnel): void
+    public function initPersonnel(Personnel $personnel, $semaine = 0): void
     {
 
     }
 
-    public function initEtudiant(Etudiant $etudiant): void
+    public function initEtudiant(Etudiant $etudiant, $semaine = 0): void
     {
     }
 

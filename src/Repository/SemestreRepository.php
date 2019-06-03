@@ -56,6 +56,23 @@ class SemestreRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param $departement
+     *
+     * @return QueryBuilder
+     */
+    public function findByDepartementActif($departement)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.departement = :departement')
+            ->andWhere('s.actif = 1')
+            ->setParameter('departement', $departement)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param $diplome
      *
      * @return QueryBuilder

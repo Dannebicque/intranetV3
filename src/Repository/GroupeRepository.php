@@ -8,6 +8,7 @@ use App\Entity\Departement;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use DA\KernelBundle\Entity\Groupes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -48,6 +49,62 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllGroupes(Semestre $semestre)
+    {
+
+        $groupes = array();
+        $gtp = $this->getGroupesTP($semestre->getId());
+
+        $i = 1;
+        /** @var Groupe $g */
+        foreach ($gtp as $g) {
+            $groupes[$i] = $g->getLibelle();
+            $i++;
+        }
+
+        for ($j = $i; $j <= $semestre->getNbgroupeTpEdt() + 1; $j++) {
+            $groupes[$j] = '';
+        }
+
+        return $groupes;
+
+    }
+
+    /**
+     * @param $semestre
+     *
+     * @return array
+     */
+    public function getGroupesTP($semestre)
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            //->where('t.defaut = :defaut')
+            ->where('t.type = :type')
+            ->andWhere('t.semestre = :semestre')
+            ->setParameters(array('type' => 'TP', 'semestre' => $semestre))
+            ->orderBy('g.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $semestre
+     *
+     * @return array
+     */
+    public function getGroupesTD($semestre)
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            ->where('t.type = :type')
+            ->andWhere('t.semestre = :semestre')
+            ->setParameters(array('type' => 'TD', 'semestre' => $semestre))
+            ->orderBy('g.libelle', 'ASC')
             ->getQuery()
             ->getResult();
     }

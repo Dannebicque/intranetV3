@@ -23,11 +23,11 @@
     {% if user_data.departement.optEdt == true %}
         {% if is_granted('ROLE_PERMANENT') %}
             {{ render(controller(
-                'App\\Controller\\EdtController::dashboardPersonnel'
+                'App\\Controller\\EdtController::dashboardPersonnel', {semaine:semaine}
             )) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
             {{ render(controller(
-                'App\\Controller\\EdtController::dashboardEtudiant'
+                'App\\Controller\\EdtController::dashboardEtudiant', {semaine:semaine}
             )) }}
         {% else %}
             erreur

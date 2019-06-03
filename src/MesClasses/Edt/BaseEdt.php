@@ -2,10 +2,10 @@
 /**
  * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  *
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/BaseEdt.php
- * @author David annebicque
- * @project intranetv3
- * @date  07/05/2019 10:42
+ * @file       /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/BaseEdt.php
+ * @author     David annebicque
+ * @project    intranetv3
+ * @date       07/05/2019 10:42
  * @lastUpdate 07/05/2019 10:42
  *
  */
@@ -14,12 +14,16 @@ namespace App\MesClasses\Edt;
 
 
 use App\Entity\Calendrier;
+use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Repository\CalendrierRepository;
 use Exception;
 
 Abstract class BaseEdt
 {
     protected $tabJour = [];
+
+    protected $semaines;
 
     protected $semaine;
 
@@ -37,6 +41,30 @@ Abstract class BaseEdt
     protected $semaineFormationLundi;
     protected $filtre;
     protected $valeur;
+    protected $total = [];
+
+    /**
+     * @var \App\Entity\Semestre|null
+     */
+    protected $semestre;
+
+    /**
+     * @var Personnel|Etudiant
+     */
+    protected $user;
+    /**
+     * @var \App\Entity\Matiere|null
+     */
+    protected $module;
+
+    protected $groupes;
+
+    protected $jour;
+    protected $salle;
+    protected $groupetd = 0;
+    protected $groupetp = 0;
+
+    protected $planning;
 
     /**
      * MyEdt constructor.
@@ -168,6 +196,88 @@ Abstract class BaseEdt
     public function getValeur()
     {
         return $this->valeur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlanning()
+    {
+        return $this->planning;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSemainePrecedente()
+    {
+        $s = (int)$this->semaine - 1;
+
+        if ($s === 0) {
+            return 52;
+        }
+            return $s;
+
+    }
+
+    /**
+     * @return int
+     */
+    public function getSemaineSuivante()
+    {
+        $s = $this->semaine + 1;
+        if ($s === 53) {
+            return 1;
+        }
+            return $s;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTotal(): array
+    {
+        return $this->total;
+    }
+
+    /**
+     * @return \App\Entity\Semestre|null
+     */
+    public function getSemestre(): ?\App\Entity\Semestre
+    {
+        return $this->semestre;
+    }
+
+    /**
+     * @return \App\Entity\Matiere|null
+     */
+    public function getModule(): ?\App\Entity\Matiere
+    {
+        return $this->module;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJour()
+    {
+        return $this->jour;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalle()
+    {
+        return $this->salle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupes()
+    {
+        return $this->groupes;
     }
 
 

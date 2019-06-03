@@ -38,6 +38,11 @@ class TypeGroupe extends BaseEntity
      */
     private $defaut = false;
 
+    /**
+     * @ORM\Column(type="string", length=2)
+     */
+    private $type;
+
     public function __construct(Semestre $semestre)
     {
         $this->semestre = $semestre;
@@ -147,5 +152,27 @@ class TypeGroupe extends BaseEntity
             'libelle' => $this->getLibelle(),
             'defaut' => $this->getDefaut()
         ];
+    }
+
+    public function isTD()
+    {
+        return $this->getLibelle() === 'TD'; //todo: a améliorer
+    }
+
+    public function isTP()
+    {
+        return $this->getLibelle() === 'TP'; //todo: a améliorer
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

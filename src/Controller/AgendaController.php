@@ -24,12 +24,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class AgendaController extends BaseController
 {
     /**
-     * @Route("/", name="agenda_index")
+     * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index")
      */
-    public function index(MyEdt $myEdt): Response
+    public function index(
+        $semaine = 0,
+        $filtre = '',
+        $valeur = ''
+        ): Response
     {
         return $this->render('agenda/index.html.twig', [
-
+            'filtre' => $filtre,
+            'valeur' => $valeur,
+            'semaine' => $semaine,
         ]);
     }
 }

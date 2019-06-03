@@ -15,6 +15,8 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\MesClasses\MyPrevisionnel;
+use App\Repository\CalendrierRepository;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,26 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EdtCompareController extends BaseController
 {
+    /** @var EdtPlanningRepository */
+    protected $edtPlanningRepository;
+
+    /** @var CalendrierRepository */
+    protected $calendrierRepository;
+
+    /**
+     * EdtRealiseController constructor.
+     *
+     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param CalendrierRepository  $calendrierRepository
+     */
+    public function __construct(
+        EdtPlanningRepository $edtPlanningRepository,
+        CalendrierRepository $calendrierRepository
+    ) {
+        $this->edtPlanningRepository = $edtPlanningRepository;
+        $this->calendrierRepository = $calendrierRepository;
+    }
+
     /**
      *
      * @param PersonnelRepository $personnelRepository
@@ -48,7 +70,7 @@ class EdtCompareController extends BaseController
 
         if ($source === 'intranet') {
             //intranet
-            $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findDepartement($this->dataUserSession->getDepartement());
+            $planning = $this->edtPlanningRepository->findDepartement($this->dataUserSession->getDepartement());
         } else {
             //celcat
         }
@@ -80,7 +102,7 @@ class EdtCompareController extends BaseController
 
         if ($source === 'intranet') {
             //intranet
-            $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findDepartement($this->dataUserSession->getDepartement());
+            $planning = $this->edtPlanningRepository->findDepartement($this->dataUserSession->getDepartement());
         } else {
             //celcat
         }
@@ -103,9 +125,9 @@ class EdtCompareController extends BaseController
     public function comparePlusInfoAction(Matiere $matiere) : Response
     {
         //tester si celcat ou intranet
-        $planning = $this->getDoctrine()->getRepository('DAKernelBundle:Planning')->findBy(array('matiere' => $matiere->getId()));
+        $planning = $this->edtPlanningRepository->findBy(array('matiere' => $matiere->getId()));
 
-        $calendrier = $this->getDoctrine()->getRepository('DAKernelBundle:Calendrier')->findCalendrier();
+        $calendrier = $this->calendrierRepository->findCalendrier();
 
         return $this->render('administration/edtCompare/plusInfo.html.twig', [
             'planning'   => $planning,
