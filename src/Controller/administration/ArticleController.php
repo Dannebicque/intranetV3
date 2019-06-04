@@ -17,9 +17,11 @@ namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Article;
+use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;
 use App\Form\ArticleType;
 use App\MesClasses\MyExport;
+use App\Repository\ArticleCategorieRepository;
 use App\Repository\ArticleRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -194,5 +196,23 @@ class ArticleController extends BaseController
         return $this->render('administration/article/gestionCategorie.html.twig', [
             'categories' => $this->dataUserSession->getArticlesCategories()
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/gestion/categorie/add", name="administration_article_categorie_add", options={"expose"=true})
+     */
+    public function addCategorie(ArticleCategorieRepository $categorieRepository, Request $request)
+    {
+       $libelle = $request->request->get('libelle');
+       $categorie = new ArticleCategorie();
+       $categorie->setDepartement($this->dataUserSession->getDepartement());
+       $categorie->setLibelle($libelle);
+
+       $this->entityManager->persist($categorie);
+       $this->entityManager->flush();
+
+       return $this->json($categorieRepository->findByDepartementJson($this->dataUserSession->getDepartement()));
+
     }
 }
