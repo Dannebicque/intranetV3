@@ -28,4 +28,18 @@ class ArticleCategorieRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement->getId())
             ->orderBy('c.libelle', 'ASC');
     }
+
+    public function findByDepartementJson(Departement $departement)
+    {
+        $data = $this->findByDepartementBuilder($departement)->getQuery()->getResult();
+        $t = [];
+        /** @var ArticleCategorie $d */
+        foreach ($data as $d) {
+            $t[] = ['libelle' => $d->getLibelle(),
+                'id' => $d->getId(),
+                'nbArticles' => count($d->getArticles())];
+        }
+
+        return $t;
+    }
 }
