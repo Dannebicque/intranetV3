@@ -19,7 +19,7 @@
                 <th>{{ 'heure'|trans }}</th>
                 <th>{{ 'matiere'|trans }}</th>
                 <th>{{ 'justifiee'|trans }}</th>
-                <th>{{ 'saisie_par'|trans }}</th>
+                <th class="hide">{{ 'saisie_par'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
             </tr>
             </thead>
@@ -30,7 +30,7 @@
                     <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : ''}}</td>
                     <td>{{ absence.matiere.codeMatiere }}</td>
                     <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
-                    <td>{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
+                    <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
                     <td>
                         <button data-provide="modaler tooltip"
                                 data-url="{{ path('app_etudiant_absence_detail', {'uuid': absence.uuidString}) }}"

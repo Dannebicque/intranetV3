@@ -10,7 +10,7 @@
 {% block headeractions %}
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
-            {% for semestre in user_data.semestres %}
+            {% for semestre in user_data.semestresActifs %}
                 <li class="nav-item">
                     <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-toggle="tab"
                        href="#" data-sem="{{ semestre.id }}" role="tab">{{ semestre.libelle }}
@@ -38,7 +38,7 @@
 
     <div id="trombi">
         {% if user_data.semestres|length > 0 %}
-            {% for semestre in user_data.semestres %}
+            {% for semestre in user_data.semestresActifs %}
                 {% if loop.first %}
                     {% set semestreActif = semestre.id %}
                 {% endif %}

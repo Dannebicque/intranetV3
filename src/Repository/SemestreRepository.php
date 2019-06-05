@@ -58,7 +58,7 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * @param $departement
      *
-     * @return QueryBuilder
+     * @return mixed
      */
     public function findByDepartementActif($departement)
     {

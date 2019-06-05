@@ -167,3 +167,21 @@ fieldset legend {
   text-align: center;
 }
 
+@media screen and (max-width: 640px) {
+  /* Grid EDT Etudiant */
+  .wrapper-edt-etudiant {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+  }
+
+  .col-edt-hide {
+    display:none;
+  }
+
+  .hide {
+    display:none;
+  }
+}
+
