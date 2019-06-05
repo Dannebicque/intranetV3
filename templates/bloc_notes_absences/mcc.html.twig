@@ -6,7 +6,7 @@
                 <thead>
                 <tr>
                     <th>{{ 'table.matiere'|trans }}</th>
-                    <th>{{ 'table.ue'|trans }}</th>
+                    <th class="hide">{{ 'table.ue'|trans }}</th>
                     <th>{{ 'table.nombre.notes'|trans }}</th>
                     <th>{{ 'table.coefficient'|trans }}</th>
                 </tr>
@@ -15,9 +15,9 @@
                 {% for matiere in matieres %}
                     <tr>
                         <td>{{ matiere.display }}</td>
-                        <td>{{ matiere.ue ? matiere.ue.display : 'non.defini'|trans }}</td>
+                        <td class="hide">{{ matiere.ue ? matiere.ue.display : 'non.defini'|trans }}</td>
                         <td>{{ matiere.nbNotes }}</td>
-                        <th>{{ matiere.coefficient }}</th>
+                        <td>{{ matiere.coefficient }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

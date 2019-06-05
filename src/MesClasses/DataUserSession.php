@@ -102,6 +102,10 @@ class DataUserSession
     protected $notificationRepository;
 
     protected $security;
+    /**
+     * @var \Doctrine\ORM\QueryBuilder
+     */
+    private $semestresActifs;
 
     /**
      * DataUserSession constructor.
@@ -164,6 +168,7 @@ class DataUserSession
         if ($this->departement !== null) {
             //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
             $this->semestres = $semestreRepository->findByDepartement($this->departement);
+            $this->semestresActifs = $semestreRepository->findByDepartementActif($this->departement);
             $this->diplomes = $diplomeRepository->findByDepartement($this->departement);
             $this->annees = $anneeRepository->findByDepartement($this->departement);
         }
@@ -341,4 +346,14 @@ class DataUserSession
 
         return $this->getDepartement() !== null ? $this->getDepartement()->getArticleCategories() : [];
     }
+
+    /**
+     * @return array
+     */
+    public function getSemestresActifs(): array
+    {
+        return $this->semestresActifs;
+    }
+
+
 }

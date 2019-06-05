@@ -6,23 +6,23 @@
             <tr>
                 <th>{{ 'evaluation'|trans }}</th>
                 <th>{{ 'matiere'|trans }}</th>
-                <th>{{ 'date'|trans }}</th>
-                <th>{{ 'com_eval'|trans }}</th>
+                <th class="hide">{{ 'date'|trans }}</th>
+                <th class="hide">{{ 'com_eval'|trans }}</th>
                 <th>{{ 'note'|trans }}</th>
-                <th>{{ 'coefficient'|trans }}</th>
+                <th class="hide">{{ 'coefficient'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
             </tr>
             </thead>
             <tbody>
             {% for note in notes %}
                 <tr>
-                    {# todo: afficher le nom de l'évaluation ou? son id?#}
                     <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                     <td>{{ note.evaluation.matiere.codeMatiere }}</td>
-                    <td>{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-                    <td>{{ note.evaluation.commentaire }}</td>
+                    <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long',
+                            'short', app.request.getLocale()) : '' }}</td>
+                    <td class="hide">{{ note.evaluation.commentaire }}</td>
                     <td>{{ note.note|number_format(2) }}</td>
-                    <td>{{ note.evaluation.coefficient|number_format(2) }}</td>
+                    <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>
                     <td>
                         <button data-provide="modaler tooltip"
                                 data-url="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
@@ -37,10 +37,11 @@
                 </tr>
                 <tr>
                     <td>--> {{ note.evaluation.matiere.codeMatiere }}</td>
-                    <td>{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-                    <td>{{ note.evaluation.commentaire }}</td>
+                    <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|localizeddate('long',
+                            'short', app.request.getLocale()) : '' }}</td>
+                    <td class="hide">{{ note.evaluation.commentaire }}</td>
                     <td>{{ note.note|number_format(2) }}</td>
-                    <td>{{ note.evaluation.coefficient|number_format(2) }}</td>
+                    <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>
                     <td>
                         <button data-provide="modaler tooltip"
                                 data-url="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
