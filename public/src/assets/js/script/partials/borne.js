@@ -1,5 +1,5 @@
 $(document).on('click', '.visibiliteBorne', function(){
-  var btn = $(this);
+  const btn = $(this)
   $.ajax({
     url: Routing.generate('administration_borne_visibilite', {id:btn.data('id')}),
     success: function(data) {

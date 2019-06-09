@@ -34,8 +34,10 @@ class AbsenceSubscriber implements EventSubscriberInterface
     /**
      * RegistrationNotifySubscriber constructor.
      *
-     * @param EntityManagerInterface $entityManager
-     * @param RouterInterface        $router
+     * @param EntityManagerInterface        $entityManager
+     * @param RouterInterface               $router
+     * @param AbsenceRepository             $absenceRepository
+     * @param AbsenceJustificatifRepository $absenceJustificatifRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,

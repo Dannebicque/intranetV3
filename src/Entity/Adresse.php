@@ -188,7 +188,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setPays(?string $pays = 'France'): self
+    public function setPays(string $pays = 'France'): self
     {
         $this->pays = $pays;
 

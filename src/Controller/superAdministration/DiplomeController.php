@@ -161,12 +161,13 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @param Diplome $annee
-     * @param bool        $etat
+     * @param Diplome $diplome
+     * @param bool    $etat
+     *
+     * @return RedirectResponse
      * @Route("/activate/{diplome}/{etat}", methods={"GET"}, name="sa_diplome_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @return RedirectResponse
      */
     public function activate(Diplome $diplome, bool $etat): RedirectResponse
     {

@@ -17,6 +17,9 @@ class AlternanceFicheSuiviController extends AbstractController
 {
     /**
      * @Route("/", name="alternance_fiche_suivi_index", methods={"GET"})
+     * @param AlternanceFicheSuiviRepository $alternanceFicheSuiviRepository
+     *
+     * @return Response
      */
     public function index(AlternanceFicheSuiviRepository $alternanceFicheSuiviRepository): Response
     {
@@ -27,6 +30,9 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/new", name="alternance_fiche_suivi_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
      */
     public function new(Request $request): Response
     {
@@ -50,6 +56,8 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}", name="alternance_fiche_suivi_show", methods={"GET"})
+     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     * @return Response
      */
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -60,6 +68,9 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="alternance_fiche_suivi_edit", methods={"GET","POST"})
+     * @param Request              $request
+     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     * @return Response
      */
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -82,6 +93,9 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}", name="alternance_fiche_suivi_delete", methods={"DELETE"})
+     * @param Request              $request
+     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     * @return Response
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {

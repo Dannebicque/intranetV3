@@ -1137,15 +1137,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new DateTime();
-    }
-
-    /**
      * @return null|File
      */
     public function getPhotoFile(): ?File

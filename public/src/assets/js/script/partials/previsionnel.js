@@ -12,7 +12,7 @@
  *
  */
 
-var nbLignePrevisionnel = 1;
+let nbLignePrevisionnel = 1
 
 //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
 //todo: pourquoi ajaxcomplete?
@@ -73,7 +73,7 @@ $(document).on('click', '#addIntervenantPrevisionnel', function (e) {
   e.stopPropagation();
   nbLignePrevisionnel++;
 
-  var html = '<tr>\n' +
+  const html = '<tr>\n' +
     '                        <td>\n' +
     '                            <select class="form-control">\n' +
     '                                <option value="">Choisir l\'intervenant</option>\n' +
@@ -93,50 +93,54 @@ $(document).on('click', '#addIntervenantPrevisionnel', function (e) {
     '                        <td style="background-color: #FFC052"><input type="number" value="0" name="gr_tp_' + nbLignePrevisionnel + '" id="gr_tp_' + nbLignePrevisionnel + '"\n' +
     '                                                                     data-ligne="' + nbLignePrevisionnel + '" class="form-control chgtp"></td>\n' +
     '                        <td style="background-color: #FFC052" id="ind_tp_' + nbLignePrevisionnel + '">0</td>\n' +
-    '                    </tr>';
+    '                    </tr>'
 
   $('#nbLigne').val(nbLignePrevisionnel);
   $('#ligneAdd').before(html);
 });
 
 $(document).on('change', '.chgcm', function (e) {
-  var ligne = $(this).data('ligne');
-  var nbSeance = parseFloat($('#cm_' + ligne).val()) / 1.5;
+  const ligne = $(this).data('ligne')
+  const nbSeance = parseFloat($('#cm_' + ligne).val()) / 1.5
   $('#ind_cm_' + ligne).html(nbSeance.toFixed(2));
 
   updateSynthesePrevisionnel();
 });
 
 $(document).on('change', '.chgtd', function (e) {
-  var ligne = $(this).data('ligne');
-  var nbSeance = parseFloat($('#td_' + ligne).val()) / 1.5;
+  const ligne = $(this).data('ligne')
+  const nbSeance = parseFloat($('#td_' + ligne).val()) / 1.5
   $('#ind_td_' + ligne).html(nbSeance.toFixed(2));
 
   updateSynthesePrevisionnel();
 });
 
 $(document).on('change', '.chgtp', function (e) {
-  var ligne = $(this).data('ligne');
-  var nbSeance = parseFloat($('#tp_' + ligne).val()) / 1.5;
+  const ligne = $(this).data('ligne')
+  const nbSeance = parseFloat($('#tp_' + ligne).val()) / 1.5
   $('#ind_tp_' + ligne).html(nbSeance.toFixed(2));
 
   updateSynthesePrevisionnel();
 });
 
 function updateSynthesePrevisionnel() {
-  var totalCm = 0;
-  var totalTd = 0;
-  var totalTp = 0;
-  var totalEqTd = 0;
-  var totalEtu = 0;
-  var totalMatiere = 0;
+  let totalCm = 0
+  let totalTd = 0
+  let totalTp = 0
+  const totalEqTd = 0
+  let totalEtu = 0
+  let totalMatiere = 0
 
-  for (var i = 1; i <= nbLignePrevisionnel; i++) {
-    totalCm = totalCm + parseFloat($('#cm_' + i).val()) * parseInt($('#gr_cm_' + i).val());
-    totalTd = totalTd + parseFloat($('#td_' + i).val()) * parseInt($('#gr_td_' + i).val());
-    totalTp = totalTp + parseFloat($('#tp_' + i).val()) * parseInt($('#gr_tp_' + i).val());
+  for (let i = 1; i <= nbLignePrevisionnel; i++) {
+    let $cm = $('#cm_' + i)
+    let $td = $('#td_' + i)
+    let $tp = $('#tp_' + i)
+
+    totalCm = totalCm + parseFloat($cm.val()) * parseInt($('#gr_cm_' + i).val());
+    totalTd = totalTd + parseFloat($td.val()) * parseInt($('#gr_td_' + i).val());
+    totalTp = totalTp + parseFloat($tp.val()) * parseInt($('#gr_tp_' + i).val());
     totalMatiere = totalMatiere + totalCm + totalTd + totalTp;
-    totalEtu = totalEtu + parseFloat($('#cm_' + i).val()) + parseFloat($('#td_' + i).val()) + parseFloat($('#tp_' + i).val());
+    totalEtu = totalEtu + parseFloat($cm.val()) + parseFloat($td.val()) + parseFloat($tp.val());
   }
 
 
@@ -149,8 +153,8 @@ function updateSynthesePrevisionnel() {
 }
 
 $(document).on('change', '#previsionnel_semestre', function () {
-  var selectMatiere = $('#previsionnel_matiere');
-  if ($(this).val() == "") {
+  const selectMatiere = $('#previsionnel_matiere')
+  if ($(this).val() === "") {
     selectMatiere.empty();
     selectMatiere.append($("<option></option>")
       .attr("value", "")
@@ -176,14 +180,14 @@ $(document).on('change', '#previsionnel_semestre', function () {
 });
 
 $(document).on('change', '#previsionnel_matiere', function () {
-  var volumeMatiere = $('#volumeMatiere');
-  if ($(this).val() == "") {
+  const volumeMatiere = $('#volumeMatiere')
+  if ($(this).val() === "") {
     volumeMatiere.html("Choisir d'abord une matière");
   } else {
     $.ajax({
       url: Routing.generate('api_matiere', {'matiere': $(this).val()}),
       success: function (data) {
-        var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/departement => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
+        const html = 'PPN Officiel => CM ' + data.cmFormation + ' heure(s); TD ' + data.tdFormation + ' heure(s); TP ' + data.tpFormation + ' heure(s); PPN Réalisé/departement => CM ' + data.cmPpn + ' heure(s); TD ' + data.tdPpn + ' heure(s); TP ' + data.tpPpn + ' heure(s);'
         volumeMatiere.html(html);
       }
     });
@@ -195,7 +199,7 @@ $(document).on('click', '#btnGenereFichier', function (e) {
   e.preventDefault()
   e.stopPropagation()
 
-  var selectedChamps = []
+  const selectedChamps = []
   $('input:checkbox[name=exportChamps]:checked').each(function () {
     selectedChamps.push($(this).val())
   })

@@ -12,6 +12,11 @@ class BorneController extends AbstractController
 {
     /**
      * @Route("/borne/{semestre1}/{semestre2}", name="borne")
+     * @param MyEdtBorne $myEdtBorne
+     * @param Semestre   $semestre1
+     * @param Semestre   $semestre2
+     *
+     * @return Response
      */
     public function index(MyEdtBorne $myEdtBorne, Semestre $semestre1, Semestre $semestre2): Response
     {

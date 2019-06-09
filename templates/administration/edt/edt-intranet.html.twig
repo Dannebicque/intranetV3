@@ -30,9 +30,8 @@
                         {% for semestre in user_data.semestres %}
                             <a class="btn {% if edt.semestre.id == semestre.id %}btn-primary{% endif %}"
                                href="{{ path('administration_edt_index',{valeur:semestre.id, filtre:'promo',
-                                   semaine:edt.semaine}) }}" >{{ semestre
-                                .libelle
-                                }}</a>
+                                   semaine:edt.semaine}) }}">{{ semestre
+                                .libelle }}</a>
                         {% endfor %}
 
                     </div>
@@ -85,13 +84,14 @@
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichesemaine" id="affichesemaine">
                     <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
                     {% for sem in edt.semaines %}
-                    <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
-                    du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem.semaineIUT }}</option>
+                        <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
+                            du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} |
+                            S{{ sem.semaineIUT }}</option>
                     {% endfor %}
                 </select>
             </div>
 
-    </div>
+        </div>
 
         <div class="row gap-y">
             <div class="col-sm-12">
@@ -149,6 +149,7 @@
                 </table>
             </div>
         </div>
+    </div>
 </div>
 
 {{ include('composants/edt.html.twig', {source: 'intranet'}) }}
@@ -158,8 +159,10 @@
     <div class="card-body">
         <div class="row gap-y">
             <div class="col-md-4 col-sm-12">
-                <div><button id="idimportsemaine"
-                        class="btn btn-block btn-primary"> {{ 'adm.edt.import.semaine'|trans }}</button></div>
+                <div>
+                    <button id="idimportsemaine"
+                            class="btn btn-block btn-primary"> {{ 'adm.edt.import.semaine'|trans }}</button>
+                </div>
             </div>
 
             <div class="col-md-4 col-sm-12">

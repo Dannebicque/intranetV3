@@ -20,8 +20,6 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/", name="administration_matiere_index", methods="GET")
-     * @param MatiereRepository $matiereRepository
-     *
      * @return Response
      */
     public function index(): Response
@@ -31,7 +29,7 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose"=true})
-     * @param MatiereRepository $matiereRepository
+     * @param Diplome $diplome
      *
      * @return Response
      */

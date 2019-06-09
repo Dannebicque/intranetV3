@@ -167,6 +167,16 @@ fieldset legend {
   text-align: center;
 }
 
+table {
+  border: 1px solid lightgrey;
+}
+
+thead {
+  background-color: lightgrey;
+}
+
+/** Responsive */
+
 @media screen and (max-width: 640px) {
   /* Grid EDT Etudiant */
   .wrapper-edt-etudiant {

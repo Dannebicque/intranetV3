@@ -122,6 +122,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/choix-departement", name="security_choix_departement")
      * @param TranslatorInterface            $translator
+     * @param FlashBagInterface              $flashBag
+     * @param SessionInterface               $session
      * @param Request                        $request
      * @param PersonnelDepartementRepository $personnelDepartementRepository
      *

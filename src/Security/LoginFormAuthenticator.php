@@ -129,7 +129,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $roles = $token->getRoles();
+        $roles = $token->getRoleNames();
 
         $rolesTab = array_map(static function($role) {
             return $role->getRole();

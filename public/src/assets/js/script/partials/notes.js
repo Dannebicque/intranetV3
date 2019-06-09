@@ -13,14 +13,14 @@
  */
 
 $('.savegroupe').click(function () {
-  var groupe = $(this).attr('id')
+  const groupe = $(this).attr('id')
   console.log(groupe)
-  var notes = {'notes': []}
+  const notes = {'notes': []}
   $('.noteetudiant:input').each(function () {
     if ($(this).hasClass(groupe)) //vérifier que c'est le groupe concerné
     {
-      var $id = $(this).data('etudiant')
-      var obj = {
+      const $id = $(this).data('etudiant')
+      const obj = {
         'id': $id,
         'note': $(this).val(),
         'commentaire': $('#com_' + $id).val()
@@ -50,7 +50,7 @@ $('.savegroupe').click(function () {
 })
 
 $(document).on('keyup', '.noteetudiant', function (e) {
-  var val = $(this).val()
+  const val = $(this).val()
 
   if (val == '-0.01') {
     $(this).addClass('is-valid')

@@ -13,8 +13,8 @@
  */
 
 $(document).on('click', '.filtreTypeDate', function (e) {
-  var btn = $(this)
-  var type = btn.data('type')
+  const btn = $(this)
+  const type = btn.data('type')
   if (btn.hasClass('btn-outline')) {
     afficheType(type)
     btn.removeClass('btn-outline')
@@ -26,8 +26,8 @@ $(document).on('click', '.filtreTypeDate', function (e) {
 })
 
 $(document).on('click', '.filtreUtilisateurDate', function (e) {
-  var btn = $(this)
-  var type = btn.data('type')
+  const btn = $(this)
+  const type = btn.data('type')
   if (btn.hasClass('btn-outline')) {
     afficheUtilisateur(type)
     btn.removeClass('btn-outline')

@@ -59,7 +59,7 @@ class ProgressionPedagogiqueRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getProgressionsArray(Personnel $personnel)
+    public function getProgressionsArray(Personnel $personnel): array
     {
         $query = $this->createQueryBuilder('d')
             ->andWhere('d.personnel = :personnel')

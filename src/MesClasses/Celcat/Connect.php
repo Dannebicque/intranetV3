@@ -38,7 +38,7 @@ abstract class Connect
         return self::$conn;
     }
 
-    public static function getCalendar(EntityManagerInterface $entityManager)
+    public static function getCalendar(EntityManagerInterface $entityManager): void
     {
         self::connect();
 

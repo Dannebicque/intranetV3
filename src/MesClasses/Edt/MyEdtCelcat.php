@@ -32,8 +32,7 @@ class MyEdtCelcat extends BaseEdt
     /**
      * MyEdt constructor.
      *
-     * @param EdtPlanningRepository $edtPlanningRepository
-     * @param CalendrierRepository  $celcatCalendrierRepository
+     * @param CalendrierRepository $celcatCalendrierRepository
      */
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository
@@ -44,6 +43,7 @@ class MyEdtCelcat extends BaseEdt
 
     /**
      * @param Personnel $personnel
+     * @param int       $semaine
      */
     public function initPersonnel(Personnel $personnel, $semaine = 0): void
     {
@@ -54,7 +54,7 @@ class MyEdtCelcat extends BaseEdt
     {
     }
 
-    public function initAdministration()
+    public function initAdministration(): void
     {
     }
 }

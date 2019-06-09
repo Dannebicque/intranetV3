@@ -55,7 +55,7 @@ class SalleExamenController extends BaseController
      */
     public function export(MyExport $myExport, SalleExamenRepository $salleExamenRepository, $_format): Response
     {
-        $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
+        $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $salles_examen,

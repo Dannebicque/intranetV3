@@ -46,8 +46,8 @@ $(document).on('click', '#marquerNotificationsRead', function (e) {
 })
 
 $(document).on('click', '#valideDestinataires', function () {
-  var dest = ''
-    $("input[type='checkbox']:checked").each(
+  let dest = ''
+  $("input[type='checkbox']:checked").each(
       function() {
         dest = dest + "; " + $(this).val()
         console.log($(this).val())

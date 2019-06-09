@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Absence;
+use App\Entity\AbsenceJustificatif;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -143,7 +144,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAbsencesAJustifer(\App\Entity\AbsenceJustificatif $justificatif)
+    public function findAbsencesAJustifer(AbsenceJustificatif $justificatif)
     {
         //recherche toutes les absences sur la période du justificatif
 

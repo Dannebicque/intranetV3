@@ -56,10 +56,12 @@ class MyEdtImport
     /**
      * MyEdtImport constructor.
      *
+     * @param EdtPlanningRepository  $edtPlanningRepository
      * @param PersonnelRepository    $personnelRepository
      * @param MatiereRepository      $matiereRepository
      * @param SemestreRepository     $semestreRepository
      * @param EntityManagerInterface $entityManager
+     * @param MyUpload               $myUpload
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
@@ -89,7 +91,7 @@ class MyEdtImport
     }
 
 
-    public function traite()
+    public function traite(): void
     {
         //Récupérer la liste des profs avec initiales
         $tabIntervenants = $this->personnelRepository->tableauIntervenants($this->dataUserSession->getDepartement());
@@ -225,7 +227,7 @@ class MyEdtImport
         return $this->semestre;
     }
 
-    private function clearSemaine($semaine, Semestre $semestre)
+    private function clearSemaine($semaine, Semestre $semestre): void
     {
         $sem = $this->edtPlanningRepository->findBy(array(
             'semaine'  => $semaine,

@@ -2,7 +2,7 @@
 
 $(document).on('click', '#addCategorie', function (e) {
 
-  var table = $('#listeCategories').DataTable();
+  const table = $('#listeCategories').DataTable()
   table.clear(); //effacer le datatable
   table.destroy(); //supprimer le datatable
 
@@ -15,7 +15,7 @@ $(document).on('click', '#addCategorie', function (e) {
     },
     method: 'POST',
     success: function (data) {
-      var table = $('#listeCategories').empty();
+      const table = $('#listeCategories').empty()
       table.append('<thead>\n' +
        '<tr>\n' +
         '<th>Libellé</th>\n' +
@@ -27,10 +27,10 @@ $(document).on('click', '#addCategorie', function (e) {
 
       jQuery.each(data, function (index, categorie) {
         //console.log(etudiant)
-        var html = '<tr>\n' +
+        const html = '<tr>\n' +
           '                        <td>' + categorie.libelle + '</td>\n' +
           '                        <td>' + categorie.nbArticles + '</td>\n' +
-          '                        <td>'+ categorie.id +'</td>\n' +
+          '                        <td>' + categorie.id + '</td>\n' +
           '                    </tr>'
         table.append(html)
       })

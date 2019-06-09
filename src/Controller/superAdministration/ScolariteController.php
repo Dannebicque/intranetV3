@@ -37,7 +37,7 @@ class ScolariteController extends BaseController
     /**
      * @Route("/importer", name="sa_scolarite_importer")
      */
-    public function importerScolarite()
+    public function importerScolarite(): void
     {
         //déjà dans administration ?
     }

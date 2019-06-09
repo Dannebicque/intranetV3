@@ -155,6 +155,10 @@ class TypeDiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_type_diplome_delete", methods="DELETE")
+     * @param Request     $request
+     * @param TypeDiplome $typeDiplome
+     *
+     * @return Response
      */
     public function delete(Request $request, TypeDiplome $typeDiplome): Response
     {

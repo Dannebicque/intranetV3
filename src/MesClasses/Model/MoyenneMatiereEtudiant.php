@@ -22,7 +22,7 @@ class MoyenneMatiereEtudiant
     private $etudiant;
 
     /** @var */
-    private $notes = [];
+    private $notes;
 
     /** @var double */
     private $moyenne = -0.01;

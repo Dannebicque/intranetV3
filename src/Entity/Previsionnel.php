@@ -190,7 +190,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbHTd(?float $nbHTd = 0): self
+    public function setNbHTd(float $nbHTd = 0): self
     {
         $this->nbHTd = $nbHTd;
 
@@ -210,7 +210,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbHTp(?float $nbHTp = 0): self
+    public function setNbHTp(float $nbHTp = 0): self
     {
         $this->nbHTp = $nbHTp;
 
@@ -230,7 +230,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbGrCm(?int $nbGrCm = 0): self
+    public function setNbGrCm(int $nbGrCm = 0): self
     {
         $this->nbGrCm = $nbGrCm;
 
@@ -250,7 +250,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbGrTd(?int $nbGrTd = 0): self
+    public function setNbGrTd(int $nbGrTd = 0): self
     {
         $this->nbGrTd = $nbGrTd;
 
@@ -270,7 +270,7 @@ class Previsionnel extends BaseEntity
      *
      * @return Previsionnel
      */
-    public function setNbGrTp(?int $nbGrTp = 0): self
+    public function setNbGrTp(int $nbGrTp = 0): self
     {
         $this->nbGrTp = $nbGrTp;
 

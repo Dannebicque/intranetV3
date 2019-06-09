@@ -114,8 +114,8 @@ app.config({
 
 
 function readUrlMenu($url) {
-  var $elt = $url.split('/');
-  var $firstElt = 2;
+  const $elt = $url.split('/')
+  let $firstElt = 2
   console.log($elt);
     if ($elt[1] === 'index.php') {
       if ($elt.length > 1) {
@@ -138,12 +138,37 @@ function readUrlMenu($url) {
 //colorise le bon menu
 readUrlMenu($(location).attr('pathname'))
 
+function updateAffichage (date, heure) {
+  console.log('aff')
+  $.ajax({
+    type: 'GET',
+    url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
+    dataType: 'json',
+    success: function (data) {
+
+      const tabsences = data
+      console.log(date)
+      const t = date.split('/')
+      const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
+      console.log(ddate)
+      console.log(tabsences[ddate])
+      if (typeof tabsences[ddate] !== 'undefined') {
+        if (typeof tabsences[ddate][heure] !== 'undefined') {
+          for (let i = 0; i < tabsences[ddate][heure].length; i++) {
+            console.log(tabsences[ddate][heure][i])
+            $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
+          }
+        }
+      }
+    }
+  })
+}
 
 //pop up de confirmation de suppression
 $(document).on('click', '.supprimer', function (e) {
   e.preventDefault();
-  var url = $(this).attr('href');
-  var csrf = $(this).data('csrf');
+  const url = $(this).attr('href')
+  const csrf = $(this).data('csrf')
   swal({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -195,7 +220,7 @@ $(document).on('click', '.supprimer', function (e) {
 });
 
 function addCallout (message, label) {
-  var html = '<div class="callout callout-' + label + '" role="alert">\n' +
+  const html = '<div class="callout callout-' + label + '" role="alert">\n' +
     '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
     '                        <span>&times;</span>\n' +
     '                    </button>\n' +
@@ -251,8 +276,8 @@ app.ready(function () {
 
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
-    var files = []
-    for (var i = 0; i < $(this)[0].files.length; i++) {
+    const files = []
+    for (let i = 0; i < $(this)[0].files.length; i++) {
       files.push($(this)[0].files[i].name)
     }
     $(this).next('.custom-file-label').html(files.join(', '))
@@ -287,17 +312,17 @@ app.ready(function () {
  *
  */
 
-var idModal = 1;
+const idModal = 1
 
 function openModal(titre)
 {
 
 
-  var html = '<div id="modal'+idModal+'" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">\n' +
+  const html = '<div id="modal' + idModal + '" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">\n' +
     '                    <div class="modal-dialog modal-md modal-dialog-centered">\n' +
     '                        <div tabindex="-1" class="modal-content">\n' +
     '                            <header class="modal-header"><h5 class="modal-title">\n' +
-    '                                    '+ titre +'</h5>\n' +
+    '                                    ' + titre + '</h5>\n' +
     '                                <button type="button" data-dismiss="modal" class="close">×</button>\n' +
     '                            </header>\n' +
     '                            <div class="modal-body"><p class="my-4"></p></div>\n' +
@@ -306,7 +331,7 @@ function openModal(titre)
     '                            </footer>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
-    '                </div>';
+    '                </div>'
 
 
 }
@@ -315,10 +340,11 @@ function openModal(titre)
 $(document).on('click', '.page-link', function (e) {
   e.preventDefault();
   e.stopPropagation();
-  var zone = $('#zone-pagination');
+  const zone = $('#zone-pagination')
   zone.empty();
   zone.load($(this).attr('href'));
 });
+
 
   // $.fn.editableform.buttons =
   //   '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
@@ -558,7 +584,7 @@ $(document).on('click', '.enseignanttrombi', function(e) {
  */
 
 $(document).on('keyup', '#login_urca', function() {
-  var $val = $(this).val();
+  const $val = $(this).val()
   console.log($val);
   if ($val.length > 2) {
     $.ajax({
@@ -567,13 +593,13 @@ $(document).on('keyup', '#login_urca', function() {
       success: function(data) {
         $('#result').empty();
         jQuery.each(data, function (index, pers) {
-          var html = "<tr>" +
-            "<td>"+pers.nom+"</td>" +
-            "<td>"+pers.prenom+"</td>" +
-            "<td>"+pers.username+"</td>" +
-            "<td>"+pers.mail_univ+"</td>" +
-            "<td><a href=\"#\" class=\"btn btn-success btn-outline btn-square addpersonnel\" data-provide=\"tooltip\" data-placement=\"bottom\" title=\"Ajouter à la departement\" data-slug=\""+pers.slug+"\"><i class=\"ti-plus\"></i></a></td>" +
-            "</tr>";
+          const html = '<tr>' +
+            '<td>' + pers.nom + '</td>' +
+            '<td>' + pers.prenom + '</td>' +
+            '<td>' + pers.username + '</td>' +
+            '<td>' + pers.mail_univ + '</td>' +
+            '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la departement" data-slug="' + pers.slug + '"><i class="ti-plus"></i></a></td>' +
+            '</tr>'
           $('#result').append(html);
         });
       }
@@ -592,8 +618,8 @@ $(document).on('click', '.addpersonnel', function(){
 });
 
 $(document).on('keyup', '#sa_login_urca', function () {
-  var departement = $(this).data('departement');
-  var $val = $(this).val()
+  const departement = $(this).data('departement')
+  const $val = $(this).val()
   console.log($val)
   if ($val.length > 2) {
     $.ajax({
@@ -602,7 +628,7 @@ $(document).on('keyup', '#sa_login_urca', function () {
       success: function (data) {
         $('#result').empty()
         jQuery.each(data, function (index, pers) {
-          var html = '<tr>' +
+          const html = '<tr>' +
             '<td>' + pers.nom + '</td>' +
             '<td>' + pers.prenom + '</td>' +
             '<td>' + pers.username + '</td>' +
@@ -630,7 +656,7 @@ $(document).on('click', '.sa_addpersonnel', function () {
 $(document).on('click', '.personnel_index_change', function(){
   $('.personnel_index_change').removeClass('active show');
   $(this).addClass('active show');
-  var table = $('#tableau').DataTable();
+  const table = $('#tableau').DataTable()
   table.clear(); //effacer le datatable
   table.destroy(); //supprimer le datatable
   $.ajax({
@@ -639,26 +665,26 @@ $(document).on('click', '.personnel_index_change', function(){
     success: function(data) {
       jQuery.each(data, function (index, pers) {
         //ajouter les lignes
-        var html = "<tr>\n" +
-          "                        <td>"+pers.nom+"</td>\n" +
-          "                        <td>"+pers.prenom+"</td>\n" +
-          "                        <td>"+pers.posteInterne+"</td>\n" +
-          "                        <td>"+pers.telBureau+"</td>\n" +
-          "                        <td>"+pers.bureau1+"</td>\n" +
-          "                        <td>"+pers.numeroHarpege+"</td>\n" +
-          "                        <td>"+pers.mailUniv+"</td>\n" +
-          "                        <td>\n" +
-          "<a href=\""+Routing.generate('administration_personnel_show', {id: pers.id})+"\" class=\"btn btn-info btn-outline btn-square\" data-provide=\"tooltip\"\n" +
+        const html = '<tr>\n' +
+          '                        <td>' + pers.nom + '</td>\n' +
+          '                        <td>' + pers.prenom + '</td>\n' +
+          '                        <td>' + pers.posteInterne + '</td>\n' +
+          '                        <td>' + pers.telBureau + '</td>\n' +
+          '                        <td>' + pers.bureau1 + '</td>\n' +
+          '                        <td>' + pers.numeroHarpege + '</td>\n' +
+          '                        <td>' + pers.mailUniv + '</td>\n' +
+          '                        <td>\n' +
+          '<a href="' + Routing.generate('administration_personnel_show', {id: pers.id}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
           '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
-          "<a href=\""+Routing.generate('administration_personnel_edit', {id: pers.id})+"\"\n" +
+          '<a href="' + Routing.generate('administration_personnel_edit', {id: pers.id}) + '"\n' +
           '   class="btn btn-warning btn-outline btn-square"><i class="fa fa-edit"\n' +
-          "                                                     data-provide=\"tooltip\"\n" +
-          "                                                     data-placement=\"bottom\"\n" +
-          "                                                     title=\"Modifier\"></i></a>\n" +
-          "<a href=\""+Routing.generate('administration_personnel_delete', {id: pers.id})+"\" class=\"btn btn-danger btn-outline btn-square supprimer\" data-id=\"id\"><i\n" +
+          '                                                     data-provide="tooltip"\n' +
+          '                                                     data-placement="bottom"\n' +
+          '                                                     title="Modifier"></i></a>\n' +
+          '<a href="' + Routing.generate('administration_personnel_delete', {id: pers.id}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i\n' +
           '            class="fa fa-trash" data-provide="tooltip" data-placement="bottom"\n' +
-          "            title=\"Supprimer\"></i></a>"
-          "                        </td>\n" +
+          '            title="Supprimer"></i></a>' +
+        '                        </td>\n' +
           "                    </tr>";
         $('#datatableau').append(html);
       });
@@ -728,7 +754,7 @@ $(document).on('change','.change_droit_pf', function (){
  *
  */
 
-var table = $('#datatableEtudiants').DataTable({});
+const table = $('#datatableEtudiants').DataTable({})
 table.clear(); //effacer le datatable
 table.destroy(); //supprimer le datatable
 
@@ -756,8 +782,8 @@ $(document).on('click', '.admChangeTypeGroupe', function() {
 
 $(document).on( 'click', '.changegroupe', function() {
   if($(this).is(':checked')) {
-    var newgroupe = $(this).val();
-    var oldgroupe = '#' + $(this).attr('name') + "_old";
+    const newgroupe = $(this).val()
+    const oldgroupe = '#' + $(this).attr('name') + '_old'
 
     console.log(oldgroupe);
     $.ajax(
@@ -792,6 +818,7 @@ $(document).on( 'click', '.changegroupe', function() {
  *
  */
 
+
 $(document).on('click', '.changeapplication', function(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -804,8 +831,8 @@ $(document).on('click', '.changeapplication', function(e) {
 $(document).on('change', '#selectsemestre', function () {
   //matieres
   $('#listegroupe').empty();
-  var selectMatiere = $("#selectmatiere");
-  var selectGroupes = $("#selectgroupes");
+  const selectMatiere = $('#selectmatiere')
+  const selectGroupes = $('#selectgroupes')
   $.ajax(
     {
       url: Routing.generate('api_matieres_semestre', {semestre: $(this).val()}),
@@ -852,7 +879,7 @@ $(document).on('change', '#selectsemestre', function () {
 
 $(document).on('change', '#selectgroupes', function () {
 
-  var $lgr = $('#listegroupe');
+  const $lgr = $('#listegroupe')
   //matieres
   $.ajax(
     {
@@ -860,7 +887,7 @@ $(document).on('change', '#selectgroupes', function () {
       dataType: "json", //Return data type (what we expect).
       success: function (data) {
         $lgr.empty();
-        var $html = '';
+        let $html = ''
         jQuery.each(data, function (index, groupe) {
           $html += '<input type="checkbox" checked name="detail_groupes[]" value="' + groupe.id + '"> ' + groupe.libelle + ' | ';
         });
@@ -897,7 +924,7 @@ $(document).on('click','#add_carnet', function(){
  *
  */
 
-var nbLignePrevisionnel = 1;
+let nbLignePrevisionnel = 1
 
 //todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
 //todo: pourquoi ajaxcomplete?
@@ -958,7 +985,7 @@ $(document).on('click', '#addIntervenantPrevisionnel', function (e) {
   e.stopPropagation();
   nbLignePrevisionnel++;
 
-  var html = '<tr>\n' +
+  const html = '<tr>\n' +
     '                        <td>\n' +
     '                            <select class="form-control">\n' +
     '                                <option value="">Choisir l\'intervenant</option>\n' +
@@ -978,50 +1005,54 @@ $(document).on('click', '#addIntervenantPrevisionnel', function (e) {
     '                        <td style="background-color: #FFC052"><input type="number" value="0" name="gr_tp_' + nbLignePrevisionnel + '" id="gr_tp_' + nbLignePrevisionnel + '"\n' +
     '                                                                     data-ligne="' + nbLignePrevisionnel + '" class="form-control chgtp"></td>\n' +
     '                        <td style="background-color: #FFC052" id="ind_tp_' + nbLignePrevisionnel + '">0</td>\n' +
-    '                    </tr>';
+    '                    </tr>'
 
   $('#nbLigne').val(nbLignePrevisionnel);
   $('#ligneAdd').before(html);
 });
 
 $(document).on('change', '.chgcm', function (e) {
-  var ligne = $(this).data('ligne');
-  var nbSeance = parseFloat($('#cm_' + ligne).val()) / 1.5;
+  const ligne = $(this).data('ligne')
+  const nbSeance = parseFloat($('#cm_' + ligne).val()) / 1.5
   $('#ind_cm_' + ligne).html(nbSeance.toFixed(2));
 
   updateSynthesePrevisionnel();
 });
 
 $(document).on('change', '.chgtd', function (e) {
-  var ligne = $(this).data('ligne');
-  var nbSeance = parseFloat($('#td_' + ligne).val()) / 1.5;
+  const ligne = $(this).data('ligne')
+  const nbSeance = parseFloat($('#td_' + ligne).val()) / 1.5
   $('#ind_td_' + ligne).html(nbSeance.toFixed(2));
 
   updateSynthesePrevisionnel();
 });
 
 $(document).on('change', '.chgtp', function (e) {
-  var ligne = $(this).data('ligne');
-  var nbSeance = parseFloat($('#tp_' + ligne).val()) / 1.5;
+  const ligne = $(this).data('ligne')
+  const nbSeance = parseFloat($('#tp_' + ligne).val()) / 1.5
   $('#ind_tp_' + ligne).html(nbSeance.toFixed(2));
 
   updateSynthesePrevisionnel();
 });
 
 function updateSynthesePrevisionnel() {
-  var totalCm = 0;
-  var totalTd = 0;
-  var totalTp = 0;
-  var totalEqTd = 0;
-  var totalEtu = 0;
-  var totalMatiere = 0;
+  let totalCm = 0
+  let totalTd = 0
+  let totalTp = 0
+  const totalEqTd = 0
+  let totalEtu = 0
+  let totalMatiere = 0
 
-  for (var i = 1; i <= nbLignePrevisionnel; i++) {
-    totalCm = totalCm + parseFloat($('#cm_' + i).val()) * parseInt($('#gr_cm_' + i).val());
-    totalTd = totalTd + parseFloat($('#td_' + i).val()) * parseInt($('#gr_td_' + i).val());
-    totalTp = totalTp + parseFloat($('#tp_' + i).val()) * parseInt($('#gr_tp_' + i).val());
+  for (let i = 1; i <= nbLignePrevisionnel; i++) {
+    let $cm = $('#cm_' + i)
+    let $td = $('#td_' + i)
+    let $tp = $('#tp_' + i)
+
+    totalCm = totalCm + parseFloat($cm.val()) * parseInt($('#gr_cm_' + i).val());
+    totalTd = totalTd + parseFloat($td.val()) * parseInt($('#gr_td_' + i).val());
+    totalTp = totalTp + parseFloat($tp.val()) * parseInt($('#gr_tp_' + i).val());
     totalMatiere = totalMatiere + totalCm + totalTd + totalTp;
-    totalEtu = totalEtu + parseFloat($('#cm_' + i).val()) + parseFloat($('#td_' + i).val()) + parseFloat($('#tp_' + i).val());
+    totalEtu = totalEtu + parseFloat($cm.val()) + parseFloat($td.val()) + parseFloat($tp.val());
   }
 
 
@@ -1034,8 +1065,8 @@ function updateSynthesePrevisionnel() {
 }
 
 $(document).on('change', '#previsionnel_semestre', function () {
-  var selectMatiere = $('#previsionnel_matiere');
-  if ($(this).val() == "") {
+  const selectMatiere = $('#previsionnel_matiere')
+  if ($(this).val() === "") {
     selectMatiere.empty();
     selectMatiere.append($("<option></option>")
       .attr("value", "")
@@ -1061,14 +1092,14 @@ $(document).on('change', '#previsionnel_semestre', function () {
 });
 
 $(document).on('change', '#previsionnel_matiere', function () {
-  var volumeMatiere = $('#volumeMatiere');
-  if ($(this).val() == "") {
+  const volumeMatiere = $('#volumeMatiere')
+  if ($(this).val() === "") {
     volumeMatiere.html("Choisir d'abord une matière");
   } else {
     $.ajax({
       url: Routing.generate('api_matiere', {'matiere': $(this).val()}),
       success: function (data) {
-        var html = "PPN Officiel => CM " + data.cmFormation + " heure(s); TD " + data.tdFormation + " heure(s); TP " + data.tpFormation + " heure(s); PPN Réalisé/departement => CM " + data.cmPpn + " heure(s); TD " + data.tdPpn + " heure(s); TP " + data.tpPpn + " heure(s);"
+        const html = 'PPN Officiel => CM ' + data.cmFormation + ' heure(s); TD ' + data.tdFormation + ' heure(s); TP ' + data.tpFormation + ' heure(s); PPN Réalisé/departement => CM ' + data.cmPpn + ' heure(s); TD ' + data.tdPpn + ' heure(s); TP ' + data.tpPpn + ' heure(s);'
         volumeMatiere.html(html);
       }
     });
@@ -1080,7 +1111,7 @@ $(document).on('click', '#btnGenereFichier', function (e) {
   e.preventDefault()
   e.stopPropagation()
 
-  var selectedChamps = []
+  const selectedChamps = []
   $('input:checkbox[name=exportChamps]:checked').each(function () {
     selectedChamps.push($(this).val())
   })
@@ -1290,8 +1321,8 @@ $(document).on('click', '#marquerNotificationsRead', function (e) {
 })
 
 $(document).on('click', '#valideDestinataires', function () {
-  var dest = ''
-    $("input[type='checkbox']:checked").each(
+  let dest = ''
+  $("input[type='checkbox']:checked").each(
       function() {
         dest = dest + "; " + $(this).val()
         console.log($(this).val())
@@ -1333,7 +1364,6 @@ $(document).on('click', '.starred', function () {
 
 
 /*
- * *
  *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
  *  *
  *  *
@@ -1346,11 +1376,11 @@ $(document).on('click', '.starred', function () {
  *
  */
 
-var tabsences = [];
+let tabsences = [];
 
-$(document).on('change', '#justifier_etudiant', function (e) {
+$(document).on('change', '#justifier_etudiant', function () {
 
-  var table = $('#tableJustifier').DataTable();
+  let table = $('#tableJustifier').DataTable();
   table.clear(); //effacer le datatable
   table.destroy(); //supprimer le datatable
 
@@ -1359,7 +1389,7 @@ $(document).on('change', '#justifier_etudiant', function (e) {
     url: Routing.generate('administration_absences_liste_absence_etudiant', {etudiant: $(this).val()}),
     //dataType: 'json',
     success: function (data) {
-      var table = $('#tableJustifier').empty();
+      let table = $('#tableJustifier').empty();
       table.append('<thead>\n' +
         '                <tr>\n' +
         '                    <th>Date</th>\n' +
@@ -1373,7 +1403,7 @@ $(document).on('change', '#justifier_etudiant', function (e) {
 
       jQuery.each(data, function (index, etudiant) {
         //console.log(etudiant)
-        var html = '<tr>\n' +
+        let html = '<tr>\n' +
           '                        <td>' + etudiant.date + '</td>\n' +
           '                        <td>' + etudiant.heure + '</td>\n' +
           '                        <td>' + etudiant.matiere + '</td>\n' +
@@ -1421,64 +1451,42 @@ $(document).on('click', '.justifieAbsence', function() {
 $(document).on('click', '.absChangeTypeGroupe', function (e) {
   e.preventDefault()
   e.stopPropagation()
+  $('.absChangeTypeGroupe').removeClass('btn-primary')
+  $(this).addClass('btn-primary')
   $('#listeEtudiantsAbsences').load(Routing.generate('api_absence_liste_etudiant', {typegroupe: $(this).data('typegroupe')}))
-  var date = $('#absence-date')
-  var heure = $('#absence-heure')
+  let date = $('#absence-date')
+  let heure = $('#absence-heure')
   updateAffichage(date.val(), heure.val())
 })
 
-
-function updateAffichage (date, heure) {
-  $.ajax({
-    type: 'GET',
-    url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
-    dataType: 'json',
-    success: function (data) {
-      tabsences = data
-      var t = date.split('/')
-      var ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
-
-      if (typeof tabsences[ddate] !== 'undefined') {
-        if (typeof tabsences[ddate][heure] !== 'undefined') {
-          for (var i = 0; i < tabsences[ddate][heure].length; i++) {
-            $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
-          }
-        }
-      }
-    }
-  })
-
-
-}
-
 $(document).on('change', '#absence-matiere', function () {
-  var etudiants = $('.etudiant')
-  var date = $('#absence-date')
-  var heure = $('#absence-heure')
+  let etudiants = $('.etudiant')
+  let date = $('#absence-date')
+  let heure = $('#absence-heure')
   etudiants.removeClass('absent')
   //etudiants.addClass('absence');
   updateAffichage(date.val(), heure.val())
 })
 
 $(document).on('change', '#absence-date', function () {
-  var etudiants = $('.etudiant')
-  var date = $('#absence-date')
-  var heure = $('#absence-heure')
+  let etudiants = $('.etudiant')
+  let date = $('#absence-date')
+  let heure = $('#absence-heure')
   etudiants.removeClass('absent')
   updateAffichage(date.val(), heure.val())
 })
 
 $(document).on('change', '#absence-heure', function () {
   var etudiants = $('.etudiant')
-  var date = $('#absence-date')
-  var heure = $('#absence-heure')
+  const date = $('#absence-date')
+  const heure = $('#absence-heure')
   etudiants.removeClass('absent')
   updateAffichage(date.val(), heure.val())
 })
 
 //marquage et enregistrement des absents
 $(document).on('click', '.etudiant', function () {
-  var $split = $(this).attr('id').split('_');
+  const $split = $(this).attr('id').split('_')
   if ($(this).hasClass('absent')) {
 
     //supprimer absence
@@ -1525,7 +1533,7 @@ $(document).on('click', '.etudiant', function () {
       },
       //affichage de l'erreur en cas de problème
       error: function (msg, string) {
-        if (msg.responseText == 'out') {
+        if (msg.responseText === 'out') {
           addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
         } else {
           addCallout('Erreur lors de l\'enregistrement.', 'danger')
@@ -1553,7 +1561,7 @@ $('#liste-absences').dataTable({
     }
   }*/
   'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-    if (aData[6] == 'non' || aData[6] == 'no' || aData[6] == 'No' || aData[6] == 'Non') {
+    if (aData[6] === 'non' || aData[6] === 'no' || aData[6] === 'No' || aData[6] === 'Non') {
       $('td', nRow).css('background-color', '#fce3e3')
     } else {
       $('td', nRow).css('background-color', '#e3fcf2')
@@ -1564,12 +1572,12 @@ $('#liste-absences').dataTable({
 //** Partie Justificatif **/
 
 $(document).on('click', '.justificatif-accepte', function (e) {
-  var justificatif = $(this).data('justificatif')
+  const justificatif = $(this).data('justificatif')
   $.ajax({
     url: Routing.generate('administration_absence_justificatif_change_etat', {uuid: justificatif, etat: 'A'}),
     success: function (e) {
-      var bx = $('.bx_' + justificatif)
-      var parent = bx.parent()
+      const bx = $('.bx_' + justificatif)
+      const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Accepté</a>')
       //todo: gérer la création du bouton annuler.
@@ -1582,12 +1590,12 @@ $(document).on('click', '.justificatif-accepte', function (e) {
 })
 
 $(document).on('click', '.justificatif-refuse', function (e) {
-  var justificatif = $(this).data('justificatif')
+  const justificatif = $(this).data('justificatif')
   $.ajax({
     url: Routing.generate('administration_absence_justificatif_change_etat', {uuid: justificatif, etat: 'R'}),
     success: function (e) {
-      var bx = $('.bx_' + justificatif)
-      var parent = bx.parent()
+      const bx = $('.bx_' + justificatif)
+      const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-warning btn-outline"><i class="ti-check"></i>Refusé</a>')
       //todo: gérer la création du bouton annuler.
@@ -1600,30 +1608,30 @@ $(document).on('click', '.justificatif-refuse', function (e) {
 })
 
 $(document).on('click', '.justificatif-annuler', function (e) {
-  var justificatif = $(this).data('justificatif')
+  const justificatif = $(this).data('justificatif')
   $.ajax({
     url: Routing.generate('administration_absence_justificatif_change_etat', {uuid: justificatif, etat: 'D'}),
     success: function (e) {
-      var bx = $('.bx_' + justificatif)
-      var parent = bx.parent()
+      const bx = $('.bx_' + justificatif)
+      const parent = bx.parent()
       bx.remove()
       //todo: gérer la création des deux boutons.
 
-      var html = "<a href=\"#\"\n" +
-        "                               class=\"btn btn-success btn-outline btn-square justificatif-accepte bx_"+justificatif+"\" data-provide=\"tooltip\"\n" +
-        "                               data-justificatif=\""+justificatif+"\"\n" +
-        "                               data-placement=\"bottom\" title=\"atitle.accepter.le.justificatif\"><i\n" +
-        "                                        class=\"ti-check\"></i></a>\n" +
-        "                            <a href=\"#\"\n" +
-        "                               class=\"btn btn-warning btn-outline btn-square justificatif-refuse bx_"+justificatif+"\" data-provide=\"tooltip\"\n" +
-        "                               data-justificatif=\""+justificatif+"\"\n" +
-        "                               data-placement=\"bottom\" title=\"atitle.refuser.le.justificatif\"><i\n" +
-        "                                        class=\"ti-na\"></i></a>\n" +
-        "\n" +
-        "                            <a href=\""+Routing.generate('administration_absence_justificatif_delete', {id: justificatif})+"\" data-csrf=\"{{ csrf_token('delete' ~ justificatif.uuidString) }}\"\n" +
-        "                               class=\"btn btn-danger btn-outline btn-square supprimer bx_"+justificatif+"\"><i\n" +
-        "                                        class=\"ti-close\" data-provide=\"tooltip\" data-placement=\"bottom\"\n" +
-        "                                        title=\"atitle.supprimer\"></i></a>"
+      const html = '<a href="#"\n' +
+        '                               class="btn btn-success btn-outline btn-square justificatif-accepte bx_' + justificatif + '" data-provide="tooltip"\n' +
+        '                               data-justificatif="' + justificatif + '"\n' +
+        '                               data-placement="bottom" title="atitle.accepter.le.justificatif"><i\n' +
+        '                                        class="ti-check"></i></a>\n' +
+        '                            <a href="#"\n' +
+        '                               class="btn btn-warning btn-outline btn-square justificatif-refuse bx_' + justificatif + '" data-provide="tooltip"\n' +
+        '                               data-justificatif="' + justificatif + '"\n' +
+        '                               data-placement="bottom" title="atitle.refuser.le.justificatif"><i\n' +
+        '                                        class="ti-na"></i></a>\n' +
+        '\n' +
+        '                            <a href="' + Routing.generate('administration_absence_justificatif_delete', {id: justificatif}) + '" data-csrf="{{ csrf_token(\'delete\' ~ justificatif.uuidString) }}"\n' +
+        '                               class="btn btn-danger btn-outline btn-square supprimer bx_' + justificatif + '"><i\n' +
+        '                                        class="ti-close" data-provide="tooltip" data-placement="bottom"\n' +
+        '                                        title="atitle.supprimer"></i></a>'
       parent.prepend(html)
       addCallout('Etat du justificatif d\'absence annulé !', 'success')
     },
@@ -1649,14 +1657,14 @@ $(document).on('click', '.justificatif-annuler', function (e) {
  */
 
 $('.savegroupe').click(function () {
-  var groupe = $(this).attr('id')
+  const groupe = $(this).attr('id')
   console.log(groupe)
-  var notes = {'notes': []}
+  const notes = {'notes': []}
   $('.noteetudiant:input').each(function () {
     if ($(this).hasClass(groupe)) //vérifier que c'est le groupe concerné
     {
-      var $id = $(this).data('etudiant')
-      var obj = {
+      const $id = $(this).data('etudiant')
+      const obj = {
         'id': $id,
         'note': $(this).val(),
         'commentaire': $('#com_' + $id).val()
@@ -1686,7 +1694,7 @@ $('.savegroupe').click(function () {
 })
 
 $(document).on('keyup', '.noteetudiant', function (e) {
-  var val = $(this).val()
+  const val = $(this).val()
 
   if (val == '-0.01') {
     $(this).addClass('is-valid')
@@ -1715,7 +1723,7 @@ $(document).on('keyup', '.noteetudiant', function (e) {
 $(document).on('click', '.articleLike', function (e) {
   e.preventDefault();
   e.stopPropagation();
-  var elt = $(this);
+  const elt = $(this)
 
   $.ajax({
     url: Routing.generate('article_like', {slug: $(this).data('article')}),
@@ -1742,11 +1750,11 @@ $(document).on('click', '.articleLike', function (e) {
 
 $(document).on('keyup', '#search', function (e) {
 
-  var keyword = $(this).val()
+  const keyword = $(this).val()
   console.log(keyword)
-  var search_reponse_etudiant = $('#search_reponse_etudiant')
-  var search_reponse_personnel = $('#search_reponse_personnel')
-  var search_reponse_autre = $('#search_reponse_autre')
+  const search_reponse_etudiant = $('#search_reponse_etudiant')
+  const search_reponse_personnel = $('#search_reponse_personnel')
+  const search_reponse_autre = $('#search_reponse_autre')
 
   if (keyword.length > 2) {
     $.ajax({
@@ -1755,7 +1763,7 @@ $(document).on('keyup', '#search', function (e) {
       success: function (data) {
 
 
-        var html = ''
+        let html = ''
         if (data.etudiants.length > 0) {
           jQuery.each(data.etudiants, function (index, etudiant) {
             html = html + '<a class="media" href="' + Routing.generate('user_profil', {
@@ -1763,12 +1771,12 @@ $(document).on('keyup', '#search', function (e) {
                 slug: etudiant.slug
               }) + '" target="_blank">\n' +
               '                <span class="avatar status-dark">\n' +
-              '                  <img src="' + basePath + 'photo/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
+              '                  <img src="/upload/etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
               '                </span>\n' +
               '\n' +
               '                        <div class="media-body">\n' +
               '                            <p><strong>' + etudiant.displayPr + '</strong>\n' +
-              '                                <time class="float-right" datetime="2018-07-14 20:00">Groupes...</time>\n' +
+              '                                <time class="float-right">' + etudiant.groupes +'</time>\n' +
               '                            </p>\n' +
               '                        </div>\n' +
               '                    </a>'
@@ -1786,7 +1794,7 @@ $(document).on('keyup', '#search', function (e) {
                 type: 'personnel',
                 slug: personnel.slug
               }) + '" target="_blank">\n' +
-              '                        <img class="avatar avatar-sm" src="' + basePath + 'photo/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
+              '                        <img class="avatar avatar-sm" src="upload/personnels/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
               '                        <p>' + personnel.displayPr + '</p>\n' +
               '                    </a>'
           })
@@ -1833,12 +1841,12 @@ $(document).on('keyup', '#search', function (e) {
  */
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
-  var rattrapage = $(this).data('rattrapage')
+  const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'A'}),
     success: function (e) {
-      var bx = $('.bx_' + rattrapage)
-      var parent = bx.parent()
+      const bx = $('.bx_' + rattrapage)
+      const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Acceptée</a>')
       addCallout('Demande de rattrapage validée !', 'success')
@@ -1850,12 +1858,12 @@ $(document).on('click', '.rattrapage-accepte', function (e) {
 })
 
 $(document).on('click', '.rattrapage-refuse', function (e) {
-  var rattrapage = $(this).data('rattrapage')
+  const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'R'}),
     success: function (e) {
-      var bx = $('.bx_' + rattrapage)
-      var parent = bx.parent()
+      const bx = $('.bx_' + rattrapage)
+      const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-warning btn-outline"><i class="ti-na"></i>Refusée</a>')
       addCallout('Demande de rattrapage refusée !', 'success')
@@ -1868,9 +1876,9 @@ $(document).on('click', '.rattrapage-refuse', function (e) {
 
 
 $(document).on('click', '.optAfficher', function (e) {
-  var evaluation = $(this).data('id')
-  var $child = $(this).children('i')
-  var $a = $(this)
+  const evaluation = $(this).data('id')
+  const $child = $(this).children('i')
+  const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_visibilite', {uuid: evaluation}),
     success: function (e) {
@@ -1897,9 +1905,9 @@ $(document).on('click', '.optAfficher', function (e) {
 })
 
 $(document).on('click', '.optVerrouiller', function (e) {
-  var evaluation = $(this).data('id')
-  var $child = $(this).children('i')
-  var $a = $(this)
+  const evaluation = $(this).data('id')
+  const $child = $(this).children('i')
+  const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
     success: function (e) {
@@ -1924,6 +1932,7 @@ $(document).on('click', '.optVerrouiller', function (e) {
   })
 })
 
+
 /*
  * *
  *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
@@ -1939,8 +1948,8 @@ $(document).on('click', '.optVerrouiller', function (e) {
  */
 
 $(document).on('click', '.filtreTypeDate', function (e) {
-  var btn = $(this)
-  var type = btn.data('type')
+  const btn = $(this)
+  const type = btn.data('type')
   if (btn.hasClass('btn-outline')) {
     afficheType(type)
     btn.removeClass('btn-outline')
@@ -1952,8 +1961,8 @@ $(document).on('click', '.filtreTypeDate', function (e) {
 })
 
 $(document).on('click', '.filtreUtilisateurDate', function (e) {
-  var btn = $(this)
-  var type = btn.data('type')
+  const btn = $(this)
+  const type = btn.data('type')
   if (btn.hasClass('btn-outline')) {
     afficheUtilisateur(type)
     btn.removeClass('btn-outline')
@@ -2058,7 +2067,7 @@ $(document).on('change', '.departementParDefaut', function(e){
  */
 
 $('#matiere_semestre').change(function () {
-  var semestreSelector = $(this)
+  const semestreSelector = $(this)
 
   // Request the neighborhoods of the selected city.
   $.ajax({
@@ -2069,7 +2078,7 @@ $('#matiere_semestre').change(function () {
       semestreid: semestreSelector.val()
     },
     success: function (ues) {
-      var matiereSelector = $('#matiere_ue')
+      const matiereSelector = $('#matiere_ue')
 
       // Remove current options
       matiereSelector.html('')
@@ -2095,7 +2104,7 @@ $('#matiere_semestre').change(function () {
       semestreid: semestreSelector.val()
     },
     success: function (parcours) {
-      var parcourSelector = $('#matiere_parcours')
+      const parcourSelector = $('#matiere_parcours')
 
       // Remove current options
       parcourSelector.html('')
@@ -2118,7 +2127,7 @@ $('#matiere_semestre').change(function () {
     dataType: 'JSON',
     type: 'GET',
     success: function (matieres) {
-      var parentSelector = $('#matiere_matiereParent')
+      const parentSelector = $('#matiere_matiereParent')
 
       // Remove current options
       parentSelector.html('')
@@ -2184,7 +2193,7 @@ $(document).on('change', '#tuteurUniversitaire', function (e) {
  */
 
 $(document).on('keyup', '#etudiant', function() {
-  var $val = $(this).val();
+  const $val = $(this).val()
   console.log($val);
   if ($val.length > 2) {
     $('#resultat').empty().load(Routing.generate('sa_scolarite_recherche', {needle: $val}))
@@ -2193,7 +2202,7 @@ $(document).on('keyup', '#etudiant', function() {
 
 
 $(document).on('click', '.visibiliteBorne', function(){
-  var btn = $(this);
+  const btn = $(this)
   $.ajax({
     url: Routing.generate('administration_borne_visibilite', {id:btn.data('id')}),
     success: function(data) {
@@ -2244,7 +2253,7 @@ $(document).on('change', '.typegroupe_defaut', function (e) {
 });
 
 $(document).on('click', '#add_type_groupe', function() {
-  var $semestre = $(this).data('semestre');
+  const $semestre = $(this).data('semestre')
   $.ajax({
     url: Routing.generate('administration_type_groupe_new'),
     method: 'POST',
@@ -2263,7 +2272,7 @@ $(document).on('click', '#add_type_groupe', function() {
 });
 
 $(document).on('click', '.add_groupe', function() {
-  var $parent = $(this).data('parent');
+  const $parent = $(this).data('parent')
 
   $.ajax({
     url: Routing.generate('administration_groupe_new'),
@@ -2300,7 +2309,7 @@ $(document).on('click', '.add_groupe', function() {
  */
 
 $(document).on('click', '#btn_creneau_add', function(){
-  var $annee = $('#change_annee_universitiare_temp').val()
+  const $annee = $('#change_annee_universitiare_temp').val()
   $.ajax({
     method:'POST',
     data: {
@@ -2321,7 +2330,7 @@ $(document).on('click', '#btn_creneau_add', function(){
 });
 
 $(document).on('click', '.bloquercreneau', function(){
-  var $cr = $(this)
+  const $cr = $(this)
   console.log('click')
   if ($cr.hasClass('bloquercreneau_eviter')) {
     updateCreneau('dispo', $cr.data('creneau'), $cr.data('semaine'));
@@ -2337,15 +2346,15 @@ $(document).on('click', '.bloquercreneau', function(){
 })
 
 $(document).on('click', '.creneau', function () {
-  var interdit = $('#nb_interdit')
-  var eviter = $('#nb_eviter')
-  var dispo = $('#nb_dispo')
-  var heure = $(this).data('heure')
-  var jour = $(this).dataAttr('jour')
+  const interdit = $('#nb_interdit')
+  const eviter = $('#nb_eviter')
+  const dispo = $('#nb_dispo')
+  const heure = $(this).data('heure')
+  const jour = $(this).dataAttr('jour')
 
-  var nb_interdit = parseInt(interdit.text())
-  var nb_eviter = parseInt(eviter.text())
-  var nb_dispo = parseInt(dispo.text())
+  let nb_interdit = parseInt(interdit.text())
+  let nb_eviter = parseInt(eviter.text())
+  let nb_dispo = parseInt(dispo.text())
 
   if ($(this).hasClass('bloquercreneau_interdit')) {
     $(this).removeClass('bloquercreneau_interdit')
@@ -2416,51 +2425,51 @@ function updateProgression (semaine, typecours, matiere,nbSeances) {
 
 function calculProgression (semaine, typecours, matiere) {
   //update colonne
-  var $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
-  var $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
-  var $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
+  const $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
+  const $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
+  const $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
 
 
-  var $col = 'tot_s' + semaine + '_' + matiere
+  const $col = 'tot_s' + semaine + '_' + matiere
 
-  var cm = parseInt($('#' + $col + '_cm').val())
+  let cm = parseInt($('#' + $col + '_cm').val())
   if (isNaN(cm)) {
     cm = 0
   }
 
-  var td = parseInt($('#' + $col + '_td').val())
+  let td = parseInt($('#' + $col + '_td').val())
   if (isNaN(td)) {
     td = 0
   }
 
-  var tp = parseInt($('#' + $col + '_tp').val())
+  let tp = parseInt($('#' + $col + '_tp').val())
   if (isNaN(tp)) {
     tp = 0
   }
 
-  var $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
+  const $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
   $('#' + $col).text($total)
 
   //update ligne
-  var $ztotCm = 'tot_cm_' + matiere
-  var $ztotTd = 'tot_td_' + matiere
-  var $ztotTp = 'tot_tp_' + matiere
-  var $ztotSCm = 'tot_cm_seance_' + matiere
-  var $ztotSTd = 'tot_td_seance_' + matiere
-  var $ztotSTp = 'tot_tp_seance_' + matiere
-  var $ztot = 'tot_' + matiere
-  var $ztotS = 'tot_seance_' + matiere
-  var $ztotCmH = 'tot_cm_h_' + matiere
-  var $ztotTdH = 'tot_td_h_' + matiere
-  var $ztotTpH = 'tot_tp_h_' + matiere
-  var $ztotH = 'tot_h_' + matiere
+  const $ztotCm = 'tot_cm_' + matiere
+  const $ztotTd = 'tot_td_' + matiere
+  const $ztotTp = 'tot_tp_' + matiere
+  const $ztotSCm = 'tot_cm_seance_' + matiere
+  const $ztotSTd = 'tot_td_seance_' + matiere
+  const $ztotSTp = 'tot_tp_seance_' + matiere
+  const $ztot = 'tot_' + matiere
+  const $ztotS = 'tot_seance_' + matiere
+  const $ztotCmH = 'tot_cm_h_' + matiere
+  const $ztotTdH = 'tot_td_h_' + matiere
+  const $ztotTpH = 'tot_tp_h_' + matiere
+  const $ztotH = 'tot_h_' + matiere
 
-  var $totCm = 0
-  var $totTd = 0
-  var $totTp = 0
+  let $totCm = 0
+  let $totTd = 0
+  let $totTp = 0
   //CM
   $('.cm_' + matiere).each(function () {
-    var t = parseInt($(this).val())
+    let t = parseInt($(this).val())
     if (isNaN(t)) {
       t = 0
     }
@@ -2473,7 +2482,7 @@ function calculProgression (semaine, typecours, matiere) {
 
   //TD
   $('.td_' + matiere).each(function () {
-    var t = parseInt($(this).val())
+    let t = parseInt($(this).val())
     if (isNaN(t)) {
       t = 0
     }
@@ -2485,7 +2494,7 @@ function calculProgression (semaine, typecours, matiere) {
 
   //TP
   $('.tp_' + matiere).each(function () {
-    var t = parseInt($(this).val())
+    let t = parseInt($(this).val())
     if (isNaN(t)) {
       t = 0
     }
@@ -2505,7 +2514,7 @@ $(document).on('click', '#refresh', function () {
 })
 
 function updateAllProgresssion() {
-  var totSemaine = Array();
+  const totSemaine = Array()
   for (var semaine = 1; semaine<15; semaine++) {
     totSemaine[semaine] = 0;
   }
@@ -2515,55 +2524,54 @@ function updateAllProgresssion() {
 
   $('.une_matiere').each(function(){
     //update colonne
-    var matiere = $(this).data('matiere')
-    var $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
-    var $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
-    var $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
-    var $totCm = 0
-    var $totTd = 0
-    var $totTp = 0
+    const matiere = $(this).data('matiere')
+    const $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
+    const $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
+    const $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
+    let $totCm = 0
+    let $totTd = 0
+    let $totTp = 0
 
-      for (var semaine = 1; semaine<15; semaine++) {
+    for (let semaine = 1; semaine<15; semaine++) {
 
-        var $col = 'tot_s' + semaine + '_' + matiere
+        const $col = 'tot_s' + semaine + '_' + matiere
 
-        var cm = parseInt($('#' + $col + '_cm').val())
+        let cm = parseInt($('#' + $col + '_cm').val())
         if (isNaN(cm)) {
           cm = 0
         }
         $totCm += cm
 
-        var td = parseInt($('#' + $col + '_td').val())
+        let td = parseInt($('#' + $col + '_td').val())
         if (isNaN(td)) {
           td = 0
         }
         $totTd += td
 
-        var tp = parseInt($('#' + $col + '_tp').val())
+        let tp = parseInt($('#' + $col + '_tp').val())
         if (isNaN(tp)) {
           tp = 0
         }
         $totTp += tp
 
-        var $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
+        const $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
         $('#' + $col).text($total)
         totSemaine[semaine] += $total;
     }//fin boucle semaine
 
     //update ligne
-    var $ztotCm = 'tot_cm_' + matiere
-    var $ztotTd = 'tot_td_' + matiere
-    var $ztotTp = 'tot_tp_' + matiere
-    var $ztotSCm = 'tot_cm_seance_' + matiere
-    var $ztotSTd = 'tot_td_seance_' + matiere
-    var $ztotSTp = 'tot_tp_seance_' + matiere
-    var $ztot = 'tot_' + matiere
-    var $ztotS = 'tot_seance_' + matiere
-    var $ztotCmH = 'tot_cm_h_' + matiere
-    var $ztotTdH = 'tot_td_h_' + matiere
-    var $ztotTpH = 'tot_tp_h_' + matiere
-    var $ztotH = 'tot_h_' + matiere
-
+    const $ztotCm = 'tot_cm_' + matiere
+    const $ztotTd = 'tot_td_' + matiere
+    const $ztotTp = 'tot_tp_' + matiere
+    const $ztotSCm = 'tot_cm_seance_' + matiere
+    const $ztotSTd = 'tot_td_seance_' + matiere
+    const $ztotSTp = 'tot_tp_seance_' + matiere
+    const $ztot = 'tot_' + matiere
+    const $ztotS = 'tot_seance_' + matiere
+    const $ztotCmH = 'tot_cm_h_' + matiere
+    const $ztotTdH = 'tot_td_h_' + matiere
+    const $ztotTpH = 'tot_tp_h_' + matiere
+    const $ztotH = 'tot_h_' + matiere
 
 
     $('#' + $ztotSCm).text($totCm)
@@ -2612,11 +2620,11 @@ function updateAllProgresssion() {
  *
  */
 
-var Cells = [];
-var Ind = 0;
+const Cells = []
+const Ind = 0
 
-var $contextMenuEdt = $("#contextMenuEdt");
-var $rowClicked;
+const $contextMenuEdt = $('#contextMenuEdt')
+let $rowClicked
 
 //menu contextuel
 $(document).on("contextmenu", ".edt_cours", function (e) {
@@ -2653,7 +2661,7 @@ $contextMenuEdt.on("click", "a", function () {
     case 'modifier':
       console.log('modification ' + $rowClicked[0].id);
       $('#blocadd').hide();
-      var tabetu = $('#zoneaction');
+      const tabetu = $('#zoneaction')
       tabetu.empty().hide();
       /*tabetu.load("{{ path('da_kernel_administration_edt_modifier') }}", {
         id: $rowClicked[0].id,
@@ -2745,8 +2753,8 @@ $(document).click(function () {
 
   //suppression d'une semaine
   $('#supprimerSemaineModal').click(function () {
-    var $id = createModal('suppr');
-    var $valeur = $(this).data('element');
+    const $id = createModal('suppr')
+    const $valeur = $(this).data('element')
 
     $('#textemodal_' + $idModal).html("Vous allez la semaine/promo suivante : \"" + $(this).attr('data-titre') + "\" .");
 
@@ -2774,7 +2782,7 @@ $(document).click(function () {
   //importer semaine
   $(document).on('click', '#idimportsemaine', function () {
     console.log('ok')
-    var za = $('#zoneaction');
+    const za = $('#zoneaction')
     za.empty()
     za.load(Routing.generate('administration_edt_za_importsemaine'))
     za.fadeIn(1000);
@@ -2782,7 +2790,7 @@ $(document).click(function () {
 
   //zones
   $('#idcreerzone').click(function () {
-    var za = $('#zoneaction');
+    const za = $('#zoneaction')
     za.empty();
     //za.load("{{ path('da_kernel_administration_edt_creerzone') }}");
     za.fadeIn(1000);
@@ -2790,7 +2798,7 @@ $(document).click(function () {
 
   //export
   $('#idexport').click(function () {
-    var za = $('#zoneaction');
+    const za = $('#zoneaction')
     za.empty();
     //za.load("{{ path('da_kernel_administration_edt_za_export') }}");
     za.fadeIn(1000);
@@ -2800,7 +2808,7 @@ $(document).click(function () {
 
   //suppr semestre
   $('#ideffacer').click(function () {
-    var za = $('#zoneaction');
+    const za = $('#zoneaction')
     za.empty();
     //za.load("{{ path('da_kernel_administration_edt_za_effacer') }}");
     za.fadeIn(1000);
@@ -2811,7 +2819,7 @@ $(document).click(function () {
 
 $(document).on('click', '.closeza', function (e) {
   e.preventDefault();
-  var za = $('#zoneaction');
+  const za = $('#zoneaction')
   za.fadeOut(1000);
   za.empty();
   za.hide();
@@ -2819,14 +2827,14 @@ $(document).on('click', '.closeza', function (e) {
 
 //changement d'heure de début
 $(document).on('change', "#hdbt", function () {
-  var t = parseInt($(this).val()) + 3;
+  const t = parseInt($(this).val()) + 3
   $('#hfin').val(t);
 });
 
 //affiche par prof
 $(document).on('change', '#afficheenseignant', function () {
-  var tabetu = $('#zone_edt');
-  var $sem = $('#semainereelle').val();
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semainereelle').val()
 
   tabetu.empty();
   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
@@ -2841,8 +2849,8 @@ $(document).on('change', '#afficheenseignant', function () {
 
 //affiche par prof
 $(document).on('change', '#affichesalle', function () {
-  var tabetu = $('#zone_edt');
-  var $sem = $('#semainereelle').val();
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semainereelle').val()
   tabetu.empty().hide();
   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
     filtre: 'salle',
@@ -2856,8 +2864,8 @@ $(document).on('change', '#affichesalle', function () {
 
 //affiche de tous les groupes de toutes les promos
 $(document).on('change', '#affichejour', function () {
-  var tabetu = $('#zone_edt');
-  var $sem = $('#semainereelle').val();
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semainereelle').val()
   tabetu.empty();
   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
     filtre: 'jour',
@@ -2871,18 +2879,18 @@ $(document).on('change', '#affichejour', function () {
 
 //affichage d'une promo sur une semaine précise
 $(document).on('change', '#affichesemaine', function () {
-  var tabetu = $('#zone_edt');
+  const tabetu = $('#zone_edt')
 
   tabetu.empty();
-  $t = $(this).val().split('_');
+  let $t = $(this).val().split('_');
   //tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {filtre: $t[0], valeur: $t[1], semainer: $t[2]});
   $('#load-page').hide();
 });
 
 //affichage par matière
 $(document).on('change', '#affichemodule', function () {
-  var tabetu = $('#zone_edt');
-  var $sem = $('#semainereelle').val();
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semainereelle').val()
 
   tabetu.empty();
   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
@@ -2931,7 +2939,7 @@ $(document).on('change', '#affichemodule', function () {
 
 $(document).on('click', '#addCategorie', function (e) {
 
-  var table = $('#listeCategories').DataTable();
+  const table = $('#listeCategories').DataTable()
   table.clear(); //effacer le datatable
   table.destroy(); //supprimer le datatable
 
@@ -2944,7 +2952,7 @@ $(document).on('click', '#addCategorie', function (e) {
     },
     method: 'POST',
     success: function (data) {
-      var table = $('#listeCategories').empty();
+      const table = $('#listeCategories').empty()
       table.append('<thead>\n' +
        '<tr>\n' +
         '<th>Libellé</th>\n' +
@@ -2956,10 +2964,10 @@ $(document).on('click', '#addCategorie', function (e) {
 
       jQuery.each(data, function (index, categorie) {
         //console.log(etudiant)
-        var html = '<tr>\n' +
+        const html = '<tr>\n' +
           '                        <td>' + categorie.libelle + '</td>\n' +
           '                        <td>' + categorie.nbArticles + '</td>\n' +
-          '                        <td>'+ categorie.id +'</td>\n' +
+          '                        <td>' + categorie.id + '</td>\n' +
           '                    </tr>'
         table.append(html)
       })
@@ -2990,9 +2998,9 @@ $(document).on('click', '#addCategorie', function (e) {
     //var editor = loadQuill('#editCourrier', ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'])
   }
 
-  var preloader = $('.preloader');
+  const preloader = $('.preloader')
   if (preloader.length) {
-    var speed = preloader.dataAttr('hide-spped', 600)
+    const speed = preloader.dataAttr('hide-spped', 600)
     preloader.fadeOut(speed)
   }
 

@@ -16,6 +16,7 @@ use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
 use App\MesClasses\Pdf\MyPDF;
 use Dompdf\Options;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,7 +35,7 @@ class EdtController extends BaseController
     /** @var MyEdtCelcat */
     private $myEdtCelcat;
 
-    protected $tabHeures = [
+    private static $tabHeures = [
         1  => ['8h00', '9h30'],
         2  => ['9h30', '11h00'],
         3  => ['11h00', '12h30'],
@@ -52,8 +53,10 @@ class EdtController extends BaseController
 
     /**
      *
+     * @param int $semaine
+     *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function dashboardPersonnel($semaine=0): Response
     {
@@ -71,7 +74,7 @@ class EdtController extends BaseController
 
             return $this->render('edt/_intervenant.html.twig', [
                 'edt' => $this->myEdt,
-                'tabHeures' => $this->tabHeures
+                'tabHeures' => self::$tabHeures
             ]);
         }
 
@@ -79,10 +82,9 @@ class EdtController extends BaseController
     }
 
     /**
-     * @param MyEdt       $myEdt
-     * @param MyEdtCelcat $myEdtCelcat
-     *
+     * @param int $semaine
      * @return Response
+     * @throws Exception
      */
     public function dashboardEtudiant($semaine=0): Response
     {
@@ -100,7 +102,7 @@ class EdtController extends BaseController
 
             return $this->render('edt/_etudiant.html.twig', [
                 'edt' => $this->myEdt,
-                'tabHeures' => $this->tabHeures
+                'tabHeures' => self::$tabHeures
             ]);
         }
 
@@ -110,7 +112,7 @@ class EdtController extends BaseController
     /**
      * @Route("/intervenant/export/semaine/{semaine}", name="edt_intervenant_export_semaine_courante")
      */
-    public function exportIntervenantSemaine()
+    public function exportIntervenantSemaine(): void
     {
 
     }
@@ -118,7 +120,7 @@ class EdtController extends BaseController
     /**
      * @Route("/intervenant/export/annee", name="edt_intervenant_export_annee")
      */
-    public function exportIntervenantAnnee()
+    public function exportIntervenantAnnee(): void
     {
 
     }
@@ -126,7 +128,7 @@ class EdtController extends BaseController
     /**
      * @Route("/intervenant/export/ical", name="edt_intervenant_export_ical")
      */
-    public function exportIntervenantIcal()
+    public function exportIntervenantIcal(): void
     {
         //todo: a proposer aux étudiants également ? visibilité réduite?
     }
@@ -134,15 +136,21 @@ class EdtController extends BaseController
     /**
      * @Route("/intervenant/synchro/ical", name="edt_intervenant_synchro_ical")
      */
-    public function synchroIntervenantIcal()
+    public function synchroIntervenantIcal(): void
     {
         //todo: a proposer aux étudiants également ? visibilité réduite?
     }
 
     /**
      * @Route("/etudiant/export/semaine/{semaine}", name="edt_etudiant_export_semaine_courante")
+     * @param MyPDF $myPDF
+     * @param int   $semaine
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function exportEtudiantSemaine(MyPDF $myPDF, $semaine = 0)
+    public function exportEtudiantSemaine(MyPDF $myPDF, $semaine = 0): ?\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if ($semaine === 0) {
             $semaine = (int)date('W');
@@ -158,13 +166,13 @@ class EdtController extends BaseController
             $edt = $this->myEdt->initEtudiant($this->getConnectedUser(), $semaine);
         }
 
-        $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt,'tabHeures' => $this->tabHeures], 'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
+        $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt,'tabHeures' => self::$tabHeures], 'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
     }
 
     /**
      * @Route("/etudiant/export/ical", name="edt_etudiant_export_ical")
      */
-    public function exportEtudiantIcal()
+    public function exportEtudiantIcal(): void
     {
         //todo: a proposer aux étudiants également ? visibilité réduite?
     }
@@ -172,7 +180,7 @@ class EdtController extends BaseController
     /**
      * @Route("/interetudiantvenant/synchro/ical", name="edt_etudiant_synchro_ical")
      */
-    public function synchroEtudiantIcal()
+    public function synchroEtudiantIcal(): void
     {
         //todo: a proposer aux étudiants également ? visibilité réduite?
     }

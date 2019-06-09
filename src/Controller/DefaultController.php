@@ -34,8 +34,8 @@ class DefaultController extends BaseController
     public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository): Response
     {
         return $this->render('default/index.html.twig', [
-            'actualites' => $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement(), 2),
-            'dates'      => $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 2)
+            'actualites' => $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'dates'      => $dateRepository->findByDepartement($this->dataUserSession->getDepartement())
         ]);
     }
 

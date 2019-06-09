@@ -155,6 +155,10 @@ class UfrController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_ufr_delete", methods="DELETE")
+     * @param Request $request
+     * @param Ufr     $ufr
+     *
+     * @return Response
      */
     public function delete(Request $request, Ufr $ufr): Response
     {

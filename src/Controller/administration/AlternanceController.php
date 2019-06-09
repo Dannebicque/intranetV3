@@ -253,6 +253,6 @@ class AlternanceController extends BaseController
         $this->entityManager->persist($alternance);
         $this->entityManager->flush();
 
-        return $this->json('ok', 200);
+        return $this->json('ok');
     }
 }

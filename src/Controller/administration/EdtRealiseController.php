@@ -79,10 +79,13 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param MatiereRepository      $matiereRepository
+     * @param PersonnelRepository    $personnelRepository
+     * @param PrevisionnelRepository $previsionnelRepository
+     * @param Request                $request
      *
      *
-     * @param         $source
+     * @param                        $source
      *
      * @return Response
      * @Route("/affiche/{source}", name="administration_edt_service_realise_affiche", methods={"POST"},
@@ -160,7 +163,10 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param SemestreRepository     $semestreRepository
+     * @param PersonnelRepository    $personnelRepository
+     * @param PrevisionnelRepository $previsionnelRepository
+     * @param Request                $request
      *
      * @return JsonResponse|RedirectResponse
      * @Route("/ajax/enseignant/modules", name="administration_edt_realise_ajax_modules", options={"expose"=true},

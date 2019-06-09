@@ -153,6 +153,10 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_site_delete", methods="DELETE")
+     * @param Request $request
+     * @param Site    $site
+     *
+     * @return Response
      */
     public function delete(Request $request, Site $site): Response
     {

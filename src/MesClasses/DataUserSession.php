@@ -41,6 +41,7 @@ use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -103,7 +104,7 @@ class DataUserSession
 
     protected $security;
     /**
-     * @var \Doctrine\ORM\QueryBuilder
+     * @var QueryBuilder
      */
     private $semestresActifs;
 

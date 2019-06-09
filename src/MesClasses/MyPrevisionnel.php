@@ -119,6 +119,7 @@ class MyPrevisionnel
      * @param PrevisionnelRepository $previsionnelRepository
      * @param HrsRepository          $hrsRepository
      * @param MyExcelWriter          $myExcelWriter
+     * @param MyUpload               $myUpload
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -649,7 +650,7 @@ class MyPrevisionnel
     public function importCsv($data): bool
     {
 
-        $file = $this->myUpload->upload($data['fichier'], 'temp');;
+        $file = $this->myUpload->upload($data['fichier'], 'temp');
 
         if ($data['diplome'] !== null) {
             $matieres = $this->entityManager->getRepository(Matiere::class)->tableauMatieresApogees($data['diplome']);

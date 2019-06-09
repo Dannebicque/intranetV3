@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -75,6 +76,8 @@ class AlternanceFicheSuivi extends BaseEntity
      * AlternanceFicheSuivi constructor.
      *
      * @param $alternance
+     *
+     * @throws \Exception
      */
     public function __construct(Alternance $alternance)
     {
@@ -203,12 +206,12 @@ class AlternanceFicheSuivi extends BaseEntity
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -220,7 +223,7 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @return string
      */
-    public function getIntegrationLong()
+    public function getIntegrationLong(): string
     {
         return self::$tabTexte[$this->integration];
     }
@@ -230,7 +233,7 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @return string
      */
-    public function getInitiativeLong()
+    public function getInitiativeLong(): string
     {
         return self::$tabTexte[$this->initiative];
     }
@@ -240,7 +243,7 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @return string
      */
-    public function getAdaptationLong()
+    public function getAdaptationLong(): string
     {
         return self::$tabTexte[$this->adaptation];
     }
@@ -250,7 +253,7 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @return string
      */
-    public function getPerformanceLong()
+    public function getPerformanceLong(): string
     {
         return self::$tabTexteM[$this->performance];
     }
@@ -260,7 +263,7 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @return string
      */
-    public function getDelaisLong()
+    public function getDelaisLong(): string
     {
         return self::$tabTexteM[$this->delais];
     }
@@ -270,17 +273,20 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @return string
      */
-    public function getComportementLong()
+    public function getComportementLong(): string
     {
         return self::$tabTexteM[$this->comportement];
     }
 
-    public function getMethodeLong() {
+    public function getMethodeLong(): ?string
+    {
         switch ($this->methode) {
             case 'v' :
                 return 'Visite dans l\'entreprise';
             case 't':
                 return 'Entretien téléphonique';
+            default:
+                return '-';
         }
     }
 }

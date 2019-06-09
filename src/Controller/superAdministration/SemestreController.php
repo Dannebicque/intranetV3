@@ -162,11 +162,12 @@ class SemestreController extends BaseController
 
     /**
      * @param Semestre $semestre
-     * @param bool        $etat
+     * @param bool     $etat
+     *
+     * @return RedirectResponse
      * @Route("/activate/{semestre}/{etat}", methods={"GET"}, name="sa_semestre_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @return RedirectResponse
      */
     public function activate(Semestre $semestre, bool $etat): RedirectResponse
     {

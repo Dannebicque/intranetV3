@@ -1,8 +1,8 @@
 function loadQuill($selector, $options) {
-  var toolbarFullOptions = [
+  const toolbarFullOptions = [
     [
       // {'font': []},
-      {'header': [1, 2, 3, 4, 5, 6, false]},
+      {'header': [1, 2, 3, 4, 5, 6, false]}
       //  {'size': ['small', false, 'large', 'huge']}
     ],
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -14,22 +14,22 @@ function loadQuill($selector, $options) {
     ['link', 'image', 'video'],
     ['clean'],
     [{'placeholder': $options}]// remove formatting button
-  ];
+  ]
 
-  var options = {
+  const options = {
     debug: 'info',
     modules: {
       toolbar: {
         container: toolbarFullOptions,
         handlers: {
           'placeholder': function (value) {
-            console.log(value);
+            console.log(value)
             if (value) {
 
-              var cursorPosition = this.quill.getSelection().index;
-              console.log(cursorPosition);
-              this.quill.insertText(cursorPosition, value);
-              this.quill.setSelection(cursorPosition + value.length);
+              const cursorPosition = this.quill.getSelection().index
+              console.log(cursorPosition)
+              this.quill.insertText(cursorPosition, value)
+              this.quill.setSelection(cursorPosition + value.length)
             }
           }
         }
@@ -37,10 +37,10 @@ function loadQuill($selector, $options) {
     },
     placeholder: 'Compose an epic...',
     theme: 'snow'
-  };
+  }
   new Quill($selector, options);
 
-  var placeholderPickerItems = Array.prototype.slice.call(document.querySelectorAll('.ql-placeholder .ql-picker-item'));
+  const placeholderPickerItems = Array.prototype.slice.call(document.querySelectorAll('.ql-placeholder .ql-picker-item'))
   //placeholderPickerItems.forEach(item => item.textContent = item.dataset.value)
 
   placeholderPickerItems.forEach(function (item) {

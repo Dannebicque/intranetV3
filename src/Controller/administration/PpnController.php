@@ -40,7 +40,8 @@ class PpnController extends BaseController
     /**
      * @Route("/copie", name="administration_ppn_copie_integrale", methods="POST")
      *
-     * @param Request $request
+     * @param PpnRepository $ppnRepository
+     * @param Request       $request
      *
      * @return Response
      * @throws Exception
@@ -149,6 +150,10 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_ppn_delete", methods="DELETE")
+     * @param Request $request
+     * @param Ppn     $ppn
+     *
+     * @return Response
      */
     public function delete(Request $request, Ppn $ppn): Response
     {

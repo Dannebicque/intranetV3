@@ -22,8 +22,12 @@ use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
+use App\MesClasses\MyGroupes;
 use App\MesClasses\Tools;
 use App\Repository\AbsenceRepository;
+use App\Repository\CalendrierRepository;
+use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
 use Exception;
@@ -33,6 +37,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use function count;
 
 /**
@@ -74,7 +79,57 @@ class AbsenceController extends BaseController
             return $this->render('appPersonnel/absence/index.html.twig', [
                 'matiere'     => $matiere,
                 'matieres'    => $matiereRepository->findBySemestre($semestre),
-                'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre)
+                'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
+                'heure' => '08:00'
+            ]);
+        }
+
+        return $this->redirectToRoute('erreur_666');
+    }
+
+    /**
+     * @Route("/edt/{event}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"}, methods={"GET"})
+     *
+     * @param MatiereRepository      $matiereRepository
+     * @param CalendrierRepository   $calendrierRepository
+     * @param AbsenceRepository      $absenceRepository
+     * @param EdtPlanningRepository  $edtPlanningRepository
+     * @param CelcatEventsRepository $celcatEventsRepository
+     * @param MyGroupes              $myGroupes
+     * @param                        $event
+     *
+     * @return Response
+     */
+    public function saisieFromEdt(
+        MatiereRepository $matiereRepository,
+        CalendrierRepository $calendrierRepository,
+        AbsenceRepository $absenceRepository,
+        EdtPlanningRepository $edtPlanningRepository,
+        CelcatEventsRepository $celcatEventsRepository,
+        MyGroupes $myGroupes,
+        $event
+    ): Response {
+
+
+
+        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
+           $planning = $celcatEventsRepository->find($event);
+        } else {
+            $planning = $edtPlanningRepository->find($event);
+            $matiere = $planning !== null ? $planning->getMatiere() : null;
+        }
+
+        if ($planning !== null) {
+            $semaine = $calendrierRepository->findOneBy(array('semaineFormation' => $planning->getSemaine()));
+
+            return $this->render('appPersonnel/absence/index.html.twig', [
+                'matieres'    => $matiereRepository->findBySemestre($planning->getSemestre()),
+                'matiere'     => $matiere,
+                'event' => $planning,
+                'groupes' => $myGroupes->getGroupesPlanning($planning),
+                'heure'     => Constantes::TAB_HEURES[$planning->getDebut()],
+                'date'      => $planning->getDate($semaine->getSemaineReelle()),
+                'dateFr'      => $planning->getDateFr($semaine->getSemaineReelle()),
             ]);
         }
 
@@ -97,14 +152,6 @@ class AbsenceController extends BaseController
                 $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
             )
         ]);
-    }
-
-    /**
-     * @Route("/aide", name="application_personnel_absence_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('appPersonnel/absence/help.html.twig');
     }
 
     /**

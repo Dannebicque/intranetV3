@@ -53,12 +53,12 @@ class MyStage
     }
 
 
-    public function getDataPeriode(StagePeriode $stagePeriode, int $anneeUniversitaire = 0)
+    public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire)
     {
         if ($anneeUniversitaire === 0) {
             $anneeUniversitaire = $stagePeriode->getSemestre() ? $stagePeriode->getSemestre()->getAnneeUniversitaire() : 0;
         }
-        
+
         $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());
 
         /** @var Etudiant $etudiant */

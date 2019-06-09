@@ -57,8 +57,8 @@ app.ready(function () {
 
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
-    var files = []
-    for (var i = 0; i < $(this)[0].files.length; i++) {
+    const files = []
+    for (let i = 0; i < $(this)[0].files.length; i++) {
       files.push($(this)[0].files[i].name)
     }
     $(this).next('.custom-file-label').html(files.join(', '))
@@ -142,9 +142,9 @@ app.ready(function () {
     //var editor = loadQuill('#editCourrier', ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'])
   }
 
-  var preloader = $('.preloader');
+  const preloader = $('.preloader')
   if (preloader.length) {
-    var speed = preloader.dataAttr('hide-spped', 600)
+    const speed = preloader.dataAttr('hide-spped', 600)
     preloader.fadeOut(speed)
   }
 

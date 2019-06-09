@@ -154,6 +154,10 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_type_hrs_delete", methods="DELETE")
+     * @param Request $request
+     * @param TypeHrs $typeHrs
+     *
+     * @return Response
      */
     public function delete(Request $request, TypeHrs $typeHrs): Response
     {

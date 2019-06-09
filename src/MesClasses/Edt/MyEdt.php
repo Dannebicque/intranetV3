@@ -30,6 +30,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Exception;
 
 class MyEdt extends BaseEdt
 {
@@ -50,13 +51,15 @@ class MyEdt extends BaseEdt
     private $matiereRepository;
 
 
-
-
     /**
      * MyEdt constructor.
      *
-     * @param EdtPlanningRepository $edtPlanningRepository
      * @param CalendrierRepository  $celcatCalendrierRepository
+     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param SemestreRepository    $semestreRepository
+     * @param GroupeRepository      $groupeRepository
+     * @param PersonnelRepository   $personnelRepository
+     * @param MatiereRepository     $matiereRepository
      */
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
@@ -78,7 +81,10 @@ class MyEdt extends BaseEdt
     /**
      * @param Personnel $personnel
      *
-     * @throws \Exception
+     * @param int       $semaine
+     *
+     * @return MyEdt
+     * @throws Exception
      */
     public function initPersonnel(Personnel $personnel, $semaine = 0)
     {
@@ -101,9 +107,11 @@ class MyEdt extends BaseEdt
     /**
      * @param Etudiant $etudiant
      *
-     * @throws \Exception
+     * @param int      $semaine
+     * @return MyEdt
+     * @throws Exception
      */
-    public function initEtudiant(Etudiant $etudiant, $semaine = 0)
+    public function initEtudiant(Etudiant $etudiant, $semaine = 0): MyEdt
     {
 
         $this->user = $etudiant;
@@ -112,7 +120,7 @@ class MyEdt extends BaseEdt
         return $this;
     }
 
-    public function calculEdt()
+    public function calculEdt(): bool
     {
         if ($this->semaineFormationIUT !== '') {
             switch ($this->filtre) {
@@ -209,7 +217,7 @@ class MyEdt extends BaseEdt
      *
      * @return array
      */
-    private function transformePromo($pl)
+    private function transformePromo($pl): array
     {
         $tab = [];
         /** @var EdtPlanning $p */
@@ -252,13 +260,10 @@ class MyEdt extends BaseEdt
 
             if ($p->getIntervenant() === null) {
                 $inter = '';
+            } else if ($taille == 0) {
+                $inter = $p->getIntervenant()->getNom();
             } else {
-                if ($taille == 0) {
-                    $inter = $p->getIntervenant()->getNom();
-                } else {
-                    $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
-                }
-
+                $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
             $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
@@ -274,7 +279,7 @@ class MyEdt extends BaseEdt
      *
      * @return string
      */
-    private function getCouleur(EdtPlanning $p)
+    private function getCouleur(EdtPlanning $p): ?string
     {
         switch ($p->getType()) {
             case 'CM':
@@ -296,7 +301,7 @@ class MyEdt extends BaseEdt
      *
      * @return string
      */
-    private function getCouleurTexte(EdtPlanning $p)
+    private function getCouleurTexte(EdtPlanning $p): string
     {
         return $p->getSemestre()->getAnnee()->getCouleurTexte();
     }
@@ -306,7 +311,7 @@ class MyEdt extends BaseEdt
      *
      * @return string
      */
-    private function isEvaluation(EdtPlanning $p)
+    private function isEvaluation(EdtPlanning $p): string
     {
         if ($p->getEvaluation()) {
             if ($p->getMatiere() !== null) {
@@ -329,7 +334,7 @@ class MyEdt extends BaseEdt
      *
      * @return bool
      */
-    private function hasCommentaire(EdtPlanning $p)
+    private function hasCommentaire(EdtPlanning $p): bool
     {
         return ($p->getCommentaire() !== '' && $p->getCommentaire() !== null);
     }
@@ -337,7 +342,7 @@ class MyEdt extends BaseEdt
     /**
      * @param EdtPlanning $p
      */
-    private function calculTotal(EdtPlanning $p)
+    private function calculTotal(EdtPlanning $p): void
     {
         switch ($p->getType()) {
             case 'cm':
@@ -360,7 +365,7 @@ class MyEdt extends BaseEdt
      *
      * @return array
      */
-    private function transformeProf($pl)
+    private function transformeProf($pl): array
     {
         $tab = [];
 
@@ -422,7 +427,7 @@ class MyEdt extends BaseEdt
         return $tab;
     }
 
-    private function convertEdt($nb)
+    private function convertEdt($nb): ?int
     {
         switch ($nb)
         {
@@ -440,23 +445,23 @@ class MyEdt extends BaseEdt
                 return 6;
             case '19':
                 return 7;
+            default:
+                return null;
         }
     }
 
     /**
      *
      */
-    private function groupes()
+    private function groupes() : void
     {
         /** @var Groupe $groupe */
         foreach ($this->user->getGroupes() as $groupe) {
             if ($groupe->getTypegroupe()->isTd()) {
                 $this->groupetd = $groupe->getOrdre();
-            } else {
-                if ($groupe->getTypegroupe()->isTp()) {
-                    $this->groupetp = $groupe->getOrdre();
+            } else if ($groupe->getTypegroupe()->isTp()) {
+                $this->groupetp = $groupe->getOrdre();
 
-                }
             }
         }
     }
@@ -466,7 +471,7 @@ class MyEdt extends BaseEdt
      *
      * @return array
      */
-    private function transformeModule($pl)
+    private function transformeModule($pl): array
     {
         $tab = [];
 
@@ -508,13 +513,10 @@ class MyEdt extends BaseEdt
 
             if ($p->getIntervenant() === null) {
                 $inter = '';
+            } else if ($taille === 0) {
+                $inter = $p->getIntervenant()->getNom();
             } else {
-                if ($taille == 0) {
-                    $inter = $p->getIntervenant()->getNom();
-                } else {
-                    $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
-                }
-
+                $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
 
@@ -530,7 +532,7 @@ class MyEdt extends BaseEdt
      *
      * @return array
      */
-    private function transformeSalle($pl)
+    private function transformeSalle($pl): array
     {
         $tab = [];
 
@@ -562,7 +564,7 @@ class MyEdt extends BaseEdt
      *
      * @return array
      */
-    private function transformeJour($pl)
+    private function transformeJour($pl): array
     {
         $tab = [];
         /** @var EdtPlanning $p */
@@ -603,13 +605,10 @@ class MyEdt extends BaseEdt
 
             if ($p->getIntervenant() === null) {
                 $inter = '';
+            } else if ($taille === 0) {
+                $inter = $p->getIntervenant()->getNom();
             } else {
-                if ($taille == 0) {
-                    $inter = $p->getIntervenant()->getNom();
-                } else {
-                    $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
-                }
-
+                $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
 

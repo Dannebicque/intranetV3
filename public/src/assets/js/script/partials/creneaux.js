@@ -13,7 +13,7 @@
  */
 
 $(document).on('click', '#btn_creneau_add', function(){
-  var $annee = $('#change_annee_universitiare_temp').val()
+  const $annee = $('#change_annee_universitiare_temp').val()
   $.ajax({
     method:'POST',
     data: {
@@ -34,7 +34,7 @@ $(document).on('click', '#btn_creneau_add', function(){
 });
 
 $(document).on('click', '.bloquercreneau', function(){
-  var $cr = $(this)
+  const $cr = $(this)
   console.log('click')
   if ($cr.hasClass('bloquercreneau_eviter')) {
     updateCreneau('dispo', $cr.data('creneau'), $cr.data('semaine'));
@@ -50,15 +50,15 @@ $(document).on('click', '.bloquercreneau', function(){
 })
 
 $(document).on('click', '.creneau', function () {
-  var interdit = $('#nb_interdit')
-  var eviter = $('#nb_eviter')
-  var dispo = $('#nb_dispo')
-  var heure = $(this).data('heure')
-  var jour = $(this).dataAttr('jour')
+  const interdit = $('#nb_interdit')
+  const eviter = $('#nb_eviter')
+  const dispo = $('#nb_dispo')
+  const heure = $(this).data('heure')
+  const jour = $(this).dataAttr('jour')
 
-  var nb_interdit = parseInt(interdit.text())
-  var nb_eviter = parseInt(eviter.text())
-  var nb_dispo = parseInt(dispo.text())
+  let nb_interdit = parseInt(interdit.text())
+  let nb_eviter = parseInt(eviter.text())
+  let nb_dispo = parseInt(dispo.text())
 
   if ($(this).hasClass('bloquercreneau_interdit')) {
     $(this).removeClass('bloquercreneau_interdit')

@@ -18,51 +18,51 @@ function updateProgression (semaine, typecours, matiere,nbSeances) {
 
 function calculProgression (semaine, typecours, matiere) {
   //update colonne
-  var $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
-  var $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
-  var $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
+  const $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
+  const $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
+  const $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
 
 
-  var $col = 'tot_s' + semaine + '_' + matiere
+  const $col = 'tot_s' + semaine + '_' + matiere
 
-  var cm = parseInt($('#' + $col + '_cm').val())
+  let cm = parseInt($('#' + $col + '_cm').val())
   if (isNaN(cm)) {
     cm = 0
   }
 
-  var td = parseInt($('#' + $col + '_td').val())
+  let td = parseInt($('#' + $col + '_td').val())
   if (isNaN(td)) {
     td = 0
   }
 
-  var tp = parseInt($('#' + $col + '_tp').val())
+  let tp = parseInt($('#' + $col + '_tp').val())
   if (isNaN(tp)) {
     tp = 0
   }
 
-  var $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
+  const $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
   $('#' + $col).text($total)
 
   //update ligne
-  var $ztotCm = 'tot_cm_' + matiere
-  var $ztotTd = 'tot_td_' + matiere
-  var $ztotTp = 'tot_tp_' + matiere
-  var $ztotSCm = 'tot_cm_seance_' + matiere
-  var $ztotSTd = 'tot_td_seance_' + matiere
-  var $ztotSTp = 'tot_tp_seance_' + matiere
-  var $ztot = 'tot_' + matiere
-  var $ztotS = 'tot_seance_' + matiere
-  var $ztotCmH = 'tot_cm_h_' + matiere
-  var $ztotTdH = 'tot_td_h_' + matiere
-  var $ztotTpH = 'tot_tp_h_' + matiere
-  var $ztotH = 'tot_h_' + matiere
+  const $ztotCm = 'tot_cm_' + matiere
+  const $ztotTd = 'tot_td_' + matiere
+  const $ztotTp = 'tot_tp_' + matiere
+  const $ztotSCm = 'tot_cm_seance_' + matiere
+  const $ztotSTd = 'tot_td_seance_' + matiere
+  const $ztotSTp = 'tot_tp_seance_' + matiere
+  const $ztot = 'tot_' + matiere
+  const $ztotS = 'tot_seance_' + matiere
+  const $ztotCmH = 'tot_cm_h_' + matiere
+  const $ztotTdH = 'tot_td_h_' + matiere
+  const $ztotTpH = 'tot_tp_h_' + matiere
+  const $ztotH = 'tot_h_' + matiere
 
-  var $totCm = 0
-  var $totTd = 0
-  var $totTp = 0
+  let $totCm = 0
+  let $totTd = 0
+  let $totTp = 0
   //CM
   $('.cm_' + matiere).each(function () {
-    var t = parseInt($(this).val())
+    let t = parseInt($(this).val())
     if (isNaN(t)) {
       t = 0
     }
@@ -75,7 +75,7 @@ function calculProgression (semaine, typecours, matiere) {
 
   //TD
   $('.td_' + matiere).each(function () {
-    var t = parseInt($(this).val())
+    let t = parseInt($(this).val())
     if (isNaN(t)) {
       t = 0
     }
@@ -87,7 +87,7 @@ function calculProgression (semaine, typecours, matiere) {
 
   //TP
   $('.tp_' + matiere).each(function () {
-    var t = parseInt($(this).val())
+    let t = parseInt($(this).val())
     if (isNaN(t)) {
       t = 0
     }
@@ -107,7 +107,7 @@ $(document).on('click', '#refresh', function () {
 })
 
 function updateAllProgresssion() {
-  var totSemaine = Array();
+  const totSemaine = Array()
   for (var semaine = 1; semaine<15; semaine++) {
     totSemaine[semaine] = 0;
   }
@@ -117,55 +117,54 @@ function updateAllProgresssion() {
 
   $('.une_matiere').each(function(){
     //update colonne
-    var matiere = $(this).data('matiere')
-    var $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
-    var $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
-    var $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
-    var $totCm = 0
-    var $totTd = 0
-    var $totTp = 0
+    const matiere = $(this).data('matiere')
+    const $nbGrCm = parseInt($('#nbgr_cm_' + matiere).text())
+    const $nbGrTd = parseInt($('#nbgr_td_' + matiere).text())
+    const $nbGrTp = parseInt($('#nbgr_tp_' + matiere).text())
+    let $totCm = 0
+    let $totTd = 0
+    let $totTp = 0
 
-      for (var semaine = 1; semaine<15; semaine++) {
+    for (let semaine = 1; semaine<15; semaine++) {
 
-        var $col = 'tot_s' + semaine + '_' + matiere
+        const $col = 'tot_s' + semaine + '_' + matiere
 
-        var cm = parseInt($('#' + $col + '_cm').val())
+        let cm = parseInt($('#' + $col + '_cm').val())
         if (isNaN(cm)) {
           cm = 0
         }
         $totCm += cm
 
-        var td = parseInt($('#' + $col + '_td').val())
+        let td = parseInt($('#' + $col + '_td').val())
         if (isNaN(td)) {
           td = 0
         }
         $totTd += td
 
-        var tp = parseInt($('#' + $col + '_tp').val())
+        let tp = parseInt($('#' + $col + '_tp').val())
         if (isNaN(tp)) {
           tp = 0
         }
         $totTp += tp
 
-        var $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
+        const $total = cm * $nbGrCm * 1.5 + td * $nbGrTd * 1.5 + tp * $nbGrTp * 1.5
         $('#' + $col).text($total)
         totSemaine[semaine] += $total;
     }//fin boucle semaine
 
     //update ligne
-    var $ztotCm = 'tot_cm_' + matiere
-    var $ztotTd = 'tot_td_' + matiere
-    var $ztotTp = 'tot_tp_' + matiere
-    var $ztotSCm = 'tot_cm_seance_' + matiere
-    var $ztotSTd = 'tot_td_seance_' + matiere
-    var $ztotSTp = 'tot_tp_seance_' + matiere
-    var $ztot = 'tot_' + matiere
-    var $ztotS = 'tot_seance_' + matiere
-    var $ztotCmH = 'tot_cm_h_' + matiere
-    var $ztotTdH = 'tot_td_h_' + matiere
-    var $ztotTpH = 'tot_tp_h_' + matiere
-    var $ztotH = 'tot_h_' + matiere
-
+    const $ztotCm = 'tot_cm_' + matiere
+    const $ztotTd = 'tot_td_' + matiere
+    const $ztotTp = 'tot_tp_' + matiere
+    const $ztotSCm = 'tot_cm_seance_' + matiere
+    const $ztotSTd = 'tot_td_seance_' + matiere
+    const $ztotSTp = 'tot_tp_seance_' + matiere
+    const $ztot = 'tot_' + matiere
+    const $ztotS = 'tot_seance_' + matiere
+    const $ztotCmH = 'tot_cm_h_' + matiere
+    const $ztotTdH = 'tot_td_h_' + matiere
+    const $ztotTpH = 'tot_tp_h_' + matiere
+    const $ztotH = 'tot_h_' + matiere
 
 
     $('#' + $ztotSCm).text($totCm)

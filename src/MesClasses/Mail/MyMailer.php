@@ -57,9 +57,10 @@ class MyMailer
     /**
      * MyMailer constructor.
      *
-     * @param Swift_Mailer       $mailer
-     * @param EngineInterface    $templating
-     * @param DatabaseTwigLoader $databaseTwigLoader
+     * @param Swift_Mailer        $mailer
+     * @param EngineInterface     $templating
+     * @param DatabaseTwigLoader  $databaseTwigLoader
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         Swift_Mailer $mailer,
