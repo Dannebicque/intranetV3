@@ -20,6 +20,7 @@
 namespace App\MesClasses\Edt;
 
 
+use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
@@ -617,5 +618,50 @@ class MyEdt extends BaseEdt
         }
 
         return $tab;
+    }
+
+    public function transformeDetails(?EdtPlanning $pl)
+    {
+        if ($pl !== null) {
+            $t = array();
+            $t['matiere'] = $pl->getMatiere() !== null ? $pl->getMatiere()->getDisplay() : $pl->getTexte();
+
+
+            if ($pl->getIntervenant() !== null) {
+                $t['enseignant'] = $pl->getIntervenant()->getDisplayPr();
+            } else {
+                $t['enseignant'] = '';
+            }
+
+            $t['horaires'] = Constantes::TAB_HEURES[$pl->getDebut()] . ' - ' . Constantes::TAB_HEURES[$pl->getFin()];
+            $t['commentaire'] = $pl->getCommentaire();
+            $t['salle'] = $pl->getSalle();
+
+            switch ($pl->getType()) {
+                case 'cm':
+                case 'CM':
+                    $t['type'] = 'Cours Magistral';
+                    $t['groupes'] = 'Tous';
+                    break;
+                case 'td':
+                case 'TD':
+                    $t['type'] = 'Travaux Dirigés';
+                    $t['groupes'] = chr($pl->getGroupe() + 64) . chr($pl->getGroupe() + 65);
+                    break;
+                case 'tp':
+                case 'TP':
+                    $t['type'] = 'Travaux Pratiques';
+                    $t['groupes'] = chr($pl->getGroupe() + 64);
+                    break;
+            }
+
+            if ($pl->getEvaluation() === 'O') {
+                $t['evaluation'] = 'Ce cours est une évaluation !';
+            } else {
+                $t['evaluation'] = '';
+            }
+
+            return $t;
+        }
     }
 }

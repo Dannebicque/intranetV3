@@ -11845,5 +11845,77 @@
         <target>Nouvelle absence enregistrée</target>
       </segment>
     </unit>
+    <unit id="a12HGA3" name="modifiez.vos.informations">
+      <segment>
+        <source>modifiez.vos.informations</source>
+        <target>modifiez.vos.informations</target>
+      </segment>
+    </unit>
+    <unit id="MBgykTk" name="donnees.update.success.flash">
+      <segment>
+        <source>donnees.update.success.flash</source>
+        <target>donnees.update.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="kdzlQ0V" name="telephone.de.letudiant">
+      <segment>
+        <source>telephone.de.letudiant</source>
+        <target>telephone.de.letudiant</target>
+      </segment>
+    </unit>
+    <unit id="bNcgOz3" name="tel1">
+      <segment>
+        <source>tel1</source>
+        <target>tel1</target>
+      </segment>
+    </unit>
+    <unit id="9UO1eFb" name="tel2">
+      <segment>
+        <source>tel2</source>
+        <target>tel2</target>
+      </segment>
+    </unit>
+    <unit id="gSxTcaR" name="edt.etudiant.details">
+      <segment>
+        <source>edt.etudiant.details</source>
+        <target>edt.etudiant.details</target>
+      </segment>
+    </unit>
+    <unit id=".wvc8EB" name="edt.type_groupe">
+      <segment>
+        <source>edt.type_groupe</source>
+        <target>edt.type_groupe</target>
+      </segment>
+    </unit>
+    <unit id="3RM2SSL" name="edt.enseignant">
+      <segment>
+        <source>edt.enseignant</source>
+        <target>edt.enseignant</target>
+      </segment>
+    </unit>
+    <unit id="Ov1EmY8" name="edt.horaires">
+      <segment>
+        <source>edt.horaires</source>
+        <target>edt.horaires</target>
+      </segment>
+    </unit>
+    <unit id="AaAmD7N" name="edt.commentaire">
+      <segment>
+        <source>edt.commentaire</source>
+        <target>edt.commentaire</target>
+      </segment>
+    </unit>
+    <unit id="AmkemA1" name="edt.evaluation">
+      <segment>
+        <source>edt.evaluation</source>
+        <target>edt.evaluation</target>
+      </segment>
+    </unit>
+    <unit id="lbRL02y" name="edt.salle">
+      <segment>
+        <source>edt.salle</source>
+        <target>edt.salle</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

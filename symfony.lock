@@ -260,6 +260,9 @@
             "ref": "f3a28efb32f20b8740fd763651cabd780bce43da"
         }
     },
+    "symfony/contracts": {
+        "version": "v1.1.0"
+    },
     "symfony/css-selector": {
         "version": "v4.2.4"
     },
@@ -313,6 +316,12 @@
             "version": "4.2",
             "ref": "82e2278ff2a74a97837e84c2493c30e7a85ad299"
         }
+    },
+    "symfony/http-client": {
+        "version": "v4.3.1"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v1.1.3"
     },
     "symfony/http-foundation": {
         "version": "v4.2.1"

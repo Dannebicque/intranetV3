@@ -66,6 +66,7 @@ class AppExtension extends AbstractExtension
     {
         return array(
             new TwigFilter('tel_format', [$this, 'telFormat']),
+            new TwigFilter('age', [$this, 'age']),
             new TwigFilter('time_ago', [$this, 'timeAgo']),
             new TwigFilter('badge', [$this, 'badge']),
             new TwigFilter('escapetitle', [$this, 'escapetitle']),
@@ -100,6 +101,13 @@ class AppExtension extends AbstractExtension
             default:
                 return 'card-outline-info';
         }
+    }
+
+    public function age($dateNaissance): string
+    {
+        //return floor((time() - strtotime($dateNaissance->format('d-m-Y'))) / 3600 / 24 / 365);
+
+        return date_diff(new DateTime('now'), $dateNaissance)->format('%Y');
     }
 
     public function mailto($email): string
