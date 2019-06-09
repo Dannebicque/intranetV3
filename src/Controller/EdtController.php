@@ -15,6 +15,7 @@ namespace App\Controller;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
 use App\MesClasses\Pdf\MyPDF;
+use App\Repository\EdtPlanningRepository;
 use Dompdf\Options;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -185,5 +186,15 @@ class EdtController extends BaseController
         //todo: a proposer aux étudiants également ? visibilité réduite?
     }
 
+    /**
+     * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
+     */
+    public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type) {
+        if ($type === 'planning') {
+            $pl = $edtPlanningRepository->find($event);
+
+            return $this->render('edt/_details.html.twig', ['event' => $myEdt->transformeDetails($pl)]);
+        }
+    }
 
 }
