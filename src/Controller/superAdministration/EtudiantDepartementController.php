@@ -35,7 +35,8 @@ class EtudiantDepartementController extends BaseController
 {
     /**
      * @Route("/{departement}", name="sa_etudiant_departement_index")
-     * @param Departement $departement
+     * @param EtudiantRepository $etudiantRepository
+     * @param Departement        $departement
      *
      * @return Response
      */
@@ -62,7 +63,9 @@ class EtudiantDepartementController extends BaseController
 
     /**
      * @Route("/remove/{id}", name="sa_etudiant_remove", methods="DELETE")
-     * @param Request              $request
+     * @param Request  $request
+     *
+     * @param Etudiant $etudiant
      *
      * @return Response
      */

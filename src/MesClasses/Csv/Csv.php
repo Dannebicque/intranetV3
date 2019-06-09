@@ -53,7 +53,6 @@ class Csv
      * @param array  $data
      * @param array  $groups
      *
-     * @throws RuntimeException
      * @throws AnnotationException
      */
     public function export(string $filename, array $data, array $groups): void

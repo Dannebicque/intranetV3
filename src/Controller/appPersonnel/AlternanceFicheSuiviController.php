@@ -20,6 +20,9 @@ class AlternanceFicheSuiviController extends AbstractController
 {
     /**
      * @Route("/{alternance}", name="application_personnel_alternance_fiche_suivi_alternance", methods={"GET"})
+     * @param Alternance $alternance
+     *
+     * @return Response
      */
     public function index(Alternance $alternance): Response
     {
@@ -31,6 +34,10 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{alternance}/new", name="application_personnel_alternance_fiche_suivi_new", methods={"GET","POST"})
+     * @param Request    $request
+     * @param Alternance $alternance
+     * @return Response
+     * @throws \Exception
      */
     public function new(Request $request, Alternance $alternance): Response
     {
@@ -75,6 +82,7 @@ class AlternanceFicheSuiviController extends AbstractController
      */
     public function print(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
+
         $html = $this->renderView('pdf/ficheSuiviAlternant.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
         ]);
@@ -94,6 +102,9 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_alternance_fiche_suivi_edit", methods={"GET","POST"})
+     * @param Request              $request
+     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     * @return Response
      */
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -115,6 +126,9 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}", name="application_personnel_alternance_fiche_suivi_delete", methods={"DELETE"})
+     * @param Request              $request
+     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     * @return Response
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {

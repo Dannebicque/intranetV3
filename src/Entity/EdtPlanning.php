@@ -250,7 +250,7 @@ class EdtPlanning
     /**
      * @return string
      */
-    public function getDisplayGroupe()
+    public function getDisplayGroupe(): ?string
     {
         switch ($this->type) {
             case 'cm':
@@ -272,7 +272,7 @@ class EdtPlanning
     /**
      * @return string
      */
-    public function getIntervenantEdt()
+    public function getIntervenantEdt(): string
     {
         if ($this->getIntervenant() !== null) {
             return $this->getIntervenant()->getPrenom()[0] . '. ' . $this->getIntervenant()->getNom();
@@ -284,7 +284,7 @@ class EdtPlanning
     /**
      * @return string
      */
-    public function getDureeTexte()
+    public function getDureeTexte(): string
     {
         $d = $this->fin - $this->debut;
         $td = array('0h00', '0h30', '1h00', '1h30', '2h00', '2h30', '3h00', '3h30', '4h00', '4h30', '5h00');
@@ -314,5 +314,55 @@ class EdtPlanning
         $this->commentaire = $commentaire;
 
         return $this;
+    }
+
+    /**
+     * @param $semaine
+     *
+     * @return string
+     */
+    public function getDate($semaine): string
+    {
+        $lundi = $this->getLundiFromWeek($semaine, date('Y'));
+
+        return date('Y-m-d',
+            mktime(12, 30, 00, date('m', $lundi), date('d', $lundi) + $this->jour - 1, date('Y', $lundi)));
+    }
+
+    /**
+     * @param $semaine
+     *
+     * @return false|string
+     */
+    public function getDateFr($semaine)
+    {
+        $lundi = $this->getLundiFromWeek($semaine, date('Y'));
+
+        return date('d/m/Y',
+            mktime(12, 30, 00, date('m', $lundi), date('d', $lundi) + $this->jour - 1, date('Y', $lundi)));
+    }
+
+    /**
+     * @param integer $week
+     * @param integer $year
+     *
+     * @return double
+     */
+    private function getLundiFromWeek($week, $year): float
+    {
+        $firstDayInYear = date('N', mktime(0, 0, 0, 1, 1, $year));
+        if ($firstDayInYear < 5) {
+            $shift = -($firstDayInYear - 1) * 86400;
+        } else {
+            $shift = (8 - $firstDayInYear) * 86400;
+        }
+
+        if ($week > 1) {
+            $weekInSeconds = ($week - 1) * 604800;
+        } else {
+            $weekInSeconds = 0;
+        }
+
+        return mktime(0, 0, 0, 1, 1, $year) + $weekInSeconds + $shift;
     }
 }

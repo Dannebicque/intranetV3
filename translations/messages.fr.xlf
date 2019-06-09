@@ -11839,5 +11839,11 @@
         <target>super-admin.etudiant-departement.heading</target>
       </segment>
     </unit>
+    <unit id="MHEZ.GF" name="Nouvelle absence enregistrée">
+      <segment>
+        <source>Nouvelle absence enregistrée</source>
+        <target>Nouvelle absence enregistrée</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

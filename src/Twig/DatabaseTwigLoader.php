@@ -82,7 +82,7 @@ class DatabaseTwigLoader implements LoaderInterface
         return $lastModified <= $time;
     }
 
-    protected function getValue($name)
+    protected function getValue($name): void
     {
         //return $this->twigTemplateRepository->findOneBy(['name' => $name]);
         //todo: SI je laisse cette ligne ca plante Travis et le composer install ???

@@ -16,6 +16,7 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
@@ -113,7 +114,7 @@ class Absence extends BaseEntity
     private $etudiant;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateJustifie;
 
@@ -260,12 +261,12 @@ class Absence extends BaseEntity
         return $this;
     }
 
-    public function getDateJustifie(): ?\DateTimeInterface
+    public function getDateJustifie(): ?DateTimeInterface
     {
         return $this->dateJustifie;
     }
 
-    public function setDateJustifie(\DateTimeInterface $dateJustifie): self
+    public function setDateJustifie(DateTimeInterface $dateJustifie): self
     {
         $this->dateJustifie = $dateJustifie;
 

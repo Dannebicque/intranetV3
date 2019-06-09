@@ -1039,15 +1039,6 @@ class Etudiant extends Utilisateur implements Serializable
     }
 
     /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new DateTime();
-    }
-
-    /**
      * @return null|File
      */
     public function getPhotoFile(): ?File

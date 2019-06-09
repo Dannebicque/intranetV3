@@ -39,6 +39,9 @@ class RhController extends BaseController
 
     /**
      * @Route("/show/{id}", name="sa_rh_personnel_show", options={"expose"=true})
+     * @param Personnel $personnel
+     *
+     * @return Response
      */
     public function show(Personnel $personnel): Response
     {
@@ -119,6 +122,10 @@ class RhController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_rh_delete_personnel", methods="DELETE", options={"expose"=true})
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
+     * @param Request                        $request
+     * @param Personnel                      $personnel
+     * @return Response
      */
     public function delete(
         PersonnelDepartementRepository $personnelDepartementRepository,

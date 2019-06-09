@@ -64,7 +64,8 @@ class MessagerieController extends BaseController
      * @return JsonResponse
      */
     public function starred(MessageDestinatairePersonnelRepository $messagePersonnelRepository,
-        MessageDestinataireEtudiantRepository $messageEtudiantRepository, Request $request) {
+        MessageDestinataireEtudiantRepository $messageEtudiantRepository, Request $request): JsonResponse
+    {
         $message = $request->request->get('message');
         $valeur = $request->request->get('valeur') !== 'false';
 
@@ -162,7 +163,8 @@ class MessagerieController extends BaseController
      *
      * @return JsonResponse
      */
-    public function messageSend(Request $request, MyMessagerie $messagerie) {
+    public function messageSend(Request $request, MyMessagerie $messagerie): JsonResponse
+    {
         //todo: mercure pour notification...
         $destinataires = explode(',', $request->request->get('destinataires'));
         $sujet = $request->request->get('sujet');
@@ -179,7 +181,7 @@ class MessagerieController extends BaseController
 
         $messagerie->sendSynthese();
 
-        return $this->json('ok', 200);
+        return $this->json('ok');
     }
 
     /**

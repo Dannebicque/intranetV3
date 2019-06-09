@@ -15,6 +15,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
@@ -81,7 +82,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findJustificatifByAbsence(\App\Entity\Absence $absence)
+    public function findJustificatifByAbsence(Absence $absence): bool
     {
         //regarde si un justificatif valide existe pour l'absence
         //todo: a tester.

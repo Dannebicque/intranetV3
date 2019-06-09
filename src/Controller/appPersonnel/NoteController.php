@@ -236,8 +236,11 @@ class NoteController extends BaseController
     /**
      * @Route("/ajax/gere/{uuid}", name="application_personnel_note_ajax_autorise", methods="GET")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param Evaluation $evaluation
+     *
+     * @return Response
      */
-    public function ajaxAddPersonneAction(Evaluation $evaluation)
+    public function ajaxAddPersonneAction(Evaluation $evaluation): Response
     {
         if ($evaluation !== null) //todo: tester si c'est le prof ou un admin...
         {

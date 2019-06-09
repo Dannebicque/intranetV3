@@ -169,12 +169,13 @@ class UeController extends BaseController
     }
 
     /**
-     * @param Ue $ue
-     * @param bool        $etat
+     * @param Ue   $ue
+     * @param bool $etat
+     *
+     * @return RedirectResponse
      * @Route("/activate/{ue}/{etat}", methods={"GET"}, name="sa_ue_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @return RedirectResponse
      */
     public function activate(Ue $ue, bool $etat): RedirectResponse
     {

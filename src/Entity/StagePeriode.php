@@ -510,7 +510,7 @@ class StagePeriode extends BaseEntity
     }
 
     /**
-     * @param string $documentName
+     * @param string|null $documentName
      */
     public function setDocumentName(?string $documentName): void
     {

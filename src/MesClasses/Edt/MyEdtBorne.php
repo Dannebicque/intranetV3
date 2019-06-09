@@ -36,14 +36,15 @@ class MyEdtBorne
     private $groupeRepository;
 
 
-    public function init()
+    public function init(): void
     {
         $this->data['semaine'] = date('W');
         $this->data['njour'] = date('d');
         $this->data['jsem'] = date('N');
     }
 
-    public function calculSemestre(Semestre $semestre1, Semestre $semestre2) {
+    public function calculSemestre(Semestre $semestre1, Semestre $semestre2): void
+    {
         $t['semaine'] = $this->calendrierRepository->findOneBy(array('semaineReelle' => $this->data['semaine']));
 
 

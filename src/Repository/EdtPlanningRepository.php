@@ -65,7 +65,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtProf($prof, $semaine)
+    public function findEdtProf($prof, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -114,7 +114,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtSemestre($semestre, $semaine)
+    public function findEdtSemestre($semestre, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -131,7 +131,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtModule($module, $semaine)
+    public function findEdtModule($module, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -148,7 +148,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtJour($jour, $semaine)
+    public function findEdtJour($jour, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -165,7 +165,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtSalle($salle, $semaine)
+    public function findEdtSalle($salle, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -207,15 +207,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
     /**
      * @param $user
      */
-    private function groupes(Etudiant $user)
+    private function groupes(Etudiant $user): void
     {
         foreach ($user->getGroupes() as $groupe) {
             if ($groupe->getTypeGroupe()->isTD()) {
                 $this->groupetd = $groupe->getOrdre();
-            } else {
-                if ($groupe->getTypegroupe()->isTP()) {
-                    $this->groupetp = $groupe->getOrdre();
-                }
+            } else if ($groupe->getTypegroupe()->isTP()) {
+                $this->groupetp = $groupe->getOrdre();
             }
         }
     }
@@ -226,7 +224,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtSalleJour($semaine, $jour)
+    public function findEdtSalleJour($semaine, $jour): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -296,7 +294,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtEtu(Etudiant $user, $semaine)
+    public function findEdtEtu(Etudiant $user, $semaine): array
     {
         if ($user->getSemestre() !== null) {
             $this->groupes($user);
@@ -326,7 +324,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function recupereEDTBornesNew($numSemaine, Semestre $semestre, $jour)
+    public function recupereEDTBornesNew($numSemaine, Semestre $semestre, $jour): array
     {
         $creneaux = array(
             1  => array('8h00', '9h30'),
@@ -337,7 +335,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             16 => array('15h30', '17h00'),
             19 => array('17h00', '18h30'));
 
-        $nbgroupetp = $semestre->getNbgroupeTP();
+        $nbgroupetp = $semestre->getNbgroupeTpEdt();
 
         if ($nbgroupetp <= 2) {
             $typebloc = '-d';
@@ -361,7 +359,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $planning = array();
 
         $j = 0;
-        /** @var  $row Planning */
+        /** @var  EdtPlanning $row */
         foreach ($query as $row) {
             $casedebut = $row->getDebut();
 
@@ -385,7 +383,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             if ($row->getMatiere() === null) {
                 $refmatiere = $row->getTexte();
             } else {
-                $refmatiere = $row->getMatiere()->getRefmatiere();
+                $refmatiere = $row->getMatiere()->getCodeMatiere();
             }
 
             if (array_key_exists($casedebut, $creneaux) && $duree % 3 === 0) {
@@ -411,7 +409,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
                 $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
 
-                if ($duree % 3 == 0) {
+                if ($duree % 3 === 0) {
                     for ($i = 1; $i < $duree / 3; $i++) {
                         $planning[$casedebut + ($i * 3)] = $planning[$casedebut];
                     }
@@ -419,15 +417,15 @@ class EdtPlanningRepository extends ServiceEntityRepository
             } else {
                 //pas sur un créneau classique pour le début
                 if (!array_key_exists($casedebut, $creneaux)) {
-                    $casedebut = $casedebut - ($duree % 3);
+                    $casedebut -= ($duree % 3);
                 }
 
-                if ($casedebut == 11 || $casedebut == 12)
+                if ($casedebut === 11 || $casedebut === 12)
                 {
                     $casedebut = 10;
                 }
 
-                if ($casedebut == 2 || $casedebut == 3)
+                if ($casedebut === 2 || $casedebut === 3)
                 {
                     $casedebut = 1;
                 }
@@ -457,7 +455,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
             }
         }
-        return ($planning);
+        return $planning;
     }
 
 //    /**

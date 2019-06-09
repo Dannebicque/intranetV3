@@ -57,7 +57,7 @@ class UeRepository extends ServiceEntityRepository
      *
      * @return Ue[]
      */
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
 
         return $this->findBySemestreBuilder($semestre)->getQuery()->getResult();

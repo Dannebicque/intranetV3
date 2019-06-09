@@ -30,9 +30,10 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="" class="sr-only"></label>
+                    <label for="semaine" class="sr-only"></label>
                     <select class="form-control " data-provide="selectpicker"
                             data-live-search="true"
+                            id="semaine"
                     >
                         <option value="">Choisir</option>
                         {% for sem in edt.semaines %}
@@ -79,8 +80,13 @@
                             <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}<br>{{ tabHeures[ligne][1] }}</div>
                             {% for j in 1..5 %}
                                 {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
-                                    <div class="edt-etudiant-col1 edt-cours" style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">{{ edt
-                                        .planning[j][ligne].texte|raw }}</div>
+                                    <div class="edt-etudiant-col1 edt-cours" style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                                        <a href="{{ path('application_personnel_absence_from_planning',{'event':edt
+                                            .planning[j][ligne].pl }) }}" style="color:{{
+                                        edt.planning[j][ligne]
+                                        .couleurTexte
+                                        }};">{{ edt.planning[j][ligne].texte|raw }}</a>
+                                    </div>
                                 {% else %}
                                     <div class="edt-etudiant-col1 edt-cours"></div>
                                 {% endif %}

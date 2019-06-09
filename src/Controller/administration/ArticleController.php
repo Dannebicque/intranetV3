@@ -199,10 +199,14 @@ class ArticleController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param ArticleCategorieRepository $categorieRepository
+     * @param Request                    $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @Route("/gestion/categorie/add", name="administration_article_categorie_add", options={"expose"=true})
+     *
      */
-    public function addCategorie(ArticleCategorieRepository $categorieRepository, Request $request)
+    public function addCategorie(ArticleCategorieRepository $categorieRepository, Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
        $libelle = $request->request->get('libelle');
        $categorie = new ArticleCategorie();

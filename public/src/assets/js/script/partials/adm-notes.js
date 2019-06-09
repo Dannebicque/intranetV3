@@ -1,7 +1,7 @@
 $(document).on('click', '.optAfficher', function (e) {
-  var evaluation = $(this).data('id')
-  var $child = $(this).children('i')
-  var $a = $(this)
+  const evaluation = $(this).data('id')
+  const $child = $(this).children('i')
+  const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_visibilite', {uuid: evaluation}),
     success: function (e) {
@@ -28,9 +28,9 @@ $(document).on('click', '.optAfficher', function (e) {
 })
 
 $(document).on('click', '.optVerrouiller', function (e) {
-  var evaluation = $(this).data('id')
-  var $child = $(this).children('i')
-  var $a = $(this)
+  const evaluation = $(this).data('id')
+  const $child = $(this).children('i')
+  const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
     success: function (e) {

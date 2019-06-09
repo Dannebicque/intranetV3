@@ -93,29 +93,29 @@ $(document).on('click', '.absChangeTypeGroupe', function (e) {
   updateAffichage(date.val(), heure.val())
 })
 
-
-function updateAffichage (date, heure) {
-  $.ajax({
-    type: 'GET',
-    url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
-    dataType: 'json',
-    success: function (data) {
-      tabsences = data
-      var t = date.split('/')
-      var ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
-
-      if (typeof tabsences[ddate] !== 'undefined') {
-        if (typeof tabsences[ddate][heure] !== 'undefined') {
-          for (var i = 0; i < tabsences[ddate][heure].length; i++) {
-            $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
-          }
-        }
-      }
-    }
-  })
-
-
-}
+//
+// function updateAffichage (date, heure) {
+//   $.ajax({
+//     type: 'GET',
+//     url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
+//     dataType: 'json',
+//     success: function (data) {
+//       tabsences = data
+//       var t = date.split('/')
+//       var ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
+//
+//       if (typeof tabsences[ddate] !== 'undefined') {
+//         if (typeof tabsences[ddate][heure] !== 'undefined') {
+//           for (var i = 0; i < tabsences[ddate][heure].length; i++) {
+//             $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
+//           }
+//         }
+//       }
+//     }
+//   })
+//
+//
+// }
 
 $(document).on('change', '#absence-matiere', function () {
   var etudiants = $('.etudiant')

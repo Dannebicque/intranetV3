@@ -263,7 +263,8 @@ class MyEvaluation
      *
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     public function importEvaluation(Evaluation $evaluation, string $fichier): ?bool
     {
@@ -321,8 +322,8 @@ class MyEvaluation
      * @param string $fichier
      *
      * @return array
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     private function importXlsx(string $fichier): array
     {

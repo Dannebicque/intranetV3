@@ -53,7 +53,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllGroupes(Semestre $semestre)
+    public function findAllGroupes(Semestre $semestre): array
     {
 
         $groupes = array();
@@ -79,7 +79,7 @@ class GroupeRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function getGroupesTP($semestre)
+    public function getGroupesTP($semestre): array
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
@@ -97,7 +97,7 @@ class GroupeRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function getGroupesTD($semestre)
+    public function getGroupesTD($semestre): array
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')

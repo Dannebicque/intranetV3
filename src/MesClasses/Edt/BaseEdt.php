@@ -15,7 +15,9 @@ namespace App\MesClasses\Edt;
 
 use App\Entity\Calendrier;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use Exception;
 
@@ -44,7 +46,7 @@ Abstract class BaseEdt
     protected $total = [];
 
     /**
-     * @var \App\Entity\Semestre|null
+     * @var Semestre|null
      */
     protected $semestre;
 
@@ -52,8 +54,9 @@ Abstract class BaseEdt
      * @var Personnel|Etudiant
      */
     protected $user;
+
     /**
-     * @var \App\Entity\Matiere|null
+     * @var Matiere|null
      */
     protected $module;
 
@@ -96,7 +99,7 @@ Abstract class BaseEdt
     /**
      * @return array
      */
-    public function getTabJour()
+    public function getTabJour(): array
     {
         return $this->tabJour;
     }
@@ -169,7 +172,7 @@ Abstract class BaseEdt
         return $this;
     }
 
-    private function getJours()
+    private function getJours(): void
     {
         $njour = (int)$this->semaineFormationLundi->format('d');
         $mois = $this->semaineFormationLundi->format('m');
@@ -209,7 +212,7 @@ Abstract class BaseEdt
     /**
      * @return int
      */
-    public function getSemainePrecedente()
+    public function getSemainePrecedente(): int
     {
         $s = (int)$this->semaine - 1;
 
@@ -223,7 +226,7 @@ Abstract class BaseEdt
     /**
      * @return int
      */
-    public function getSemaineSuivante()
+    public function getSemaineSuivante(): int
     {
         $s = $this->semaine + 1;
         if ($s === 53) {
@@ -241,17 +244,17 @@ Abstract class BaseEdt
     }
 
     /**
-     * @return \App\Entity\Semestre|null
+     * @return Semestre|null
      */
-    public function getSemestre(): ?\App\Entity\Semestre
+    public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
     /**
-     * @return \App\Entity\Matiere|null
+     * @return Matiere|null
      */
-    public function getModule(): ?\App\Entity\Matiere
+    public function getModule(): ?Matiere
     {
         return $this->module;
     }

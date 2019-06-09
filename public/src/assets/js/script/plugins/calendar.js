@@ -1,9 +1,9 @@
-var dateDuJour = moment().day();
-var moisDuJour = moment().month();
-var semaineAnnee = moment().week();
+const dateDuJour = moment().day()
+const moisDuJour = moment().month()
+const semaineAnnee = moment().week()
 
-var table = $('#calendar');
-var num = 0;
+const table = $('#calendar')
+let num = 0
 
 console.log('jour' + dateDuJour);
 console.log('mois' + moisDuJour);
@@ -11,10 +11,10 @@ console.log('semaine' + semaineAnnee);
 
 
 function dessineLigne() {
-  var html = '';
+  let html = ''
 
   html = html + '<tr>';
-  for (var i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i++) {
     html = html + '<td>' + num + '</td>';
     num++;
   }

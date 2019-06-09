@@ -71,7 +71,8 @@ class DisponibiliteController extends BaseController
      * @return JsonResponse
      * @throws NonUniqueResultException
      */
-    public function updateDisponibilites(Request $request, DisponibiliteRepository $disponibiliteRepository) {
+    public function updateDisponibilites(Request $request, DisponibiliteRepository $disponibiliteRepository): JsonResponse
+    {
         //todo: a gérer année universitaire
         $jour = $request->request->get('jour');
         $heure = $request->request->get('heure');

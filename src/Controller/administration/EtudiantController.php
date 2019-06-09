@@ -75,10 +75,11 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/edit/{id}", name="administration_etudiant_edit", methods="{GET|POST}")
-     * @param Request $request
+     * @param Request  $request
+     *
+     * @param Etudiant $etudiant
      *
      * @return Response
-     * @throws Exception
      */
     public function edit(Request $request, Etudiant $etudiant): Response
     {

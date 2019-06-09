@@ -24,7 +24,7 @@ class Configuration
         self::$configurationRepository = $configurationRepository;
     }
 
-    public static function get($name)
+    public static function get($name): string
     {
         if (count(self::$settings) === 0) {
             self::getAllSettings();

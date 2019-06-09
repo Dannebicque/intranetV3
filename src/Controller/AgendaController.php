@@ -25,6 +25,11 @@ class AgendaController extends BaseController
 {
     /**
      * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index")
+     * @param int    $semaine
+     * @param string $filtre
+     * @param string $valeur
+     *
+     * @return Response
      */
     public function index(
         $semaine = 0,

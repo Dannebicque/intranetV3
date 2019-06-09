@@ -324,10 +324,8 @@ class MyExportListing
         $this->myExcelWriter->getSheet()->getPageSetup()->setFitToPage(true);
     }
 
-    private function exportPdf()
+    private function exportPdf(): void
     {
         $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name, $this->dataUserSession->getDepartement()->getLibelle());
-
-        return null;
     }
 }

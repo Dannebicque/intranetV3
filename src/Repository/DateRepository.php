@@ -47,7 +47,7 @@ class DateRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByDepartement($departement, $nbResult)
+    public function findByDepartement($departement, $nbResult = 2)
     {
         return $this->createQueryBuilder('d')
             ->leftJoin('d.semestres', 's')

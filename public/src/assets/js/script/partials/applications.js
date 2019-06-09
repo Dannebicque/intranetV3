@@ -12,6 +12,7 @@
  *
  */
 
+
 $(document).on('click', '.changeapplication', function(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -24,8 +25,8 @@ $(document).on('click', '.changeapplication', function(e) {
 $(document).on('change', '#selectsemestre', function () {
   //matieres
   $('#listegroupe').empty();
-  var selectMatiere = $("#selectmatiere");
-  var selectGroupes = $("#selectgroupes");
+  const selectMatiere = $('#selectmatiere')
+  const selectGroupes = $('#selectgroupes')
   $.ajax(
     {
       url: Routing.generate('api_matieres_semestre', {semestre: $(this).val()}),
@@ -72,7 +73,7 @@ $(document).on('change', '#selectsemestre', function () {
 
 $(document).on('change', '#selectgroupes', function () {
 
-  var $lgr = $('#listegroupe');
+  const $lgr = $('#listegroupe')
   //matieres
   $.ajax(
     {
@@ -80,7 +81,7 @@ $(document).on('change', '#selectgroupes', function () {
       dataType: "json", //Return data type (what we expect).
       success: function (data) {
         $lgr.empty();
-        var $html = '';
+        let $html = ''
         jQuery.each(data, function (index, groupe) {
           $html += '<input type="checkbox" checked name="detail_groupes[]" value="' + groupe.id + '"> ' + groupe.libelle + ' | ';
         });

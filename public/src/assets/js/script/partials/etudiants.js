@@ -12,7 +12,7 @@
  *
  */
 
-var table = $('#datatableEtudiants').DataTable({});
+const table = $('#datatableEtudiants').DataTable({})
 table.clear(); //effacer le datatable
 table.destroy(); //supprimer le datatable
 
@@ -40,8 +40,8 @@ $(document).on('click', '.admChangeTypeGroupe', function() {
 
 $(document).on( 'click', '.changegroupe', function() {
   if($(this).is(':checked')) {
-    var newgroupe = $(this).val();
-    var oldgroupe = '#' + $(this).attr('name') + "_old";
+    const newgroupe = $(this).val()
+    const oldgroupe = '#' + $(this).attr('name') + '_old'
 
     console.log(oldgroupe);
     $.ajax(

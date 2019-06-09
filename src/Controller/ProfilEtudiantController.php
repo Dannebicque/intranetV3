@@ -82,6 +82,7 @@ class ProfilEtudiantController extends BaseController
         $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
+            'etudiant' => $etudiant,
             'scolarite'    => $scolarite,
             'scolariteUes' => $scolariteUes
         ]);
@@ -89,10 +90,12 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
-     * @param Etudiant $etudiant
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     * @param ScolariteRepository $scolariteRepository
+     * @param Etudiant            $etudiant
      *
      * @return Response
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     *
      */
     public function notes(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
     {

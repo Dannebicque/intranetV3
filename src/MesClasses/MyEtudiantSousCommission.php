@@ -44,7 +44,7 @@ class MyEtudiantSousCommission
     private $parcours = [];
 
     /** @var */
-    private $notes = [];
+    private $notes;
 
     /**
      * MyEtudiantSousCommission constructor.

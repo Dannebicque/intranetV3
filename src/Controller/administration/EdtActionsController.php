@@ -27,8 +27,14 @@ class EdtActionsController extends BaseController
 {
     /**
      * @Route("/uploadsemaine", name="administration_edt_action_upload")
+     * @param CalendrierRepository $calendrierRepository
+     * @param Request              $request
+     * @param MyEdtImport          $myEdtImport
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function uploadSemaine(CalendrierRepository $calendrierRepository, Request $request, MyEdtImport $myEdtImport) {
+    public function uploadSemaine(CalendrierRepository $calendrierRepository, Request $request, MyEdtImport $myEdtImport): ?\Symfony\Component\HttpFoundation\RedirectResponse
+    {
 
         //récupérer le fichier
         $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();

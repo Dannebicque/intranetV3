@@ -100,7 +100,7 @@ class SemestreRepository extends ServiceEntityRepository
         return $this->findByDepartementBuilder($departement->getId())->getQuery()->getResult();
     }
 
-    public function tableauSemestres(Departement $departement)
+    public function tableauSemestres(Departement $departement): array
     {
         $semestres = $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')

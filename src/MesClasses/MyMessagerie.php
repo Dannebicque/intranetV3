@@ -97,7 +97,7 @@ class MyMessagerie
     }
 
 
-    public function sendToPermanents()
+    public function sendToPermanents(): void
     {
         //mail réel + notification (utiliser le busMessage ?
         $message = (new TemplatedEmail())
@@ -125,12 +125,12 @@ class MyMessagerie
         $this->entityManager->flush();
     }
 
-    public function sendToVacataires()
+    public function sendToVacataires(): void
     {
         //mail réel + notification (utiliser le busMessage ?
     }
 
-    public function sendToEtudiants()
+    public function sendToEtudiants(): void
     {
         $this->nbMessagesEnvoyes = 0;
         $this->nbEtudiants = 0;
@@ -170,7 +170,7 @@ class MyMessagerie
 
     }
 
-    public function setMessage($sujet, $message, $expediteur, $pjs = null)
+    public function setMessage($sujet, $message, $expediteur, $pjs = null): void
     {
         //pour définir les éléments du message, commun à tous les destinataires
         $this->sujet = $sujet;
@@ -179,13 +179,13 @@ class MyMessagerie
         $this->pjs = $pjs;
     }
 
-    public function setCopie(array $copie)
+    public function setCopie(array $copie): void
     {
         //envoi d'une copie du message à des destinataires
 
     }
 
-    public function sendSynthese()
+    public function sendSynthese(): void
     {
         //envoi de la synthèse à l'auteur
         $email = (new TemplatedEmail())
@@ -202,7 +202,7 @@ class MyMessagerie
 
     }
 
-    public function sendToDestinataires(array $destinataires, Departement $departement)
+    public function sendToDestinataires(array $destinataires, Departement $departement): void
     {
         $this->departement = $departement;
         foreach ($destinataires as $destinataire) {
@@ -238,7 +238,7 @@ class MyMessagerie
         }
     }
 
-    private function saveMessageDatabase(string $type)
+    private function saveMessageDatabase(string $type): Message
     {
 
         $mess = new Message();
@@ -255,7 +255,7 @@ class MyMessagerie
         return $mess;
     }
 
-    private function saveDestinataireEtudiantDatabase(Message $message, $etudiant)
+    private function saveDestinataireEtudiantDatabase(Message $message, $etudiant): void
     {
         $dest = new MessageDestinataireEtudiant();
         $dest->setMessage($message);
@@ -263,7 +263,7 @@ class MyMessagerie
         $this->entityManager->persist($dest);
     }
 
-    private function saveDestinatairePersonnelDatabase(Message $message, $personnel)
+    private function saveDestinatairePersonnelDatabase(Message $message, $personnel): void
     {
         echo 'detinataires';
         $dest = new MessageDestinatairePersonnel();
@@ -272,13 +272,13 @@ class MyMessagerie
         $this->entityManager->persist($dest);
     }
 
-    private function getEtudiantsSemestre($codeSemestre)
+    private function getEtudiantsSemestre($codeSemestre): void
     {
         //récupére tous les étudiants d'un semestre
         $this->etudiants = $this->etudiantRepository->findBySemestreCodeApogee($codeSemestre);
     }
 
-    private function getEtudiantsTypeGroupe($codeTypeGroupe)
+    private function getEtudiantsTypeGroupe($codeTypeGroupe): void
     {
         //récupère tous les étudiants d'un ensemble de groupe
         $typeGroupes = $this->typeGroupeRepository->findOneBy(['libelle' => $codeTypeGroupe]);
@@ -289,7 +289,7 @@ class MyMessagerie
         }
     }
 
-    private function getEtudiantsGroupe($codeGroupe)
+    private function getEtudiantsGroupe($codeGroupe): void
     {
         //récupère tous les étudiants d'un ensemble de groupe
         $groupe = $this->groupeRepository->findOneBy(['codeApogee' => $codeGroupe]);

@@ -14,11 +14,11 @@
 
 $(document).on('keyup', '#search', function (e) {
 
-  var keyword = $(this).val()
+  const keyword = $(this).val()
   console.log(keyword)
-  var search_reponse_etudiant = $('#search_reponse_etudiant')
-  var search_reponse_personnel = $('#search_reponse_personnel')
-  var search_reponse_autre = $('#search_reponse_autre')
+  const search_reponse_etudiant = $('#search_reponse_etudiant')
+  const search_reponse_personnel = $('#search_reponse_personnel')
+  const search_reponse_autre = $('#search_reponse_autre')
 
   if (keyword.length > 2) {
     $.ajax({
@@ -27,7 +27,7 @@ $(document).on('keyup', '#search', function (e) {
       success: function (data) {
 
 
-        var html = ''
+        let html = ''
         if (data.etudiants.length > 0) {
           jQuery.each(data.etudiants, function (index, etudiant) {
             html = html + '<a class="media" href="' + Routing.generate('user_profil', {
@@ -35,12 +35,12 @@ $(document).on('keyup', '#search', function (e) {
                 slug: etudiant.slug
               }) + '" target="_blank">\n' +
               '                <span class="avatar status-dark">\n' +
-              '                  <img src="' + basePath + 'photo/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
+              '                  <img src="/upload/etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
               '                </span>\n' +
               '\n' +
               '                        <div class="media-body">\n' +
               '                            <p><strong>' + etudiant.displayPr + '</strong>\n' +
-              '                                <time class="float-right" datetime="2018-07-14 20:00">Groupes...</time>\n' +
+              '                                <time class="float-right">' + etudiant.groupes +'</time>\n' +
               '                            </p>\n' +
               '                        </div>\n' +
               '                    </a>'
@@ -58,7 +58,7 @@ $(document).on('keyup', '#search', function (e) {
                 type: 'personnel',
                 slug: personnel.slug
               }) + '" target="_blank">\n' +
-              '                        <img class="avatar avatar-sm" src="' + basePath + 'photo/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
+              '                        <img class="avatar avatar-sm" src="upload/personnels/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
               '                        <p>' + personnel.displayPr + '</p>\n' +
               '                    </a>'
           })

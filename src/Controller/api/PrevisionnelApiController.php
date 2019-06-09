@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrevisionnelApiController extends BaseController
 {
     /**
-     * @Route("/maiere/{matiere}", name="api_previsionnel_matiere", options={"expose":true})
+     * @Route("/matiere/{matiere}", name="api_previsionnel_matiere", options={"expose":true})
      * @param PrevisionnelRepository $previsionnelRepository
      * @param Matiere                $matiere
      *

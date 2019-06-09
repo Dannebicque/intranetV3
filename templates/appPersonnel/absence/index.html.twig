@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block header %}Saisie d'absences pour | <strong>{{ matiere.libelle }}</strong>{% endblock %}
+{% block header %}Saisie d'absences pour | <strong>{{ matiere.display }}</strong>{% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
@@ -38,7 +38,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" data-provide="datepicker"
                                    data-language="{{ app.request.getLocale() }}" id="absence-date"
-                                   value="{{ 'now'|date('d/m/Y') }}">
+                                   value="{% if date is defined %}{{ date|date('d/m/Y') }} {% else %} {{ date("now")|date('d/m/Y') }}{% endif %}">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
@@ -51,9 +51,19 @@
                         <select class="form-control" id="absence-heure" data-provide="selectpicker"
                                 data-live-search="true">
                             <option value="">{{ 'choisir.heure.debut'|trans }}</option>
-                            {% for i in 08..20 %}
-                                <option value="{% if i < 10 %}0{% endif %}{{ i }}:00" {% if loop.first %}selected{% endif %}>{% if i < 10 %}0{% endif %}{{ i }}:00</option>
-                                <option value="{% if i < 10 %}0{% endif %}{{ i }}:30">{% if i < 10 %}0{% endif %}{{ i }}:30</option>
+                            {% for i in 08..19 %}
+                                <option value="{{ i }}:00" {% if i~':00' == heure %} selected {% endif %}>
+                                    {{ i }}h00
+                                </option>
+                                <option value="{{ i }}:15" {% if i~':15' == heure %} selected {% endif %}>
+                                    {{ i }}h15
+                                </option>
+                                <option value="{{ i }}:30" {% if i~':30' == heure %} selected {% endif %}>
+                                    {{ i }}h30
+                                </option>
+                                <option value="{{ i }}:45" {% if i~':45' == heure %} selected {% endif %}>
+                                    {{ i }}h45
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
@@ -62,10 +72,13 @@
                     <div class="form-group">
                         <label for="absence-groupe">{{ 'groupe'|trans }}</label>
                         <div class="row">
-                            {% for typeGroupe in typeGroupes %}
+                            {% for typeGroupe in groupes.typeGroupes %}
                                 <div class="col-sm-2">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id == typeGroupe.id %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
+                                            class="btn btn-block {% if event is defined and event.type|upper ==
+                                                typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{
+                                        typeGroupe
+                                        .libelle }}</button>
                                 </div>
                             {% else %}
                                 <div class="col-md-12">
@@ -85,10 +98,29 @@
     <div class="card">
         <h4 class="card-title">{{ 'etudiants.du.semestre'|trans }}</h4>
         <div class="card-body" id="listeEtudiantsAbsences">
+            {% if event is defined %}
+                {{ include('api/absence/listeEtudiant.html.twig', {selectedTypeGroupe: groupes, numerogroupe: event
+                    .groupe}) }}
+            {% else %}
             <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% if event is defined %}
+    <script>
+        $(document).ready(function () {
+          console.log('update')
+          updateAffichage("{{ dateFr }}", "{{ heure }}")
+        })
+
+    </script>
+{% endif %}
+{% endblock %}
+
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[

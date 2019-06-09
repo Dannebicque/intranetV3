@@ -13,7 +13,7 @@
  */
 
 $('#matiere_semestre').change(function () {
-  var semestreSelector = $(this)
+  const semestreSelector = $(this)
 
   // Request the neighborhoods of the selected city.
   $.ajax({
@@ -24,7 +24,7 @@ $('#matiere_semestre').change(function () {
       semestreid: semestreSelector.val()
     },
     success: function (ues) {
-      var matiereSelector = $('#matiere_ue')
+      const matiereSelector = $('#matiere_ue')
 
       // Remove current options
       matiereSelector.html('')
@@ -50,7 +50,7 @@ $('#matiere_semestre').change(function () {
       semestreid: semestreSelector.val()
     },
     success: function (parcours) {
-      var parcourSelector = $('#matiere_parcours')
+      const parcourSelector = $('#matiere_parcours')
 
       // Remove current options
       parcourSelector.html('')
@@ -73,7 +73,7 @@ $('#matiere_semestre').change(function () {
     dataType: 'JSON',
     type: 'GET',
     success: function (matieres) {
-      var parentSelector = $('#matiere_matiereParent')
+      const parentSelector = $('#matiere_matiereParent')
 
       // Remove current options
       parentSelector.html('')

@@ -28,7 +28,7 @@ $(document).on('change', '.typegroupe_defaut', function (e) {
 });
 
 $(document).on('click', '#add_type_groupe', function() {
-  var $semestre = $(this).data('semestre');
+  const $semestre = $(this).data('semestre')
   $.ajax({
     url: Routing.generate('administration_type_groupe_new'),
     method: 'POST',
@@ -47,7 +47,7 @@ $(document).on('click', '#add_type_groupe', function() {
 });
 
 $(document).on('click', '.add_groupe', function() {
-  var $parent = $(this).data('parent');
+  const $parent = $(this).data('parent')
 
   $.ajax({
     url: Routing.generate('administration_groupe_new'),

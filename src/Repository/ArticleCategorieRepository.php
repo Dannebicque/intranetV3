@@ -29,7 +29,7 @@ class ArticleCategorieRepository extends ServiceEntityRepository
             ->orderBy('c.libelle', 'ASC');
     }
 
-    public function findByDepartementJson(Departement $departement)
+    public function findByDepartementJson(Departement $departement): array
     {
         $data = $this->findByDepartementBuilder($departement)->getQuery()->getResult();
         $t = [];

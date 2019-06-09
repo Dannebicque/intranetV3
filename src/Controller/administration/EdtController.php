@@ -34,6 +34,10 @@ class EdtController extends BaseController
     /**
      * @Route("/{semaine}/{valeur}/{filtre}", name="administration_edt_index", requirements={"semaine" = "\d+"})
      *
+     * @param int    $semaine
+     * @param string $valeur
+     * @param string $filtre
+     *
      * @return Response
      */
     public function index($semaine = 0, $valeur = '', $filtre = ''): Response

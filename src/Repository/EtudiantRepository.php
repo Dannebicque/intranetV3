@@ -167,6 +167,11 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['displayPr'] = $etudiant->getDisplayPr();
             $tt['slug'] = $etudiant->getSlug();
             $tt['photo'] = $etudiant->getPhotoName();
+            $gr = '';
+            foreach ($etudiant->getGroupes() as $groupe) {
+                $gr .= $groupe->getLibelle().', ';
+            }
+            $tt['groupes'] = substr($gr, 0, -2);
             $t[] = $tt;
         }
 

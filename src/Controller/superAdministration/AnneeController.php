@@ -177,11 +177,12 @@ class AnneeController extends BaseController
 
     /**
      * @param Annee $annee
-     * @param bool        $etat
+     * @param bool  $etat
+     *
+     * @return RedirectResponse
      * @Route("/activate/{annee}/{etat}", methods={"GET"}, name="sa_annee_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @return RedirectResponse
      */
     public function activate(Annee $annee, bool $etat): RedirectResponse
     {

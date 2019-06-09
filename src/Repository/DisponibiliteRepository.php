@@ -54,7 +54,7 @@ class DisponibiliteRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getDisponibilitesArray($personnel)
+    public function getDisponibilitesArray($personnel): array
     {
         $query = $this->createQueryBuilder('d')
             ->andWhere('d.personnel = :personnel')

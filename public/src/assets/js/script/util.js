@@ -1,6 +1,6 @@
 function readUrlMenu($url) {
-  var $elt = $url.split('/');
-  var $firstElt = 2;
+  const $elt = $url.split('/')
+  let $firstElt = 2
   console.log($elt);
     if ($elt[1] === 'index.php') {
       if ($elt.length > 1) {
@@ -23,12 +23,37 @@ function readUrlMenu($url) {
 //colorise le bon menu
 readUrlMenu($(location).attr('pathname'))
 
+function updateAffichage (date, heure) {
+  console.log('aff')
+  $.ajax({
+    type: 'GET',
+    url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
+    dataType: 'json',
+    success: function (data) {
+
+      const tabsences = data
+      console.log(date)
+      const t = date.split('/')
+      const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
+      console.log(ddate)
+      console.log(tabsences[ddate])
+      if (typeof tabsences[ddate] !== 'undefined') {
+        if (typeof tabsences[ddate][heure] !== 'undefined') {
+          for (let i = 0; i < tabsences[ddate][heure].length; i++) {
+            console.log(tabsences[ddate][heure][i])
+            $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
+          }
+        }
+      }
+    }
+  })
+}
 
 //pop up de confirmation de suppression
 $(document).on('click', '.supprimer', function (e) {
   e.preventDefault();
-  var url = $(this).attr('href');
-  var csrf = $(this).data('csrf');
+  const url = $(this).attr('href')
+  const csrf = $(this).data('csrf')
   swal({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -80,7 +105,7 @@ $(document).on('click', '.supprimer', function (e) {
 });
 
 function addCallout (message, label) {
-  var html = '<div class="callout callout-' + label + '" role="alert">\n' +
+  const html = '<div class="callout callout-' + label + '" role="alert">\n' +
     '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
     '                        <span>&times;</span>\n' +
     '                    </button>\n' +

@@ -11,7 +11,7 @@ namespace App\MesClasses\Pdf;
 use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 
 class MyPDF
 {
@@ -20,15 +20,15 @@ class MyPDF
 
     protected static $options;
 
-    /** @var EngineInterface */
+    /** @var Environment */
     protected static $templating;
 
     /**
      * MyPDF constructor.
      *
-     * @param EngineInterface $templating
+     * @param Environment $templating
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(Environment $templating)
     {
         self::$templating = $templating;
         self::$options = new Options();
@@ -49,7 +49,11 @@ class MyPDF
      * @param $template
      * @param $data
      * @param $name
+     * @param $departement
      *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public static function generePdf($template, $data, $name, $departement):void
     {
@@ -61,7 +65,7 @@ class MyPDF
 
         $date = new DateTime('now');
         $canvas = self::$domPdf->getCanvas();
-        $canvas->page_text(500, 800, "Page {PAGE_NUM} sur {PAGE_COUNT}", 'Arial', 10, array(0,0,0));
+        $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, array(0, 0, 0));
         $canvas->page_text(43, 800, $departement. ' | '.$date->format('d/m/Y').'. Généré depuis l\'intranet', 'Arial', 10, array(0,0,0));
 
         self::$domPdf->stream($name, array('Attachment' => 1));

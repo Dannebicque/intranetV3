@@ -71,7 +71,7 @@ class ProgressionController extends BaseController
         Request $request,
         Matiere $matiere,
         ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
-    ) {
+    ): JsonResponse {
         //todo: a gérer année universitaire
         $semaine = $request->request->get('semaine');
         $typeCours = $request->request->get('typecours');
