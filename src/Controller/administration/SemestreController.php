@@ -67,6 +67,4 @@ class SemestreController extends BaseController
             'nbRattrapages' => $rattrapageRepository->findBySemestreCount($semestre)
         ]);
     }
-
-
 }

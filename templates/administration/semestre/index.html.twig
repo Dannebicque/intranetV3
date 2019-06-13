@@ -6,21 +6,13 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for sem in user_data.semestres if sem.actif == true %}
+        {% for sem in user_data.semestresActifs  %}
             <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
-               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'changer.de.semestre'|trans }}"
                data-provide="tooltip"
                data-placement="bottom"
             >{{ sem.libelle }}</a>
-        {% endfor %}
-        {% for sem in user_data.semestres if sem.actif == false %}
-            <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
-               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
-               title="{{ 'changer.de.semestre'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom"
-            ><i>{{ sem.libelle }}</i></a>
         {% endfor %}
     </div>
 {% endblock %}
@@ -51,7 +43,13 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6 sol-sm-12">
+        {% if semestre.actif == false %}
+        <div class="col-sm-12">
+        <div class="alert alert-warning">Ce semestre n'est pas actif, <strong>aucune action ne peut être faite par les
+                                                                              enseignants</strong>.</div>
+        </div>
+        {% endif %}
+        <div class="col-md-6 col-sm-12">
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'gestion.des.absences'|trans|raw }}</h4>
@@ -100,7 +98,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 sol-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'gestion.des.notes'|trans|raw }}</h4>
@@ -136,7 +134,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 sol-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div class="card">
                 <header class="card-header"><h4 class="card-title">{{ 'gestion.des.etudiants'|trans|raw }}</h4>
                     <div class="card-header-actions">
@@ -179,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 sol-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'gerer.fin.semestre'|trans|raw }}</h4>

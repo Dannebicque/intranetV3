@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="tabs">
                 <ul class="nav nav-tabs">
-                    {% for semestre in user_data.semestres %}
+                    {% for semestre in user_data.semestresActifs %}
                         <li class="nav-item">
                             <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
                                href="#sem{{ semestre.id }}">{{ semestre.libelle }}</a>
@@ -15,7 +15,7 @@
                 </ul>
             </div>
             <div class="tab-content">
-                {% for semestre in user_data.semestres %}
+                {% for semestre in user_data.semestresActifs %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="sem{{ semestre.id }}">
                         <h3>{{ 'vos.modules.du.semestre'|trans({'%semestre%':semestre.display}) }}</h3>
                         <table class="table table-striped">
