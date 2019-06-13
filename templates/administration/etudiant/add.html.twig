@@ -6,9 +6,9 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for sem in user_data.semestres %}
+        {% for sem in user_data.semestresActifs %}
             <a href="{{ path('administration_etudiant_semestre_add', {semestre:sem.id}) }}"
-               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'changer.de.semestre'|trans }}"
                data-provide="tooltip"
                data-placement="bottom"

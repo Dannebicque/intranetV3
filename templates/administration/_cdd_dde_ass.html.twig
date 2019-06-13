@@ -10,28 +10,36 @@
                 </div>
             </header>
 
-
             <div class="card-body">
                 <div class="row gap-y">
-                    {% for semestre in user_data.semestres %}
+                    {% for semestre in user_data.semestres if semestre.actif == true %}
                         <div class="col-md-2"><a
                                     href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                                     class="btn btn-block btn-primary">
                                 {{ semestre.libelle }}
                             </a></div>
                     {% endfor %}
+
+                    {% for semestre in user_data.semestres if semestre.actif == false %}
+                        <div class="col-md-2"><a
+                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                    class="btn btn-block btn-default">
+                                {{ semestre.libelle }}
+                            </a></div>
+                    {% endfor %}
+
                 </div>
                 <div class="row gap-y">
-                    <div class="col-sm-4">
+                    <div class="col-sm-12 col-md-4">
                         <div><a href="{{ path('administration_etudiant_index') }}"
                                 class="btn btn-block btn-primary"> {{ 'adm.tous.les.etudiants'|trans }}</a></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-12 col-md-4">
                         <div><a href="{{ path('administration_statistique_index') }}"
                                 class="btn btn-block btn-primary">
                                 {{ 'adm.statistiques'|trans }}</a></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-12 col-md-4">
                         <div><a href="{{ path('administration_cohorte_index') }}" class="btn btn-block btn-primary">
                                 {{ 'adm.cohortes'|trans }}</a></div>
                     </div>
@@ -323,5 +331,4 @@
             </div>
         </div>
     {% endif %}
-
 </div>

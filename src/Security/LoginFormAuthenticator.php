@@ -129,11 +129,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        $roles = $token->getRoleNames();
+        $rolesTab = $token->getRoleNames();
 
-        $rolesTab = array_map(static function($role) {
-            return $role->getRole();
-        }, $roles);
+        /*$rolesTab = array_map(static function($role) {
+            return $role;
+        }, $roles);*/
 
         if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
