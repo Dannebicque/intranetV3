@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ScolariteController
- * @IsGranted("ROLE_ETUDIANT")
  * @package App\Controller
  * @Route("/application/etudiant/scolarite")
  */

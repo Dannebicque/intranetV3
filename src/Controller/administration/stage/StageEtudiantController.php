@@ -18,10 +18,12 @@ namespace App\Controller\administration\stage;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Form\StageEtudiantType;
 use App\MesClasses\MyStageEtudiant;
+use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -42,11 +44,12 @@ class StageEtudiantController extends BaseController
      *
      * @return Response
      */
-    public function show(StageEtudiant $stageEtudiant): Response
+    public function show(PersonnelRepository $personnelRepository, StageEtudiant $stageEtudiant): Response
     {
         return $this->render(
             'administration/stage/stage_etudiant/show.html.twig',
-            ['stageEtudiant' => $stageEtudiant]
+            ['stageEtudiant' => $stageEtudiant,
+                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())]
         );
     }
 
@@ -122,6 +125,23 @@ class StageEtudiantController extends BaseController
 
         return $this->redirectToRoute('administration_stage_periode_gestion',
             ['uuid' => $stagePeriode->getUuidString()]);
+    }
+
+    /**
+     * @Route("/change-tuteur/{stageEtudiant}/{tuteur}", name="administration_stage_etudiant_change_tuteur", options={"expose"=true})
+     */
+    public function changeTuteur(
+        MyStageEtudiant $myStageEtudiant,
+        StageEtudiant $stageEtudiant,
+        Personnel $tuteur
+    )
+    {
+        $stageEtudiant->setTuteurUniversitaire($tuteur);
+        $this->entityManager->persist($stageEtudiant);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.change_tuteur.success.flash');
+
+        return $this->json(true, Response::HTTP_OK);
     }
 
     /**

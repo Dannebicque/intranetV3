@@ -34,7 +34,7 @@ class ScolariteMoyenneUe
     /**
      * @ORM\Column(type="integer")
      */
-    private $rang;
+    private $rang = 0;
 
     public function getId(): ?int
     {

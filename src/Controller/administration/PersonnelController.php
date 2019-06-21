@@ -18,6 +18,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
+use App\Entity\PersonnelDepartement;
 use App\Form\PersonnelType;
 use App\MesClasses\MyExport;
 use App\Repository\PersonnelDepartementRepository;
@@ -211,14 +212,56 @@ class PersonnelController extends BaseController
     public function gestionDroit(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response
+    ): Response {
+
+        if ($this->dataUserSession->isGoodDepartement('ROLE_CDD') || $this->dataUserSession->isGoodDepartement('ROLE_DDE') || $this->dataUserSession->isGoodDepartement('ROLE_ADMIN')) {
+
+            $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
+                $this->dataUserSession->getDepartement());
+
+            return $this->render('administration/personnel/droit.html.twig',
+                ['personnel' => $personnel, 'droits' => $droits]);
+        }
+
+        return $this->redirectToRoute('erreur_666');
+    }
+
+    /**
+     * @Route("/modifier-droit/{personnel}", name="admin_personnel_departement_modifier_droit", options={"expose":true})
+     * @param Request              $request
+     * @param PersonnelDepartement $pf
+     *
+     * @return Response
+     */
+    public function modifierDroits(Request $request, PersonnelDepartementRepository $personnelDepartementRepository, Personnel $personnel): Response
     {
-        //todo: tester si CDD ou DDE
+        $droit = $request->request->get('droit');
+        $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
 
-        $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
-            $this->dataUserSession->getDepartement());
+        if (count($pf) === 1 && in_array($droit, Constantes::ROLE_LISTE, true)) {
+            if (in_array($droit, $pf[0]->getRoles())){
+                //deja existant on retire
+                $pf[0]->removeRole($droit);
+                $this->entityManager->flush();
 
-        return $this->render('administration/personnel/droit.html.twig',
-            ['personnel' => $personnel, 'droits' => $droits]);
+                return $this->json($droit, Response::HTTP_OK);
+            } else {
+                //pas présent on ajoute
+                $pf[0]->addRole($droit);
+                $this->entityManager->flush();
+
+                return $this->json($droit, Response::HTTP_OK);
+            }
+        } elseif (count($pf) === 0 && in_array($droit, Constantes::ROLE_LISTE, true)) {
+            //etrangement pas dans un département, on ajoute.
+            $pf = new PersonnelDepartement();
+            $pf->setDepartement($this->dataUserSession->getDepartement());
+            $pf->setAnnee(date('Y'));
+            $pf->setPersonnel($personnel);
+            $pf->addRole($droit);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 }

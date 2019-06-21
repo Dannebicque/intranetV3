@@ -850,4 +850,9 @@ class MyPrevisionnel
 
         return $t;
     }
+
+    public function export(?Departement $getDepartement, $annee, $type, $data, $_format)
+    {
+        //todo: a faire.
+    }
 }

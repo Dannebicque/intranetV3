@@ -110,8 +110,19 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.tuteur_universitaire'|trans }}</th>
-                    {# todo: liste déroulante pour modifier ?#}
-                    <td>{{ stageEtudiant.tuteurUniversitaire ? stageEtudiant.tuteurUniversitaire.displayPr : 'non.defini'|trans }}</td>
+                    <td>
+                        <label for="tuteurUniversitaire" class="sr-only">Tuteur universitaire</label>
+                        <select id="tuteurUniversitaire" data-stage="{{ stageEtudiant.id }}"
+                                class="form-control">
+                            <option value="" selected>Choisir le tuteur universitaire</option>
+                            {% for personnel in personnels %}
+                            <option value="{{ personnel.id }}" {% if personnel.id == stageEtudiant
+                                .tuteurUniversitaire.id %}selected{% endif %}>{{ personnel
+                                .displayPr
+                                }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
                 </tr>
                 </tbody>
             </table>

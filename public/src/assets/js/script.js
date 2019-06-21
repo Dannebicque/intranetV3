@@ -583,15 +583,15 @@ $(document).on('click', '.enseignanttrombi', function(e) {
  *
  */
 
-$(document).on('keyup', '#login_urca', function() {
+$(document).on('keyup', '#login_urca', function () {
   const $val = $(this).val()
-  console.log($val);
+  console.log($val)
   if ($val.length > 2) {
     $.ajax({
       url: Routing.generate('api_personnel_recherche', {needle: $val}),
       dataType: 'json',
-      success: function(data) {
-        $('#result').empty();
+      success: function (data) {
+        $('#result').empty()
         jQuery.each(data, function (index, pers) {
           const html = '<tr>' +
             '<td>' + pers.nom + '</td>' +
@@ -600,22 +600,22 @@ $(document).on('keyup', '#login_urca', function() {
             '<td>' + pers.mail_univ + '</td>' +
             '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter à la departement" data-slug="' + pers.slug + '"><i class="ti-plus"></i></a></td>' +
             '</tr>'
-          $('#result').append(html);
-        });
+          $('#result').append(html)
+        })
       }
     })
   }
-});
+})
 
-$(document).on('click', '.addpersonnel', function(){
+$(document).on('click', '.addpersonnel', function () {
   $.ajax({
     url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug')}),
     dataType: 'json',
-    success: function(data) {
+    success: function (data) {
       addCallout('Personnel ajouté au département !', 'success')
     }
   })
-});
+})
 
 $(document).on('keyup', '#sa_login_urca', function () {
   const departement = $(this).data('departement')
@@ -644,7 +644,10 @@ $(document).on('keyup', '#sa_login_urca', function () {
 
 $(document).on('click', '.sa_addpersonnel', function () {
   $.ajax({
-    url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug'), departement: $(this).data('departement')}),
+    url: Routing.generate('api_personnel_add_to_departement', {
+      slug: $(this).data('slug'),
+      departement: $(this).data('departement')
+    }),
     dataType: 'json',
     success: function (data) {
       addCallout('Personnel ajouté au departement !', 'success')
@@ -653,16 +656,16 @@ $(document).on('click', '.sa_addpersonnel', function () {
   })
 })
 
-$(document).on('click', '.personnel_index_change', function(){
-  $('.personnel_index_change').removeClass('active show');
-  $(this).addClass('active show');
+$(document).on('click', '.personnel_index_change', function () {
+  $('.personnel_index_change').removeClass('active show')
+  $(this).addClass('active show')
   const table = $('#tableau').DataTable()
-  table.clear(); //effacer le datatable
-  table.destroy(); //supprimer le datatable
+  table.clear() //effacer le datatable
+  table.destroy() //supprimer le datatable
   $.ajax({
     url: Routing.generate('api_enseignants_type', {type: $(this).data('type')}),
     dataType: 'json',
-    success: function(data) {
+    success: function (data) {
       jQuery.each(data, function (index, pers) {
         //ajouter les lignes
         const html = '<tr>\n' +
@@ -684,39 +687,39 @@ $(document).on('click', '.personnel_index_change', function(){
           '<a href="' + Routing.generate('administration_personnel_delete', {id: pers.id}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i\n' +
           '            class="fa fa-trash" data-provide="tooltip" data-placement="bottom"\n' +
           '            title="Supprimer"></i></a>' +
-        '                        </td>\n' +
-          "                    </tr>";
-        $('#datatableau').append(html);
-      });
+          '                        </td>\n' +
+          '                    </tr>'
+        $('#datatableau').append(html)
+      })
 
-      $('#tableau').DataTable({}); //regenerer le datatable avec les nouvelles data
+      $('#tableau').DataTable({}) //regenerer le datatable avec les nouvelles data
     }
   })
-});
+})
 
 $('#datatableRh').DataTable({
-  "processing": true,
-  "serverSide": true,
+  'processing': true,
+  'serverSide': true,
   'langue': langueFr,
-  "ajax": Routing.generate('api_all_personnel'),
-  "sAjaxDataProp": "data",
-  "pageLength": 25,
-  "columns": [
-    {"data": "numero_harpege"},
-    {"data": "nom"},
-    {"data": "prenom"},
-    {"data": "departements"},
-    {"data": "deleted"},
+  'ajax': Routing.generate('api_all_personnel'),
+  'sAjaxDataProp': 'data',
+  'pageLength': 25,
+  'columns': [
+    {'data': 'numero_harpege'},
+    {'data': 'nom'},
+    {'data': 'prenom'},
+    {'data': 'departements'},
+    {'data': 'deleted'},
     {
-      "data": "id",
-      "sortable": false,
+      'data': 'id',
+      'sortable': false,
       'mRender': function (data, type, full) {
         return '<a href="' + Routing.generate('sa_rh_personnel_show', {id: data}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
           '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
           '<a href="' + Routing.generate('sa_rh_personnel_edit', {id: data}) + '"\n' +
           '   class="btn btn-warning btn-outline btn-square"\n' +
-        "                                                     data-provide=\"tooltip\"\n" +
-        "                                                     data-placement=\"bottom\"\n" +
+          '                                                     data-provide="tooltip"\n' +
+          '                                                     data-placement="bottom"\n' +
           '                                                     title="Modifier"><i class="fa fa-edit"></i></a>\n' +
           '<a href="' + Routing.generate('sa_rh_delete_personnel', {id: data}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"' +
           '            data-provide="tooltip" data-placement="bottom"\n' +
@@ -724,9 +727,9 @@ $('#datatableRh').DataTable({
       }
     }]
   //todo: gérer scrf sur le delete
-});
+})
 
-$(document).on('change','.change_droit_pf', function (){
+$(document).on('change', '.change_droit_pf', function () {
   $.ajax({
     url: Routing.generate('sa_personnel_departement_modifier_droit', {pf: $(this).data('pf')}),
     method: 'POST',
@@ -735,9 +738,19 @@ $(document).on('change','.change_droit_pf', function (){
       addCallout('Droits modifiés !', 'success')
 
     }
+  })
 })
 
-});
+$(document).on('change', '.updateRole', function () {
+  $.ajax({
+    url: Routing.generate('admin_personnel_departement_modifier_droit', {personnel: $('#personnel').val()}),
+    method: 'POST',
+    data: {'droit': $(this).val()},
+    success: function (data) {
+      addCallout('Droits modifiés !', 'success')
+    }
+  })
+})
 
 
 /*
@@ -2174,8 +2187,57 @@ $(document).on('change', '#tuteurUniversitaire', function (e) {
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
-  }) 
+  })
 })
+
+$(document).on('click', '.initAllAlternance', function (e) {
+  e.preventDefault();
+  const url = $(this).attr('href')
+
+  swal({
+    title: 'Etes vous sûr?',
+    text: "Vous allez initialiser tous les suivis d'alternances. Cela effacera les données déjà présente. !",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Oui, initialiser!',
+    cancelButtonText: 'Non, ne rien faire!',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-secondary',
+    buttonsStyling: false
+  }).then(function (result) {
+    console.log(result)
+    if (result.value) {
+      $.ajax({
+        url: url,
+        type: "POST",
+        success: function (id) {
+          addCallout('Initialisation effectuée avec succès', 'success')
+          swal(
+            'Initialisé!',
+            'Toutes les fiches des alertnants ont été initialisées.',
+            'success'
+          )
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          swal("Error deleting!", "Please try again", "error");
+          addCallout('Erreur lors de la tentative d\'initialisation', 'danger')
+        }
+      });
+
+    } else if (
+      // Read more about handling dismissals
+      result.dismiss === 'cancel'
+    ) {
+      swal(
+        'Cancelled',
+        'Your imaginary file is safe :)',
+        'error'
+      )
+    }
+  })
+});
 
 
 /*
@@ -2198,6 +2260,30 @@ $(document).on('keyup', '#etudiant', function() {
   if ($val.length > 2) {
     $('#resultat').empty().load(Routing.generate('sa_scolarite_recherche', {needle: $val}))
   }
+});
+
+$(document).on('change','#scolarite_semestre', function () {
+  $.ajax(
+    {
+      url: Routing.generate('administration_scolarite_ues_semestre', {semestre: $(this).val()}),
+      type: 'POST',
+      success: function (data) {
+        var $html = '<div class="row" id="blocUEs"><div class="col-sm-1">&nbsp;</div><div class="col-sm-11">';
+        for (var key in data) {
+          var value = data[key];
+          $html = $html + '<div class="form-group"><label for="ue_'+key+'" class="required">UE '+value+'</label><input type="text" id="ue_'+key+'" name="ue_'+key+'" required="required" class="form-control" value="0"></div>';
+        }
+        $html = $html + '</div></div>'
+        var idUE = $('#scolarite_semestre')
+        if (document.getElementById("blocUEs")) {
+          $('#blocUEs').remove()
+        }
+        idUE.after($html)
+      },
+      error: function () {
+        addCallout('Erreur la requête.','error');
+      }
+    });
 });
 
 
@@ -2244,15 +2330,15 @@ $(document).on('change', '.typegroupe_defaut', function (e) {
     data: {
       typegroupe: $(this).val()
     },
-    success: function(data) {
+    success: function (data) {
       addCallout('Type de groupe par défaut enregistré', 'success')
-    }, error: function(e){
+    }, error: function (e) {
       addCallout('Erreur lors de l\'enregistrement du type de groupe par défaut', 'danger')
     }
   })
-});
+})
 
-$(document).on('click', '#add_type_groupe', function() {
+$(document).on('click', '#add_type_groupe', function () {
   const $semestre = $(this).data('semestre')
   $.ajax({
     url: Routing.generate('administration_type_groupe_new'),
@@ -2262,36 +2348,38 @@ $(document).on('click', '#add_type_groupe', function() {
       semestre: $semestre,
       defaut: $('#type_groupe_defaut').prop('checked')
     },
-    success: function(data) {
-      $('#typgeGroupe_bloc').empty().load(Routing.generate('administration_type_groupe_refresh', {semestre: $semestre}));
+    success: function (data) {
+      $('#typgeGroupe_bloc').empty().load(Routing.generate('administration_type_groupe_refresh', {semestre: $semestre}))
       addCallout('Type de groupe ajouté', 'success')
-    }, error: function(e){
+    }, error: function (e) {
       addCallout('Erreur lors de l\'ajout du type de groupe', 'danger')
     }
   })
-});
+})
 
-$(document).on('click', '.add_groupe', function() {
+$(document).on('click', '.add_groupe', function () {
   const $parent = $(this).data('parent')
 
   $.ajax({
     url: Routing.generate('administration_groupe_new'),
     method: 'POST',
     data: {
-      libelle: $('#groupe_libelle_'+$parent).val(),
-      code: $('#groupe_code_apogee_'+$parent).val(),
-      type: $('#groupe_type_groupe_'+$parent).val(),
-      parcours: $('#groupe_parcours_'+$parent).val(),
+      //todo: ca bug pour le refresh...
+      libelle: $('#groupe_libelle_' + $parent).val(),
+      ordre: $('#groupe_ordre_' + $parent).val(),
+      code: $('#groupe_code_apogee_' + $parent).val(),
+      type: $('#groupe_type_groupe_' + $parent).val(),
+      parcours: $('#groupe_parcours_' + $parent).val(),
       parent: $parent
     },
-    success: function(data) {
-      $('#groupe_bloc').empty().load(Routing.generate('administration_groupe_refresh', {parent: $parent}));
+    success: function (data) {
+      $('#groupe_bloc').empty().load(Routing.generate('administration_groupe_refresh', {parent: $parent}))
       addCallout('Groupe ajouté', 'success')
-    }, error: function(e){
+    }, error: function (e) {
       addCallout('Erreur lors de l\'ajout du groupe', 'danger')
     }
   })
-});
+})
 
 
 /*
@@ -2903,6 +2991,59 @@ $(document).on('change', '#affichemodule', function () {
 
 });
 
+/***************/
+/* EDT REALISE */
+/***************/
+
+
+$(document).on('change','#selectpersonnel', function () {
+  const selectSemestre = $('#selectsemestre');
+  const selectMatiere = $('#selectmatiere');
+
+  selectSemestre.val('0');
+  selectMatiere.selectpicker('destroy')
+  selectMatiere.empty()
+  selectMatiere.append(new Option("Choisissez un semestre !", "0"));
+  selectMatiere.selectpicker('val', '0')
+
+})
+
+$(document).on('change','#edtSelectSemestre', function () {
+  $.ajax(
+    {
+      url: Routing.generate('api_matieres_semestre_personnel', {semestre: $(this).val(), personnel: $('#selectpersonnel').val()}),
+      type: 'POST',
+      dataType: "json", //Return data type (what we expect).
+      success: function (data) {
+        const selectMatiere = $("#selectmatiere");
+        selectMatiere.selectpicker('destroy')
+        selectMatiere.empty()
+        selectMatiere.append(new Option("Choisissez une matière !", ""))
+        for (let key in data) {
+          let value = data[key];
+          console.log(key)
+          console.log(value)
+          selectMatiere.append(new Option(value.libelle + " (UE: " + value.ue + ")", value.id));
+        }
+        selectMatiere.selectpicker()
+      },
+      error: function () {
+
+      }
+    });
+})
+
+$(document).on('click', '#btnafficheRealise', function (e) {
+  e.preventDefault();
+  const $bloc = $('#blocchrono');
+  $bloc.empty();
+  $bloc.load(Routing.generate('administration_edt_service_realise_affiche', {
+    semestre: $('#edtSelectSemestre').val(),
+    personnel: $('#selectpersonnel').val(),
+    matiere: $('#selectmatiere').val()
+  }))
+})
+
 // $(document).ajaxComplete(function (event, xhr, settings) {
 //   // actions
 //
@@ -2989,6 +3130,16 @@ $(document).on('click', '#addCategorie', function (e) {
   })
 })
 
+
+
+$(document).on('change', '#tuteurUniversitaire', function () {
+  $.ajax({
+    url: Routing.generate('administration_stage_etudiant_change_tuteur', {stageEtudiant: $(this).data('stage'), tuteur: $(this).val()}),
+    success: function () {
+      addCallout('Tuteur universitaire modifié !', 'success')
+    }
+  })
+})
 
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.

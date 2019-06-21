@@ -25,14 +25,14 @@
             btn-warning
             btn-sm btn-float"
                data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.masquer_semestre'|trans }}"><i class="ti-eye-slash"></i>
-                <span class="sr-only">{{ 'atitle.masquer_semestre'|trans }}</span></a>{# todo: vérifier l'icone #}
+               data-placement="bottom" title="{{ 'atitle.masquer_semestre'|trans }}"><i class="fa fa-eye-slash"></i>
+                <span class="sr-only">{{ 'atitle.masquer_semestre'|trans }}</span></a>
             {% else %}
                 <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:1}) }}" class="btn
             btn-info
             btn-sm btn-float"
                    data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.afficher_semestre'|trans }}"><i class="ti-eye"></i>
+                   data-placement="bottom" title="{{ 'atitle.afficher_semestre'|trans }}"><i class="fa fa-eye"></i>
                     <span class="sr-only">{{ 'atitle.afficher_semestre'|trans }}</span></a>
             {% endif %}
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"

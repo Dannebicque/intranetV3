@@ -153,6 +153,19 @@ class PersonnelDepartement
         return $this;
     }
 
+    /**
+     * @return PersonnelDepartement
+     */
+    public function removeRole($role): self
+    {
+        $roles = $this->getRoles();
+        $key = array_search($role, $roles);
+        unset($roles[$key]);
+        $roles = array_values($roles);
+        $this->roles = json_encode($roles);
+        return $this;
+    }
+
     public function getDefaut(): ?bool
     {
         return $this->defaut;

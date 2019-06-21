@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceController
- * @IsGranted("ROLE_ETUDIANT")
  * @package App\Controller
  * @Route("/application/etudiant/absence")
  */

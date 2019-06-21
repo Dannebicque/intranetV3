@@ -16,8 +16,8 @@
         <div class="card-body">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="intervenant">Intervenant</label>
-                        <select name="intervenant" id="intervenant" data-provide="selectpicker"
+                    <label for="selectpersonnel">Personnel</label>
+                        <select name="intervenant" id="selectpersonnel" data-provide="selectpicker"
                                 data-live-search="true" class="form-control">
                             <option value="">Choisir</option>
                             {% for personnel in personnels %}
@@ -26,16 +26,14 @@
                         </select>
                 </div>
                 <div class="form-group">
-                    <label for="selectsemestre">
+                    <label for="edtSelectSemestre">
                         Semestre
                     </label>
-                        <select name="selectsemestre" id="selectsemestre" data-provide="selectpicker"
+                        <select name="edtSelectSemestre" id="edtSelectSemestre" data-provide="selectpicker"
                                 data-live-search="true" class="form-control">
                             <option value="0">Choisissez un semestre</option>
-                            {% for semestrea in semestres %}
-                                {% for semestre in semestrea %}
+                            {% for semestre in semestres %}
                                     <option value="{{ semestre.id }}">{{ semestre.display }}</option>
-                                {% endfor %}
                             {% endfor %}
                         </select>
                 </div>
@@ -48,7 +46,8 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a href="#" id="btnaffiche" class="btn btn-block btn-primary">Afficher le chronologique</a>
+                        <a href="#" id="btnafficheRealise" class="btn btn-block btn-primary">Afficher le
+                                                                                            chronologique</a>
                     </div>
                 </div>
             </form>
@@ -64,9 +63,4 @@
         </div>
     </div>
 
-{% endblock %}
-
-{% block javascript %}
-{# todo: voir pour ajouter le JS et centraliser le refresh des select ? #}
-{#{{ include('DAKernelBundle:js:admEdtRealise.js.twig') }}#}
 {% endblock %}

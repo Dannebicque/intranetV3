@@ -6,10 +6,11 @@
             <tr>
                 <th>{{ 'table.ordre'|trans }}</th>
                 <th>{{ 'table.semestre'|trans }}</th>
-                <th>{{ 'table.decision'|trans }}</th>
-                <th>{{ 'table.proposition'|trans }}</th>
+
                 <th>{{ 'table.moyenneues'|trans }}</th>
                 <th>{{ 'table.moyenne'|trans }}</th>
+                <th>{{ 'table.decision'|trans }}</th>
+                <th>{{ 'table.proposition'|trans }}</th>
                 <th>{{ 'table.infos'|trans }}</th>
             </tr>
             </thead>
@@ -18,20 +19,23 @@
                 <tr>
                     <td>{{ parcour.ordre }}</td>
                     <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
-                    <td>{{ parcour.decision }}</td>
-                    <td>{{ parcour.proposition }}</td>
+
                     <td>
                         {% if parcour.decision != 'EC' %}
                             {% for ue in scolariteUes[parcour.id] %}
-                                {{ ue.ue.libelle }} : {{ ue.moyenne|number_format(3) }}
+                                UE {{ ue.ue.numeroUe }} : {{ ue.moyenne|number_format(3) }}
                             {% endfor %}
                         {% else %}
                             EC
                         {% endif %}</td>
                     <td>{{ parcour.moyenne }}</td>
+                    <td>{{ parcour.decision }}</td>
+                    <td>{{ parcour.proposition }}</td>
                     <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                            data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a></td>
+                    {# todo: editer relevés provisoire et définitif pour poursuite d'études modele GMP. Edit. Déja
+                    dans la page action... a synthétiser #}
                 </tr>
             {% endfor %}
 
