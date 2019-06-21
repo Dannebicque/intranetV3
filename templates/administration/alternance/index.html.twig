@@ -7,85 +7,87 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_alternance_init_all', {annee: annee.id}) }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.init_all'|trans }}" data-provide="tooltip" data-placement="bottom"><i class="fa fa-magic"></i></a>
-            {# todo: message de confirmation #}
+            <a href="{{ path('administration_alternance_init_all', {annee: annee.id}) }}" class="btn btn-info btn-sm
+            btn-float initAllAlternance" title="{{ 'atitle.init_all'|trans }}" data-provide="tooltip" data-placement="bottom"><i class="fa fa-magic"></i></a>
 
-                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><span
-                            class="material-icons">build</span></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><span
+                        class="material-icons">build</span></a>
 
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">{{ 'adm.alternance.index.heading'|trans({'%annee%': annee.libelle}) }}</h4>
-    <div class="card-body">
-        lien vers les anciennes ? ou onglet ?
-        Bouton pour initialiser toutes les alternances
-        <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="false">
-        <thead>
-            <tr>
-                <th>{{ 'table.etudiant'|trans }}</th>
-                <th>{{ 'table.type_contrat'|trans }}</th>
-                <th>{{ 'table.entreprise'|trans }}</th>
-                <th>{{ 'table.tuteur_entreprise'|trans }}</th>
-                <th>{{ 'table.tuteur_universitaire'|trans }}</th>
-                <th>{{ 'table.actions'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for etudiant in etudiants %}
-            <tr>
-                <td><a href="{{ path('user_profil', {slug:etudiant.slug, type:'etudiant'}) }}" target="_blank">{{ etudiant.displayPr }}</a> </td>
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.alternance.index.heading'|trans({'%annee%': annee.libelle}) }}</h4>
+        <div class="card-body">
+            lien vers les anciennes ? ou onglet ?
+            Bouton pour initialiser toutes les alternances
+            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="false">
+                <thead>
+                <tr>
+                    <th>{{ 'table.etudiant'|trans }}</th>
+                    <th>{{ 'table.type_contrat'|trans }}</th>
+                    <th>{{ 'table.entreprise'|trans }}</th>
+                    <th>{{ 'table.tuteur_entreprise'|trans }}</th>
+                    <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in etudiants %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('user_profil', {slug:etudiant.slug, type:'etudiant'}) }}" target="_blank">{{ etudiant.displayPr }}</a>
+                        </td>
 
-                {% if alternances[etudiant.id] is defined %}
-                    {% set alternance = alternances[etudiant.id] %}
-                <td>{{ alternance.typeContrat }}</td>
-                <td>{{ alternance.entreprise ? alternance.entreprise.nom : 'non.defini'|trans }}</td>
-                <td>{{ alternance.tuteur ? alternance.tuteur.displayPr : 'non.defini'|trans }}</td>
-                <td>
-                    <label class="sr-only" for="tuteurUniversitaire">Tuteur universitaire</label>
-                    <select name="tuteurUniversitaire" id="tuteurUniversitaire" class="form-control" data-provide="selectpicker" data-live-search="true">
-                        <option value="" selected>Veuillez choisir</option>
-                        {% for personnel in user_data.personnelsEnseignant %}
-                            <option value="{{ personnel.id }}" {% if alternance.tuteurUniversitaire != null and personnel.id == alternance.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.display }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'alternance', id: alternance.id, duplicate:false}) }}
-                </td>
+                        {% if alternances[etudiant.id] is defined %}
+                            {% set alternance = alternances[etudiant.id] %}
+                            <td>{{ alternance.typeContrat }}</td>
+                            <td>{{ alternance.entreprise ? alternance.entreprise.nom : 'non.defini'|trans }}</td>
+                            <td>{{ alternance.tuteur ? alternance.tuteur.displayPr : 'non.defini'|trans }}</td>
+                            <td>
+                                <label class="sr-only" for="tuteurUniversitaire">Tuteur universitaire</label>
+                                <select name="tuteurUniversitaire" id="tuteurUniversitaire" class="form-control" data-provide="selectpicker" data-live-search="true">
+                                    <option value="" selected>Veuillez choisir</option>
+                                    {% for personnel in user_data.personnelsEnseignant %}
+                                        <option value="{{ personnel.id }}" {% if alternance.tuteurUniversitaire != null and personnel.id == alternance.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'alternance', id: alternance.id, duplicate:false}) }}
+                            </td>
+                        {% else %}
+                            <td> -</td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td> -</td>
+                            <td>
+                                <a href="{{ path('administration_alternance_init', {etudiant: etudiant.id, action:'init', annee:annee.id}) }}"
+                                   class="btn btn-success btn-outline btn-square"
+                                   data-provide="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ 'atitle.initialiser'|trans }}"><i class="fa fa-refresh"></i></a>
+                                <a href="{{ path('administration_alternance_init', {etudiant: etudiant.id, action:'init-false', annee:annee.id}) }}"
+                                   class="btn btn-warning btn-outline btn-square"
+                                   data-provide="tooltip"
+                                   data-placement="bottom"
+                                   title="{{ 'atitle.initialiser_false'|trans }}"><i class="fa fa-stop-circle-o"></i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
                 {% else %}
-                    <td> - </td>
-                    <td> - </td>
-                    <td> - </td>
-                    <td> - </td>
-                    <td>
-                        <a href="{{ path('administration_alternance_init', {etudiant: etudiant.id, action:'init', annee:annee.id}) }}"
-                           class="btn btn-success btn-outline btn-square"
-                           data-provide="tooltip"
-                           data-placement="bottom"
-                           title="{{ 'atitle.initialiser'|trans }}"><i class="fa fa-refresh"></i></a>
-                        <a href="{{ path('administration_alternance_init', {etudiant: etudiant.id, action:'init-false', annee:annee.id}) }}"
-                           class="btn btn-warning btn-outline btn-square"
-                           data-provide="tooltip"
-                           data-placement="bottom"
-                           title="{{ 'atitle.initialiser_false'|trans }}"><i class="fa fa-stop-circle-o"></i></a>
-                    </td>
-                {% endif %}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-        réinitilaiser (avec ou sans archivage), suivi (liste des suivis de l'étudiant
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            réinitilaiser (avec ou sans archivage), suivi (liste des suivis de l'étudiant
+        </div>
     </div>
-</div>
 {% endblock %}
 
 {% block fabactions %}

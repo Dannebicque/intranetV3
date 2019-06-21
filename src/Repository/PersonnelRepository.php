@@ -25,6 +25,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method Personnel|null find($id, $lockMode = null, $lockVersion = null)
@@ -34,14 +35,19 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class PersonnelRepository extends ServiceEntityRepository
 {
+    private $router;
+
+
     /**
      * PersonnelRepository constructor.
      *
      * @param RegistryInterface $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, RouterInterface $router)
     {
         parent::__construct($registry, Personnel::class);
+        $this->router = $router;
+
     }
 
     /**
@@ -94,6 +100,15 @@ class PersonnelRepository extends ServiceEntityRepository
             $tt['prenom'] = $personnel->getPrenom();
             $tt['username'] = $personnel->getUsername();
             $tt['mail_univ'] = $personnel->getMailUniv();
+            $tt['profil'] = '<a href="'.$this->router->generate('user_profil', ['type' => 'personnel', 'slug' => $personnel->getSlug()]).'"
+       class="btn btn-info btn-outline btn-square"
+       data-provide="tooltip"
+       target="_blank"
+       data-placement="bottom"
+       title="Profil de l\'étudiant">
+        <i class="fa fa-info"></i>
+        <span class="sr-only">Profil de l\'étudiant</span>
+    </a>';;
 
             $t[] = $tt;
         }
@@ -169,7 +184,7 @@ class PersonnelRepository extends ServiceEntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
-        //$order = isset($data['query']) && $data['query'] ? $data['query'] : null;
+        $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
 
         $qb
             ->select('u')
@@ -177,11 +192,25 @@ class PersonnelRepository extends ServiceEntityRepository
         // ->andWhere('u.visible = :visible')
         // ->andWhere('u.anneesortie = :anneesortie')
 
-        /*switch ($order[0]['column']) {
+        //todo: ordre des colonnes? ou essayer de récupérer les noms?
+        switch ($order[0]['column']) {
             case 0:
-                //todo: mettre les tris.
+                $qb->orderBy('u.prenom', $order[0]['dir']);
+                $qb->addOrderBy('u.nom', $order[0]['dir']);
                 break;
-        }*/
+            case 1:
+                $qb->orderBy('u.slug', $order[0]['dir']);
+                break;
+            case 2:
+                $qb->orderBy('u.nom', $order[0]['dir']);
+                break;
+            case 3:
+                $qb->orderBy('u.prenom', $order[0]['dir']);
+                break;
+            case 4:
+                $qb->orderBy('u.username', $order[0]['dir']);
+                break;
+        }
 
         if ($query) {
             $qb

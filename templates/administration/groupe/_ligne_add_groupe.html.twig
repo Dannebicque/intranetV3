@@ -2,12 +2,19 @@
     {% if parent is defined %}
     <td>Parent : {{ parent.libelle }}</td>
     <td>
+        <div class="row">
         <label class="sr-only" for="groupe_libelle_{{ parent.id }}">Libellé du groupe</label>
         <input type="text"
-               class="form-control"
+               class="form-control col-sm-2"
+               placeholder="Ordre"
+               id="groupe_ordre_{{ parent.id }}"
+               name="groupe_ordre_{{ parent.id }}">
+        <input type="text"
+               class="form-control col-sm-10"
                placeholder="Libellé"
                id="groupe_libelle_{{ parent.id }}"
                name="groupe_libelle_{{ parent.id }}">
+        </div>
     </td>
     <td><label class="sr-only" for="groupe_code_apogee_{{ parent.id }}">Code apogée du groupe</label>
         <input type="text"
@@ -41,12 +48,19 @@
     {% else %}
         <td>&nbsp;</td>
         <td>
+            <div class="row">
             <label class="sr-only" for="groupe_libelle_s{{ semestre.id }}">Libellé du groupe</label>
             <input type="text"
-                   class="form-control"
+                   class="form-control col-sm-2"
+                   placeholder="Ordre"
+                   id="groupe_ordre_s{{ semestre.id }}"
+                   name="groupe_ordre_s{{ semestre.id }}">
+            <input type="text"
+                   class="form-control col-sm-10"
                    placeholder="Libellé"
                    id="groupe_libelle_s{{ semestre.id }}"
                    name="groupe_libelle_s{{ semestre.id }}">
+            </div>
         </td>
         <td><label class="sr-only" for="groupe_code_apogee_s{{ semestre.id }}">Code apogée du groupe</label>
             <input type="text"

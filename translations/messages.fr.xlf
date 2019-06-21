@@ -11917,5 +11917,35 @@
         <target>edt.salle</target>
       </segment>
     </unit>
+    <unit id="iDuyNAq" name="adm.scolarite.edit.heading">
+      <segment>
+        <source>adm.scolarite.edit.heading</source>
+        <target>adm.scolarite.edit.heading</target>
+      </segment>
+    </unit>
+    <unit id="sLwIhTO" name="adm.scolarite.add.flashbag">
+      <segment>
+        <source>adm.scolarite.add.flashbag</source>
+        <target>adm.scolarite.add.flashbag</target>
+      </segment>
+    </unit>
+    <unit id="AJXLy1p" name="atitle.retour_profil">
+      <segment>
+        <source>atitle.retour_profil</source>
+        <target>atitle.retour_profil</target>
+      </segment>
+    </unit>
+    <unit id="VsJDXTO" name="groupe.delete.success.flash">
+      <segment>
+        <source>groupe.delete.success.flash</source>
+        <target>groupe.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="xX7cfwt" name="adm.gerer.les.categories.articles">
+      <segment>
+        <source>adm.gerer.les.categories.articles</source>
+        <target>adm.gerer.les.categories.articles</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

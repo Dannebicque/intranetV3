@@ -163,7 +163,9 @@ class CompetenceController extends BaseController
     {
         $id = $competence->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            //todo: vérifier le cascade delete s'il y a des enfants ...
+            foreach ($competence->getEnfants() as $c) {
+                $this->entityManager->remove($c);
+            }
             $this->entityManager->remove($competence);
             $this->entityManager->flush();
 

@@ -3857,5 +3857,125 @@
         <target>help.commentaire_evaluation</target>
       </segment>
     </unit>
+    <unit id="suuRjjV" name="Ordre">
+      <segment>
+        <source>Ordre</source>
+        <target>Ordre</target>
+      </segment>
+    </unit>
+    <unit id="ZArkuvl" name="Decision">
+      <segment>
+        <source>Decision</source>
+        <target>Decision</target>
+      </segment>
+    </unit>
+    <unit id="HoaL3qb" name="Proposition">
+      <segment>
+        <source>Proposition</source>
+        <target>Proposition</target>
+      </segment>
+    </unit>
+    <unit id="Ku.hm3a" name="Moyenne">
+      <segment>
+        <source>Moyenne</source>
+        <target>Moyenne</target>
+      </segment>
+    </unit>
+    <unit id="Yge.tLw" name="Nb absences">
+      <segment>
+        <source>Nb absences</source>
+        <target>Nb absences</target>
+      </segment>
+    </unit>
+    <unit id="SNPoFla" name="Commentaire">
+      <segment>
+        <source>Commentaire</source>
+        <target>Commentaire</target>
+      </segment>
+    </unit>
+    <unit id="HMbzZ6v" name="Annee universitaire">
+      <segment>
+        <source>Annee universitaire</source>
+        <target>Annee universitaire</target>
+      </segment>
+    </unit>
+    <unit id="Gy.ISY2" name="EC">
+      <segment>
+        <source>EC</source>
+        <target>EC</target>
+      </segment>
+    </unit>
+    <unit id="3lpveBF" name="V">
+      <segment>
+        <source>V</source>
+        <target>V</target>
+      </segment>
+    </unit>
+    <unit id="h59yZ0f" name="NV">
+      <segment>
+        <source>NV</source>
+        <target>NV</target>
+      </segment>
+    </unit>
+    <unit id="HBKrE9Y" name="DEM">
+      <segment>
+        <source>DEM</source>
+        <target>DEM</target>
+      </segment>
+    </unit>
+    <unit id="DJIlGUJ" name="REO">
+      <segment>
+        <source>REO</source>
+        <target>REO</target>
+      </segment>
+    </unit>
+    <unit id="IVzJi9." name="VCJ">
+      <segment>
+        <source>VCJ</source>
+        <target>VCJ</target>
+      </segment>
+    </unit>
+    <unit id="0osQ5.K" name="E.C.">
+      <segment>
+        <source>E.C.</source>
+        <target>E.C.</target>
+      </segment>
+    </unit>
+    <unit id="TBVSkAN" name="label.decision">
+      <segment>
+        <source>label.decision</source>
+        <target>label.decision</target>
+      </segment>
+    </unit>
+    <unit id="QC.ZTjv" name="label.proposition">
+      <segment>
+        <source>label.proposition</source>
+        <target>label.proposition</target>
+      </segment>
+    </unit>
+    <unit id="8BSW_ky" name="label.moyenne">
+      <segment>
+        <source>label.moyenne</source>
+        <target>label.moyenne</target>
+      </segment>
+    </unit>
+    <unit id="NdBwveQ" name="label.nbAbsences">
+      <segment>
+        <source>label.nbAbsences</source>
+        <target>label.nbAbsences</target>
+      </segment>
+    </unit>
+    <unit id="rvQHbxl" name="Choose an option">
+      <segment>
+        <source>Choose an option</source>
+        <target>Choose an option</target>
+      </segment>
+    </unit>
+    <unit id="cAZJSpS" name="Choisir le semestre">
+      <segment>
+        <source>Choisir le semestre</source>
+        <target>Choisir le semestre</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

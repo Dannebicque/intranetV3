@@ -296,6 +296,59 @@ $(document).on('change', '#affichemodule', function () {
 
 });
 
+/***************/
+/* EDT REALISE */
+/***************/
+
+
+$(document).on('change','#selectpersonnel', function () {
+  const selectSemestre = $('#selectsemestre');
+  const selectMatiere = $('#selectmatiere');
+
+  selectSemestre.val('0');
+  selectMatiere.selectpicker('destroy')
+  selectMatiere.empty()
+  selectMatiere.append(new Option("Choisissez un semestre !", "0"));
+  selectMatiere.selectpicker('val', '0')
+
+})
+
+$(document).on('change','#edtSelectSemestre', function () {
+  $.ajax(
+    {
+      url: Routing.generate('api_matieres_semestre_personnel', {semestre: $(this).val(), personnel: $('#selectpersonnel').val()}),
+      type: 'POST',
+      dataType: "json", //Return data type (what we expect).
+      success: function (data) {
+        const selectMatiere = $("#selectmatiere");
+        selectMatiere.selectpicker('destroy')
+        selectMatiere.empty()
+        selectMatiere.append(new Option("Choisissez une matière !", ""))
+        for (let key in data) {
+          let value = data[key];
+          console.log(key)
+          console.log(value)
+          selectMatiere.append(new Option(value.libelle + " (UE: " + value.ue + ")", value.id));
+        }
+        selectMatiere.selectpicker()
+      },
+      error: function () {
+
+      }
+    });
+})
+
+$(document).on('click', '#btnafficheRealise', function (e) {
+  e.preventDefault();
+  const $bloc = $('#blocchrono');
+  $bloc.empty();
+  $bloc.load(Routing.generate('administration_edt_service_realise_affiche', {
+    semestre: $('#edtSelectSemestre').val(),
+    personnel: $('#selectpersonnel').val(),
+    matiere: $('#selectmatiere').val()
+  }))
+})
+
 // $(document).ajaxComplete(function (event, xhr, settings) {
 //   // actions
 //

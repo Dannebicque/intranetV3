@@ -108,6 +108,7 @@ class GroupeController extends BaseController
                     $groupe->set($parcour);
                 }
             }*/
+            $groupe->setOrdre($request->request->get('ordre'));
             $groupe->setLibelle($request->request->get('libelle'));
             $groupe->setCodeApogee($request->request->get('code'));
 
@@ -230,7 +231,7 @@ class GroupeController extends BaseController
      * @return Response
      */
     public function delete(Request $request, Groupe $groupe): Response
-    {//todo: tester delete cascade
+    {
 
         $id = $groupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {

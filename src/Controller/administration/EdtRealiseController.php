@@ -16,7 +16,11 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\EdtPlanning;
+use App\Entity\Matiere;
+use App\Entity\Personnel;
 use App\Entity\Previsionnel;
+use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
@@ -60,45 +64,37 @@ class EdtRealiseController extends BaseController
     /**
      *
      * @param PersonnelRepository $personnelRepository
-     * @param                     $source
      *
      * @return Response
-     * @Route("/{source}", name="administration_edt_service_realise", methods={"GET"},
-     *                     requirements={"source"="intranet|celcat"})
+     * @Route("", name="administration_edt_service_realise", methods={"GET"})
      */
-    public function index(PersonnelRepository $personnelRepository, $source): Response
+    public function index(PersonnelRepository $personnelRepository): Response
     {
-        //todo: a refaire
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtRealise/index.html.twig', array(
             'personnels' => $personnels,
             'semestres'   => $this->dataUserSession->getSemestres(),
-            'source' => $source //Todo: utile ?
         ));
     }
 
     /**
-     * @param MatiereRepository      $matiereRepository
-     * @param PersonnelRepository    $personnelRepository
      * @param PrevisionnelRepository $previsionnelRepository
-     * @param Request                $request
-     *
-     *
-     * @param                        $source
+     * @param Semestre               $semestre
+     * @param Matiere                $matiere
+     * @param Personnel              $personnel
      *
      * @return Response
-     * @Route("/affiche/{source}", name="administration_edt_service_realise_affiche", methods={"POST"},
-     *                             requirements={"source"="intranet|celcat"})
+     * @Route("/service-realise/{semestre}/{matiere}/{personnel}", name="administration_edt_service_realise_affiche",
+     *                                                             options={"expose"=true}, methods={"POST","GET"})
      */
-    public function detailPersonnelMatiere(MatiereRepository $matiereRepository,
-        PersonnelRepository $personnelRepository,
+    public function serviceRealisePersonnelMatiere(
         PrevisionnelRepository $previsionnelRepository,
-        Request $request, $source): Response
+        Semestre $semestre,
+        Matiere $matiere,
+        Personnel $personnel
+        ): Response
     {
-        $matiere = $matiereRepository->find($request->request->get('matiere'));
-        $personnel = $personnelRepository->find($request->request->get('personnel'));
-
         if ($matiere && $personnel) {
             //todo: mettre dans un service MyEDT ?
             $m = $this->edtPlanningRepository->findBy(array(
@@ -111,7 +107,7 @@ class EdtRealiseController extends BaseController
                     'debut'   => 'ASC'
                 ));
 
-            $calendrier = $this->calendrierRepository->findCalendrier();
+            $calendrier = $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
 
             $p = $previsionnelRepository->findBy(array(
                 'personnel' => $personnel->getId(),
@@ -133,19 +129,20 @@ class EdtRealiseController extends BaseController
                 $t['tp']['previ'] += $pr->getNbHTP() * $pr->getNbGrTP();
             }
 
+            /** @var EdtPlanning $ma */
             foreach ($m as $ma) {
                 switch ($ma->getType()) {
                     case 'CM':
                     case 'cm':
-                        $t['cm']['real'] += $ma->getDuree2();
+                        $t['cm']['real'] += $ma->getDureeInt();
                         break;
                     case 'TD':
                     case 'td':
-                        $t['td']['real'] += $ma->getDuree2();
+                        $t['td']['real'] += $ma->getDureeInt();
                         break;
                     case 'TP':
                     case 'tp':
-                        $t['tp']['real'] += $ma->getDuree2();
+                        $t['tp']['real'] += $ma->getDureeInt();
                         break;
                 }
             }

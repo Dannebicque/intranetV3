@@ -79,6 +79,7 @@
                                 {% for comp in competence.enfants %}
                                     <tr id="ligne_{{ comp.id }}">
                                         <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
                                         <td>{{ comp.code }}</td>
                                         <td>{{ comp.libelle }}</td>
                                         <td>{{ comp.updated ? comp.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
@@ -89,7 +90,7 @@
                                 {% endfor %}
                             {% else %}
                                 <tr>
-                                    <td colspan="5">{{ 'no.record.found'|trans }}</td>
+                                    <td colspan="6">{{ 'no.record.found'|trans }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

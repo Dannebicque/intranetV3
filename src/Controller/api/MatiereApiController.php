@@ -5,10 +5,13 @@ namespace App\Controller\api;
 use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\Entity\Parcour;
+use App\Entity\Personnel;
+use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\MatiereRepository;
 use App\Repository\ParcourRepository;
+use App\Repository\PrevisionnelRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -171,5 +174,36 @@ class MatiereApiController extends BaseController
         }
 
         return new JsonResponse(false);
+    }
+
+    /**
+     * @param Semestre  $semestre
+     * @param Personnel $personnel
+     * @Route("/matiere/semestre/personnel/{semestre}/{personnel}", name="api_matieres_semestre_personnel", options={"expose":true})
+     */
+    public function matiereSemestrePersonnel(PrevisionnelRepository $previsionnelRepository, Semestre $semestre, Personnel $personnel){
+
+        if ($semestre !== null && $personnel !== null) {
+            $matieres = $previsionnelRepository->findPrevisionnelSemestrePersonnel($semestre, $personnel, $this->dataUserSession->getAnneePrevisionnel());
+
+            $array = array();
+            $i = 1;
+
+            /** @var Previsionnel $m */
+            foreach ($matieres as $m) {
+                if ($m->getMatiere() !== null) {
+                    $array['matiere' . $i]['id'] = $m->getMatiere()->getId();
+                    $array['matiere' . $i]['libelle'] = $m->getMatiere()->getDisplay();
+                    $array['matiere' . $i]['ue'] = $m->getMatiere()->getUE()->getNumeroUe();
+                    $i++;
+                }
+            }
+
+            $response = new JsonResponse();
+            $response->setData($array);
+
+            return $response;
+        }
+        return $this->redirect($this->generateUrl('erreur_666'));
     }
 }

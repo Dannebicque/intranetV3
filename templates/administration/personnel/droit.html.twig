@@ -2,7 +2,7 @@
     {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
         <h3 id="droit" class="titre_rub">Droits de {{ personnel.displayPr }}</h3>
         <form class="form">
-            {# todo: ecrire le js pour la sauvegarde #}
+                <input type="hidden" id="personnel" value="{{ personnel.id }}">
                 {% for role in constant('App\\Entity\\Constantes::ROLE_LISTE') %}
                     <div class="form-check">
                         <input class="form-check-input updateRole" {% if role in droits[0].roles %}checked{% endif %} type="checkbox" value="{{ role }}" id="role_{{ loop.index }}">

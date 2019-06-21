@@ -164,6 +164,8 @@ class PrevisionnelController extends BaseController
         MatiereRepository $matiereRepository,
         Request $request
     ) {
+
+        //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
             $matiere = $matiereRepository->find($request->request->get('previsionnel_matiere'));
 
@@ -229,20 +231,6 @@ class PrevisionnelController extends BaseController
         return $this->render('administration/previsionnel/import.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param MyPrevisionnel $myPrevisionnel
-     * @param                $annee
-     *
-     * @return StreamedResponse
-     * @throws Exception
-     * @Route("/{annee}/export_omega", name="administration_previsionnel_export_omega", methods="GET")
-     *
-     */
-    public function exportOmega(MyPrevisionnel $myPrevisionnel, $annee): StreamedResponse
-    {
-        return $myPrevisionnel->exportOmegaDepartement($this->dataUserSession->getDepartement(), $annee);
     }
 
     /**

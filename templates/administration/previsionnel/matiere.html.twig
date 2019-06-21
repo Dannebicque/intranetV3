@@ -7,6 +7,18 @@
                     ({{ 'periode'|trans }}
                     : {{ user_data.departement.optAnneePrevisionnel }})</h4>
                 <ul class="card-controls">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee,
+                                '_format': 'csv', type:'matiere', data: previsionnel.matiere.id}) }}"><i
+                                        class="ti-export"></i> {{ 'exporter.csv'|trans }}</a>
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'pdf', type:'matiere', data: previsionnel.matiere.id}) }}"><i
+                                        class="ti-export"></i> {{ 'exporter.pdf'|trans }}</a>
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'xlsx', type:'matiere', data: previsionnel.matiere.id}) }}"><i
+                                        class="ti-export"></i> {{ 'exporter.xlsx'|trans }}</a>
+                        </div>
+                    </li>
                     <li><a class="card-btn-reload" href="#" id="reloadPreviMatiere" data-annee="{{ annee }}" data-matiere="{{ previsionnel.matiere.id }}" title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a></li>
                 </ul>
             </header>

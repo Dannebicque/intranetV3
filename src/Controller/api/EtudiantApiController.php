@@ -87,10 +87,15 @@ class EtudiantApiController extends BaseController
         $start = $request->get('start');
         $start = $length ? ($start && ($start !== -1) ? $start : 0) / $length : 0;
 
+        $order = $request->get('order');
+
         $search = $request->get('search');
         $filters = [
-            'query' => $search['value']
+            'query' => $search['value'],
+            'order' => $order
         ];
+
+
 
         $users = $this->etudiantRepository->getArrayEtudiantsByDepartement(
             $this->dataUserSession->getDepartementId(),

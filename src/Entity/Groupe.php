@@ -42,7 +42,7 @@ class Groupe extends BaseEntity
     private $etudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parent", cascade={"remove"})
      */
     private $enfants;
 

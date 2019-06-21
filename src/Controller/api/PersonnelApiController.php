@@ -156,8 +156,12 @@ class PersonnelApiController extends BaseController
         $start = $length ? ($start && ($start !== -1) ? $start : 0) / $length : 0;
 
         $search = $request->get('search');
+
+        $order = $request->get('order');
+
         $filters = [
-            'query' => $search['value']
+            'query' => $search['value'],
+            'order' => $order
         ];
 
         $users = $myPersonnel->getArrayAllPersonnel(
