@@ -64,6 +64,7 @@ class RattrapagePlanningController extends BaseController
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport             $myExport
      * @param RattrapageRepository $rattrapageRepository
+     * @param Diplome              $diplome
      * @param                      $_format
      *
      * @return Response
@@ -75,11 +76,11 @@ class RattrapagePlanningController extends BaseController
         Diplome $diplome,
         $_format
     ): Response {
-        $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
         $response = $myExport->genereFichierGenerique(
             $_format,
             $rattrapages,
-            'rattrapages_' . $semestre->getLibelle(),
+            'rattrapages_' . $diplome->getLibelle(),
             ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
                 'etudiant'  => ['nom', 'prenom'],
