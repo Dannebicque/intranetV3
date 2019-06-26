@@ -4,7 +4,7 @@
  *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
  *  *
  *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/CelcatEvents.php
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/CelcatEventphp
  *  * @author     David annebicque
  *  * @project intranetv3
  *  * @date 4/28/19 8:46 PM
@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CelcatEventsRepository")
  */
-class CelcatEvents extends BaseEntity
+class CelcatEvent extends BaseEntity
 {
     /**
      * @ORM\Column(type="integer")
@@ -87,6 +87,16 @@ class CelcatEvents extends BaseEntity
      * @ORM\Column(type="string", length=255)
      */
     private $libSalle;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $codeGroupe;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $libGroupe;
 
     public function getEventId(): ?int
     {
@@ -240,6 +250,30 @@ class CelcatEvents extends BaseEntity
     public function setLibSalle(string $libSalle): self
     {
         $this->libSalle = $libSalle;
+
+        return $this;
+    }
+
+    public function getCodeGroupe(): ?string
+    {
+        return $this->codeGroupe;
+    }
+
+    public function setCodeGroupe(string $codeGroupe): self
+    {
+        $this->codeGroupe = $codeGroupe;
+
+        return $this;
+    }
+
+    public function getLibGroupe(): ?string
+    {
+        return $this->libGroupe;
+    }
+
+    public function setLibGroupe(string $libGroupe): self
+    {
+        $this->libGroupe = $libGroupe;
 
         return $this;
     }

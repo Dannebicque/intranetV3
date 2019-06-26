@@ -1,0 +1,130 @@
+<?php
+/**
+ * *
+ *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
+ *  *
+ *  *
+ *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/RattrapageController.php
+ *  * @author     David annebicque
+ *  * @project intranetv3
+ *  * @date 4/28/19 8:47 PM
+ *  * @lastUpdate 4/28/19 8:44 PM
+ *  *
+ *
+ */
+
+namespace App\Controller\administration;
+
+use App\Controller\BaseController;
+use App\Entity\Constantes;
+use App\Entity\Diplome;
+use App\Entity\Rattrapage;
+use App\Entity\Semestre;
+use App\Events;
+use App\MesClasses\MyExport;
+use App\Repository\AbsenceRepository;
+use App\Repository\RattrapageRepository;
+use DateTime;
+use PhpOffice\PhpSpreadsheet\Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+/**
+ * Class RattrapageController
+ * @package App\Controller\administration
+ * @Route("/administration/rattrapage/planning")
+ */
+class RattrapagePlanningController extends BaseController
+{
+    /**
+     * @Route("/{diplome}", name="administration_rattrapage_planning_index")
+     * @param RattrapageRepository $rattrapageRepository
+     *
+     * @param Diplome              $diplome
+     *
+     * @return Response
+     */
+    public function index(
+        RattrapageRepository $rattrapageRepository,
+        Diplome $diplome
+    ): Response {
+        return $this->render('administration/rattrapagePlanning/index.html.twig', [
+            'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
+            'diplome' => $diplome
+        ]);
+    }
+
+    /**
+     * @Route("/{semestre}/export.{_format}", name="administration_rattrapage_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport             $myExport
+     * @param RattrapageRepository $rattrapageRepository
+     * @param Semestre             $semestre
+     * @param                      $_format
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function export(
+        MyExport $myExport,
+        RattrapageRepository $rattrapageRepository,
+        Semestre $semestre,
+        $_format
+    ): Response {
+        $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $rattrapages,
+            'rattrapages_' . $semestre->getLibelle(),
+            ['rattrapage_administration', 'utilisateur', 'matiere'],
+            [
+                'etudiant'  => ['nom', 'prenom'],
+                'dateEval',
+                'heureEval',
+                'duree',
+                'matiere'   => ['libelle'],
+                'personnel' => ['nom', 'prenom'],
+                'dateRattrapage',
+                'heureRattrapage',
+                'salle',
+                'etatDemande'
+            ]
+        );
+
+        return $response;
+    }
+
+    /**
+     * @Route("/change/{uuid}/{type}/{data}", name="administration_rattrapage_planning_change", methods="GET",
+     *                                    requirements={"etat"="A|R"}, options={"expose":true})
+     * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Rattrapage               $rattrapage
+     * @param                          $etat
+     *
+     * @return Response
+     */
+    public function accepte(Rattrapage $rattrapage, $type, $data): Response
+    {
+        switch ($type) {
+            case 'date':
+                $rattrapage->setDateRattrapage(new DateTime($data));
+                break;
+            case 'heure':
+                $rattrapage->setHeureRattrapage(new DateTime($data));
+                break;
+            case 'salle':
+                $rattrapage->setSalle($data);
+                break;
+            default:
+                return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        $this->entityManager->flush();
+        return $this->json(true, Response::HTTP_OK);
+
+    }
+}

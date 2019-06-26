@@ -11947,5 +11947,53 @@
         <target>adm.gerer.les.categories.articles</target>
       </segment>
     </unit>
+    <unit id="3kl__3V" name="atitle.planning">
+      <segment>
+        <source>atitle.planning</source>
+        <target>atitle.planning</target>
+      </segment>
+    </unit>
+    <unit id="PbFYaBW" name="Demande de rattrapage acceptée">
+      <segment>
+        <source>Demande de rattrapage acceptée</source>
+        <target>Demande de rattrapage acceptée</target>
+      </segment>
+    </unit>
+    <unit id="SI5Nl88" name="table.salle">
+      <segment>
+        <source>table.salle</source>
+        <target>table.salle</target>
+      </segment>
+    </unit>
+    <unit id="f9lwnjS" name="table.heure_rattrapage">
+      <segment>
+        <source>table.heure_rattrapage</source>
+        <target>table.heure_rattrapage</target>
+      </segment>
+    </unit>
+    <unit id="x8DwutM" name="table.date_rattrapage">
+      <segment>
+        <source>table.date_rattrapage</source>
+        <target>table.date_rattrapage</target>
+      </segment>
+    </unit>
+    <unit id="Hzlcp_s" name="table.opt_nb_semaines_visibles">
+      <segment>
+        <source>table.opt_nb_semaines_visibles</source>
+        <target>table.opt_nb_semaines_visibles</target>
+      </segment>
+    </unit>
+    <unit id="9Pwvusv" name="help.opt_nb_semaines_visibles">
+      <segment>
+        <source>help.opt_nb_semaines_visibles</source>
+        <target>help.opt_nb_semaines_visibles</target>
+      </segment>
+    </unit>
+    <unit id="yMuZrNU" name="afficher.toutes.les.semaines">
+      <segment>
+        <source>afficher.toutes.les.semaines</source>
+        <target>afficher.toutes.les.semaines</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

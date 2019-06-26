@@ -20,16 +20,9 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            {#<a href="{{ path('administration_rattrapage_export', {semestre:semestre.id, _format:'pdf'}) }}"#}
-               {#class="btn btn-info btn-sm btn-float" data-provide="tooltip"#}
-               {#data-placement="bottom" title="{{ 'atitle.save_pdf'|trans }}"><i class="fa fa-file-pdf-o"></i></a>#}
-            {#<a href="{{ path('administration_rattrapage_export', {semestre:semestre.id,_format:'csv'}) }}"#}
-               {#class="btn btn-info btn-sm btn-float" data-provide="tooltip"#}
-               {#data-placement="bottom" title="{{ 'atitle.save_csv'|trans }}"><i class="fa fa-file-text-o"></i></a>#}
-            {#<a href="{{ path('administration_rattrapage_export', {semestre:semestre.id, _format:'xlsx'}) }}"#}
-               {#class="btn btn-info btn-sm btn-float" data-provide="tooltip"#}
-               {#data-placement="bottom" title="{{ 'atitle.save_xls'|trans }}"><i class="fa fa-file-excel-o"></i></a>#}
-
+            <a href="{{ path('administration_rattrapage_planning_index', {diplome: semestre.diplome.id}) }}"
+               class="btn btn-success btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.planning'|trans }}"><i class="ti-agenda"></i></a>
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
@@ -96,7 +89,6 @@
                         </td>
                     </tr>
                 {% endfor %}
-                {#todo: ajotuer deux colonnes pour planifier date, salle et heure de rattrapage ? ou une page supplémentaire avec les demandes acceptées uniquement ?#}
                 </tbody>
             </table>
         </div>

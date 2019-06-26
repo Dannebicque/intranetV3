@@ -15,6 +15,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
+use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -99,5 +102,26 @@ class RattrapageRepository extends ServiceEntityRepository
             ->setParameter('anneeuniversitaire', $annee)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findValidByDiplome(
+        Diplome $diplome,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
+        return $this->createQueryBuilder('r')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->where('a.diplome = :diplome')
+            ->andWhere('r.anneeuniversitaire = :anneeuniversitaire')
+            ->andWhere('r.etatDemande = :etat')
+            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('etat', 'A')
+            ->setParameter('anneeuniversitaire', $anneeUniversitaire->getAnnee())
+            ->orderBy('e.semestre.libelle', 'ASC')
+            ->orderBy('e.nom', 'ASC')
+            ->orderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
