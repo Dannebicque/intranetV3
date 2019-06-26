@@ -11995,5 +11995,11 @@
         <target>afficher.toutes.les.semaines</target>
       </segment>
     </unit>
+    <unit id="gZIdP9J" name="applications.etudiant.carnet.heading">
+      <segment>
+        <source>applications.etudiant.carnet.heading</source>
+        <target>applications.etudiant.carnet.heading</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

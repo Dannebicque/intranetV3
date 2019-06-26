@@ -125,6 +125,19 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setUrl($this->router->generate('application_index', ['onglet' => 'rattrapage']));
         $this->entityManager->persist($notif);
 
+        // notification du personnel
+        $notif = new Notification();
+        $notif->setEtudiant(null);
+        $notif->setPersonnel($rattrapage->getPersonnel());
+        $notif->setTypeUser(Notification::PERSONNEL);
+        if ($rattrapage->getEtatDemande() === 'A') {
+            $notif->setType(Events::DECISION_RATTRAPAGE_ACCEPTEE);
+        } else {
+            $notif->setType(Events::DECISION_RATTRAPAGE_REFUSEE);
+        }
+        $notif->setUrl($this->router->generate('application_index', ['onglet' => 'rattrapage']));
+        $this->entityManager->persist($notif);
+
         $this->entityManager->flush();
     }
 

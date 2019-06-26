@@ -41,17 +41,18 @@
                            placeholder="Salle">
                 </div>
                 <div class="col-sm-6 col-md-2">
-                    <button class="btn btn-success btn-block">Salle partout</button>
+                    <button class="btn btn-success btn-block" id="sallePartout">Salle partout</button>
                 </div>
                 <div class="col-sm-6 col-md-2"><label for="date" class="sr-only">Date</label>
                     <input type="text"
                            name="date"
                            id="date"
+                           data-provide="datepicker" data-language="{{ app.request.locale }}"
                            class="form-control"
                            placeholder="Date">
                 </div>
                 <div class="col-sm-6 col-md-2">
-                    <button class="btn btn-success btn-block">Date partout</button>
+                    <button class="btn btn-success btn-block" id="datePartout">Date partout</button>
                 </div>
                 <div class="col-sm-6 col-md-2"><label for="heure" class="sr-only">Salle</label>
                     <input type="text"
@@ -61,9 +62,10 @@
                            placeholder="Heure">
                 </div>
                 <div class="col-sm-6 col-md-2">
-                    <button class="btn btn-success btn-block">Heure partout</button>
+                    <button class="btn btn-success btn-block" id="heurePartout">Heure partout</button>
                 </div>
             </div>
+            <br />
             <table class="table table-striped table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
@@ -101,6 +103,7 @@
                                    id="date_{{ rattrapage.uuidString }}"
                                    class="form-control dateChange"
                                    placeholder="Date"
+                                   data-provide="datepicker" data-language="{{ app.request.locale }}"
                                    value="{{ rattrapage.dateRattrapage|date('d/m/Y') }}"
                                    data-rattrapage="{{ rattrapage.uuidString }}">
                         </td>
@@ -124,35 +127,41 @@
                 {% endfor %}
                 </tbody>
             </table>
-            {# todo: publier, exporter date, salle, heure globale puis ajustement en live. Enregistrement en live. #}
         </div>
     </div>
 {% endblock %}
 
+{% block javascripts %}
+<script>
+let diplome = {{ diplome.id }}
+</script>
+    {{ parent() }}
+{% endblock %}
+
 {% block fabactions %}
-{#    {{ include('composants/fab-buttons.html.twig', {boutons:[#}
-{#        {type: 'info',#}
-{#            href: path('administration_rattrapage_export', {semestre:semestre.id,_format:'pdf'}),#}
-{#            title: 'exporter.pdf'|trans,#}
-{#            icone : "fa fa-file-pdf-o"#}
-{#        },#}
-{#        {#}
-{#            type:'info',#}
-{#            href:path('administration_rattrapage_export', {semestre:semestre.id,_format:'csv'}),#}
-{#            title: 'exporter.csv'|trans,#}
-{#            icone: 'fa fa-file-text-o'#}
-{#        },#}
-{#        {#}
-{#            type:'info',#}
-{#            href:path('administration_rattrapage_export', {semestre:semestre.id,_format:'xlsx'}),#}
-{#            title: 'exporter.xls'|trans,#}
-{#            icone: 'fa fa-file-excel-o'#}
-{#        },#}
-{#        {#}
-{#            type:'info',#}
-{#            href:path('help_article', {sujet: 'administration_rattrapage'}),#}
-{#            title: 'aide'|trans,#}
-{#            icone: 'fa fa-question'#}
-{#        }#}
-{#    ]}) }}#}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_rattrapage_planning_export', {diplome:diplome.id,_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf-o"
+        },
+        {
+            type:'info',
+            href:path('administration_rattrapage_planning_export', {diplome:diplome.id,_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-text-o'
+        },
+        {
+            type:'info',
+            href:path('administration_rattrapage_planning_export', {diplome:diplome.id,_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel-o'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_rattrapage'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
 {% endblock %}

@@ -1888,10 +1888,14 @@ $(document).on('click', '.rattrapage-refuse', function (e) {
 })
 
 
-$(document).on('blur', '.dateChange', function (e) {
+$(document).on('change', '.dateChange', function (e) {
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
-    url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'date', data: $(this).val()}),
+    url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'date'}),
+    data: {
+      data: $(this).val()
+    },
+    method: 'POST',
     success: function (e) {
       //todo:...
     },
@@ -1923,6 +1927,57 @@ $(document).on('blur', '.heureChange', function (e) {
     },
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
+    }
+  })
+})
+
+$(document).on('click', '#sallePartout', function () {
+  const salle = $('#salle').val()
+  $.ajax({
+    //sauvegarde de la salle pour les rattrapages du diplôme
+    url: Routing.generate('administration_rattrapage_update_global', {type: 'salle', diplome:diplome}),
+    data: {
+      valeur: salle
+    },
+    method: 'POST',
+    success: function (e) {
+      $('.salleChange').each(function() {
+        $(this).val(salle)
+      })
+    }
+  })
+})
+
+$(document).on('click', '#datePartout', function () {
+  const date = $('#date').val()
+  $.ajax({
+    //sauvegarde de la salle pour les rattrapages du diplôme
+    url: Routing.generate('administration_rattrapage_update_global', {type: 'date', diplome:diplome}),
+    data: {
+      valeur: date
+    },
+    method: 'POST',
+    success: function (e) {
+      $('.dateChange').each(function() {
+        $(this).val(date)
+      })
+    }
+  })
+})
+
+$(document).on('click', '#heurePartout', function () {
+  const heure = $('#heure').val()
+  $.ajax({
+    //sauvegarde de la salle pour les rattrapages du diplôme
+    url: Routing.generate('administration_rattrapage_update_global', {type: 'heure', diplome:diplome}),
+    data: {
+      valeur: heure
+    },
+    method: 'POST',
+    success: function (e) {
+      $('.heureChange').each(function() {
+        $(this).val(heure)
+      })
     }
   })
 })
