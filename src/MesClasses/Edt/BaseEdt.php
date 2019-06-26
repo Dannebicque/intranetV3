@@ -104,7 +104,7 @@ Abstract class BaseEdt
         return $this->tabJour;
     }
 
-    public function init($filtre = '', $valeur = '', $semaine = 0)
+    protected function init($filtre = '', $valeur = '', $semaine = 0)
     {
         //$this->syncCelcat = $formation->getOptUpdateCelcat();
         $this->total['CM'] = 0;
@@ -283,5 +283,35 @@ Abstract class BaseEdt
         return $this->groupes;
     }
 
+    /**
+     * @return array
+     */
+    protected function calculSemaines(): array
+    {
+        $allsemaine = $this->calendrierRepository->findAll();//todo: pour une anneeuniversitaire donnée
+
+        $t = [];
+        $i = 0;
+        foreach ($allsemaine as $s) {
+            $t[$i]['semaineReelle'] = $s->getSemaineReelle();
+            $t[$i]['semaineIUT'] = $s->getSemaineFormation();
+            $t[$i]['debut'] = $s->getDatelundi();
+            $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
+            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), date('j', $date1) + 7, date('Y', $date1)));
+            $t[$i]['fin'] = $fin;
+            $i++;
+        }
+
+        return $t;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSemaines()
+    {
+        return $this->semaines;
+    }
 
 }

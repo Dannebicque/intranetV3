@@ -67,7 +67,8 @@ class EdtController extends BaseController
                 $this->myEdtCelcat->initPersonnel($this->getConnectedUser(), $semaine);
 
                 return $this->render('edt/_intervenant.html.twig', [
-                    'edt' => $this->myEdtCelcat
+                    'edt' => $this->myEdtCelcat,
+                    'tabHeures' => self::$tabHeures
                 ]);
             }
 
@@ -95,7 +96,8 @@ class EdtController extends BaseController
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $semaine);
 
                 return $this->render('edt/_etudiant.html.twig', [
-                    'edt' => $this->myEdtCelcat
+                    'edt' => $this->myEdtCelcat,
+                    'tabHeures' => self::$tabHeures
                 ]);
             }
 

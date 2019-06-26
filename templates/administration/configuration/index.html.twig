@@ -8,7 +8,7 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active show" data-toggle="tab" href="#tab-departement" role="tab"
+                <a class="nav-link active" data-toggle="tab" href="#tab-departement" role="tab"
                    aria-selected="false">{{ 'adm.configuration.tab.departement.menu'|trans }}</a>
             </li>
             <li class="nav-item">
@@ -34,7 +34,7 @@
 
 {% block content %}
     <div class="tab-content">
-        <div class="tab-pane active show" id="tab-departement" role="tabpanel">
+        <div class="tab-pane active" id="tab-departement" role="tabpanel">
             <div class="card">
                 <h4 class="card-title">{{ 'adm.configuration.tab.departement.heading'|trans }}</h4>
                 <div class="card-body">
@@ -302,10 +302,10 @@
                                             <p><strong>{{ 'table.opt_nb_semaines_visibles'|trans }}</strong></p>
                                             <p>{{ 'help.opt_nb_semaines_visibles'|trans }}</p>
                                         </div>
-                                        <label class="sr-only" for="optNbSemainesVisibles_{{ diplome.id }}">optNbSemainesVisibles_{{ diplome.id }}</label>
+                                        <label class="sr-only" for="optSemainesVisibles_{{ diplome.id }}">optSemainesVisibles_{{ diplome.id }}</label>
                                         <select class="form-control col-sm-6 changeOptionSelect"
-                                                name="optNbSemainesVisibles_{{ diplome.id }}"
-                                                id="optNbSemainesVisibles_{{ diplome.id }}"
+                                                name="optSemainesVisibles_{{ diplome.id }}"
+                                                id="optSemainesVisibles_{{ diplome.id }}"
                                                 data-type="diplome"
                                                 data-id="{{ diplome.id }}"
                                         >
@@ -313,7 +313,7 @@
                                                 / {{ 'afficher.toutes.les.semaines'|trans }}</option>
                                             {% for i in 1 .. 30 %}
                                                 <option value="{{ i }}"
-                                                        {% if diplome.optNbSemainesVisibles == i %}selected{% endif %}>{{ i }}
+                                                        {% if diplome.optSemainesVisibles == i %}selected{% endif %}>{{ i }}
                                                     jour(s)
                                                 </option>
                                             {% endfor %}
@@ -393,8 +393,9 @@
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+
                 </div>
             </div>
         </div>

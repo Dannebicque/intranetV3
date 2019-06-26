@@ -1888,6 +1888,46 @@ $(document).on('click', '.rattrapage-refuse', function (e) {
 })
 
 
+$(document).on('blur', '.dateChange', function (e) {
+  const rattrapage = $(this).data('rattrapage')
+  $.ajax({
+    url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'date', data: $(this).val()}),
+    success: function (e) {
+      //todo:...
+    },
+    error: function (e) {
+      addCallout('Une erreur est survenue !', 'danger')
+    }
+  })
+})
+
+$(document).on('blur', '.salleChange', function (e) {
+  const rattrapage = $(this).data('rattrapage')
+  $.ajax({
+    url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'salle', data: $(this).val()}),
+    success: function (e) {
+      //todo:...
+    },
+    error: function (e) {
+      addCallout('Une erreur est survenue !', 'danger')
+    }
+  })
+})
+
+$(document).on('blur', '.heureChange', function (e) {
+  const rattrapage = $(this).data('rattrapage')
+  $.ajax({
+    url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'heure', data: $(this).val()}),
+    success: function (e) {
+      //todo:...
+    },
+    error: function (e) {
+      addCallout('Une erreur est survenue !', 'danger')
+    }
+  })
+})
+
+
 $(document).on('click', '.optAfficher', function (e) {
   const evaluation = $(this).data('id')
   const $child = $(this).children('i')
