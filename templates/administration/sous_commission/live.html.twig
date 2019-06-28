@@ -7,7 +7,7 @@
 {% block headerright %}
     <div class="right gap-items-2">
         {% for sem in user_data.semestres %}
-            <a href="{{ path('administration_sous_comission_index', {semestre:sem.id}) }}"
+            <a href="{{ path('administration_sous_comission_live', {semestre:sem.id}) }}"
                class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
                data-provide="tooltip"

@@ -82,9 +82,9 @@ class MyEtudiantSousCommission
 
         $this->moyenneSemestre = new MoyennesSemestreEtudiant($etudiant, $semestre);
 
-        if ($semestre->getDiplome()->getOptMethodeCalcul() == Constantes::MOYENNE_MODULES) {
+        if ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_MODULES) {
             $this->moyenneSemestre->calculMoyenneModules($this->moyenneMatieres, $matieres);
-        } elseif ($semestre->getDiplome()->getOptMethodeCalcul() == Constantes::MOYENNE_UES) {
+        } elseif ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_UES) {
             $this->moyenneSemestre->calculMoyenneUes($this->moyenneUes, $semestre->getUes());
         } else {
             //erreur

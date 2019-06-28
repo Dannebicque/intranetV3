@@ -31,7 +31,7 @@ class SousComissionController extends BaseController
 
 
     /**
-     * @Route("/live/{semestre}", name="administration_sous_comission_live")
+     * @Route("/live/{semestre}", name="administration_sous_commission_live")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
@@ -49,7 +49,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/travail/{semestre}", name="administration_sous_comission_travail")
+     * @Route("/travail/{semestre}", name="administration_sous_commission_travail")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
@@ -58,7 +58,7 @@ class SousComissionController extends BaseController
     public function travail(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
         $mySousCommission->init($semestre, $semestre->getAnneeUniversitaire());
-
+        $mySousCommission->SauvegardeTravail();
 
         return $this->render('administration/sous_commission/travail.html.twig', [
             'semestre' => $semestre,
@@ -67,7 +67,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/purger/{semestre}", name="administration_sous_comission_purger")
+     * @Route("/purger/{semestre}", name="administration_sous_commission_purger")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
@@ -76,11 +76,11 @@ class SousComissionController extends BaseController
     public function purger(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
 
-        return $this->redirectToRoute('administration_sous_comission_travail', ['semestre' => $semestre->getId()]);
+        return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
     /**
-     * @Route("/recalculer/{semestre}", name="administration_sous_comission_recalculer")
+     * @Route("/recalculer/{semestre}", name="administration_sous_commission_recalculer")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
@@ -92,7 +92,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/publier/{semestre}", name="administration_sous_comission_publier")
+     * @Route("/publier/{semestre}", name="administration_sous_commission_publier")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
@@ -105,7 +105,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/exporter/{semestre}", name="administration_sous_comission_exporter")
+     * @Route("/exporter/{semestre}", name="administration_sous_commission_exporter")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
@@ -117,7 +117,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/grand-jury/{semestre}", name="administration_sous_comission_exporter_grand_jury")
+     * @Route("/grand-jury/{semestre}", name="administration_sous_commission_exporter_grand_jury")
      * @param MySousCommission $mySousCommission
      * @param Semestre         $semestre
      *
