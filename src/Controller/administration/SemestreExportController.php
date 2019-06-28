@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SemestreExportController extends BaseController
 {
+    //todo: gestion de l'année universitaire
     /**
      * @Route("/all/{semestre}", name="administration_semestre_export_tous_les_releves_provisoires")
      * @param MyEtudiant $myEtudiant

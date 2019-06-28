@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
