@@ -20,6 +20,10 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('administration_sous_commission_exporter', {semestre:semestre.id}) }}" class="btn btn-info
+            btn-float btn-sm" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.exporter'|trans }}"><i
+                        class="ti-download"></i></a>
             <a href="{{ path('administration_sous_commission_travail', {semestre:semestre.id}) }}" class="btn btn-info
             btn-float btn-sm" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.basculer.sous_comm_travail'|trans }}"><i
@@ -36,7 +40,6 @@
             <div class="card">
                 <div class="card-header">
                     <h4><strong>Synthèse</strong> | {{ semestre.display }}</h4>
-                    Export
                 </div>
                 <div class="card-body">
                     {# todo: boton pour masquer les colonnes pénalités ou les colonnes modules #}
@@ -52,7 +55,7 @@
                                 {% endfor %}
                                 <th colspan="{{ (sousCommission.ues|length *2 ) + 7 }}" style="text-align: center">
                                     Semestre {{ semestre.libelle }}</th>
-                                 decision semestre
+{#                                 decision semestre#}
                                 {% for sem in sousCommission.semestres if sem.id != semestre.id %}
                                     <th colspan="{{ sem.ues|length+2 }}" style="text-align: center">
                                         Semestre {{ sem.libelle }}</th>

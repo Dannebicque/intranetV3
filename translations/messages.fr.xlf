@@ -12013,5 +12013,11 @@
         <target>atitle.basculer.sous_comm_travail</target>
       </segment>
     </unit>
+    <unit id="ejeqjyX" name="atitle.exporter">
+      <segment>
+        <source>atitle.exporter</source>
+        <target>atitle.exporter</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

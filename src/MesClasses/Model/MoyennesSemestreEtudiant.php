@@ -45,7 +45,10 @@ class MoyennesSemestreEtudiant
     private $bonif = 0;
 
     private $decision = '';
+
     private $proposition = '';
+
+
 
     /**
      * MoyennesSemestreEtudiant constructor.

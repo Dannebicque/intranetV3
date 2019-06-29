@@ -47,8 +47,18 @@ class MyEtudiantSousCommission
     /** @var */
     private $notes;
 
+    private $nbSemestres = 1;
+
     /** @var ScolariteRepository */
     private $scolariteRepository;
+
+    /**
+     * @return int
+     */
+    public function getNbSemestres(): int
+    {
+        return $this->nbSemestres;
+    }
 
     /**
      * MyEtudiantSousCommission constructor.
@@ -98,6 +108,7 @@ class MyEtudiantSousCommission
         $semprec = $semestre->getPrecedent();
 
         while ($semprec !== null) {
+            $this->nbSemestres++; //todo: pas le bon calcul...
             $pe = new ParcoursEtudiant($this->scolariteRepository);
             $this->parcours[$semprec->getOrdreLmd()] = $pe->calculScolarite($etudiant, $semprec);
             $semprec = $semprec->getPrecedent();
