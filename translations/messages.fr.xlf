@@ -12001,5 +12001,17 @@
         <target>applications.etudiant.carnet.heading</target>
       </segment>
     </unit>
+    <unit id="_jYZzy6" name="semestre.edit.success.flash">
+      <segment>
+        <source>semestre.edit.success.flash</source>
+        <target>semestre.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="p8XkzZa" name="atitle.basculer.sous_comm_travail">
+      <segment>
+        <source>atitle.basculer.sous_comm_travail</source>
+        <target>atitle.basculer.sous_comm_travail</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

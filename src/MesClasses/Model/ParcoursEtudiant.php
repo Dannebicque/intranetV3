@@ -10,7 +10,9 @@ namespace App\MesClasses\Model;
 
 
 use App\Entity\Etudiant;
+use App\Entity\ScolariteMoyenneUe;
 use App\Entity\Semestre;
+use App\Repository\ScolariteRepository;
 
 class ParcoursEtudiant
 {
@@ -20,41 +22,97 @@ class ParcoursEtudiant
     /** @var Semestre */
     private $semestreCourant;
 
+    private $parcoursUe = [];
+
+    private $moyenne = 0;
+
+    private $decision = '';
+
+    /** @var ScolariteRepository */
+    private $scolariteRepository;
+
+
     /**
      * ParcoursEtudiant constructor.
      *
-     * @param Etudiant $etudiant
-     * @param Semestre $semestreCourant
+     * @param ScolariteRepository $scolariteRepository
      */
-    public function __construct(Etudiant $etudiant, Semestre $semestreCourant)
+    public function __construct(ScolariteRepository $scolariteRepository)
+    {
+        $this->scolariteRepository = $scolariteRepository;
+
+    }
+
+    public function calculScolarite(Etudiant $etudiant, Semestre $semestreCourant)
     {
         $this->etudiant = $etudiant;
         $this->semestreCourant = $semestreCourant;
+
+        foreach ($semestreCourant->getUes() as $ue)
+        {
+            $this->parcoursUe[$ue->getNumeroUe()]['style'] = '';
+            $this->parcoursUe[$ue->getNumeroUe()]['moyenne'] = 0;
+        }
+        $scolarite = $this->scolariteRepository->findBy(['etudiant' => $this->etudiant->getId(), 'semestre' => $this->semestreCourant->getId()], ['ordre' => 'DESC']);
+
+        if (count($scolarite) > 0) {
+            $this->moyenne = $scolarite[0]->getMoyenne();
+            $this->decision = $scolarite[0]->getDecision();
+
+            /** @var ScolariteMoyenneUe $ue */
+            foreach ($scolarite[0]->getScolariteMoyenneUes() as $ue) {
+                $this->parcoursUe[$ue->getUe()->getNumeroUe()]['style'] = $ue->getMoyenne() >= 8 ? 'badge badge-success' : 'badge badge-danger';;
+                $this->parcoursUe[$ue->getUe()->getNumeroUe()]['moyenne'] = $ue->getMoyenne();
+            }
+        }
+
+        return $this;
     }
 
-
-    public function getBadge(): void
+    /**
+     * @return array
+     */
+    public function getParcoursUe(): array
     {
-//        {% if sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision == 'V' %}
-//        badge badge-success
-//                            {% elseif sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision ==
-//                            'MNC'
-//                            or
-//                            sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision ==
-//                            sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision ==
-//                            'NV' %}
-//                                badge badge-danger
-//                            {% elseif sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision ==
-//                            'VCA'
-//                            or
-//                            sousCommission.moyennes[etudiant.id].parcours[sem.ordre].parcours.decision ==
-//                            'VCJ' %}
-//                                badge badge-warning
-//                            {% endif %}
+        return $this->parcoursUe;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMoyenne(): int
+    {
+        return $this->moyenne;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStyleDecision(): string
+    {
+        switch ($this->decision) {
+            case 'V':
+                return 'badge badge-success';
+            case 'NV':
+                return 'badge badge-danger';
+            case 'VCA':
+            case 'VCJ':
+                return 'badge badge-warning';
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getStyle(): string
+    {
+        return $this->moyenne >= 10 ? 'badge badge-success' :  'badge badge-danger';
     }
 
     public function getDecision(): string
     {
-        return '';
+        return $this->decision;
     }
 }
