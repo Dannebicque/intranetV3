@@ -6,9 +6,9 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for sem in user_data.semestres %}
-            <a href="{{ path('administration_sous_comission_travail', {semestre:sem.id}) }}"
-               class="btn btn-square btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+        {% for sem in user_data.semestresActifs %}
+            <a href="{{ path('administration_sous_commission_travail', {semestre:sem.id}) }}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
                data-provide="tooltip"
                data-placement="bottom"
@@ -52,47 +52,47 @@
                                            > Sous-Commission
             </div>
 
+            Tableau éditable
 
             {#        {% if sc.publier == false %}#}
-            <div class="row">
-                <div class="col-sm-6">
-                    <a href="{{ path('administration_sous_comission_purger', {semestre:semestre.id}) }}"
+            <div class="row gap-y">
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('administration_sous_commission_recalculer', {semestre:semestre.id}) }}"
+                       class="btn btn-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
+                                                         des moyennes (semestre et UE). Modifie les décisions en
+                                                         fonction des résultats.</a>
+                    <a href="{{ path('administration_sous_commission_publier', {semestre:semestre.id}) }}"
+                       class="btn btn-block btn-success">Publier les résultats aux étudiants (une fois publiée, vous
+                                                         pourrez modifier le parcours sur chaque profil étudiant, la
+                                                         sous-commission ne sera plus active)</a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <form action="{{ path('administration_sous_commission_exporter', {semestre:semestre.id}) }}"
+                          method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>
+                                Fichier type
+                            </label>
+                                <input type="file" name="fichier" class="form-control"/>
+                        </div>
+                        <button type="submit" class="btn btn-block btn-success">Export Apogée (va générer le fichier txt
+                                                                                pour la scolarité)
+                        </button>
+                    </form>
+<br>
+                    <a href="{{ path('administration_sous_commission_exporter_grand_jury', {semestre:semestre.id}) }}"
+                       class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
+                </div>
+
+
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('administration_sous_commission_purger', {semestre:semestre.id}) }}"
                        class="btn btn-block btn-danger">Nettoyer les notes (remplace les -0.01 par des 0)
                         <strong>Attention, opération irréversible !</strong></a>
                 </div>
-                <div class="col-sm-6">
-
-                </div>
             </div>
-            <br>
-            <a href="{{ path('administration_sous_comission_recalculer', {semestre:semestre.id}) }}"
-               class="btn btn-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
-                                                 des moyennes (semestre et UE). Modifie les décisions en
-                                                 fonction des résultats.</a>
-            <a href="{{ path('administration_sous_comission_publier', {semestre:semestre.id}) }}"
-               class="btn btn-block btn-success">Publier les résultats aux étudiants (une fois publiée, vous
-                                                 pourrez modifier le parcours sur chaque profil étudiant, la
-                                                 sous-commission ne sera plus active)</a>
-
-
             {#        {% endif %}#}
-            <form action="{{ path('administration_sous_comission_exporter', {semestre:semestre.id}) }}"
-                  method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label class="col-sm-2">
-                        Fichier type
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="file" name="fichier" class="form-control"/>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-block btn-success">Export Apogée (va générer le fichier txt
-                                                                        pour la scolarité)
-                </button>
-            </form>
-            <br/>
-            <a href="{{ path('administration_sous_comission_exporter_grand_jury', {semestre:semestre.id}) }}"
-               class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
+
         </div>
     </div>
 {% endblock %}

@@ -18,6 +18,7 @@ use App\MesClasses\Model\MoyenneMatiereEtudiant;
 use App\MesClasses\Model\MoyennesSemestreEtudiant;
 use App\MesClasses\Model\MoyenneUeEtudiant;
 use App\MesClasses\Model\ParcoursEtudiant;
+use App\Repository\ScolariteRepository;
 
 class MyEtudiantSousCommission
 {
@@ -46,6 +47,9 @@ class MyEtudiantSousCommission
     /** @var */
     private $notes;
 
+    /** @var ScolariteRepository */
+    private $scolariteRepository;
+
     /**
      * MyEtudiantSousCommission constructor.
      *
@@ -54,10 +58,11 @@ class MyEtudiantSousCommission
      * @param          $matieres
      * @param          $notes
      */
-    public function __construct(Etudiant $etudiant, Semestre $semestre, $matieres, $notes)
+    public function __construct(ScolariteRepository $scolariteRepository, Etudiant $etudiant, Semestre $semestre, $matieres, $notes)
     {
         $this->etudiant = $etudiant;
         $this->semestre = $semestre;
+        $this->scolariteRepository = $scolariteRepository;
         $this->notes = $notes;
 
         /** @var Matiere $matiere */
@@ -93,7 +98,8 @@ class MyEtudiantSousCommission
         $semprec = $semestre->getPrecedent();
 
         while ($semprec !== null) {
-            $this->parcours[$semprec->getOrdreLmd()] = new ParcoursEtudiant($etudiant, $semprec);
+            $pe = new ParcoursEtudiant($this->scolariteRepository);
+            $this->parcours[$semprec->getOrdreLmd()] = $pe->calculScolarite($etudiant, $semprec);
             $semprec = $semprec->getPrecedent();
         }
 

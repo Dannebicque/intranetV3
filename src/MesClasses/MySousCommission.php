@@ -29,6 +29,7 @@ use App\Entity\Ue;
 use App\Repository\EtudiantRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\NoteRepository;
+use App\Repository\ScolariteRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 
@@ -52,6 +53,9 @@ class MySousCommission
 
     /** @var NoteRepository */
     private $noteRepository;
+
+    /** @var ScolariteRepository */
+    private $scolariteRepository;
 
     /** @var Etudiant[] */
     private $etudiants = [];
@@ -85,13 +89,15 @@ class MySousCommission
         MatiereRepository $matiereRepository,
         SemestreRepository $semestreRepository,
         UeRepository $ueRepository,
-        NoteRepository $noteRepository
+        NoteRepository $noteRepository,
+        ScolariteRepository $scolariteRepository
     ) {
         $this->etudiantRepository = $etudiantRepository;
         $this->matiereRepository = $matiereRepository;
         $this->ueRepository = $ueRepository;
         $this->semestreRepository = $semestreRepository;
         $this->noteRepository = $noteRepository;
+        $this->scolariteRepository = $scolariteRepository;
     }
 
     /**
@@ -118,7 +124,7 @@ class MySousCommission
 
         foreach ($this->etudiants as $etudiant) {
             $etuId = $etudiant->getId();
-            $this->sousCommissionEtudiants[$etuId] = new MyEtudiantSousCommission($etudiant, $semestre, $this->matieres, $notes[$etuId]);
+            $this->sousCommissionEtudiants[$etuId] = new MyEtudiantSousCommission($this->scolariteRepository, $etudiant, $semestre, $this->matieres, $notes[$etuId]);
         }
     }
 
