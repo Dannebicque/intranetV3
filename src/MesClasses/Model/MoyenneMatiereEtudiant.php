@@ -27,7 +27,7 @@ class MoyenneMatiereEtudiant
     /** @var double */
     private $moyenne = -0.01;
 
-    /** @var int  */
+    /** @var int */
     private $bonif = 0;
 
     private $penalite = 0;
@@ -35,7 +35,7 @@ class MoyenneMatiereEtudiant
     /** @var double */
     private $moyennePenalisee = -0.01;
 
-    /** @var bool  */
+    /** @var bool */
     private $pasOption = false;
 
 
@@ -139,20 +139,34 @@ class MoyenneMatiereEtudiant
      */
     public function getStyle(): string
     {
-        if ($this->moyenne < 0) {
+        return $this->style($this->moyenne);
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getStylePenalisee(): string
+    {
+        return $this->style($this->moyennePenalisee);
+
+    }
+
+    private function style($note)
+    {
+        if ($note < 0) {
             return 'pasdenote';
         }
 
-        if ($this->moyenne === 0) {
-            return 'label label-danger';
+        if ($note === 0) {
+            return 'badge badge-danger';
         }
 
-        if ($this->moyenne < 10) {
-            return 'label label-warning';
+        if ($note < 10) {
+            return 'badge badge-warning';
         }
 
         return 'notenormale';
-
     }
 
     /**

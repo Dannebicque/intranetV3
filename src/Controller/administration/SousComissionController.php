@@ -111,9 +111,9 @@ class SousComissionController extends BaseController
      *
      * @return Response
      */
-    public function exporter(MySousCommission $mySousCommission, Semestre $semestre): Response
+    public function exporter(MySousCommission $mySousCommission, Semestre $semestre)
     {
-
+        return $mySousCommission->export($semestre, $semestre->getAnneeUniversitaire());
     }
 
     /**
