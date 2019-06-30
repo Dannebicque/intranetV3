@@ -32,7 +32,7 @@ class TypeGroupeType extends AbstractType
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             //->add('codeApogee', TextType::class, ['label' => 'label.codeApogee', 'required' => false])
-            /*->add('type', ChoiceType::class, [
+            ->add('type', ChoiceType::class, [
                 'choices'            => [
                     TypeGroupe::TYPE_GROUPE_CM => 'CM',
                     TypeGroupe::TYPE_GROUPE_TD => 'TD',
@@ -40,7 +40,7 @@ class TypeGroupeType extends AbstractType
                 ],
                 'label'              => 'label.type_groupe',
                 'translation_domain' => 'form'
-            ])*/
+            ])
             ->add('defaut', YesNoType::class)
             ->add('semestre', EntityType::class, array(
                 'class'         => Semestre::class,

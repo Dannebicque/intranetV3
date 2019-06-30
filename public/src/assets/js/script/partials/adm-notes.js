@@ -4,7 +4,7 @@ $(document).on('click', '.optAfficher', function (e) {
   const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_visibilite', {uuid: evaluation}),
-    success: function (e) {
+    success: function () {
       if ($child.hasClass('fa-eye')) {
         $a.addClass('btn-danger')
         $a.removeClass('btn-info').removeClass('btn-outline')
@@ -21,19 +21,19 @@ $(document).on('click', '.optAfficher', function (e) {
       }
       addCallout('Visibilité de l\'évaluation modifiée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
-$(document).on('click', '.optVerrouiller', function (e) {
+$(document).on('click', '.optVerrouiller', function () {
   const evaluation = $(this).data('id')
   const $child = $(this).children('i')
   const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
-    success: function (e) {
+    success: function () {
       if ($(this).children('i').hasClass('fa-pencil')) {
         $a.addClass('btn-danger')
         $a.removeClass('btn-warning').removeClass('btn-outline')
@@ -49,7 +49,7 @@ $(document).on('click', '.optVerrouiller', function (e) {
       }
       addCallout('Vérouillage de l\'évaluation modifiée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })

@@ -24,7 +24,10 @@
                                 <a href="{{ path('trombinoscope_etudiant_export', {_format:'csv', typeGroupe: selectedTypeGroupe.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.csv'|trans }}
                                 </a>
-                                {# todo: ajouter version trombinoscope #}
+                                <a href="{{ path('trombinoscope_etudiant_image', {typeGroupe: selectedTypeGroupe.id})
+                                }}"
+                                   class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.trombi'|trans }}
+                                </a>
                             </div>
                         </li>
                     </ul>

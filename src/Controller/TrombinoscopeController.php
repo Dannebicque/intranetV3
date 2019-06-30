@@ -21,6 +21,8 @@ use App\Entity\TypeGroupe;
 use App\MesClasses\MyExport;
 use App\MesClasses\MyExportListing;
 use App\Repository\PersonnelRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -63,6 +65,38 @@ class TrombinoscopeController extends BaseController
             [],
             $typeGroupe->getId()
         );
+    }
+
+    /**
+     * @Route("/etudiant/export-image/{typeGroupe}.pdf", name="trombinoscope_etudiant_image", methods="GET",
+     *                                                   )
+     * @param MyExportListing  $myExportListing
+     * @param TypeGroupe       $typeGroupe
+     * @param                  $_format
+     *
+     * @return null|StreamedResponse
+     * @throws Exception
+     */
+    public function trombiEtudiantExportImage(
+        TypeGroupe $typeGroupe
+    ): Response {
+
+        $html = $this->renderView('pdf/trombinoscope.html.twig', [
+            'typeGroupe' => $typeGroupe,
+            'groupes' => $typeGroupe->getGroupes(),
+            'semestre' => $typeGroupe->getSemestre()
+        ]);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $options->set('isPhpEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return new Response($dompdf->stream('trombinoscope-' . $typeGroupe->getSemestre()->getLibelle(),
+            ['Attachment' => 1]));
     }
 
     /**
