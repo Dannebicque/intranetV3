@@ -1671,7 +1671,6 @@ $(document).on('click', '.justificatif-annuler', function (e) {
 
 $('.savegroupe').click(function () {
   const groupe = $(this).attr('id')
-  console.log(groupe)
   const notes = {'notes': []}
   $('.noteetudiant:input').each(function () {
     if ($(this).hasClass(groupe)) //vérifier que c'est le groupe concerné
@@ -1709,7 +1708,7 @@ $('.savegroupe').click(function () {
 $(document).on('keyup', '.noteetudiant', function (e) {
   const val = $(this).val()
 
-  if (val == '-0.01') {
+  if (val === '-0.01') {
     $(this).addClass('is-valid')
   } else if (parseFloat(val) >= 0 && parseFloat(val) <= 20) {
     $(this).addClass('is-valid')
@@ -3235,6 +3234,12 @@ $(document).on('change', '#tuteurUniversitaire', function () {
     }
   })
 })
+
+
+$(document).on('click', '#masqueMatieres', function (e) {
+  $('.matiere').hide();
+})
+//https://jsfiddle.net/KyleMit/rr96p4vv/
 
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.

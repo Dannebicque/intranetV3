@@ -44,10 +44,10 @@ $contextMenuEdt.on("click", "a", function () {
           success: function () {
             $('#' + $rowClicked[0].id).empty();
 
-            autohidenotify('success', 'Element supprimé du planing.');
+            addCallout('Element supprimé du planing.','success');
           },
           error: function () {
-            autohidenotify('error', 'Erreur lors de la suppression.');
+            addCallout('Erreur lors de la suppression.','error');
           }
         });
       break;

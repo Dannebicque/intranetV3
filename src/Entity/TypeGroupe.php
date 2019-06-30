@@ -156,12 +156,17 @@ class TypeGroupe extends BaseEntity
 
     public function isTD()
     {
-        return $this->getLibelle() === 'TD'; //todo: a améliorer
+        return $this->getType() === self::TYPE_GROUPE_TD;
     }
 
     public function isTP()
     {
-        return $this->getLibelle() === 'TP'; //todo: a améliorer
+        return $this->getType() === self::TYPE_GROUPE_TP;
+    }
+
+    public function isCM()
+    {
+        return $this->getType() === self::TYPE_GROUPE_CM;
     }
 
     public function getType(): ?string

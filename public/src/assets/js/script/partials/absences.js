@@ -22,7 +22,6 @@ $(document).on('change', '#justifier_etudiant', function () {
 
   $.ajax({
     url: Routing.generate('administration_absences_liste_absence_etudiant', {etudiant: $(this).val()}),
-    //dataType: 'json',
     success: function (data) {
       let table = $('#tableJustifier').empty();
       table.append('<thead>\n' +
@@ -68,7 +67,7 @@ $(document).on('click', '.justifieAbsence', function() {
   $.ajax({
     type: 'GET',
     url: Routing.generate('administration_absences_justifie', {absence: $(this).data('absence'), etat:$(this).val()}),
-    error: function (msg, string) {
+    error: function () {
         addCallout('Erreur lors de l\'enregistrement.', 'danger')
     },
     success: function (data) {
@@ -112,7 +111,7 @@ $(document).on('change', '#absence-date', function () {
 })
 
 $(document).on('change', '#absence-heure', function () {
-  var etudiants = $('.etudiant')
+  const etudiants = $('.etudiant')
   const date = $('#absence-date')
   const heure = $('#absence-heure')
   etudiants.removeClass('absent')
@@ -141,7 +140,7 @@ $(document).on('click', '.etudiant', function () {
         action: 'suppr'
       },
       //affichage de l'erreur en cas de problème
-      error: function (msg, string) {
+      error: function () {
         addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
       },
       success: function (data) {
@@ -153,7 +152,6 @@ $(document).on('click', '.etudiant', function () {
   else {
     //marquer comme absent
     $(this).addClass('absent')
-    //$(this).removeClass('absence');
     $.ajax({
       type: 'POST',
       url: Routing.generate('application_personnel_absence_saisie_ajax', {
@@ -167,7 +165,7 @@ $(document).on('click', '.etudiant', function () {
         action: 'saisie'
       },
       //affichage de l'erreur en cas de problème
-      error: function (msg, string) {
+      error: function (msg) {
         if (msg.responseText === 'out') {
           addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
         } else {
@@ -236,7 +234,7 @@ $(document).on('click', '.justificatif-refuse', function (e) {
       //todo: gérer la création du bouton annuler.
       addCallout('Justificatif d\'absence refusé !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })

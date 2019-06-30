@@ -110,6 +110,7 @@ class SousComissionController extends BaseController
      * @param Semestre         $semestre
      *
      * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exporter(MySousCommission $mySousCommission, Semestre $semestre)
     {
