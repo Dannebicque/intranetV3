@@ -20,7 +20,7 @@ $(document).on('change', '.changeOption', function (e) {
 
 });
 
-$(document).on('change', '.changeOptionSelect', function (e) {
+$(document).on('change', '.changeOptionSelect', function () {
   $.ajax({
     url: Routing.generate('administration_configuration_change_option'),
     method: 'POST',

@@ -12019,5 +12019,17 @@
         <target>atitle.exporter</target>
       </segment>
     </unit>
+    <unit id="OMUt2qT" name="table.absence">
+      <segment>
+        <source>table.absence</source>
+        <target>table.absence</target>
+      </segment>
+    </unit>
+    <unit id="6yGL29P" name="exporter.trombi">
+      <segment>
+        <source>exporter.trombi</source>
+        <target>exporter.trombi</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -72,9 +72,10 @@ class MyEvaluations
     /**
      * @param $semestre
      */
-    public function setSemestre($semestre): void
+    public function setSemestre($semestre)
     {
         $this->semestre = $semestre;
+        return $this;
     }
 
     /**

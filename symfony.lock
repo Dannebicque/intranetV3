@@ -104,9 +104,6 @@
     "endroid/qr-code-bundle": {
         "version": "3.3.3"
     },
-    "facebook/webdriver": {
-        "version": "1.6.0"
-    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.0",
         "recipe": {
@@ -260,9 +257,6 @@
             "ref": "f3a28efb32f20b8740fd763651cabd780bce43da"
         }
     },
-    "symfony/contracts": {
-        "version": "v1.1.0"
-    },
     "symfony/css-selector": {
         "version": "v4.2.4"
     },
@@ -317,12 +311,6 @@
             "ref": "82e2278ff2a74a97837e84c2493c30e7a85ad299"
         }
     },
-    "symfony/http-client": {
-        "version": "v4.3.1"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v1.1.3"
-    },
     "symfony/http-foundation": {
         "version": "v4.2.1"
     },
@@ -364,9 +352,6 @@
     },
     "symfony/orm-pack": {
         "version": "v1.0.5"
-    },
-    "symfony/panther": {
-        "version": "v0.3.0"
     },
     "symfony/phpunit-bridge": {
         "version": "4.1",

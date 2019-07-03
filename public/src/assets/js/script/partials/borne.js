@@ -3,7 +3,6 @@ $(document).on('click', '.visibiliteBorne', function(){
   $.ajax({
     url: Routing.generate('administration_borne_visibilite', {id:btn.data('id')}),
     success: function(data) {
-      console.log(data)
       if (data === false) {
         addCallout('Message masqué avec succés !', 'success')
         btn.removeClass('btn-success').addClass('btn-danger');

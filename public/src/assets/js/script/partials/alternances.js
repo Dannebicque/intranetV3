@@ -1,4 +1,4 @@
-$(document).on('change', '#tuteurUniversitaire', function (e) {
+$(document).on('change', '#tuteurUniversitaire', function () {
   $.ajax({
     url: Routing.generate('administration_alternance_update_tuteur_universitaire', {alternance: $(this).data('alternance'), personnel: $(this).val()}),
     success: function () {
@@ -27,12 +27,11 @@ $(document).on('click', '.initAllAlternance', function (e) {
     cancelButtonClass: 'btn btn-secondary',
     buttonsStyling: false
   }).then(function (result) {
-    console.log(result)
     if (result.value) {
       $.ajax({
         url: url,
         type: "POST",
-        success: function (id) {
+        success: function () {
           addCallout('Initialisation effectuée avec succès', 'success')
           swal(
             'Initialisé!',
@@ -40,7 +39,7 @@ $(document).on('click', '.initAllAlternance', function (e) {
             'success'
           )
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function () {
           swal("Error deleting!", "Please try again", "error");
           addCallout('Erreur lors de la tentative d\'initialisation', 'danger')
         }
