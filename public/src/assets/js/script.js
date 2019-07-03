@@ -1267,7 +1267,7 @@ $(document).on('change', '.changeOption', function (e) {
 
 });
 
-$(document).on('change', '.changeOptionSelect', function (e) {
+$(document).on('change', '.changeOptionSelect', function () {
   $.ajax({
     url: Routing.generate('administration_configuration_change_option'),
     method: 'POST',
@@ -1285,6 +1285,7 @@ $(document).on('change', '.changeOptionSelect', function (e) {
   })
 
 });
+
 
 /*
  * *
@@ -1400,7 +1401,6 @@ $(document).on('change', '#justifier_etudiant', function () {
 
   $.ajax({
     url: Routing.generate('administration_absences_liste_absence_etudiant', {etudiant: $(this).val()}),
-    //dataType: 'json',
     success: function (data) {
       let table = $('#tableJustifier').empty();
       table.append('<thead>\n' +
@@ -1446,7 +1446,7 @@ $(document).on('click', '.justifieAbsence', function() {
   $.ajax({
     type: 'GET',
     url: Routing.generate('administration_absences_justifie', {absence: $(this).data('absence'), etat:$(this).val()}),
-    error: function (msg, string) {
+    error: function () {
         addCallout('Erreur lors de l\'enregistrement.', 'danger')
     },
     success: function (data) {
@@ -1490,7 +1490,7 @@ $(document).on('change', '#absence-date', function () {
 })
 
 $(document).on('change', '#absence-heure', function () {
-  var etudiants = $('.etudiant')
+  const etudiants = $('.etudiant')
   const date = $('#absence-date')
   const heure = $('#absence-heure')
   etudiants.removeClass('absent')
@@ -1519,7 +1519,7 @@ $(document).on('click', '.etudiant', function () {
         action: 'suppr'
       },
       //affichage de l'erreur en cas de problème
-      error: function (msg, string) {
+      error: function () {
         addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
       },
       success: function (data) {
@@ -1531,7 +1531,6 @@ $(document).on('click', '.etudiant', function () {
   else {
     //marquer comme absent
     $(this).addClass('absent')
-    //$(this).removeClass('absence');
     $.ajax({
       type: 'POST',
       url: Routing.generate('application_personnel_absence_saisie_ajax', {
@@ -1545,7 +1544,7 @@ $(document).on('click', '.etudiant', function () {
         action: 'saisie'
       },
       //affichage de l'erreur en cas de problème
-      error: function (msg, string) {
+      error: function (msg) {
         if (msg.responseText === 'out') {
           addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
         } else {
@@ -1614,7 +1613,7 @@ $(document).on('click', '.justificatif-refuse', function (e) {
       //todo: gérer la création du bouton annuler.
       addCallout('Justificatif d\'absence refusé !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
@@ -1679,6 +1678,7 @@ $('.savegroupe').click(function () {
       const obj = {
         'id': $id,
         'note': $(this).val(),
+        'absence': $('#abs_' + $id).prop('checked'),
         'commentaire': $('#com_' + $id).val()
       }
 
@@ -1707,15 +1707,17 @@ $('.savegroupe').click(function () {
 
 $(document).on('keyup', '.noteetudiant', function (e) {
   const val = $(this).val()
-
+  console.log(val)
   if (val === '-0.01') {
-    $(this).addClass('is-valid')
+    $(this).removeClass('is-invalid').removeClass('is-valid')
   } else if (parseFloat(val) >= 0 && parseFloat(val) <= 20) {
-    $(this).addClass('is-valid')
+    $(this).removeClass('is-invalid').addClass('is-valid')
   } else {
-    $(this).addClass('is-invalid')
+    $(this).removeClass('is-valid').addClass('is-invalid')
   }
 })
+
+
 
 
 /*
@@ -1853,41 +1855,44 @@ $(document).on('keyup', '#search', function (e) {
  */
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
+  e.preventDefault()
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'A'}),
-    success: function (e) {
+    success: function () {
       const bx = $('.bx_' + rattrapage)
       const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Acceptée</a>')
       addCallout('Demande de rattrapage validée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
 $(document).on('click', '.rattrapage-refuse', function (e) {
+  e.preventDefault()
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'R'}),
-    success: function (e) {
+    success: function () {
       const bx = $('.bx_' + rattrapage)
       const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-warning btn-outline"><i class="ti-na"></i>Refusée</a>')
       addCallout('Demande de rattrapage refusée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
 
-$(document).on('change', '.dateChange', function (e) {
+$(document).on('change', '.dateChange', function () {
+
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'date'}),
@@ -1895,36 +1900,30 @@ $(document).on('change', '.dateChange', function (e) {
       data: $(this).val()
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       //todo:...
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
-$(document).on('blur', '.salleChange', function (e) {
+$(document).on('blur', '.salleChange', function () {
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'salle', data: $(this).val()}),
-    success: function (e) {
-      //todo:...
-    },
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
-$(document).on('blur', '.heureChange', function (e) {
+$(document).on('blur', '.heureChange', function () {
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'heure', data: $(this).val()}),
-    success: function (e) {
-      //todo:...
-    },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
@@ -1939,7 +1938,7 @@ $(document).on('click', '#sallePartout', function () {
       valeur: salle
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       $('.salleChange').each(function() {
         $(this).val(salle)
       })
@@ -1947,7 +1946,8 @@ $(document).on('click', '#sallePartout', function () {
   })
 })
 
-$(document).on('click', '#datePartout', function () {
+$(document).on('click', '#datePartout', function (e) {
+  e.preventDefault()
   const date = $('#date').val()
   $.ajax({
     //sauvegarde de la salle pour les rattrapages du diplôme
@@ -1956,7 +1956,7 @@ $(document).on('click', '#datePartout', function () {
       valeur: date
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       $('.dateChange').each(function() {
         $(this).val(date)
       })
@@ -1964,7 +1964,8 @@ $(document).on('click', '#datePartout', function () {
   })
 })
 
-$(document).on('click', '#heurePartout', function () {
+$(document).on('click', '#heurePartout', function (e) {
+  e.preventDefault()
   const heure = $('#heure').val()
   $.ajax({
     //sauvegarde de la salle pour les rattrapages du diplôme
@@ -1973,7 +1974,7 @@ $(document).on('click', '#heurePartout', function () {
       valeur: heure
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       $('.heureChange').each(function() {
         $(this).val(heure)
       })
@@ -1982,13 +1983,13 @@ $(document).on('click', '#heurePartout', function () {
 })
 
 
-$(document).on('click', '.optAfficher', function (e) {
+$(document).on('click', '.optAfficher', function () {
   const evaluation = $(this).data('id')
   const $child = $(this).children('i')
   const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_visibilite', {uuid: evaluation}),
-    success: function (e) {
+    success: function () {
       if ($child.hasClass('fa-eye')) {
         $a.addClass('btn-danger')
         $a.removeClass('btn-info').removeClass('btn-outline')
@@ -2005,19 +2006,19 @@ $(document).on('click', '.optAfficher', function (e) {
       }
       addCallout('Visibilité de l\'évaluation modifiée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
-$(document).on('click', '.optVerrouiller', function (e) {
+$(document).on('click', '.optVerrouiller', function () {
   const evaluation = $(this).data('id')
   const $child = $(this).children('i')
   const $a = $(this)
   $.ajax({
     url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
-    success: function (e) {
+    success: function () {
       if ($(this).children('i').hasClass('fa-pencil')) {
         $a.addClass('btn-danger')
         $a.removeClass('btn-warning').removeClass('btn-outline')
@@ -2033,7 +2034,7 @@ $(document).on('click', '.optVerrouiller', function (e) {
       }
       addCallout('Vérouillage de l\'évaluation modifiée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
@@ -2272,13 +2273,13 @@ $(document).on('click', '.change-diplome', function (e) {
 })
 
 
-$(document).on('change', '#tuteurUniversitaire', function (e) {
+$(document).on('change', '#tuteurUniversitaire', function () {
   $.ajax({
     url: Routing.generate('administration_alternance_update_tuteur_universitaire', {alternance: $(this).data('alternance'), personnel: $(this).val()}),
-    success: function (e) {
+    success: function () {
       addCallout('Justificatif d\'absence refusé !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
@@ -2301,12 +2302,11 @@ $(document).on('click', '.initAllAlternance', function (e) {
     cancelButtonClass: 'btn btn-secondary',
     buttonsStyling: false
   }).then(function (result) {
-    console.log(result)
     if (result.value) {
       $.ajax({
         url: url,
         type: "POST",
-        success: function (id) {
+        success: function () {
           addCallout('Initialisation effectuée avec succès', 'success')
           swal(
             'Initialisé!',
@@ -2314,7 +2314,7 @@ $(document).on('click', '.initAllAlternance', function (e) {
             'success'
           )
         },
-        error: function (xhr, ajaxOptions, thrownError) {
+        error: function () {
           swal("Error deleting!", "Please try again", "error");
           addCallout('Erreur lors de la tentative d\'initialisation', 'danger')
         }
@@ -2386,7 +2386,6 @@ $(document).on('click', '.visibiliteBorne', function(){
   $.ajax({
     url: Routing.generate('administration_borne_visibilite', {id:btn.data('id')}),
     success: function(data) {
-      console.log(data)
       if (data === false) {
         addCallout('Message masqué avec succés !', 'success')
         btn.removeClass('btn-success').addClass('btn-danger');
@@ -2833,10 +2832,10 @@ $contextMenuEdt.on("click", "a", function () {
           success: function () {
             $('#' + $rowClicked[0].id).empty();
 
-            autohidenotify('success', 'Element supprimé du planing.');
+            addCallout('Element supprimé du planing.','success');
           },
           error: function () {
-            autohidenotify('error', 'Erreur lors de la suppression.');
+            addCallout('Erreur lors de la suppression.','error');
           }
         });
       break;
@@ -3172,7 +3171,7 @@ $(document).on('click', '#btnafficheRealise', function (e) {
 
 
 
-$(document).on('click', '#addCategorie', function (e) {
+$(document).on('click', '#addCategorie', function () {
 
   const table = $('#listeCategories').DataTable()
   table.clear(); //effacer le datatable
@@ -3237,6 +3236,7 @@ $(document).on('change', '#tuteurUniversitaire', function () {
 
 
 $(document).on('click', '#masqueMatieres', function (e) {
+  e.preventDefault()
   $('.matiere').hide();
 })
 //https://jsfiddle.net/KyleMit/rr96p4vv/

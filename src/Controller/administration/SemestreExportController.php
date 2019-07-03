@@ -6,6 +6,9 @@ use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\MesClasses\MyEtudiant;
+use App\MesClasses\MyEvaluations;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,9 +25,8 @@ class SemestreExportController extends BaseController
      * @param MyEtudiant $myEtudiant
      * @param Semestre   $semestre
      */
-    public function exportTousLesRelevesProvisoires(MyEtudiant $myEtudiant, Semestre $semestre): void
+    public function exportTousLesRelevesProvisoires(MyEvaluations $myEvaluations, Semestre $semestre): void
     {
-
     }
 
     /**

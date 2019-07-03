@@ -35,6 +35,7 @@ use App\MesClasses\Pdf\MyPDF;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
+use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,10 +77,12 @@ class MyEtudiant
      */
     private $eventDispatcher;
 
-    /** @var MyPDF  */
+    /** @var MyPDF */
     private $myPdf;
-    /** @var MyEvaluations  */
+    /** @var MyEvaluations */
     private $myEvaluations;
+
+    private $statistiques = [];
 
     /**
      * MyEtudiant constructor.
@@ -99,7 +102,7 @@ class MyEtudiant
         AbsenceRepository $absenceRepository,
         EventDispatcherInterface $eventDispatcher,
         MyPDF $myPdf,
-    MyEvaluations $myEvaluations
+        MyEvaluations $myEvaluations
     ) {
         $this->entityManager = $entityManager;
         $this->etudiantRepository = $etudiantRepository;
@@ -154,12 +157,20 @@ class MyEtudiant
     public function getNotesAbsences(Semestre $semestre, $anneeUniversitaire): void
     {
         $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
-        $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
+        $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
+            $anneeUniversitaire);
     }
 
-    public function setIdEtudiant($id): void
+    /**
+     * @param $id
+     *
+     * @return $this
+     */
+    public function setIdEtudiant($id)
     {
         $this->etudiant = $this->etudiantRepository->find($id);
+
+        return $this;
     }
 
     /**
@@ -214,15 +225,20 @@ class MyEtudiant
     public function addNote(Evaluation $evaluation, $data): bool
     {
         //on cherche si deja une note de présente
-        $note = $this->noteRepository->findBy(array(
+        $note = $this->noteRepository->findBy([
             'evaluation' => $evaluation->getId(),
             'etudiant'   => $this->etudiant->getId()
-        ));
+        ]);
 
         if (count($note) === 1) {
             //update
             $note[0]->setNote(Tools::convertToFloat($data['note']));
             $note[0]->setCommentaire($data['commentaire']);
+            if ($data['absence'] === 'true') {
+                $note[0]->setAbsenceJustifie(true);
+            } else {
+                $note[0]->setAbsenceJustifie(false);
+            }
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
         } elseif (count($note) === 0) {
@@ -271,18 +287,22 @@ class MyEtudiant
 
     /**
      * @param Semestre $semestre
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function exportReleveProvisoire(Semestre $semestre): void
     {
         $this->getNotesAbsences($semestre);
         $this->myEvaluations->getEvaluationsSemestre();
 
-        $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', array(
-                'etudiant'  => $this->etudiant,
-                'notes'     => $this->notes,
-                'syntheses' => $this->myEvaluations->getStatistiques(),
-                'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
-            ), 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf');
+        $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
+            'etudiant'           => $this->etudiant,
+            'notes'              => $this->notes,
+            'syntheses'          => $this->myEvaluations->getStatistiques(),
+            'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
+        ], 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf');
     }
 
     public function suppressionGroupes(): void
@@ -296,5 +316,50 @@ class MyEtudiant
             $this->entityManager->persist($groupe);
         }
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param Semestre|null $semestre
+     *
+     * @return $this
+     * @throws Exception
+     */
+    public function getAbsencesSemestre(Semestre $semestre = null): self
+    {
+        if ($semestre === null) {
+            $semestre = $this->etudiant->getSemestre();
+        }
+
+        $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
+            $semestre->getAnneeUniversitaire());
+
+
+        $this->statistiques['nbCoursManques'] = 0;
+        $this->statistiques['totalDuree'] = new DateTime('00:00');
+        $this->statistiques['nbNonJustifie'] = 0;
+        $this->statistiques['nbDemiJournee'] = 0; //todo: a gérer dans le calcul
+        $this->statistiques['nbJustifie'] = 0;
+
+
+        /** @var Absence $absence */
+        foreach ($this->absences as $absence) {
+            $this->statistiques['nbCoursManques']++;
+
+            if ($absence->getDuree() !== null) {
+                $this->statistiques['totalDuree']->add(new DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
+            }
+
+            $absence->isJustifie() ? $this->statistiques['nbJustifie']++ : $this->statistiques['nbNonJustifie']++;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStatistiques(): array
+    {
+        return $this->statistiques;
     }
 }

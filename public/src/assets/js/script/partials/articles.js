@@ -1,6 +1,6 @@
 
 
-$(document).on('click', '#addCategorie', function (e) {
+$(document).on('click', '#addCategorie', function () {
 
   const table = $('#listeCategories').DataTable()
   table.clear(); //effacer le datatable

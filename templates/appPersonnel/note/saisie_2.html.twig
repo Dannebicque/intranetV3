@@ -150,11 +150,17 @@
                             Naviguez dans les onglets. <strong>N'oubliez pas de sauvegarder chaque groupe.</strong> Les
                             groupes non saisis pourront être complétés plus tard.
                         </div>
+                        <br>
+                        <div class="alert alert-info">
+                            Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera pas
+                            pénalisé par un 0. Laisser non coché si vous n'avez pas encore l'information.
+                        </div>
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
                                 <th>{{ 'table.etudiant'|trans }}</th>
                                 <th>{{ 'table.note'|trans }}</th>
+                                <th>{{ 'table.absence'|trans }}*</th>
                                 <th>{{ 'table.commentaire_optionnel'|trans }}</th>
                             </tr>
                             </thead>
@@ -171,7 +177,20 @@
                                                class="form-control noteetudiant groupe_{{ groupe.id }}"
                                                value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
                                     </td>
-                                    <td>Absent.</td>{# todo: a gérer #}
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="abs_{{ etudiant.id }}"
+                                                   id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+                                                   class="form-check-input absenceetudiant"
+                                                   {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                                       .absenceJustifie ==
+                                                       true %}checked{% endif %}/>
+                                            <label for="abs_{{ etudiant.id }}" class="form-check-label">
+
+                                                Absence justfiée
+                                            </label>
+                                        </div>
+                                    </td>
                                     <td>
                                         <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
                                             .display }}</label>

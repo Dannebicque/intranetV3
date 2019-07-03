@@ -23,12 +23,12 @@
                     <td>
                         {% if parcour.decision != 'EC' %}
                             {% for ue in scolariteUes[parcour.id] %}
-                                UE {{ ue.ue.numeroUe }} : {{ ue.moyenne|number_format(3) }}
+                                <strong>UE {{ ue.ue.numeroUe }} :</strong> {{ ue.moyenne|format_note(3, 8) }}
                             {% endfor %}
                         {% else %}
                             EC
                         {% endif %}</td>
-                    <td>{{ parcour.moyenne }}</td>
+                    <td>{{ parcour.moyenne|format_note(3, 10) }}</td>
                     <td>{{ parcour.decision }}</td>
                     <td>{{ parcour.proposition }}</td>
                     <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"

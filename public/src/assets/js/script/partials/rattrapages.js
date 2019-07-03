@@ -13,41 +13,44 @@
  */
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
+  e.preventDefault()
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'A'}),
-    success: function (e) {
+    success: function () {
       const bx = $('.bx_' + rattrapage)
       const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Acceptée</a>')
       addCallout('Demande de rattrapage validée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
 $(document).on('click', '.rattrapage-refuse', function (e) {
+  e.preventDefault()
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'R'}),
-    success: function (e) {
+    success: function () {
       const bx = $('.bx_' + rattrapage)
       const parent = bx.parent()
       bx.remove()
       parent.prepend('<a href="#" class="btn btn-warning btn-outline"><i class="ti-na"></i>Refusée</a>')
       addCallout('Demande de rattrapage refusée !', 'success')
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
 
-$(document).on('change', '.dateChange', function (e) {
+$(document).on('change', '.dateChange', function () {
+
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'date'}),
@@ -55,36 +58,30 @@ $(document).on('change', '.dateChange', function (e) {
       data: $(this).val()
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       //todo:...
     },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
-$(document).on('blur', '.salleChange', function (e) {
+$(document).on('blur', '.salleChange', function () {
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'salle', data: $(this).val()}),
-    success: function (e) {
-      //todo:...
-    },
     error: function (e) {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
 
-$(document).on('blur', '.heureChange', function (e) {
+$(document).on('blur', '.heureChange', function () {
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'heure', data: $(this).val()}),
-    success: function (e) {
-      //todo:...
-    },
-    error: function (e) {
+    error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }
   })
@@ -99,7 +96,7 @@ $(document).on('click', '#sallePartout', function () {
       valeur: salle
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       $('.salleChange').each(function() {
         $(this).val(salle)
       })
@@ -107,7 +104,8 @@ $(document).on('click', '#sallePartout', function () {
   })
 })
 
-$(document).on('click', '#datePartout', function () {
+$(document).on('click', '#datePartout', function (e) {
+  e.preventDefault()
   const date = $('#date').val()
   $.ajax({
     //sauvegarde de la salle pour les rattrapages du diplôme
@@ -116,7 +114,7 @@ $(document).on('click', '#datePartout', function () {
       valeur: date
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       $('.dateChange').each(function() {
         $(this).val(date)
       })
@@ -124,7 +122,8 @@ $(document).on('click', '#datePartout', function () {
   })
 })
 
-$(document).on('click', '#heurePartout', function () {
+$(document).on('click', '#heurePartout', function (e) {
+  e.preventDefault()
   const heure = $('#heure').val()
   $.ajax({
     //sauvegarde de la salle pour les rattrapages du diplôme
@@ -133,7 +132,7 @@ $(document).on('click', '#heurePartout', function () {
       valeur: heure
     },
     method: 'POST',
-    success: function (e) {
+    success: function () {
       $('.heureChange').each(function() {
         $(this).val(heure)
       })

@@ -1,4 +1,4 @@
-$(document).on('click', '.optAfficher', function (e) {
+$(document).on('click', '.optAfficher', function () {
   const evaluation = $(this).data('id')
   const $child = $(this).children('i')
   const $a = $(this)

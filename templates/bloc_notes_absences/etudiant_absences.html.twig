@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for absence in absences %}
+            {% for absence in myEtudiant.absences %}
                 <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}">
                     <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : ''  }}</td>
                     <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : ''}}</td>
@@ -46,5 +46,18 @@
             {% endfor %}
             </tbody>
         </table>
+        {% if myEtudiant.etudiant.semestre.optPenaliteAbsence == true %}
+            <div class="alert alert-warning">
+                Vous avez <strong> {{ myEtudiant.absences|length }} </strong> cours manqués, dont <strong>{{
+                    myEtudiant.statistiques.nbNonJustifie }} non justifiées</strong>. <br />
+                <strong>Vous avez perdu ce semestre {{ myEtudiant.statistiques.nbNonJustifie * myEtudiant.etudiant
+                    .semestre.optPointPenaliteAbsence }} points.</strong>
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                Vous avez <strong> {{ myEtudiant.absences|length }} </strong> cours manqués, dont
+                <strong>{{ myEtudiant.statistiques.nbNonJustifie }} non justifiées</strong>. <br/>
+            </div>
+        {% endif %}
     </div>
 </div>

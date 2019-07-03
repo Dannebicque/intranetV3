@@ -5,10 +5,13 @@ namespace App\Tests;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
+use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 
 class RoutesTest extends WebTestCase
 {
-    private $client = null;
+    private $client;
 
     public function setUp()
     {
@@ -16,11 +19,11 @@ class RoutesTest extends WebTestCase
 
         $session = $this->client->getContainer()->get('session');
 
-
-        $token = new UsernamePasswordToken('permanent', 'test', 'main', ['ROLE_PERMANENT']);
+        $token = new PostAuthenticationGuardToken('permanent',  'main', ['ROLE_PERMANENT']);
         $session->set('_security_main', serialize($token));
-        $session->save();
+        $session->set('departement', '23004287-e45b-413e-82a1-f578aad12e73');
 
+        $session->save();
         $cookie = new Cookie($session->getName(), $session->getId());
         $this->client->getCookieJar()->set($cookie);
     }
@@ -31,8 +34,11 @@ class RoutesTest extends WebTestCase
      */
     public function testPermanentUrl($url)
     {
-        $crawler = $this->client->request('GET', $url);
-
+        $this->client->request('GET', $url);
+        $this->assertEquals(
+            200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
+            $this->client->getResponse()->getStatusCode()
+        );
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
 

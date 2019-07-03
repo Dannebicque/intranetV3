@@ -106,8 +106,11 @@ class RattrapageRepository extends ServiceEntityRepository
 
     public function findValidByDiplome(
         Diplome $diplome,
-        AnneeUniversitaire $anneeUniversitaire
+        ?AnneeUniversitaire $anneeUniversitaire
     ) {
+
+        $annee = $anneeUniversitaire === null ? date('Y') : $anneeUniversitaire->getAnnee();
+
         return $this->createQueryBuilder('r')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
@@ -117,7 +120,7 @@ class RattrapageRepository extends ServiceEntityRepository
             ->andWhere('r.etatDemande = :etat')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('etat', 'A')
-            ->setParameter('anneeuniversitaire', $anneeUniversitaire->getAnnee())
+            ->setParameter('anneeuniversitaire', $annee)
             ->orderBy('e.semestre.libelle', 'ASC')
             ->orderBy('e.nom', 'ASC')
             ->orderBy('e.prenom', 'ASC')
