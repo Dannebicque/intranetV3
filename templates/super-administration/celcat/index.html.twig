@@ -1,0 +1,78 @@
+{% extends 'base-super_admin.html.twig' %}
+
+
+{% block header %}
+    {{ 'sadm.celcat.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_celcat_extraction_code') }}" class="btn btn-info btn-sm btn-float"
+               data-provide="tooltip"
+               target="_blank"
+               data-placement="bottom" title="{{ 'atitle.code_celcat'|trans }}"><i
+                        class="material-icons">settings_ethernet</i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.celcat.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="false">
+                <thead>
+                <tr>
+                    <th>{{ 'table.diplome'|trans }}</th>
+                    <th>{{ 'table.code_celcat'|trans }}</th>
+                    <th>{{ 'table.synchro_edt'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for diplome in diplomes %}
+                    <tr>
+                        <td>{{ diplome.libelle }}</td>
+                        <td>{{ diplome.codeCelcatDepartement }}</td>
+                        <td>{{ diplome.departement ? (diplome.departement.optUpdateCelcat == true ? '<span
+                        class="badge badge-primary">Synchronisé</span>' : 'Non') : 'Erreur'
+                            }}</td>
+                        <td>
+                            <a href="{{ path('sa_diplome_edit', {'id': diplome.id}) }}"
+                               class="btn btn-warning btn-outline btn-square" target="_blank"><i class="{{ iconEdit }}"
+                                                                                 data-provide="tooltip"
+                                                                                 data-placement="bottom"
+                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
+                            <a href="{{ path('super_admin_celcat_update_events', {'id': diplome.id}) }}"
+                               class="btn btn-success btn-outline btn-square" target="_blank"><i class="fa fa-refresh"
+                                                                                                 data-provide="tooltip"
+                                                                                                 data-placement="bottom"
+                                                                                                 title="{{ 'atitle.update_events'|trans }}"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'super-administration_celcat'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

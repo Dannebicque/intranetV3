@@ -19,7 +19,7 @@ use App\Controller\BaseController;
 use App\Entity\Calendrier;
 use App\Entity\Constantes;
 use App\Form\CelcatCalendrierType;
-use App\MesClasses\Celcat\Connect;
+use App\MesClasses\Celcat\MyCelcat;
 use App\MesClasses\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CalendrierRepository;
@@ -106,7 +106,7 @@ class CelcatCalendrierController extends BaseController
         if ($request->isMethod('POST')) {
             $annee = $anneeUniversitaireRepository->find($request->request->get('annee_universitaire'));
             if ($annee) {
-                Connect::getCalendar($this->entityManager);
+                MyCelcat::getCalendar($this->entityManager);
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.create_year.success.flash');
             } else {
                 $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'celcat_calendrier.create_year.error.flash');

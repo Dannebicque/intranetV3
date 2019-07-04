@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Etudiant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -71,5 +72,20 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
             }
         }
+    }
+
+    public function deleteDepartement(
+        int $codeCelcatDepartement,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
+
+        return $this->createQueryBuilder('c')
+            ->delete(CelcatEvent::class, 'c')
+            ->where('c.anneeUniversitaire = :annee')
+            ->andWhere('c.departementId = :departement')
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
+            ->setParameter('departement', $codeCelcatDepartement)
+            ->getQuery()
+            ->getResult();
     }
 }

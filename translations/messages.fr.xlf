@@ -11792,7 +11792,7 @@
     <unit id="NkTSZ6J" name="actualite.edit.success.flash">
       <segment>
         <source>actualite.edit.success.flash</source>
-        <target>actualite.edit.success.flash</target>
+        <target>Actualité modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="slRDKDI" name="menu&#10;                        .documentation">
@@ -11812,31 +11812,31 @@
     <unit id="nuQFilM" name="atitle.desactiver">
       <segment>
         <source>atitle.desactiver</source>
-        <target>atitle.desactiver</target>
+        <target>Désactiver</target>
       </segment>
     </unit>
     <unit id="IM_p9Ih" name="ppn.copie.integrale.success.flash">
       <segment>
         <source>ppn.copie.integrale.success.flash</source>
-        <target>ppn.copie.integrale.success.flash</target>
+        <target>Copie du PPN réalisée avec succès</target>
       </segment>
     </unit>
     <unit id="dYWOiEz" name="atitle.supprimer.impossible">
       <segment>
         <source>atitle.supprimer.impossible</source>
-        <target>atitle.supprimer.impossible</target>
+        <target>Suppression impossible</target>
       </segment>
     </unit>
     <unit id="FpRCwnL" name="atitle.active">
       <segment>
         <source>atitle.active</source>
-        <target>atitle.active</target>
+        <target>Activer</target>
       </segment>
     </unit>
     <unit id="EWa8_.D" name="super-admin.etudiant-departement.heading">
       <segment>
         <source>super-admin.etudiant-departement.heading</source>
-        <target>super-admin.etudiant-departement.heading</target>
+        <target>Gestion des étudiants par département</target>
       </segment>
     </unit>
     <unit id="MHEZ.GF" name="Nouvelle absence enregistrée">
@@ -11848,31 +11848,31 @@
     <unit id="a12HGA3" name="modifiez.vos.informations">
       <segment>
         <source>modifiez.vos.informations</source>
-        <target>modifiez.vos.informations</target>
+        <target>Modifiez vos informations</target>
       </segment>
     </unit>
     <unit id="MBgykTk" name="donnees.update.success.flash">
       <segment>
         <source>donnees.update.success.flash</source>
-        <target>donnees.update.success.flash</target>
+        <target>Données mise à jour avec succès</target>
       </segment>
     </unit>
     <unit id="kdzlQ0V" name="telephone.de.letudiant">
       <segment>
         <source>telephone.de.letudiant</source>
-        <target>telephone.de.letudiant</target>
+        <target>Téléphone de l'étudiant</target>
       </segment>
     </unit>
     <unit id="bNcgOz3" name="tel1">
       <segment>
         <source>tel1</source>
-        <target>tel1</target>
+        <target>Téléphone</target>
       </segment>
     </unit>
     <unit id="9UO1eFb" name="tel2">
       <segment>
         <source>tel2</source>
-        <target>tel2</target>
+        <target>Autre téléphone</target>
       </segment>
     </unit>
     <unit id="gSxTcaR" name="edt.etudiant.details">
@@ -11884,73 +11884,73 @@
     <unit id=".wvc8EB" name="edt.type_groupe">
       <segment>
         <source>edt.type_groupe</source>
-        <target>edt.type_groupe</target>
+        <target>Type de groupe</target>
       </segment>
     </unit>
     <unit id="3RM2SSL" name="edt.enseignant">
       <segment>
         <source>edt.enseignant</source>
-        <target>edt.enseignant</target>
+        <target>Enseignant</target>
       </segment>
     </unit>
     <unit id="Ov1EmY8" name="edt.horaires">
       <segment>
         <source>edt.horaires</source>
-        <target>edt.horaires</target>
+        <target>Horaires</target>
       </segment>
     </unit>
     <unit id="AaAmD7N" name="edt.commentaire">
       <segment>
         <source>edt.commentaire</source>
-        <target>edt.commentaire</target>
+        <target>Commentaire</target>
       </segment>
     </unit>
     <unit id="AmkemA1" name="edt.evaluation">
       <segment>
         <source>edt.evaluation</source>
-        <target>edt.evaluation</target>
+        <target>Evaluation</target>
       </segment>
     </unit>
     <unit id="lbRL02y" name="edt.salle">
       <segment>
         <source>edt.salle</source>
-        <target>edt.salle</target>
+        <target>Salle</target>
       </segment>
     </unit>
     <unit id="iDuyNAq" name="adm.scolarite.edit.heading">
       <segment>
         <source>adm.scolarite.edit.heading</source>
-        <target>adm.scolarite.edit.heading</target>
+        <target>Parcours de scolarité modifié avec succès</target>
       </segment>
     </unit>
     <unit id="sLwIhTO" name="adm.scolarite.add.flashbag">
       <segment>
         <source>adm.scolarite.add.flashbag</source>
-        <target>adm.scolarite.add.flashbag</target>
+        <target>Parcours de scolarité ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="AJXLy1p" name="atitle.retour_profil">
       <segment>
         <source>atitle.retour_profil</source>
-        <target>atitle.retour_profil</target>
+        <target>Retour au profil</target>
       </segment>
     </unit>
     <unit id="VsJDXTO" name="groupe.delete.success.flash">
       <segment>
         <source>groupe.delete.success.flash</source>
-        <target>groupe.delete.success.flash</target>
+        <target>Groupe supprimé avec succès</target>
       </segment>
     </unit>
     <unit id="xX7cfwt" name="adm.gerer.les.categories.articles">
       <segment>
         <source>adm.gerer.les.categories.articles</source>
-        <target>adm.gerer.les.categories.articles</target>
+        <target>Gérer les catégories d'articles</target>
       </segment>
     </unit>
     <unit id="3kl__3V" name="atitle.planning">
       <segment>
         <source>atitle.planning</source>
-        <target>atitle.planning</target>
+        <target>Planning</target>
       </segment>
     </unit>
     <unit id="PbFYaBW" name="Demande de rattrapage acceptée">
@@ -11962,73 +11962,109 @@
     <unit id="SI5Nl88" name="table.salle">
       <segment>
         <source>table.salle</source>
-        <target>table.salle</target>
+        <target>Salle</target>
       </segment>
     </unit>
     <unit id="f9lwnjS" name="table.heure_rattrapage">
       <segment>
         <source>table.heure_rattrapage</source>
-        <target>table.heure_rattrapage</target>
+        <target>Heure rattrapage</target>
       </segment>
     </unit>
     <unit id="x8DwutM" name="table.date_rattrapage">
       <segment>
         <source>table.date_rattrapage</source>
-        <target>table.date_rattrapage</target>
+        <target>Date rattrapage</target>
       </segment>
     </unit>
     <unit id="Hzlcp_s" name="table.opt_nb_semaines_visibles">
       <segment>
         <source>table.opt_nb_semaines_visibles</source>
-        <target>table.opt_nb_semaines_visibles</target>
+        <target>Nombre de semaines visibles sur l'EDT</target>
       </segment>
     </unit>
     <unit id="9Pwvusv" name="help.opt_nb_semaines_visibles">
       <segment>
         <source>help.opt_nb_semaines_visibles</source>
-        <target>help.opt_nb_semaines_visibles</target>
+        <target>Configurer le nombre de semaine visible sur l'EDT par l'étudiant. 0 pour toutes les semaines.</target>
       </segment>
     </unit>
     <unit id="yMuZrNU" name="afficher.toutes.les.semaines">
       <segment>
         <source>afficher.toutes.les.semaines</source>
-        <target>afficher.toutes.les.semaines</target>
+        <target>Afficher toutes les semaines</target>
       </segment>
     </unit>
     <unit id="gZIdP9J" name="applications.etudiant.carnet.heading">
       <segment>
         <source>applications.etudiant.carnet.heading</source>
-        <target>applications.etudiant.carnet.heading</target>
+        <target>Cahier de texte</target>
       </segment>
     </unit>
     <unit id="_jYZzy6" name="semestre.edit.success.flash">
       <segment>
         <source>semestre.edit.success.flash</source>
-        <target>semestre.edit.success.flash</target>
+        <target>Modification du semestre effectuée avec succès</target>
       </segment>
     </unit>
     <unit id="p8XkzZa" name="atitle.basculer.sous_comm_travail">
       <segment>
         <source>atitle.basculer.sous_comm_travail</source>
-        <target>atitle.basculer.sous_comm_travail</target>
+        <target>Basculer vers la sous-commission de travail (editable)</target>
       </segment>
     </unit>
     <unit id="ejeqjyX" name="atitle.exporter">
       <segment>
         <source>atitle.exporter</source>
-        <target>atitle.exporter</target>
+        <target>Exporter</target>
       </segment>
     </unit>
     <unit id="OMUt2qT" name="table.absence">
       <segment>
         <source>table.absence</source>
-        <target>table.absence</target>
+        <target>Absences</target>
       </segment>
     </unit>
     <unit id="6yGL29P" name="exporter.trombi">
       <segment>
         <source>exporter.trombi</source>
-        <target>exporter.trombi</target>
+        <target>Exporter le trombinoscope</target>
+      </segment>
+    </unit>
+    <unit id="aaeJdzF" name="menu.celcat">
+      <segment>
+        <source>menu.celcat</source>
+        <target>Celcat</target>
+      </segment>
+    </unit>
+    <unit id="_Op4koe" name="sadm.celcat.index.heading">
+      <segment>
+        <source>sadm.celcat.index.heading</source>
+        <target>Gestion lien Celcat</target>
+      </segment>
+    </unit>
+    <unit id="iAKpKPz" name="table.code_celcat">
+      <segment>
+        <source>table.code_celcat</source>
+        <target>Voir les codes dans Celcat</target>
+      </segment>
+    </unit>
+    <unit id="r2UdSHK" name="table.synchro_edt">
+      <segment>
+        <source>table.synchro_edt</source>
+        <target>Synchronisation de l'EDT</target>
+      </segment>
+    </unit>
+    <unit id="pT0DUQD" name="atitle.code_celcat">
+      <segment>
+        <source>atitle.code_celcat</source>
+        <target>Code Ceclat</target>
+      </segment>
+    </unit>
+    <unit id="vAHTo4L" name="dca9170">
+      <segment>
+        <source>atitle.update_events</source>
+        <target>Forcer la Mise à jour les événements depuis Celcat</target>
       </segment>
     </unit>
   </file>
