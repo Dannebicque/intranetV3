@@ -98,6 +98,16 @@ class CelcatEvent extends BaseEntity
      */
     private $libGroupe;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
+     */
+    private $anneeUniversitaire;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updateEvent;
+
     public function getEventId(): ?int
     {
         return $this->eventId;
@@ -274,6 +284,30 @@ class CelcatEvent extends BaseEntity
     public function setLibGroupe(string $libGroupe): self
     {
         $this->libGroupe = $libGroupe;
+
+        return $this;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
+
+    public function getUpdateEvent(): ?\DateTimeInterface
+    {
+        return $this->updateEvent;
+    }
+
+    public function setUpdateEvent(\DateTimeInterface $updateEvent): self
+    {
+        $this->updateEvent = $updateEvent;
 
         return $this;
     }
