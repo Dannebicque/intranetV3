@@ -41,6 +41,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use function count;
@@ -189,10 +191,12 @@ class MyEtudiant
      * @param Matiere   $matiere
      * @param Personnel $personnel
      *
+     * @param bool      $justifie
+     *
      * @return void
      * @throws Exception
      */
-    public function addAbsence($date, $heure, Matiere $matiere, ?Personnel $personnel): void
+    public function addAbsence($date, $heure, Matiere $matiere, ?Personnel $personnel, bool $justifie = false): ?Absence
     {
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
@@ -202,6 +206,7 @@ class MyEtudiant
         $absence->setDuree(new DateTime('01:30'));
         $absence->setHeure($heure);
         $absence->setMatiere($matiere);
+        $absence->setJustifie($justifie);
 
         $this->entityManager->persist($absence);
         $this->entityManager->flush();
@@ -213,6 +218,8 @@ class MyEtudiant
             Events::VERIFICATION_JUSTIFICATIF); //on vérifie s'il faut la valider ou pas
         $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED_RESPONSABLE);
         $this->eventDispatcher->dispatch($event, Events::ABSENCE_ADDED);
+
+        return $absence;
     }
 
     /**

@@ -42,6 +42,8 @@ const langueFr = {
     'sortDescending': ': activer pour trier la colonne par ordre d&eacute;croissant'
   }
 }
+
+const iconShow = 'fa fa-info';
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready
@@ -135,7 +137,7 @@ app.ready(function () {
   require('./partials/admEdt')
   require('./partials/articles')
   require('./partials/stage')
-  require('./partials/sousCommission')
+  //require('./partials/sousCommission')
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 

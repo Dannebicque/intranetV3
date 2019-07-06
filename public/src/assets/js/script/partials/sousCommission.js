@@ -1,5 +1,5 @@
 $(document).on('click', '#masqueMatieres', function (e) {
   e.preventDefault()
-  $('.matiere').hide();
+  //$('.matiere').hide();
 })
 //https://jsfiddle.net/KyleMit/rr96p4vv/

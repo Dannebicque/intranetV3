@@ -18,13 +18,20 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
+use App\MesClasses\Mail\MyMailer;
 use App\MesClasses\MyAbsences;
+use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyExport;
+use App\MesClasses\Tools;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
+use App\Repository\MatiereRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -191,5 +198,45 @@ class AbsenceController extends BaseController
         $absence->setJustifie($etat);
         $this->entityManager->flush();
         return $this->json($etat);
+    }
+
+    /**
+     * @param MatiereRepository $matiereRepository
+     * @param Request           $request
+     *
+     *
+     * @param MyEtudiant        $myEtudiant
+     *
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws Exception
+     * @Route("/ajax/addabs",
+     *     name="administration_absences_ajax_add",
+     *     methods={"POST"},
+     *     options={"expose":true})
+     */
+    public function ajaxAddAbsence(
+        MatiereRepository $matiereRepository,
+        Request $request,
+        MyEtudiant $myEtudiant
+    ): JsonResponse {
+        $myEtudiant->setIdEtudiant($request->request->get('etudiant'));
+        $matiere = $matiereRepository->find($request->request->get('matiere'));
+
+        if ($matiere !== null) {
+            $absence = $myEtudiant->addAbsence(
+                Tools::convertDateToObject($request->request->get('date')),
+                Tools::convertTimeToObject($request->request->get('heure')),
+                $matiere,
+                $this->getConnectedUser(),
+                Tools::convertToBool($request->request->get('justif'))
+            );
+        } else {
+            return $this->json('false', Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        }
+
+
+        return $this->json($absence->getJson(), Response::HTTP_OK);
     }
 }

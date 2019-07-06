@@ -272,4 +272,16 @@ class Absence extends BaseEntity
 
         return $this;
     }
+
+    public function getJson() {
+        return [
+            'id' => $this->getId(),
+            'justifie' => $this->isJustifie(),
+            'uuidString' => $this->getUuidString(),
+            'date' => $this->getDate()->format('d/m/Y'),
+            'heure' => $this->getHeure()->format('H:i'),
+            'personnel' => $this->getPersonnel()->getDisplay(),
+            'codeMatiere' => $this->getMatiere()->getCodeMatiere(),
+        ];
+    }
 }

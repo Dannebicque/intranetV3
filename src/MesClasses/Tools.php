@@ -46,4 +46,9 @@ abstract class Tools
     {
         return str_replace(',', '.', $note);
     }
+
+    public static function convertToBool($texte)
+    {
+        return $texte === 'true';
+    }
 }
