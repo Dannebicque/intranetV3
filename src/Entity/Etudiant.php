@@ -247,7 +247,7 @@ class Etudiant extends Utilisateur implements Serializable
 
     public function getUuidString(): string
     {
-        return (string)$this->getUuid();
+        return $this->getUuid()->toString();
     }
 
     /**

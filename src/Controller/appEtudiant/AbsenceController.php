@@ -18,7 +18,7 @@ class AbsenceController extends BaseController
 {
     /**
      *
-     * @Route("/details/{uuid}", name="app_etudiant_absence_detail")
+     * @Route("/details/{uuid}", name="app_etudiant_absence_detail", options={"expose" = true})
      * @param Absence $absence
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      * @return Response

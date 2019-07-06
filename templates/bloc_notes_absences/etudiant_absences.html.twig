@@ -3,16 +3,16 @@
         <h4 class="card-title">{{ 'bloc.absence.etu.heading'|trans }}</h4>
         <div class="card-header-actions">
             <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary"
-                    title="{{ 'absence_justificatif_deposer'|trans }}"
-                    data-provide="tooltip"
-                    data-placement="bottom">
+               title="{{ 'absence_justificatif_deposer'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
                 <i class="ti ti-plus"></i>
             </a>
         </div>
     </header>
 
     <div class="card-body">
-        <table class="table table-border">
+        <table class="table table-border" id="tableAbsence">
             <thead>
             <tr>
                 <th>{{ 'date'|trans }}</th>
@@ -21,13 +21,16 @@
                 <th>{{ 'justifiee'|trans }}</th>
                 <th class="hide">{{ 'saisie_par'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
+                {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                    <th>Justifiée?</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for absence in myEtudiant.absences %}
-                <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}">
-                    <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : ''  }}</td>
-                    <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : ''}}</td>
+                <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}" id="ligne_{{ absence.id }}">
+                    <td>{{ absence.date ? absence.date|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+                    <td>{{ absence.heure ? absence.heure|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
                     <td>{{ absence.matiere.codeMatiere }}</td>
                     <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
                     <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
@@ -42,14 +45,26 @@
                             <i class="{{ iconShow }}"></i>
                         </button>
                     </td>
+                    {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                        <td>
+                            <div class="custom-control custom-control-lg custom-checkbox">
+                                <input type="checkbox" class="custom-control-input checkAbsence" id="check_{{ absence.id }}"
+                                       data-absence="{{ absence.id }}" {% if absence.justifie %}checked{% endif %}>
+                                <label class="custom-control-label" for="check_{{ absence.id }}">Justifiée*</label>
+                            </div>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+            <div class="alert alert-info">* Si la case est cochée, l'absence est justifiée.</div>
+        {% endif %}
         {% if myEtudiant.etudiant.semestre.optPenaliteAbsence == true %}
             <div class="alert alert-warning">
-                Vous avez <strong> {{ myEtudiant.absences|length }} </strong> cours manqués, dont <strong>{{
-                    myEtudiant.statistiques.nbNonJustifie }} non justifiées</strong>. <br />
+                Vous avez <strong> {{ myEtudiant.absences|length }} </strong> cours manqués, dont
+                <strong>{{ myEtudiant.statistiques.nbNonJustifie }} non justifiées</strong>. <br/>
                 <strong>Vous avez perdu ce semestre {{ myEtudiant.statistiques.nbNonJustifie * myEtudiant.etudiant
                     .semestre.optPointPenaliteAbsence }} points.</strong>
             </div>

@@ -18,6 +18,7 @@ use App\MesClasses\Calendrier;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
 use App\Repository\AlternanceRepository;
+use App\Repository\MatiereRepository;
 use App\Repository\ScolariteMoyenneUeRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
@@ -117,7 +118,7 @@ class ProfilEtudiantController extends BaseController
      * @return Response
      * @throws Exception
      */
-    public function absences(MyEtudiant $myEtudiant, Etudiant $etudiant): Response
+    public function absences(MatiereRepository $matiereRepository, MyEtudiant $myEtudiant, Etudiant $etudiant): Response
     {
         Calendrier::calculPlanning($etudiant->getAnneeUniversitaire(), 2, Constantes::DUREE_SEMESTRE);
 
@@ -129,7 +130,8 @@ class ProfilEtudiantController extends BaseController
             'tabFinMois'  => Calendrier::getTabFinMois(),
             'annee'       => $etudiant->getAnneeUniversitaire(),
             'myEtudiant'    => $myEtudiant->setEtudiant($etudiant)->getAbsencesSemestre(),
-            'tabAbsence'  => [] //compte des absences par créneaux du planning.
+            'tabAbsence'  => [], //compte des absences par créneaux du planning.
+            'matieres'    => $matiereRepository->findBySemestre($etudiant->getSemestre())
         ]);
     }
 
