@@ -168,13 +168,30 @@ class MessagerieController extends BaseController
     public function messageSend(Request $request, MyMessagerie $messagerie): JsonResponse
     {
         //todo: mercure pour notification...
-        $destinataires = explode(',', $request->request->get('destinataires'));
+        $typeDestinataire = $request->request->get('typeDestinataire');
+        $destinataires = '';
+        switch ($typeDestinataire) {
+            case 's':
+                $destinataires =$request->request->get('messageToSemestre');
+                break;
+            case 'g':
+                $destinataires =$request->request->get('messageToGroupe');
+                break;
+            case 'e':
+                $destinataires =$request->request->get('messageToLibreEtudiant');
+                break;
+            case 'p':
+                $destinataires =$request->request->get('messageToLibrePersonnel');
+                break;
+
+        }
+
         $sujet = $request->request->get('sujet');
         $copie = explode(',', $request->request->get('copie'));
         $message = $request->request->get('message');
 
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
-        $messagerie->sendToDestinataires($destinataires, $this->dataUserSession->getDepartement());
+        $messagerie->sendToDestinataires($destinataires, $typeDestinataire, $this->dataUserSession->getDepartement());
 
 
         if ($copie !== null) {
