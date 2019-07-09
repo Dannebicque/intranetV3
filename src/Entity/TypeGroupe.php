@@ -30,6 +30,7 @@ class TypeGroupe extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe")
+     * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $groupes;
 
@@ -179,5 +180,9 @@ class TypeGroupe extends BaseEntity
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getDisplay(){
+        return $this->getSemestre() !== null ? $this->getSemestre()->getLibelle() . ' | '.$this->getLibelle() : $this->getLibelle();
     }
 }

@@ -110,6 +110,7 @@ class Semestre extends BaseEntity
     /**
      * @var
      * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre")
+     * @ORM\OrderBy({"nom" = "ASC", "prenom" = "ASC"})
      */
     private $etudiants;
 
@@ -227,11 +228,13 @@ class Semestre extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ue", mappedBy="semestre")
+     * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $ues;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
+     * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $typeGroupes;
 

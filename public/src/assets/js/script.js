@@ -1460,6 +1460,41 @@ $(document).on('click', '.starred', function () {
   })
 })
 
+$(document).on('click', '.messageDestinataireType', function () {
+  const type = $(this).val()
+  const blocDestLibreEtudiant = $('#blocDestLibreEtudiant')
+  const blocDestLibrePersonnel = $('#blocDestLibrePersonnel')
+  const blocDestMessgaeInfo = $('#blocDestMessgaeInfo')
+  const blocDestGroupe = $('#blocDestGroupe')
+  const blocDestSemestre = $('#blocDestSemestre')
+
+  if (type === 'e'){
+    blocDestLibreEtudiant.show()
+    blocDestLibrePersonnel.hide()
+    blocDestMessgaeInfo.hide()
+    blocDestGroupe.hide()
+    blocDestSemestre.hide()
+  } else if (type === 's'){
+    blocDestLibreEtudiant.hide()
+    blocDestLibrePersonnel.hide()
+    blocDestMessgaeInfo.hide()
+    blocDestGroupe.hide()
+    blocDestSemestre.show()
+  }else if (type === 'g'){
+    blocDestLibreEtudiant.hide()
+    blocDestLibrePersonnel.hide()
+    blocDestMessgaeInfo.hide()
+    blocDestGroupe.show()
+    blocDestSemestre.hide()
+  }else if (type === 'p'){
+    blocDestLibreEtudiant.hide()
+    blocDestLibrePersonnel.show()
+    blocDestMessgaeInfo.hide()
+    blocDestGroupe.hide()
+    blocDestSemestre.hide()
+  }
+})
+
 
 /*
  *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
