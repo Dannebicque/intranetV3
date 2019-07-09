@@ -47,9 +47,11 @@
                             >
                         {% endif %}
                     </a>
-                    <h5 class="mt-2 mb-0"><a class="hover-primary text-white" href="#">{{ user.displayPr }}</a></h5>
+                    <h5 class="mt-2 mb-0 overlay"><a class="hover-primary
+                    text-white" href="#">{{ user.displayPr}}</a></h5>
                     {% if user.typeUser == 'etudiant' %}
-                        <span>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %} {% endfor %}</span>
+                        <span>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %}
+{% endfor %}</span>
                     {% else %}
                         <span>{{ user.typeUser|trans }}</span>
                     {% endif %}

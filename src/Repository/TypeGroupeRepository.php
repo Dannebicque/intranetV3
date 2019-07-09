@@ -15,6 +15,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
+use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -54,5 +57,17 @@ class TypeGroupeRepository extends ServiceEntityRepository
     public function findBySemestre(Semestre $semestre)
     {
         return $this->findBySemestreBuilder($semestre)->getQuery()->getResult();
+    }
+
+    public function findByDepartement(Departement $departement)
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

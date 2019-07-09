@@ -22,6 +22,7 @@ use App\MesClasses\MyMessagerie;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\MessageRepository;
+use App\Repository\TypeGroupeRepository;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,9 +50,10 @@ class MessagerieController extends BaseController
     /**
      * @Route("/ecrire", name="messagerie_nouveau", options={"expose":true})
      */
-    public function nouveauMessage() :Response
+    public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository) :Response
     {
         return $this->render('messagerie/nouveauMessage.html.twig', [
+            'type_groupes' => $typeGroupeRepository->findByDepartement($this->dataUserSession->getDepartement())
         ]);
     }
 

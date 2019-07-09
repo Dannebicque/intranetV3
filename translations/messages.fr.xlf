@@ -12061,10 +12061,16 @@
         <target>Code Ceclat</target>
       </segment>
     </unit>
-    <unit id="vAHTo4L" name="dca9170">
+    <unit id="gIS7PhC" name="atitle.update_events">
       <segment>
         <source>atitle.update_events</source>
         <target>Forcer la Mise à jour les événements depuis Celcat</target>
+      </segment>
+    </unit>
+    <unit id="pXSUnNd" name="rgpd.heading">
+      <segment>
+        <source>rgpd.heading</source>
+        <target>Vos données personnelles (RGPD)</target>
       </segment>
     </unit>
   </file>
