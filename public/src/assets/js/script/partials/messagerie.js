@@ -45,30 +45,24 @@ $(document).on('click', '#marquerNotificationsRead', function (e) {
   })
 })
 
-$(document).on('click', '#valideDestinataires', function () {
-  let dest = ''
-  $("input[type='checkbox']:checked").each(
-      function() {
-        dest = dest + "; " + $(this).val()
-        console.log($(this).val())
-      })
-    $('#messageTo').val(dest)
-})
-
 $(document).on('click', '#messageSent', function (e) {
   e.preventDefault();
   e.stopPropagation();
   $.ajax({
     url: Routing.generate('messagerie_sent'),
     data: {
-      destinataires: $('#messageTo').val(),
+      messageToSemestre: $('#messageToSemestre').val(),
+      messageToGroupe: $('#messageToGroupe').val(),
+      messageToLibreEtudiant: $('#messageToLibreEtudiant').val(),
+      messageToLibrePersonnel: $('#messageToLibrePersonnel').val(),
+      typeDestinataire: $('input[type=radio][name=messageDestinataireType]:checked').val(),
       copie: $('#messageCopy').val(),
       message: $('.ql-editor').html(),
       sujet: $('#messageSubject').val()
     },
     method: 'POST',
     success: function (data) {
-
+      //baculer vers l'affichage du message + statistiques d'envois
     }
   })
 })

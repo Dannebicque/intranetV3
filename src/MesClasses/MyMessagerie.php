@@ -25,6 +25,7 @@ use App\Entity\Personnel;
 use App\MesClasses\Mail\MyMailer;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
+use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -66,6 +67,8 @@ class MyMessagerie
     /** @var EtudiantRepository */
     private $etudiantRepository;
 
+    /** @var PersonnelRepository */
+    private $personnelRepository;
 
     /** @var TypeGroupeRepository */
     private $typeGroupeRepository;
@@ -86,6 +89,7 @@ class MyMessagerie
         SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
+        PersonnelRepository $personnelRepository,
         TypeGroupeRepository $typeGroupeRepository
     ) {
         $this->myMailer = $myMailer;
@@ -94,10 +98,11 @@ class MyMessagerie
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
         $this->typeGroupeRepository = $typeGroupeRepository;
+        $this->personnelRepository = $personnelRepository;
     }
 
 
-    public function sendToPermanents(): void
+    public function sendToPersonnels($destinataires): void
     {
         //mail réel + notification (utiliser le busMessage ?
         $message = (new TemplatedEmail())
@@ -109,25 +114,20 @@ class MyMessagerie
         //sauvegarde en BDD
         $mess = $this->saveMessageDatabase('permanents');
 
-        /** @var Etudiant $etu */
-        foreach ($this->departement->getPersonnelDepartements() as $personnelDepartement) {
-            if ($personnelDepartement->getPersonnel() !== null && $personnelDepartement->getPersonnel()->getTypeUser() === 'permanent') {
-                foreach ($personnelDepartement->getPersonnel()->getMails() as $mail) {
+        foreach ($destinataires as $destinataire) {
+            $personnel = $this->personnelRepository->find($destinataire);
+            if ($personnel !== null) {
+                foreach ($personnel->getMails() as $mail) {
                     $message->addTo($mail);
                 }
 
-                $this->saveDestinatairePersonnelDatabase($mess, $personnelDepartement->getPersonnel());
+                $this->saveDestinatairePersonnelDatabase($mess, $personnel);
                 $this->nbEtudiants++;
                 //$this->nbMessagesEnvoyes += $this->get('mailer')->send($message);
                 //todo: envoyer notification ?
             }
         }
         $this->entityManager->flush();
-    }
-
-    public function sendToVacataires(): void
-    {
-        //mail réel + notification (utiliser le busMessage ?
     }
 
     public function sendToEtudiants(): void
@@ -166,6 +166,7 @@ class MyMessagerie
             //todo: envoyer notification ?
         }
 
+
         $this->entityManager->flush();
 
     }
@@ -202,40 +203,29 @@ class MyMessagerie
 
     }
 
-    public function sendToDestinataires(array $destinataires, Departement $departement): void
+    public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement): void
     {
         $this->departement = $departement;
-        foreach ($destinataires as $destinataire) {
-            //tester si pas un email valide.
 
-            //sinon
-            switch (strtolower($destinataire)) {
-                case 'permanents':
-                    echo '-permanents-';
-                    $this->sendToPermanents();
-                    break;
-                case 'vacataires':
-                    $this->sendToVacataires();
-                    break;
-                default:
-                    $data = explode('_', $destinataire);
-                    $this->etudiants = [];
-                    switch ($data[0]) {
-                        case 'semestre':
-                            $this->getEtudiantsSemestre($data[1]);
-                            $this->sendToEtudiants();
-                            break;
-                        case 'groupe':
-                            $this->getEtudiantsGroupe($data[1]);
-                            $this->sendToEtudiants();
-                            break;
-                        case 'typegroupe':
-                            $this->getEtudiantsTypeGroupe($data[1]);
-                            $this->sendToEtudiants();
-                            break;
-                    }
-            }
+        switch ($typeDestinataire) {
+            case 'p':
+                $this->sendToPersonnels($destinataires);
+                break;
+            case 's':
+                $this->getEtudiantsSemestre($destinataires);
+                $this->sendToEtudiants();
+                break;
+            case 'g':
+                $this->getEtudiantsGroupe($destinataires);
+                $this->sendToEtudiants();
+                break;
+            case 'e':
+                $this->prepareEtudiants($destinataires);
+                $this->sendToEtudiants();
+                break;
         }
+
+
     }
 
     private function saveMessageDatabase(string $type): Message
@@ -295,8 +285,22 @@ class MyMessagerie
         $groupe = $this->groupeRepository->findOneBy(['codeApogee' => $codeGroupe]);
         if ($groupe !== null) {
             $this->etudiants[] = $groupe->getEtudiants();
-
         }
+    }
+
+    /**
+     * @param $destinataires
+     */
+    private function prepareEtudiants($destinataires) : void
+    {
+        $this->etudiants = [];
+        foreach ($destinataires as $destinatiare) {
+            $etudiant = $this->etudiantRepository->find($destinatiare);
+            if ($etudiant !== null) {
+                $this->etudiants[] = $etudiant;
+            }
+        }
+
     }
 
 
