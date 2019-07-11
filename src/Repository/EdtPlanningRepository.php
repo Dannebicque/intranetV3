@@ -324,7 +324,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function recupereEDTBornesNew($numSemaine, Semestre $semestre, $jour): array
+    public function recupereEDTBornes($numSemaine, Semestre $semestre, $jour): array
     {
         $creneaux = array(
             1  => array('8h00', '9h30'),

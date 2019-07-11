@@ -21,16 +21,14 @@ class BorneController extends AbstractController
     public function index(MyEdtBorne $myEdtBorne, Semestre $semestre1, Semestre $semestre2): Response
     {
         $myEdtBorne->init();
-
-
-
+        $myEdtBorne->calculSemestre($semestre1, $semestre2);
         // récupération des messages
         $messages = array();
-        $messages[] = $semestre1->getMessagesBorne();
-        $messages[] = $semestre2->getMessagesBorne();
+        $messages[] = $semestre1->getBornes();
+        $messages[] = $semestre2->getBornes();
 
         $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
+        //$response->headers->set('Content-Type', 'application/json');
         // Allow all websites
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $content = $this->renderView('borne/index.html.twig', [

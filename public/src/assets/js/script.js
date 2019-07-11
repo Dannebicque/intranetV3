@@ -262,7 +262,7 @@ const langueFr = {
   }
 }
 
-const iconShow = 'fa fa-info';
+const iconShow = 'fa fa-info'
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready
@@ -275,6 +275,13 @@ const iconShow = 'fa fa-info';
 */
 
 app.ready(function () {
+
+  //bouton copier du lien ical
+  $(document).on('click', '#copyLink', function() {
+    $('#lienIcal').select()
+    document.execCommand('copy')
+  })
+
 
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
@@ -294,7 +301,6 @@ app.ready(function () {
   | Import initialization of plugins that used in your application
   |
   */
-
 
 
   //require('./plugins/documents.js'
@@ -1418,30 +1424,24 @@ $(document).on('click', '#marquerNotificationsRead', function (e) {
   })
 })
 
-$(document).on('click', '#valideDestinataires', function () {
-  let dest = ''
-  $("input[type='checkbox']:checked").each(
-      function() {
-        dest = dest + "; " + $(this).val()
-        console.log($(this).val())
-      })
-    $('#messageTo').val(dest)
-})
-
 $(document).on('click', '#messageSent', function (e) {
   e.preventDefault();
   e.stopPropagation();
   $.ajax({
     url: Routing.generate('messagerie_sent'),
     data: {
-      destinataires: $('#messageTo').val(),
+      messageToSemestre: $('#messageToSemestre').val(),
+      messageToGroupe: $('#messageToGroupe').val(),
+      messageToLibreEtudiant: $('#messageToLibreEtudiant').val(),
+      messageToLibrePersonnel: $('#messageToLibrePersonnel').val(),
+      typeDestinataire: $('input[type=radio][name=messageDestinataireType]:checked').val(),
       copie: $('#messageCopy').val(),
       message: $('.ql-editor').html(),
       sujet: $('#messageSubject').val()
     },
     method: 'POST',
     success: function (data) {
-
+      //baculer vers l'affichage du message + statistiques d'envois
     }
   })
 })

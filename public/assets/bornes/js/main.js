@@ -1,7 +1,7 @@
 $(document).ready(function(){
   initLocalClocks();
   horloge();
-  $('.carousel.carousel-slider').carousel({fullWidth: true});
+  $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});
 
   setInterval(horloge,60000);
   setInterval(changeSlide, 8000);

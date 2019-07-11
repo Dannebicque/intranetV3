@@ -12073,5 +12073,17 @@
         <target>Vos données personnelles (RGPD)</target>
       </segment>
     </unit>
+    <unit id="4Wykfbe" name="atitle.lien_ical">
+      <segment>
+        <source>atitle.lien_ical</source>
+        <target>atitle.lien_ical</target>
+      </segment>
+    </unit>
+    <unit id="Y7oGNnP" name="edt.intervenant.synchro.ical.heading">
+      <segment>
+        <source>edt.intervenant.synchro.ical.heading</source>
+        <target>edt.intervenant.synchro.ical.heading</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -35,6 +35,26 @@ class MyEdtBorne
     /** @var GroupeRepository */
     private $groupeRepository;
 
+    /**
+     * MyEdtBorne constructor.
+     *
+     * @param CalendrierRepository   $calendrierRepository
+     * @param EdtPlanningRepository  $edtPlanningRepository
+     * @param CelcatEventsRepository $celcatEventRepository
+     * @param GroupeRepository       $groupeRepository
+     */
+    public function __construct(
+        CalendrierRepository $calendrierRepository,
+        EdtPlanningRepository $edtPlanningRepository,
+        CelcatEventsRepository $celcatEventRepository,
+        GroupeRepository $groupeRepository
+    ) {
+        $this->calendrierRepository = $calendrierRepository;
+        $this->edtPlanningRepository = $edtPlanningRepository;
+        $this->celcatEventRepository = $celcatEventRepository;
+        $this->groupeRepository = $groupeRepository;
+    }
+
 
     public function init(): void
     {
@@ -45,7 +65,7 @@ class MyEdtBorne
 
     public function calculSemestre(Semestre $semestre1, Semestre $semestre2): void
     {
-        $t['semaine'] = $this->calendrierRepository->findOneBy(array('semaineReelle' => $this->data['semaine']));
+        $semaine = $this->calendrierRepository->findOneBy(array('semaineReelle' => $this->data['semaine']));
 
 
 
@@ -54,14 +74,14 @@ class MyEdtBorne
 
 
         if ($semestre1->getDiplome() !== null && $semestre1->getDiplome()->getDepartement() !== null && $semestre1->getDiplome()->getDepartement()->isOptUpdateCelcat()) {
-            $this->data['p1']['planning'] = $this->celcatEventRepository->recupereEDTBornesNew($this->data['semaine']->getSemaineRelle(),
+            $this->data['p1']['planning'] = $this->celcatEventRepository->recupereEDTBornes( $semaine->getSemaineReelle(),
                 $semestre1,  $this->data['jsem']);
-            $this->data['p2']['planning'] = $this->celcatEventRepository->recupereEDTBornesNew($this->data['semaine']->getSemaineRelle(),
+            $this->data['p2']['planning'] = $this->celcatEventRepository->recupereEDTBornes( $semaine->getSemaineReelle(),
                 $semestre2,  $this->data['jsem']);
         } else {
-            $this->data['p1']['planning'] = $this->edtPlanningRepository->recupereEDTBornesNew($this->data['semaine']->getSemaine(),
+            $this->data['p1']['planning'] = $this->edtPlanningRepository->recupereEDTBornes( $semaine->getSemaineFormation(),
                 $semestre1,  $this->data['jsem'] + 1);
-            $this->data['p2']['planning'] = $this->edtPlanningRepository->recupereEDTBornesNew($this->data['semaine']->getSemaineIUT(),
+            $this->data['p2']['planning'] = $this->edtPlanningRepository->recupereEDTBornes( $semaine->getSemaineFormation(),
                 $semestre2,  $this->data['jsem'] + 1);
         }
 
@@ -69,7 +89,10 @@ class MyEdtBorne
         $this->data['p2']['groupes'] = $this->groupeRepository->findAllGroupes($semestre2);
 
         $this->data['jours'] = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi');
-        $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y', mktime(12, 30, 00, date('n'), $t['njour'], date('Y')));
+        $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y', mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
+    }
 
+    public function getData() {
+        return $this->data;
     }
 }

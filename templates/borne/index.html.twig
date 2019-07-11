@@ -172,13 +172,13 @@
                 <span>{{ t.semestre2.display }}</span>
             </div>
             <div class="groupe">
-                {% if t.semestre2.nbgroupeTPEDT|length > 2 %}
-                    {% for j in 1..t.semestre2.nbgroupeTPEDT %}
-                        <div class="item">{{ t.p1.groupes[j] }}</div>
+                {% if t.semestre2.nbgroupeTpEdt|length > 2 %}
+                    {% for j in 1..t.semestre2.nbgroupeTpEdt %}
+                        <div class="item">{{ t.p2.groupes[j] }}</div>
                     {% endfor %}
                 {% else %}
-                    {% for j in 1..t.semestre2.nbgroupeTPEDT %}
-                        <div class="itemd">{{ t.p1.groupes[j] }}</div>
+                    {% for j in 1..t.semestre2.nbgroupeTpEdt %}
+                        <div class="itemd">{{ t.p2.groupes[j] }}</div>
                     {% endfor %}
                 {% endif %}
             </div>
@@ -197,6 +197,7 @@
                     <p>{{ value[0] }}<br>-<br>{{ value[1] }}</p>
                 </div>
             </div>
+
             <!-- /TRANCHE HORAIRE -->
             {% if (t.p2.planning[ligne][1] is defined and (t.p2.planning[ligne][1].type == "CM" or t.p2.planning[ligne][1].type == "cm")) %}
                 {% set col=t.semestre2.annee.couleurCM %}
@@ -268,56 +269,40 @@
     <!-- BANDEAU INFOS -->
     <section class="bandeau">
         <div class="carousel carousel-slider center" data-indicators="true">
+            <div class="carousel-item" style="background-color:#F9B000" href="#sli_0">
+                <div class="align">
+
+                    <p class="white-text">
+                        Toutes les informations du département.
+                    </p>
+
+                        <div class="qrcode">
+                            <img src="{{ qr_code_data_uri('http://mmi.iut-troyes.univ-reims.fr') }}" />
+                            <p>Flashez moi pour plus d'informations.</p>
+                        </div>
+                </div>
+            </div>
+
+            {% set i = 0 %}
             {% for message in messages %}
                 {% for m in message if m.visible == true %}
-                    <div class="carousel-item" style="background-color:#{{ m.couleur }}" href="#one!">
+                    {% set i = i + 1 %}
+                    <div class="carousel-item" style="background-color:{{ m.couleur }}" href="#sli_{{ i }}">
                         <div class="align">
-                            <img src="{{ asset('assets/bornes/img/' ~ m.icone) }}" alt="m.icone">
+                            <img src="{{ asset('assets/bornes/img/' ~ m.icone~'.png') }}" alt="m.icone">
                             <p class="white-text">
                                 {{ m.message }}
                             </p>
-                            {#{% if m.url != '' or m.url != null %}#}
-                            {#<div class="qrcode">#}
-                            {#<img src="{{ qr_code_data_uri(m.url) }}" />#}
-                            {#<p>Flashez moi pour plus d'informations.</p>#}
-                            {#</div>#}
-                            {#{% endif %}#}
+                            {% if m.url != '' or m.url != null %}
+                            <div class="qrcode">
+                            <img src="{{ qr_code_data_uri(m.url) }}" />
+                            <p>Flashez moi pour plus d'informations.</p>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
             {% endfor %}
-            <!--<div class="carousel-item orangeinfos" href="#two!">
-                <div class="align">
-                    <img src="{{ asset('assets/bornes/img/partiel.png') }}" alt="Partiels">
-                    <p class="white-text top">Dates des prochains partiels</p>
-                    <div class="column space mtop">
-                        <span class="white-text"><b>S1</b></span>
-                        <p><em>26/10 A018 14h-15h30 Intégration Web</em></p>
-                        <p><em>26/10 A018 15h30-17h00 Prod Audio</em></p>
-                    </div>
-                    <div class="column space mtop">
-                        <span class="white-text"><b>S2D</b></span>
-                        <p><em>26/01 A018 9h30-11h00 Algo Prog</em></p>
-                        <p><em>26/10 A018 15h30-17h00 Base de Données</em></p>
-                    </div>
-                    <div class="column space mtop">
-                        <span class="white-text"><b>S3</b></span>
-                        <p><em>16/12 A018 14h00-15h30 Anglais</em></p>
-                        <p><em>20/12 A018 15h30-17h00 Prod Audio</em></p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item vertinfos" href="#three!">
-                <div class="align">
-                    <img src="{{ asset('assets/bornes/img/infos.png') }}" alt="Informations">
-                    <p class="white-text">Une multitude de revues et de livres ainsi qu'un grand nombre
-                        de ressources sont disponibles sur le bureau virtuel.</p>
-                    <div class="qrcode">
-                        <img class="" src="{{ asset('assets/bornes/img/grcode.png') }}" alt="qrcode">
-                        <p>Flashez ici pour accéder à la bibliothèque en ligne.</p>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </section>
     <!-- /BANDEAU INFOS -->

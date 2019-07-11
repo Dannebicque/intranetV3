@@ -18,21 +18,15 @@
                 {% for semestre in user_data.semestresActifs %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="sem{{ semestre.id }}">
                         <h3>{{ 'vos.modules.du.semestre'|trans({'%semestre%':semestre.display}) }}</h3>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>{{ 'table.matiere'|trans }}</th>
-                                <th>{{ 'table.previ'|trans }}</th>
-                                <th>{{ 'table.absences'|trans }}</th>
-                                <th>{{ 'table.notes'|trans }}</th>
-                                <th>{{ 'table.exports'|trans }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="wrapper-notes-absences">
+                            <div class="col-notes-header">{{ 'table.matiere'|trans }}</div>
+                            <div class="col-notes-header">{{ 'table.previ'|trans }}</div>
+                            <div class="col-notes-header">{{ 'table.absences'|trans }}</div>
+                            <div class="col-notes-header">{{ 'table.notes'|trans }}</div>
+                            <div class="col-notes-header">{{ 'table.exports'|trans }}</div>
                             {% for matiere in previsionnel if matiere.matiere.ue.semestre.id == semestre.id %}
-                                <tr>
-                                    <td>{{ matiere.matiere.display }}</td>
-                                    <td>
+                                    <div>{{ matiere.matiere.display }}</div>
+                                    <div>
                                         <button data-provide="modaler tooltip"
                                                 data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.matiere.id}) }}"
                                                 data-size="lg"
@@ -44,8 +38,8 @@
                                         >
                                             {{ 'voir'|trans }}
                                         </button>
-                                    </td>
-                                    <td>
+                                    </div>
+                                    <div>
                                         <a href="{{ path('application_personnel_absence_index',{'matiere':matiere.matiere.id}) }}"
                                            class="btn btn-block btn-primary-outline"
                                            title="{{ 'saisir.voir.modifier.absences'|trans }}"
@@ -53,8 +47,8 @@
                                            data-placement="bottom"
                                         >
                                             {{ 'saisir.voir.modifier.absences'|trans }}
-                                        </a></td>
-                                    <td>
+                                        </a></div>
+                                    <div>
                                         <a href="{{ path('application_personnel_note_index',{'matiere':matiere.matiere.id}) }}"
                                            class="btn btn-block btn-primary-outline"
                                            title="{{ 'saisir.voir.modifier.notes'|trans }}"
@@ -62,8 +56,8 @@
                                            data-placement="bottom"
                                         >
                                             {{ 'saisir.voir.modifier.notes'|trans }}
-                                        </a></td>
-                                    <td>
+                                        </a></div>
+                                    <div>
                                         <button data-provide="modaler tooltip"
                                                 data-url="{{ path('api_export_document_matiere', {'matiere': matiere.matiere.id}) }}"
                                                 data-size="lg"
@@ -75,11 +69,71 @@
                                         >
                                             {{ 'choisir'|trans }}
                                         </button>
-                                    </td>
-                                </tr>
+                                    </div>
                             {% endfor %}
-                            </tbody>
-                        </table>
+                        </div>
+{#                        <table class="table table-striped">#}
+{#                            <thead>#}
+{#                            <tr>#}
+{#                                <th>{{ 'table.matiere'|trans }}</th>#}
+{#                                <th>{{ 'table.previ'|trans }}</th>#}
+{#                                <th>{{ 'table.absences'|trans }}</th>#}
+{#                                <th>{{ 'table.notes'|trans }}</th>#}
+{#                                <th>{{ 'table.exports'|trans }}</th>#}
+{#                            </tr>#}
+{#                            </thead>#}
+{#                            <tbody>#}
+{#                            {% for matiere in previsionnel if matiere.matiere.ue.semestre.id == semestre.id %}#}
+{#                                <tr>#}
+{#                                    <td>{{ matiere.matiere.display }}</td>#}
+{#                                    <td>#}
+{#                                        <button data-provide="modaler tooltip"#}
+{#                                                data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.matiere.id}) }}"#}
+{#                                                data-size="lg"#}
+{#                                                data-confirm-text="{{ 'fermer'|trans }}"#}
+{#                                                class="btn btn-block btn-primary-outline "#}
+{#                                                data-placement="bottom"#}
+{#                                                title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"#}
+{#                                                data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"#}
+{#                                        >#}
+{#                                            {{ 'voir'|trans }}#}
+{#                                        </button>#}
+{#                                    </td>#}
+{#                                    <td>#}
+{#                                        <a href="{{ path('application_personnel_absence_index',{'matiere':matiere.matiere.id}) }}"#}
+{#                                           class="btn btn-block btn-primary-outline"#}
+{#                                           title="{{ 'saisir.voir.modifier.absences'|trans }}"#}
+{#                                           data-provide="tooltip"#}
+{#                                           data-placement="bottom"#}
+{#                                        >#}
+{#                                            {{ 'saisir.voir.modifier.absences'|trans }}#}
+{#                                        </a></td>#}
+{#                                    <td>#}
+{#                                        <a href="{{ path('application_personnel_note_index',{'matiere':matiere.matiere.id}) }}"#}
+{#                                           class="btn btn-block btn-primary-outline"#}
+{#                                           title="{{ 'saisir.voir.modifier.notes'|trans }}"#}
+{#                                           data-provide="tooltip"#}
+{#                                           data-placement="bottom"#}
+{#                                        >#}
+{#                                            {{ 'saisir.voir.modifier.notes'|trans }}#}
+{#                                        </a></td>#}
+{#                                    <td>#}
+{#                                        <button data-provide="modaler tooltip"#}
+{#                                                data-url="{{ path('api_export_document_matiere', {'matiere': matiere.matiere.id}) }}"#}
+{#                                                data-size="lg"#}
+{#                                                data-confirm-text="{{ 'fermer'|trans }}"#}
+{#                                                class="btn btn-block btn-primary-outline "#}
+{#                                                data-placement="bottom"#}
+{#                                                title="{{ 'atitle.export'|trans }}"#}
+{#                                                data-title="{{ 'export.heading'|trans }}"#}
+{#                                        >#}
+{#                                            {{ 'choisir'|trans }}#}
+{#                                        </button>#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{#                            </tbody>#}
+{#                        </table>#}
                     </div>
                 {% endfor %}
             </div>

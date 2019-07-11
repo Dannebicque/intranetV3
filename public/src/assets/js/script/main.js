@@ -12,11 +12,11 @@
 'use strict'
 
 
-require('./config');
-require('./util');
+require('./config')
+require('./util')
 
 /** CSS **/
-require("../../css/style.scss");
+require('../../css/style.scss')
 
 const langueFr = {
   'decimal': '',
@@ -43,7 +43,7 @@ const langueFr = {
   }
 }
 
-const iconShow = 'fa fa-info';
+const iconShow = 'fa fa-info'
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready
@@ -56,6 +56,13 @@ const iconShow = 'fa fa-info';
 */
 
 app.ready(function () {
+
+  //bouton copier du lien ical
+  $(document).on('click', '#copyLink', function() {
+    $('#lienIcal').select()
+    document.execCommand('copy')
+  })
+
 
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
@@ -75,7 +82,6 @@ app.ready(function () {
   | Import initialization of plugins that used in your application
   |
   */
-
 
 
   //require('./plugins/documents.js'

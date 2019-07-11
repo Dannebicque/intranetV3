@@ -122,6 +122,22 @@ fieldset legend {
   border-left: 2px solid black;
 }
 
+
+/* Grid Notes Absences */
+.wrapper-notes-absences {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 1em;
+}
+
+.col-notes-header {
+  background-color: lightgrey;
+  padding: 1em;
+  margin:0;
+  grid-column-gap: 0px;
+}
+
 /* Grid EDT Etudiant */
 .wrapper-edt-etudiant {
   display: grid;
@@ -129,6 +145,9 @@ fieldset legend {
   grid-column-gap: 10px;
   grid-row-gap: 1em;
 }
+
+
+
 
 .edt-etudiant-col1 {
 

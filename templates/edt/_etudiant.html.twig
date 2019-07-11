@@ -37,9 +37,14 @@
                         <a href="{{ path('edt_etudiant_export_ical') }}"
                            class="dropdown-item"><i
                                     class="ti-export"></i>{{ 'edt.etudiant.export.ical'|trans }}</a>
-                        <a href="{{ path('edt_etudiant_synchro_ical') }}"
+                        <a href="#"
+                           data-provide="modaler tooltip"
+                           data-url="{{ path('edt_affiche_ical') }}"
+                           data-placement="bottom"
+                           title="{{ 'atitle.lien_ical'|trans }}"
+                           data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
                            class="dropdown-item"><i
-                                    class="ti-export"></i>{{ 'edt.etudiant.synchro.ical'|trans }}</a>
+                                    class="ti-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}</a>
                     </div>
                 </li>
             </ul>
