@@ -2,16 +2,17 @@
 /**
  * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  *
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/EdtController.php
- * @author David annebicque
- * @project intranetv3
- * @date  07/05/2019 10:42
+ * @file       /Users/davidannebicque/htdocs/intranetv3/src/Controller/EdtController.php
+ * @author     David annebicque
+ * @project    intranetv3
+ * @date       07/05/2019 10:42
  * @lastUpdate 07/05/2019 10:42
  *
  */
 
 namespace App\Controller;
 
+use App\MesClasses\Configuration;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
 use App\MesClasses\Pdf\MyPDF;
@@ -37,13 +38,14 @@ class EdtController extends BaseController
     private $myEdtCelcat;
 
     private static $tabHeures = [
-        1  => ['8h00', '9h30'],
-        2  => ['9h30', '11h00'],
-        3  => ['11h00', '12h30'],
+        1 => ['8h00', '9h30'],
+        2 => ['9h30', '11h00'],
+        3 => ['11h00', '12h30'],
         4 => ['12h30', '14h00'],
         5 => ['14h00', '15h30'],
         6 => ['15h30', '17h00'],
-        7 => ['17h00', '18h30']];
+        7 => ['17h00', '18h30']
+    ];
 
 
     public function __construct(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
@@ -59,7 +61,7 @@ class EdtController extends BaseController
      * @return Response
      * @throws Exception
      */
-    public function dashboardPersonnel($semaine=0): Response
+    public function dashboardPersonnel($semaine = 0): Response
     {
         if ($this->getConnectedUser() !== null) {
 
@@ -67,7 +69,7 @@ class EdtController extends BaseController
                 $this->myEdtCelcat->initPersonnel($this->getConnectedUser(), $semaine);
 
                 return $this->render('edt/_intervenant.html.twig', [
-                    'edt' => $this->myEdtCelcat,
+                    'edt'       => $this->myEdtCelcat,
                     'tabHeures' => self::$tabHeures
                 ]);
             }
@@ -75,7 +77,7 @@ class EdtController extends BaseController
             $this->myEdt->initPersonnel($this->getConnectedUser(), $semaine);
 
             return $this->render('edt/_intervenant.html.twig', [
-                'edt' => $this->myEdt,
+                'edt'       => $this->myEdt,
                 'tabHeures' => self::$tabHeures
             ]);
         }
@@ -85,10 +87,11 @@ class EdtController extends BaseController
 
     /**
      * @param int $semaine
+     *
      * @return Response
      * @throws Exception
      */
-    public function dashboardEtudiant($semaine=0): Response
+    public function dashboardEtudiant($semaine = 0): Response
     {
         if ($this->getConnectedUser() !== null) {
 
@@ -96,7 +99,7 @@ class EdtController extends BaseController
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $semaine);
 
                 return $this->render('edt/_etudiant.html.twig', [
-                    'edt' => $this->myEdtCelcat,
+                    'edt'       => $this->myEdtCelcat,
                     'tabHeures' => self::$tabHeures
                 ]);
             }
@@ -104,7 +107,7 @@ class EdtController extends BaseController
             $this->myEdt->initEtudiant($this->getConnectedUser(), $semaine);
 
             return $this->render('edt/_etudiant.html.twig', [
-                'edt' => $this->myEdt,
+                'edt'       => $this->myEdt,
                 'tabHeures' => self::$tabHeures
             ]);
         }
@@ -137,24 +140,43 @@ class EdtController extends BaseController
     }
 
     /**
-     * @Route("/intervenant/synchro/ical", name="edt_intervenant_synchro_ical")
+     * @Route("/intervenant/affiche/ical", name="edt_affiche_ical")
      */
-    public function synchroIntervenantIcal(): void
+    public function afficheLienIcal(): Response
     {
         //todo: a proposer aux étudiants également ? visibilité réduite?
+        return $this->render('edt/modal_lien_ical.html.twig', [
+            'lienIcal' => $this->generateUrl('edt_intervenant_synchro_ical', [
+                'code'    => md5($this->getConnectedUser()->getSlug()),
+                '_format' => '.ics'
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/intervenant/synchro/ical/{code}.{_format}", name="edt_intervenant_synchro_ical")
+     */
+    public function synchroIntervenantIcal($code, $_format): Response
+    {
+        //todo: a proposer aux étudiants également ? visibilité réduite?
+        return $this->render('edt/modal_lien_ical.html.twig', [
+        ]);
     }
 
     /**
      * @Route("/etudiant/export/semaine/{semaine}", name="edt_etudiant_export_semaine_courante")
      * @param MyPDF $myPDF
      * @param int   $semaine
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportEtudiantSemaine(MyPDF $myPDF, $semaine = 0): ?\Symfony\Component\HttpFoundation\RedirectResponse
-    {
+    public function exportEtudiantSemaine(
+        MyPDF $myPDF,
+        $semaine = 0
+    ): ?\Symfony\Component\HttpFoundation\RedirectResponse {
         if ($semaine === 0) {
             $semaine = (int)date('W');
         }
@@ -169,7 +191,8 @@ class EdtController extends BaseController
             $edt = $this->myEdt->initEtudiant($this->getConnectedUser(), $semaine);
         }
 
-        $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt,'tabHeures' => self::$tabHeures], 'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
+        $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt, 'tabHeures' => self::$tabHeures],
+            'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
     }
 
     /**
@@ -191,7 +214,8 @@ class EdtController extends BaseController
     /**
      * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
      */
-    public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type) {
+    public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type)
+    {
         if ($type === 'planning') {
             $pl = $edtPlanningRepository->find($event);
 

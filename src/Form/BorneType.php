@@ -52,7 +52,7 @@ class BorneType extends AbstractType
                 'label'       => 'label.icone',
                 'choices'     => Borne::ICONES,
                 'choice_attr' => static function($choiceValue, $key, $value) {
-                    return ['data-icon' => Borne::ICONES[$key] . ' mr-2'];
+                    return ['data-icon' => Borne::ICONES[$key] . ' mr-2']; //todo à voir comment récupérer value et pas l'icine
                 },
             ])
             ->add('couleur', TextType::class, [

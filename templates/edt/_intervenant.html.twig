@@ -18,7 +18,12 @@
                                 <a href="{{ path('edt_intervenant_export_ical') }}"
                                    class="dropdown-item"><i
                                             class="ti-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a>
-                                <a href="{{ path('edt_intervenant_synchro_ical') }}"
+                                <a href="#"
+                                   data-provide="modaler tooltip"
+                                   data-url="{{ path('edt_affiche_ical') }}"
+                                   data-placement="bottom"
+                                   title="{{ 'atitle.lien_ical'|trans }}"
+                                   data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
                                    class="dropdown-item"><i
                                             class="ti-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}</a>
                             </div>
@@ -30,7 +35,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="semaine" class="sr-only"></label>
+                    <label for="semaine" class="sr-only">Choisir la semaine</label>
                     <select class="form-control " data-provide="selectpicker"
                             data-live-search="true"
                             id="semaine"

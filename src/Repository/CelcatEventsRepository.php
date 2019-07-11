@@ -4,7 +4,12 @@ namespace App\Repository;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
+use App\Entity\Configuration;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
+use App\Entity\Semestre;
+use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -87,5 +92,128 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->setParameter('departement', $codeCelcatDepartement)
             ->getQuery()
             ->getResult();
+    }
+
+    public function recupereEDTBornes(int $semaineReelle, Semestre $semestre, $jsem)
+    {
+        $creneaux = array(
+            1  => array('8h00', '9h30'),
+            4  => array('9h30', '11h00'),
+            7  => array('11h00', '12h30'),
+            10 => array('12h30', '14h00'),
+            13 => array('14h00', '15h30'),
+            16 => array('15h30', '17h00'),
+            19 => array('17h00', '18h30'));
+
+        $nbgroupetp = $semestre->getNbgroupeTpEdt();
+
+        if ($nbgroupetp <= 2) {
+            $typebloc = '-d';
+        } else {
+            $typebloc = '';
+        }
+
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeApogee')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->where('p.semaineFormation = :semaine')
+            ->andWhere('p.jour = :jour ')
+            ->andWhere('u.semestre = :semestre')
+            ->setParameters(array(
+                'semaine'  => $semaineReelle,
+                'jour'     => $jsem + 1,
+                'semestre' => $semestre->getId(),
+            ))
+            ->orderBy('p.codeGroupe, p.debut')
+            ->getQuery()
+            ->getResult();
+
+        $planning = array();
+
+        $j = 0;
+        /** @var  $row CelcatEvent */
+        foreach ($query as $row) {
+            $casedebut = Constantes::TAB_HEURES_INDEX[$row->getDebut()->format('H:i:s')];
+            $casefin = Constantes::TAB_HEURES_INDEX[$row->getFin()->format('H:i:s')];
+            $duree = $casefin - $casedebut;
+            $groupe = Constantes::TAB_GROUPES_INDEX[$row->getLibGroupe()]; //todo: pas idéal car dépend de MMI
+            $type = $row->getType();
+            $max = 20;
+            if ($type === 'tp' || $type === 'TP') {
+                $max = 6;
+            }
+
+            if ($row->getLibPersonnel() !== null) {
+                $prof  = substr($row->getLibPersonnel(), 0, $max);
+            } else {
+                $prof = '';
+            }
+
+            $refmatiere = explode(' ',$row->getLibModule());
+
+
+            if (array_key_exists($casedebut, $creneaux) && $duree % 3 === 0) {
+                $planning[$casedebut][$groupe]['prof'] = $prof;
+                $planning[$casedebut][$groupe]['module'] = $refmatiere[0];
+                $planning[$casedebut][$groupe]['salle'] = substr($row->getLibSalle(), 0, $max);
+                $planning[$casedebut][$groupe]['type'] = $type;
+                $planning[$casedebut][$groupe]['typebloc'] = $typebloc;
+                $planning[$casedebut][$groupe]['duree'] = $duree;
+                $planning[$casedebut][$groupe]['idplanning'] = $row->getId();
+                $planning[$casedebut][$groupe]['format'] = 'ok';
+
+                if (strtoupper($type) === 'TD') {
+                    $planning[$casedebut][$groupe + 1]['module'] = 'xt';
+                }
+
+                if (strtoupper($type) === 'CM') {
+                    for ($gr = 1; $gr < $nbgroupetp; $gr++) {
+                        $planning[$casedebut][$groupe + $gr]['module'] = 'xt';
+                    }
+                }
+
+                $planning[$casedebut][$groupe]['module'] = $refmatiere[0]; //création du premier créneaux
+
+                if ($duree % 3 == 0) {
+                    for ($i = 1; $i < $duree / 3; $i++) {
+                        $planning[$casedebut + ($i * 3)] = $planning[$casedebut];
+                    }
+                }
+            } else {
+                //pas sur un créneau classique pour le début
+                if (!array_key_exists($casedebut, $creneaux)) {
+                    $casedebut = $casedebut - ($duree % 3);
+                }
+
+                if ($casedebut == 11 || $casedebut == 12)
+                {
+                    $casedebut = 10;
+                }
+
+                $planning[$casedebut][$groupe]['prof'] = $prof;
+                $planning[$casedebut][$groupe]['module'] = $refmatiere[0];
+                $planning[$casedebut][$groupe]['salle'] = substr($row->getLibSalle(), 0, $max);
+                $planning[$casedebut][$groupe]['type'] = $type;
+                $planning[$casedebut][$groupe]['typebloc'] = $typebloc;
+                $planning[$casedebut][$groupe]['duree'] = $duree;
+                $planning[$casedebut][$groupe]['idplanning'] = $row->getId();
+                $planning[$casedebut][$groupe]['format'] = 'nok';
+                $planning[$casedebut][$groupe]['debut'] = $row->getDebut();
+                $planning[$casedebut][$groupe]['fin'] = $casefin;
+
+                if (strtoupper($type) === 'TD') {
+                    $planning[$casedebut][$groupe + 1]['module'] = 'xt';
+                }
+
+                if (strtoupper($type) === 'CM') {
+                    for ($gr = 1; $gr < $nbgroupetp; $gr++) {
+                        $planning[$casedebut][$groupe + $gr]['module'] = 'xt';
+                    }
+                }
+
+                $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
+            }
+        }
+        return ($planning);
     }
 }
