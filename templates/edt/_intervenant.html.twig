@@ -33,44 +33,7 @@
 
         </header>
         <div class="card-body">
-            <div class="row">
-                <div class="col-sm-4">
-                    <label for="semaine" class="sr-only">Choisir la semaine</label>
-                    <select class="form-control " data-provide="selectpicker"
-                            data-live-search="true"
-                            id="semaine"
-                    >
-                        <option value="">Choisir</option>
-                        {% for sem in edt.semaines %}
-                            <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle
-                            }}">
-                                du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem
-                                .semaineIUT }}</option>
-                        {% endfor %}
-
-                    </select>
-                </div>
-                <div class="col-sm-8">
-                    <div class="btn-toolbar pull-right">
-                        <div class="btn-group mr-2">
-                        <a class="btn btn-primary" href="" data-provide="tooltip" title="Cette semaine"><i class="fa
-	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
-                        </div>
-                        <div class="btn-group mr-2">
-                            <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaine précédente"><i
-                                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                            {% for semestre in user_data.semestres if semestre.actif == true %}
-                                <a class="btn"
-                                   href="" data-provide="tooltip" title="Emploi du temps du semestre {{ semestre.libelle }}">{{ semestre.libelle }}</a>
-                            {% endfor %}
-                            <a class="btn {% if edt.filtre=='prof' %} btn-primary {% endif %}"
-                               href="" data-provide="tooltip" title="Votre emploi du temps">Perso.</a>
-                            <a class="btn btn-primary" href="" data-provide="tooltip" title="Semaie suivante"><i
-                                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           {{ include('edt/_navpersonnel.html.twig') }}
             <br>
             <div class="row">
                 <div class="col-sm-12">

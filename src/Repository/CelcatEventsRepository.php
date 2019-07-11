@@ -216,4 +216,17 @@ class CelcatEventsRepository extends ServiceEntityRepository
         }
         return ($planning);
     }
+
+    public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeApogee')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.UE')
+            ->where('p.semaineFormation = :semaine')
+            ->andWhere('u.semestre = :semestre')
+            ->setParameters(array('semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()))
+            ->orderBy('p.jour, p.debut, p.codeGroupe')
+            ->getQuery()
+            ->getResult();
+    }
 }
