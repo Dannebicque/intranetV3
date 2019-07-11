@@ -12,6 +12,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Semestre;
 use App\MesClasses\Configuration;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
@@ -70,6 +71,8 @@ class EdtController extends BaseController
 
                 return $this->render('edt/_intervenant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
+                    'filtre' => 'prof',
+                    'valeur' => $this->getConnectedUser()->getId(),
                     'tabHeures' => self::$tabHeures
                 ]);
             }
@@ -78,11 +81,38 @@ class EdtController extends BaseController
 
             return $this->render('edt/_intervenant.html.twig', [
                 'edt'       => $this->myEdt,
+                'filtre' => 'prof',
+                'valeur' => $this->getConnectedUser()->getId(),
                 'tabHeures' => self::$tabHeures
             ]);
         }
 
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
+    }
+
+    public function personnelSemestre(Semestre $semestre, $semaine = 0): Response
+    {
+
+        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
+            $this->myEdtCelcat->initSemestre($semaine, $semestre);
+
+            return $this->render('edt/_semestre.html.twig', [
+                'edt'       => $this->myEdtCelcat,
+                'semestre' => $semestre,
+                'valeur' => $semestre->getId(),
+                'tabHeures' => self::$tabHeures
+            ]);
+        }
+
+        $this->myEdt->initSemestre($semaine, $semestre);
+
+        return $this->render('edt/_semestre.html.twig', [
+            'edt'       => $this->myEdt,
+            'semestre' => $semestre,
+            'filtre' => 'promo',
+            'valeur' => $semestre->getId(),
+            'tabHeures' => self::$tabHeures
+        ]);
     }
 
     /**

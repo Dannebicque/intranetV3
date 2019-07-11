@@ -22,9 +22,15 @@
 
     {% if user_data.departement.optEdt == true %}
         {% if is_granted('ROLE_PERMANENT') %}
-            {{ render(controller(
-                'App\\Controller\\EdtController::dashboardPersonnel', {semaine:semaine}
-            )) }}
+            {% if filtre == 'prof' %}
+                {{ render(controller(
+                    'App\\Controller\\EdtController::dashboardPersonnel', {semaine:semaine}
+                )) }}
+            {% elseif filtre == 'promo' %}
+                {{ render(controller(
+                    'App\\Controller\\EdtController::personnelSemestre', {semestre:valeur, semaine:semaine}
+                )) }}
+            {% endif %}
         {% elseif is_granted('ROLE_ETUDIANT') %}
             {{ render(controller(
                 'App\\Controller\\EdtController::dashboardEtudiant', {semaine:semaine}

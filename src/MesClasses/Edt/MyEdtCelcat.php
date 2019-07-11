@@ -25,6 +25,7 @@ use App\Entity\CelcatEvent;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\GroupeRepository;
@@ -108,13 +109,12 @@ class MyEdtCelcat extends BaseEdt
     {
         if ($this->semaineFormationIUT !== '') {
             switch ($this->filtre) {
-//                case 'promo':
-//                    $this->semestre = $this->semestreRepository->find($this->valeur);
-//                    $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
-//                    $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
-//                    $this->planning = $this->transformePromo($pl);
-//
-//                    break;
+                case 'promo':
+                    $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
+                    $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
+                    $this->planning = $this->transformePromo($pl);
+
+                    break;
                 case 'prof':
                     $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(), $this->semaineFormationIUT);
                     $this->planning = $this->transformeProf($pl);
@@ -155,6 +155,64 @@ class MyEdtCelcat extends BaseEdt
         }
 
         return false;
+    }
+
+    public function transformePromo($pl)
+    {
+
+        $gr = array();
+        $groupes = $this->groupeRepository->getGroupesTP($this->semestre->getId());
+
+        /** @var Groupe $groupe */
+        foreach ($groupes as $groupe) {
+            $gr[$groupe->getCodeapogee()] = $groupe->getOrdre();
+        }
+
+        //var_dump($pl);
+        $tab = array();
+        /** @var CelcatEvent $p */
+        foreach ($pl as $p) {
+            $groupe = $gr[$p->getCodeGroupe()];
+            $jour = $p->getJour() + 1;
+            $dbtEdt = $p->getDebut();
+
+            $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin() - $p->getDebut();
+
+            $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
+            $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte();
+
+
+            $taille = 0;
+            switch ($p->getType()) {
+                case 'CM':
+                case 'cm':
+                    $tab[$jour][$dbtEdt][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
+                    $taille = 0;
+                    break;
+                case 'TP':
+                case 'tp':
+                    $tab[$jour][$dbtEdt][$groupe]['largeur'] = 1;
+                    $taille = 4;
+                    break;
+                case 'TD':
+                case 'td':
+                    $tab[$jour][$dbtEdt][$groupe]['largeur'] = 2;
+                    $taille = 8;
+                    break;
+            }
+
+            $groupefin = $groupe + $tab[$jour][$dbtEdt][$groupe]['largeur'];
+            for ($i = $dbtEdt; $i < $p->getFin(); $i++) {
+                for ($j = $groupe; $j < $groupefin; $j++) {
+                    $tab[$jour][$i][$j]['texte'] = 'xx';
+                }
+            }
+
+            $tab[$jour][$dbtEdt][$groupe]['texte'] = $p->getLibModule() . '<br />' . $p->getLibSalle() . '<br />' . $p->getLibPersonnel() . ' |  ' . $p->getType() . ' |  ' . $p->getLibGroupe();
+
+        }
+
+        return $tab;
     }
 
     /**
@@ -292,6 +350,15 @@ class MyEdtCelcat extends BaseEdt
             default:
                 return 'CCCCCC';
         }
+    }
+
+    public function initSemestre(int $semaine, Semestre $semestre)
+    {
+        $this->semestre = $semestre;
+        $this->init('promo', $semestre->getId(), $semaine);
+        $this->semaines = $this->calculSemaines();
+        $this->calculEdt();
+        return $this;
     }
 
 }

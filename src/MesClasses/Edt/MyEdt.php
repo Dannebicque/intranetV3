@@ -25,6 +25,7 @@ use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
@@ -637,5 +638,14 @@ class MyEdt extends BaseEdt
 
             return $t;
         }
+    }
+
+    public function initSemestre(int $semaine, Semestre $semestre)
+    {
+        $this->semestre = $semestre;
+        $this->init('promo', $semestre->getId(), $semaine);
+        $this->semaines = $this->calculSemaines();
+        $this->calculEdt();//todo: pour des datas en BDD sasn scelcat. Ajouter test.
+        return $this;
     }
 }
