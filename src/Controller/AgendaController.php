@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AgendaController extends BaseController
 {
     /**
-     * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index")
+     * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index", options={"expose"=true})
      * @param int    $semaine
      * @param string $filtre
      * @param string $valeur
