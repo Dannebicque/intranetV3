@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TrelloTacheController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 10:30 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TrelloTacheController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -62,7 +57,7 @@ class TrelloTacheController extends BaseController
         $dateDuJour = new DateTimeImmutable();
         $dp = $dateDuJour;
 
-        $tab = array();
+        $tab = [];
         for ($i = $jourDuJour - 1; $i > 0; $i--) {
             $tab[$i] = $dp->sub(new DateInterval('P1D'));
             $dp = $tab[$i];
@@ -87,11 +82,12 @@ class TrelloTacheController extends BaseController
 
 
     /**
-     * @Route("/export.{_format}", name="administration_trello_tache_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
+     * @Route("/export.{_format}", name="administration_trello_tache_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport              $myExport
      * @param TrelloTacheRepository $trelloTacheRepository
      *
-     * @param                     $_format
+     * @param                       $_format
      *
      * @return Response
      * @throws Exception
@@ -126,7 +122,7 @@ class TrelloTacheController extends BaseController
             $trelloTache,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -172,7 +168,7 @@ class TrelloTacheController extends BaseController
             $trelloTache,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]

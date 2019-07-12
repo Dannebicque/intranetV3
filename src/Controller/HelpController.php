@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/HelpController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/HelpController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -42,7 +37,7 @@ class HelpController extends BaseController
      *
      * @return Response
      */
-    public function article(HelpRepository $helpRepository, $sujet) :Response
+    public function article(HelpRepository $helpRepository, $sujet): Response
     {
         $article = $helpRepository->findBySlug($sujet);
 
@@ -57,7 +52,7 @@ class HelpController extends BaseController
      *
      * @return Response
      */
-    public function imprimer($sujet) :Response
+    public function imprimer($sujet): Response
     {
         return $this->render('help/article.html.twig', [
         ]);

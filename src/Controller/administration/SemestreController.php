@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/SemestreController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/SemestreController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -59,8 +54,11 @@ class SemestreController extends BaseController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function index(AbsenceJustificatifRepository $absenceJustificatifRepository, RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
-    {
+    public function index(
+        AbsenceJustificatifRepository $absenceJustificatifRepository,
+        RattrapageRepository $rattrapageRepository,
+        Semestre $semestre
+    ): Response {
         return $this->render('administration/semestre/index.html.twig', [
             'semestre' => $semestre,
             'nbJustificatifs' => $absenceJustificatifRepository->findBySemestreCount($semestre),

@@ -1,5 +1,14 @@
 <?php
 /**
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluations.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/2/19 10:20 PM
+ */
+
+/**
  * Created by PhpStorm.
  * User: davidannebicque
  * Date: 02/04/2018

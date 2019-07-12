@@ -1,13 +1,21 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\appPersonnel;
 
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
 use App\Form\AlternanceFicheSuiviType;
-use App\Repository\AlternanceFicheSuiviRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +36,7 @@ class AlternanceFicheSuiviController extends AbstractController
     {
         return $this->render('appPersonnel/alternance_fiche_suivi/index.html.twig', [
             'alternance_fiche_suivis' => $alternance->getAlternanceFicheSuivis(),
-            'alternance' => $alternance
+            'alternance'              => $alternance
         ]);
     }
 
@@ -36,8 +44,9 @@ class AlternanceFicheSuiviController extends AbstractController
      * @Route("/{alternance}/new", name="application_personnel_alternance_fiche_suivi_new", methods={"GET","POST"})
      * @param Request    $request
      * @param Alternance $alternance
+     *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function new(Request $request, Alternance $alternance): Response
     {
@@ -50,13 +59,14 @@ class AlternanceFicheSuiviController extends AbstractController
             $entityManager->persist($alternanceFicheSuivi);
             $entityManager->flush();
 
-            return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show', ['id' => $alternanceFicheSuivi->getId()]);
+            return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
+                ['id' => $alternanceFicheSuivi->getId()]);
         }
 
         return $this->render('appPersonnel/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form' => $form->createView(),
-            'alternance' => $alternance
+            'form'                   => $form->createView(),
+            'alternance'             => $alternance
 
         ]);
     }
@@ -95,7 +105,7 @@ class AlternanceFicheSuiviController extends AbstractController
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        return new Response($dompdf->stream('Fiche-suivi-alternant-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom().'-'.$alternanceFicheSuivi->getDate()->format('dmY'),
+        return new Response($dompdf->stream('Fiche-suivi-alternant-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom() . '-' . $alternanceFicheSuivi->getDate()->format('dmY'),
             ['Attachment' => 1]));
 
     }
@@ -104,6 +114,7 @@ class AlternanceFicheSuiviController extends AbstractController
      * @Route("/{id}/edit", name="application_personnel_alternance_fiche_suivi_edit", methods={"GET","POST"})
      * @param Request              $request
      * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     *
      * @return Response
      */
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
@@ -114,13 +125,14 @@ class AlternanceFicheSuiviController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show', ['id' => $alternanceFicheSuivi->getId()]);
+            return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
+                ['id' => $alternanceFicheSuivi->getId()]);
 
         }
 
         return $this->render('appPersonnel/alternance_fiche_suivi/edit.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form' => $form->createView(),
+            'form'                   => $form->createView(),
         ]);
     }
 
@@ -128,18 +140,20 @@ class AlternanceFicheSuiviController extends AbstractController
      * @Route("/{id}", name="application_personnel_alternance_fiche_suivi_delete", methods={"DELETE"})
      * @param Request              $request
      * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     *
      * @return Response
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $alternance = $alternanceFicheSuivi->getAlternance();
 
-        if ($this->isCsrfTokenValid('delete'.$alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($alternanceFicheSuivi);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_alternance', ['alternance' => $alternance->getId()]);
+        return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_alternance',
+            ['alternance' => $alternance->getId()]);
     }
 }

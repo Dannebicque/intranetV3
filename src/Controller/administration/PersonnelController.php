@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PersonnelController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PersonnelController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -233,13 +228,17 @@ class PersonnelController extends BaseController
      *
      * @return Response
      */
-    public function modifierDroits(Request $request, PersonnelDepartementRepository $personnelDepartementRepository, Personnel $personnel): Response
-    {
+    public function modifierDroits(
+        Request $request,
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        Personnel $personnel
+    ): Response {
         $droit = $request->request->get('droit');
-        $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
+        $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
+            $this->dataUserSession->getDepartement());
 
         if (count($pf) === 1 && in_array($droit, Constantes::ROLE_LISTE, true)) {
-            if (in_array($droit, $pf[0]->getRoles())){
+            if (in_array($droit, $pf[0]->getRoles())) {
                 //deja existant on retire
                 $pf[0]->removeRole($droit);
                 $this->entityManager->flush();

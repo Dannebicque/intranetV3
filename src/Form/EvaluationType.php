@@ -1,13 +1,11 @@
 <?php
 /**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
- * @file       /Users/davidannebicque/htdocs/intranetv3/src/Form/EvaluationType.php
- * @author     David annebicque
- * @project    intranetv3
- * @date       05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/EvaluationType.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 5/17/19 8:56 AM
  */
 
 namespace App\Form;

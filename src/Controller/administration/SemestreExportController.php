@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/SemestreExportController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\administration;
 
@@ -7,8 +15,6 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluations;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,7 +36,7 @@ class SemestreExportController extends BaseController
     }
 
     /**
-     * @Route("/{slug}/{semestre}", name="administration_semestre_export_releve_provisoire")
+     * @Route("/provisoire/{slug}/{semestre}", name="administration_semestre_export_releve_provisoire")
      * @param MyEtudiant $myEtudiant
      * @param Etudiant   $etudiant
      * @param Semestre   $semestre
@@ -38,6 +44,19 @@ class SemestreExportController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function exportReleveProvisoire(MyEtudiant $myEtudiant, Etudiant $etudiant, Semestre $semestre = null): void
+    {
+        $myEtudiant->setEtudiant($etudiant)->exportReleveProvisoire($semestre ?: $etudiant->getSemestre());
+    }
+
+    /**
+     * @Route("/définitif/{slug}/{semestre}", name="administration_semestre_export_releve_definitif")
+     * @param MyEtudiant $myEtudiant
+     * @param Etudiant   $etudiant
+     * @param Semestre   $semestre
+     *
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     */
+    public function exportReleveDefinitif(MyEtudiant $myEtudiant, Etudiant $etudiant, Semestre $semestre = null): void
     {
         $myEtudiant->setEtudiant($etudiant)->exportReleveProvisoire($semestre ?: $etudiant->getSemestre());
     }

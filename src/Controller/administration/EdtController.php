@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -76,8 +71,7 @@ class EdtController extends BaseController
         $semaine,
         $valeur,
         $filtre
-    ) : Response
-    {
+    ): Response {
         return $this->render('administration/edt/edt-intranet.html.twig', [
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles'     => $salleRepository->findAll(),
@@ -100,8 +94,7 @@ class EdtController extends BaseController
         MatiereRepository $matiereRepository,
         SalleRepository $salleRepository,
         MyEdtCelcat $myEdtCelcat
-    ) : Response
-    {
+    ): Response {
         return $this->render('administration/edt/edt-celcat.html.twig', [
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles'     => $salleRepository->findAll(),

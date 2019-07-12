@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatCalendrierController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/1/19 8:38 AM
- *  * @lastUpdate 5/1/19 8:03 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatCalendrierController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -41,14 +36,16 @@ class CelcatCalendrierController extends BaseController
      */
     public function index(CalendrierRepository $celcatCalendrierRepository): Response
     {
-        return $this->render('super-administration/celcat_calendrier/index.html.twig', ['celcat_calendriers' => $celcatCalendrierRepository->findAll()]);
+        return $this->render('super-administration/celcat_calendrier/index.html.twig',
+            ['celcat_calendriers' => $celcatCalendrierRepository->findAll()]);
     }
 
     /**
-     * @Route("/export.{_format}", name="sa_celcat_calendrier_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="sa_celcat_calendrier_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport             $myExport
      * @param CalendrierRepository $celcatCalendrierRepository
-     * @param                   $_format
+     * @param                      $_format
      *
      * @return Response
      * @throws Exception
@@ -89,7 +86,7 @@ class CelcatCalendrierController extends BaseController
 
         return $this->render('super-administration/celcat_calendrier/new.html.twig', [
             'celcat_calendrier' => $celcatCalendrier,
-            'form' => $form->createView(),
+            'form'              => $form->createView(),
         ]);
     }
 
@@ -101,8 +98,10 @@ class CelcatCalendrierController extends BaseController
      *
      * @return Response
      */
-    public function createNewYear(Request $request, AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
-    {
+    public function createNewYear(
+        Request $request,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository
+    ): Response {
         if ($request->isMethod('POST')) {
             $annee = $anneeUniversitaireRepository->find($request->request->get('annee_universitaire'));
             if ($annee) {
@@ -124,7 +123,8 @@ class CelcatCalendrierController extends BaseController
      */
     public function show(Calendrier $celcatCalendrier): Response
     {
-        return $this->render('super-administration/celcat_calendrier/show.html.twig', ['celcat_calendrier' => $celcatCalendrier]);
+        return $this->render('super-administration/celcat_calendrier/show.html.twig',
+            ['celcat_calendrier' => $celcatCalendrier]);
     }
 
     /**
@@ -148,7 +148,7 @@ class CelcatCalendrierController extends BaseController
 
         return $this->render('super-administration/celcat_calendrier/edit.html.twig', [
             'celcat_calendrier' => $celcatCalendrier,
-            'form' => $form->createView(),
+            'form'              => $form->createView(),
         ]);
     }
 

@@ -1,13 +1,11 @@
 <?php
 /**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
- * @file       /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdtImport.php
- * @author     David annebicque
- * @project    intranetv3
- * @date       07/05/2019 12:19
- * @lastUpdate 07/05/2019 12:19
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdtImport.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 6/9/19 8:53 AM
  */
 
 namespace App\MesClasses\Edt;

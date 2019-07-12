@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/UserAjaxController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/UserAjaxController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -36,9 +31,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserAjaxController extends BaseController
 {
     /**
-     * @param FavoriRepository $favoriRepository
+     * @param FavoriRepository   $favoriRepository
      * @param EtudiantRepository $etudiantRepository
-     * @param Request $request
+     * @param Request            $request
      *
      * @return Response
      * @throws NonUniqueResultException
@@ -61,10 +56,10 @@ class UserAjaxController extends BaseController
         }
 
         if ($user && $action === 'false') {
-            $fav = $favoriRepository->findBy(array(
+            $fav = $favoriRepository->findBy([
                 'etudiantDemandeur' => $this->getConnectedUser()->getId(),
                 'etudiantDemande'   => $user->getId()
-            ));
+            ]);
             foreach ($fav as $f) {
                 $this->entityManager->remove($f);
             }
@@ -81,6 +76,7 @@ class UserAjaxController extends BaseController
      * @param PersonnelDepartementRepository $personnelDepartementRepository
      * @param Departement                    $departement
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
+     *
      * @return JsonResponse
      */
     public function changeDepartementDefaut(
@@ -102,6 +98,7 @@ class UserAjaxController extends BaseController
 
             return new JsonResponse(true, Response::HTTP_OK);
         }
+
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

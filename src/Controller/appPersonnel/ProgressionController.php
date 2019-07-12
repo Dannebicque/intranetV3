@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/ProgressionController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 2:35 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/ProgressionController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\appPersonnel;
@@ -43,8 +38,10 @@ class ProgressionController extends BaseController
      *
      * @return Response
      */
-    public function index(PrevisionnelRepository $previsionnelRepository, ProgressionPedagogiqueRepository $progressionPedagogiqueRepository): Response
-    {
+    public function index(
+        PrevisionnelRepository $previsionnelRepository,
+        ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
+    ): Response {
         //todo: a gérer année universitaire
         $progressions = $progressionPedagogiqueRepository->getProgressionsArray($this->getConnectedUser());
 
@@ -53,7 +50,7 @@ class ProgressionController extends BaseController
             $this->dataUserSession->getDepartement());
 
         return $this->render('appPersonnel/progression/index.html.twig', [
-            'matieres' => $matieres,
+            'matieres'     => $matieres,
             'progressions' => $progressions
         ]);
     }

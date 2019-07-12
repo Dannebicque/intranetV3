@@ -1,11 +1,18 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SemestreController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
+ */
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
-use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -21,8 +28,8 @@ class SemestreController extends BaseController
 {
     /**
      * @Route("/new/{annee}", name="sa_semestre_new", methods="GET|POST")
-     * @param Request                $request
-     * @param Annee                  $annee
+     * @param Request $request
+     * @param Annee   $annee
      *
      * @return Response
      */
@@ -72,8 +79,8 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_semestre_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Semestre               $semestre
+     * @param Request  $request
+     * @param Semestre $semestre
      *
      * @return Response
      */
@@ -113,7 +120,7 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_semestre_duplicate", methods="GET|POST")
-     * @param Semestre               $semestre
+     * @param Semestre $semestre
      *
      * @return Response
      */

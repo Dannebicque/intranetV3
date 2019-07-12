@@ -1,4 +1,12 @@
 <?php
+/**
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Migrations/Version20190315053006.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 3/17/19 9:02 AM
+ */
 
 declare(strict_types=1);
 

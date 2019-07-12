@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/PlanningController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 2:35 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/PlanningController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -47,9 +42,10 @@ class PlanningController extends BaseController
         }
 
         Calendrier::calculPlanning($annee);
+
         return $this->render('planning/index.html.twig', [
             'tabPlanning' => Calendrier::getTabPlanning(),
-            'tabJour'     => array('', 'L', 'M', 'M', 'J', 'V', 'S', 'D'),
+            'tabJour'     => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],
             'tabFerie'    => Calendrier::getTabJoursFeries(),
             'tabFinMois'  => Calendrier::getTabFinMois(),
             'annee'       => $annee,

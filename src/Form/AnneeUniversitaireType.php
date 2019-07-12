@@ -1,16 +1,11 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/AnneeUniversitaireType.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/1/19 8:38 AM
- *  * @lastUpdate 5/1/19 8:38 AM
- *  *
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/AnneeUniversitaireType.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 5/1/19 8:38 AM
  */
 
 namespace App\Form;

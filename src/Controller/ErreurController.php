@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ErreurController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller;
 
@@ -24,7 +32,7 @@ class ErreurController extends AbstractController
     /**
      * @Route("/500", name="erreur_500")
      */
-    public function erreur500() : Response
+    public function erreur500(): Response
     {
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig', [
         ]);
@@ -33,7 +41,7 @@ class ErreurController extends AbstractController
     /**
      * @Route("/666", name="erreur_666")
      */
-    public function erreur666() : Response
+    public function erreur666(): Response
     {
         return $this->render('bundles/TwigBundle/Exception/error666.html.twig', [
         ]);

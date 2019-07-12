@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 3:13 PM
- *  * @lastUpdate 4/30/19 3:13 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -149,6 +144,7 @@ class SecurityController extends AbstractController
                 $em->flush();
                 $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
                 $session->set('departement', $departement->getUuidString()); //on sauvegarde
+
                 return $this->redirectToRoute('default_homepage');
             }
 

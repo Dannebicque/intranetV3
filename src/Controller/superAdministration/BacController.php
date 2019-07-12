@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/BacController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/2/19 4:18 AM
- *  * @lastUpdate 5/1/19 9:00 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/BacController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -45,7 +40,7 @@ class BacController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_bac_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
-     * @param BacRepository $bacRepository
+     * @param BacRepository       $bacRepository
      *
      * @param                     $_format
      *
@@ -87,7 +82,7 @@ class BacController extends BaseController
         }
 
         return $this->render('super-administration/bac/new.html.twig', [
-            'bac' => $bac,
+            'bac'  => $bac,
             'form' => $form->createView(),
         ]);
     }
@@ -118,11 +113,12 @@ class BacController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.edit.success.flash');
+
             return $this->redirectToRoute('sa_bac_index', ['id' => $bac->getId()]);
         }
 
         return $this->render('super-administration/bac/edit.html.twig', [
-            'bac' => $bac,
+            'bac'  => $bac,
             'form' => $form->createView(),
         ]);
     }
@@ -146,7 +142,7 @@ class BacController extends BaseController
     /**
      * @Route("/{id}", name="sa_bac_delete", methods="DELETE")
      * @param Request $request
-     * @param Bac   $bac
+     * @param Bac     $bac
      *
      * @return Response
      */

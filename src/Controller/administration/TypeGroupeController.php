@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TypeGroupeController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 10:58 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TypeGroupeController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -59,9 +54,11 @@ class TypeGroupeController extends BaseController
 
             $this->entityManager->persist($typeGroupe);
             $this->entityManager->flush();
+
             return $this->json($typeGroupe->getArray(), Response::HTTP_OK);
 
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
@@ -81,6 +78,7 @@ class TypeGroupeController extends BaseController
      * @param Request              $request
      * @param TypeGroupeRepository $typeGroupeRepository
      * @Route("/ajax/groupe_defaut", name="administration_type_groupe_defaut", methods="POST", options={"expose"=true})
+     *
      * @return JsonResponse
      */
     public function typeGroupeDefaut(Request $request, TypeGroupeRepository $typeGroupeRepository): JsonResponse
@@ -110,6 +108,7 @@ class TypeGroupeController extends BaseController
     /**
      * @Route("/{id}", name="administration_type_groupe_show", methods="GET")
      * @param TypeGroupe $typeGroupe
+     *
      * @return Response
      */
     public function show(TypeGroupe $typeGroupe): Response
@@ -121,11 +120,13 @@ class TypeGroupeController extends BaseController
      * @Route("/{id}/edit", name="administration_type_groupe_edit", methods="GET|POST")
      * @param Request    $request
      * @param TypeGroupe $typeGroupe
+     *
      * @return Response
      */
     public function edit(Request $request, TypeGroupe $typeGroupe): Response
     {
-        $form = $this->createForm(TypeGroupeType::class, $typeGroupe, ['departement' => $this->dataUserSession->getDepartement()]);
+        $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
+            ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -145,13 +146,13 @@ class TypeGroupeController extends BaseController
 
         return $this->render('administration/type_groupe/edit.html.twig', [
             'type_groupe' => $typeGroupe,
-            'form' => $form->createView(),
+            'form'        => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}/duplicate", name="administration_type_groupe_duplicate", methods="GET|POST")
-     * @param TypeGroupe                 $typeGroupe
+     * @param TypeGroupe $typeGroupe
      *
      * @return Response
      */
@@ -168,8 +169,8 @@ class TypeGroupeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_groupe_delete", methods="DELETE")
-     * @param Request $request
-     * @param TypeGroupe  $typeGroupe
+     * @param Request    $request
+     * @param TypeGroupe $typeGroupe
      *
      * @return Response
      */

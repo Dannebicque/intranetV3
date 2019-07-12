@@ -1,13 +1,11 @@
 <?php
-/**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtCompareController.php
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 02/05/2019 12:12
- *
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -57,14 +55,14 @@ class EdtCompareController extends BaseController
      * @param                     $source
      *
      * @return Response
-     * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"}, requirements={"source"="intranet|celcat"})
+     * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"},
+     *                                requirements={"source"="intranet|celcat"})
      */
     public function comparePersonnel(
         PersonnelRepository $personnelRepository,
         MyPrevisionnel $myPrevisionnel,
         $source
-    ): Response
-    {
+    ): Response {
         //todo: a refaire
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
@@ -74,11 +72,12 @@ class EdtCompareController extends BaseController
         } else {
             //celcat
         }
-        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($personnels, $planning, $this->dataUserSession->getDepartement());
+        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($personnels, $planning,
+            $this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtCompare/comparePersonnel.html.twig', [
             'personnels' => $personnels,
-            'edts'        => $comparatif
+            'edts'       => $comparatif
         ]);
     }
 
@@ -90,14 +89,14 @@ class EdtCompareController extends BaseController
      * @param                   $source
      *
      * @return Response
-     * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"}, requirements={"source"="intranet|celcat"})
+     * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"},
+     *                              requirements={"source"="intranet|celcat"})
      */
     public function compareMatiereAction(
         MatiereRepository $matiereRepository,
         MyPrevisionnel $myPrevisionnel,
         $source
-    ): Response
-    {
+    ): Response {
         $matieres = $matiereRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         if ($source === 'intranet') {
@@ -111,7 +110,7 @@ class EdtCompareController extends BaseController
 
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [
             'matieres' => $matieres,
-            'edts'    => $ed
+            'edts'     => $ed
         ]);
     }
 
@@ -122,16 +121,16 @@ class EdtCompareController extends BaseController
      * @return Response
      * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info", methods={"POST"})
      */
-    public function comparePlusInfoAction(Matiere $matiere) : Response
+    public function comparePlusInfoAction(Matiere $matiere): Response
     {
         //tester si celcat ou intranet
-        $planning = $this->edtPlanningRepository->findBy(array('matiere' => $matiere->getId()));
+        $planning = $this->edtPlanningRepository->findBy(['matiere' => $matiere->getId()]);
 
         $calendrier = $this->calendrierRepository->findCalendrier();
 
         return $this->render('administration/edtCompare/plusInfo.html.twig', [
             'planning'   => $planning,
-            'matiere'     => $matiere,
+            'matiere'    => $matiere,
             'calendrier' => $calendrier
         ]);
     }

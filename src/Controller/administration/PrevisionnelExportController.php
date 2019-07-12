@@ -1,37 +1,18 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PrevisionnelController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PrevisionnelExportController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\Constantes;
-use App\Entity\Matiere;
-use App\Entity\Personnel;
-use App\Entity\Previsionnel;
-use App\Entity\Semestre;
-use App\Form\ImportPrevisionnelType;
 use App\MesClasses\MyPrevisionnel;
-use App\MesClasses\Tools;
-use App\Repository\MatiereRepository;
-use App\Repository\PersonnelRepository;
-use App\Repository\PrevisionnelRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -64,7 +45,9 @@ class PrevisionnelExportController extends BaseController
      *
      * @return StreamedResponse
      * @throws Exception
-     * @Route("/{annee}/{type}/{data}/{_format}", name="administration_previsionnel_export", methods="GET", requirements={"_format"="csv|xlsx|pdf", "type"="personnel|matiere|semestre"})
+     * @Route("/{annee}/{type}/{data}/{_format}", name="administration_previsionnel_export", methods="GET",
+     *                                            requirements={"_format"="csv|xlsx|pdf",
+     *                                            "type"="personnel|matiere|semestre"})
      *
      */
     public function export(MyPrevisionnel $myPrevisionnel, $annee, $type, $data, $_format): StreamedResponse

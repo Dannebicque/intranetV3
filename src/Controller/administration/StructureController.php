@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/StructureController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\administration;
 
@@ -26,7 +34,8 @@ class StructureController extends BaseController
     }
 
     /**
-     * @Route("/{departement}/export.{_format}", name="administration_structure_export", methods="GET", requirements={"_format"="xlsx|pdf"})
+     * @Route("/{departement}/export.{_format}", name="administration_structure_export", methods="GET",
+     *                                           requirements={"_format"="xlsx|pdf"})
      * @param MyStructure       $myStructure
      * @param Departement       $departement
      * @param                   $_format

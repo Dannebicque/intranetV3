@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/FinSemestreController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/FinSemestreController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -47,8 +42,7 @@ class FinSemestreController extends BaseController
         DepartementRepository $departementRepository,
         EtudiantRepository $etudiantRepository,
         Semestre $semestre
-    ): Response
-    {
+    ): Response {
         $etudiants = $etudiantRepository->findBySemestre($semestre);
         //$sc = $this->getDoctrine()->getRepository('DAKernelBundle:ScEtudiantSemestre')->findSemestre($semestre->getId());
 

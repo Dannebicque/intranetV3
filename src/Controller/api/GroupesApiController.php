@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/GroupesApiController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\api;
 
@@ -25,7 +33,7 @@ class GroupesApiController extends BaseController
      */
     public function typeGroupeSemestreAjax(Semestre $semestre): Response
     {
-        $json = array();
+        $json = [];
         /** @var TypeGroupe $typeGroupe */
         foreach ($semestre->getTypeGroupes() as $typeGroupe) {
             $json[] = ['libelle' => $typeGroupe->getLibelle(), 'id' => $typeGroupe->getId()];
@@ -42,7 +50,7 @@ class GroupesApiController extends BaseController
      */
     public function grouepTypeGroupeAjax(TypeGroupe $typeGroupe): Response
     {
-        $json = array();
+        $json = [];
         /** @var Groupe $groupe */
         foreach ($typeGroupe->getGroupes() as $groupe) {
             $json[] = ['libelle' => $groupe->getLibelle(), 'id' => $groupe->getId()];

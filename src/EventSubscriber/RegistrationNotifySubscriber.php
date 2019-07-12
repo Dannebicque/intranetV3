@@ -1,4 +1,13 @@
 <?php
+/**
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/RegistrationNotifySubscriber.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 6/26/19 7:12 AM
+ */
+
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
 

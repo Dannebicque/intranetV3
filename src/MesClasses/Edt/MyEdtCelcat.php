@@ -1,13 +1,11 @@
 <?php
 /**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdtCelcat.php
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  07/05/2019 10:42
- * @lastUpdate 07/05/2019 10:42
- *
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/11/19 5:15 PM
  */
 
 /**

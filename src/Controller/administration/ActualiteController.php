@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/ActualiteController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/ActualiteController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -46,7 +41,8 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_actualite_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_actualite_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
      * @param ActualiteRepository $actualiteRepository
      *
@@ -71,7 +67,7 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/new", name="administration_actualite_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -112,8 +108,8 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_actualite_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Actualite              $actualite
+     * @param Request   $request
+     * @param Actualite $actualite
      *
      * @return Response
      */
@@ -141,8 +137,8 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_actualite_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Actualite              $actualite
+     * @param Request   $request
+     * @param Actualite $actualite
      *
      * @return Response
      */
@@ -161,6 +157,7 @@ class ActualiteController extends BaseController
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 

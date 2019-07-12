@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -56,7 +51,7 @@ class EtudiantController extends BaseController
             null,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -87,7 +82,7 @@ class EtudiantController extends BaseController
             EtudiantType::class,
             $etudiant,
             [
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ],
                 'departement' => $this->dataUserSession->getDepartement()
@@ -103,9 +98,10 @@ class EtudiantController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.add.success.flash');
             $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestre()->getId()]);
         }
+
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
-            'form' => $form->createView()
+            'form'     => $form->createView()
         ]);
     }
 
@@ -125,7 +121,7 @@ class EtudiantController extends BaseController
             EtudiantType::class,
             $etudiant,
             [
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ],
                 'departement' => $this->dataUserSession->getDepartement()
@@ -146,7 +142,8 @@ class EtudiantController extends BaseController
 
 
     /**
-     * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      */
     public function export(): Response
     {

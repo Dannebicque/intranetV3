@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/ScolariteController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -23,8 +18,7 @@ use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\ScolariteType;
 use App\Repository\ScolariteMoyenneUeRepository;
-use App\Repository\SemestreRepository;
-use App\Repository\UeRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,22 +33,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class ScolariteController extends BaseController
 {
     /**
+     * @Route("/edit/{slug}", name="administration_scolarite_etudiant_edit")
+     *
      * @param Request  $request
      * @param Etudiant $etudiant
      *
      * @return Response
-     * @throws \Exception
-     * @Route("/edit/{slug}", name="administration_scolarite_etudiant_edit")
+     * @throws Exception
+     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      *
      */
-    public function editScolariteEtudiant(ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
-        Request $request, Etudiant $etudiant)
-    {
+    public function editScolariteEtudiant(
+        ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
+        Request $request,
+        Etudiant $etudiant
+    ) {
         $scolarite = new Scolarite();
         $scolarite->setEtudiant($etudiant);
 
-        $form = $this->createForm(ScolariteType::class, $scolarite, ['departement' => $this->dataUserSession->getDepartement()]);
+        $form = $this->createForm(ScolariteType::class, $scolarite,
+            ['departement' => $this->dataUserSession->getDepartement()]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -74,10 +73,10 @@ class ScolariteController extends BaseController
         $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('administration/scolarite/edit.html.twig', [
-           'etudiant' => $etudiant,
-           'scolarite' => $etudiant->getScolarites(),
-           'scolariteUes' => $scolariteUes,
-           'form' => $form->createView()
+            'etudiant'     => $etudiant,
+            'scolarite'    => $etudiant->getScolarites(),
+            'scolariteUes' => $scolariteUes,
+            'form'         => $form->createView()
         ]);
     }
 
@@ -90,7 +89,7 @@ class ScolariteController extends BaseController
 
         $ues = $semestre->getUes();
 
-        $t = array();
+        $t = [];
         /** @var Ue $ue */
         foreach ($ues as $ue) {
             $t[$ue->getId()] = $ue->getNumeroUe();

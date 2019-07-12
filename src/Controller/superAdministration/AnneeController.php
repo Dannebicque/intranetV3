@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -35,9 +30,9 @@ class AnneeController extends BaseController
     /**
      * @Route("/nouveau/{diplome}", name="sa_annee_new",
      *                                    methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
-     * @param Diplome                $diplome
+     * @param Diplome $diplome
      *
      * @return RedirectResponse|Response
      */
@@ -48,7 +43,7 @@ class AnneeController extends BaseController
             $annee->setDiplome($diplome);
             $form = $this->createForm(AnneeType::class, $annee, [
                 'departement' => $diplome->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]);
@@ -87,8 +82,8 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/modifier", name="sa_annee_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Annee                  $annee
+     * @param Request $request
+     * @param Annee   $annee
      *
      * @return Response
      */
@@ -100,7 +95,7 @@ class AnneeController extends BaseController
                 $annee,
                 [
                     'departement' => $annee->getDiplome()->getDepartement(),
-                    'attr'      => [
+                    'attr'        => [
                         'data-provide' => 'validation'
                     ]
                 ]
@@ -128,7 +123,7 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_annee_duplicate", methods="GET|POST")
-     * @param Annee                  $annee
+     * @param Annee $annee
      *
      * @return Response
      */

@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AlternanceController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AlternanceController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -69,13 +64,20 @@ class AlternanceController extends BaseController
      *
      * @return RedirectResponse
      */
-    public function initAll(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): RedirectResponse
-    {
+    public function initAll(
+        EtudiantRepository $etudiantRepository,
+        AlternanceRepository $alternanceRepository,
+        Annee $annee
+    ): RedirectResponse {
         $etudiants = $etudiantRepository->findByAnnee($annee);
 
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
-            $exist = $alternanceRepository->findBy(['etudiant' => $etudiant->getId(), 'anneeUniversitaire'=>$annee->getAnneeUniversitaire(), 'annee' => $annee->getId()]);
+            $exist = $alternanceRepository->findBy([
+                'etudiant'           => $etudiant->getId(),
+                'anneeUniversitaire' => $annee->getAnneeUniversitaire(),
+                'annee'              => $annee->getId()
+            ]);
             if ($exist === null) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
@@ -161,7 +163,8 @@ class AlternanceController extends BaseController
     public function create(Request $request): Response
     {
         $alternance = new Alternance();
-        $form = $this->createForm(AlternanceType::class, $alternance, ['departement' => $this->dataUserSession->getDepartement()]);
+        $form = $this->createForm(AlternanceType::class, $alternance,
+            ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -198,7 +201,8 @@ class AlternanceController extends BaseController
      */
     public function edit(Request $request, Alternance $alternance): Response
     {
-        $form = $this->createForm(AlternanceType::class, $alternance, ['departement' => $this->dataUserSession->getDepartement()]);
+        $form = $this->createForm(AlternanceType::class, $alternance,
+            ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

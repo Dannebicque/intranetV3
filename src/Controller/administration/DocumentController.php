@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/DocumentController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/DocumentController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -39,11 +34,13 @@ class DocumentController extends BaseController
      */
     public function index(DocumentRepository $documentRepository): Response
     {
-        return $this->render('administration/document/index.html.twig', ['documents' => $documentRepository->findAll()]);
+        return $this->render('administration/document/index.html.twig',
+            ['documents' => $documentRepository->findAll()]);
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_document_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_document_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      */
     public function export(): Response
     {
@@ -66,7 +63,7 @@ class DocumentController extends BaseController
             $document,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -93,6 +90,7 @@ class DocumentController extends BaseController
      * @Route("/{id}", name="administration_document_show", methods="GET")
      * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
+     *
      * @return Response
      */
     public function show(Document $document): Response
@@ -102,9 +100,10 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_document_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Document               $document
+     * @param Request  $request
+     * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
+     *
      * @return Response
      */
     public function edit(Request $request, Document $document): Response
@@ -114,7 +113,7 @@ class DocumentController extends BaseController
             $document,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -136,9 +135,10 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
-     * @param Request                $request
-     * @param Document               $document
+     * @param Request  $request
+     * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
+     *
      * @return Response
      */
     public function delete(Request $request, Document $document): Response
@@ -160,6 +160,7 @@ class DocumentController extends BaseController
      * @Route("/{id}/duplicate", name="administration_document_duplicate", methods="GET|POST")
      * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
+     *
      * @return Response
      */
     public function duplicate(Document $document): Response

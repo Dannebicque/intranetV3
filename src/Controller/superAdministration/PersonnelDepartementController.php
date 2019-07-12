@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/PersonnelDepartementController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/PersonnelDepartementController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -40,8 +35,8 @@ class PersonnelDepartementController extends BaseController
     public function index(Departement $departement): Response
     {
         return $this->render('super-administration/personnel_formation/index.html.twig', [
-            'personnels' => $departement->getPersonnelDepartements(),
-            'departement'  => $departement
+            'personnels'  => $departement->getPersonnelDepartements(),
+            'departement' => $departement
         ]);
     }
 
@@ -67,6 +62,7 @@ class PersonnelDepartementController extends BaseController
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'personnel_formation.remove.error.flash');
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
@@ -84,8 +80,10 @@ class PersonnelDepartementController extends BaseController
             $pf->clearRole();
             $pf->addRole($droit);
             $this->entityManager->flush();
+
             return $this->json($droit, Response::HTTP_OK);
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
 
     }

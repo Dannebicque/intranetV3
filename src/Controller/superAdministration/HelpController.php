@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/HelpController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -6,7 +14,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Help;
 use App\Form\HelpType;
-use App\MesClasses\MyExport;
 use App\Repository\HelpRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

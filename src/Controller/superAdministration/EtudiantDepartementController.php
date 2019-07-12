@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/PersonnelDepartementController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/EtudiantDepartementController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -19,12 +14,10 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
-use App\Entity\PersonnelDepartement;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function in_array;
 
 /**
  * Class PersonnelDepartementController
@@ -43,8 +36,8 @@ class EtudiantDepartementController extends BaseController
     public function index(EtudiantRepository $etudiantRepository, Departement $departement): Response
     {
         return $this->render('super-administration/etudiant_departement/index.html.twig', [
-            'etudiants' => $etudiantRepository->getByDepartement($departement, null),
-            'departement'  => $departement
+            'etudiants'   => $etudiantRepository->getByDepartement($departement, null),
+            'departement' => $departement
         ]);
     }
 
@@ -57,7 +50,7 @@ class EtudiantDepartementController extends BaseController
     public function add(Departement $departement): Response
     {
         return $this->render('super-administration/etudiant_departement/add.html.twig', [
-            'departement'  => $departement
+            'departement' => $departement
         ]);
     }
 
@@ -84,6 +77,7 @@ class EtudiantDepartementController extends BaseController
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'etudiant_departement.remove.error.flash');
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

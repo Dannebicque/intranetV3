@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtRealiseController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtRealiseController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -23,7 +18,6 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\SemestreRepository;
@@ -72,10 +66,10 @@ class EdtRealiseController extends BaseController
     {
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
-        return $this->render('administration/edtRealise/index.html.twig', array(
+        return $this->render('administration/edtRealise/index.html.twig', [
             'personnels' => $personnels,
-            'semestres'   => $this->dataUserSession->getSemestres(),
-        ));
+            'semestres'  => $this->dataUserSession->getSemestres(),
+        ]);
     }
 
     /**
@@ -93,29 +87,28 @@ class EdtRealiseController extends BaseController
         Semestre $semestre,
         Matiere $matiere,
         Personnel $personnel
-        ): Response
-    {
+    ): Response {
         if ($matiere && $personnel) {
             //todo: mettre dans un service MyEDT ?
-            $m = $this->edtPlanningRepository->findBy(array(
+            $m = $this->edtPlanningRepository->findBy([
                 'matiere'     => $matiere->getId(),
                 'intervenant' => $personnel->getId()
-            ),
-                array(
+            ],
+                [
                     'semaine' => 'ASC',
                     'jour'    => 'ASC',
                     'debut'   => 'ASC'
-                ));
+                ]);
 
             $calendrier = $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
 
-            $p = $previsionnelRepository->findBy(array(
+            $p = $previsionnelRepository->findBy([
                 'personnel' => $personnel->getId(),
                 'matiere'   => $matiere->getId(),
                 'annee'     => $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel()
-            ));
+            ]);
 
-            $t = array();
+            $t = [];
             $t['cm']['previ'] = 0;
             $t['td']['previ'] = 0;
             $t['tp']['previ'] = 0;
@@ -148,14 +141,15 @@ class EdtRealiseController extends BaseController
             }
 
 
-            return $this->render('administration/edtRealise/detailPersonnelMatiere.html.twig', array(
+            return $this->render('administration/edtRealise/detailPersonnelMatiere.html.twig', [
                 'planning'   => $m,
                 'matiere'    => $matiere,
                 'calendrier' => $calendrier,
                 'personnel'  => $personnel,
                 't'          => $t
-            ));
+            ]);
         }
+
         return $this->redirect($this->generateUrl('erreur_666'));
     }
 
@@ -173,8 +167,8 @@ class EdtRealiseController extends BaseController
         SemestreRepository $semestreRepository,
         PersonnelRepository $personnelRepository,
         PrevisionnelRepository $previsionnelRepository,
-        Request $request)
-    {
+        Request $request
+    ) {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $personnel = $personnelRepository->find($request->request->get('personnel'));
 
@@ -182,7 +176,7 @@ class EdtRealiseController extends BaseController
             $matieres = $previsionnelRepository->findServiceSemestre($personnel->getId(),
                 $semestre->getId(), $semestre->getAnnee()->getDiplome()->getDepartement()->getAnneeprevi());
 
-            $array = array();
+            $array = [];
             $i = 1;
 
             /** @var Previsionnel $m */
@@ -200,6 +194,7 @@ class EdtRealiseController extends BaseController
 
             return $response;
         }
+
         return $this->redirect($this->generateUrl('erreur_666'));
     }
 

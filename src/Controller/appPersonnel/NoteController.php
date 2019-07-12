@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\appPersonnel;
@@ -83,10 +78,10 @@ class NoteController extends BaseController
                 EvaluationType::class,
                 $evaluation,
                 [
-                    'departement'       => $this->dataUserSession->getDepartement(),
+                    'departement'     => $this->dataUserSession->getDepartement(),
                     'semestre'        => $matiere->getUe()->getSemestre(),
                     'matiereDisabled' => false,
-                    'locale' =>$request->getLocale(),
+                    'locale'          => $request->getLocale(),
                     'attr'            => [
                         'data-provide' => 'validation'
                     ]
@@ -120,11 +115,13 @@ class NoteController extends BaseController
      * @param MyEvaluation $myEvaluation
      * @param Evaluation   $evaluation
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     *
      * @return Response
      */
     public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
+
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes
@@ -176,11 +173,11 @@ class NoteController extends BaseController
             EvaluationType::class,
             $evaluation,
             [
-                'departement'       => $this->dataUserSession->getDepartement(),
+                'departement'     => $this->dataUserSession->getDepartement(),
                 'semestre'        => $matiere->getUe() !== null ? $matiere->getUe()->getSemestre() : '',
                 'import'          => true,
                 'matiereDisabled' => true,
-                'locale' =>$request->getLocale(),
+                'locale'          => $request->getLocale(),
                 'attr'            => [
                     'data-provide' => 'validation'
                 ]
@@ -244,10 +241,10 @@ class NoteController extends BaseController
     {
         if ($evaluation !== null) //todo: tester si c'est le prof ou un admin...
         {
-            $form = $this->createForm(EvaluationsPersonnelsType::class, $evaluation, array(
-                'attr'     => array('id' => 'formPersonne', 'class' => 'form-horizontal'),
+            $form = $this->createForm(EvaluationsPersonnelsType::class, $evaluation, [
+                'attr'     => ['id' => 'formPersonne', 'class' => 'form-horizontal'],
                 'semestre' => $evaluation->getMatiere()->getUE()->getSemestre()
-            ));
+            ]);
 
             return $this->render('appPersonnel/note/addPersonne.html.twig',
                 [
@@ -255,6 +252,7 @@ class NoteController extends BaseController
                     'eval' => $evaluation
                 ]);
         }
+
         return $this->render('bundles/TwigBundle/Exception/error666.html.twig');
     }
 }
