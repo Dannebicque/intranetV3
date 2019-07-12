@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/HrsController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\administration;
 
@@ -6,7 +14,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Hrs;
 use App\Form\HrsType;
-use App\MesClasses\MyExport;
 use App\Repository\HrsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +45,7 @@ class HrsController extends BaseController
         $hrs = new Hrs($this->dataUserSession->getDepartement());
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'      => [
+            'attr'        => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -69,7 +76,7 @@ class HrsController extends BaseController
     {
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'      => [
+            'attr'        => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -182,6 +189,7 @@ class HrsController extends BaseController
      * @param Request       $request
      *
      * @param HrsRepository $hrsRepository
+     *
      * @return Response
      */
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response

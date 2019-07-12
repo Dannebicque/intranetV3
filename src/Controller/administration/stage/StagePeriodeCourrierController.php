@@ -1,16 +1,18 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeCourrierController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
+ */
 
 namespace App\Controller\administration\stage;
 
 use App\Controller\BaseController;
-use App\Entity\Constantes;
 use App\Entity\StagePeriode;
-use App\Entity\StagePeriodeOffre;
-use App\Form\StagePeriodeOffreType;
-use App\MesClasses\MyExport;
-use App\Repository\StagePeriodeOffreRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -35,7 +37,7 @@ class StagePeriodeCourrierController extends BaseController
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
             'stagePeriode' => $stagePeriode,
-            'courriers' => $courriers
+            'courriers'    => $courriers
         ]);
     }
 }

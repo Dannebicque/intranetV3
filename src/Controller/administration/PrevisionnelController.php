@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PrevisionnelController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PrevisionnelController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -27,12 +22,10 @@ use App\MesClasses\Tools;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -92,6 +85,7 @@ class PrevisionnelController extends BaseController
      * @param Semestre       $semestre
      *
      * @param int            $annee
+     *
      * @return Response
      */
     public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre, $annee = 0): Response
@@ -115,6 +109,7 @@ class PrevisionnelController extends BaseController
      * @param Personnel      $personnel
      *
      * @param int            $annee
+     *
      * @return Response
      */
     public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel, $annee = 0): Response
@@ -215,7 +210,7 @@ class PrevisionnelController extends BaseController
             null,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -319,6 +314,7 @@ class PrevisionnelController extends BaseController
      * @param Request                $request
      *
      * @param PrevisionnelRepository $previsionnelRepository
+     *
      * @return Response
      */
     public function supprimer(Request $request, PrevisionnelRepository $previsionnelRepository): Response

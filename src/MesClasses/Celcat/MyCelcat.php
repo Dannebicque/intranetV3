@@ -1,16 +1,11 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcatt.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 3:23 PM
- *  * @lastUpdate 4/30/19 3:22 PM
- *  *
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/4/19 7:13 AM
  */
 
 /**

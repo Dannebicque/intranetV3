@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PpnController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\administration;
 
@@ -29,7 +37,8 @@ class PpnController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_ppn_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_ppn_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      */
     public function export(): Response
     {
@@ -78,7 +87,7 @@ class PpnController extends BaseController
 
     /**
      * @Route("/new", name="administration_ppn_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -87,7 +96,7 @@ class PpnController extends BaseController
         $ppn = new Ppn();
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'      => [
+            'attr'        => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -120,8 +129,8 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_ppn_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Ppn                    $ppn
+     * @param Request $request
+     * @param Ppn     $ppn
      *
      * @return Response
      */
@@ -129,7 +138,7 @@ class PpnController extends BaseController
     {
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'      => [
+            'attr'        => [
                 'data-provide' => 'validation'
             ]
         ]);

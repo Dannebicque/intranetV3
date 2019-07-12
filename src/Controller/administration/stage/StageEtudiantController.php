@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StageEtudiantController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:32 PM
- *  * @lastUpdate 4/28/19 8:32 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StageEtudiantController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\administration\stage;
@@ -48,8 +43,10 @@ class StageEtudiantController extends BaseController
     {
         return $this->render(
             'administration/stage/stage_etudiant/show.html.twig',
-            ['stageEtudiant' => $stageEtudiant,
-                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())]
+            [
+                'stageEtudiant' => $stageEtudiant,
+                'personnels'    => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())
+            ]
         );
     }
 
@@ -128,14 +125,14 @@ class StageEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/change-tuteur/{stageEtudiant}/{tuteur}", name="administration_stage_etudiant_change_tuteur", options={"expose"=true})
+     * @Route("/change-tuteur/{stageEtudiant}/{tuteur}", name="administration_stage_etudiant_change_tuteur",
+     *                                                   options={"expose"=true})
      */
     public function changeTuteur(
         MyStageEtudiant $myStageEtudiant,
         StageEtudiant $stageEtudiant,
         Personnel $tuteur
-    )
-    {
+    ) {
         $stageEtudiant->setTuteurUniversitaire($tuteur);
         $this->entityManager->persist($stageEtudiant);
         $this->entityManager->flush();

@@ -1,13 +1,11 @@
 <?php
-/**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SiteController.php
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;

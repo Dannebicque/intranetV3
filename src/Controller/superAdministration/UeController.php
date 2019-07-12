@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/UeController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:32 PM
- *  * @lastUpdate 4/28/19 6:23 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/UeController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -33,9 +28,9 @@ class UeController extends BaseController
 {
     /**
      * @Route("/new/{semestre}", name="sa_ue_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request  $request
      *
-     * @param Semestre               $semestre
+     * @param Semestre $semestre
      *
      * @return Response
      */
@@ -84,8 +79,8 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ue_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param Ue                     $ue
+     * @param Request $request
+     * @param Ue      $ue
      *
      * @return Response
      */
@@ -122,7 +117,7 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_ue_duplicate", methods="GET|POST")
-     * @param Ue                     $ue
+     * @param Ue $ue
      *
      * @return Response
      */

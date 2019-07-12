@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/TypeHrsController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/2/19 4:18 AM
- *  * @lastUpdate 5/1/19 8:59 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/TypeHrsController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -39,13 +34,14 @@ class TypeHrsController extends BaseController
      */
     public function index(TypeHrsRepository $typeHrsRepository): Response
     {
-        return $this->render('super-administration/type_hrs/index.html.twig', ['type_hrs' => $typeHrsRepository->findAll()]);
+        return $this->render('super-administration/type_hrs/index.html.twig',
+            ['type_hrs' => $typeHrsRepository->findAll()]);
     }
 
     /**
      * @Route("/export.{_format}", name="sa_type_hrs_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
-     * @param TypeHrsRepository $typeHrsRepository
+     * @param TypeHrsRepository   $typeHrsRepository
      *
      * @param                     $_format
      *
@@ -68,7 +64,7 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/new", name="sa_type_hrs_new", methods="GET|POST")
-     * @param Request                $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -109,8 +105,8 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_type_hrs_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param TypeHrs                $typeHr
+     * @param Request $request
+     * @param TypeHrs $typeHr
      *
      * @return Response
      */

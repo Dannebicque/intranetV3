@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/DisponibiliteController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 2:35 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/DisponibiliteController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\appPersonnel;
@@ -42,8 +37,8 @@ class DisponibiliteController extends BaseController
     public function index(DisponibiliteRepository $disponibiliteRepository): Response
     {
         $disponibilites = $disponibiliteRepository->getDisponibilitesArray($this->getConnectedUser());
-        $nbInterdit=0;
-        $nbEviter=0;
+        $nbInterdit = 0;
+        $nbEviter = 0;
         foreach ($disponibilites as $disponibilite) {
             foreach ($disponibilite as $dispo) {
                 if ($dispo === 'E') {
@@ -55,11 +50,11 @@ class DisponibiliteController extends BaseController
         }
 
         return $this->render('appPersonnel/disponibilite/index.html.twig', [
-            'anneepreparee' => $this->dataUserSession->getDepartement() ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : null,
-            'creneaux' => [1 => '8:00', 2=>'9:30', 3=>'11:00', 4=>'14:00', 5=>'15:30',6=>'17:00'],
+            'anneepreparee'  => $this->dataUserSession->getDepartement() ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : null,
+            'creneaux'       => [1 => '8:00', 2 => '9:30', 3 => '11:00', 4 => '14:00', 5 => '15:30', 6 => '17:00'],
             'disponibilites' => $disponibilites,
-            'nb_eviter' => $nbEviter,
-            'nb_interdit' => $nbInterdit,
+            'nb_eviter'      => $nbEviter,
+            'nb_interdit'    => $nbInterdit,
         ]);
     }
 
@@ -71,8 +66,10 @@ class DisponibiliteController extends BaseController
      * @return JsonResponse
      * @throws NonUniqueResultException
      */
-    public function updateDisponibilites(Request $request, DisponibiliteRepository $disponibiliteRepository): JsonResponse
-    {
+    public function updateDisponibilites(
+        Request $request,
+        DisponibiliteRepository $disponibiliteRepository
+    ): JsonResponse {
         //todo: a gérer année universitaire
         $jour = $request->request->get('jour');
         $heure = $request->request->get('heure');
@@ -87,16 +84,18 @@ class DisponibiliteController extends BaseController
                 $disponibilite->setEtat($etat);
             }
             $this->entityManager->flush();
+
             return $this->json(true, Response::HTTP_OK);
         }
-            $disponibilite = new Disponibilite();
-            $disponibilite->setPersonnel($this->getConnectedUser());
-            $disponibilite->setJour($jour);
-            $disponibilite->setHeure($heure);
-            $disponibilite->setEtat($etat);
-            $this->entityManager->persist($disponibilite);
-            $this->entityManager->flush();
-            return $this->json(true, Response::HTTP_OK);
+        $disponibilite = new Disponibilite();
+        $disponibilite->setPersonnel($this->getConnectedUser());
+        $disponibilite->setJour($jour);
+        $disponibilite->setHeure($heure);
+        $disponibilite->setEtat($etat);
+        $this->entityManager->persist($disponibilite);
+        $this->entityManager->flush();
+
+        return $this->json(true, Response::HTTP_OK);
 
     }
 }

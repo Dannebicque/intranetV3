@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TypeDocumentController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\administration;
 
@@ -31,7 +39,8 @@ class TypeDocumentController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_type_document_export", methods="GET", requirements={"_format":"pdf|csv|xlsx"})
+     * @Route("/export.{_format}", name="administration_type_document_export", methods="GET",
+     *                             requirements={"_format":"pdf|csv|xlsx"})
      */
     public function export(): Response
     {
@@ -122,8 +131,7 @@ class TypeDocumentController extends BaseController
     ): Response {
         $id = $typeDocument->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            foreach ($typeDocument->getDocuments() as $document)
-            {
+            foreach ($typeDocument->getDocuments() as $document) {
                 $typeDocument->removeDocument($document);
             }
 

@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/CreneauBloqueController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 10:57 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/CreneauBloqueController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -81,8 +76,7 @@ class CreneauBloqueController extends BaseController
         CalendrierRepository $calendrierRepository,
         CreneauBloqueRepository $creneauBloqueRepository,
         Request $request
-    ): Response
-    {
+    ): Response {
         $cr = $creneauCoursRepository->find($request->request->get('creneau'));
         $semaine = $calendrierRepository->find($request->request->get('semaine'));
 

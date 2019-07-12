@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:35 PM
- *  * @lastUpdate 4/30/19 2:35 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -41,7 +36,7 @@ class MessagerieController extends BaseController
     /**
      * @Route("/", name="messagerie_index")
      */
-    public function index() :Response
+    public function index(): Response
     {
         return $this->render('messagerie/index.html.twig', [
         ]);
@@ -50,7 +45,7 @@ class MessagerieController extends BaseController
     /**
      * @Route("/ecrire", name="messagerie_nouveau", options={"expose":true})
      */
-    public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository) :Response
+    public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository): Response
     {
         return $this->render('messagerie/nouveauMessage.html.twig', [
             'type_groupes' => $typeGroupeRepository->findByDepartement($this->dataUserSession->getDepartement())
@@ -65,9 +60,11 @@ class MessagerieController extends BaseController
      *
      * @return JsonResponse
      */
-    public function starred(MessageDestinatairePersonnelRepository $messagePersonnelRepository,
-        MessageDestinataireEtudiantRepository $messageEtudiantRepository, Request $request): JsonResponse
-    {
+    public function starred(
+        MessageDestinatairePersonnelRepository $messagePersonnelRepository,
+        MessageDestinataireEtudiantRepository $messageEtudiantRepository,
+        Request $request
+    ): JsonResponse {
         $message = $request->request->get('message');
         $valeur = $request->request->get('valeur') !== 'false';
 
@@ -79,13 +76,14 @@ class MessagerieController extends BaseController
             $messageDest = $messagePersonnelRepository->find($message);
         }
 
-        if( $messageDest !== null) {
+        if ($messageDest !== null) {
             $messageDest->setStarred($valeur);
             $this->entityManager->persist($messageDest);
             $this->entityManager->flush();
 
             return $this->json(true, Response::HTTP_OK);
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
@@ -105,7 +103,7 @@ class MessagerieController extends BaseController
         $filtre
     ): Response {
 
-        if ($filtre === 'sent'){
+        if ($filtre === 'sent') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
         } elseif ($filtre === 'draft') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
@@ -118,7 +116,7 @@ class MessagerieController extends BaseController
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
-            'filtre' => $filtre,
+            'filtre'   => $filtre,
             'messages' => $messages
         ]);
     }
@@ -140,7 +138,7 @@ class MessagerieController extends BaseController
         $filtre = 'all',
         $page = 0
     ): Response {
-        if ($filtre === 'send'){
+        if ($filtre === 'send') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
         } elseif ($filtre === 'draft') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
@@ -153,7 +151,7 @@ class MessagerieController extends BaseController
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
-            'filtre' => $filtre,
+            'filtre'   => $filtre,
             'messages' => $messages
         ]);
     }
@@ -172,16 +170,16 @@ class MessagerieController extends BaseController
         $destinataires = '';
         switch ($typeDestinataire) {
             case 's':
-                $destinataires =$request->request->get('messageToSemestre');
+                $destinataires = $request->request->get('messageToSemestre');
                 break;
             case 'g':
-                $destinataires =$request->request->get('messageToGroupe');
+                $destinataires = $request->request->get('messageToGroupe');
                 break;
             case 'e':
-                $destinataires =$request->request->get('messageToLibreEtudiant');
+                $destinataires = $request->request->get('messageToLibreEtudiant');
                 break;
             case 'p':
-                $destinataires =$request->request->get('messageToLibrePersonnel');
+                $destinataires = $request->request->get('messageToLibrePersonnel');
                 break;
 
         }

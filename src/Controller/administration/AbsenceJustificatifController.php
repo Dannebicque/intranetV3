@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceJustificatifController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceJustificatifController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -90,8 +85,11 @@ class AbsenceJustificatifController extends BaseController
      *
      * @return Response
      */
-    public function delete(EventDispatcherInterface $eventDispatcher, Request $request, AbsenceJustificatif $absenceJustificatif): Response
-    {
+    public function delete(
+        EventDispatcherInterface $eventDispatcher,
+        Request $request,
+        AbsenceJustificatif $absenceJustificatif
+    ): Response {
         $id = $absenceJustificatif->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
@@ -132,8 +130,11 @@ class AbsenceJustificatifController extends BaseController
      *
      * @return Response
      */
-    public function accepte(EventDispatcherInterface $eventDispatcher, AbsenceJustificatif $absenceJustificatif, $etat): Response
-    {
+    public function accepte(
+        EventDispatcherInterface $eventDispatcher,
+        AbsenceJustificatif $absenceJustificatif,
+        $etat
+    ): Response {
         $absenceJustificatif->setEtat($etat);
         $this->entityManager->flush();
 

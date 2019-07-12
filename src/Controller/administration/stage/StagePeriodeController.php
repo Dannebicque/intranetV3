@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\administration\stage;
@@ -66,6 +61,7 @@ class StagePeriodeController extends BaseController
             ['stage_periode_administration', 'utilisateur'],
             ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
         );
+
         //todo: définir les colonnes. copier/coller ici
 
         return $response;
@@ -83,7 +79,7 @@ class StagePeriodeController extends BaseController
         $stagePeriode = new StagePeriode();
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'      => [
+            'attr'        => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -128,7 +124,7 @@ class StagePeriodeController extends BaseController
     {
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'      => [
+            'attr'        => [
                 'data-provide' => 'validation'
             ]
         ]);
@@ -166,6 +162,7 @@ class StagePeriodeController extends BaseController
                 Constantes::FLASHBAG_SUCCESS,
                 'stage_periode.delete.success.flash'
             );
+
             //todo: supprimer les autres éléments ou définir le cas ??
 
             return $this->json($id, Response::HTTP_OK);

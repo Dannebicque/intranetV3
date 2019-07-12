@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -39,13 +34,12 @@ class CelcatController extends BaseController
      */
     public function index(DiplomeRepository $diplomeRepository): Response
     {
-       return $this->render('super-administration/celcat/index.html.twig', [
-           'diplomes' => $diplomeRepository->findAll()
-       ]);
+        return $this->render('super-administration/celcat/index.html.twig', [
+            'diplomes' => $diplomeRepository->findAll()
+        ]);
     }
 
     /**
-
      * @Route("/extraction", methods={"GET"}, name="super_admin_celcat_extraction_code")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
@@ -68,10 +62,12 @@ class CelcatController extends BaseController
     public function update(CelcatEventsRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
         //suppression des events existants pour le département
-        $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
+        $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(),
+            $diplome->getAnneeUniversitaire());
 
         //récupération et ajouts des events.
-        MyCelcat::getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire(), $this->entityManager);
+        MyCelcat::getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire(),
+            $this->entityManager);
 
         return $this->redirectToRoute('sa_celcat_index');
     }

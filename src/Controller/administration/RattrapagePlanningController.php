@@ -1,35 +1,25 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/RattrapageController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/RattrapagePlanningController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Rattrapage;
-use App\Entity\Semestre;
-use App\Events;
 use App\MesClasses\MyExport;
 use App\MesClasses\Tools;
-use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,7 +45,7 @@ class RattrapagePlanningController extends BaseController
     ): Response {
         return $this->render('administration/rattrapagePlanning/index.html.twig', [
             'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
-            'diplome' => $diplome
+            'diplome'     => $diplome
         ]);
     }
 
@@ -111,7 +101,7 @@ class RattrapagePlanningController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function change( Request $request, Rattrapage $rattrapage, $type): Response
+    public function change(Request $request, Rattrapage $rattrapage, $type): Response
     {
         $data = $request->request->get('data');
         switch ($type) {
@@ -128,6 +118,7 @@ class RattrapagePlanningController extends BaseController
                 return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         $this->entityManager->flush();
+
         return $this->json(true, Response::HTTP_OK);
 
     }
@@ -140,17 +131,19 @@ class RattrapagePlanningController extends BaseController
      * @return Response
      * @throws \Exception
      */
-    public function updateGlobal(Request $request, RattrapageRepository $rattrapageRepository, $type, Diplome $diplome): Response
-    {
+    public function updateGlobal(
+        Request $request,
+        RattrapageRepository $rattrapageRepository,
+        $type,
+        Diplome $diplome
+    ): Response {
         $valeur = $request->request->get('valeur');
 
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
 
         /** @var Rattrapage $rattrapage */
-        foreach ($rattrapages as $rattrapage)
-        {
-            switch ($type)
-            {
+        foreach ($rattrapages as $rattrapage) {
+            switch ($type) {
                 case 'salle':
                     $rattrapage->setSalle($valeur);
                     break;
@@ -164,6 +157,7 @@ class RattrapagePlanningController extends BaseController
             $this->entityManager->persist($rattrapage);
         }
         $this->entityManager->flush();
+
         return $this->json(true, Response::HTTP_OK);
 
     }

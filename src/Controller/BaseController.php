@@ -1,23 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/BaseController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 4:47 PM
- *  * @lastUpdate 4/30/19 4:47 PM
- *  *
- *
- */
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 01/05/2018
- * Time: 12:41
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/BaseController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -44,6 +32,7 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
 
     /**
      * @param DataUserSession $dataUserSession
+     *
      * @required
      */
     public function setDataUserSession(DataUserSession $dataUserSession): void
@@ -63,6 +52,7 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
 
     /**
      * @param TranslatorInterface $translator
+     *
      * @required
      */
     public function setTranslator(TranslatorInterface $translator): void

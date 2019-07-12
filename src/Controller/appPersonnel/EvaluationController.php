@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/EvaluationController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -50,8 +58,11 @@ class EvaluationController extends BaseController
      */
     public function exportEvaluation(
         GroupeRepository $groupeRepository,
-        MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format): void
-    {
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation,
+        $type,
+        $_format
+    ): void {
         $t = explode('_', $type);
         if ($t[0] === 'groupe') {
             $grp = $groupeRepository->find($t[1]);

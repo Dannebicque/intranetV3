@@ -1,18 +1,15 @@
 <?php
-/**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/AgendaController.php
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  07/05/2019 10:42
- * @lastUpdate 07/05/2019 10:41
- *
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
 
-use App\MesClasses\Edt\MyEdt;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class AgendaController extends BaseController
 {
     /**
-     * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index", options={"expose"=true})
+     * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index", options={"expose"=true},
+     *                                        requirements={"semaine":"\d+"})
      * @param int    $semaine
      * @param string $filtre
      * @param string $valeur
@@ -33,13 +31,16 @@ class AgendaController extends BaseController
      */
     public function index(
         $semaine = 0,
-        $filtre = '',
+        $filtre = 'prof',
         $valeur = ''
-        ): Response
-    {
+    ): Response {
+        if ($semaine === 0) {
+            $semaine = (int)date('W');
+        }
+
         return $this->render('agenda/index.html.twig', [
-            'filtre' => $filtre,
-            'valeur' => $valeur,
+            'filtre'  => $filtre,
+            'valeur'  => $valeur,
             'semaine' => $semaine,
         ]);
     }

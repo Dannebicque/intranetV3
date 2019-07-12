@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/PersonnelApiController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/PersonnelApiController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\api;
@@ -63,7 +58,7 @@ class PersonnelApiController extends BaseController
             $type,
             $this->dataUserSession->getDepartementId()
         );
-        $pers = array();
+        $pers = [];
 
         /** @var PersonnelDepartement $p */
         foreach ($personnels as $p) {
@@ -95,7 +90,7 @@ class PersonnelApiController extends BaseController
         $needle
     ): Response {
         $result = $this->personnelRepository->search($needle);
-        $pers = array();
+        $pers = [];
 
         foreach ($result as $p) {
             $pers[] = $p;
@@ -106,13 +101,14 @@ class PersonnelApiController extends BaseController
 
     /**
      * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param                              $slug
+     * @param                                $slug
      *
      * @param Departement                    $departement
      *
      * @return Response
      * @throws NonUniqueResultException
-     * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement", options={"expose":true})
+     * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement",
+     *                                                           options={"expose":true})
      */
     public function addPersonnelToDepartement(
         PersonnelDepartementRepository $personnelDepartementRepository,
@@ -124,7 +120,7 @@ class PersonnelApiController extends BaseController
         if ($personnel !== null) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),
-                'personnel' => $personnel->getId()
+                'personnel'   => $personnel->getId()
             ]);
             if ($existe === null) {
                 $pf = new PersonnelDepartement($personnel, $departement);

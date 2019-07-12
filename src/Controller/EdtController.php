@@ -1,27 +1,27 @@
 <?php
-/**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
- * @file       /Users/davidannebicque/htdocs/intranetv3/src/Controller/EdtController.php
- * @author     David annebicque
- * @project    intranetv3
- * @date       07/05/2019 10:42
- * @lastUpdate 07/05/2019 10:42
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/EdtController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
 
 use App\Entity\Semestre;
-use App\MesClasses\Configuration;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
 use App\MesClasses\Pdf\MyPDF;
 use App\Repository\EdtPlanningRepository;
-use Dompdf\Options;
 use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class EdtController
@@ -30,14 +30,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EdtController extends BaseController
 {
-    /**
-     * @var MyEdt
-     */
-    private $myEdt;
-
-    /** @var MyEdtCelcat */
-    private $myEdtCelcat;
-
     private static $tabHeures = [
         1 => ['8h00', '9h30'],
         2 => ['9h30', '11h00'],
@@ -47,7 +39,12 @@ class EdtController extends BaseController
         6 => ['15h30', '17h00'],
         7 => ['17h00', '18h30']
     ];
-
+    /**
+     * @var MyEdt
+     */
+    private $myEdt;
+    /** @var MyEdtCelcat */
+    private $myEdtCelcat;
 
     public function __construct(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
     {
@@ -71,8 +68,8 @@ class EdtController extends BaseController
 
                 return $this->render('edt/_intervenant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
-                    'filtre' => 'prof',
-                    'valeur' => $this->getConnectedUser()->getId(),
+                    'filtre'    => 'prof',
+                    'valeur'    => $this->getConnectedUser()->getId(),
                     'tabHeures' => self::$tabHeures
                 ]);
             }
@@ -81,8 +78,8 @@ class EdtController extends BaseController
 
             return $this->render('edt/_intervenant.html.twig', [
                 'edt'       => $this->myEdt,
-                'filtre' => 'prof',
-                'valeur' => $this->getConnectedUser()->getId(),
+                'filtre'    => 'prof',
+                'valeur'    => $this->getConnectedUser()->getId(),
                 'tabHeures' => self::$tabHeures
             ]);
         }
@@ -98,8 +95,8 @@ class EdtController extends BaseController
 
             return $this->render('edt/_semestre.html.twig', [
                 'edt'       => $this->myEdtCelcat,
-                'semestre' => $semestre,
-                'valeur' => $semestre->getId(),
+                'semestre'  => $semestre,
+                'valeur'    => $semestre->getId(),
                 'tabHeures' => self::$tabHeures
             ]);
         }
@@ -108,9 +105,9 @@ class EdtController extends BaseController
 
         return $this->render('edt/_semestre.html.twig', [
             'edt'       => $this->myEdt,
-            'semestre' => $semestre,
-            'filtre' => 'promo',
-            'valeur' => $semestre->getId(),
+            'semestre'  => $semestre,
+            'filtre'    => 'promo',
+            'valeur'    => $semestre->getId(),
             'tabHeures' => self::$tabHeures
         ]);
     }
@@ -198,15 +195,15 @@ class EdtController extends BaseController
      * @param MyPDF $myPDF
      * @param int   $semaine
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @return RedirectResponse
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function exportEtudiantSemaine(
         MyPDF $myPDF,
         $semaine = 0
-    ): ?\Symfony\Component\HttpFoundation\RedirectResponse {
+    ): ?RedirectResponse {
         if ($semaine === 0) {
             $semaine = (int)date('W');
         }

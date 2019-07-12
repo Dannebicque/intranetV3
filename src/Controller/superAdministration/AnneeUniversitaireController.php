@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/2/19 4:18 AM
- *  * @lastUpdate 5/1/19 8:59 AM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
@@ -45,17 +40,21 @@ class AnneeUniversitaireController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="sa_annee_universitaire_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
+     * @Route("/export.{_format}", name="sa_annee_universitaire_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport                     $myExport
      * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
      *
-     * @param                     $_format
+     * @param                              $_format
      *
      * @return Response
      * @throws Exception
      */
-    public function export(MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, $_format): Response
-    {
+    public function export(
+        MyExport $myExport,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        $_format
+    ): Response {
         $annee_universitaires = $anneeUniversitaireRepository->findAll();
         $response = $myExport->genereFichierGenerique(
             $_format,
@@ -91,7 +90,7 @@ class AnneeUniversitaireController extends BaseController
 
         return $this->render('super-administration/annee_universitaire/new.html.twig', [
             'annee_universitaire' => $anneeUniversitaire,
-            'form' => $form->createView(),
+            'form'                => $form->createView(),
         ]);
     }
 
@@ -131,7 +130,7 @@ class AnneeUniversitaireController extends BaseController
 
         return $this->render('super-administration/annee_universitaire/edit.html.twig', [
             'annee_universitaire' => $anneeUniversitaire,
-            'form' => $form->createView(),
+            'form'                => $form->createView(),
         ]);
     }
 
@@ -154,8 +153,8 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_universitaire_delete", methods="DELETE")
-     * @param Request $request
-     * @param AnneeUniversitaire   $annee_universitaire
+     * @param Request            $request
+     * @param AnneeUniversitaire $annee_universitaire
      *
      * @return Response
      */

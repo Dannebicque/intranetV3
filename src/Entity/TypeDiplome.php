@@ -1,16 +1,11 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/TypeDiplome.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/2/19 4:18 AM
- *  * @lastUpdate 5/1/19 4:39 PM
- *  *
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/TypeDiplome.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 5/2/19 4:18 AM
  */
 
 namespace App\Entity;

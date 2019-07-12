@@ -1,16 +1,11 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/FormationFixtures.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 2:48 PM
- *  * @lastUpdate 4/30/19 2:48 PM
- *  *
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/FormationFixtures.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 4/30/19 2:48 PM
  */
 
 namespace App\DataFixtures;

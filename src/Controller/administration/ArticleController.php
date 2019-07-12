@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/ArticleController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/ArticleController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -24,6 +19,7 @@ use App\MesClasses\MyExport;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\ArticleRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,12 +37,14 @@ class ArticleController extends BaseController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
-        return $this->render('administration/article/index.html.twig', ['articles' => $articleRepository->findByDepartement($this->dataUserSession->getDepartement())]);
+        return $this->render('administration/article/index.html.twig',
+            ['articles' => $articleRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_article_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport          $myExport
+     * @Route("/export.{_format}", name="administration_article_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport $myExport
      * @param ArticleRepository $articleRepository
      * @param                   $_format
      *
@@ -81,7 +79,7 @@ class ArticleController extends BaseController
             $article,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -127,7 +125,7 @@ class ArticleController extends BaseController
             $article,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -202,21 +200,23 @@ class ArticleController extends BaseController
      * @param ArticleCategorieRepository $categorieRepository
      * @param Request                    $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      * @Route("/gestion/categorie/add", name="administration_article_categorie_add", options={"expose"=true})
      *
      */
-    public function addCategorie(ArticleCategorieRepository $categorieRepository, Request $request): \Symfony\Component\HttpFoundation\JsonResponse
-    {
-       $libelle = $request->request->get('libelle');
-       $categorie = new ArticleCategorie();
-       $categorie->setDepartement($this->dataUserSession->getDepartement());
-       $categorie->setLibelle($libelle);
+    public function addCategorie(
+        ArticleCategorieRepository $categorieRepository,
+        Request $request
+    ): JsonResponse {
+        $libelle = $request->request->get('libelle');
+        $categorie = new ArticleCategorie();
+        $categorie->setDepartement($this->dataUserSession->getDepartement());
+        $categorie->setLibelle($libelle);
 
-       $this->entityManager->persist($categorie);
-       $this->entityManager->flush();
+        $this->entityManager->persist($categorie);
+        $this->entityManager->flush();
 
-       return $this->json($categorieRepository->findByDepartementJson($this->dataUserSession->getDepartement()));
+        return $this->json($categorieRepository->findByDepartementJson($this->dataUserSession->getDepartement()));
 
     }
 }

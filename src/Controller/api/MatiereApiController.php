@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/MatiereApiController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
+ */
 
 namespace App\Controller\api;
 
@@ -49,7 +57,7 @@ class MatiereApiController extends BaseController
     {
         $matieres = $this->matiereRepository->findBySemestre($semestre);
 
-        $tmatieres = array();
+        $tmatieres = [];
         /** @var Matiere $m */
         foreach ($matieres as $m) {
             $t = [];
@@ -113,8 +121,11 @@ class MatiereApiController extends BaseController
      *
      * @return JsonResponse
      */
-    public function listUesOfSemestre(Request $request, UeRepository $ueRepository, SemestreRepository $semestreRepository) :JsonResponse
-    {
+    public function listUesOfSemestre(
+        Request $request,
+        UeRepository $ueRepository,
+        SemestreRepository $semestreRepository
+    ): JsonResponse {
         $semestre = $semestreRepository->find($request->request->get('semestreid'));
         if ($semestre !== null) {
             // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
@@ -122,15 +133,15 @@ class MatiereApiController extends BaseController
 
             // Serialize into an array the data that we need, in this case only name and id
             // Note: you can use a serializer as well, for explanation purposes, we'll do it manually
-            $responseArray = array();
+            $responseArray = [];
 
             /** @var Ue $ue */
             foreach ($ues as $ue) {
-                $responseArray[] = array(
-                    'id'   => $ue->getId(),
-                    'libelle' => $ue->getLibelle(),
+                $responseArray[] = [
+                    'id'       => $ue->getId(),
+                    'libelle'  => $ue->getLibelle(),
                     'numeroUe' => $ue->getNumeroUe()
-                );
+                ];
             }
 
             // Return array with structure of the neighborhoods of the providen city id
@@ -150,8 +161,11 @@ class MatiereApiController extends BaseController
      *
      * @return JsonResponse
      */
-    public function listParcoursOfSemestre(Request $request, ParcourRepository $parcourRepository, SemestreRepository $semestreRepository): JsonResponse
-    {
+    public function listParcoursOfSemestre(
+        Request $request,
+        ParcourRepository $parcourRepository,
+        SemestreRepository $semestreRepository
+    ): JsonResponse {
         $semestre = $semestreRepository->find($request->request->get('semestreid'));
         if ($semestre !== null) {
             // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
@@ -159,14 +173,14 @@ class MatiereApiController extends BaseController
 
             // Serialize into an array the data that we need, in this case only name and id
             // Note: you can use a serializer as well, for explanation purposes, we'll do it manually
-            $responseArray = array();
+            $responseArray = [];
 
             /** @var Parcour $parcour */
             foreach ($parcours as $parcour) {
-                $responseArray[] = array(
-                    'id'   => $parcour->getId(),
+                $responseArray[] = [
+                    'id'      => $parcour->getId(),
                     'libelle' => $parcour->getLibelle()
-                );
+                ];
             }
 
             // Return array with structure of the neighborhoods of the providen city id
@@ -179,14 +193,20 @@ class MatiereApiController extends BaseController
     /**
      * @param Semestre  $semestre
      * @param Personnel $personnel
-     * @Route("/matiere/semestre/personnel/{semestre}/{personnel}", name="api_matieres_semestre_personnel", options={"expose":true})
+     * @Route("/matiere/semestre/personnel/{semestre}/{personnel}", name="api_matieres_semestre_personnel",
+     *                                                              options={"expose":true})
      */
-    public function matiereSemestrePersonnel(PrevisionnelRepository $previsionnelRepository, Semestre $semestre, Personnel $personnel){
+    public function matiereSemestrePersonnel(
+        PrevisionnelRepository $previsionnelRepository,
+        Semestre $semestre,
+        Personnel $personnel
+    ) {
 
         if ($semestre !== null && $personnel !== null) {
-            $matieres = $previsionnelRepository->findPrevisionnelSemestrePersonnel($semestre, $personnel, $this->dataUserSession->getAnneePrevisionnel());
+            $matieres = $previsionnelRepository->findPrevisionnelSemestrePersonnel($semestre, $personnel,
+                $this->dataUserSession->getAnneePrevisionnel());
 
-            $array = array();
+            $array = [];
             $i = 1;
 
             /** @var Previsionnel $m */
@@ -204,6 +224,7 @@ class MatiereApiController extends BaseController
 
             return $response;
         }
+
         return $this->redirect($this->generateUrl('erreur_666'));
     }
 }

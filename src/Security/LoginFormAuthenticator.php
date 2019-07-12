@@ -1,16 +1,11 @@
 <?php
 /**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/30/19 3:06 PM
- *  * @lastUpdate 4/30/19 3:05 PM
- *  *
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 6/9/19 12:11 PM
  */
 
 namespace App\Security;

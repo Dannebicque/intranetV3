@@ -1,13 +1,11 @@
 <?php
-/**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EdtActionsController.php
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  07/05/2019 12:01
- * @lastUpdate 07/05/2019 12:00
- *
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -15,6 +13,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\MesClasses\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,17 +30,20 @@ class EdtActionsController extends BaseController
      * @param Request              $request
      * @param MyEdtImport          $myEdtImport
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
-    public function uploadSemaine(CalendrierRepository $calendrierRepository, Request $request, MyEdtImport $myEdtImport): ?\Symfony\Component\HttpFoundation\RedirectResponse
-    {
+    public function uploadSemaine(
+        CalendrierRepository $calendrierRepository,
+        Request $request,
+        MyEdtImport $myEdtImport
+    ): ?RedirectResponse {
 
         //récupérer le fichier
         $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();
 
 
         /* fin necessaire ? */
-        $s = $calendrierRepository->findOneBy(array('semaineFormation' => $myEdtImport->getSemaine()));
+        $s = $calendrierRepository->findOneBy(['semaineFormation' => $myEdtImport->getSemaine()]);
 
         if ($s) {
             return $this->redirectToRoute('administration_edt_index',

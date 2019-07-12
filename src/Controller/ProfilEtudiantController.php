@@ -1,13 +1,11 @@
 <?php
-/**
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller;
@@ -15,7 +13,6 @@ namespace App\Controller;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\MesClasses\Calendrier;
-use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
 use App\Repository\AlternanceRepository;
 use App\Repository\MatiereRepository;
@@ -85,7 +82,7 @@ class ProfilEtudiantController extends BaseController
         $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
-            'etudiant' => $etudiant,
+            'etudiant'     => $etudiant,
             'scolarite'    => $scolarite,
             'scolariteUes' => $scolariteUes
         ]);
@@ -104,6 +101,7 @@ class ProfilEtudiantController extends BaseController
     {
         $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
             $etudiant->getDepartement()); //les semestres dans lesquels l'étudiant est passé dans le département...
+
         return $this->render('user/composants/notes.html.twig', [
             'notes'     => $etudiant->getNotes(),
             'semestres' => $semestres
@@ -129,7 +127,7 @@ class ProfilEtudiantController extends BaseController
             'tabFerie'    => Calendrier::getTabJoursFeries(),
             'tabFinMois'  => Calendrier::getTabFinMois(),
             'annee'       => $etudiant->getAnneeUniversitaire(),
-            'myEtudiant'    => $myEtudiant->setEtudiant($etudiant)->getAbsencesSemestre(),
+            'myEtudiant'  => $myEtudiant->setEtudiant($etudiant)->getAbsencesSemestre(),
             'tabAbsence'  => [], //compte des absences par créneaux du planning.
             'matieres'    => $matiereRepository->findBySemestre($etudiant->getSemestre())
         ]);

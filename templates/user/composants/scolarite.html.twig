@@ -33,9 +33,19 @@
                     <td>{{ parcour.proposition }}</td>
                     <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a></td>
-                    {# todo: editer relevés provisoire et définitif pour poursuite d'études modele GMP. Edit. Déja
-                    dans la page action... a synthétiser #}
+                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                        {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                            {% if parcour.decision == 'EC' %}
+                        <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
+                           class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
+                                    class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+                                {% else %}
+                                    <a href="{{ path('administration_semestre_export_releve_definitif',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
+                                       class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
+                                                class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+                                {% endif %}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
 

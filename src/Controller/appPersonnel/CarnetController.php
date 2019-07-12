@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/CarnetController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/CarnetController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\appPersonnel;
@@ -53,11 +48,12 @@ class CarnetController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="application_personnel_carnet_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
+     * @Route("/export.{_format}", name="application_personnel_carnet_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport              $myExport
      * @param CahierTexteRepository $cahierTexteRepository
      *
-     * @param                     $_format
+     * @param                       $_format
      *
      * @return Response
      * @throws Exception
@@ -70,7 +66,14 @@ class CarnetController extends BaseController
             $actualites,
             'carnet_texte',
             ['carnet_personnel', 'utilisateur', 'semestre', 'matiere'],
-            ['libelle', 'description', 'dateRetour', 'personnel' => ['nom', 'prenom'], 'semestre' => ['libelle'], 'matiere' => ['libelle', 'codeMatiere']]
+            [
+                'libelle',
+                'description',
+                'dateRetour',
+                'personnel' => ['nom', 'prenom'],
+                'semestre'  => ['libelle'],
+                'matiere'   => ['libelle', 'codeMatiere']
+            ]
         );
 
         return $response;
@@ -94,7 +97,7 @@ class CarnetController extends BaseController
             $cahierTexte,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -131,8 +134,8 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_carnet_edit", methods="GET|POST")
-     * @param Request                $request
-     * @param CahierTexte            $cahierTexte
+     * @param Request     $request
+     * @param CahierTexte $cahierTexte
      *
      * @return Response
      */
@@ -143,7 +146,7 @@ class CarnetController extends BaseController
             $cahierTexte,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'      => [
+                'attr'        => [
                     'data-provide' => 'validation'
                 ]
             ]
@@ -164,8 +167,8 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_delete", methods="DELETE")
-     * @param Request                $request
-     * @param CahierTexte            $cahierTexte
+     * @param Request     $request
+     * @param CahierTexte $cahierTexte
      *
      * @return Response
      */

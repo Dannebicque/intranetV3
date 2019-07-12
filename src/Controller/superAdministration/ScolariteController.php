@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ScolariteController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -54,12 +62,11 @@ class ScolariteController extends BaseController
         DepartementRepository $departementRepository,
         EtudiantRepository $etudiantRepository,
         $needle
-    ): Response
-    {
+    ): Response {
         $etudiants = $etudiantRepository->searchObject($needle);
 
         return $this->render('super-administration/scolarite/recherche.html.twig', [
-            'etudiants' => $etudiants,
+            'etudiants'    => $etudiants,
             'departements' => $departementRepository->findActifs()
         ]);
     }

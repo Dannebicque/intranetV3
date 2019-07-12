@@ -1,22 +1,16 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/DiplomeController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:46 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/DiplomeController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
-use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -60,9 +54,9 @@ class DiplomeController extends BaseController
         }
 
         return $this->render('structure/diplome/new.html.twig', [
-            'diplome' => $diplome,
+            'diplome'     => $diplome,
             'departement' => $departement,
-            'form'    => $form->createView(),
+            'form'        => $form->createView(),
         ]);
     }
 
@@ -114,7 +108,7 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_diplome_duplicate", methods="GET|POST")
-     * @param Diplome                $diplome
+     * @param Diplome $diplome
      *
      * @return Response
      */
@@ -133,6 +127,7 @@ class DiplomeController extends BaseController
      * @Route("/{id}", name="sa_diplome_delete", methods="DELETE")
      * @param Request $request
      * @param Diplome $diplome
+     *
      * @return Response
      */
     public function delete(Request $request, Diplome $diplome): Response

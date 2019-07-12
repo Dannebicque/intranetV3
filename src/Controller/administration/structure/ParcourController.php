@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/ParcourController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:32 PM
- *  * @lastUpdate 4/28/19 6:23 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/ParcourController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:23 AM
  */
 
 namespace App\Controller\administration\structure;
@@ -81,6 +76,7 @@ class ParcourController extends BaseController
      * @Route("/{id}/edit", name="administration_structure_parcour_edit", methods="GET|POST")
      * @param Request $request
      * @param Parcour $parcour
+     *
      * @return Response
      */
     public function edit(Request $request, Parcour $parcour): Response

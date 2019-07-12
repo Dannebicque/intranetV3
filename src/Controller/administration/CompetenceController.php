@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/CompetenceController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:42 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/CompetenceController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -80,7 +75,8 @@ class CompetenceController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_competence_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export.{_format}", name="administration_competence_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param Csv                  $csv
      * @param CompetenceRepository $competenceRepository
      *
@@ -90,7 +86,7 @@ class CompetenceController extends BaseController
     public function export(Csv $csv, CompetenceRepository $competenceRepository): Response
     {
         $competences = $competenceRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $csv->export('competences.csv', $competences, array('acutalite_administration'));
+        $csv->export('competences.csv', $competences, ['acutalite_administration']);
 
         return $csv->response();
     }
@@ -143,6 +139,7 @@ class CompetenceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'competence.edit.success.flash');
+
             return $this->redirectToRoute('administration_competence_index');
         }
 

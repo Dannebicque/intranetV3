@@ -1,16 +1,11 @@
 <?php
-/**
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceController.php
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 4/28/19 8:47 PM
- *  * @lastUpdate 4/28/19 8:44 PM
- *  *
- *
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AbsenceController.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 7/12/19 11:23 AM
+ * @lastUpdate 7/12/19 11:21 AM
  */
 
 namespace App\Controller\administration;
@@ -18,10 +13,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
-use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\MesClasses\Mail\MyMailer;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyExport;
@@ -29,6 +21,7 @@ use App\MesClasses\Tools;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\MatiereRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,9 +44,9 @@ class AbsenceController extends BaseController
      */
     public function listeAbsenceEtudiant(Etudiant $etudiant): Response
     {
-        $tAbs = array();
+        $tAbs = [];
         foreach ($etudiant->getAbsences() as $abs) {
-            $t = array();
+            $t = [];
             $t['date'] = $abs->getDate() !== null ? $abs->getDate()->format('d/m/Y') : '';
             $t['id'] = $abs->getId();
             $t['heure'] = $abs->getHeure() !== null ? $abs->getHeure()->format('H:i') : '';
@@ -110,7 +103,8 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/semestre/{semestre}/justificatif/export.{_format}", name="administration_absences_semestre_justificatif_export", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/semestre/{semestre}/justificatif/export.{_format}", name="administration_absences_semestre_justificatif_export",
+     *                                                              requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport                      $myExport
      * @param AbsenceJustificatifRepository $absenceJustificatifRepository
      * @param Semestre                      $semestre
@@ -120,8 +114,12 @@ class AbsenceController extends BaseController
      * @return Response
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function exportJustificatif(MyExport $myExport, AbsenceJustificatifRepository $absenceJustificatifRepository, Semestre $semestre, $_format): Response
-    {
+    public function exportJustificatif(
+        MyExport $myExport,
+        AbsenceJustificatifRepository $absenceJustificatifRepository,
+        Semestre $semestre,
+        $_format
+    ): Response {
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
         $response = $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
 
@@ -150,7 +148,8 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export", requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export",
+     *                                                     requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport          $myExport
      * @param AbsenceRepository $absenceRepository
      * @param Semestre          $semestre
@@ -197,6 +196,7 @@ class AbsenceController extends BaseController
     {
         $absence->setJustifie($etat);
         $this->entityManager->flush();
+
         return $this->json($etat);
     }
 
@@ -208,7 +208,7 @@ class AbsenceController extends BaseController
      * @param MyEtudiant        $myEtudiant
      *
      * @return JsonResponse
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      * @throws Exception
      * @Route("/ajax/addabs",
      *     name="administration_absences_ajax_add",
