@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/4/19 7:13 AM
+ * @date 30/07/2019 08:41
+ * @lastUpdate 30/07/2019 08:41
  */
 
 /**
@@ -23,6 +23,7 @@ use App\Entity\Calendrier;
 use App\Entity\CelcatEvent;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\InvalidArgumentException;
 
 abstract class MyCelcat
 {
@@ -73,8 +74,16 @@ abstract class MyCelcat
      * @param AnneeUniversitaire     $anneeUniversitaire
      * @param EntityManagerInterface $entity
      */
-    public static function getEvents(int $codeCelcatDepartement, AnneeUniversitaire $anneeUniversitaire, EntityManagerInterface $entity)
+    public static function getEvents(
+        int $codeCelcatDepartement,
+        ?AnneeUniversitaire $anneeUniversitaire,
+        EntityManagerInterface $entity
+    )
     {
+        if ($anneeUniversitaire === null) {
+            throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
+        }
+
         self::connect();
         $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change
             FROM CT_EVENT
