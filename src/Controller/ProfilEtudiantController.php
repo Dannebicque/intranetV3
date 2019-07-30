@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 14:14
  */
 
 namespace App\Controller;
@@ -97,13 +97,17 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      *
      */
-    public function notes(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
+    public function notes(
+        MyEtudiant $myEtudiant,
+        ScolariteRepository $scolariteRepository,
+        Etudiant $etudiant
+    ): Response
     {
         $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
             $etudiant->getDepartement()); //les semestres dans lesquels l'étudiant est passé dans le département...
 
         return $this->render('user/composants/notes.html.twig', [
-            'notes'     => $etudiant->getNotes(),
+            'notes' => $myEtudiant->setEtudiant($etudiant)->getNotesSemestre($etudiant->getSemestre())->getNotes(),
             'semestres' => $semestres
         ]);
     }
@@ -111,14 +115,16 @@ class ProfilEtudiantController extends BaseController
     /**
      * @Route("/profil/{slug}/absences", name="profil_etudiant_absences")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     * @param Etudiant $etudiant
+     * @param MatiereRepository $matiereRepository
+     * @param MyEtudiant        $myEtudiant
+     * @param Etudiant          $etudiant
      *
      * @return Response
      * @throws Exception
      */
     public function absences(MatiereRepository $matiereRepository, MyEtudiant $myEtudiant, Etudiant $etudiant): Response
     {
-        Calendrier::calculPlanning($etudiant->getAnneeUniversitaire(), 2, Constantes::DUREE_SEMESTRE);
+        Calendrier::calculPlanning($etudiant->getAnneeUniversitaire()->getAnnee(), 2, Constantes::DUREE_SEMESTRE);
 
         //todo: gérer les mois, selon le semestre ?
         return $this->render('user/composants/absences.html.twig', [

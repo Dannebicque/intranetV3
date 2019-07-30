@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/AdministrationController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 22/07/2019 17:26
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 09:46
  */
 
 namespace App\Controller;

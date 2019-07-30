@@ -21,7 +21,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_semestre_index', {semestre:evaluation.semestre.id}) }}"
+            <a href="{{ path('administration_notes_semestre_index', {semestre:evaluation.semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
@@ -56,15 +56,12 @@
             | {{ evaluation.matiere.libelle }}
         </h4>
         <div class="card-body">
-
             <div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
                 suivis cette option sont affichés.
             </div>
             <br/>
             <ul class="nav nav-tabs">
                 {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
-
-
                     <li class="nav-item"><a href="#gr{{ groupe.id }}"
                                             class="nav-link {% if loop.index == 1 %} active show{% endif %}"
                                             data-toggle="tab" role="tab">{{ groupe.libelle }}</a>
@@ -84,6 +81,7 @@
                             <tr>
                                 <th>Etudiant</th>
                                 <th>Note</th>
+                                <th>Abs.</th>
                                 <th>Commentaire optionnel</th>
                             </tr>
                             </thead>
@@ -99,7 +97,19 @@
                                                class="form-control noteetudiant groupe_{{ groupe.id }}"
                                                value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
                                     </td>
-                                    <td>Absent.</td>{# todo: a gérer comme dans la saisie #}
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="abs_{{ etudiant.id }}"
+                                                   id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+                                                   class="form-check-input absenceetudiant"
+                                                   {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                                       .absenceJustifie ==
+                                                       true %}checked{% endif %}/>
+                                            <label for="abs_{{ etudiant.id }}" class="form-check-label">
+                                                Absence justfiée
+                                            </label>
+                                        </div>
+                                    </td>
                                     <td>
                                         <label for="com_{{ etudiant.uuidString }}" class="sr-only">Commentaire</label>
                                         <input type="text" name="com_{{ etudiant.uuidString }}" id="com_{{ etudiant.uuidString }}"
@@ -108,7 +118,7 @@
                                 {% set tab=tab+1 %}
                             {% else %}
                                 <tr class="bg-warning">
-                                    <td colspan="3">{{ 'pas.etudiant.groupe'|trans }}</td>
+                                    <td colspan="4">{{ 'pas.etudiant.groupe'|trans }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

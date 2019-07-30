@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EvaluationRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 11/23/18 12:06 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 09:19
  */
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -38,17 +39,20 @@ class EvaluationRepository extends ServiceEntityRepository
     /**
      * @param Semestre $semestre
      *
+     * @param int      $annee
+     *
      * @return mixed
      */
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre, int $annee)
     {
         return $this->createQueryBuilder('e')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
+            ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
             ->where('u.semestre = :semestre')
-            ->andWhere('e.anneeuniversitaire = :annee')
+            ->andWhere('n.annee = :annee')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('annee', $semestre->getAnneeUniversitaire())
+            ->setParameter('annee', $annee)
             ->orderBy('e.dateEvaluation', 'ASC')
             ->getQuery()
             ->getResult();
@@ -60,12 +64,13 @@ class EvaluationRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByMatiere(Matiere $matiere, $annee)
+    public function findByMatiere(Matiere $matiere, int $annee)
     {
         return $this->createQueryBuilder('e')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
+            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
             ->where('m.id = :matiere')
-            ->andWhere('e.anneeuniversitaire = :annee')
+            ->andWhere('u.annee = :annee')
             ->setParameter('matiere', $matiere->getId())
             ->setParameter('annee', $annee)
             ->orderBy('e.dateEvaluation', 'ASC')

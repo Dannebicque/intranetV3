@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/NoteRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/26/19 8:34 AM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 14:14
  */
 
 namespace App\Repository;
@@ -38,14 +38,16 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
-    public function findBySemestre(Semestre $semestre, $annee)
+    public function findBySemestre(Semestre $semestre, int $annee)
     {
         return $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation=e.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere=m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
+
             ->where('u.semestre= :semestre')
-            ->andWhere('e.anneeuniversitaire = :annee')
+            ->andWhere('j.annee = :annee')
             ->setParameter('semestre', $semestre)
             ->setParameter('annee', $annee)
             ->orderBy('e.id')
@@ -56,14 +58,15 @@ class NoteRepository extends ServiceEntityRepository
     public function findByEtudiantSemestre(
         Etudiant $etudiant,
         Semestre $semestre,
-        $annee
+        int $annee
     ) {
 
         return $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation = e.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->where('e.anneeuniversitaire = :annee')
+            ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
+            ->where('j.annee = :annee')
             ->andWhere('n.etudiant = :etudiant')
             ->andWhere('u.semestre = :semestre')
             ->setParameter('annee', $annee)

@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluation.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:39
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 09:07
  */
 
 /**
@@ -312,7 +312,6 @@ class MyEvaluation
                 $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
             }
         }
-        dump($notes);
 
         return $notes;
     }

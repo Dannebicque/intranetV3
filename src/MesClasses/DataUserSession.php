@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/DataUserSession.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/8/19 7:44 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 10:23
  */
 
 /**
@@ -321,7 +321,7 @@ class DataUserSession
     public function getAnneeUniversitaire(): ?int
     {
         if ($this->getUser() instanceof Etudiant) {
-            return $this->getUser()->getAnneeUniversitaire();
+            return $this->getUser()->getAnneeUniversitaire()->getAnnee();
         }
             return (int)date('Y'); //todo: a améliorer pour les non étudiants...
 

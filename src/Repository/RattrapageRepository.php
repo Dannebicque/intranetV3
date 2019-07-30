@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/RattrapageRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/30/19 6:36 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 09:05
  */
 
 namespace App\Repository;
@@ -45,12 +45,14 @@ class RattrapageRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findBySemestre(Semestre $semestre, $anneeUniversitaire)
+    public function findBySemestre(Semestre $semestre, int $anneeUniversitaire)
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
+            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'r.anneeUniversitaire = u.id')
+
             ->where('e.semestre = :semestre')
-            ->andWhere('r.anneeuniversitaire = :anneeuniversitaire')
+            ->andWhere('u.annee = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('anneeuniversitaire', $anneeUniversitaire)
             ->orderBy('e.nom', 'ASC')
@@ -85,14 +87,15 @@ class RattrapageRepository extends ServiceEntityRepository
     public function findBySemestreCount(Semestre $semestre, int $annee = 0)
     {
         if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire();
+            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : date('Y');
         }
 
         return $this->createQueryBuilder('r')
             ->select('COUNT(r.id)')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
+            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'r.anneeUniversitaire = u.id')
             ->where('e.semestre = :semestre')
-            ->andWhere('r.anneeuniversitaire = :anneeuniversitaire')
+            ->andWhere('u.annee = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('anneeuniversitaire', $annee)
             ->getQuery()
@@ -110,8 +113,9 @@ class RattrapageRepository extends ServiceEntityRepository
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'r.anneeUniversitaire = u.id')
             ->where('a.diplome = :diplome')
-            ->andWhere('r.anneeuniversitaire = :anneeuniversitaire')
+            ->andWhere('u.annee = :anneeuniversitaire')
             ->andWhere('r.etatDemande = :etat')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('etat', 'A')

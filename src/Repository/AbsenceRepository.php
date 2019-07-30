@@ -4,14 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AbsenceRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/8/19 7:44 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 14:14
  */
 
 namespace App\Repository;
 
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -76,11 +77,12 @@ class AbsenceRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function getByMatiere(Matiere $matiere, $anneeCourante)
+    public function getByMatiere(Matiere $matiere, int $anneeCourante)
     {
         return $this->createQueryBuilder('m')
+            ->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
             ->where('m.matiere = :matiere')
-            ->andWhere('m.anneeuniversitaire = :annee')
+            ->andWhere('a.annee = :annee')
             ->setParameter('matiere', $matiere->getId())
             ->setParameter('annee', $anneeCourante)
             ->orderBy('m.date', 'DESC')
@@ -123,12 +125,13 @@ class AbsenceRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findBySemestre(Semestre $semestre, $anneeCourante)
+    public function findBySemestre(Semestre $semestre, int $anneeCourante)
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant =e.id')
+            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'a.anneeUniversitaire = u.id')
             ->where('e.semestre = :semestre')
-            ->andWhere('a.anneeuniversitaire = :annee')
+            ->andWhere('u.annee = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $anneeCourante)
             ->orderBy('a.date', 'DESC')
@@ -137,12 +140,13 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantSemestre(Etudiant $etudiant, Semestre $semestre, $anneeUniversitaire)
+    public function findByEtudiantSemestre(Etudiant $etudiant, Semestre $semestre, int $anneeUniversitaire)
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'a.matiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->where('a.anneeuniversitaire = :annee')
+            ->innerJoin(AnneeUniversitaire::class, 'e', 'WITH', 'a.anneeUniversitaire = e.id')
+            ->where('e.annee = :annee')
             ->andWhere('a.etudiant = :etudiant')
             ->andWhere('u.semestre = :semestre')
             ->setParameter('annee', $anneeUniversitaire)

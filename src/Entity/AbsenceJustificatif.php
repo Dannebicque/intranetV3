@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AbsenceJustificatif.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:35 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 08:53
  */
 
 namespace App\Entity;
@@ -68,10 +68,6 @@ class AbsenceJustificatif extends BaseEntity
      */
     private $etudiant;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $anneeUniversitaire;
 
     /**
      * @var string
@@ -88,6 +84,11 @@ class AbsenceJustificatif extends BaseEntity
     private $fichierFile;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
+     */
+    private $anneeUniversitaire;
+
+    /**
      * AbsenceJustificatif constructor.
      *
      * @param Etudiant $etudiant
@@ -98,7 +99,7 @@ class AbsenceJustificatif extends BaseEntity
     {
         $this->etat = 'D';
         $this->uuid = Uuid::uuid4();
-        $this->anneeUniversitaire = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getAnneeUniversitaire() : date('Y');
+        $this->anneeUniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
         $this->setEtudiant($etudiant);
     }
 
@@ -186,18 +187,6 @@ class AbsenceJustificatif extends BaseEntity
         return $this;
     }
 
-    public function getAnneeUniversitaire(): ?int
-    {
-        return $this->anneeUniversitaire;
-    }
-
-    public function setAnneeUniversitaire(int $anneeUniversitaire): self
-    {
-        $this->anneeUniversitaire = $anneeUniversitaire;
-
-        return $this;
-    }
-
     /**
      * @param File|null $document
      *
@@ -263,5 +252,17 @@ class AbsenceJustificatif extends BaseEntity
         ];
 
         return $tabEtat[$this->etat];
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
     }
 }
