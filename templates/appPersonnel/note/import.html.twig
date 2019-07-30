@@ -19,9 +19,13 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
             <div class="alert alert-info">L'import doit se faire au format xlsx ou csv (séparateur ; ou ,). Le
-                fichier doit contenir les <strong>colonnes suivantes</strong> : Numéro étudiant (<i>num_etudiant</i>)
-                , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les colonnes doivent être nommées (première ligne) ou
-                respecter l'odre précédent. <a href="">Vous pouvez récupérer le fichier type pour le semestre
+                                          fichier doit contenir les <strong>colonnes suivantes</strong> : Numéro étudiant (<i>num_etudiant</i>)
+                                          , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les colonnes doivent être nommées (première ligne) ou
+                                          respecter l'odre précédent.
+                <a href="{{ path('application_personnel_note_import_modele',
+                    {semestre:matiere.ue.semestre.id}) }}">Vous
+                                                           pouvez récupérer le fichier type pour le
+                                                           semestre
                     ici</a>
             </div>
             <button class="btn btn-success">{{ button_label|default('label.import'|trans) }}</button>

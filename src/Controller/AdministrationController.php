@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/AdministrationController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/24/19 9:49 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 22/07/2019 17:26
  */
 
 namespace App\Controller;
@@ -32,9 +32,8 @@ class AdministrationController extends BaseController
     {
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $pers = $stagePeriodeRepository->findByDiplome($diplome,
-                $diplome->getAnneeUniversitaire() ? $diplome->getAnneeUniversitaire()->getAnnee() : (int)date('Y'));
-            foreach ($pers as $periode) {
+            $periodes = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            foreach ($periodes as $periode) {
                 $periodes[] = $periode;
             }
         }

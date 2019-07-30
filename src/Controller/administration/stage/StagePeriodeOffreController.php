@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeOffreController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:47 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 23/07/2019 10:15
  */
 
 namespace App\Controller\administration\stage;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/administration/stage/periode/offre")
+ * @Route("/administration/stage/offre")
  */
 class StagePeriodeOffreController extends BaseController
 {
@@ -102,7 +102,7 @@ class StagePeriodeOffreController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode_offre.create.success.flash');
 
             return $this->redirectToRoute('administration_stage_periode_offre_index',
-                ['stagePeriode' => $stagePeriode->getUuidString()]);
+                ['uuid' => $stagePeriode->getUuidString()]);
         }
 
         return $this->render('administration/stage/stage_periode_offre/new.html.twig', [
@@ -112,21 +112,7 @@ class StagePeriodeOffreController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/{stagePeriode}", name="administration_stage_periode_offre_show", methods="GET")
-     * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
-     * @param StagePeriodeOffre $stagePeriodeOffre
-     * @param StagePeriode      $stagePeriode
-     *
-     * @return Response
-     */
-    public function show(StagePeriodeOffre $stagePeriodeOffre, StagePeriode $stagePeriode): Response
-    {
-        return $this->render('administration/stage/stage_periode_offre/show.html.twig', [
-            'stage_periode_offre' => $stagePeriodeOffre,
-            'stagePeriode'        => $stagePeriode
-        ]);
-    }
+
 
     /**
      * @Route("/{id}/edit", name="administration_stage_periode_offre_edit", methods="GET|POST")
@@ -176,6 +162,22 @@ class StagePeriodeOffreController extends BaseController
 
         return $this->redirectToRoute('administration_stage_periode_offre_edit',
             ['id' => $newStagePeriodeOffre->getId()]);
+    }
+
+    /**
+     * @Route("/{id}/{stagePeriode}", name="administration_stage_periode_offre_show", methods="GET")
+     * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
+     * @param StagePeriodeOffre $stagePeriodeOffre
+     * @param StagePeriode      $stagePeriode
+     *
+     * @return Response
+     */
+    public function show(StagePeriodeOffre $stagePeriodeOffre, StagePeriode $stagePeriode): Response
+    {
+        return $this->render('administration/stage/stage_periode_offre/show.html.twig', [
+            'stage_periode_offre' => $stagePeriodeOffre,
+            'stagePeriode'        => $stagePeriode
+        ]);
     }
 
     /**

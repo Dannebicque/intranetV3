@@ -38,8 +38,7 @@
     <img src="{{ linuxpath~'img/logo/urcapetit.jpg' }}" alt="logo" width="100px" style="float:left;"/>
     <div style="text-align: right;">
         <strong><p style="font-size:18px">CONVENTION DE STAGE EN FRANCE</p><br/>Année Universitaire {{ proposition
-            .stagePeriode.semestre.annee.diplome.anneeuniversitaire }} / {{ proposition.stagePeriode
-            .semestre.annee.diplome.anneeuniversitaire+1 }}</strong></div>
+            .stagePeriode.semestre.annee.diplome.anneeuniversitaire.displayAnneeUniversitaire }}</strong></div>
     <div style="clear:both;"></div>
     <p class="titresuligne">ENTRE L’UNIVERSITÉ DE REIMS CHAMPAGNE-ARDENNE</p>
     <div class="blocconvention">
@@ -657,9 +656,9 @@
                 .entreprise.responsable.nom|upper }}
             </td>
         </tr>
-        <tr style="height: 40px;">
-            <td></td>
-            <td></td>
+        <tr style="height: 80px;">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td><strong>Stagiaire (ou son représentant légal échéant)</strong><br/>Nom et signature
@@ -667,9 +666,9 @@
                 .displayPr }}</td>
             <td></td>
         </tr>
-        <tr style="height: 40px;">
-            <td></td>
-            <td></td>
+        <tr style="height: 80px;">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td><strong>L’enseignant référent du stagiaire</strong><br/>Nom et signature
@@ -688,9 +687,9 @@
             </td>
         </tr>
         {#{% if proposition.tuteur.signatureelectronique == null %}#}
-            <tr style="height: 30px;">
-                <td></td>
-                <td></td>
+        <tr style="height: 80px;">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
             </tr>
         {#{% endif %}#}
     </table>
@@ -700,7 +699,8 @@
     <div style="page-break-after: always"></div>
     <div style="text-align: right;">
         <strong><p style="font-size:18px">ATTESTATION DE STAGE </p><br/>
-            Année Universitaire {{ proposition.stagePeriode.semestre.annee.diplome.anneeUniversitaire }}
+            Année
+            Universitaire {{ proposition.stagePeriode.semestre.annee.diplome.anneeUniversitaire.displayAnneeUniversitaire }}
             A remettre au stagiaire à l’issue du stage
         </strong></div>
     <div style="clear:both;"></div>

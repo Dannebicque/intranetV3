@@ -4,8 +4,8 @@
   ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~ @author     David Annebicque
   ~ @project intranetv3
-  ~ @date 7/22/19 4:57 PM
-  ~ @lastUpdate 7/22/19 4:56 PM
+  ~ @date 30/07/2019 08:40
+  ~ @lastUpdate 30/07/2019 08:39
   -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
@@ -76,9 +76,6 @@
       </segment>
     </unit>
     <unit id="VuQvnpd" name="menu.documentation">
-      <notes>
-        <note priority="1">templates/base.html.twig:366</note>
-      </notes>
       <segment>
         <source>menu.documentation</source>
         <target>Documentation</target>
@@ -6939,9 +6936,6 @@
       </segment>
     </unit>
     <unit id="i6EoFNc" name="voir.tous.les.messages">
-      <notes>
-        <note priority="1">templates/base.html.twig:285</note>
-      </notes>
       <segment>
         <source>voir.tous.les.messages</source>
         <target>Voir tous les messages</target>
@@ -8338,7 +8332,7 @@
     <unit id="N3axLgP" name="adm.stage_periode.modification.heading">
       <segment>
         <source>adm.stage_periode.modification.heading</source>
-        <target>Modification d'une période de stage</target>
+          <target>Période de stage modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="KRjjtwI" name="stage_periode_gestion.heading">
@@ -8416,7 +8410,7 @@
     <unit id="TFPRilf" name="table.document">
       <segment>
         <source>table.document</source>
-        <target>table.document</target>
+          <target>Document</target>
       </segment>
     </unit>
     <unit id="SBXV.l2" name="adm.stage_periode_offre.new.heading">
@@ -8434,7 +8428,7 @@
     <unit id="3wHmPSZ" name="stage_periode_offre.create.success.flash">
       <segment>
         <source>stage_periode_offre.create.success.flash</source>
-        <target>stage_periode_offre.create.success.flash</target>
+          <target>Offre de stage ajoutée avec succès</target>
       </segment>
     </unit>
     <unit id="JuflWsk" name="atitle.retour.stage_periode_gestion">
@@ -8461,10 +8455,10 @@
         <target>Gestion des entreprises pour stage</target>
       </segment>
     </unit>
-    <unit id="6KCXLmx" name="table.responsale">
+      <unit id="p9MSu8n" name="table.responsable">
       <segment>
-        <source>table.responsale</source>
-        <target>table.responsale</target>
+          <source>table.responsable</source>
+          <target>Représentant</target>
       </segment>
     </unit>
     <unit id="gur7Cu_" name="table.email">
@@ -8476,13 +8470,13 @@
     <unit id="ZTn4PkY" name="table.nbstagiaire">
       <segment>
         <source>table.nbstagiaire</source>
-        <target>table.nbstagiaire</target>
+          <target>Nb. stagiaires</target>
       </segment>
     </unit>
     <unit id="rnj36HB" name="stage_periode.create.success.flash">
       <segment>
         <source>stage_periode.create.success.flash</source>
-        <target>stage_periode.create.success.flash</target>
+          <target>Période de stage créée avec succès</target>
       </segment>
     </unit>
     <unit id="VgRvTep" name="label.update">
@@ -8494,13 +8488,13 @@
     <unit id="tb81anI" name="stage_periode.edit.success.flash">
       <segment>
         <source>stage_periode.edit.success.flash</source>
-        <target>stage_periode.edit.success.flash</target>
+          <target>Période de stage modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="Rk7Foa_" name="stage_etudiant.change_etat.success.flash">
       <segment>
         <source>stage_etudiant.change_etat.success.flash</source>
-        <target>stage_etudiant.change_etat.success.flash</target>
+          <target>L'état du stage a été modifié avec succès</target>
       </segment>
     </unit>
     <unit id="fb20FRg" name="chgt.etat_stage.autorise">
@@ -8548,7 +8542,7 @@
     <unit id="5NQ1B3f" name="form_date">
       <segment>
         <source>form_date</source>
-        <target>form_date</target>
+          <target>Date(s)</target>
       </segment>
     </unit>
     <unit id="eptVqnq" name="from_date">
@@ -8566,7 +8560,7 @@
     <unit id="38hkrKy" name="table.icone_couleur">
       <segment>
         <source>table.icone_couleur</source>
-        <target>table.icone_couleur</target>
+          <target>Icône/couleur</target>
       </segment>
     </unit>
     <unit id="1u_CKPH" name="borne.delete.success.flash">
@@ -9571,10 +9565,7 @@
     <unit id="V3UY_m0" name="convention.en.attente.de.retour">
       <segment>
         <source>convention.en.attente.de.retour</source>
-        <target>Conventions en attente
-        de
-          retour
-        </target>
+          <target>Convention en attente de retour</target>
       </segment>
     </unit>
     <unit id="1uWoSWm" name="conventions.completes">
@@ -9720,13 +9711,13 @@
     <unit id="EMzCvNT" name="saisie.autorise.formulaire.non.completee">
       <segment>
         <source>saisie.autorise.formulaire.non.completee</source>
-        <target>saisie.autorise.formulaire.non.completee</target>
+          <target>Saisie autorisée, mais non complétée</target>
       </segment>
     </unit>
     <unit id="Zs4N2SN" name="stage_etudiant.formulaire.success.flash">
       <segment>
         <source>stage_etudiant.formulaire.success.flash</source>
-        <target>stage_etudiant.formulaire.success.flash</target>
+          <target>Le formulaire a été envoyé avec succès</target>
       </segment>
     </unit>
     <unit id="_YVF7tY" name="adm.stage_etudiant.show.heading">
@@ -9738,7 +9729,7 @@
     <unit id="BL2yzv0" name="table.siret">
       <segment>
         <source>table.siret</source>
-        <target>table.siret</target>
+          <target>SIRET/SIREN</target>
       </segment>
     </unit>
     <unit id="mHX_zsK" name="table.fonction">
@@ -9762,31 +9753,31 @@
     <unit id="fEyYbz0" name="site.add.success.flash">
       <segment>
         <source>site.add.success.flash</source>
-        <target>site.add.success.flash</target>
+          <target>Site créé avec succès</target>
       </segment>
     </unit>
     <unit id="UdmlLIA" name="ufr.add.success.flash">
       <segment>
         <source>ufr.add.success.flash</source>
-        <target>ufr.add.success.flash</target>
+          <target>UFR créée avec succès</target>
       </segment>
     </unit>
     <unit id="9EYv5vH" name="type_diplome.add.success.flash">
       <segment>
         <source>type_diplome.add.success.flash</source>
-        <target>type_diplome.add.success.flash</target>
+          <target>Type de diplôme créé avec succès</target>
       </segment>
     </unit>
     <unit id="KnFrunU" name="type_hrs.add.success.flash">
       <segment>
         <source>type_hrs.add.success.flash</source>
-        <target>type_hrs.add.success.flash</target>
+          <target>Type de HRS/Prime créé avec succès</target>
       </segment>
     </unit>
     <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
       <segment>
         <source>type_hrs.edit.success.flash</source>
-        <target>type_hrs.edit.success.flash</target>
+          <target>Type de HRS/Prime modifié avec succès</target>
       </segment>
     </unit>
     <unit id="UdQ4.mn" name="atitle.import_personnel">
@@ -9798,13 +9789,13 @@
     <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
       <segment>
         <source>sadm.gestion.rh.import.heading</source>
-        <target>sadm.gestion.rh.import.heading</target>
+          <target>Gestion RH, importer des personnels</target>
       </segment>
     </unit>
     <unit id="BijnuiW" name="fichier.personnel.import">
       <segment>
         <source>fichier.personnel.import</source>
-        <target>fichier.personnel.import</target>
+          <target>Fichier d'import de personnels</target>
       </segment>
     </unit>
     <unit id=".0s.MiM" name="diplome.add.success.flash">
@@ -9816,7 +9807,7 @@
     <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
       <segment>
         <source>diplome.delete.error.non-vide.flash</source>
-        <target>diplome.delete.error.non-vide.flash</target>
+          <target>Impossible de supprimer un diplôme non vide.</target>
       </segment>
     </unit>
     <unit id="Ej.WZqo" name="danger">
@@ -9840,13 +9831,13 @@
     <unit id="UsylaK_" name="semestre.add.success.flash">
       <segment>
         <source>semestre.add.success.flash</source>
-        <target>semestre.add.success.flash</target>
+          <target>Semestre créé avec succès</target>
       </segment>
     </unit>
     <unit id="TQPu08x" name="ue.add.success.flash">
       <segment>
         <source>ue.add.success.flash</source>
-        <target>ue.add.success.flash</target>
+          <target>UE créée avec succès</target>
       </segment>
     </unit>
     <unit id="qG124ae" name="super-admin.personnel-formation.heading">
@@ -9876,7 +9867,7 @@
     <unit id="5worNIF" name="rh.add.success.flash">
       <segment>
         <source>rh.add.success.flash</source>
-        <target>rh.add.success.flash</target>
+          <target>Personnel ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="BLeBkva" name="ROLE_PERMANENT">
@@ -9888,7 +9879,7 @@
     <unit id="Byj02Tr" name="formation.par.defaut.sauvegarde">
       <segment>
         <source>formation.par.defaut.sauvegarde</source>
-        <target>formation.par.defaut.sauvegarde</target>
+          <target>Formation par défaut sauvegardée</target>
       </segment>
     </unit>
     <unit id="2cOTHPo" name="diplome.create.success.flash">
@@ -9906,19 +9897,19 @@
     <unit id="0RNVUyJ" name="semestre.create.success.flash">
       <segment>
         <source>semestre.create.success.flash</source>
-        <target>semestre.create.success.flash</target>
+          <target>Semestre créé avec succès</target>
       </segment>
     </unit>
     <unit id="iCZvqdB" name="salle_examen.add.success.flash">
       <segment>
         <source>salle_examen.add.success.flash</source>
-        <target>salle_examen.add.success.flash</target>
+          <target>Salle d'examen créée avec succès</target>
       </segment>
     </unit>
     <unit id="aIZJaLQ" name="salle_examen.duplicate.success.flash">
       <segment>
         <source>salle_examen.duplicate.success.flash</source>
-        <target>salle_examen.duplicate.success.flash</target>
+          <target>Salle d'examen dupliquée avec succès</target>
       </segment>
     </unit>
     <unit id="_Sk3WhF" name="adm.salle_examen.modification.heading">
@@ -9972,7 +9963,7 @@
     <unit id="NuGD.DL" name="table.categorie">
       <segment>
         <source>table.categorie</source>
-        <target>table.categorie</target>
+          <target>Catégorie</target>
       </segment>
     </unit>
     <unit id="t3zKZHM" name="date.create.success.flash">
@@ -9984,7 +9975,7 @@
     <unit id="ucDhBuW" name="toute.la.journee">
       <segment>
         <source>toute.la.journee</source>
-        <target>toute.la.journee</target>
+          <target>Toute la journée</target>
       </segment>
     </unit>
     <unit id="LpW47cF" name="competence.add.success.flash">
@@ -10008,19 +9999,19 @@
     <unit id="IZ1jidQ" name="type_groupe.add.success.flash">
       <segment>
         <source>type_groupe.add.success.flash</source>
-        <target>type_groupe.add.success.flash</target>
+          <target>Type de groupe créé avec succès</target>
       </segment>
     </unit>
     <unit id="qan7uGz" name="groupe.add.success.flash">
       <segment>
         <source>groupe.add.success.flash</source>
-        <target>groupe.add.success.flash</target>
+          <target>Groupe créé avec succès</target>
       </segment>
     </unit>
     <unit id="1WQuoGr" name="sadm.scolarite.heading">
       <segment>
         <source>sadm.scolarite.heading</source>
-        <target>sadm.scolarite.heading</target>
+          <target>Scolarité</target>
       </segment>
     </unit>
     <unit id="OJDs835" name="sadm.scolarite.resultat.heading">
@@ -10056,7 +10047,7 @@
     <unit id="crIumOh" name="gestion.cohorte.choix.annee.heading">
       <segment>
         <source>gestion.cohorte.choix.annee.heading</source>
-        <target>gestion.cohorte.choix.annee.heading</target>
+          <target>Gestion des cohortes, choisir l'année</target>
       </segment>
     </unit>
     <unit id="xJn3FX6" name="ppn.add.success.flash">
@@ -10189,12 +10180,6 @@
       <segment>
         <source>ETU</source>
         <target>ETU</target>
-      </segment>
-    </unit>
-    <unit id="p9MSu8n" name="table.responsable">
-      <segment>
-        <source>table.responsable</source>
-        <target>__table.responsable</target>
       </segment>
     </unit>
     <unit id="i1r30MP" name="annee.promotion">
@@ -10841,24 +10826,6 @@
         <target>Envoyés</target>
       </segment>
     </unit>
-      <unit id="x5HstoD" name="messagerie.boite.brouillons">
-      <segment>
-          <source>messagerie.boite.brouillons</source>
-        <target>Brouillons</target>
-      </segment>
-    </unit>
-      <unit id="le5wJ.S" name="messagerie.boite.corbeille">
-      <segment>
-          <source>messagerie.boite.corbeille</source>
-        <target>Corbeille</target>
-      </segment>
-    </unit>
-      <unit id="amYnZN1" name="messagerie.boite.epingles">
-      <segment>
-          <source>messagerie.boite.epingles</source>
-        <target>Epinglés</target>
-      </segment>
-    </unit>
     <unit id="sdpQiGI" name="messagerie.boite.brouillons">
       <segment>
         <source>messagerie.boite.brouillons</source>
@@ -10887,12 +10854,6 @@
       <segment>
         <source>table.departement</source>
         <target>Département</target>
-      </segment>
-    </unit>
-      <unit id="ozDhCB0" name="voir.tous.les.messages">
-      <segment>
-          <source>voir.tous.les.messages</source>
-          <target>Voir tous les messages</target>
       </segment>
     </unit>
     <unit id="uXn35Qq" name="adm.annee_universitaire.show.heading">
@@ -11351,12 +11312,6 @@
         <target>Actualité modifiée avec succès</target>
       </segment>
     </unit>
-      <unit id="slRDKDI" name="menu.documentation">
-      <segment>
-          <source>menu.documentation</source>
-          <target>Documentation</target>
-      </segment>
-    </unit>
     <unit id="jaLV0d4" name="menu.rgpd">
       <segment>
         <source>menu.rgpd</source>
@@ -11639,5 +11594,167 @@
           <target>Lien pour la synchronisation de l'EDT via ICAL</target>
       </segment>
     </unit>
+      <unit id="cJfy41b" name="annee.en.apprentissage">
+          <segment>
+              <source>annee.en.apprentissage</source>
+              <target>Année en apprentissage</target>
+          </segment>
+      </unit>
+      <unit id="fjam7IK" name="aucune.convention.a.envoyer">
+          <segment>
+              <source>aucune.convention.a.envoyer</source>
+              <target>Aucune convention à envoyer</target>
+          </segment>
+      </unit>
+      <unit id="U8TpKG." name="mail.chgt.etat_stage.autorise">
+          <segment>
+              <source>mail.chgt.etat_stage.autorise</source>
+              <target>Saisie des informations du stage autorisée</target>
+          </segment>
+      </unit>
+      <unit id="PzQFUty" name="copie mail.chgt.etat_stage.autorise">
+          <segment>
+              <source>copie mail.chgt.etat_stage.autorise</source>
+              <target>[COPIE] Saisie des informations du stage autorisée</target>
+          </segment>
+      </unit>
+      <unit id="7R25jpq" name="mail.chgt.etat_stage.depose">
+          <segment>
+              <source>mail.chgt.etat_stage.depose</source>
+              <target>Formulaire complété par l'étudiant</target>
+          </segment>
+      </unit>
+      <unit id="HbK16.Z" name="copie mail.chgt.etat_stage.depose">
+          <segment>
+              <source>copie mail.chgt.etat_stage.depose</source>
+              <target>[COPIE] Formulaire complété par l'étudiant</target>
+          </segment>
+      </unit>
+      <unit id="BaUZo_C" name="Formulaire de stage complété">
+          <segment>
+              <source>Formulaire de stage complété</source>
+              <target>Formulaire de stage complété</target>
+          </segment>
+      </unit>
+      <unit id="7r22tl3" name="table.securite_sociale">
+          <segment>
+              <source>table.securite_sociale</source>
+              <target>Mutuelle étudiante ou sécurité sociale</target>
+          </segment>
+      </unit>
+      <unit id="dpm6hxI" name="table.adresse_securite_sociale">
+          <segment>
+              <source>table.adresse_securite_sociale</source>
+              <target>Adresse mutuelle étudiante ou sécurité sociale</target>
+          </segment>
+      </unit>
+      <unit id="HTyY9yd" name="stage_etudiant.change_tuteur.success.flash">
+          <segment>
+              <source>stage_etudiant.change_tuteur.success.flash</source>
+              <target>stage_etudiant.change_tuteur.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="mK_lhAE" name="mail.chgt.etat_stage.valide">
+          <segment>
+              <source>mail.chgt.etat_stage.valide</source>
+              <target>mail.chgt.etat_stage.valide</target>
+          </segment>
+      </unit>
+      <unit id="bmE.L6C" name="copie mail.chgt.etat_stage.valide">
+          <segment>
+              <source>copie mail.chgt.etat_stage.valide</source>
+              <target>copie mail.chgt.etat_stage.valide</target>
+          </segment>
+      </unit>
+      <unit id=".VuvPdM" name="chgt.etat_stage.valide">
+          <segment>
+              <source>chgt.etat_stage.valide</source>
+              <target>chgt.etat_stage.valide</target>
+          </segment>
+      </unit>
+      <unit id="uxuuM4c" name="mail.chgt.etat_stage.convention_envoyee">
+          <segment>
+              <source>mail.chgt.etat_stage.convention_envoyee</source>
+              <target>mail.chgt.etat_stage.convention_envoyee</target>
+          </segment>
+      </unit>
+      <unit id="nkjjYma" name="copie mail.chgt.etat_stage.convention_envoyee">
+          <segment>
+              <source>copie mail.chgt.etat_stage.convention_envoyee</source>
+              <target>copie mail.chgt.etat_stage.convention_envoyee</target>
+          </segment>
+      </unit>
+      <unit id="zaqZWuX" name="mail.chgt.etat_stage.convention_recue">
+          <segment>
+              <source>mail.chgt.etat_stage.convention_recue</source>
+              <target>mail.chgt.etat_stage.convention_recue</target>
+          </segment>
+      </unit>
+      <unit id="ZhbUwFT" name="copie mail.chgt.etat_stage.convention_recue">
+          <segment>
+              <source>copie mail.chgt.etat_stage.convention_recue</source>
+              <target>copie mail.chgt.etat_stage.convention_recue</target>
+          </segment>
+      </unit>
+      <unit id="YJdZxhn" name="ETAT_STAGE_AUTORISE">
+          <segment>
+              <source>ETAT_STAGE_AUTORISE</source>
+              <target>ETAT_STAGE_AUTORISE</target>
+          </segment>
+      </unit>
+      <unit id="R8pNITG" name="ETAT_STAGE_DEPOSE">
+          <segment>
+              <source>ETAT_STAGE_DEPOSE</source>
+              <target>ETAT_STAGE_DEPOSE</target>
+          </segment>
+      </unit>
+      <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
+          <segment>
+              <source>ETAT_STAGE_VALIDE</source>
+              <target>ETAT_STAGE_VALIDE</target>
+          </segment>
+      </unit>
+      <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
+          <segment>
+              <source>ETAT_STAGE_REFUS</source>
+              <target>ETAT_STAGE_REFUS</target>
+          </segment>
+      </unit>
+      <unit id="6n7fjVa" name="ETAT_STAGE_INCOMPLET">
+          <segment>
+              <source>ETAT_STAGE_INCOMPLET</source>
+              <target>ETAT_STAGE_INCOMPLET</target>
+          </segment>
+      </unit>
+      <unit id="ZIHlkWz" name="ETAT_STAGE_IMPRIME">
+          <segment>
+              <source>ETAT_STAGE_IMPRIME</source>
+              <target>ETAT_STAGE_IMPRIME</target>
+          </segment>
+      </unit>
+      <unit id="FLHSsmy" name="ETAT_STAGE_CONVENTION_ENVOYEE">
+          <segment>
+              <source>ETAT_STAGE_CONVENTION_ENVOYEE</source>
+              <target>ETAT_STAGE_CONVENTION_ENVOYEE</target>
+          </segment>
+      </unit>
+      <unit id="FjIF_WV" name="ETAT_STAGE_CONVENTION_RECUE">
+          <segment>
+              <source>ETAT_STAGE_CONVENTION_RECUE</source>
+              <target>ETAT_STAGE_CONVENTION_RECUE</target>
+          </segment>
+      </unit>
+      <unit id="I6hImAB" name="numEtudiant">
+          <segment>
+              <source>numEtudiant</source>
+              <target>numEtudiant</target>
+          </segment>
+      </unit>
+      <unit id="KcFzACF" name="prenom">
+          <segment>
+              <source>prenom</source>
+              <target>prenom</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

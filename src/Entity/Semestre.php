@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Semestre.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/7/19 9:30 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 22/07/2019 17:56
  */
 
 namespace App\Entity;
@@ -1089,15 +1089,15 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @return int
+     * @return AnneeUniversitaire
      */
-    public function getAnneeUniversitaire(): int
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         if ($this->getDiplome() !== null && $this->getDiplome()->getAnneeUniversitaire() !== null) {
-            return $this->getDiplome()->getAnneeUniversitaire()->getAnnee();
+            return $this->getDiplome()->getAnneeUniversitaire();
         }
 
-        return 0;
+        return null;
 
     }
 
@@ -1149,7 +1149,7 @@ class Semestre extends BaseEntity
      *
      * @return integer
      */
-    public function getNbgroupeTpEdt()
+    public function getNbgroupeTpEdt(): int
     {
         if ($this->nbGroupesTP % 2 === 0) {
             return $this->nbGroupesTP;

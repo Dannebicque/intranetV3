@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+  ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.en.xlf
+  ~ @author     David Annebicque
+  ~ @project intranetv3
+  ~ @date 30/07/2019 08:40
+  ~ @lastUpdate 30/07/2019 08:39
+  -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
     <header>
@@ -3135,8 +3144,8 @@
         <source>adm.stage_entreprise.index.heading</source>
         <target>__adm.stage_entreprise.index.heading</target>
       </trans-unit>
-      <trans-unit id="6KCXLmx" resname="table.responsale">
-        <source>table.responsale</source>
+        <trans-unit id="6KCXLmx" resname="table.responsable">
+            <source>table.responsable</source>
         <target>__table.responsale</target>
       </trans-unit>
       <trans-unit id="ZTn4PkY" resname="table.nbstagiaire">
@@ -3243,19 +3252,17 @@
         <source>convention.a.envoyer</source>
         <target>__convention.a.envoyer</target>
       </trans-unit>
-      <trans-unit id="LUpmeYH" resname="convention.en&#10;                        .attente.de.retour">
-        <source>convention.en
-                        .attente.de.retour</source>
-        <target>__convention.en
-                        .attente.de.retour</target>
+        <trans-unit id="LUpmeYH" resname="convention.en.attente.de.retour">
+            <source>convention.en.attente.de.retour</source>
+            <target>Convention en attente de retour</target>
       </trans-unit>
       <trans-unit id="1uWoSWm" resname="conventions.completes">
         <source>conventions.completes</source>
-        <target>__conventions.completes</target>
+          <target>Conventions complètes</target>
       </trans-unit>
       <trans-unit id="kK3HPqh" resname="table.etat">
         <source>table.etat</source>
-        <target>__table.etat</target>
+          <target>Etat</target>
       </trans-unit>
       <trans-unit id="EMzCvNT" resname="saisie.autorise.formulaire.non.completee">
         <source>saisie.autorise.formulaire.non.completee</source>

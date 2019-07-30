@@ -24,7 +24,6 @@
             <table class="table table-striped table-bordered">
                 <tbody>
 
-                Etudiant + infos
                 <tr>
                     <th colspan="2">{{ 'table.etudiant'|trans }}</th>
                 </tr>
@@ -34,15 +33,27 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.groupe_promo'|trans }}</th>
-                    <td></td>
+                    <td>{% for groupe in stageEtudiant.etudiant.groupes %}
+                            {{ groupe.libelle }}{% if not loop.last %},
+                            {% endif %}
+                        {% endfor %}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.securite_sociale'|trans }}</th>
+                    <td>{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.adresse_securite_sociale'|trans }}</th>
+                    <td>{{ stageEtudiant.etudiant.adresseSecuriteSociale }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.email'|trans }}</th>
-                    <td>{{ stageEtudiant.etudiant.mailuniv }}</td>
+                    <td>{{ stageEtudiant.etudiant.mailuniv|mailto }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.telephone'|trans }}</th>
-                    <td>{{ stageEtudiant.etudiant.tel1 }} ou {{ stageEtudiant.etudiant.tel2 }}</td>
+                    <td>{{ stageEtudiant.etudiant.tel1|tel_format }}
+                        ou {{ stageEtudiant.etudiant.tel2|tel_format }}</td>
                 </tr>
                 {{ include('composants/adresse_array.html.twig', {adresse:stageEtudiant.etudiant.adresse}) }}
 
@@ -112,14 +123,15 @@
                     <th>{{ 'table.tuteur_universitaire'|trans }}</th>
                     <td>
                         <label for="tuteurUniversitaire" class="sr-only">Tuteur universitaire</label>
-                        <select id="tuteurUniversitaire" data-stage="{{ stageEtudiant.id }}"
+                        <select id="tuteurUniversitaireStage" data-stage="{{ stageEtudiant.id }}"
                                 class="form-control">
+
                             <option value="" selected>Choisir le tuteur universitaire</option>
                             {% for personnel in personnels %}
-                            <option value="{{ personnel.id }}" {% if personnel.id == stageEtudiant
-                                .tuteurUniversitaire.id %}selected{% endif %}>{{ personnel
-                                .displayPr
-                                }}</option>
+                                <option value="{{ personnel.id }}" {% if stageEtudiant.tuteurUniversitaire != null
+                                    and personnel.id == stageEtudiant.tuteurUniversitaire.id %}selected{% endif %}>
+                                    {{ personnel.displayPr }}
+                                </option>
                             {% endfor %}
                         </select>
                     </td>

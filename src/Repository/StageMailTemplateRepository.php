@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StageMailTemplateRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 24/07/2019 12:11
  */
 
 namespace App\Repository;
@@ -33,11 +33,11 @@ class StageMailTemplateRepository extends ServiceEntityRepository
      * @param              $codeEvent
      * @param StagePeriode $stagePeriode
      *
-     * @return mixed
+     * @return StageMailTemplate|null
      * @throws NonUniqueResultException
      *
      */
-    public function findEventPeriode($codeEvent, StagePeriode $stagePeriode)
+    public function findEventPeriode($codeEvent, StagePeriode $stagePeriode): ?StageMailTemplate
     {
         return $this->createQueryBuilder('s')
             ->where('s.stagePeriode = :stagePeriode')
@@ -45,7 +45,6 @@ class StageMailTemplateRepository extends ServiceEntityRepository
             ->setParameter('stagePeriode', $stagePeriode)
             ->setParameter('code', $codeEvent)
             ->getQuery()
-            ->getOneOrNullResult()
-            ;
+            ->getOneOrNullResult();
     }
 }

@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 namespace App\Controller\appPersonnel;
@@ -13,11 +13,13 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
+use App\Entity\Semestre;
 use App\Form\EvaluationsPersonnelsType;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluation;
 use App\MesClasses\MyEvaluations;
+use App\MesClasses\MyExport;
 use App\MesClasses\MyUpload;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -187,7 +189,6 @@ class NoteController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) { //&& $form->isValid()
-            //todo: peut être simplement traiter et ne psa sauvegarder en BDD et sauvegarder une fois la confirmation faite ?
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();
 
@@ -195,10 +196,14 @@ class NoteController extends BaseController
             $fichier = $myUpload->upload($request->files->get('evaluation')['fichier_import'], 'temp/');
 
             //traitement de l'import des notes.
-            $myEvaluation->importEvaluation($evaluation, $fichier);
+            $notes = $myEvaluation->importEvaluation($evaluation, $fichier);
+            $this->addFlashBag('success', 'import_note_a_verifier');
 
-            /*return $this->redirectToRoute('application_personnel_note_confirme_import',
-                ['evaluation' => $evaluation->getId()]);*/
+            return $this->render('appPersonnel/note/saisie_2.html.twig', [
+                'evaluation' => $evaluation,
+                'notes'      => $notes,
+                'import'     => true
+            ]);
         }
 
         return $this->render('appPersonnel/note/import.html.twig', [
@@ -208,26 +213,12 @@ class NoteController extends BaseController
     }
 
     /**
-     * @Route("/confirme-import/{evaluation}", name="application_personnel_note_confirme_import", methods="GET")
-     * @param Evaluation $evaluation
+     * @Route("/modele-import/{semestre}", name="application_personnel_note_import_modele", methods="GET")
      *
-     * @return Response
      */
-    public function confirmeImport(Evaluation $evaluation): Response
+    public function modeleImport(MyExport $myExport, Semestre $semestre)
     {
-        //todo: voir comment exploiter saisie_2?
-        return $this->render('appPersonnel/note/confirmeImport.html.twig', [
-            'evaluation' => $evaluation,
-
-        ]);
-    }
-
-    /**
-     * @Route("/aide", name="application_personnel_note_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return new Response('', Response::HTTP_OK);
+        return $myExport->genereModeleImportNote($semestre);
     }
 
     /**

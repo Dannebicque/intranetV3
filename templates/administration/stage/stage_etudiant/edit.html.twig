@@ -6,7 +6,12 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/sadm-buttons-edit.html.twig', {elt:'stage_etudiant', id: stage_etudiant.id}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_stage_periode_gestion', {uuid: stageEtudiant.stagePeriode.uuidString}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i
+                        class="material-icons">arrow_back</i></a>
+        </div>
     </div>
 {% endblock %}
 

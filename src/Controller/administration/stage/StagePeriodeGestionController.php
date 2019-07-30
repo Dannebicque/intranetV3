@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeGestionController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 22/07/2019 17:30
  */
 
 namespace App\Controller\administration\stage;
@@ -42,7 +42,7 @@ class StagePeriodeGestionController extends BaseController
     ): Response {
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $pers = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire()->getAnnee());
+            $pers = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
             foreach ($pers as $periode) {
                 $periodes[] = $periode;
             }

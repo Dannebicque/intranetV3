@@ -24,24 +24,35 @@
                 <tr>
                     <th>{{ 'table.entreprise'|trans }}</th>
                     <th>{{ 'table.ville'|trans }}</th>
-                    <th>{{ 'table.responsale'|trans }}</th>
+                    <th>{{ 'table.responsable'|trans }}</th>
                     <th>{{ 'table.email'|trans }}</th>
                     <th>{{ 'table.nbstagiaire'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for entreprise in entreprises %}
                     <tr>
-                        <td>{{ 'table.entreprise'|trans }}</td>
-                        <td>{{ 'table.ville'|trans }}</td>
-                        <td>{{ 'table.responsale'|trans }}</td>
-                        <td>{{ 'table.email'|trans }}</td>
-                        <td>{{ 'table.nbstagiaire'|trans }}</td>
-
+                        <td>{{ entreprise.entreprise.libelle }}</td>
+                        <td>{{ entreprise.entreprise.adresse.ville }}</td>
+                        <td>{{ entreprise.entreprise.responsable.display }}</td>
+                        <td>{{ entreprise.entreprise.responsable.email|mailto }}</td>
+                        <td>{{ entreprise.nbstagiaire }}</td>
+                        <td>
+                            <button data-provide="modaler"
+                                    data-size="lg"
+                                    data-confirm-text="{{ 'fermer'|trans }}"
+                                    data-url="{{ path('administration_stage_entreprise_detail', {entreprise:entreprise.entreprise.id}) }}"
+                                    class="btn btn-info btn-outline btn-square btn-xs"
+                                    data-title="Détails de l'entreprise"
+                            >
+                                <i class="{{ iconShow }}"></i>
+                            </button>
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

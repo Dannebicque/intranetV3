@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/StageEtudiantType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:35 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 namespace App\Form;
@@ -70,7 +70,48 @@ class StageEtudiantType extends AbstractType
                     'mapped'    => false,
                     'date_data' => ['from' => $stageEtudiant->getDateDebutStage(), 'to' => $stageEtudiant->getDateFinStage()]
                 ]);
+            })
+            ->add('dateRange', DateRangeType::class,
+                ['label' => 'dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
+            /*->add(
+                'dateDebutStage',
+                DateType::class,
+                ['label' => 'label.dateDebutStage', 'help' => 'help.dateDebutStage', 'widget' => 'single_text']
+            )
+            ->add(
+                'dateFinStage',
+                DateType::class,
+                ['label' => 'label.dateFinStage', 'help' => 'help.dateFinStage', 'widget' => 'single_text']
+            )*/
+
+            ->add(
+                'dureeJoursStage',
+                TextType::class,
+                ['label' => 'label.dureeJoursStage', 'help' => 'help.dureeJoursStage']
+            )
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+                /** @var StageEtudiant $stageEtudiant */
+                $stageEtudiant = $event->getData();
+                $form = $event->getForm();
+                $dateRange = $form->get('dateRange')->getData();
+                $stageEtudiant->setDateDebutStage($dateRange['from_date']);
+                $stageEtudiant->setDateFinStage($dateRange['to_date']);
+            })
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+                /** @var StageEtudiant $stageEtudiant */
+                $stageEtudiant = $event->getData();
+                $form = $event->getForm();
+                $form->add('dateRange', DateRangeType::class, [
+                    'label'     => 'dateRange.periode',
+                    'mapped'    => false,
+                    'date_data' => [
+                        'from' => $stageEtudiant->getDateDebutStage(),
+                        'to'   => $stageEtudiant->getDateFinStage()
+                    ]
+                ]);
             });
+
+
 
     }
 

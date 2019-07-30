@@ -134,8 +134,8 @@
                             ({{ myStage.conventionAEnvoyer|length }})</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#onglet_attente" role="tab">{{ 'convention.en
-                        .attente.de.retour'|trans }} ({{ myStage.conventionEnAttente|length }})</a>
+                        <a class="nav-link" data-toggle="tab" href="#onglet_attente" role="tab">{{ 'convention.en.attente.de.retour'|trans }}
+                            ({{ myStage.conventionEnAttente|length }})</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#onglet_complet"
@@ -197,9 +197,9 @@
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>Etudiant</th>
-                                <th>Entreprise</th>
-                                <th>Actions</th>
+                                <th>{{ 'table.etudiant'|trans }}</th>
+                                <th>{{ 'table.entreprise'|trans }}</th>
+                                <th>{{ 'table.actions'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -229,7 +229,7 @@
                                 </tr>
                             {% else %}
                                 <tr class="bg-success">
-                                    <td colspan="3">Aucune convention à envoyer</td>
+                                    <td colspan="3">{{ 'aucune.convention.a.envoyer'|trans }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -239,9 +239,9 @@
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>Etudiant</th>
-                                <th>Entreprise</th>
-                                <th>Actions</th>
+                                <th>{{ 'table.etudiant'|trans }}</th>
+                                <th>{{ 'table.entreprise'|trans }}</th>
+                                <th>{{ 'table.actions'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -345,7 +345,7 @@
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'departement.en.apprentissage'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -370,7 +370,7 @@
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'departement.en.apprentissage'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -431,7 +431,7 @@
                                         {% elseif stageEtudiant.stage.etatStage =='ETAT_STAGE_APPRENTISSAGE' %}
                                             <a href="#" class="btn btn-success btn-block" data-provide="tooltip"
                                                data-placement="top"
-                                               title="Apprentissage">{{ 'departement.en.apprentissage'|trans }}</a>
+                                               title="Apprentissage">{{ 'annee.en.apprentissage'|trans }}</a>
                                         {% endif %}
                                     </td>
                                     <td>
@@ -464,7 +464,7 @@
                                                 <a class="dropdown-item"
                                                    href="#">{{ 'mettre.a.jour.la.convetion'|trans }}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_edit', {id:stageEtudiant.stage.id}) }}">{{ 'editer.le.courrier'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_courrier_pdf', {id:stageEtudiant.stage.id}) }}">{{ 'editer.le.courrier'|trans }}</a>
                                                 <a class="dropdown-item" href="{{ path
                                                     ('administration_stage_etudiant_fiche_enseignant', {id:stageEtudiant
                                                         .stage.id}) }}">{{ 'fiche.enseignant'|trans }}</a>
@@ -473,7 +473,7 @@
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'departement.en.apprentissage'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -499,7 +499,7 @@
                                             <a class="dropdown-item"
                                                href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
                                             <a class="dropdown-item"
-                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'departement.en.apprentissage'|trans }}</a>
+                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
                                         </div>
                                     </div>
                                 </td>

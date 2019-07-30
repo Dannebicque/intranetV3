@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Events.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/26/19 7:32 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 /**
@@ -75,4 +75,9 @@ class Events
 
     public const REDIRECT_TO_LOGIN = 'redirect.to.login';
     public const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
+
+    static function getConstante($constante)
+    {
+        return constant('self::' . $constante);
+    }
 }

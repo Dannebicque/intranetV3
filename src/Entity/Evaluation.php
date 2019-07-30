@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Evaluation.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/5/19 11:55 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:21
  */
 
 namespace App\Entity;
@@ -52,11 +52,6 @@ class Evaluation extends BaseEntity
     private $dateEvaluation;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $anneeuniversitaire;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $visible = false;
@@ -100,6 +95,11 @@ class Evaluation extends BaseEntity
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $libelle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="evaluations")
+     */
+    private $anneeUniversitaire;
 
     /**
      * Evaluation constructor.
@@ -229,26 +229,6 @@ class Evaluation extends BaseEntity
     public function setDateEvaluation(DateTimeInterface $dateEvaluation): self
     {
         $this->dateEvaluation = $dateEvaluation;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getAnneeuniversitaire(): ?int
-    {
-        return $this->anneeuniversitaire;
-    }
-
-    /**
-     * @param int $anneeuniversitaire
-     *
-     * @return Evaluation
-     */
-    public function setAnneeuniversitaire(int $anneeuniversitaire): self
-    {
-        $this->anneeuniversitaire = $anneeuniversitaire;
 
         return $this;
     }
@@ -480,6 +460,18 @@ class Evaluation extends BaseEntity
     public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
 
         return $this;
     }

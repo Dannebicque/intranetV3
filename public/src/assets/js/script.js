@@ -1,12 +1,10 @@
 /*
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
- * @author David annebicque
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 'use strict'
@@ -2253,6 +2251,7 @@ $(document).on('change', '#semaine', function(e){
   e.preventDefault()
   //{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle}}
   let tab = $(this).val().split('_')
+  console.log(tab)
   location.href = Routing.generate('agenda_index', {semaine: tab[2] ,valeur: tab[1],  filtre: tab[0]});
 })
 
@@ -3350,8 +3349,7 @@ $(document).on('click', '#addCategorie', function () {
 })
 
 
-
-$(document).on('change', '#tuteurUniversitaire', function () {
+  $(document).on('change', '#tuteurUniversitaireStage', function () {
   $.ajax({
     url: Routing.generate('administration_stage_etudiant_change_tuteur', {stageEtudiant: $(this).data('stage'), tuteur: $(this).val()}),
     success: function () {
@@ -3360,15 +3358,90 @@ $(document).on('change', '#tuteurUniversitaire', function () {
   })
 })
 
+  /*let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9;
+
+  if (typeof $('.editCourrier') != 'undefined') {
+
+    const champs = ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'];
+    //let ed1 = loadQuill('#editCourrier', champs)
+    ed2 = loadQuill('ETAT_STAGE_AUTORISE')
+    ed3 = loadQuill('ETAT_STAGE_DEPOSE')
+    ed4 = loadQuill('ETAT_STAGE_VALIDE')
+    ed5 = loadQuill('ETAT_STAGE_REFUS')
+    ed6 = loadQuill('ETAT_STAGE_INCOMPLET')
+    ed7 = loadQuill('ETAT_STAGE_IMPRIME')
+    ed8 = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
+    ed9 = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
+  }*/
+
+  $(document).on('click', '.enregistreModeleMail', function () {
+    const etat = $(this).data('type')
+    console.log(etat)
+    console.log(ed2.getContents())
+    $.ajax({
+      url: Routing.generate('administration_stage_periode_courrier_sauvegarde_modele', {
+        uuid: $(this).data('periode'),
+        mail: etat
+      }),
+      data: {
+        message: ed2.root.innerHTML,
+        sujet: $('#sujet_' + etat).val()
+      },
+      success: function () {
+        addCallout('Modèle enregistré !', 'success')
+      }
+    })
+  })
+
 
   //require('./partials/sousCommission')
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 
-  if (typeof $('#editCourrier') != 'undefined') {
-    //require('./plugins/myQuill');
-    //var editor = loadQuill('#editCourrier', ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'])
+
+  function loadQuill ($id) {
+    /*const toolbarFullOptions = [
+      [
+        // {'font': []},
+        {'header': [1, 2, 3, 4, 5, 6, false]}
+        //  {'size': ['small', false, 'large', 'huge']}
+      ],
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      //  [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+      // [{'script': 'sub'}, {'script': 'super'}],
+      [{'header': 1}, {'header': 2}, 'blockquote', 'code-block'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      [{'direction': 'rtl'}, {'align': []}],        // text direction
+      ['link', 'image', 'video'],
+      ['clean'],
+      [{'placeholder': $options}]// remove formatting button
+    ]*/
+
+    const options = {
+      debug: 'info',
+      modules: {
+        toolbar: {
+          container: '#toolbar_' + $id,
+          handlers: {
+            'customsfields': function (value) {
+              /* do something with lang */
+              console.log('--' + value)
+              if (value) {
+                const cursorPosition = this.quill.getSelection().index
+                this.quill.insertText(cursorPosition, value)
+                this.quill.setSelection(cursorPosition + value.length)
+              }
+            }
+          }
+        }
+
+      },
+      placeholder: 'Compose an epic...',
+      theme: 'snow'
+    }
+    let quill = new Quill('#text_' + $id, options)
   }
+
 
   const preloader = $('.preloader')
   if (preloader.length) {

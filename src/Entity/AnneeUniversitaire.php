@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AnneeUniversitaire.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/18/19 9:03 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:21
  */
 
 namespace App\Entity;
@@ -85,6 +85,16 @@ class AnneeUniversitaire
      */
     private $progressionPedagogiques;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StagePeriode", mappedBy="anneeUniversitaire")
+     */
+    private $stagePeriodes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="anneeUniversitaire")
+     */
+    private $evaluations;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
@@ -96,6 +106,8 @@ class AnneeUniversitaire
         $this->diplomes = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
         $this->progressionPedagogiques = new ArrayCollection();
+        $this->stagePeriodes = new ArrayCollection();
+        $this->evaluations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -393,6 +405,68 @@ class AnneeUniversitaire
             // set the owning side to null (unless already changed)
             if ($progressionPedagogique->getAnneeUniversitaire() === $this) {
                 $progressionPedagogique->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StagePeriode[]
+     */
+    public function getStagePeriodes(): Collection
+    {
+        return $this->stagePeriodes;
+    }
+
+    public function addStagePeriode(StagePeriode $stagePeriode): self
+    {
+        if (!$this->stagePeriodes->contains($stagePeriode)) {
+            $this->stagePeriodes[] = $stagePeriode;
+            $stagePeriode->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStagePeriode(StagePeriode $stagePeriode): self
+    {
+        if ($this->stagePeriodes->contains($stagePeriode)) {
+            $this->stagePeriodes->removeElement($stagePeriode);
+            // set the owning side to null (unless already changed)
+            if ($stagePeriode->getAnneeUniversitaire() === $this) {
+                $stagePeriode->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Evaluation[]
+     */
+    public function getEvaluations(): Collection
+    {
+        return $this->evaluations;
+    }
+
+    public function addEvaluation(Evaluation $evaluation): self
+    {
+        if (!$this->evaluations->contains($evaluation)) {
+            $this->evaluations[] = $evaluation;
+            $evaluation->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluation(Evaluation $evaluation): self
+    {
+        if ($this->evaluations->contains($evaluation)) {
+            $this->evaluations->removeElement($evaluation);
+            // set the owning side to null (unless already changed)
+            if ($evaluation->getAnneeUniversitaire() === $this) {
+                $evaluation->setAnneeUniversitaire(null);
             }
         }
 

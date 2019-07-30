@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyExport.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 29/07/2019 08:56
  */
 
 /**
@@ -14,8 +14,10 @@
  * Date: 12/07/2018
  * Time: 13:10
  */
+
 namespace App\MesClasses;
 
+use App\Entity\Semestre;
 use App\MesClasses\Excel\MyExcelMultiExport;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +47,6 @@ class MyExport
     {
         return $this->excel;
     }
-
 
 
     /**
@@ -96,5 +97,13 @@ class MyExport
         }
 
         return false;
+    }
+
+
+    public function genereModeleImportNote(Semestre $semestre): ?Response
+    {
+        $this->excel->genereModeleExcel($semestre);
+
+        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
     }
 }
