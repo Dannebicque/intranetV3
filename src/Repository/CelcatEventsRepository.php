@@ -4,21 +4,21 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/CelcatEventsRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/11/19 5:10 PM
+ * @date 30/07/2019 08:41
+ * @lastUpdate 30/07/2019 08:41
  */
 
 namespace App\Repository;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
-use App\Entity\Configuration;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use http\Exception\InvalidArgumentException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -76,21 +76,27 @@ class CelcatEventsRepository extends ServiceEntityRepository
     private function groupes(Etudiant $user): void
     {
         foreach ($user->getGroupes() as $groupe) {
-            if ($groupe->getTypeGroupe()->isTD()) {
-                $this->groupetd = $groupe->getCodeApogee();
-            } else if ($groupe->getTypegroupe()->isTP()) {
-                $this->groupetp = $groupe->getCodeApogee();
-            } else {
-                $this->groupecm = $groupe->getCodeApogee();
+            if ($groupe->getTypeGroupe() !== null) {
+                if ($groupe->getTypeGroupe()->isTD()) {
+                    $this->groupetd = $groupe->getCodeApogee();
+                } else if ($groupe->getTypegroupe()->isTP()) {
+                    $this->groupetp = $groupe->getCodeApogee();
+                } else {
+                    $this->groupecm = $groupe->getCodeApogee();
 
+                }
             }
         }
     }
 
     public function deleteDepartement(
         int $codeCelcatDepartement,
-        AnneeUniversitaire $anneeUniversitaire
+        ?AnneeUniversitaire $anneeUniversitaire
     ) {
+
+        if ($anneeUniversitaire === null) {
+            throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
+        }
 
         return $this->createQueryBuilder('c')
             ->delete(CelcatEvent::class, 'c')

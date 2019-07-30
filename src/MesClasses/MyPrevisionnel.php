@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyPrevisionnel.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/21/19 10:48 AM
+ * @date 30/07/2019 08:41
+ * @lastUpdate 30/07/2019 08:41
  */
 
 /**
@@ -30,7 +30,6 @@ use App\Repository\PrevisionnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -703,13 +702,15 @@ class MyPrevisionnel
         $this->entityManager->flush();
     }
 
-    public function compareEdtPreviPersonnels($personnels, $planning, Departement $departement, $annee): array
+    public function compareEdtPreviPersonnels(Departement $departement, $annee): array
     {
+        $this->recupPlanning($departement);
+        $this->recupPersonnels($departement);
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
         $t = [];
 
         /** @var Personnel $ens */
-        foreach ($personnels as $ens) {
+        foreach ($this->personnels as $ens) {
             $t[$ens->getId()] = [];
         }
 
@@ -738,8 +739,7 @@ class MyPrevisionnel
             }
         }
 
-        /** @var  $pl Planning */
-        foreach ($planning as $pl) {
+        foreach ($this->planning as $pl) {
             if ($pl->getMatiere() !== null &&
                 $pl->getIntervenant() !== null &&
                 array_key_exists($pl->getIntervenant()->getId(), $t)) {
@@ -780,17 +780,20 @@ class MyPrevisionnel
      *
      * @return Array
      */
-    public function compareEdtPreviMatiere($modules, $previModule, $planning): Array
+    public function compareEdtPreviMatiere(Departement $departement, $annee): Array
     {
+        $this->recupPlanning($departement);
+        $this->recupMatieres($departement);
+
         $t = [];
 
         /** @var Matiere $module */
-        foreach ($modules as $module) {
-            $t[$module->getId()] = [];
+        foreach ($this->matieres as $matiere) {
+            $t[$matiere->getId()] = [];
         }
 
         /** @var  $p Previsionnel */
-        foreach ($previModule as $p) {
+        foreach ($this->previMatieres as $p) {
             if (($p !== null && $p->getMatiere() !== null && $p->getPersonnel() !== null) &&
                 array_key_exists($p->getMatiere()->getId(), $t)) {
                 if (!array_key_exists($p->getPersonnel()->getId(), $t[$p->getMatiere()->getId()])) {
@@ -811,8 +814,7 @@ class MyPrevisionnel
             }
         }
 
-        /** @var  $pl Planning */
-        foreach ($planning as $pl) {
+        foreach ($this->planning as $pl) {
             if ($pl->getMatiere() !== null &&
                 $pl->getIntervenant() !== null &&
                 array_key_exists($pl->getMatiere()->getId(), $t)) {

@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 12:11 PM
+ * @date 30/07/2019 08:41
+ * @lastUpdate 13/07/2019 08:25
  */
 
 namespace App\Security;
@@ -120,15 +120,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-
         $rolesTab = $token->getRoleNames();
-
-        /*$rolesTab = array_map(static function($role) {
-            return $role;
-        }, $roles);*/
 
         if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
@@ -161,6 +153,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
                     //donc il y a une departement, mais pas une par défaut.
                     return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
                 }
+            }
+
+            if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+                return new RedirectResponse($targetPath);
             }
 
             $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));

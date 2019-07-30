@@ -1,6 +1,0 @@
-<component name="CopyrightManager">
-  <copyright>
-    <option name="notice" value="Copyright (C) 2013 - &amp;#36;today.format('yyyy') | David annebicque | IUT de Troyes - All Rights Reserved&#10; &#10;@file &amp;#36;file.pathName     &#10;@author David annebicque&#10;@project &amp;#36;project.name&#10;@date  &amp;#36;today.format('dd/MM/yyyy HH:mm')&#10;@lastUpdate &amp;#36;file.lastModified.format('dd/MM/yyyy HH:mm')&#10;" />
-    <option name="myName" value="David Annebicque" />
-  </copyright>
-</component>
