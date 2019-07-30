@@ -4,14 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AbsenceJustificatifRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:53 AM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 09:02
  */
 
 namespace App\Repository;
 
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -60,14 +61,15 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     public function findBySemestreCount(Semestre $semestre, $annee = 0)
     {
         if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire();
+            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : date('Y');
         }
 
         return $this->createQueryBuilder('j')
             ->select('count(j.id)')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
+            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'j.anneeUniversitaire = u.id')
             ->where('e.semestre = :semestre')
-            ->andWhere('j.anneeUniversitaire = :annee')
+            ->andWhere('u.annee = :annee')
             ->andWhere('j.etat = :etat')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $annee)

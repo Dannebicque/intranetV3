@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyAbsences.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 14:14
  */
 
 /**
@@ -105,7 +105,8 @@ class MyAbsences
     public function getAbsencesSemestre(Semestre $semestre): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
-        $this->absences = $this->absenceRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $this->absences = $this->absenceRepository->findBySemestre($semestre,
+            $semestre->getAnneeUniversitaire()->getAnnee());
 
 
         /** @var Etudiant $etudiant */

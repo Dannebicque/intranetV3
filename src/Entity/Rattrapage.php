@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Rattrapage.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:35 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 08:55
  */
 
 namespace App\Entity;
@@ -94,9 +94,11 @@ class Rattrapage extends BaseEntity
     private $etatDemande;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
-    private $anneeuniversitaire;
+    private $anneeUniversitaire;
+
+
 
     /**
      * Rattrapage constructor.
@@ -110,7 +112,7 @@ class Rattrapage extends BaseEntity
         $this->uuid = Uuid::uuid4();
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
-        $this->anneeuniversitaire = $etudiant->getSemestre()->getAnneeUniversitaire();
+        $this->anneeuniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
     }
 
     /**
@@ -322,28 +324,20 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getAnneeuniversitaire(): ?int
-    {
-        return $this->anneeuniversitaire;
-    }
-
-    /**
-     * @param int $anneeuniversitaire
-     *
-     * @return Rattrapage
-     */
-    public function setAnneeuniversitaire(int $anneeuniversitaire): self
-    {
-        $this->anneeuniversitaire = $anneeuniversitaire;
-
-        return $this;
-    }
-
     public function getUuidString(): string
     {
         return (string)$this->getUuid();
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
     }
 }

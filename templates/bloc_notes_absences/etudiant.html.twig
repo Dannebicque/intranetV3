@@ -1,6 +1,6 @@
 <div class="col-lg-6 col-md-12 col-sm-12">
-        {{ include('bloc_notes_absences/etudiant_absences.html.twig', {absences: etudiant.absences}) }}
+    {{ include('bloc_notes_absences/etudiant_absences.html.twig', {absences: myEtudiant.absences}) }}
     </div>
 <div class="col-lg-6 col-md-12 col-sm-12">
-        {{ include('bloc_notes_absences/etudiant_notes.html.twig', {notes:etudiant.notes}) }}
+    {{ include('bloc_notes_absences/etudiant_notes.html.twig', {notes:myEtudiant.notes}) }}
     </div>

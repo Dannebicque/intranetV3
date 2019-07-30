@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EvaluationController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 09:40
  */
 
 namespace App\Controller\administration;
@@ -34,13 +34,15 @@ class EvaluationController extends BaseController
     /**
      * @Route("/details/{uuid}", name="administration_evaluation_show", methods="GET|POST")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param Request    $request
-     * @param Evaluation $evaluation
+     * @param Request      $request
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
      *
      * @return RedirectResponse|Response
      */
-    public function show(Request $request, Evaluation $evaluation)
+    public function show(Request $request, MyEvaluation $myEvaluation, Evaluation $evaluation)
     {
+        $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
@@ -65,7 +67,8 @@ class EvaluationController extends BaseController
 
         return $this->render('administration/evaluation/show.html.twig', [
             'evaluation' => $evaluation,
-            'form'       => $form->createView()
+            'form'       => $form->createView(),
+            'notes'      => $notes
         ]);
     }
 

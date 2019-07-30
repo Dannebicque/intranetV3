@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/6/19 11:50 AM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 14:13
  */
 
 /**
@@ -36,8 +36,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use function count;
@@ -333,7 +331,7 @@ class MyEtudiant
         }
 
         $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
-            $semestre->getAnneeUniversitaire());
+            $semestre->getAnneeUniversitaire()->getAnnee());
 
 
         $this->statistiques['nbCoursManques'] = 0;
@@ -363,5 +361,15 @@ class MyEtudiant
     public function getStatistiques(): array
     {
         return $this->statistiques;
+    }
+
+    public function getNotesSemestre(Semestre $semestre, $anneeUniversitaire = 0)
+    {
+        if ($anneeUniversitaire === 0) {
+            $anneeUniversitaire = $this->etudiant->getAnneeUniversitaire()->getAnnee();
+        }
+        $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
+
+        return $this;
     }
 }

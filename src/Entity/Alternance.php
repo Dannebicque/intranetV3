@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Alternance.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/23/19 3:08 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 08:52
  */
 
 namespace App\Entity;
@@ -39,11 +39,6 @@ class Alternance extends BaseEntity
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
      */
     private $tuteur;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $anneeUniversitaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="alternances")
@@ -85,6 +80,11 @@ class Alternance extends BaseEntity
      */
     private $alternanceFicheSuivis;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
+     */
+    private $anneeUniversitaire;
+
     public function __construct()
     {
         $this->typeContrat = self::ALTERNANCE_PROFESSIONALISATION;
@@ -111,18 +111,6 @@ class Alternance extends BaseEntity
     public function setTuteur(?Contact $tuteur): self
     {
         $this->tuteur = $tuteur;
-
-        return $this;
-    }
-
-    public function getAnneeUniversitaire(): ?int
-    {
-        return $this->anneeUniversitaire;
-    }
-
-    public function setAnneeUniversitaire(int $anneeUniversitaire): self
-    {
-        $this->anneeUniversitaire = $anneeUniversitaire;
 
         return $this;
     }
@@ -238,6 +226,18 @@ class Alternance extends BaseEntity
                 $alternanceFicheSuivi->setAlternance(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
 
         return $this;
     }

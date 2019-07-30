@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluations.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/2/19 10:20 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 14:14
  */
 
 /**
@@ -108,7 +108,8 @@ class MyEvaluations
      */
     public function getEvaluationsSemestre(): array
     {
-        $evaluations = $this->evaluationRespository->findBySemestre($this->semestre);
+        $evaluations = $this->evaluationRespository->findBySemestre($this->semestre,
+            $this->semestre->getAnneeUniversitaire()->getAnnee());
         $tab = array();
         /** @var Evaluation $eval */
         foreach ($evaluations as $eval) {

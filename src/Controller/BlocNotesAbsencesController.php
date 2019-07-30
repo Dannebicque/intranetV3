@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/BlocNotesAbsencesController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:47 PM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 10:35
  */
 
 namespace App\Controller;
@@ -45,10 +45,11 @@ class BlocNotesAbsencesController extends BaseController
     {
         $myEtudiant->setEtudiant($this->getConnectedUser());
         $myEtudiant->getNotesAbsences($this->getConnectedUser()->getSemestre(),
-            $this->getConnectedUser()->getSemestre()->getAnneeUniversitaire());
+            $this->getConnectedUser()->getAnneeUniversitaire()->getAnnee());
+        $myEtudiant->getAbsencesSemestre($this->getConnectedUser()->getSemestre());
 
         return $this->render('bloc_notes_absences/etudiant.html.twig', [
-            'etudiant' => $myEtudiant,
+            'myEtudiant' => $myEtudiant,
         ]);
     }
 

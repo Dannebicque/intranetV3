@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Absence.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/6/19 11:54 AM
+ * @date 30/07/2019 14:14
+ * @lastUpdate 30/07/2019 08:55
  */
 
 namespace App\Entity;
@@ -87,12 +87,7 @@ class Absence extends BaseEntity
      */
     private $personnel;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="anneeuniversitaire", type="integer")
-     */
-    private $anneeuniversitaire;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="absences")
@@ -114,13 +109,18 @@ class Absence extends BaseEntity
     private $dateJustifie;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
+     */
+    private $anneeUniversitaire;
+
+    /**
      * Absence constructor.
      * @throws Exception
      */
     public function __construct()
     {
         $this->uuid = Uuid::uuid4();
-        $this->anneeuniversitaire = (int)date('Y');
+        $this->anneeUniversitaire = $this->etudiant !== null ? $this->etudiant->getAnneeUniversitaire() : null;
     }
 
     /**
@@ -221,22 +221,6 @@ class Absence extends BaseEntity
     }
 
     /**
-     * @return int
-     */
-    public function getAnneeuniversitaire(): int
-    {
-        return $this->anneeuniversitaire;
-    }
-
-    /**
-     * @param int $anneeuniversitaire
-     */
-    public function setAnneeuniversitaire(int $anneeuniversitaire): void
-    {
-        $this->anneeuniversitaire = $anneeuniversitaire;
-    }
-
-    /**
      * @return Matiere|null
      */
     public function getMatiere(): ?Matiere
@@ -278,5 +262,17 @@ class Absence extends BaseEntity
             'personnel' => $this->getPersonnel()->getDisplay(),
             'codeMatiere' => $this->getMatiere()->getCodeMatiere(),
         ];
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
     }
 }

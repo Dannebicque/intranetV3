@@ -4,8 +4,8 @@
   ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~ @author     David Annebicque
   ~ @project intranetv3
-  ~ @date 30/07/2019 08:40
-  ~ @lastUpdate 30/07/2019 08:39
+  ~ @date 30/07/2019 14:14
+  ~ @lastUpdate 30/07/2019 14:14
   -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
@@ -11754,6 +11754,18 @@
           <segment>
               <source>prenom</source>
               <target>prenom</target>
+          </segment>
+      </unit>
+      <unit id="6S33qKT" name="chgt.etat_stage.convention_recue">
+          <segment>
+              <source>chgt.etat_stage.convention_recue</source>
+              <target>chgt.etat_stage.convention_recue</target>
+          </segment>
+      </unit>
+      <unit id="kI5JHM8" name="chgt.etat_stage.convention_envoyee">
+          <segment>
+              <source>chgt.etat_stage.convention_envoyee</source>
+              <target>chgt.etat_stage.convention_envoyee</target>
           </segment>
       </unit>
   </file>
