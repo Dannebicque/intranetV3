@@ -8260,73 +8260,73 @@
     <unit id="drx.AkN" name="table.numeroPeriode">
       <segment>
         <source>table.numeroPeriode</source>
-        <target>table.numeroPeriode</target>
+          <target>Numéro de la période</target>
       </segment>
     </unit>
     <unit id="_77GiBk" name="table.responsables_stage_periode">
       <segment>
         <source>table.responsables_stage_periode</source>
-        <target>table.responsables_stage_periode</target>
+          <target>Responsable(s) de cette période de stage</target>
       </segment>
     </unit>
     <unit id="Ul3eHwc" name="table.stage_periode_interruptions">
       <segment>
         <source>table.stage_periode_interruptions</source>
-        <target>table.stage_periode_interruptions</target>
+          <target>Période(s) d'interruption du stage</target>
       </segment>
     </unit>
     <unit id="QAQIy3r" name="table.stage_periode_soutenance">
       <segment>
         <source>table.stage_periode_soutenance</source>
-        <target>table.stage_periode_soutenance</target>
+          <target>Période(s) de soutenance</target>
       </segment>
     </unit>
     <unit id="R4_xfin" name="table.ficheRenseignement">
       <segment>
         <source>table.ficheRenseignement</source>
-        <target>table.ficheRenseignement</target>
+          <target>Fiche de renseignement</target>
       </segment>
     </unit>
     <unit id="LoOrySn" name="table.competencesVisees">
       <segment>
         <source>table.competencesVisees</source>
-        <target>table.competencesVisees</target>
+          <target>Compétences visées</target>
       </segment>
     </unit>
     <unit id="SQACd26" name="table.modaliteEvaluation">
       <segment>
         <source>table.modaliteEvaluation</source>
-        <target>table.modaliteEvaluation</target>
+          <target>Modalités d'évaluation</target>
       </segment>
     </unit>
     <unit id="Lf5MUWB" name="table.modaliteEvaluationPedagogique">
       <segment>
         <source>table.modaliteEvaluationPedagogique</source>
-        <target>table.modaliteEvaluationPedagogique</target>
+          <target>Modalités d'évaluations pédagogiques</target>
       </segment>
     </unit>
     <unit id="HDFMrQh" name="table.modaliteEncadrement">
       <segment>
         <source>table.modaliteEncadrement</source>
-        <target>table.modaliteEncadrement</target>
+          <target>Modalités d'encadrement</target>
       </segment>
     </unit>
     <unit id="WJj4mds" name="table.documentRendre">
       <segment>
         <source>table.documentRendre</source>
-        <target>table.documentRendre</target>
+          <target>Document(s) à rendre</target>
       </segment>
     </unit>
     <unit id="_5w1pwF" name="table.datesFlexibles">
       <segment>
         <source>table.datesFlexibles</source>
-        <target>table.datesFlexibles</target>
+          <target>Dates Flexibles</target>
       </segment>
     </unit>
     <unit id="Vd7YKaa" name="table.copieAssistant">
       <segment>
         <source>table.copieAssistant</source>
-        <target>table.copieAssistant</target>
+          <target>Copie des mails à l'assitant(e)</target>
       </segment>
     </unit>
     <unit id="CwQYarr" name="voir.le.document">
