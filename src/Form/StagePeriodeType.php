@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/StagePeriodeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:35 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 namespace App\Form;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
@@ -59,9 +60,9 @@ class StagePeriodeType extends AbstractType
                 'multiple'      => false
             ))
             ->add('responsables', EntityType::class, [
-                'label' => 'label.responsables',
-                'expanded' => true,
-                'multiple' => true,
+                'label'         => 'label.responsables',
+                'expanded'      => true,
+                'multiple'      => true,
                 'class'         => Personnel::class,
                 'help'          => 'help.responsables',
                 'choice_label'  => 'display',
@@ -69,9 +70,10 @@ class StagePeriodeType extends AbstractType
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
-            ->add('anneeUniversitaire', ChoiceType::class, [
-                'label'   => 'label.anneeUniversitaire',
-                'choices' => array_combine(range(date('Y') - 1, date('Y') + 4), range(date('Y') - 1, date('Y') + 4))
+            ->add('anneeUniversitaire', EntityType::class, [
+                'label'        => 'label.anneeUniversitaire',
+                'choice_label' => 'annee',
+                'class'        => AnneeUniversitaire::class
             ])
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode', 'mapped' => false, 'required' => true])
@@ -79,7 +81,6 @@ class StagePeriodeType extends AbstractType
             ->add('nbJours', TextType::class, ['label' => 'label.nbJours', 'help' => 'help.nbJours'])
             ->add('datesFlexibles', YesNoType::class,
                 ['label' => 'label.datesFlexibles', 'help' => 'help.datesFlexibles'])
-
             ->add('stagePeriodeInterruptions', CollectionType::class, [
                 'entry_type'    => StagePeriodeInterruptionType::class,
                 'entry_options' => ['label' => false],
@@ -146,7 +147,7 @@ class StagePeriodeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => StagePeriode::class,
-            'departement'          => null,
+            'departement'        => null,
             'translation_domain' => 'form'
         ]);
     }

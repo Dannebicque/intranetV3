@@ -9,19 +9,19 @@
 </tr>
 <tr>
     <th>{{ 'table.email'|trans }}</th>
-    <td>{{ contact.email }}</td>
+    <td>{{ contact.email|mailto }}</td>
 </tr>
 <tr>
     <th>{{ 'table.telephone'|trans }}</th>
-    <td>{{ contact.telephone }}</td>
+    <td>{{ contact.telephone|tel_format }}</td>
 </tr>
 <tr>
     <th>{{ 'table.portable'|trans }}</th>
-    <td>{{ contact.portable }}</td>
+    <td>{{ contact.portable|tel_format }}</td>
 </tr>
 <tr>
     <th>{{ 'table.fax'|trans }}</th>
-    <td>{{ contact.fax }}</td>
+    <td>{{ contact.fax|tel_format }}</td>
 </tr>
 {% else %}
 <tr>

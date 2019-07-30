@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelMultiExport.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:35 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:17
  */
 
 /**
@@ -17,6 +17,8 @@
 
 namespace App\MesClasses\Excel;
 
+use App\Entity\Etudiant;
+use App\Entity\Semestre;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MySerializer;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -234,6 +236,30 @@ class MyExcelMultiExport
                 $ligne,
                 $myAbsences->getStatistiques()[$etudiant->getId()]['nbJustifie']
             );
+            $ligne++;
+            $colonne = 1;
+        }
+    }
+
+    /**
+     * @param Semestre $semestre
+     */
+    public function genereModeleExcel(Semestre $semestre)
+    {
+        $this->myExcelWriter->createSheet('import');
+
+        $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire']);
+        $ligne = 2;
+        //todo: en param ?
+        $colonne = 1;
+        /** @var Etudiant $etudiant */
+        //todo: peut être a améliorer avec un filtre des étudiants?
+        foreach ($semestre->getEtudiants() as $etudiant) {
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
             $ligne++;
             $colonne = 1;
         }

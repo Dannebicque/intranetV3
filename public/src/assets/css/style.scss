@@ -1,12 +1,10 @@
 /*!
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/css/style.scss
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  07/05/2019 10:42
- * @lastUpdate 07/05/2019 10:42
- *
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 #planning thead {
@@ -211,5 +209,37 @@ thead {
   .hide {
     display:none;
   }
+}
+
+/* QuillJs */
+.ql-editor {
+  min-height: 200px;
+}
+
+.ql-snow .ql-picker.customsfields .ql-picker-label::before {
+  content: 'Choisir'
+}
+
+/*.ql-snow .ql-picker.customsfields::before,*/
+.ql-snow .ql-picker.ql-customsfields .ql-picker-item::before {
+  content: attr(data-value);
+}
+
+/*
+.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[prenom]"]::before,
+.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[prenom]"]::before {
+  content: "[prenom]";
+}
+.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[nom]"]::before,
+.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[nom]"]::before {
+  content: "[nom]";
+}
+.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[entreprise]"]::before,
+.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[entreprise]"]::before {
+  content: "[entreprise]";
+}
+*/
+.ql-snow span.ql-picker.ql-customsfields {
+  width: 8em;
 }
 

@@ -82,7 +82,8 @@
                                                              l'entreprise.
                                 <strong>Ce document n'est pas la convention de stage !</strong></div>
 
-                            <a href="" class="btn btn-block btn-large btn-info">Consultez les offres de stage</a>
+                            <a href="" class="btn btn-block btn-large btn-info">Consultez les offres de stage</a>{#
+                            todo: a finaliser. Redirection vers la page document, rubrique offres de stage. #}
                         {% endif %}
                         {% if ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_AUTORISE', stageEtudiants[stagePeriode.id]) )) %}
                             <div class="alert alert-warning"><p>Votre proposition a été acceptée le

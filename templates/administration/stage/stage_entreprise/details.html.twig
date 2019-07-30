@@ -1,0 +1,20 @@
+<h4>Entreprise : {{ entreprise.libelle }}</h4>
+<dl class="row">
+
+    <dt class="col-sm-4">Raison Sociale :</dt>
+    <dd class="col-sm-6">{{ entreprise.raisonSociale }}</dd>
+    <dt class="col-sm-4">Siret :</dt>
+    <dd class="col-sm-6">{{ entreprise.siret }}</dd>
+    <dt class="col-sm-4">Adresse Siège :</dt>
+    <dd class="col-sm-6">{{ entreprise.adresse.display|raw }}</dd>
+</dl>
+<h4>Responsable</h4>
+<dl class="row">
+
+    <dt class="col-sm-4">Responsable :</dt>
+    <dd class="col-sm-6">{{ entreprise.responsable.display }}</dd>
+    <dt class="col-sm-4">Email :</dt>
+    <dd class="col-sm-6">{{ entreprise.responsable.email|mailto }}</dd>
+    <dt class="col-sm-4">Téléphone :</dt>
+    <dd class="col-sm-6">{{ entreprise.responsable.telephone|tel_format }}</dd>
+</dl>

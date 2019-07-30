@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluation.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:47 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 /**
@@ -257,11 +257,12 @@ class MyEvaluation
      * @param string     $fichier
      *
      *
-     * @return bool
+     * @return array|null
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws \Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier): ?bool
+    public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
     {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
@@ -270,47 +271,50 @@ class MyEvaluation
             case 'xlsx':
                 echo 'xlsx';
                 $data = $this->importXlsx($fichier);
-                $this->insertNotes($evaluation, $data);
+                $notes = $this->insertNotes($evaluation, $data);
                 break;
             case 'csv':
 
                 $data = $this->importCsv($fichier);
-                $this->insertNotes($evaluation, $data);
+                $notes = $this->insertNotes($evaluation, $data);
                 break;
             default:
-                return false; //erreur
+                return []; //erreur
         }
 
-        return false; //erreur
+        return $notes; //erreur
     }
 
     /**
      * @param Evaluation $evaluation
      * @param            $data
      *
+     * @return array
      * @throws \Exception
      */
-    private function insertNotes(Evaluation $evaluation, $data): void
+    private function insertNotes(Evaluation $evaluation, $data): array
     {
+        $notes = [];
         $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($evaluation->getSemestre());
         $etudiants = [];
         /** @var Etudiant $etu */
         foreach ($req as $etu) {
             $etudiants[$etu->getNumEtudiant()] = $etu;
         }
-
         foreach ($data as $note) {
             if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
-                $newnote = new Note();
-                $newnote->setEvaluation($evaluation);
-                $newnote->setEtudiant($etudiants[(string)$note['num_etudiant']]);
-                $newnote->setNote($note['note']);
-                $newnote->setAbsenceJustifie(true);
-                $newnote->setCommentaire($note['commentaire']);
-                $this->entityManager->persist($newnote);
+                $newnote = [];
+                $newnote['idetudiant'] = $etudiants[$note['num_etudiant']]->getId();
+                $newnote['numetudiant'] = $note['num_etudiant'];
+                $newnote['note'] = $note['note'];
+                $newnote['commentaire'] = $note['commentaire'];
+                $newnote['absenceJustifie'] = false;
+                $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
             }
         }
-        $this->entityManager->flush();
+        dump($notes);
+
+        return $notes;
     }
 
     /**
@@ -327,7 +331,7 @@ class MyEvaluation
         $data = [];
         $ordre = [];
         foreach ($sheetData[1] as $key) {
-            $ordre[] = $key;
+            $ordre[] = strtolower($key);
         }
 
         $nblignes = count($sheetData);
@@ -380,4 +384,5 @@ class MyEvaluation
 
         return $data;
     }
+
 }

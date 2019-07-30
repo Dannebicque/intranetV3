@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/StageEtudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:35 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 23/07/2019 11:32
  */
 
 namespace App\Entity;
@@ -24,6 +24,8 @@ class StageEtudiant extends BaseEntity
     public const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
     public const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';
     public const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
+    public const ETAT_STAGE_REFUS = 'ETAT_STAGE_REFUS';
+    public const ETAT_STAGE_INCOMPLET = 'ETAT_STAGE_INCOMPLET';
     public const ETAT_STAGE_IMPRIME = 'ETAT_STAGE_IMPRIME';
     public const ETAT_STAGE_CONVENTION_ENVOYEE = 'ETAT_STAGE_CONVENTION_ENVOYEE';
     public const ETAT_STAGE_CONVENTION_RECUE = 'ETAT_STAGE_CONVENTION_RECUE';
@@ -35,6 +37,16 @@ class StageEtudiant extends BaseEntity
     public const PERIODE_GRATIFICATION_JOUR = 'J';
     public const PERIODE_GRATIFICATION_SEMAINE = 'S';
     public const PERIODE_GRATIFICATION_MOIS = 'M';
+    public const ETATS = [
+        self::ETAT_STAGE_AUTORISE,
+        self::ETAT_STAGE_DEPOSE,
+        self::ETAT_STAGE_VALIDE,
+        self::ETAT_STAGE_REFUS,
+        self::ETAT_STAGE_INCOMPLET,
+        self::ETAT_STAGE_IMPRIME,
+        self::ETAT_STAGE_CONVENTION_ENVOYEE,
+        self::ETAT_STAGE_CONVENTION_RECUE
+    ];
 
 
     /**

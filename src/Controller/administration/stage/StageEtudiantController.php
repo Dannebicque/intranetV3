@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StageEtudiantController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
  */
 
 namespace App\Controller\administration\stage;
@@ -70,8 +70,8 @@ class StageEtudiantController extends BaseController
         }
 
         return $this->render('administration/stage/stage_etudiant/edit.html.twig', [
-            'stage_etudiant' => $stageEtudiant,
-            'form'           => $form->createView(),
+            'stageEtudiant' => $stageEtudiant,
+            'form'          => $form->createView(),
         ]);
     }
 

@@ -8,8 +8,8 @@
     <div class="header-action">
         <div class="buttons">
             {#<a href="{{ path('administration_stage_courrier_new') }}" class="btn btn-info btn-sm btn-float"#}
-               {#title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i#}
-                        {#class="ti-plus"></i></a>#}
+            {#title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i#}
+            {#class="ti-plus"></i></a>#}
             <a href="{{ path('administration_stage_periode_gestion', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i
@@ -21,41 +21,121 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.stage_periode_courrier.index.heading'|trans }}</h4>
+        <h3 class="card-title">{{ 'adm.stage_periode_courrier.index.heading'|trans }}</h3>
         <div class="card-body">
-            <p>Personnalisation des courriers et des mails associés à la période : <strong>{{ stagePeriode.libelle }}</strong></p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Element</th>
-                    <th>Type</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for courrier in courriers %}
-                <tr>
-                    <td>{{ courrier.libelle }}</td>
-                    <td>{{ courrier.type }}</td>
-                    <td>
-                        <a href="{{ path('administration_stage_periode_courrier_show', {'id': courrier.id}) }}"
-                           class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+            <p>Personnalisation des courriers et des mails associés à la période :
+                <strong>{{ stagePeriode.libelle }}</strong></p>
+            <div class="nav-tabs-left">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-tabs-success">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#courrier">Courrier d'accompagement</a>
+                    </li>
+                    {% for etat in etatsConvention %}
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#{{ etat }}">{{ etat|trans }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
 
-                        <a href="{{ path('administration_stage_periode_courrier_edit', {'id': courrier.id}) }}"
-                           class="btn btn-warning btn-outline btn-square"
-                           data-provide="tooltip"
-                           data-placement="bottom"
-                           title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
-                        <a href="{{ path('administration_stage_periode_courrier_delete', {id: courrier.id}) }}"
-                           data-csrf="{{ csrf_token('delete' ~ courrier.id) }}"
-                           class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip" data-placement="bottom"
-                           title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="courrier">
+                        <h4>Courrier d'accompagnement</h4>
+                        <div class="alert alert-info">Quickly utilize synergistic deliverables via enabled synergy.
+                                                      Rapidiously
+                                                      create
+                                                      optimal solutions rather than 24/7 e-services. Continually
+                                                      reinvent performance based
+                                                      markets before open-source testing procedures. Dynamically
+                                                      fabricate process-centric content for cross functional
+                                                      relationships. Proactively build clicks-and-mortar interfaces.
+                        </div>
+                        <div class="editCourrier" id="editCourrier"></div>
+                    </div>
+                    {% for etat in etatsConvention %}
+                        <div class="tab-pane fade" id="{{ etat }}">
+                            <h4>{{ etat|trans }}</h4>
+                            <div class="alert alert-info">
+                                Dans cette partie vous pouvez éditer le contenu des emails
+                                envoyés lors des différentes phases de la gestion de la
+                                convetion. Si vous laissez la zone de texte vide le mail
+                                par défaut sera envoyé. <a href="#" data-provide="modaler"
+                                                           data-url="{{ path
+                                                               ('administration_stage_periode_courrier_apercu_defaut',
+                                                               {'mail': etat}) }}"
+                                                           title="Mail par défaut pour {{ etat|trans }}"
+                                                           data-title="Mail par défaut pour {{ etat|trans }}">Vous
+                                                                                                              pouvez
+                                                                                                              consulter
+                                                                                                              le mail
+                                                                                                              par défaut
+                                                                                                              ici</a>.
+                                Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
+                                fusion d'un publipostage word) pour générer votre mail.
+                            </div>
+                            <div>
+                                <label for="sujet_{{ etat }}">Sujet du message : </label>
+                                <input type="text" class="form-control" value="defaut" name="sujet_{{ etat }}"
+                                       id="sujet_{{ etat }}"/>
+                            </div>
+                            <div id="toolbar_{{ etat }}" class="mt-10">
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered" type="button"></button>
+                                    <button class="ql-list" value="bullet" type="button"></button>
+
+                                    <select class="ql-align">
+                                        <option selected=""></option>
+                                        <option value="center"></option>
+                                        <option value="right"></option>
+                                        <option value="justify"></option>
+                                    </select>
+                                </span>
+                                <span>
+                                    <select id="custom-fields_{{ etat }}" class="ql-customsfields">
+                                        <option selected>Choisir</option>
+                                        <option value="[prenom_etudiant]"></option>
+                                        <option value="[nom_etudiant]"></option>
+                                        <option value="[entreprise]"></option>
+                                        <option value="[prenom_tuteur]"></option>
+                                        <option value="[nom_tuteur]"></option>
+                                        <option value="[prenom_tuteur_univ]"></option>
+                                        <option value="[nom_tuteur_univ]"></option>
+                                        <option value="[date_debut_stage]"></option>
+                                        <option value="[date_fin_stage]"></option>
+                                        <option value="[nom_periode_stage]"></option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="editCourrier" id="text_{{ etat }}"></div>
+
+                            <div class="row mt-10">
+                                <div class="col-sm-12 col-md-4">
+                                    <button id="" class="btn btn-danger btn-block">Revenir au mail par défaut
+                                                                                   (effacera le contenu du
+                                                                                   texte ci-dessus)
+                                    </button>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <button id="" class="btn btn-info btn-block">Aperçu du mail</button>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
+                                    btn-block enregistreModeleMail">Enregistrer le modèle
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

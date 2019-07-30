@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/StagePeriode.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:47 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 22/07/2019 17:11
  */
 
 namespace App\Entity;
@@ -120,10 +120,6 @@ class StagePeriode extends BaseEntity
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="stagePeriodes")
      */
     private $responsables;
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $anneeUniversitaire;
 
     /**
      * @ORM\Column(type="text")
@@ -144,6 +140,11 @@ class StagePeriode extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\StageMailTemplate", mappedBy="stagePeriode")
      */
     private $stageMailTemplates;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="stagePeriodes")
+     */
+    private $anneeUniversitaire;
 
     /**
      * StagePeriode constructor.
@@ -445,21 +446,6 @@ class StagePeriode extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getAnneeUniversitaire(): ?int
-    {
-        return $this->anneeUniversitaire;
-    }
-
-    public function setAnneeUniversitaire(?int $anneeUniversitaire): self
-    {
-        $this->anneeUniversitaire = $anneeUniversitaire;
-
-        return $this;
-    }
-
     public function getTexteLibre(): ?string
     {
         return $this->texteLibre;
@@ -608,5 +594,17 @@ class StagePeriode extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
     }
 }

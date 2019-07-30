@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StageEtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 24/07/2019 13:34
  */
 
 namespace App\Repository;
 
+use App\Entity\Entreprise;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
@@ -93,6 +94,17 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->andWhere('s.etudiant = :etudiant')
             ->setParameter('annee', $getAnneeUniversitaire)
             ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findEntreprisesByPeriode(StagePeriode $stagePeriode)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(Entreprise::class, 'e', 'WITH', 's.entreprise = e.id')
+            ->where('s.stagePeriode = :stagePeriode')
+            ->setParameter('stagePeriode', $stagePeriode->getId())
+            ->orderBy('e.libelle', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -81,8 +81,7 @@
 
             <h3 class="titre_rub">Le stage</h3>
             {% if stageEtudiant.stagePeriode.datesFlexibles == true %}
-                {{ form_row(form.dateDebutStage) }}
-                {{ form_row(form.dateFinStage) }}
+                {{ form_row(form.dateRange) }}
                 {{ form_row(form.dureeJoursStage) }}
             {% else %}
                 <div class="alert alert-info">Stage du

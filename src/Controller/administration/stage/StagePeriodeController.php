@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 22/07/2019 17:13
  */
 
 namespace App\Controller\administration\stage;
@@ -114,7 +114,7 @@ class StagePeriodeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_stage_periode_edit", methods="GET|POST")
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "id"}})
+     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
      * @param Request      $request
      * @param StagePeriode $stagePeriode
      *

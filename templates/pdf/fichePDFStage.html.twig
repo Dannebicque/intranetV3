@@ -14,12 +14,13 @@
         </tr>
         <tr>
             <td colspan="3" style="text-align: center">
-                <h1>DUT TC<br />
-                    {{ settings('NOM_IUT') }} – {{ settings('NOM_UNIVERSITE') }}
+                <h1>{{ settings('NOM_IUT') }} – {{ settings('NOM_UNIVERSITE') }}
                     <br /><br />
-                    FICHE DE RENSEIGNEMENTS<br />
-                    Stages (Année universitaire {{ stageEtudiant.etudiant.semestre.anneeUniversitaire }} / {{ stageEtudiant.etudiant.semestre.anneeUniversitaire+1 }})<br />
-                    Formation suivie : {{ stageEtudiant.etudiant.semestre.annee.libelle }} {{ stageEtudiant.etudiant
+                                              FICHE DE RENSEIGNEMENTS<br />
+                                              Stages (Année
+                                              universitaire {{ stageEtudiant.etudiant.semestre.anneeUniversitaire.displayAnneeUniversitaire }}
+                                              )<br/>
+                                              Formation suivie : {{ stageEtudiant.etudiant.semestre.annee.libelle }} {{ stageEtudiant.etudiant
                     .semestre.annee.diplome.libelle }}<br />
                 </h1>
             </td>
@@ -35,8 +36,8 @@
         N° d’étudiant : {{ stageEtudiant.etudiant.numetudiant }}<br />
         Adresse postale : {% if stageEtudiant.etudiant.adresse != null %}{{ stageEtudiant.etudiant.adresse.display }}{% endif %}<br />
         Courriel(s) : {{ stageEtudiant.etudiant.mailuniv }} | {{ stageEtudiant.etudiant.mailperso }}<br />
-        Téléphone : {{ stageEtudiant.etudiant.tel1 }}<br />
-        Téléphone portable : {{ stageEtudiant.etudiant.tel2 }}<br />
+        Téléphone : {{ stageEtudiant.etudiant.tel1|tel_format }}<br/>
+        Téléphone portable : {{ stageEtudiant.etudiant.tel2|tel_format }}<br/>
         Caisse Primaire d’Assurance Maladie (à contacter en cas d’accident) :<br />
         Intitulé : {{ stageEtudiant.etudiant.intituleSecuriteSociale }}<br />
         Adresse : {{ stageEtudiant.etudiant.adresseSecuriteSociale }}<br />
@@ -54,7 +55,7 @@
         Service dans lequel le stage sera effectué<br />
         <ul>
             <li>Intitulé : {{ stageEtudiant.serviceStageEntreprise }}</li>
-            <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone }}</li>
+            <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone|tel_format }}</li>
             <li>Courriel : {{ stageEtudiant.entreprise.responsable.email }}</li>
         </ul>
         Adresse du lieu du stage (si différente de celle de l’organisme): {% if stageEtudiant.adresseStage != null %}{{ stageEtudiant.adresseStage.display }}{% endif %}<br />
@@ -71,7 +72,7 @@
                     }}{%
                         endif %}{% else %}{{ stageEtudiant.adresseStage.display }}{% endif %}</li>
                 <li>Courriel : {{ stageEtudiant.entreprise.responsable.email }}</li>
-                <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone }}</li>
+                <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone|tel_format }}</li>
             {% else %}
                 <li>Nom : {{ stageEtudiant.tuteur.nom }}</li>
                 <li>Prénom : {{ stageEtudiant.tuteur.prenom }}</li>
@@ -82,7 +83,7 @@
                     }}{%
                         endif %}{% else %}{{ stageEtudiant.adresseStage.display }}{% endif %}</li>
                 <li>Courriel : {{ stageEtudiant.tuteur.email }}</li>
-                <li>Téléphone : {{ stageEtudiant.tuteur.telephone }}</li>
+                <li>Téléphone : {{ stageEtudiant.tuteur.telephone|tel_format }}</li>
             {% endif %}
         </ul>
 

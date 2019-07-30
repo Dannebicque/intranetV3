@@ -4,15 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StagePeriodeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/29/19 10:35 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 22/07/2019 17:54
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\Diplome;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -38,7 +39,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByDiplome(Diplome $diplome, $anneeUniversitaire = 0)
+    public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->findByDiplomeBuilder($diplome, $anneeUniversitaire)->getQuery()
             ->getResult();
@@ -50,22 +51,18 @@ class StagePeriodeRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function findByDiplomeBuilder(Diplome $diplome, $anneeUniversitaire = 0): QueryBuilder
+    public function findByDiplomeBuilder(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
 
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->where('a.diplome = :diplome');
-
-        if ($anneeUniversitaire !== 0) {
-            $query->andWhere('p.anneeUniversitaire = :annee')
-                ->setParameter('annee', $anneeUniversitaire);
-        }
-
-        $query->setParameter('diplome', $diplome->getId())
+            ->where('a.diplome = :diplome')
+            ->andWhere('p.anneeUniversitaire = :annee')
+            ->setParameter('annee', $anneeUniversitaire->getId())
+            ->setParameter('diplome', $diplome->getId())
             ->orderBy('p.anneeUniversitaire', 'DESC')
-            ->orderBy('p.numeroPeriode', 'ASC');
+            ->addOrderBy('p.numeroPeriode', 'ASC');
 
         return $query;
     }
@@ -77,7 +74,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->where('s.semestre = :semestreCourant')
             ->andWhere('s.anneeUniversitaire = :annee')
             ->setParameter('semestreCourant', $semestre->getId())
-            ->setParameter('annee', $semestre->getAnneeUniversitaire());
+            ->setParameter('annee', $semestre->getAnneeUniversitaire()->getId());
         if ($semestre->getSuivant() !== null) {
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());

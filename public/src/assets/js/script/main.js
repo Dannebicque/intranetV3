@@ -1,12 +1,10 @@
 /*
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * @date 30/07/2019 08:40
+ * @lastUpdate 24/07/2019 13:02
  */
 
 'use strict'
@@ -147,10 +145,7 @@ app.ready(function () {
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 
-  if (typeof $('#editCourrier') != 'undefined') {
-    //require('./plugins/myQuill');
-    //var editor = loadQuill('#editCourrier', ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'])
-  }
+  require('./plugins/myQuill')
 
   const preloader = $('.preloader')
   if (preloader.length) {

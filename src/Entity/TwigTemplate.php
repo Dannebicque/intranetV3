@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/TwigTemplate.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 8/16/18 11:08 AM
+ * @date 30/07/2019 08:40
+ * @lastUpdate 24/07/2019 12:04
  */
 
 namespace App\Entity;
@@ -51,5 +51,11 @@ class TwigTemplate extends BaseEntity
         $this->source = $source;
 
         return $this;
+    }
+
+    public function __construct($name, $source)
+    {
+        $this->name = $name;
+        $this->source = $source;
     }
 }
