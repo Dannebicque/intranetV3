@@ -41,8 +41,10 @@ security:
     - { path: '^/admin', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/connexion', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
     - { path: '^/[a-z]{2}/administration', roles: ROLE_PERMANENT }
     - { path: '^/[a-z]{2}/iut', roles: ROLE_IUT }
     - { path: '^/[a-z]{2}/super-administration', roles: ROLE_SUPER_ADMIN }
     - { path: '^/[a-z]{2}/admin', roles: ROLE_PERMANENT }
+    - { path: '^/[a-z]{2}/api/', roles: IS_AUTHENTICATED_ANONYMOUSLY }
