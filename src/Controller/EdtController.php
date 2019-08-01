@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/EdtController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 01/08/2019 15:58
+ * @lastUpdate 01/08/2019 15:58
  */
 
 namespace App\Controller;
@@ -19,6 +19,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -171,23 +172,24 @@ class EdtController extends BaseController
      */
     public function afficheLienIcal(): Response
     {
-        //todo: a proposer aux étudiants également ? visibilité réduite?
+        if ($this->isEtudiant()) {
+            return $this->render('edt/modal_lien_ical.html.twig', [
+                'lienIcal' => $this->generateUrl('edt_etudiant_synchro_ical', [
+                    'code'    => md5($this->getConnectedUser()->getSlug()),
+                    '_format' => 'ics'
+                ],
+                    UrlGeneratorInterface::ABSOLUTE_URL)
+            ]);
+        }
+
         return $this->render('edt/modal_lien_ical.html.twig', [
             'lienIcal' => $this->generateUrl('edt_intervenant_synchro_ical', [
                 'code'    => md5($this->getConnectedUser()->getSlug()),
-                '_format' => '.ics'
-            ])
+                '_format' => 'ics'
+            ],
+                UrlGeneratorInterface::ABSOLUTE_URL)
         ]);
-    }
 
-    /**
-     * @Route("/intervenant/synchro/ical/{code}.{_format}", name="edt_intervenant_synchro_ical")
-     */
-    public function synchroIntervenantIcal($code, $_format): Response
-    {
-        //todo: a proposer aux étudiants également ? visibilité réduite?
-        return $this->render('edt/modal_lien_ical.html.twig', [
-        ]);
     }
 
     /**
@@ -231,17 +233,9 @@ class EdtController extends BaseController
     }
 
     /**
-     * @Route("/interetudiantvenant/synchro/ical", name="edt_etudiant_synchro_ical")
-     */
-    public function synchroEtudiantIcal(): void
-    {
-        //todo: a proposer aux étudiants également ? visibilité réduite?
-    }
-
-    /**
      * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
      */
-    public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type)
+    public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type): ?Response
     {
         if ($type === 'planning') {
             $pl = $edtPlanningRepository->find($event);

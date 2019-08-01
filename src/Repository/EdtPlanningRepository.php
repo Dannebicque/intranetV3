@@ -1,17 +1,18 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EdtPlanningRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/11/19 2:32 PM
+ * @date 01/08/2019 15:58
+ * @lastUpdate 01/08/2019 15:58
  */
 
 namespace App\Repository;
 
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -493,5 +494,34 @@ class EdtPlanningRepository extends ServiceEntityRepository
 //
 //        return $t;
 //    }
+    public function getByPersonnelArray(Personnel $user)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->andWhere('p.intervenant = :idprof')
+            ->setParameter('idprof', $user->getId())
+            ->orderBy('p.jour, p.debut, p.groupe')
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+        /** @var EdtPlanning $event */
+        foreach ($query as $event) {
+            $pl = [];
+            $pl['semaine'] = $event->getSemaine();
+            $pl['jour'] = $event->getJour();
+            $pl['debut'] = $event->getDebut();
+            $pl['fin'] = $event->getFin();
+            $pl['commentaire'] = $event->getCommentaire();
+            $pl['ical'] = $event->getDisplayIcal();
+            $pl['salle'] = $event->getSalle();
+            $t[] = $pl;
+        }
+
+        return $t;
+    }
+
+    public function getByEtudiantArray($user, $nbSemaines)
+    {
+    }
 
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/CelcatEventsRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:41
- * @lastUpdate 30/07/2019 08:41
+ * @date 01/08/2019 15:58
+ * @lastUpdate 01/08/2019 15:58
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\CelcatEvent;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -242,5 +243,49 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->orderBy('p.jour, p.debut, p.codeGroupe')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Personnel $user
+     *
+     * @return array
+     */
+    public function getByPersonnelArray(Personnel $user)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->andWhere('p.codePersonnel = :idprof')
+            ->setParameter('idprof', $user->getNumeroHarpege())
+            ->orderBy('p.jour, p.debut, p.libGroupe')
+            ->getQuery()
+            ->getResult();
+
+        return $this->transformeArray($query);
+    }
+
+    public function getByEtudiantArray($user, $semaine)
+    {
+        $query = $this->findEdtEtu($user, $semaine);
+
+        return $this->transformeArray($query);
+
+    }
+
+    private function transformeArray($data)
+    {
+        $t = [];
+        /** @var CelcatEvent $event */
+        foreach ($data as $event) {
+            $pl = [];
+            $pl['semaine'] = $event->getSemaineFormation();
+            $pl['jour'] = $event->getJour();
+            $pl['debut'] = $event->getDebut();
+            $pl['fin'] = $event->getFin();
+            $pl['commentaire'] = '';
+            $pl['ical'] = $event->getDisplayIcal();
+            $pl['salle'] = $event->getLibSalle();
+            $t[] = $pl;
+        }
+
+        return $t;
     }
 }

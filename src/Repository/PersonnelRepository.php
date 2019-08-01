@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PersonnelRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/18/19 7:31 PM
+ * @date 01/08/2019 15:58
+ * @lastUpdate 01/08/2019 08:37
  */
 
 namespace App\Repository;
@@ -262,5 +262,20 @@ class PersonnelRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function findByCode($code)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('MD5(p.slug) = :code')
+            ->setParameter('code', $code)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
