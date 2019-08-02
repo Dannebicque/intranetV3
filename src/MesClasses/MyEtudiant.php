@@ -1,18 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 14:13
- */
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 12/05/2018
- * Time: 16:02
+ * @date 02/08/2019 11:34
+ * @lastUpdate 30/07/2019 14:20
  */
 
 namespace App\MesClasses;
@@ -363,13 +356,13 @@ class MyEtudiant
         return $this->statistiques;
     }
 
-    public function getNotesSemestre(Semestre $semestre, $anneeUniversitaire = 0)
+    public function getNotesSemestre(Semestre $semestre, $anneeUniversitaire = 0): array
     {
         if ($anneeUniversitaire === 0) {
             $anneeUniversitaire = $this->etudiant->getAnneeUniversitaire()->getAnnee();
         }
         $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
 
-        return $this;
+        return $this->getNotes();
     }
 }

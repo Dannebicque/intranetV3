@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 14:14
+ * @date 02/08/2019 11:34
+ * @lastUpdate 02/08/2019 11:34
  */
 
 namespace App\Controller;
@@ -107,7 +107,7 @@ class ProfilEtudiantController extends BaseController
             $etudiant->getDepartement()); //les semestres dans lesquels l'étudiant est passé dans le département...
 
         return $this->render('user/composants/notes.html.twig', [
-            'notes' => $myEtudiant->setEtudiant($etudiant)->getNotesSemestre($etudiant->getSemestre())->getNotes(),
+            'notes'     => $myEtudiant->setEtudiant($etudiant)->getNotesSemestre($etudiant->getSemestre()),
             'semestres' => $semestres
         ]);
     }
