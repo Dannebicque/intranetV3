@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 11:44
- * @lastUpdate 02/08/2019 11:43
+ * @date 02/08/2019 14:09
+ * @lastUpdate 02/08/2019 14:09
  */
 
 namespace App\Controller\superAdministration;
@@ -30,6 +30,7 @@ class ApogeeController extends BaseController
      */
     public function index(): Response
     {
+        phpinfo();
         try {
             $conn = new PDO('oci:dbname=//apogee-db.univ-reims.fr:1522/APOGEE/ORCL', 'iut', 'Iut3Re1msApo!');
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
