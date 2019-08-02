@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 11:34
- * @lastUpdate 02/08/2019 11:34
+ * @date 02/08/2019 11:39
+ * @lastUpdate 02/08/2019 11:39
  */
 
 namespace App\Controller\superAdministration;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApogeeController extends BaseController
 {
     /**
-     * @Route("/index", methods={"GET"}, name="sa_apogee_index")
+     * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @return Response
@@ -31,7 +31,7 @@ class ApogeeController extends BaseController
     public function index(): Response
     {
         try {
-            $conn = new PDO('oci:dbname=//pogee-db.univ-reims.fr:1522/APOGEE/ORCL', 'iut', 'Iut3Re1msApo!');
+            $conn = new PDO('oci:dbname=//apogee-db.univ-reims.fr:1522/APOGEE/ORCL', 'iut', 'Iut3Re1msApo!');
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo 'ERROR: ' . $e->getMessage();
