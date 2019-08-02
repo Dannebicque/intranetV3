@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 14:16
- * @lastUpdate 02/08/2019 14:16
+ * @date 02/08/2019 14:18
+ * @lastUpdate 02/08/2019 14:18
  */
 
 namespace App\Controller\superAdministration;
@@ -47,6 +47,9 @@ class ApogeeController extends BaseController
             echo "</tr>\n";
         }
         echo "</table>\n";
+
+        $stid = oci_parse($conn, 'DESC INDIVIDU');
+        oci_execute($stid);
 
         return $this->render('super-administration/apogee/index.html.twig', [
 
