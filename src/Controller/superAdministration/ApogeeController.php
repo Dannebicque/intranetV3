@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 14:38
- * @lastUpdate 02/08/2019 14:38
+ * @date 02/08/2019 14:47
+ * @lastUpdate 02/08/2019 14:46
  */
 
 namespace App\Controller\superAdministration;
@@ -35,7 +35,8 @@ class ApogeeController extends BaseController
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }
 
-        $stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
+        //$stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
+        $stid = oci_parse($conn, 'SELECT COD_IND FROM INS_ADM_ETP WHERE COD_ETP=\'5PSP13\'');
         oci_execute($stid);
 
         echo "<table border='1'>\n";
@@ -64,5 +65,6 @@ class ApogeeController extends BaseController
         return $this->render('super-administration/apogee/index.html.twig', [
 
         ]);
+        //SELECT COD_IND FROM INS_ADM_ETP WHERE COD_ETP='5PSP13'
     }
 }
