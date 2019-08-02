@@ -1,17 +1,18 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/PersonnelApiController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 02/08/2019 12:40
+ * @lastUpdate 02/08/2019 12:39
  */
 
 namespace App\Controller\api;
 
 use App\Controller\BaseController;
 use App\Entity\Departement;
+use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\MesClasses\MyPersonnel;
 use App\Repository\PersonnelDepartementRepository;
@@ -71,6 +72,31 @@ class PersonnelApiController extends BaseController
             $t['numeroHarpege'] = $p->getPersonnel() ? $p->getPersonnel()->getNumeroHarpege() : '';
             $t['mailUniv'] = $p->getPersonnel() ? $p->getPersonnel()->getMailUniv() : '';
             $t['id'] = $p->getPersonnel() ? $p->getPersonnel()->getId() : '';
+            $pers[] = $t;
+        }
+
+        return new JsonResponse($pers);
+    }
+
+    /**
+     * @Route("/enseignants", name="api_enseignants_departement", options={"expose":true})
+     *
+     * @return Response
+     */
+    public function getEnseignantsByDepartement(): Response
+    {
+        $personnels = $this->personnelRepository->findByDepartement(
+            $this->dataUserSession->getDepartementId()
+        );
+        $pers = [];
+
+        /** @var Personnel $p */
+        foreach ($personnels as $p) {
+            $t = [];
+            $t['nom'] = $p->getNom();
+            $t['prenom'] = $p->getPrenom();
+            $t['display'] = $p->getDisplayPr();
+            $t['id'] = $p->getId();
             $pers[] = $t;
         }
 

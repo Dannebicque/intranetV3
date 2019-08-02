@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PrevisionnelController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 02/08/2019 12:40
+ * @lastUpdate 31/07/2019 18:20
  */
 
 namespace App\Controller\administration;
@@ -193,6 +193,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('administration/previsionnel/new.html.twig', [
+            'matieres' => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement())
         ]);
     }
 
