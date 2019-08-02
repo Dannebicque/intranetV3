@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 14:37
- * @lastUpdate 02/08/2019 14:37
+ * @date 02/08/2019 14:38
+ * @lastUpdate 02/08/2019 14:38
  */
 
 namespace App\Controller\superAdministration;
@@ -48,7 +48,7 @@ class ApogeeController extends BaseController
         }
         echo "</table>\n";
 
-        $stid2 = oci_parse($conn, 'SELECT view_name, num_rows FROM ALL_VIEWS');
+        $stid2 = oci_parse($conn, 'SELECT view_name FROM ALL_VIEWS');
         oci_execute($stid2);
 
         echo "<table border='1'>\n";
