@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 14:18
- * @lastUpdate 02/08/2019 14:18
+ * @date 02/08/2019 14:32
+ * @lastUpdate 02/08/2019 14:32
  */
 
 namespace App\Controller\superAdministration;
@@ -48,8 +48,22 @@ class ApogeeController extends BaseController
         }
         echo "</table>\n";
 
-        $stid = oci_parse($conn, 'DESC INDIVIDU');
+        $stid = oci_parse($conn, 'select owner as schema_name, 
+       view_name
+from sys.all_views
+order by owner, 
+         view_name;');
         oci_execute($stid);
+
+        echo "<table border='1'>\n";
+        while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+            echo "<tr>\n";
+            foreach ($row as $item) {
+                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "") . "</td>\n";
+            }
+            echo "</tr>\n";
+        }
+        echo "</table>\n";
 
         return $this->render('super-administration/apogee/index.html.twig', [
 
