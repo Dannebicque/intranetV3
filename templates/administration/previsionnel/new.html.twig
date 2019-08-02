@@ -25,38 +25,29 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label class="form-control-label required"
-                                   for="previsionnel_semestre">{{ 'label.semestre'|trans }}</label>
-                            <select class="form-control" id="previsionnel_semestre">
-                                <option value="">{{ 'choisir.un.semestre'|trans }}</option>
-                                {% for semestre in user_data.semestres %}
-                                    <option value="{{ semestre.id }}">{{ semestre.libelle }}</option>
+                            <label class="form-control-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
+                            <select class="form-control" id="previsionnel_matiere" name="previsionnel_matiere" data-live-search="true" data-provide="selectpicker">
+                                <option value="">{{ 'choisir.matiere'|trans }}</option>
+                                {% for matiere in matieres %}
+                                    <option value="{{ matiere.id }}">{{ matiere.codeMatiere }}
+                                        | {{ matiere.libelle }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label class="form-control-label required"
-                                   for="previsionnel_matiere">{{ 'label.matiere'|trans }}</label>
-                            <select class="form-control" id="previsionnel_matiere" name="previsionnel_matiere">
-                                <option value="">{{ 'choisir.dabord.un.semestre'|trans }}</option>
-                            </select>{# todo: faire une zone de texe si pas de semestre ... pour recherche #}
-                        </div>
+                        <label class="form-control-label required"
+                               for="previsionnel_annee_previsionnel">{{ 'label.annee_previsionnel'|trans }}</label>
+                        <select class="form-control" id="previsionnel_annee_previsionnel"
+                                name="previsionnel_annee_previsionnel">
+                            {% for annee in 'now'|date('Y')-5..'now'|date('Y')+5 %}
+                                <option value="{{ annee }}"
+                                        {% if annee == user_data.getAnneePrevisionnel %}selected{% endif %}>{{ annee }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <input type="hidden" name="nbLignes" id="nbLigne" value="1"/>
-                <div class="form-group">
-                    <label class="form-control-label required"
-                           for="previsionnel_annee_previsionnel">{{ 'label.annee_previsionnel'|trans }}</label>
-                    <select class="form-control" id="previsionnel_annee_previsionnel"
-                            name="previsionnel_annee_previsionnel">
-                        {% for annee in 'now'|date('Y')-5..'now'|date('Y')+5 %}
-                            <option value="{{ annee }}"
-                                    {% if annee == user_data.getAnneePrevisionnel %}selected{% endif %}>{{ annee }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
 
                 <div class="alert alert-success">
                     {{ 'volume.matiere'|trans }} : <p id="volumeMatiere">{{ 'choisir.dabord.une.matiere'|trans }}</p>
@@ -66,7 +57,7 @@
                     * {{ 'explication.volume.horaire'|trans }}
                     ** {{ 'nb.seance.indicatif'|trans }}
                 </div>
-                <table class="table" id="tabheures">
+                <table class="table" id="tabheures" style="display: none">
                     <thead>
                     <tr>
                         <th rowspan="2">{{ 'intervenant'|trans }}</th>
@@ -90,7 +81,8 @@
                     <tr>
                         <td>
                             <label for="intervenant_1" class="sr-only">intervenant 1</label>
-                            <select class="form-control" name="intervenant_1" id="intervenant_1">
+                            <select class="form-control" name="intervenant_1" id="intervenant_1"
+                                    data-live-search="true" data-provide="selectpicker">
                                 <option value="">{{ 'choisir.intervenant'|trans }}</option>
                                 {% for personnel in user_data.personnels %}
                                     <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
@@ -156,8 +148,26 @@
                         <td id="totalEqTd">O</td>
                         <td colspan="2">{{ 'total.etudiant'|trans }}</td>
                         <td id="totalEtu">0</td>
-                        <td colspan="2">{{ 'total.matiere'|trans }}</td>
-                        <td id="totalMatiere">0</td>
+                        <td colspan="3">&nbsp;</td>
+                        {#                        <td colspan="2">{{ 'total.matiere'|trans }}</td>#}
+                        {#                        <td id="totalMatiere">0</td>#}
+                    </tr>
+                    <tr>
+                        <td rowspan="2">{{ 'verificiation'|trans }}</td>
+                        <td colspan="3">{{ 'cm.maquette'|trans }}</td>
+                        <td style="background-color: #68C39F" colspan="3">{{ 'td.maquette'|trans }}</td>
+                        <td style="background-color: #FFC052" colspan="3">{{ 'table.ppn.maquette'|trans }}</td>
+                    </tr>
+                    <tr>
+                        <td id="cmMaquette">Choisir</td>
+                        <td id="totalHeuresCm">une</td>
+                        <td id="diffCm">matière</td>
+                        <td id="tdMaquette" style="background-color: #68C39F">Choisir</td>
+                        <td id="totalHeuresTd" style="background-color: #68C39F">une</td>
+                        <td id="diffTd" style="background-color: #68C39F">matière</td>
+                        <td id="tpMaquette" style="background-color: #FFC052">Choisir</td>
+                        <td id="totalHeuresTp" style="background-color: #FFC052">une</td>
+                        <td id="diffTp" style="background-color: #FFC052">matière</td>
                     </tr>
                     </tfoot>
 

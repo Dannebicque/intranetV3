@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+  ~ Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
   ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~ @author     David Annebicque
   ~ @project intranetv3
-  ~ @date 30/07/2019 14:14
-  ~ @lastUpdate 30/07/2019 14:14
+  ~ @date 02/08/2019 12:40
+  ~ @lastUpdate 02/08/2019 12:39
   -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
@@ -11766,6 +11766,30 @@
           <segment>
               <source>chgt.etat_stage.convention_envoyee</source>
               <target>chgt.etat_stage.convention_envoyee</target>
+          </segment>
+      </unit>
+      <unit id="bNI0ZJv" name="verificiation">
+          <segment>
+              <source>verificiation</source>
+              <target>verificiation</target>
+          </segment>
+      </unit>
+      <unit id="Rogi5P8" name="cm.maquette">
+          <segment>
+              <source>cm.maquette</source>
+              <target>cm.maquette</target>
+          </segment>
+      </unit>
+      <unit id="U9qPp3i" name="td.maquette">
+          <segment>
+              <source>td.maquette</source>
+              <target>td.maquette</target>
+          </segment>
+      </unit>
+      <unit id="LZupY.Q" name="table.ppn.maquette">
+          <segment>
+              <source>table.ppn.maquette</source>
+              <target>table.ppn.maquette</target>
           </segment>
       </unit>
   </file>
