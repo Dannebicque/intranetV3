@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 14:47
- * @lastUpdate 02/08/2019 14:46
+ * @date 02/08/2019 14:48
+ * @lastUpdate 02/08/2019 14:47
  */
 
 namespace App\Controller\superAdministration;
@@ -36,7 +36,7 @@ class ApogeeController extends BaseController
         }
 
         //$stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
-        $stid = oci_parse($conn, 'SELECT COD_IND FROM INS_ADM_ETP WHERE COD_ETP=\'5PSP13\'');
+        $stid = oci_parse($conn, 'SELECT * FROM INS_ADM_ETP WHERE COD_ETP=\'5PSP13\'');
         oci_execute($stid);
 
         echo "<table border='1'>\n";
@@ -49,18 +49,18 @@ class ApogeeController extends BaseController
         }
         echo "</table>\n";
 
-        $stid2 = oci_parse($conn, 'SELECT view_name FROM ALL_VIEWS');
-        oci_execute($stid2);
-
-        echo "<table border='1'>\n";
-        while ($row = oci_fetch_array($stid2, OCI_ASSOC + OCI_RETURN_NULLS)) {
-            echo "<tr>\n";
-            foreach ($row as $item) {
-                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "") . "</td>\n";
-            }
-            echo "</tr>\n";
-        }
-        echo "</table>\n";
+//        $stid2 = oci_parse($conn, 'SELECT view_name FROM ALL_VIEWS');
+//        oci_execute($stid2);
+//
+//        echo "<table border='1'>\n";
+//        while ($row = oci_fetch_array($stid2, OCI_ASSOC + OCI_RETURN_NULLS)) {
+//            echo "<tr>\n";
+//            foreach ($row as $item) {
+//                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "") . "</td>\n";
+//            }
+//            echo "</tr>\n";
+//        }
+//        echo "</table>\n";
 
         return $this->render('super-administration/apogee/index.html.twig', [
 
