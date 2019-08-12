@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 14:48
- * @lastUpdate 02/08/2019 14:47
+ * @date 12/08/2019 08:35
+ * @lastUpdate 12/08/2019 08:34
  */
 
 namespace App\Controller\superAdministration;
@@ -29,7 +29,7 @@ class ApogeeController extends BaseController
     public function index(): Response
     {
         // Connexion au service XE (i.e. la base de données) sur la machine "localhost"
-        $conn = oci_connect('iut', 'Iut3Re1msApo!', 'apogee-db.univ-reims.fr:1522/APOGEE');
+        $conn = oci_connect($_ENV['APOGEE_LOGIN'], $_ENV['APOGEE_PASSWORD'], $_ENV['APOGEE_STRING']);
         if (!$conn) {
             $e = oci_error();
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
