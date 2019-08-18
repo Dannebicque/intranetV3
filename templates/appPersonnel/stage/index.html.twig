@@ -55,7 +55,7 @@
                                                                     title="Informations sur l'entreprise"
                                                                     data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.cp }}){% else %} - {% endif %}</td>
+                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
                         </tr>
                     {% else %}
@@ -95,7 +95,7 @@
                                        title="Informations sur l'entreprise"
                                        data-title="Informations sur l'entreprise">{{ alternance.entreprise.libelle }}</a>
                                 </td>
-                                <td>{% if alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }} ({{ alternance.entreprise.adresse.cp }}){% else %} - {% endif %}</td>
+                                <td>{% if alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }} ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
                             {% else %}
                                 <td>-</td>
                                 <td>-</td>{% endif %}
@@ -150,7 +150,7 @@
                                                                     title="Informations sur l'entreprise"
                                                                     data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.cp }}){% else %} - {% endif %}</td>
+                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
                         </tr>
                     {% else %}
@@ -191,7 +191,7 @@
                                                                          title="Informations sur l'entreprise"
                                                                          data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if alternance.adresseAlternance != null %}{{ alternance.adresseAlternance.ville }} ({{ alternance.adresseAlternance.cp }}){% else %} - {% endif %}</td>
+                            <td>{% if alternance.adresseAlternance != null %}{{ alternance.adresseAlternance.ville }} ({{ alternance.adresseAlternance.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
                         </tr>
                     {% else %}

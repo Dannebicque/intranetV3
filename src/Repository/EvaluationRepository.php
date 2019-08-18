@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EvaluationRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 09:19
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 09:00
  */
 
 namespace App\Repository;
@@ -43,7 +43,7 @@ class EvaluationRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findBySemestre(Semestre $semestre, int $annee)
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $annee)
     {
         return $this->createQueryBuilder('e')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
@@ -52,7 +52,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->where('u.semestre = :semestre')
             ->andWhere('n.annee = :annee')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('annee', $annee)
+            ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.dateEvaluation', 'ASC')
             ->getQuery()
             ->getResult();
@@ -64,7 +64,7 @@ class EvaluationRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByMatiere(Matiere $matiere, int $annee)
+    public function findByMatiere(Matiere $matiere, AnneeUniversitaire $annee)
     {
         return $this->createQueryBuilder('e')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
@@ -72,7 +72,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->where('m.id = :matiere')
             ->andWhere('u.annee = :annee')
             ->setParameter('matiere', $matiere->getId())
-            ->setParameter('annee', $annee)
+            ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.dateEvaluation', 'ASC')
             ->getQuery()
             ->getResult();

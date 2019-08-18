@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/DataUserSession.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 10:23
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 /**
@@ -18,6 +18,7 @@
 namespace App\MesClasses;
 
 use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
@@ -28,6 +29,7 @@ use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use App\Events;
 use App\Repository\AnneeRepository;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\MessageDestinataireEtudiantRepository;
@@ -85,6 +87,9 @@ class DataUserSession
     /** @var AnneeRepository */
     protected $anneeRepository;
 
+    /** @var AnneeUniversitaireRepository */
+    protected $anneeUniversitaireRepository;
+
     /** @var DiplomeRepository */
     protected $diplomeRepository;
 
@@ -114,6 +119,7 @@ class DataUserSession
      * @param PersonnelRepository                    $personnelRepository
      * @param DepartementRepository                  $departementRepository
      * @param NotificationRepository                 $notificationRepository
+     * @param AnneeUniversitaireRepository           $anneeUniversitaireRepository
      * @param TokenStorageInterface                  $user
      * @param Security                               $security
      *
@@ -131,6 +137,7 @@ class DataUserSession
         PersonnelRepository $personnelRepository,
         DepartementRepository $departementRepository,
         NotificationRepository $notificationRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         TokenStorageInterface $user,
         Security $security,
         EventDispatcherInterface $eventDispatcher,
@@ -142,6 +149,7 @@ class DataUserSession
         $this->personnelRepository = $personnelRepository;
         $this->departementRepository = $departementRepository;
         $this->notificationRepository = $notificationRepository;
+        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
 
 
         $this->user = $user;
@@ -316,14 +324,15 @@ class DataUserSession
     }
 
     /**
-     * @return int
+     * @return AnneeUniversitaire
      */
-    public function getAnneeUniversitaire(): ?int
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         if ($this->getUser() instanceof Etudiant) {
-            return $this->getUser()->getAnneeUniversitaire()->getAnnee();
+            return $this->getUser()->getAnneeUniversitaire();
         }
-            return (int)date('Y'); //todo: a améliorer pour les non étudiants...
+
+        return $this->anneeUniversitaireRepository->findActive();
 
     }
 
@@ -332,8 +341,9 @@ class DataUserSession
      */
     public function displayAnneeUniversitaire(): string
     {
-        $fin = $this->getAnneeUniversitaire()+1;
-        return $this->getAnneeUniversitaire().' | '.$fin;
+        $fin = $this->getAnneeUniversitaire()->getAnnee() + 1;
+
+        return $this->getAnneeUniversitaire()->getAnnee() . ' | ' . $fin;
 
     }
 

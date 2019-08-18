@@ -17,10 +17,7 @@
                        role="tab">{{ 'menu.stages'|trans }}</a>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
-                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
-            </li>
+
 
             <li class="nav-item">
                 <a class="nav-link changeapplication {% if onglet == 'salle_examen' %}active{% endif %}"
@@ -28,21 +25,26 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
+                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
                    href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
 
-            {% if user_data.departement.preparationAnnee == true %}
-            <li class="nav-item">
-                <a class="nav-link changeapplication {% if onglet == 'disponibilite' %}active{% endif %}"
-                   href="{{ path('application_personnel_disponibilite_index') }}" role="tab">{{ 'menu.disponibilite'|trans
-                    }}</a>
-            </li>
-                <li class="nav-item">
-                    <a class="nav-link changeapplication {% if onglet == 'progression' %}active{% endif %}"
-                       href="{{ path('application_personnel_progression_index') }}" role="tab">{{ 'menu.progression'|trans }}</a>
-                </li>
-                {% endif %}
+            {#             if user_data.departement.preparationAnnee == true %}#}
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link changeapplication {% if onglet == 'disponibilite' %}active{% endif %}"#}
+            {#                   href="{{ path('application_personnel_disponibilite_index') }}" role="tab">{{ 'menu.disponibilite'|trans#}
+            {#                    }}</a>#}
+            {#            </li>#}
+            {#                <li class="nav-item">#}
+            {#                    <a class="nav-link changeapplication {% if onglet == 'progression' %}active{% endif %}"#}
+            {#                       href="{{ path('application_personnel_progression_index') }}" role="tab">{{ 'menu.progression'|trans }}</a>#}
+            {#                </li>#}
+            {#                {% endif %}#}
 
         {% else %}
             <li class="nav-item ">

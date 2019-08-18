@@ -1,3 +1,12 @@
+/*
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/util.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
+ */
+
 function readUrlMenu($url) {
   const $elt = $url.split('/')
   let $firstElt = 2
@@ -31,20 +40,36 @@ function updateAffichage (date, heure) {
     dataType: 'json',
     success: function (data) {
 
-      const tabsences = data
-      console.log(date)
+      // const tabsences = data
+      //console.log('date ' + date)
+      //console.log(data)
       const t = date.split('/')
       const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
-      console.log(ddate)
-      console.log(tabsences[ddate])
-      if (typeof tabsences[ddate] !== 'undefined') {
-        if (typeof tabsences[ddate][heure] !== 'undefined') {
-          for (let i = 0; i < tabsences[ddate][heure].length; i++) {
-            console.log(tabsences[ddate][heure][i])
-            $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
+      //console.log('ddate ' + ddate)
+      if (heure.length === 4) {
+        heure = '0' + heure
+      }
+      //console.log('heure ' + heure)
+      // var obj = tabsences[ddate]
+      // console.log('tabsences[ddate] ' + obj)
+      for (let d in data) {
+        //console.log('d ' + d)
+        if (d == ddate) {
+          //console.log('ok')
+          if (typeof data[d][heure] !== 'undefined') {
+            for (let i = 0; i < data[d][heure].length; i++) {
+              //console.log('marquage')
+              //console.log('tabsences[ddate][heure][i] ' + data[d][heure][i])
+              $('#etu_' + data[d][heure][i]).addClass('absent')
+            }
           }
         }
       }
+      //if (typeof tabsences[ddate] !== 'undefined') {
+      //if (typeof tabsences[ddate][heure] !== 'undefined') {
+
+      // }
+      //}
     }
   })
 }

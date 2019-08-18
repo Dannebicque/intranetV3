@@ -1,16 +1,17 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/AnneeUniversitaireType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/1/19 8:38 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 16/08/2019 07:26
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,6 +29,9 @@ class AnneeUniversitaireType extends AbstractType
             ->add('annee', ChoiceType::class, [
                 'label'   => 'label.annee_courante',
                 'choices' => array_combine(range(date('Y') - 2, date('Y') + 4), range(date('Y') - 2, date('Y') + 4))
+            ])
+            ->add('active', YesNoType::class, [
+                'label' => 'label.annee.par.defaut'
             ])
             ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false])
         ;

@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/AbsenceController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 namespace App\Controller\appPersonnel;
@@ -74,7 +74,8 @@ class AbsenceController extends BaseController
                 'matiere'     => $matiere,
                 'matieres'    => $matiereRepository->findBySemestre($semestre),
                 'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
-                'heure'       => '08:00'
+                'heure'       => '08:00',
+                'groupes'     => ''
             ]);
         }
 
@@ -202,7 +203,6 @@ class AbsenceController extends BaseController
             $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
         );
 
-        // dump($absences);
         return $this->json($absences);
     }
 
@@ -232,7 +232,7 @@ class AbsenceController extends BaseController
             'etudiant'           => $etudiant->getId(),
             'date'               => $date,
             'heure'              => $heure,
-            'anneeuniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire() : 0
+            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0
         ]);
 
         if ($request->get('action') === 'saisie' && count($absence) === 0) {
@@ -263,7 +263,7 @@ class AbsenceController extends BaseController
 
 
             //un tableau, donc une absence ?
-            $myEtudiant->setIdEtudiant($request->request->get('etudiant'));
+            $myEtudiant->setEtudiant($etudiant);
             $myEtudiant->removeAbsence($absence[0]);
 
             $absences = $absenceRepository->getByMatiereArray(

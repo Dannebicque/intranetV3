@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantSemestreController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/27/19 11:42 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Entity\Semestre;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
 use App\MesClasses\MyExport;
+use App\MesClasses\MyUpload;
 use App\Repository\EtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,7 +97,7 @@ class EtudiantSemestreController extends BaseController
 
 
     /**
-     * @Route("/import/photo/{semestre}", name="administration_etudiant_import_photo_zip",
+     * @Route("/import/photo/{semestre}", name="administration_etudiant_import_photo",
      *                                    requirements={"semestre"="\d+"}, methods={"GET"})
      * @param Semestre $semestre
      *
@@ -110,19 +111,34 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
-     * @Route("/import/photo/zip/{semestre}", name="administration_etudiant_import_photo",
+     * @Route("/import/photo/zip/{semestre}", name="administration_etudiant_import_photo_zip",
      *                                        requirements={"semestre"="\d+"}, methods={"GET|POST"})
+     * @param MyUpload $myUpload
      * @param Request  $request
      * @param Semestre $semestre
      *
      * @return Response
+     * @throws \Exception
      */
-    public function importPhotoZip(Request $request, Semestre $semestre): Response
+    public function importPhotoZip(MyUpload $myUpload, Request $request, Semestre $semestre): Response
     {
-        return $this->render('administration/etudiant/import_photo.html.twig', [
-            'semestre' => $semestre
-        ]);
+        $file = $request->files->get('fichierimport');
+        $fichier = $myUpload->upload($file, '/temp');
+        $extract = $myUpload->extractZip($fichier, '/ph');
+
+        if ($extract === false) {
+            $this->addFlashBag('error', 'Impossible d\'accéder à l\'archive.');
+
+            return $this->redirectToRoute('administration_etudiant_semestre_add', ['semestre' => $semestre->getId()]);
+        }
+        //on parcours les fichiers, on renome, on copie et on supprime.
+        $myUpload->traitePhoto('/ph', '/etudiants/');
+        $this->addFlashBag('notice', 'Photos importées avec succés.');
+
+        return $this->redirectToRoute('administration_etudiant_semestre_add', ['semestre' => $semestre->getId()]);
     }
+
+
 
     /**
      * @Route("/{semestre}", name="administration_etudiant_semestre_index", requirements={"semestre"="\d+"})

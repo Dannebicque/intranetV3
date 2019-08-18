@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelMultiExport.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:17
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 09:37
  */
 
 /**
@@ -18,6 +18,8 @@
 namespace App\MesClasses\Excel;
 
 use App\Entity\Etudiant;
+use App\Entity\Evaluation;
+use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MySerializer;
@@ -45,8 +47,11 @@ class MyExcelMultiExport
     /** @var TranslatorInterface */
     private $translator;
 
-    public function __construct(TranslatorInterface $translator, MySerializer $mySerializer, MyExcelWriter $myExcelWriter)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        MySerializer $mySerializer,
+        MyExcelWriter $myExcelWriter
+    ) {
         $this->serializer = $mySerializer;
         $this->myExcelWriter = $myExcelWriter;
         $this->translator = $translator;
@@ -204,7 +209,14 @@ class MyExcelMultiExport
      */
     public function genereExcelAbsence(MyAbsences $myAbsences): void
     {
-        $this->myExcelWriter->writeHeader(['nom', 'prenom', 'nbCoursManques', 'totalDuree', 'nbNonJustifie', 'nbJustifie']);
+        $this->myExcelWriter->writeHeader([
+            'nom',
+            'prenom',
+            'nbCoursManques',
+            'totalDuree',
+            'nbNonJustifie',
+            'nbJustifie'
+        ]);
         $ligne = 2;
         //todo: en param ?
         $colonne = 1;
@@ -243,8 +255,10 @@ class MyExcelMultiExport
 
     /**
      * @param Semestre $semestre
+     *
+     * @throws Exception
      */
-    public function genereModeleExcel(Semestre $semestre)
+    public function genereModeleExcel(Semestre $semestre): void
     {
         $this->myExcelWriter->createSheet('import');
 
@@ -262,6 +276,63 @@ class MyExcelMultiExport
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
             $ligne++;
             $colonne = 1;
+        }
+    }
+
+    /**
+     * @param Evaluation $evaluation
+     * @param            $groupes
+     * @param            $notes
+     *
+     * @throws Exception
+     */
+    public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes): void
+    {
+
+        /** @var Groupe $groupe */
+        foreach ($groupes as $groupe) {
+            $this->myExcelWriter->createSheet($groupe->getLibelle());
+            //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV?
+            if ($evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat() === true) {
+                $this->myExcelWriter->writeHeader(['num_etudiant', 'note', 'remise copie', 'commentaire']);
+
+            } else {
+                $this->myExcelWriter->writeHeader([
+                    'num_etudiant',
+                    'nom',
+                    'prenom',
+                    'note',
+                    'remise copie',
+                    'commentaire'
+                ]);
+            }
+            $ligne = 2;
+            $colonne = 1;
+
+            /** @var Etudiant $etudiant */
+            foreach ($groupe->getEtudiants() as $etudiant) {
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
+                $colonne++;
+                if ($evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat() === false) {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
+                    $colonne++;
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+                    $colonne++;
+                }
+
+                if (array_key_exists($etudiant->getId(), $notes)) {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, $notes[$etudiant->getId()]->getNote());
+                    $colonne++;
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        $notes[$etudiant->getId()]->getCommentaire());
+
+                } else {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, '-');
+                }
+
+                $colonne = 1;
+                $ligne++;
+            }
         }
     }
 }

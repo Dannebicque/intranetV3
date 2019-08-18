@@ -42,27 +42,44 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>{{ 'nom.evaluation'|trans }} :</td>
+                        <td>
+                            {% if autorise or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement
+                                ('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                                <span class="evaluation-edit editable"
+                                      data-name="libelle"
+                                      data-id="{{ evaluation.uuidString }}"
+                                      data-title="Modifier le libellé">{{ evaluation.libelle }}</span>
+                            {% else %}
+                                {{ evaluation.libelle }}
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                    <tr>
                         <td>{{ 'commentaire'|trans }} :</td>
                         <td>
-                            {#{% if (autorise) or connect.goodFormation('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') or connect.goodFormation('ROLE_CDD') or connect.goodFormation('ROLE_DDE') or connect.goodFormation('ROLE_ASS') %}#}
-                            {#<a href="#" class="xeval" data-type="text" data-name="commentaire"#}
-                            {#data-pk="{{ eval.id }}"#}
-                            {#data-original-title="Corrigez le commentaire">{{ eval.commentaire }}</a>#}
-                            {#{% else %}#}
-                            {{ evaluation.commentaire }}
-                            {#{% endif %}#}
+                            {% if autorise or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                                <span class="evaluation-edit editable"
+                                      data-name="commentaire"
+                                      data-id="{{ evaluation.uuidString }}"
+                                      data-title="Modifier le commentaire">{{ evaluation.commentaire }}</span>
+                            {% else %}
+                                {{ evaluation.commentaire }}
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>
                         <td>{{ 'coefficient.de.levaluation'|trans }} :</td>
                         <td>
-                            {#{% if (autorise) or connect.goodFormation('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') or connect.goodFormation('ROLE_CDD') or connect.goodFormation('ROLE_DDE') or connect.goodFormation('ROLE_ASS') %}#}
-                            {#<a href="#" class="xeval" data-name="coefficient" data-type="text"#}
-                            {#data-pk="{{ eval.id }}"#}
-                            {#data-original-title="Corrigez la note">{{ eval.coefficient }}</a>#}
-                            {#{% else %}#}
-                            {{ evaluation.coefficient }}
-                            {#{% endif %}#}
+                            {% if autorise or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                                <span class="evaluation-edit editable"
+                                      data-name="coefficient"
+                                      data-id="{{ evaluation.uuidString }}"
+                                      data-title="Modifier le coefficient">{{ evaluation.coefficient }}</span>
+                            {% else %}
+                                {{ evaluation.coefficient }}
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>
@@ -86,6 +103,7 @@
                             {#class="editable editable-click XEintervenant"#}
                             {#data-original-title="Corrigez l'enseignant en charge de l'évaluation">{{ display(eval.personnel.nom, eval.personnel.prenom) }}</a>#}
                             {#{% else %}#}
+
                             {{ evaluation.personnelAuteur.displayPr }}
                             {#{% endif %}#}
                         </td>

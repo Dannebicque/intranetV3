@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/BaseEntity.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 namespace App\Entity;
@@ -94,5 +94,17 @@ abstract class BaseEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     */
+    public function updateData($name, $value): void
+    {
+        $field = 'set' . ucfirst($name);
+        if (method_exists($this, $field)) {
+            $this->$field($value);
+        }
     }
 }

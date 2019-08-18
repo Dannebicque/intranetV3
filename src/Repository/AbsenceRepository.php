@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AbsenceRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 14:14
+ * @date 18/08/2019 11:48
+ * @lastUpdate 17/08/2019 07:58
  */
 
 namespace App\Repository;
@@ -39,14 +39,14 @@ class AbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $matiere
-     * @param $anneeCourante
+     * @param                    $matiere
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
      * @return array
      */
-    public function getByMatiereArray($matiere, $anneeCourante): array
+    public function getByMatiereArray($matiere, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $absences = $this->getByMatiere($matiere, $anneeCourante);
+        $absences = $this->getByMatiere($matiere, $anneeUniversitaire);
 
         $tab = array();
         //dump($absences);
@@ -72,19 +72,19 @@ class AbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Matiere $matiere
-     * @param         $anneeCourante
+     * @param Matiere            $matiere
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
      * @return mixed
      */
-    public function getByMatiere(Matiere $matiere, int $anneeCourante)
+    public function getByMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
             ->where('m.matiere = :matiere')
             ->andWhere('a.annee = :annee')
             ->setParameter('matiere', $matiere->getId())
-            ->setParameter('annee', $anneeCourante)
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->orderBy('m.date', 'DESC')
             ->orderBy('m.heure', 'DESC')
             ->getQuery()

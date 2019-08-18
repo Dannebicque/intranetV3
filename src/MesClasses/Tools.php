@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Tools.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/6/19 5:22 PM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 17/08/2019 07:50
  */
 
 /**
@@ -26,7 +26,7 @@ abstract class Tools
     {
         $t = explode('/', $date);
         if (count($t) === 3) {
-            $date = $t[2] . '-' . $t[1] . '-' . $t[0];
+            $date = trim($t[2]) . '-' . trim($t[1]) . '-' . trim($t[0]);
         }
 
         return new DateTime($date);

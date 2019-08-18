@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluation.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 09:07
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 /**
@@ -18,13 +18,19 @@
 namespace App\MesClasses;
 
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
+use App\MesClasses\Excel\MyExcelMultiExport;
 use App\MesClasses\Pdf\MyPDF;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use function count;
 
 /**
@@ -50,16 +56,25 @@ class MyEvaluation
     /** @var MyPDF */
     private $myPdf;
 
+    /** @var MyExcelMultiExport */
+    private $myExcelMultiExport;
+
     /**
      * MyEvaluation constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param MyPDF                  $myPdf
+     * @param MyExcelMultiExport     $myExcelMultiExport
      */
-    public function __construct(EntityManagerInterface $entityManager, MyPDF $myPdf)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        MyPDF $myPdf,
+        MyExcelMultiExport $myExcelMultiExport
+    )
     {
         $this->entityManager = $entityManager;
         $this->myPdf = $myPdf;
+        $this->myExcelMultiExport = $myExcelMultiExport;
     }
 
 
@@ -237,17 +252,46 @@ class MyEvaluation
         return true;
     }
 
-    public function exportReleve($_format, $groupes): void
+    /**
+     * @param             $_format
+     * @param             $groupes
+     * @param Departement $departement
+     *
+     * @return StreamedResponse
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function exportReleve($_format, $groupes, Departement $departement): ?StreamedResponse
     {
         $notes = $this->getNotesTableau();
-        $name = 'releve';
+        $name = 'releve-' . $this->evaluation->getMatiere()->getCodeMatiere();
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
                     'evaluation' => $this->evaluation,
                     'groupes'    => $groupes,
                     'notes'      => $notes
-                ], $name);
+                ], $name, $departement->getLibelle());
+                break;
+            case Constantes::FORMAT_EXCEL:
+                $this->myExcelMultiExport->genereReleveExcel(
+                    $this->evaluation,
+                    $groupes,
+                    $notes
+                );
+
+                return $this->myExcelMultiExport->saveXlsx($name);
+                break;
+            case Constantes::FORMAT_CSV_POINT_VIRGULE:
+                $this->myExcelMultiExport->genereReleveExcel(
+                    $this->evaluation,
+                    $groupes,
+                    $notes
+                );
+
+                return $this->myExcelMultiExport->saveCsv($name);
                 break;
         }
     }
@@ -274,7 +318,6 @@ class MyEvaluation
                 $notes = $this->insertNotes($evaluation, $data);
                 break;
             case 'csv':
-
                 $data = $this->importCsv($fichier);
                 $notes = $this->insertNotes($evaluation, $data);
                 break;

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AnneeUniversitaire.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:21
+ * @date 18/08/2019 11:48
+ * @lastUpdate 16/08/2019 07:33
  */
 
 namespace App\Entity;
@@ -94,6 +94,11 @@ class AnneeUniversitaire
      * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="anneeUniversitaire")
      */
     private $evaluations;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
 
     public function __construct()
     {
@@ -472,4 +477,23 @@ class AnneeUniversitaire
 
         return $this;
     }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getAnnee();
+    }
+
+
 }

@@ -55,7 +55,7 @@
                 <td style="text-align:center">{{ key }}</td>
                 <td>{{ t.numetudiant }}</td>
                 <td>{{ t.display }}</td>
-                <td>{% for g in t.groupes if g.typegroupe.typegroupe == typeg %}{{ g.libelle }}{% endfor %}</td>
+                <td>{% for g in t.groupes if g.typegroupe.type == typeg %}{{ g.libelle }}{% endfor %}</td>
                 <td></td>
                 <td></td>
                 <td></td>

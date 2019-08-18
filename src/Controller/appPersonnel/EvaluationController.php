@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/EvaluationController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 namespace App\Controller\appPersonnel;
@@ -13,11 +13,18 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\MesClasses\MyEvaluation;
+use App\Repository\EvaluationRepository;
 use App\Repository\GroupeRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class NotesController
@@ -28,7 +35,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EvaluationController extends BaseController
 {
     /**
-     * @Route("/{uuid}", name="application_personnel_evaluation_show",
+     * @Route("/details/{uuid}", name="application_personnel_evaluation_show",
      *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      * @param MyEvaluation $myEvaluation
@@ -42,12 +49,36 @@ class EvaluationController extends BaseController
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes
+            'notes'      => $notes,
+            'autorise'   => true //todo: a calculer
         ]);
     }
 
     /**
-     * @Route("export/{uuid}/{type}/{_format}", name="application_personnel_evaluation_export",
+     * @Route("/update", name="application_personnel_evaluation_update", options={"expose"=true})
+     * @param EvaluationRepository $evaluationRepository
+     * @param Request              $request
+     *
+     * @return Response
+     */
+    public function updateEvaluation(EvaluationRepository $evaluationRepository, Request $request): Response
+    {
+        //mise à jour d'un champ d'une évaluation
+        $evaluation = $evaluationRepository->findOneBy(['uuid' => $request->request->get('id')]);
+        $name = $request->request->get('name');
+        $value = $request->request->get('value');
+        if ($evaluation) {
+            $evaluation->updateData($name, $value);
+            $this->entityManager->flush();
+
+            return $this->json(true, Response::HTTP_OK);
+        }
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @Route("/export/{uuid}/{type}/{_format}", name="application_personnel_evaluation_export",
      *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      * @param GroupeRepository $groupeRepository
@@ -55,6 +86,12 @@ class EvaluationController extends BaseController
      * @param Evaluation       $evaluation
      * @param                  $type
      * @param                  $_format
+     *
+     * @return StreamedResponse|null
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function exportEvaluation(
         GroupeRepository $groupeRepository,
@@ -62,7 +99,7 @@ class EvaluationController extends BaseController
         Evaluation $evaluation,
         $type,
         $_format
-    ): void {
+    ): ?StreamedResponse {
         $t = explode('_', $type);
         if ($t[0] === 'groupe') {
             $grp = $groupeRepository->find($t[1]);
@@ -74,6 +111,7 @@ class EvaluationController extends BaseController
             $data = [];
         }
 
-        $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data);
+        return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
+            $this->dataUserSession->getDepartement());
     }
 }

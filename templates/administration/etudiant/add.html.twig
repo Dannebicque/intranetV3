@@ -32,6 +32,14 @@
                 <a class="nav-link" data-toggle="tab"
                    href="#importApogee">{{ 'recuperation.apogee.etudiant'|trans }}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#fichiersUrca">{{ 'importer.photo.zip'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#autresFichiers">{{ 'importer.photo'|trans }}</a>
+            </li>
         </ul>
         <div class="buttons">
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
@@ -91,6 +99,48 @@
                         <h4 class="card-title">Récupérez depuis Apogée pour le semestre {{ semestre.libelle }}</h4>
                         <div class="card-body">
                             <div class="alert alert-info">Comming Soon</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="fichiersUrca">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Import depuis le fichier du "bureau virtuel"</h4>
+                        <div class="card-body">
+                            <form action="{{ path('administration_etudiant_import_photo_zip', {semestre:semestre.id}) }}" method="post" class="form" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                        <label class="control-label" for="fichierimport">Fichier zip des photos</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <div class="input-append">
+                                            <input type="file" class="form-control fileinput" id="fichierimport" name="fichierimport"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Récupérez les photos (format .zip) sur le bureau virtuel de l'URCA (mes cours >
+                                   trombinoscope) et importez les directements.</p>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary btn-large">Importer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="autresFichiers">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Import depuis vos fichiers</h4>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                Les fichiers doivent se nommer : "numero_etudiant.jpg"
+                            </div>
                         </div>
                     </div>
                 </div>
