@@ -1,15 +1,16 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StageEtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 24/07/2019 13:34
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:48
  */
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Entreprise;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
@@ -50,49 +51,49 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByPersonnelAnnee(Personnel $personnel, int $getAnneeUniversitaire)
+    public function findByPersonnelAnnee(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire = :annee')
             ->andWhere('s.tuteurUniversitaire = :personnel')
-            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->setParameter('personnel', $personnel->getId())
             ->getQuery()
             ->getResult();
     }
 
-    public function findByPersonnelHistorique(Personnel $personnel, int $getAnneeUniversitaire)
+    public function findByPersonnelHistorique(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire < :annee')
             ->andWhere('s.tuteurUniversitaire = :personnel')
-            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->setParameter('personnel', $personnel->getId())
             ->getQuery()
             ->getResult();
     }
 
-    public function findByEtudiantAnnee(Etudiant $etudiant, int $getAnneeUniversitaire)
+    public function findByEtudiantAnnee(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire = :annee')
             ->andWhere('s.etudiant = :etudiant')
-            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->setParameter('etudiant', $etudiant->getId())
             ->getQuery()
             ->getResult();
     }
 
-    public function findByEtudiantHistorique(Etudiant $etudiant, int $getAnneeUniversitaire)
+    public function findByEtudiantHistorique(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire < :annee')
             ->andWhere('s.etudiant = :etudiant')
-            ->setParameter('annee', $getAnneeUniversitaire)
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->setParameter('etudiant', $etudiant->getId())
             ->getQuery()
             ->getResult();

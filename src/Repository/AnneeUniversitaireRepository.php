@@ -1,17 +1,18 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AnneeUniversitaireRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/23/19 11:09 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 16/08/2019 07:25
  */
 
 namespace App\Repository;
 
 use App\Entity\AnneeUniversitaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -25,5 +26,17 @@ class AnneeUniversitaireRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, AnneeUniversitaire::class);
+    }
+
+    public function findActive()
+    {
+        try {
+            return $this->createQueryBuilder('a')
+                ->where('a.active = 1')
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 }

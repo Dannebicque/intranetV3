@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 12/08/2019 08:45
  */
 
 namespace App\Controller\administration;
@@ -150,4 +150,6 @@ class EtudiantController extends BaseController
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
+
+
 }

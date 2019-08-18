@@ -9,6 +9,9 @@
 
 {% else %}
     {{ render(controller(
-        'App\\Controller\\ProfilPersonnelController::timeline', {slug: user.slug}
+        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
     )) }}
+    {#    {{ render(controller(#}
+    {#        'App\\Controller\\ProfilPersonnelController::timeline', {slug: user.slug}#}
+    {#    )) }}#}
 {% endif %}

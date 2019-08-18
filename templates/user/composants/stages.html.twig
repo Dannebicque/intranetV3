@@ -79,7 +79,7 @@
             {% for stage in stagesHistorique %}
                 <tr class="stage">
                     <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
-                    <td>{{ stage.stagePeriode.anneeuniversiaitaire }}</td>
+                    <td>{{ stage.stagePeriode.anneeUniversitaire.annee }}</td>
                     <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
                                                               data-url="{{ path('application_etudiant_stage_periode_info', {'id': stage.id}) }}"
                                                               class="btn btn-info btn-outline btn-xs"
@@ -94,7 +94,7 @@
                                                             title="Informations sur l'entreprise"
                                                             data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
                     </td>
-                    <td>{% if stage.tuteur != null %}{{ stage.tuteur.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
+                    <td>{% if stage.tuteur != null %}{{ stage.tuteur.display }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
             {% else %}
                 <tr>

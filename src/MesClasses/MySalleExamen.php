@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySalleExamen.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 /**
@@ -17,7 +17,7 @@
 
 namespace App\MesClasses;
 
-use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Matiere;
@@ -105,7 +105,8 @@ class MySalleExamen
         $requesttypegroupe,
         $requestgroupes,
         $requestenseignant1,
-        $requestenseignant2
+        $requestenseignant2,
+        Departement $departement
     ): void
     {
         $this->salle = $this->salleExamenRepository->find($requestsalle);
@@ -115,14 +116,13 @@ class MySalleExamen
             if ($requesttypegroupe !== '') {
                 $this->typeGroupe = $this->typeGroupeRepository->find($requesttypegroupe);
                 $groupes = $this->typeGroupe->getGroupes();
-
-                $typeg = $groupes[0]->getTypeGroupe();
+                //$typeg = $groupes[0]->getTypeGroupe();
                 $grdetail = array();
                 $etudiants = array();
                 /** @var Groupe $gr */
                 foreach ($groupes as $gr) {
                     foreach ($requestgroupes as $dgr) {
-                        if ($gr->getId() === $dgr) {
+                        if ($gr->getId() === (int)$dgr) {
                             $grdetail[] = $gr;
                             foreach ($gr->getEtudiants() as $etu) {
                                 $etudiants[] = $etu;
@@ -132,10 +132,9 @@ class MySalleExamen
                 }
             } else {
                 $grdetail = $this->groupeDefaut($this->matiere->getSemestre());
-                $typeg = $grdetail[0]->getTypeGroupe();
+                $this->typeGroupe = $grdetail[0]->getTypeGroupe();
                 $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->getSemestre());
             }
-
 
             if (count($etudiants) <= $this->salle->getCapacite()) {
                 $tabplace = $this->calculPlaces();
@@ -145,16 +144,15 @@ class MySalleExamen
                     'matiere'   => $this->matiere,
                     'etudiants' => $etudiants,
                     'tabplace'  => $this->placement($etudiants, $tabplace),
-                    'typeg'     => $typeg,
+                    'typeg'     => $this->typeGroupe,
                     'salle'     => $this->salle,
                     'ens1'      => $requestenseignant1 !== '' ? $this->personnelRepository->find($requestenseignant1) : null,
                     'ens2'      => $requestenseignant2 !== '' ? $this->personnelRepository->find($requestenseignant2) : null,
                     'groupes'   => $grdetail,
                     'depreuve'  => (string)$requestdateeval,
-                    'linuxpath' => Constantes::BASE_URL
                 );
 
-                $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement');
+                $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
             }
 
             $this->container->get('session')->getFlashBag()->add(

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Absence.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 08:55
+ * @date 18/08/2019 11:48
+ * @lastUpdate 17/08/2019 07:56
  */
 
 namespace App\Entity;
@@ -86,8 +86,6 @@ class Absence extends BaseEntity
      * @Groups({"absences_administration"})
      */
     private $personnel;
-
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="absences")

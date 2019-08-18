@@ -1,7 +1,7 @@
-<a class="nav-link changeprofil {% if onglet == 'timeline' %}active{% endif %}"
-   href="{{ path('profil_etudiant_timeline', {slug: user.slug}) }}"
-   id="profil-timeline">{{ 'tab.timeline'|trans }}</a>
-<a class="nav-link changeprofil {% if onglet == 'scolarite' %}active{% endif %}"
+{#<a class="nav-link changeprofil {% if onglet == 'timeline' %}active{% endif %}"#}
+{#   href="{{ path('profil_etudiant_timeline', {slug: user.slug}) }}"#}
+{#   id="profil-timeline">{{ 'tab.timeline'|trans }}</a>#}
+<a class="nav-link changeprofil active {% if onglet == 'scolarite' %}active{% endif %}"
    href="{{ path('profil_etudiant_scolarite', {slug: user.slug}) }}"
    id="profil-scolarite">{{ 'tab.scolarite'|trans }}</a>
 <a class="nav-link changeprofil {% if onglet == 'notes' %}active{% endif %}"

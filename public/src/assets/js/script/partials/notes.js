@@ -1,15 +1,10 @@
 /*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/notes.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/notes.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:46
  */
 
 $('.savegroupe').click(function () {
@@ -60,5 +55,35 @@ $(document).on('keyup', '.noteetudiant', function (e) {
     $(this).removeClass('is-valid').addClass('is-invalid')
   }
 })
+
+$('.evaluation-edit').editable(
+  Routing.generate('application_personnel_evaluation_update')
+  , {
+    type: 'text',
+    submit: 'OK',
+    cancel: 'Cancel',
+    cssclass: 'editable-class',
+    cancelcssclass: 'btn btn-danger',
+    submitcssclass: 'btn btn-success',
+    indicator: 'Sauvegarde…',
+    label: $(this).data('title'),
+    tooltip: 'Double click pour modifier',
+    submitdata: function (revert, settings, submitdata) {
+      return {
+        id: $(this).data('id'),
+        name: $(this).data('name'),
+        value: submitdata.value
+      }
+    },
+    intercept: function (jsondata) {
+      console.log(jsondata)
+      console.log($(this))
+      if (jsondata == 'true') {
+        $(this).after('OK') //todo: mettre un coche verte
+      } else {
+        $(this).after('NOK') //todo: mettre une croix rouge
+      }
+    }
+  })
 
 

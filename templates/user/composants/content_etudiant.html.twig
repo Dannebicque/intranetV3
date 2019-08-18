@@ -16,6 +16,10 @@
     )) }}
 {% else %}
     {{ render(controller(
-        'App\\Controller\\ProfilEtudiantController::timeline', {slug: user.slug}
+        'App\\Controller\\ProfilEtudiantController::scolarite', {slug: user.slug}
     )) }}
+    {#    #}
+    {#    {{ render(controller(#}
+    {#        'App\\Controller\\ProfilEtudiantController::timeline', {slug: user.slug}#}
+    {#    )) }}#}
 {% endif %}

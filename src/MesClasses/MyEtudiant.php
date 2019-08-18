@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 11:34
- * @lastUpdate 30/07/2019 14:20
+ * @date 18/08/2019 11:48
+ * @lastUpdate 17/08/2019 07:52
  */
 
 namespace App\MesClasses;
@@ -188,7 +188,7 @@ class MyEtudiant
         $absence->setEtudiant($this->etudiant);
         $absence->setPersonnel($personnel);
         $absence->setDate($date);
-        $absence->setAnneeuniversitaire($matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0);
+        $absence->setAnneeUniversitaire($matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null);
         $absence->setDuree(new DateTime('01:30'));
         $absence->setHeure($heure);
         $absence->setMatiere($matiere);

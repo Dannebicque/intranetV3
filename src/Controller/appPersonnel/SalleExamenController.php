@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/SalleExamenController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/17/19 8:06 AM
+ * @date 18/08/2019 11:48
+ * @lastUpdate 16/08/2019 07:44
  */
 
 namespace App\Controller\appPersonnel;
@@ -63,7 +63,8 @@ class SalleExamenController extends BaseController
             $request->request->get('selectgroupes'),
             $request->request->get('detail_groupes'),
             $request->request->get('enseignant1'),
-            $request->request->get('enseignant2')
+            $request->request->get('enseignant2'),
+            $this->dataUserSession->getDepartement()
         );
     }
 }

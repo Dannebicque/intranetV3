@@ -22,15 +22,20 @@
                     <th>{{ 'table.libelle'|trans }}</th>
                     <th>{{ 'table.annee'|trans }}</th>
                     <th>{{ 'table.commentaire'|trans }}</th>
+                    <th>{{ 'table.active'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for annee_universitaire in annee_universitaires %}
-                    <tr id="ligne_{{ annee_universitaire.id }}">
+                    <tr id="ligne_{{ annee_universitaire.id }}" {% if annee_universitaire.active == true %}class="bg-success"{% endif %}>
                         <td>{{ annee_universitaire.libelle }}</td>
                         <td>{{ annee_universitaire.annee }}</td>
                         <td>{{ annee_universitaire.commentaire }}</td>
+                        <td>
+                            <input type="radio" name="active" {% if annee_universitaire.active == true %}checked{% endif %}>
+                        </td>
+                        {# todo: gérer la modification #}
                         <td>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'annee_universitaire', id: annee_universitaire
                                 .id}) }}

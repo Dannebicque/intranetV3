@@ -72,23 +72,36 @@
                     <div class="form-group">
                         <label for="absence-groupe">{{ 'groupe'|trans }}</label>
                         <div class="row">
-                            {% for typeGroupe in groupes.typeGroupes %}
-                                <div class="col-sm-2">
-                                    <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event is defined and event.type|upper ==
-                                                typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{
-                                        typeGroupe
-                                        .libelle }}</button>
-                                </div>
-                            {% else %}
-                                <div class="col-md-12">
-                                    <div class="alert alert-warning">
-                                        Aucun groupe n'existe dans ce semestre. <a
-                                                href="{{ path('administration_groupe_index') }}">Veuillez
-                                            d'abord ajouter des types de groupe et des groupes.</a>
+                            {% if typeGroupes is defined %}
+                                {% for typeGroupe in typeGroupes %}
+                                    <div class="col-sm-2">
+                                        <button data-typegroupe="{{ typeGroupe.id }}"
+                                                class="btn btn-block {% if event is defined and event.type|upper ==
+                                                    typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe
+                                            .libelle }}</button>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% else %}
+                                    <div class="col-md-12">
+                                        <div class="alert alert-warning">
+                                            Aucun groupe n'existe dans ce semestre. <a
+                                                    href="{{ path('administration_groupe_index') }}">Veuillez
+                                                                                                     d'abord ajouter des
+                                                                                                     types de groupe et
+                                                                                                     des groupes.</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% for typeGroupe in groupes.typeGroupes %}
+                                    <div class="col-sm-2">
+                                        <button data-typegroupe="{{ typeGroupe.id }}"
+                                                class="btn btn-block {% if event is defined and event.type|upper ==
+                                                    typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe
+                                            .libelle }}</button>
+                                    </div>
+
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -102,7 +115,7 @@
                 {{ include('api/absence/listeEtudiant.html.twig', {selectedTypeGroupe: groupes, numerogroupe: event
                     .groupe}) }}
             {% else %}
-            <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>
+                <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>
             {% endif %}
         </div>
     </div>
@@ -110,15 +123,15 @@
 
 {% block javascripts %}
     {{ parent() }}
-{% if event is defined %}
-    <script>
-        $(document).ready(function () {
-          console.log('update')
-          updateAffichage("{{ dateFr }}", "{{ heure }}")
-        })
+    {% if event is defined %}
+        <script>
+          $(document).ready(function () {
+            console.log('update')
+            updateAffichage("{{ dateFr }}", "{{ heure }}")
+          })
 
-    </script>
-{% endif %}
+        </script>
+    {% endif %}
 {% endblock %}
 
 

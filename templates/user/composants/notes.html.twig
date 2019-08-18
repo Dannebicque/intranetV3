@@ -1,47 +1,47 @@
 {{ include('bloc_notes_absences/etudiant_notes.html.twig', {notes:notes}) }}
 
-<div class="card">
-    <h4 class="card-title">{{ 'situation.par.semestre.notes'|trans }}</h4>
-    <div class="card-body">
-        <canvas class="mx-auto" id="chart-radar" width="360" height="360"></canvas>
-    </div>
-</div>
+{#<div class="card">#}
+{#    <h4 class="card-title">{{ 'situation.par.semestre.notes'|trans }}</h4>#}
+{#    <div class="card-body">#}
+{#        <canvas class="mx-auto" id="chart-radar" width="360" height="360"></canvas>#}
+{#    </div>#}
+{#</div>#}
 
 
-<script>
-  $(document).ready(function () {
-    new Chart($("#chart-radar"), {
-      type: 'radar',
+{#<script>#}
+{#  $(document).ready(function () {#}
+{#    new Chart($("#chart-radar"), {#}
+{#      type: 'radar',#}
 
-      // Data
-      //
-      data: {
-        labels: ["Mx101", "Mx102", "Mx201", "Mx203", "Mx202", "Mx204", "Moyenne"],
-        datasets: [
-            {% for semestre in semestres %}
-          {
-            label: "S1",
-            backgroundColor: "rgba(51,202,185,0.7)",
-            borderColor: "rgba(0,0,0,0)",
-            pointBackgroundColor: "rgba(51,202,185,0.7)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(51,202,185,0.7)",
-            data: [10, 9, 19, 8, 15, 16, 8.5]
-          }{% if not loop.last %},{% endif %}
-            {% endfor %}
-        ]
-      },
+{#      // Data#}
+{#      //#}
+{#      data: {#}
+{#        labels: ["Mx101", "Mx102", "Mx201", "Mx203", "Mx202", "Mx204", "Moyenne"],#}
+{#        datasets: [#}
+{#            {% for semestre in semestres %}#}
+{#          {#}
+{#            label: "S1",#}
+{#            backgroundColor: "rgba(51,202,185,0.7)",#}
+{#            borderColor: "rgba(0,0,0,0)",#}
+{#            pointBackgroundColor: "rgba(51,202,185,0.7)",#}
+{#            pointBorderColor: "#fff",#}
+{#            pointHoverBackgroundColor: "#fff",#}
+{#            pointHoverBorderColor: "rgba(51,202,185,0.7)",#}
+{#            data: [10, 9, 19, 8, 15, 16, 8.5]#}
+{#          }{% if not loop.last %},{% endif %}#}
+{#            {% endfor %}#}
+{#        ]#}
+{#      },#}
 
-      // Options
-      //
-      options: {
-        responsive: false,
-        legend: {
-          display: true
-        }
-      }
-    });
+{#      // Options#}
+{#      //#}
+{#      options: {#}
+{#        responsive: false,#}
+{#        legend: {#}
+{#          display: true#}
+{#        }#}
+{#      }#}
+{#    });#}
 
-  })
-</script>
+{#  })#}
+{#</script>#}

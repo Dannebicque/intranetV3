@@ -3,8 +3,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 12:40
- * @lastUpdate 02/08/2019 12:39
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
  */
 
 'use strict'
@@ -144,20 +144,36 @@ function updateAffichage (date, heure) {
     dataType: 'json',
     success: function (data) {
 
-      const tabsences = data
-      console.log(date)
+      // const tabsences = data
+      //console.log('date ' + date)
+      //console.log(data)
       const t = date.split('/')
       const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
-      console.log(ddate)
-      console.log(tabsences[ddate])
-      if (typeof tabsences[ddate] !== 'undefined') {
-        if (typeof tabsences[ddate][heure] !== 'undefined') {
-          for (let i = 0; i < tabsences[ddate][heure].length; i++) {
-            console.log(tabsences[ddate][heure][i])
-            $('#etu_' + tabsences[ddate][heure][i]).addClass('absent')
+      //console.log('ddate ' + ddate)
+      if (heure.length === 4) {
+        heure = '0' + heure
+      }
+      //console.log('heure ' + heure)
+      // var obj = tabsences[ddate]
+      // console.log('tabsences[ddate] ' + obj)
+      for (let d in data) {
+        //console.log('d ' + d)
+        if (d == ddate) {
+          //console.log('ok')
+          if (typeof data[d][heure] !== 'undefined') {
+            for (let i = 0; i < data[d][heure].length; i++) {
+              //console.log('marquage')
+              //console.log('tabsences[ddate][heure][i] ' + data[d][heure][i])
+              $('#etu_' + data[d][heure][i]).addClass('absent')
+            }
           }
         }
       }
+      //if (typeof tabsences[ddate] !== 'undefined') {
+      //if (typeof tabsences[ddate][heure] !== 'undefined') {
+
+      // }
+      //}
     }
   })
 }
@@ -1012,17 +1028,12 @@ $(document).on('click','#add_carnet', function(){
 
 
 /*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/previsionnel.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/previsionnel.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 02/08/2019 12:40
+ * @lastUpdate 02/08/2019 12:39
  */
 
 let nbLignePrevisionnel = 1
@@ -1916,6 +1927,37 @@ $(document).on('keyup', '.noteetudiant', function (e) {
     $(this).removeClass('is-valid').addClass('is-invalid')
   }
 })
+
+  $('.evaluation-edit').editable(
+    Routing.generate('application_personnel_evaluation_update')
+    , {
+      type: 'text',
+      submit: 'OK',
+      cancel: 'Cancel',
+      cssclass: 'editable-class',
+      cancelcssclass: 'btn btn-danger',
+      submitcssclass: 'btn btn-success',
+      indicator: 'Sauvegarde…',
+      label: $(this).data('title'),
+      //event     : 'dbclick',
+      tooltip: 'Double click pour modifier',
+      submitdata: function (revert, settings, submitdata) {
+        return {
+          id: $(this).data('id'),
+          name: $(this).data('name'),
+          value: submitdata.value
+        }
+      },
+      intercept: function (jsondata) {
+        console.log(jsondata)
+        console.log($(this))
+        if (jsondata == 'true') {
+          $(this).after('OK')
+        } else {
+          $(this).after('NOK')
+        }
+      }
+    })
 
 
 

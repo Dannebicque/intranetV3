@@ -10,9 +10,10 @@
             <a class="nav-link active show"
                href="#vosInformations" data-toggle="tab" role="tab"
                id="profil-vosInformations">{{ 'tab.vosInformations'|trans }}</a>
-            <a class="nav-link" href="#vosParametres" data-toggle="tab" role="tab"
-               id="profil-vosParametres">{{ 'tab.vosParametres'|trans }}</a>
-
+            {% if not is_granted('ROLE_ETUDIANT') %}
+                <a class="nav-link" href="#vosParametres" data-toggle="tab" role="tab"
+                   id="profil-vosParametres">{{ 'tab.vosParametres'|trans }}</a>
+            {% endif %}
         </nav>
     </div>
 {% endblock %}
@@ -33,48 +34,50 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane" id="vosParametres">
-            <div class="card">
-                <h4 class="card-title">{{ 'settins.vos.parametres'|trans }}</h4>
+        {% if not is_granted('ROLE_ETUDIANT') %}
+            <div class="tab-pane" id="vosParametres">
+                <div class="card">
+                    <h4 class="card-title">{{ 'settins.vos.parametres'|trans }}</h4>
 
-                <div class="card-body">
-                    {% if user.typeUser == 'permanent' %}
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>{{ 'table.departement'|trans }}</th>
-                                <th>{{ 'table.diplomes'|trans }}</th>
-                                <th>{{ 'table.par.defaut'|trans }}</th>
-                            </tr>
-                            </thead>
-
-                            {% for departement in user.personnelDepartements %}
+                    <div class="card-body">
+                        {% if user.typeUser == 'permanent' %}
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
-                                    <td>{{ departement.departement.libelle }}</td>
-                                    <td>{% for diplome in departement.departement.diplomes %}{{ diplome.display }}, {% endfor %}</td>
-                                    <td>
-                                        <div class="form-check">
-                                            <label for="pardefaut_{{ departement.departement.uuidString }}"
-                                                   class="sr-only">
-                                                {{ departement.departement.libelle }} par défaut
-                                            </label>
-                                            <input class="form-check-input departementParDefaut" type="radio" name="pardefaut"
-                                                   id="pardefaut_{{ departement.departement.uuidString }}"
-                                                   value="{{ departement.departement.uuidString }}"
-                                                   {% if departement.defaut == true %}checked{% endif %}>
-                                        </div>
-                                    </td>
+                                    <th>{{ 'table.departement'|trans }}</th>
+                                    <th>{{ 'table.diplomes'|trans }}</th>
+                                    <th>{{ 'table.par.defaut'|trans }}</th>
                                 </tr>
-                            {% endfor %}
-                        </table>
-                    {% elseif user.typeUser == 'etudiant' %}
+                                </thead>
 
-                    {% else %}
-                        <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
-                    {% endif %}
+                                {% for departement in user.personnelDepartements %}
+                                    <tr>
+                                        <td>{{ departement.departement.libelle }}</td>
+                                        <td>{% for diplome in departement.departement.diplomes %}{{ diplome.display }}, {% endfor %}</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <label for="pardefaut_{{ departement.departement.uuidString }}"
+                                                       class="sr-only">
+                                                    {{ departement.departement.libelle }} par défaut
+                                                </label>
+                                                <input class="form-check-input departementParDefaut" type="radio" name="pardefaut"
+                                                       id="pardefaut_{{ departement.departement.uuidString }}"
+                                                       value="{{ departement.departement.uuidString }}"
+                                                       {% if departement.defaut == true %}checked{% endif %}>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        {% elseif user.typeUser == 'etudiant' %}
+
+                        {% else %}
+                            <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
 {% endblock %}
