@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Etudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 08:39
- * @lastUpdate 19/08/2019 08:39
+ * @date 19/08/2019 09:08
+ * @lastUpdate 19/08/2019 09:07
  */
 
 namespace App\Entity;
@@ -1096,9 +1096,8 @@ class Etudiant extends Utilisateur implements Serializable
     public function updateFromApogee($dataApogee)
     {
         foreach ($dataApogee as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
+            if (method_exists($this, $key)) {
+                $this->$key($value);
             }
         }
     }
