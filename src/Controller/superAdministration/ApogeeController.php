@@ -4,14 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 08:50
- * @lastUpdate 19/08/2019 08:50
+ * @date 19/08/2019 08:58
+ * @lastUpdate 19/08/2019 08:58
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
+use App\MesClasses\Tools;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -156,8 +157,14 @@ class ApogeeController extends BaseController
     private function transformeApogeeToArray($data)
     {
         return [
-            'numEtudiant' => $data[''],
-
+            'setNumEtudiant'   => $data['COD_ETU'],
+            'setNumIne'        => $data['COD_NNE_IND'],
+            'setDateNaissance' => Tools::convertDateToObject($data['DATE_NAI_IND']), //en fr?
+            'setPromotion'     => $data['DAA_ENT_ETB'],
+            'setNom'           => $data['LIB_NOM_PAT_IND'],
+            'setPrenom'        => $data['LIB_PR1_IND'],
+            'setCivilite'      => $data['COD_SEX_ETU '] === 'M' ? 'M.' : 'Mme', //M ou F
+            'setTypeUser'      => 'etudiant',
         ];
     }
 
