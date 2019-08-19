@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 09:00
- * @lastUpdate 19/08/2019 09:00
+ * @date 19/08/2019 09:05
+ * @lastUpdate 19/08/2019 09:02
  */
 
 namespace App\Controller\superAdministration;
@@ -74,22 +74,22 @@ class ApogeeController extends BaseController
 
             while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
                 $dataApogee = $this->transformeApogeeToArray($row);
-                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dataApogee['setNumEtudiant']]);
                 if ($etudiant && $type === 'force') {
                     //todo: une classe ?
                     //on met à jour
                     $etudiant->updateFromApogee($dataApogee);
                     $this->entityManager->flush();
-                    $etudiants[$numEtudiant]['etat'] = 'maj';
-                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                    $etudiants[$dataApogee['setNumEtudiant']]['etat'] = 'maj';
+                    $etudiants[$dataApogee['setNumEtudiant']]['data'] = $etudiant;
                 } else {
                     //n'existe pas on ajoute.
                     $etudiant = new Etudiant();
                     $etudiant->updateFromApogee($dataApogee);
                     $this->entityManager->persist($etudiant);
                     $this->entityManager->flush();
-                    $etudiants[$numEtudiant]['etat'] = 'add';
-                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                    $etudiants[$dataApogee['setNumEtudiant']]['etat'] = 'add';
+                    $etudiants[$dataApogee['setNumEtudiant']]['data'] = $etudiant;
                 }
             }
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
