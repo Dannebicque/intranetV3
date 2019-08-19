@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 08:32
- * @lastUpdate 19/08/2019 08:32
+ * @date 19/08/2019 08:39
+ * @lastUpdate 19/08/2019 08:39
  */
 
 namespace App\Controller\superAdministration;
@@ -61,35 +61,36 @@ class ApogeeController extends BaseController
             $etudiants = [];
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
-//            $conn = oci_connect($_ENV['APOGEE_LOGIN'], $_ENV['APOGEE_PASSWORD'], $_ENV['APOGEE_STRING']);
-//        if (!$conn) {
-//            $e = oci_error();
-//            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-//        }
-// todo: a définir
-//        $stid = oci_parse($conn, 'SELECT * FROM INS_ADM_ETP WHERE COD_ETP=\'5PSP13\'');
-//        oci_execute($stid);
-//
-//        while (row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-            $dataApogee = $this->transformeApogeeToArray($row);
-            $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-            if ($etudiant && $type === 'force') {
-                //todo: une classe ?
-                //on met à jour
-                $etudiant->updateFromApogee($dataApogee);
-                $this->entityManager->flush();
-                $etudiants[$numEtudiant]['etat'] = 'maj';
-                $etudiants[$numEtudiant]['data'] = $etudiant;
-            } else {
-                //n'existe pas on ajoute.
-                $etudiant = new Etudiant();
-                $etudiant->updateFromApogee($dataApogee);
-                $this->entityManager->persist($etudiant);
-                $this->entityManager->flush();
-                $etudiants[$numEtudiant]['etat'] = 'add';
-                $etudiants[$numEtudiant]['data'] = $etudiant;
+            $conn = oci_connect($_ENV['APOGEE_LOGIN'], $_ENV['APOGEE_PASSWORD'], $_ENV['APOGEE_STRING']);
+            if (!$conn) {
+                $e = oci_error();
+                trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
             }
-            //}
+
+            $stid = oci_parse($conn,
+                'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'' . $diplome->getCodeApogee() . '\'');
+            oci_execute($stid);
+
+            while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+                $dataApogee = $this->transformeApogeeToArray($row);
+                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                if ($etudiant && $type === 'force') {
+                    //todo: une classe ?
+                    //on met à jour
+                    $etudiant->updateFromApogee($dataApogee);
+                    $this->entityManager->flush();
+                    $etudiants[$numEtudiant]['etat'] = 'maj';
+                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                } else {
+                    //n'existe pas on ajoute.
+                    $etudiant = new Etudiant();
+                    $etudiant->updateFromApogee($dataApogee);
+                    $this->entityManager->persist($etudiant);
+                    $this->entityManager->flush();
+                    $etudiants[$numEtudiant]['etat'] = 'add';
+                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                }
+            }
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
             return $this->render('super-administration/apogee/confirmation.html.twig', [
@@ -170,7 +171,7 @@ class ApogeeController extends BaseController
 //        }
 //
 //        //$stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
-//        $stid = oci_parse($conn, 'SELECT * FROM INS_ADM_ETP WHERE COD_ETP=\'5PSP13\'');
+//        $stid = oci_parse($conn, 'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'5PSP13\'');
 //        oci_execute($stid);
 //
 //        echo "<table border='1'>\n";
