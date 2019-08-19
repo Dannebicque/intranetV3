@@ -73,14 +73,6 @@
                                                     {% for groupe in etudiant.groupes %}{{ groupe.libelle }} {% endfor %}
                                                 </div>
                                                 <div>
-                                                    <i class="fa fa-fw fa-globe w-20px"></i>
-                                                    <a href="{{ etudiant.siteUniv }}"
-                                                       {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
-                                                       class="text-white"
-                                                       target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                                       data-placement="bottom">{{ etudiant.siteUniv|slice(0,20) }}</a>
-                                                </div>
-                                                <div>
                                                     <i class="fa fa-fw fa-envelope w-20px"></i>
                                                     <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
                                                        class="text-white"
@@ -88,25 +80,39 @@
                                                        data-placement="bottom">Contacter
                                                     </a>
                                                 </div>
-                                                {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
-                                                    <div>
-                                                        <i class="fa fa-fw fa-link"></i>
+                                                <div>
+
+                                                    <a href="{{ etudiant.siteUniv }}"
+                                                       {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
+                                                       class="text-white"
+                                                       target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                                       data-placement="bottom">
+                                                        <i class="fa fa-fw fa-globe w-20px"></i>
+                                                        {#                                                        {{ etudiant.siteUniv|slice(0,20) }}#}
+                                                    </a>
+                                                    {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
+
                                                         <a href="{{ etudiant.sitePerso }}"
                                                            class="text-white"
                                                            target="_blank" title="Site personnel" data-provide="tooltip"
-                                                           data-placement="bottom">{{ etudiant.sitePerso|slice(0,20) }}
+                                                           data-placement="bottom">
+                                                            <i class="fa fa-fw fa-link"></i>
+                                                            {#                                                            {{ etudiant.sitePerso|slice(0,20) }}#}
                                                         </a>
-                                                    </div>
-                                                {% endif %}
-                                                <label class="toggler toggler-danger fs-16">
-                                                    <input type="checkbox" checked class="addfavori"
-                                                           value="{{ etudiant.slug }}">
-                                                    <i class="fa fa-heart"></i>
-                                                </label>
+                                                    {% endif %}
+                                                </div>
+
+
+                                                {#todo: a finaliser#}
+                                                {#                                                <label class="toggler toggler-danger fs-16">#}
+                                                {#                                                    <input type="checkbox" checked class="addfavori"#}
+                                                {#                                                           value="{{ etudiant.slug }}">#}
+                                                {#                                                    <i class="fa fa-heart"></i>#}
+                                                {#                                                </label>#}
                                             </div>
                                         </div>
                                     </div>
-                                    </div>{#todo: a finaliser#}
+                                    </div>
                                 {% endfor %}
                             {% else %}
                                 <div class="col-sm-12">
