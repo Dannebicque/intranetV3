@@ -1,0 +1,119 @@
+{% extends 'base-super_admin.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.apogee.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab"
+                   href="#majliste">{{ 'maj.liste.etudiant'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#forcerimport">{{ 'forcer.maj.liste'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#importun">{{ 'importer.une.etudiant'|trans }}</a>
+            </li>
+        </ul>
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="tab-content card">
+        <div class="tab-pane fade active show" id="majliste">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Mettre à jour une promotion</h4>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                Avec cette mise à jour, uniquement les étudiants manquants seront ajoutés. Toutes les
+                                données déjà présentent ne seront pas modifiées.
+                            </div>
+                            <form class="form" action="{{ path('sa_apogee_maj', {type:'maj'}) }}" method="post">
+                                <div class="form-group">
+                                    <label for="formation">Formation</label>
+                                    <select class="form-control" id="formation">
+                                        <option value="">Choisir la formation à mettre à jour</option>
+                                        {% for diplome in diplomes %}
+                                            <option value="{{ diplome.id }}">{{ diplome.display }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button class="btn btn-success">Mettre à jour</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="forcerimport">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Forcer un nouvel import</h4>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                Cette fonctionnalité va mettre à jour les données des étudiants présents, et importer
+                                les étudiants manquants. Toutes les modifications (coordonnées, groupes, ...) peuvent
+                                être modifiées
+                            </div>
+                            <form class="form" action="{{ path('sa_apogee_maj', {type:'force'}) }}" method="post">
+                                <div class="form-group">
+                                    <label for="diplomeforce">Formation</label>
+                                    <select class="form-control" id="diplomeforce">
+                                        <option value="">Choisir la formation à mettre à jour</option>
+                                        {% for diplome in diplomes %}
+                                            <option value="{{ diplome.id }}">{{ diplome.display }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <button class="btn btn-success">Mettre à jour</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="importun">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Récupérer un étudiant manquant</h4>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                Cette fonctionnalité permet d'importer que des étudiants de manière cilbée (avec un
+                                numéro étudiant). Vous pouvez saisir plusieurs numéros en séparant par un ; (point
+                                virugule).
+                            </div>
+                            <form class="form" action="{{ path('sa_apogee_import_etudiant') }}" method="post">
+                                <div class="form-group">
+                                    <label for="listeetudiants">Formation</label>
+                                    <textarea class="form-control" id="listeetudiants">
+                                    </textarea>
+                                </div>
+                                <button class="btn btn-success">Mettre à jour</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+
+{% endblock %}
+
