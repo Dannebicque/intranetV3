@@ -44,7 +44,7 @@
                             <form class="form" action="{{ path('sa_apogee_maj', {type:'maj'}) }}" method="post">
                                 <div class="form-group">
                                     <label for="formation">Formation</label>
-                                    <select class="form-control" id="formation">
+                                    <select class="form-control" id="formation" name="diplomeforce">
                                         <option value="">Choisir la formation à mettre à jour</option>
                                         {% for diplome in diplomes %}
                                             <option value="{{ diplome.id }}">{{ diplome.display }}</option>
@@ -72,7 +72,7 @@
                             <form class="form" action="{{ path('sa_apogee_maj', {type:'force'}) }}" method="post">
                                 <div class="form-group">
                                     <label for="diplomeforce">Formation</label>
-                                    <select class="form-control" id="diplomeforce">
+                                    <select class="form-control" id="diplomeforce" name="diplomeforce">
                                         <option value="">Choisir la formation à mettre à jour</option>
                                         {% for diplome in diplomes %}
                                             <option value="{{ diplome.id }}">{{ diplome.display }}</option>
@@ -100,7 +100,7 @@
                             <form class="form" action="{{ path('sa_apogee_import_etudiant') }}" method="post">
                                 <div class="form-group">
                                     <label for="listeetudiants">Formation</label>
-                                    <textarea class="form-control" id="listeetudiants">
+                                    <textarea class="form-control" id="listeetudiants" name="listeetudiants">
                                     </textarea>
                                 </div>
                                 <button class="btn btn-success">Mettre à jour</button>
