@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 08:39
- * @lastUpdate 19/08/2019 08:39
+ * @date 19/08/2019 08:50
+ * @lastUpdate 19/08/2019 08:50
  */
 
 namespace App\Controller\superAdministration;
@@ -164,25 +164,26 @@ class ApogeeController extends BaseController
     public function test(): Response
     {
         // Connexion au service XE (i.e. la base de données) sur la machine "localhost"
-//        $conn = oci_connect($_ENV['APOGEE_LOGIN'], $_ENV['APOGEE_PASSWORD'], $_ENV['APOGEE_STRING']);
-//        if (!$conn) {
-//            $e = oci_error();
-//            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-//        }
-//
-//        //$stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
-//        $stid = oci_parse($conn, 'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'5PSP13\'');
-//        oci_execute($stid);
-//
-//        echo "<table border='1'>\n";
-//        while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-//            echo "<tr>\n";
-//            foreach ($row as $item) {
-//                echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "") . "</td>\n";
-//            }
-//            echo "</tr>\n";
-//        }
-//        echo "</table>\n";
+        $conn = oci_connect($_ENV['APOGEE_LOGIN'], $_ENV['APOGEE_PASSWORD'], $_ENV['APOGEE_STRING']);
+        if (!$conn) {
+            $e = oci_error();
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }
+
+        //$stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
+        $stid = oci_parse($conn,
+            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'5PSP13\'');
+        oci_execute($stid);
+
+        echo "<table border='1'>\n";
+        while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+            echo "<tr>\n";
+            foreach ($row as $key => $item) {
+                echo "<td>" . $key . " = " . ($item !== null ? htmlentities($item, ENT_QUOTES) : "") . "</td>\n";
+            }
+            echo "</tr>\n";
+        }
+        echo "</table>\n";
 
 //        $stid2 = oci_parse($conn, 'SELECT view_name FROM ALL_VIEWS');
 //        oci_execute($stid2);
