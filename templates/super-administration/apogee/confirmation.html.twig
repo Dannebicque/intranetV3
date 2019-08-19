@@ -1,0 +1,30 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Mettre à jour une promotion</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Etudiant</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in etudiants %}
+                    <tr>
+                        <td>{{ etudiant.data.display }}</td>
+                        <td>{{ etudiant.etat }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+
+{% endblock %}
+
