@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 09:05
- * @lastUpdate 19/08/2019 09:02
+ * @date 19/08/2019 09:13
+ * @lastUpdate 19/08/2019 09:12
  */
 
 namespace App\Controller\superAdministration;
@@ -69,7 +69,7 @@ class ApogeeController extends BaseController
             }
 
             $stid = oci_parse($conn,
-                'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'' . $diplome->getCodeApogee() . '\'');
+                'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'' . $diplome->getCodeApogee() . '\'');
             oci_execute($stid);
 
             while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
@@ -186,7 +186,7 @@ class ApogeeController extends BaseController
 
         //$stid = oci_parse($conn, 'SELECT table_name, num_rows FROM ALL_TABLES');
         $stid = oci_parse($conn,
-            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'5PSP13\'');
+            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'5PSP13\'');
         oci_execute($stid);
 
         echo "<table border='1'>\n";
