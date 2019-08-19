@@ -1,16 +1,15 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Etudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/5/19 8:30 AM
+ * @date 19/08/2019 08:39
+ * @lastUpdate 19/08/2019 08:39
  */
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -1092,6 +1091,16 @@ class Etudiant extends Utilisateur implements Serializable
         $this->anneeSortie = $anneeSortie;
 
         return $this;
+    }
+
+    public function updateFromApogee($dataApogee)
+    {
+        foreach ($dataApogee as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
     }
 
 }
