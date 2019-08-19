@@ -161,6 +161,13 @@ class ApogeeController extends BaseController
         ];
     }
 
+    /**
+     * @Route("/test", methods={"GET"}, name="sa_apogee_test")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @return Response
+     * @throws \Exception
+     */
     public function test(): Response
     {
         // Connexion au service XE (i.e. la base de données) sur la machine "localhost"
