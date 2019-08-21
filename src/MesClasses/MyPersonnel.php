@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyPersonnel.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/24/19 9:38 AM
+ * @date 21/08/2019 12:32
+ * @lastUpdate 21/08/2019 10:02
  */
 
 /**
@@ -71,6 +71,7 @@ class MyPersonnel
             $t['numero_harpege'] = $personnel->getNumeroHarpege();
             $t['nom'] = $personnel->getNom();
             $t['prenom'] = $personnel->getPrenom();
+            $t['login'] = $personnel->getUsername();
             $t['deleted'] = $personnel->getDeleted() ? 'Désactivé' : 'Actif';
 
             $tab[] = $t;

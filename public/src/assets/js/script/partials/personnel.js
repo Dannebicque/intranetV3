@@ -1,12 +1,10 @@
 /*
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/personnel.js
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * @date 21/08/2019 12:32
+ * @lastUpdate 21/08/2019 10:06
  */
 
 $(document).on('keyup', '#login_urca', function () {
@@ -134,6 +132,7 @@ $('#datatableRh').DataTable({
     {'data': 'numero_harpege'},
     {'data': 'nom'},
     {'data': 'prenom'},
+    {'data': 'login'},
     {'data': 'departements'},
     {'data': 'deleted'},
     {

@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 18/08/2019 11:47
+ * @date 30/07/2019 08:40
+ * @lastUpdate 24/07/2019 13:02
  */
 
 'use strict'
@@ -110,6 +110,15 @@ app.config({
   cacheBust: '',
 });
 
+
+/*
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/util.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:47
+ */
 
 function readUrlMenu($url) {
   const $elt = $url.split('/')
@@ -812,6 +821,7 @@ $('#datatableRh').DataTable({
     {'data': 'numero_harpege'},
     {'data': 'nom'},
     {'data': 'prenom'},
+    {'data': 'login'},
     {'data': 'departements'},
     {'data': 'deleted'},
     {
@@ -1178,17 +1188,17 @@ $(document).on('change', '.chgtp', function (e) {
   updateSynthesePrevisionnel()
 })
 
-  function updateSynthesePrevisionnel () {
+function updateSynthesePrevisionnel () {
   let totalCm = 0
   let totalTd = 0
   let totalTp = 0
-    let totalEqTd = 0
+  let totalEqTd = 0
   let totalEtu = 0
 
-    let totalHeuresCm = 0
-    let totalHeuresTd = 0
-    let totalHeuresTp = 0
-    //let totalMatiere = 0
+  let totalHeuresCm = 0
+  let totalHeuresTd = 0
+  let totalHeuresTp = 0
+  //let totalMatiere = 0
 
   for (let i = 1; i <= nbLignePrevisionnel; i++) {
     let $cm = $('#cm_' + i)
@@ -1206,75 +1216,75 @@ $(document).on('change', '.chgtp', function (e) {
 
     totalEtu = totalEtu + parseFloat($cm.val()) + parseFloat($td.val()) + parseFloat($tp.val())
   }
-    totalEqTd = totalCm + totalTd + totalTp
+  totalEqTd = totalCm + totalTd + totalTp
 
-    $('#totalCm').html(totalCm.toFixed(2))
-    $('#totalTd').html(totalTd.toFixed(2))
-    $('#totalTp').html(totalTp.toFixed(2))
-    $('#totalEqTd').html(totalEqTd.toFixed(2))
-    $('#totalEtu').html(totalEtu.toFixed(2))
+  $('#totalCm').html(totalCm.toFixed(2))
+  $('#totalTd').html(totalTd.toFixed(2))
+  $('#totalTp').html(totalTp.toFixed(2))
+  $('#totalEqTd').html(totalEqTd.toFixed(2))
+  $('#totalEtu').html(totalEtu.toFixed(2))
 
-    /** vérificiation */
-    /* todo: ne fonctionne par, car doit prendre en compte le nombre de groupe et les possibles autres données déjà saisies. */
-    $('#totalHeuresCm').html(totalHeuresCm.toFixed(2))
-    $('#totalHeuresTd').html(totalHeuresTd.toFixed(2))
-    $('#totalHeuresTp').html(totalHeuresTp.toFixed(2))
+  /** vérificiation */
+  /* todo: ne fonctionne par, car doit prendre en compte le nombre de groupe et les possibles autres données déjà saisies. */
+  $('#totalHeuresCm').html(totalHeuresCm.toFixed(2))
+  $('#totalHeuresTd').html(totalHeuresTd.toFixed(2))
+  $('#totalHeuresTp').html(totalHeuresTp.toFixed(2))
 
-    let diffCm = parseFloat($('#cmMaquette').html()) - totalHeuresCm
-    let diffTd = parseFloat($('#tdMaquette').html()) - totalHeuresTd
-    let diffTp = parseFloat($('#tpMaquette').html()) - totalHeuresTp
-    $('#diffCm').html(diffCm.toFixed(2))
-    $('#diffTd').html(diffTd.toFixed(2))
-    $('#diffTp').html(diffTp.toFixed(2))
+  let diffCm = parseFloat($('#cmMaquette').html()) - totalHeuresCm
+  let diffTd = parseFloat($('#tdMaquette').html()) - totalHeuresTd
+  let diffTp = parseFloat($('#tpMaquette').html()) - totalHeuresTp
+  $('#diffCm').html(diffCm.toFixed(2))
+  $('#diffTd').html(diffTd.toFixed(2))
+  $('#diffTp').html(diffTp.toFixed(2))
 
-    if (diffCm < 0) {
-      $('#diffCm').addClass('erreurPrevi').removeClass('validePrevi')
-    } else {
-      $('#diffCm').addClass('validePrevi').removeClass('erreurPrevi')
-    }
-
-    if (diffTd < 0) {
-      $('#diffTd').addClass('erreurPrevi').removeClass('validePrevi')
-    } else {
-      $('#diffTd').addClass('validePrevi').removeClass('erreurPrevi')
-    }
-
-    if (diffTp < 0) {
-      $('#diffTp').addClass('erreurPrevi').removeClass('validePrevi')
-    } else {
-      $('#diffTp').addClass('validePrevi').removeClass('erreurPrevi')
-    }
-
-    //$('#totalMatiere').html(totalMatiere.toFixed(2));
+  if (diffCm < 0) {
+    $('#diffCm').addClass('erreurPrevi').removeClass('validePrevi')
+  } else {
+    $('#diffCm').addClass('validePrevi').removeClass('erreurPrevi')
   }
 
-  /*
-  $(document).on('change', '#previsionnel_semestre', function () {
-    const selectMatiere = $('#previsionnel_matiere')
-    if ($(this).val() === '') {
-      selectMatiere.empty()
-      selectMatiere.append($('<option></option>')
-        .attr('value', '')
-        .text('Choisir d\'abord un semestre'))
-    } else {
-      $.ajax({
-        url: Routing.generate('api_matieres_semestre', {'semestre': $(this).val()}),
-        success: function (data) {
+  if (diffTd < 0) {
+    $('#diffTd').addClass('erreurPrevi').removeClass('validePrevi')
+  } else {
+    $('#diffTd').addClass('validePrevi').removeClass('erreurPrevi')
+  }
 
-          selectMatiere.empty()
+  if (diffTp < 0) {
+    $('#diffTp').addClass('erreurPrevi').removeClass('validePrevi')
+  } else {
+    $('#diffTp').addClass('validePrevi').removeClass('erreurPrevi')
+  }
+
+  //$('#totalMatiere').html(totalMatiere.toFixed(2));
+}
+
+/*
+$(document).on('change', '#previsionnel_semestre', function () {
+  const selectMatiere = $('#previsionnel_matiere')
+  if ($(this).val() === '') {
+    selectMatiere.empty()
+    selectMatiere.append($('<option></option>')
+      .attr('value', '')
+      .text('Choisir d\'abord un semestre'))
+  } else {
+    $.ajax({
+      url: Routing.generate('api_matieres_semestre', {'semestre': $(this).val()}),
+      success: function (data) {
+
+        selectMatiere.empty()
+        selectMatiere.append($('<option></option>')
+          .attr('value', '')
+          .text('Choisir une matière'))
+        jQuery.each(data, function (index, matiere) {
+
           selectMatiere.append($('<option></option>')
-            .attr('value', '')
-            .text('Choisir une matière'))
-          jQuery.each(data, function (index, matiere) {
-
-            selectMatiere.append($('<option></option>')
-              .attr('value', matiere.id)
-              .text(matiere.libelle))
-          })
-        }
-      })
-    }
-  })*/
+            .attr('value', matiere.id)
+            .text(matiere.libelle))
+        })
+      }
+    })
+  }
+})*/
 
 $(document).on('change', '#previsionnel_matiere', function () {
   const volumeMatiere = $('#volumeMatiere')
@@ -1329,14 +1339,14 @@ $(document).on('click', '#btnGenereFichier', function (e) {
 
 
 //reload si changement d'année
-  $(document).on('change', '#change_annee_temp_hrs', function (e) {
+$(document).on('change', '#change_annee_temp_hrs', function (e) {
 
-    window.location = Routing.generate('administration_hrs_index', {annee: $(this).val()})
-  })
+  window.location = Routing.generate('administration_hrs_index', {annee: $(this).val()})
+})
 
-  $(document).on('change', '#change_annee_temp_previsionnel', function (e) {
-    window.location = Routing.generate('administration_previsionnel_index', {annee: $(this).val()})
-  })
+$(document).on('change', '#change_annee_temp_previsionnel', function (e) {
+  window.location = Routing.generate('administration_previsionnel_index', {annee: $(this).val()})
+})
 
 // $(document).on('click', '.previsionnelModule', function () {
 //   var modalPrevisionnel = $('#modalPrevisionnel');
@@ -1866,17 +1876,12 @@ $(document).on('click', '.justificatif-annuler', function (e) {
 
 
 /*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/notes.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/notes.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 18/08/2019 11:48
+ * @lastUpdate 18/08/2019 11:46
  */
 
 $('.savegroupe').click(function () {
@@ -1928,36 +1933,35 @@ $(document).on('keyup', '.noteetudiant', function (e) {
   }
 })
 
-  $('.evaluation-edit').editable(
-    Routing.generate('application_personnel_evaluation_update')
-    , {
-      type: 'text',
-      submit: 'OK',
-      cancel: 'Cancel',
-      cssclass: 'editable-class',
-      cancelcssclass: 'btn btn-danger',
-      submitcssclass: 'btn btn-success',
-      indicator: 'Sauvegarde…',
-      label: $(this).data('title'),
-      //event     : 'dbclick',
-      tooltip: 'Double click pour modifier',
-      submitdata: function (revert, settings, submitdata) {
-        return {
-          id: $(this).data('id'),
-          name: $(this).data('name'),
-          value: submitdata.value
-        }
-      },
-      intercept: function (jsondata) {
-        console.log(jsondata)
-        console.log($(this))
-        if (jsondata == 'true') {
-          $(this).after('OK')
-        } else {
-          $(this).after('NOK')
-        }
+$('.evaluation-edit').editable(
+  Routing.generate('application_personnel_evaluation_update')
+  , {
+    type: 'text',
+    submit: 'OK',
+    cancel: 'Cancel',
+    cssclass: 'editable-class',
+    cancelcssclass: 'btn btn-danger',
+    submitcssclass: 'btn btn-success',
+    indicator: 'Sauvegarde…',
+    label: $(this).data('title'),
+    tooltip: 'Double click pour modifier',
+    submitdata: function (revert, settings, submitdata) {
+      return {
+        id: $(this).data('id'),
+        name: $(this).data('name'),
+        value: submitdata.value
       }
-    })
+    },
+    intercept: function (jsondata) {
+      console.log(jsondata)
+      console.log($(this))
+      if (jsondata == 'true') {
+        $(this).after('OK') //todo: mettre un coche verte
+      } else {
+        $(this).after('NOK') //todo: mettre une croix rouge
+      }
+    }
+  })
 
 
 
@@ -3474,16 +3478,17 @@ $(document).on('click', '#addCategorie', function () {
 })
 
 
-  /*
-   * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-   * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/stage.js
-   * @author     David Annebicque
-   * @project intranetv3
-   * @date 30/07/2019 08:40
-   * @lastUpdate 30/07/2019 08:39
-   */
 
-  $(document).on('change', '#tuteurUniversitaireStage', function () {
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/stage.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
+ */
+
+$(document).on('change', '#tuteurUniversitaireStage', function () {
   $.ajax({
     url: Routing.generate('administration_stage_etudiant_change_tuteur', {stageEtudiant: $(this).data('stage'), tuteur: $(this).val()}),
     success: function () {
@@ -3492,40 +3497,40 @@ $(document).on('click', '#addCategorie', function () {
   })
 })
 
-  /*let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9;
+/*let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9;
 
-  if (typeof $('.editCourrier') != 'undefined') {
+if (typeof $('.editCourrier') != 'undefined') {
 
-    const champs = ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'];
-    //let ed1 = loadQuill('#editCourrier', champs)
-    ed2 = loadQuill('ETAT_STAGE_AUTORISE')
-    ed3 = loadQuill('ETAT_STAGE_DEPOSE')
-    ed4 = loadQuill('ETAT_STAGE_VALIDE')
-    ed5 = loadQuill('ETAT_STAGE_REFUS')
-    ed6 = loadQuill('ETAT_STAGE_INCOMPLET')
-    ed7 = loadQuill('ETAT_STAGE_IMPRIME')
-    ed8 = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
-    ed9 = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
-  }*/
+  const champs = ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'];
+  //let ed1 = loadQuill('#editCourrier', champs)
+  ed2 = loadQuill('ETAT_STAGE_AUTORISE')
+  ed3 = loadQuill('ETAT_STAGE_DEPOSE')
+  ed4 = loadQuill('ETAT_STAGE_VALIDE')
+  ed5 = loadQuill('ETAT_STAGE_REFUS')
+  ed6 = loadQuill('ETAT_STAGE_INCOMPLET')
+  ed7 = loadQuill('ETAT_STAGE_IMPRIME')
+  ed8 = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
+  ed9 = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
+}*/
 
-  $(document).on('click', '.enregistreModeleMail', function () {
-    const etat = $(this).data('type')
-    console.log(etat)
-    console.log(ed2.getContents())
-    $.ajax({
-      url: Routing.generate('administration_stage_periode_courrier_sauvegarde_modele', {
-        uuid: $(this).data('periode'),
-        mail: etat
-      }),
-      data: {
-        message: ed2.root.innerHTML,
-        sujet: $('#sujet_' + etat).val()
-      },
-      success: function () {
-        addCallout('Modèle enregistré !', 'success')
-      }
-    })
+$(document).on('click', '.enregistreModeleMail', function () {
+  const etat = $(this).data('type')
+  console.log(etat)
+  console.log(ed2.getContents())
+  $.ajax({
+    url: Routing.generate('administration_stage_periode_courrier_sauvegarde_modele', {
+      uuid: $(this).data('periode'),
+      mail: etat
+    }),
+    data: {
+      message: ed2.root.innerHTML,
+      sujet: $('#sujet_' + etat).val()
+    },
+    success: function () {
+      addCallout('Modèle enregistré !', 'success')
+    }
   })
+})
 
 
   //require('./partials/sousCommission')
@@ -3533,57 +3538,57 @@ $(document).on('click', '#addCategorie', function () {
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
 
 
-  /*
-   * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-   * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/plugins/myQuill.js
-   * @author     David Annebicque
-   * @project intranetv3
-   * @date 30/07/2019 08:40
-   * @lastUpdate 30/07/2019 08:39
-   */
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/plugins/myQuill.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 30/07/2019 08:40
+ * @lastUpdate 30/07/2019 08:39
+ */
 
-  function loadQuill ($id) {
-    /*const toolbarFullOptions = [
-      [
-        // {'font': []},
-        {'header': [1, 2, 3, 4, 5, 6, false]}
-        //  {'size': ['small', false, 'large', 'huge']}
-      ],
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      //  [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-      // [{'script': 'sub'}, {'script': 'super'}],
-      [{'header': 1}, {'header': 2}, 'blockquote', 'code-block'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      [{'direction': 'rtl'}, {'align': []}],        // text direction
-      ['link', 'image', 'video'],
-      ['clean'],
-      [{'placeholder': $options}]// remove formatting button
-    ]*/
+function loadQuill ($id) {
+  /*const toolbarFullOptions = [
+    [
+      // {'font': []},
+      {'header': [1, 2, 3, 4, 5, 6, false]}
+      //  {'size': ['small', false, 'large', 'huge']}
+    ],
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    //  [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+    // [{'script': 'sub'}, {'script': 'super'}],
+    [{'header': 1}, {'header': 2}, 'blockquote', 'code-block'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+    [{'direction': 'rtl'}, {'align': []}],        // text direction
+    ['link', 'image', 'video'],
+    ['clean'],
+    [{'placeholder': $options}]// remove formatting button
+  ]*/
 
-    const options = {
-      debug: 'info',
-      modules: {
-        toolbar: {
-          container: '#toolbar_' + $id,
-          handlers: {
-            'customsfields': function (value) {
-              /* do something with lang */
-              console.log('--' + value)
-              if (value) {
-                const cursorPosition = this.quill.getSelection().index
-                this.quill.insertText(cursorPosition, value)
-                this.quill.setSelection(cursorPosition + value.length)
-              }
+  const options = {
+    debug: 'info',
+    modules: {
+      toolbar: {
+        container: '#toolbar_' + $id,
+        handlers: {
+          'customsfields': function (value) {
+            /* do something with lang */
+            console.log('--' + value)
+            if (value) {
+              const cursorPosition = this.quill.getSelection().index
+              this.quill.insertText(cursorPosition, value)
+              this.quill.setSelection(cursorPosition + value.length)
             }
           }
         }
-
       },
-      placeholder: 'Compose an epic...',
-      theme: 'snow'
-    }
-    let quill = new Quill('#text_' + $id, options)
+
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow'
   }
+  let quill = new Quill('#text_' + $id, options)
+}
 
 
   const preloader = $('.preloader')

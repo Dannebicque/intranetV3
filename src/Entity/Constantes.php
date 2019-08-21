@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Constantes.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:10
+ * @date 21/08/2019 12:32
+ * @lastUpdate 21/08/2019 12:29
  */
 
 /**
@@ -27,9 +27,10 @@ class Constantes
     public const ROLE_DDE = 'ROLE_DDE';
     public const ROLE_ASS = 'ROLE_ASS';
     public const ROLE_RP = 'ROLE_RP';
-    public const ROLE_RDA = 'ROLE_RDA';
+    public const ROLE_ABS = 'ROLE_ABS';
     public const ROLE_EDT = 'ROLE_EDT';
-    public const ROLE_RDS = 'ROLE_RDS';
+    public const ROLE_STA = 'ROLE_STA';
+    public const ROLE_NOTES = 'ROLE_NOTES';
     public const ROLE_AUTEUR = 'ROLE_AUTEUR';
     public const ROLE_MAT = 'ROLE_MAT';
     public const ROLE_PERMANENT = 'ROLE_PERMANENT';
@@ -77,9 +78,10 @@ class Constantes
         self::ROLE_DDE,
         self::ROLE_ASS,
         self::ROLE_RP,
-        self::ROLE_RDA,
+        self::ROLE_ABS,
         self::ROLE_EDT,
-        self::ROLE_RDS,
+        self::ROLE_STA,
+        self::ROLE_NOTES,
         self::ROLE_AUTEUR,
         self::ROLE_MAT
     ];

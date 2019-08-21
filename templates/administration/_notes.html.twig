@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.etudiants'|trans }}</h2>
+
+            </header>
+
+            <div class="card-body">
+                <div class="row gap-y">{# todo: filtrer si RP uniquement a sa formation #}
+                    {% for semestre in user_data.semestres if semestre.actif == true %}
+                        <div class="col-md-2"><a
+                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                    class="btn btn-block btn-primary">
+                                {{ semestre.libelle }}
+                            </a></div>
+                    {% endfor %}
+
+                    {% for semestre in user_data.semestres if semestre.actif == false %}
+                        <div class="col-md-2"><a
+                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                    class="btn btn-block btn-default">
+                                {{ semestre.libelle }}
+                            </a></div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

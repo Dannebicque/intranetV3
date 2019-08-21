@@ -1,0 +1,34 @@
+<div class="row">
+    {% if user_data.departement.optMateriel %}
+        <div class="col-md-4 col-lg-4 col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'adm.materiels'|trans }}</h2>
+                    <div class="card-header-actions" style="">
+                        <a href="{{ path('administration_materiel_new') }}" class="btn btn-sm btn-info"
+                           title="Ajouter un matériel" data-provide="tooltip"> <i class="ti-plus"></i><span
+                                    class="sr-only">aAjouter un matériel</span></a>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div>
+                                <a href="{{ path('administration_materiel_index') }}"
+                                   class="btn btn-block btn-primary">{{ 'gestion.materiel'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div>
+                                <a href="{{ path('administration_type_materiel_index') }}"
+                                   class="btn btn-block btn-primary">{{ 'gestion.categorie.materiel'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
