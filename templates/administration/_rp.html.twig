@@ -1,0 +1,284 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.etudiants'|trans }}</h2>
+                <div class="card-header-actions" style="">
+                    <a href="{{ path('administration_etudiant_semestre_add') }}" class="btn btn-sm btn-info"
+                       title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                                class="ti-plus"></i><span class="sr-only">ajouter des étudiants</span></a>
+                </div>
+            </header>
+
+            <div class="card-body">
+                <div class="row gap-y">{# todo: filtrer si RP uniquement a sa formation #}
+                    {% for semestre in user_data.semestres if semestre.actif == true %}
+                        <div class="col-md-2"><a
+                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                    class="btn btn-block btn-primary">
+                                {{ semestre.libelle }}
+                            </a></div>
+                    {% endfor %}
+
+                    {% for semestre in user_data.semestres if semestre.actif == false %}
+                        <div class="col-md-2"><a
+                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                    class="btn btn-block btn-default">
+                                {{ semestre.libelle }}
+                            </a></div>
+                    {% endfor %}
+
+                </div>
+                <div class="row gap-y">
+                    <div class="col-sm-12 col-md-4">
+                        <div><a href="{{ path('administration_etudiant_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.tous.les.etudiants'|trans }}</a></div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div><a href="{{ path('administration_statistique_index') }}"
+                                class="btn btn-block btn-primary">
+                                {{ 'adm.statistiques'|trans }}</a></div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">{# todo: filtrer si RP uniquement a sa formation #}
+                        <div><a href="{{ path('administration_cohorte_index') }}" class="btn btn-block btn-primary">
+                                {{ 'adm.cohortes'|trans }}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.personnels'|trans }}</h2>
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12"><a href="{{ path('administration_personnel_index') }}"
+                                              class="btn btn-block btn-primary"> {{ 'adm.permanents.et.vacataires'|trans }}
+                        </a></div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-6">
+                        <div><a href="{{ path('administration_previsionnel_index') }}"
+                                class="btn btn-block btn-primary">
+                                {{ 'adm.previsionnels'|trans }}</a></div>
+                    </div>
+                    <div class="col-md-6">{# todo: filtrer si RP uniquement a sa formation #}
+                        <div><a href="{{ path('administration_hrs_index') }}" class="btn btn-block btn-primary">
+                                {{ 'adm.hrs.primes'|trans }}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.ppn'|trans }}</h2>
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12">{# todo: filtrer si RP uniquement a sa formation #}
+                        <div><a href="{{ path('administration_matiere_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.programme.pedagogique'|trans }}</a></div>
+                    </div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">{# todo: filtrer si RP uniquement a sa formation #}
+                        <div><a href="{{ path('administration_groupe_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.type.groupes'|trans }}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.competences'|trans }}</h2>
+            <div class="card-body">
+                <div class="row gap-y">{# todo: filtrer si RP uniquement a sa formation #}
+                    <div class="col-md-12">
+                        <div><a href="{{ path('administration_competence_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.gerer.les.competences'|trans }}</a></div>
+                    </div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <div><a href=""
+                                class="btn btn-block btn-primary"> {{ 'adm.analyser.competences'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.edt'|trans }}</h2>
+                <div class="card-header-actions" style="">
+                    <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-info"
+                       title="Ajouter une date" data-provide="tooltip"> <i class="ti-plus"></i><span
+                                class="sr-only">ajouter un événement</span></a>
+                </div>
+            </header>
+            <div class="card-body">
+                <div class="row gap-y">{# todo: filtrer si RP uniquement a sa formation #}
+                    <div class="col-md-12">
+                        <div><a href="{{ path('administration_edt_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.gerer.edt'|trans }}</a></div>
+                    </div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-6 col-sm-12">
+                        <div><a href="{{ path('administration_date_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.gerer.dates'|trans }}</a></div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div><a href="{{ path('administration_creneau_bloque_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.gerer.creneaux'|trans }}</a></div>
+                    </div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <div><a href="{{ path('administration_trello_tache_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'adm.trello'|trans }}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if user_data.departement.optStage %}
+        <div class="col-md-8 col-lg-8 col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'adm.stages'|trans }}</h2>
+                    <div class="card-header-actions" style="">
+                        <a href="{{ path('administration_stage_periode_index') }}" class="btn btn-sm btn-info"
+                           title="Créer une période" data-provide="tooltip"> <i class="ti-plus"></i><span
+                                    class="sr-only">Créer une période de stage</span></a>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <div class="row gap-y">{# todo: filtrer si RP uniquement a sa formation #}
+                        {% for periode in periodes %}
+                            <div class="col-md-6">
+                                <div>
+                                    <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
+                                       class="btn btn-block btn-primary"> Période {{ periode.libelle }}</a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-sm-12">
+                                <div class="alert alert-info">Aucune période de stage.</div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.alternances'|trans }}</h2>
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12">{# todo: filtrer si RP uniquement a sa formation #}
+                        {% set alternance = false %}
+                        {% for annee in user_data.annees if annee.optAlternance == true %}
+                            {% set alternance = true %}
+                            <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"
+                               class="btn btn-block btn-primary"> Alternances pour l'année {{ annee.libelle }}</a>
+                        {% endfor %}
+                        {% if alternance == false %}
+                            <div class="alert alert-info">Aucune année n'est proposée en alternance</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.documents'|trans }}</h2>
+                <div class="card-header-actions" style="">
+                    <a href="{{ path('administration_document_new') }}" class="btn btn-sm btn-info"
+                       title="Ajouter un document" data-provide="tooltip"> <i class="ti-plus"></i><span
+                                class="sr-only">ajouter un document</span></a>
+                </div>
+            </header>
+
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_document_index') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.gerer.les.documents'|trans }}</a></div>
+
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_type_document_index') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.gerer.les.categories.de.document'|trans }}</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.articles'|trans }}</h2>
+                <div class="card-header-actions" style="">
+                    <a href="{{ path('administration_article_new') }}" class="btn btn-sm btn-info"
+                       title="Ajouter un article" data-provide="tooltip"> <i class="ti-plus"></i><span
+                                class="sr-only">Publier un article</span></a>
+                </div>
+            </header>
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_article_index') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.gerer.articles'|trans }}
+                        </a>
+                        <a href="{{ path('administration_article_categories') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.gerer.les.categories.articles'|trans }}
+                        </a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.actualites.bornes'|trans }}</h2>
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_actualite_index') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.gerer.actualites'|trans }}
+                        </a></div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_borne_index') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.gerer.bornes'|trans }}
+                        </a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.structure.departement'|trans }}</h2>
+            <div class="card-body">
+                <div class="row gap-y">
+                    <div class="col-md-12">{# todo: filtrer si RP uniquement a sa formation #}
+                        <a href="{{ path('administration_structure_index') }}"
+                           class="btn btn-block btn-primary"> {{ 'adm.structure'|trans }}</a>
+                    </div>
+                </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_configuration') }}" class="btn btn-block btn-primary">
+                            {{ 'adm.configuration'|trans }}</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

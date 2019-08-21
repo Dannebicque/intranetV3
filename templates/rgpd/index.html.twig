@@ -1,15 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-speciale.html.twig' %}
 
 {% block header %}
     {{ 'rgpd.heading'|trans }}
 {% endblock %}
 
-{% block content %}
-    https://www.univ-lille.fr/dp/etudiants/
-    {# todo: gérer les demandes d'accès aux informations contenu sur le site par les usagers #}
-    <div class="card">
-        <h4 class="card-title"><strong>General</strong></h4>
+{% block body %}
+    class="min-h-fullscreen bg-img center-vh p-20" style="background-image: url({{ asset('assets/bg/2.jpg') }});" data-overlay="7"
+{% endblock %}
 
+{% block content %}
+    {#    https://www.univ-lille.fr/dp/etudiants/#}
+    {# todo: gérer les demandes d'accès aux informations contenu sur le site par les usagers #}
+    <div class="card card-round card-shadowed px-50 py-30 w-800px mb-0" style="max-width: 100%">
+        <h4 class="card-title"><strong>Données Personnelles / RGPD</strong></h4>
         <div class="accordion accordion-connected" id="faq-general">
             <div class="card">
                 <h3 class="card-title">
@@ -19,7 +22,27 @@
 
                 <div id="question-general-1" class="collapse" aria-expanded="false">
                     <div class="card-body pl-50">
-                        Quickly productivate resource sucking collaboration and idea-sharing before equity invested solutions. Enthusiastically monetize user friendly functionalities whereas exceptional process improvements. Holisticly administrate stand-alone paradigms via cutting-edge.
+                        <p>L’Université de Reims Champagne-Ardenne, représentée par son Président (Villa Douce - 9, bd
+                           de la Paix - CS 60005 - 51724 Reims Cedex), s'engage à ce que le traitement de données
+                           personnelles soit conforme au Règlement Général sur la Protection des Données (règlement UE
+                           2016/676) et à la loi du 6 janvier 1978 modifiée (loi Informatique et Libertés).</p>
+                        <p>Les données recueillies, pour l’exécution de la mission d’intérêt public de l’URCA, sont
+                           nécessaires à la gestion administrative et pédagogique des étudiants. [détailler]</p>
+                        <p>Les destinataires des données sont les agents de l’URCA habilités pour cette gestion. Les
+                           catégories de données personnelles concernées : (reprendre les éléments de la fiche)</p>
+                        <p>Ces données pourront être conservées durant 10 ans à l'issue de la fin de votre scolarité
+                           .</p>
+                        <p>Conformément au Règlement Général sur la Protection des Données et à la loi du 6 janvier 1978
+                           modifiée, vous disposez d’un droit d’accès, de rectification et d’effacement des données qui
+                           vous concernent ainsi que d’un droit d’opposition et d’un droit à la limitation du traitement
+                           de ces données. Vous disposez du droit de définir des directives relatives au sort de vos
+                           données personnelles, après votre décès.</p>
+                        <p>Pour toute question sur le traitement de vos données, vous pouvez contacter David Annebicque
+                           à l’adresse suivante : david.annebicque@univ-reims.fr</p>
+                        <p>Si vous estimez, après avoir contacté la Déléguée à la Protection des Données de l’URCA à
+                           l’adresse suivante : dpo@univ-reims.fr, que vos droits Informatique et Libertés ne sont pas
+                           respectés, vous avez la faculté d’introduire une réclamation à la CNIL, en ligne ou par
+                           courrier postal.</p>
                     </div>
                 </div>
             </div>
@@ -33,11 +56,12 @@
 
                 <div id="question-general-2" class="collapse" aria-expanded="false">
                     <div class="card-body pl-50">
-                        <p>L'intranet utilise les données suivantes afin de garantir un suivi efficace et personnalisé
-                        de vos données. Ces données ne sont utilisées que dans le cadre de votre scolarité. Les
-                        données sont issues du logiciel Apogée qui est géré par la scolarité de l'universite de
-                           Reims Champagne-Ardenne. Toutes les données facultatives peuvent être gerées par vos soins
-                           .</p>
+                        <p>L'intranet utilise les données suivantes afin de garantir un suivi efficace et
+                           personnalisé de votre scolarité. Ces données ne sont utilisées que dans le cadre de votre
+                           scolarité. Les données sont issues du logiciel Apogée qui est géré par la scolarité de
+                           l'universite de Reims Champagne-Ardenne. Les données ne sont accessibles qu'aux
+                           personnes habilités et ayant une nécessité d'accéder à ces informations. Toutes les
+                           données facultatives peuvent être gerées par vos soins.</p>
 
                         <h4>Les données concernants les étudiants</h4>
                         <ul>
@@ -74,7 +98,6 @@
                 </div>
             </div>
 
-
             <div class="card">
                 <h3 class="card-title">
                     <a data-toggle="collapse" data-parent="#faq-general" href="#question-general-3" class="collapsed"
@@ -83,10 +106,10 @@
 
                 <div id="question-general-3" class="collapse" aria-expanded="false">
                     <div class="card-body pl-50">
-                        Les données sont conservées le temps de la période d’inscription à l’université puis au
-                        maximum 5 ans (sauf dispositions législatives ou réglementaires contraires) une fois
-                        l'établissement quitté.
-                        Au-delà, ces données sont archivées sur un support distinct et à accès limité, conformément aux règles applicables en matière d'archives publiques et d'archives privées.
+                        Les données sont conservées le temps de la période d’inscription à l’université puis au maximum
+                        10 ans (sauf dispositions législatives ou réglementaires contraires) une fois l'établissement
+                        quitté. Au-delà, ces données sont archivées sur un support distinct et à accès limité,
+                        conformément aux règles applicables en matière d'archives publiques et d'archives privées.
                     </div>
                 </div>
             </div>
@@ -114,5 +137,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6"><img src="{{ asset('upload/logo/iut_troyes.png') }}" alt="Logo de
+            l'IUT de Troyes" class="img-fluid" style="height: 100px">
+                <img src="{{ asset('upload/logo/urca.jpeg') }}" class="img-fluid" alt="Logo de
+            l'Université de Reims" style="height: 100px"></div>
+        </div>
+
+
     </div>
 {% endblock %}

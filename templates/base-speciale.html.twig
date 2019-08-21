@@ -22,12 +22,32 @@
 </head>
 
 <body {% block body %}{% endblock %}>
-
+{# todo: logo? #}
 {% block content %}
 
 {% endblock %}
 
+<footer class="footer-speciale">
+    <div class="row">
+        <div class="col-md-6">
+            &nbsp;
+        </div>
 
+        <div class="col-md-6">
+            <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
 
 {% block javascripts %}
     <!-- Routing -->
