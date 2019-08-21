@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/PersonnelDepartement.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/21/19 11:19 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:08
  */
 
 namespace App\Entity;
@@ -162,12 +162,14 @@ class PersonnelDepartement
     }
 
     /**
+     * @param $role
+     *
      * @return PersonnelDepartement
      */
     public function removeRole($role): self
     {
         $roles = $this->getRoles();
-        $key = array_search($role, $roles);
+        $key = array_search($role, $roles, true);
         unset($roles[$key]);
         $roles = array_values($roles);
         $this->roles = json_encode($roles);

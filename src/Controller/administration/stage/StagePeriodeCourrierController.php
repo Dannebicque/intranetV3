@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StagePeriodeCourrierController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:39
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:27
  */
 
 namespace App\Controller\administration\stage;
@@ -15,6 +15,7 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Events;
 use App\MesClasses\MyStageMailTemplate;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,8 @@ class StagePeriodeCourrierController extends BaseController
 {
     /**
      * @Route("/apercu/{mail}", name="administration_stage_periode_courrier_apercu_defaut")
+     *
+     * @param $mail
      *
      * @return Response
      */
@@ -49,7 +52,7 @@ class StagePeriodeCourrierController extends BaseController
      * @param                     $mail
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function sauvegardeModele(
         MyStageMailTemplate $myStageMailTemplate,

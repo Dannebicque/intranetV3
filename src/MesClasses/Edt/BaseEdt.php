@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/BaseEdt.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/25/19 10:15 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:29
  */
 
 namespace App\MesClasses\Edt;
@@ -17,7 +17,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use Exception;
+use RuntimeException;
 
 Abstract class BaseEdt
 {
@@ -149,7 +149,7 @@ Abstract class BaseEdt
                 $this->semaineFormationLundi = $this->calendrier->getDatelundi();
                 $this->semaine = $this->calendrier->getSemaineReelle();
             } else {
-                throw new Exception('Erreur de semaine');
+                throw new RuntimeException('Erreur de semaine');
             }
         }
 

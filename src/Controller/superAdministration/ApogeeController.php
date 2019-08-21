@@ -1,20 +1,23 @@
 <?php
+
 /**
  * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 09:13
- * @lastUpdate 19/08/2019 09:12
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:27
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Adresse;
 use App\Entity\Etudiant;
 use App\MesClasses\Tools;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,9 +32,11 @@ class ApogeeController extends BaseController
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
+     * @param DiplomeRepository $diplomeRepository
+     *
      * @return Response
      */
-    public function index(DiplomeRepository $diplomeRepository)
+    public function index(DiplomeRepository $diplomeRepository): Response
     {
         return $this->render('super-administration/apogee/index.html.twig', [
             'diplomes' => $diplomeRepository->findAll()
@@ -49,7 +54,7 @@ class ApogeeController extends BaseController
      * @param                    $type
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function importMaj(
         Request $request,
@@ -112,7 +117,7 @@ class ApogeeController extends BaseController
      * @param EtudiantRepository $etudiantRepository
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function importEtudiant(Request $request, EtudiantRepository $etudiantRepository): Response
     {
@@ -173,7 +178,7 @@ class ApogeeController extends BaseController
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function test(): Response
     {

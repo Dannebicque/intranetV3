@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Absence.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 17/08/2019 07:56
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:17
  */
 
 namespace App\Entity;
@@ -250,15 +250,16 @@ class Absence extends BaseEntity
         return $this;
     }
 
-    public function getJson() {
+    public function getJson(): array
+    {
         return [
-            'id' => $this->getId(),
-            'justifie' => $this->isJustifie(),
-            'uuidString' => $this->getUuidString(),
-            'date' => $this->getDate()->format('d/m/Y'),
-            'heure' => $this->getHeure()->format('H:i'),
-            'personnel' => $this->getPersonnel()->getDisplay(),
-            'codeMatiere' => $this->getMatiere()->getCodeMatiere(),
+            'id'          => $this->getId(),
+            'justifie'    => $this->isJustifie(),
+            'uuidString'  => $this->getUuidString(),
+            'date'        => $this->getDate() !== null ? $this->getDate()->format('d/m/Y') : '-',
+            'heure'       => $this->getHeure() !== null ? $this->getHeure()->format('H:i') : '-',
+            'personnel'   => $this->getPersonnel() !== null ? $this->getPersonnel()->getDisplay() : '-',
+            'codeMatiere' => $this->getMatiere() !== null ? $this->getMatiere()->getCodeMatiere() : '-',
         ];
     }
 

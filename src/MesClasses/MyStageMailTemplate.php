@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyStageMailTemplate.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:39
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 11:55
  */
 
 namespace App\MesClasses;
@@ -16,6 +16,7 @@ use App\Entity\StagePeriode;
 use App\Entity\TwigTemplate;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 
 class MyStageMailTemplate
 {
@@ -45,7 +46,7 @@ class MyStageMailTemplate
      * @param              $message
      * @param StagePeriode $stagePeriode
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function updateTemplate($code, $sujet, $message, StagePeriode $stagePeriode): void
     {

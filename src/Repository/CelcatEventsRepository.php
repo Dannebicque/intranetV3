@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/CelcatEventsRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 15:58
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:29
  */
 
 namespace App\Repository;
@@ -109,7 +109,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function recupereEDTBornes(int $semaineReelle, Semestre $semestre, $jsem)
+    public function recupereEDTBornes(int $semaineReelle, Semestre $semestre, $jsem): array
     {
         $creneaux = array(
             1  => array('8h00', '9h30'),
@@ -145,7 +145,6 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
         $planning = array();
 
-        $j = 0;
         /** @var  $row CelcatEvent */
         foreach ($query as $row) {
             $casedebut = Constantes::TAB_HEURES_INDEX[$row->getDebut()->format('H:i:s')];
@@ -197,7 +196,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             } else {
                 //pas sur un créneau classique pour le début
                 if (!array_key_exists($casedebut, $creneaux)) {
-                    $casedebut = $casedebut - ($duree % 3);
+                    $casedebut -= ($duree % 3);
                 }
 
                 if ($casedebut == 11 || $casedebut == 12)
@@ -229,7 +228,8 @@ class CelcatEventsRepository extends ServiceEntityRepository
                 $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
             }
         }
-        return ($planning);
+
+        return $planning;
     }
 
     public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT)
@@ -250,7 +250,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function getByPersonnelArray(Personnel $user)
+    public function getByPersonnelArray(Personnel $user): array
     {
         $query = $this->createQueryBuilder('p')
             ->andWhere('p.codePersonnel = :idprof')
@@ -270,7 +270,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
     }
 
-    private function transformeArray($data)
+    private function transformeArray($data): array
     {
         $t = [];
         /** @var CelcatEvent $event */

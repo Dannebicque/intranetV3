@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/SousComissionController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 namespace App\Controller\administration;
@@ -108,7 +108,7 @@ class SousComissionController extends BaseController
      * @return Response
      * @throws Exception
      */
-    public function exporter(MySousCommission $mySousCommission, Semestre $semestre)
+    public function exporter(MySousCommission $mySousCommission, Semestre $semestre): Response
     {
         return $mySousCommission->export($semestre, $semestre->getAnneeUniversitaire());
     }

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Pdf/MyPDF.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:51 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 11:55
  */
 
 /**
@@ -21,6 +21,9 @@ use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyPDF
 {
@@ -60,9 +63,9 @@ class MyPDF
      * @param $name
      * @param $departement
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public static function generePdf($template, $data, $name, $departement):void
     {

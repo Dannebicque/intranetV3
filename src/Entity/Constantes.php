@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Constantes.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/11/19 2:39 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:10
  */
 
 /**
@@ -114,7 +114,7 @@ class Constantes
         '20:30'
     ];
 
-    const TAB_HEURES_INDEX = array(
+    public const TAB_HEURES_INDEX = array(
         '' => 0,
         '08:00:00' => 1,
         '08:30:00' => 2,
@@ -147,7 +147,7 @@ class Constantes
     public const MOYENNE_MODULES = 'moymodules';
     public const MOYENNE_UES = 'moyues';
 
-    const TAB_GROUPES_INDEX = array(
+    public const TAB_GROUPES_INDEX = array(
         'S1 DEC TP11' => 1,
         'S1 DEC TP12' => 2,
         'S1 DEC TD1' => 1,

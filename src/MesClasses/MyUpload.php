@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyUpload.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 12/08/2019 09:12
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:08
  */
 
 /**
@@ -84,8 +84,8 @@ class MyUpload
     }
 
     /**
-     * @param string $folder
-     *
+     * @param $dossierTemp
+     * @param $dossierDest
      */
     public function traitePhoto($dossierTemp, $dossierDest): void
     {

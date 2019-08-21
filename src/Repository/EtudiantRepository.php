@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 09:00
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:03
  */
 
 namespace App\Repository;
@@ -29,10 +29,12 @@ use Symfony\Component\Routing\RouterInterface;
 class EtudiantRepository extends ServiceEntityRepository
 {
     private $router;
+
     /**
      * EtudiantRepository constructor.
      *
      * @param RegistryInterface $registry
+     * @param RouterInterface   $router
      */
     public function __construct(RegistryInterface $registry, RouterInterface $router)
     {
@@ -59,7 +61,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $t['numetudiant'] = $etudiant->getId();
             $t['nom'] = $etudiant->getNom();
             $t['prenom'] = $etudiant->getPrenom();
-            $t['semestre'] = $etudiant->getSemestre()->getLibelle();
+            $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
             $t['profil'] = '<a href="'.$this->router->generate('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug()]).'"
        class="btn btn-info btn-outline btn-square"
        data-provide="tooltip"

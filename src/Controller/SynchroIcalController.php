@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SynchroIcalController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 15:41
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:02
  */
 
 namespace App\Controller;
@@ -14,6 +14,7 @@ namespace App\Controller;
 use App\MesClasses\Edt\MyEdtExport;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,7 +34,7 @@ class SynchroIcalController extends AbstractController
      * @param                     $_format
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function synchroIntervenantIcal(
         MyEdtExport $myEdtExport,
@@ -63,7 +64,7 @@ class SynchroIcalController extends AbstractController
      * @param                    $_format
      *
      * @return Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function synchroEtudiantIcal(
         MyEdtExport $myEdtExport,

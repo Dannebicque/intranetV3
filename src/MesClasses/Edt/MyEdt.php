@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdt.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/11/19 4:32 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 /**
@@ -86,7 +86,7 @@ class MyEdt extends BaseEdt
      * @return MyEdt
      * @throws Exception
      */
-    public function initPersonnel(Personnel $personnel, $semaine = 0)
+    public function initPersonnel(Personnel $personnel, $semaine = 0): MyEdt
     {
         $this->user = $personnel;
         $this->init('prof', $personnel->getId(), $semaine);
@@ -593,7 +593,12 @@ class MyEdt extends BaseEdt
         return $tab;
     }
 
-    public function transformeDetails(?EdtPlanning $pl)
+    /**
+     * @param EdtPlanning|null $pl
+     *
+     * @return array|null
+     */
+    public function transformeDetails(?EdtPlanning $pl): ?array
     {
         if ($pl !== null) {
             $t = array();
@@ -636,6 +641,8 @@ class MyEdt extends BaseEdt
 
             return $t;
         }
+
+        return [];
     }
 
     public function initSemestre(int $semaine, Semestre $semestre)

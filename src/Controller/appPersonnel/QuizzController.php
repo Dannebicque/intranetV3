@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/QuizzController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 8/28/18 1:29 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:21
  */
 
 namespace App\Controller\appPersonnel;
@@ -28,6 +28,6 @@ class QuizzController extends BaseController
      */
     public function index(): Response
     {
-        return $this->render('appPersonnel/quizz/index.html.twig', []);
+        return $this->render('appPersonnel/quizz/index.html.twig');
     }
 }

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/stage/StageEntrepriseController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:39
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:27
  */
 
 namespace App\Controller\administration\stage;
@@ -32,7 +32,8 @@ class StageEntrepriseController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_stage_entreprise_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StagePeriode $stagePeriode
+     * @param StageEtudiantRepository $stageEtudiantRepository
+     * @param StagePeriode            $stagePeriode
      *
      * @return Response
      */
@@ -75,8 +76,10 @@ class StageEntrepriseController extends BaseController
      * @Route("/{uuid}/export.{_format}", name="administration_stage_entreprise_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param MyExport               $myExport
-     * @param                        $_format
+     * @param StageEtudiantRepository $stageEtudiantRepository
+     * @param MyExport                $myExport
+     * @param StagePeriode            $stagePeriode
+     * @param                         $_format
      *
      * @return Response
      * @throws Exception
