@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PersonnelRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 08:37
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 namespace App\Repository;
@@ -37,6 +37,7 @@ class PersonnelRepository extends ServiceEntityRepository
      * PersonnelRepository constructor.
      *
      * @param RegistryInterface $registry
+     * @param RouterInterface   $router
      */
     public function __construct(RegistryInterface $registry, RouterInterface $router)
     {
@@ -103,7 +104,7 @@ class PersonnelRepository extends ServiceEntityRepository
        title="Profil de l\'étudiant">
         <i class="fa fa-info"></i>
         <span class="sr-only">Profil de l\'étudiant</span>
-    </a>';;
+    </a>';
 
             $t[] = $tt;
         }

@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/EdtController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 15:58
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:29
  */
 
 namespace App\Controller;
@@ -201,6 +201,7 @@ class EdtController extends BaseController
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws Exception
      */
     public function exportEtudiantSemaine(
         MyPDF $myPDF,
@@ -234,6 +235,12 @@ class EdtController extends BaseController
 
     /**
      * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
+     * @param MyEdt                 $myEdt
+     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param                       $event
+     * @param                       $type
+     *
+     * @return Response|null
      */
     public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type): ?Response
     {
@@ -242,6 +249,8 @@ class EdtController extends BaseController
 
             return $this->render('edt/_details.html.twig', ['event' => $myEdt->transformeDetails($pl)]);
         }
+
+        return null;
     }
 
 }

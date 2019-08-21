@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyMessagerie.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/9/19 3:18 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:21
  */
 
 namespace App\MesClasses;
@@ -21,11 +21,9 @@ use App\MesClasses\Mail\MyMailer;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
-use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mime\Email;
 
 
 class MyMessagerie
@@ -53,9 +51,6 @@ class MyMessagerie
     /** @var Etudiant[] */
     private $etudiants = [];
 
-    /** @var SemestreRepository */
-    private $semestreRepository;
-
     /** @var GroupeRepository */
     private $groupeRepository;
 
@@ -73,15 +68,14 @@ class MyMessagerie
      *
      * @param MyMailer               $myMailer
      * @param EntityManagerInterface $entityManager
-     * @param SemestreRepository     $semestreRepository
      * @param GroupeRepository       $groupeRepository
      * @param EtudiantRepository     $etudiantRepository
+     * @param PersonnelRepository    $personnelRepository
      * @param TypeGroupeRepository   $typeGroupeRepository
      */
     public function __construct(
         MyMailer $myMailer,
         EntityManagerInterface $entityManager,
-        SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
         PersonnelRepository $personnelRepository,
@@ -89,7 +83,6 @@ class MyMessagerie
     ) {
         $this->myMailer = $myMailer;
         $this->entityManager = $entityManager;
-        $this->semestreRepository = $semestreRepository;
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
         $this->typeGroupeRepository = $typeGroupeRepository;

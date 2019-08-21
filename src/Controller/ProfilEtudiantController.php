@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilEtudiantController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 02/08/2019 11:34
- * @lastUpdate 02/08/2019 11:34
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:27
  */
 
 namespace App\Controller;
@@ -90,12 +90,12 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
+     * @param MyEtudiant          $myEtudiant
      * @param ScolariteRepository $scolariteRepository
      * @param Etudiant            $etudiant
      *
      * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     *
      */
     public function notes(
         MyEtudiant $myEtudiant,

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AlternanceFicheSuivi.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:55 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 11:55
  */
 
 namespace App\Entity;
@@ -13,6 +13,7 @@ namespace App\Entity;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlternanceFicheSuiviRepository")
@@ -85,7 +86,7 @@ class AlternanceFicheSuivi extends BaseEntity
      *
      * @param $alternance
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Alternance $alternance)
     {

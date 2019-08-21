@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdtBorne.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/11/19 2:41 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 namespace App\MesClasses\Edt;
@@ -90,7 +90,8 @@ class MyEdtBorne
         $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y', mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
     }
 
-    public function getData() {
+    public function getData(): array
+    {
         return $this->data;
     }
 }

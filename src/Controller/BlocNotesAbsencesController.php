@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/BlocNotesAbsencesController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 14:14
- * @lastUpdate 30/07/2019 10:35
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:27
  */
 
 namespace App\Controller;
@@ -13,6 +13,7 @@ namespace App\Controller;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyPrevisionnel;
 use App\Repository\MatiereRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -40,6 +41,7 @@ class BlocNotesAbsencesController extends BaseController
      * @param MyEtudiant $myEtudiant
      *
      * @return Response
+     * @throws Exception
      */
     public function etudiant(MyEtudiant $myEtudiant): Response
     {

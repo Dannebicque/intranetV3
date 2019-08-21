@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StagePeriodeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 22/07/2019 17:54
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:08
  */
 
 namespace App\Repository;
@@ -34,8 +34,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Diplome $diplome
-     * @param int     $anneeUniversitaire
+     * @param Diplome            $diplome
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
      * @return mixed
      */
@@ -46,8 +46,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Diplome $diplome
-     * @param int     $anneeUniversitaire
+     * @param Diplome            $diplome
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
      * @return QueryBuilder
      */

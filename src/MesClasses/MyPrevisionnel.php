@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyPrevisionnel.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:41
- * @lastUpdate 30/07/2019 08:41
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 /**
@@ -774,9 +774,8 @@ class MyPrevisionnel
     }
 
     /**
-     * @param $modules
-     * @param $previModule
-     * @param $planning
+     * @param Departement $departement
+     * @param             $annee
      *
      * @return Array
      */
@@ -848,7 +847,7 @@ class MyPrevisionnel
         return $t;
     }
 
-    public function export(?Departement $getDepartement, $annee, $type, $data, $_format)
+    public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
     {
         //todo: a faire.
     }

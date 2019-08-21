@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/StageSubscriber.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:47 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:00
  */
 
 namespace App\EventSubscriber;
@@ -21,6 +21,9 @@ use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 
 class StageSubscriber implements EventSubscriberInterface
@@ -146,9 +149,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      *
      * @throws NonUniqueResultException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function onMailChgtEtatStageAutorise(GenericEvent $event): void
     {
@@ -160,9 +163,9 @@ class StageSubscriber implements EventSubscriberInterface
      * @param              $codeEvent
      *
      * @throws NonUniqueResultException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function sendMail(GenericEvent $event, $codeEvent): void
     {
@@ -227,6 +230,10 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function onMailChgtEtatStageConventionEnvoyee(GenericEvent $event): void
     {
@@ -235,6 +242,11 @@ class StageSubscriber implements EventSubscriberInterface
 
     /**
      * @param GenericEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function onMailChgtEtatStageConventionRecue(GenericEvent $event): void
     {
@@ -244,6 +256,10 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function onMailChgtEtatStageDepose(GenericEvent $event): void
     {
@@ -253,6 +269,10 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function onMailChgtEtatStageValide(GenericEvent $event): void
     {
@@ -262,6 +282,10 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function onMailChgtEtatStageImprime(GenericEvent $event): void
     {

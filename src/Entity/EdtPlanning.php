@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/EdtPlanning.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 08:44
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 namespace App\Entity;
@@ -377,7 +377,7 @@ class EdtPlanning
     /**
      * @return string
      */
-    public function getDisplayIcal()
+    public function getDisplayIcal(): string
     {
         if ($this->getMatiere() !== null) {
             return $this->getMatiere()->getCodeMatiere() . ' ' . $this->getDisplayGroupe();

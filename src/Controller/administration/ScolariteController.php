@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/ScolariteController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:08
  */
 
 namespace App\Controller\administration;
@@ -35,20 +35,19 @@ class ScolariteController extends BaseController
     /**
      * @Route("/edit/{slug}", name="administration_scolarite_etudiant_edit")
      *
-     * @param Request  $request
-     * @param Etudiant $etudiant
+     * @param ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository
+     * @param Request                      $request
+     * @param Etudiant                     $etudiant
      *
      * @return Response
      * @throws Exception
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     *
      */
     public function editScolariteEtudiant(
         ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
         Request $request,
         Etudiant $etudiant
-    ) {
+    ): Response {
         $scolarite = new Scolarite();
         $scolarite->setEtudiant($etudiant);
 
@@ -81,10 +80,12 @@ class ScolariteController extends BaseController
     }
 
     /**
+     * @param Semestre $semestre
+     *
      * @return JsonResponse
      * @Route("/ajax/ues/{semestre}", name="administration_scolarite_ues_semestre", options={"expose"=true})
      */
-    public function uesSemestre(Semestre $semestre)
+    public function uesSemestre(Semestre $semestre): JsonResponse
     {
 
         $ues = $semestre->getUes();

@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/RattrapagePlanningController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:29
  */
 
 namespace App\Controller\administration;
@@ -19,7 +19,6 @@ use App\Repository\RattrapageRepository;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -126,7 +125,10 @@ class RattrapagePlanningController extends BaseController
     /**
      * @Route("/update_global/{type}/{diplome}", name="administration_rattrapage_update_global", methods="POST",
      *                                    requirements={"type"="salle|heure|date"}, options={"expose":true})
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param Request              $request
+     * @param RattrapageRepository $rattrapageRepository
+     * @param                      $type
+     * @param Diplome              $diplome
      *
      * @return Response
      * @throws \Exception

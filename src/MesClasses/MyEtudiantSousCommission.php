@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiantSousCommission.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/29/19 6:13 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:04
  */
 
 /**
@@ -72,10 +72,11 @@ class MyEtudiantSousCommission
     /**
      * MyEtudiantSousCommission constructor.
      *
-     * @param Etudiant $etudiant
-     * @param Semestre $semestre
-     * @param          $matieres
-     * @param          $notes
+     * @param ScolariteRepository $scolariteRepository
+     * @param Etudiant            $etudiant
+     * @param Semestre            $semestre
+     * @param                     $matieres
+     * @param                     $notes
      */
     public function __construct(ScolariteRepository $scolariteRepository, Etudiant $etudiant, Semestre $semestre, $matieres, $notes)
     {

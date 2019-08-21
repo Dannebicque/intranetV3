@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/CalendrierRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/08/2019 15:58
- * @lastUpdate 01/08/2019 15:58
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 namespace App\Repository;
@@ -37,7 +37,7 @@ class CalendrierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findCalendrierArray()
+    public function findCalendrierArray(): array
     {
         $all = $this->findAll();
 

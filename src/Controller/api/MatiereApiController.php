@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/MatiereApiController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:00
  */
 
 namespace App\Controller\api;
@@ -23,6 +23,7 @@ use App\Repository\PrevisionnelRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -191,10 +192,14 @@ class MatiereApiController extends BaseController
     }
 
     /**
-     * @param Semestre  $semestre
-     * @param Personnel $personnel
+     * @param PrevisionnelRepository $previsionnelRepository
+     * @param Semestre               $semestre
+     * @param Personnel              $personnel
+     *
+     * @return JsonResponse|RedirectResponse
      * @Route("/matiere/semestre/personnel/{semestre}/{personnel}", name="api_matieres_semestre_personnel",
      *                                                              options={"expose":true})
+     *
      */
     public function matiereSemestrePersonnel(
         PrevisionnelRepository $previsionnelRepository,

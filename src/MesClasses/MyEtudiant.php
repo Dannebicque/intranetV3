@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 17/08/2019 07:52
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:15
  */
 
 namespace App\MesClasses;
@@ -31,6 +31,9 @@ use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use function count;
 
 /**
@@ -154,7 +157,7 @@ class MyEtudiant
      *
      * @return $this
      */
-    public function setIdEtudiant($id)
+    public function setIdEtudiant($id): self
     {
         $this->etudiant = $this->etudiantRepository->find($id);
 
@@ -179,7 +182,7 @@ class MyEtudiant
      *
      * @param bool      $justifie
      *
-     * @return void
+     * @return Absence|null
      * @throws Exception
      */
     public function addAbsence($date, $heure, Matiere $matiere, ?Personnel $personnel, bool $justifie = false): ?Absence
@@ -281,9 +284,9 @@ class MyEtudiant
     /**
      * @param Semestre $semestre
      *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function exportReleveProvisoire(Semestre $semestre): void
     {

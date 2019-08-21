@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/TrombinoscopeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:08
  */
 
 namespace App\Controller;
@@ -65,12 +65,9 @@ class TrombinoscopeController extends BaseController
     /**
      * @Route("/etudiant/export-image/{typeGroupe}.pdf", name="trombinoscope_etudiant_image", methods="GET",
      *                                                   )
-     * @param MyExportListing  $myExportListing
-     * @param TypeGroupe       $typeGroupe
-     * @param                  $_format
+     * @param TypeGroupe $typeGroupe
      *
      * @return null|StreamedResponse
-     * @throws Exception
      */
     public function trombiEtudiantExportImage(
         TypeGroupe $typeGroupe

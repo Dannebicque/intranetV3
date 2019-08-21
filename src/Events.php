@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Events.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:39
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:10
  */
 
 /**
@@ -76,7 +76,7 @@ class Events
     public const REDIRECT_TO_LOGIN = 'redirect.to.login';
     public const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
 
-    static function getConstante($constante)
+    public static function getConstante($constante)
     {
         return constant('self::' . $constante);
     }

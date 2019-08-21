@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySousCommission.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/29/19 6:13 PM
+ * @date 21/08/2019 12:29
+ * @lastUpdate 21/08/2019 12:29
  */
 
 /**
@@ -17,7 +17,6 @@
 
 namespace App\MesClasses;
 
-use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -27,8 +26,8 @@ use App\Repository\EtudiantRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\NoteRepository;
 use App\Repository\ScolariteRepository;
-use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -46,9 +45,6 @@ class MySousCommission
 
     /** @var UeRepository */
     private $ueRepository;
-
-    /** @var SemestreRepository */
-    private $semestreRepository;
 
     /** @var NoteRepository */
     private $noteRepository;
@@ -80,11 +76,12 @@ class MySousCommission
     /**
      * SousComissionController constructor.
      *
-     * @param EtudiantRepository $etudiantRepository
-     * @param MatiereRepository  $matiereRepository
-     * @param SemestreRepository $semestreRepository
-     * @param UeRepository       $ueRepository
-     * @param NoteRepository     $noteRepository
+     * @param EtudiantRepository  $etudiantRepository
+     * @param MatiereRepository   $matiereRepository
+     * @param MyExcelWriter       $myExcelWriter
+     * @param UeRepository        $ueRepository
+     * @param NoteRepository      $noteRepository
+     * @param ScolariteRepository $scolariteRepository
      */
     public function __construct(
         EtudiantRepository $etudiantRepository,
@@ -171,7 +168,7 @@ class MySousCommission
         return $this->sousCommissionEtudiants;
     }
 
-    public function SauvegardeTravail()
+    public function SauvegardeTravail(): void
     {
     }
 
@@ -180,9 +177,9 @@ class MySousCommission
      * @param int      $anneeUniversitaire
      *
      * @return StreamedResponse
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
-    public function export(Semestre $semestre, int $anneeUniversitaire)
+    public function export(Semestre $semestre, int $anneeUniversitaire): StreamedResponse
     {
         $this->init($semestre, $anneeUniversitaire);
 
@@ -333,20 +330,18 @@ class MySousCommission
                         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                         $this->myExcelWriter->colorCellRange($colonne, $ligne, $tCouleur['pasoption']);
 
+                    } else if ($semestre->isOptPenaliteAbsence() === true) {
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                            $moyenneMatiere->getMoyennePenalisee(),
+                            'numerique');
+                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                            $tCouleur[$moyenneMatiere->getStylePenalisee()]);
                     } else {
-                        if ($semestre->isOptPenaliteAbsence() === true) {
-                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                $moyenneMatiere->getMoyennePenalisee(),
-                                'numerique');
-                            $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                                $tCouleur[$moyenneMatiere->getStylePenalisee()]);
-                        } else {
-                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                $moyenneMatiere->getMoyenne(),
-                                'numerique');
-                            $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                                $tCouleur[$moyenneMatiere->getStyle()]);
-                        }
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                            $moyenneMatiere->getMoyenne(),
+                            'numerique');
+                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                            $tCouleur[$moyenneMatiere->getStyle()]);
                     }
                     $colonne++;
                 }
