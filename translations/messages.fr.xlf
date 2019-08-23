@@ -4,8 +4,8 @@
   ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
   ~ @author     David Annebicque
   ~ @project intranetv3
-  ~ @date 21/08/2019 12:32
-  ~ @lastUpdate 21/08/2019 12:30
+  ~ @date 23/08/2019 11:28
+  ~ @lastUpdate 23/08/2019 11:28
   -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
@@ -12336,6 +12336,24 @@
           <segment>
               <source>menu.administration_stage</source>
               <target>Adm. Stages</target>
+          </segment>
+      </unit>
+      <unit id="8mLMdpS" name="atitle.synchro_parent">
+          <segment>
+              <source>atitle.synchro_parent</source>
+              <target>atitle.synchro_parent</target>
+          </segment>
+      </unit>
+      <unit id="FqvoAXR" name="atitle.synchro_apogee">
+          <segment>
+              <source>atitle.synchro_apogee</source>
+              <target>atitle.synchro_apogee</target>
+          </segment>
+      </unit>
+      <unit id="PQK1IZu" name="groupes.parents.synchronises">
+          <segment>
+              <source>groupes.parents.synchronises</source>
+              <target>groupes.parents.synchronises</target>
           </segment>
       </unit>
   </file>
