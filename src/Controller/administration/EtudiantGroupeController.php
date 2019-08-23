@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantGroupeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:47 PM
+ * @date 23/08/2019 11:28
+ * @lastUpdate 23/08/2019 11:28
  */
 
 namespace App\Controller\administration;
@@ -58,6 +58,67 @@ class EtudiantGroupeController extends BaseController
             'typeGroupe' => $typeGroupe,
             'etudiants'  => $etudiants
         ]);
+    }
+
+    /**
+     * @Route("/synchro/apogee/{semestre}", name="administration_etudiant_groupe_synchro_apogee")
+     * @param EtudiantRepository $etudiantRepository
+     *
+     * @param Semestre           $semestre
+     *
+     * @return Response
+     */
+    public function synchroApogee(EtudiantRepository $etudiantRepository, Semestre $semestre): Response
+    {
+
+        $this->addFlashBag('success', 'groupes.synchronises');
+
+        return $this->redirectToRoute('administration_etudiant_groupe_semestre_index',
+            ['semestre' => $semestre->getId()]);
+    }
+
+    /**
+     * @Route("/synchro/parent/{semestre}", name="administration_etudiant_groupe_synchro_parent")
+     *
+     * @param GroupeRepository $groupeRepository
+     * @param Semestre         $semestre
+     *
+     * @return Response
+     */
+    public function synchroParent(GroupeRepository $groupeRepository, Semestre $semestre): Response
+    {
+        $groupes = $groupeRepository->findBySemestre($semestre);
+        /** @var Groupe $groupe */
+        foreach ($groupes as $groupe) {
+            //pas d'enfant c'est le groupe de plus bas  niveau
+            if (count($groupe->getEnfants()) === 0) {
+                $groupeParents = [];
+                $g = $groupe;
+                while ($g->getParent() !== null) {
+                    $groupeParents[] = $g->getParent();
+                    $g = $g->getParent();
+                }
+
+                foreach ($groupe->getEtudiants() as $etudiant) {
+                    //supprimer les groupes de l'étudiant
+                    foreach ($etudiant->getGroupes() as $gr) {
+                        $etudiant->removeGroupe($gr);
+                    }
+                    //remettre le groupe en cours
+                    $etudiant->addGroupe($groupe);
+                    //ajouter les parents
+                    foreach ($groupeParents as $gp) {
+                        $etudiant->addGroupe($gp);
+                    }
+                }
+            }
+        }
+        $this->entityManager->flush();
+        $this->addFlashBag('success', 'groupes.parents.synchronises');
+
+        return $this->redirectToRoute('administration_etudiant_groupe_semestre_index',
+            ['semestre' => $semestre->getId()]);
+
     }
 
     /**

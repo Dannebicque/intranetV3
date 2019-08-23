@@ -20,6 +20,12 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('administration_etudiant_groupe_synchro_parent', {semestre:semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.synchro_parent'|trans }}"><i class="ti-reload"></i></a>
+            <a href="{{ path('administration_etudiant_groupe_synchro_apogee', {semestre:semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.synchro_apogee'|trans }}"><i class="ti-import"></i></a>
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
@@ -47,6 +53,13 @@
                         </div>
                     </div>
                 {% endfor %}
+                <br><br>
+                <div class="alert alert-info">
+                    Vous pouvez ne remplir que le groupe de plus bas niveau (TP) et synchroniser pour remplir
+                    automatiquement les groupes parents. Si les groupes sont saisis dans Apogée, vous pouvez aussi
+                    les synchroniser (il faut attendre 24h entre la saisie dans Apogée et la possibilité de
+                    synchroniser).
+                </div>
             </div>
         </div>
     </div>
