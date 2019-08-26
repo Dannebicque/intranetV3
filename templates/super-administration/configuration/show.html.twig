@@ -6,8 +6,14 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'configuration', id: configuration.id}) }}
-
+        <div class="buttons">
+            <a href="{{ path('sa_configuration_edit', {id: configuration.id}) }}" class="btn btn-warning btn-sm
+            btn-float" title="{{ 'atitle.modifier'|trans }}" data-provide="tooltip"
+               data-placement="bottom"><i class="material-icons">edit</i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><span
+                        class="material-icons">build</span></a>
+        </div>
     </div>
 {% endblock %}
 
@@ -15,30 +21,27 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.configuration.show.heading'|trans }}</h4>
         <div class="card-body">
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ configuration.id }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{{ configuration.created ? configuration.created|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td>{{ configuration.updated ? configuration.updated|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Cle</th>
-                <td>{{ configuration.cle }}</td>
-            </tr>
-            <tr>
-                <th>Valeur</th>
-                <td>{{ configuration.valeur }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Cle</th>
+                    <td>{{ configuration.cle }}</td>
+                </tr>
+                <tr>
+                    <th>Valeur</th>
+                    <td>{{ configuration.valeur }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ configuration.created ? configuration.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ configuration.updated ? configuration.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    </div>
+    {# todo: ajouter le type et gérer l'upload ? si c'est un fichier ?#}
 {% endblock %}
