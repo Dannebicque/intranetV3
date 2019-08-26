@@ -2,8 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
 // @author     David Annebicque
 // @project intranetv3
-// @date 26/08/2019 13:45
-// @lastUpdate 21/08/2019 12:32
+// @date 26/08/2019 14:16
+// @lastUpdate 26/08/2019 13:45
 
 'use strict'
 

@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ConfigurationController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:32 PM
+ * @date 26/08/2019 14:16
+ * @lastUpdate 26/08/2019 14:15
  */
 
 namespace App\Controller\superAdministration;
@@ -13,7 +13,9 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Configuration;
 use App\Form\ConfigurationType;
+use App\MesClasses\MyExport;
 use App\Repository\ConfigurationRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,11 +40,25 @@ class ConfigurationController extends BaseController
     /**
      *
      * @Route("/export/{_format}", name="sa_configuration_export", methods="GET")
-     * @param $_format
+     * @param MyExport                $myExport
+     * @param ConfigurationRepository $configurationRepository
+     * @param                         $_format
+     *
+     * @return Response
+     * @throws Exception
      */
-    public function export($_format): void
+    public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, $_format): Response
     {
+        $configurations = $configurationRepository->findAll();
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $configurations,
+            'configurations',
+            ['configuration_administration'],
+            ['cle', 'valeur']
+        );
 
+        return $response;
     }
 
     /**
@@ -103,5 +119,22 @@ class ConfigurationController extends BaseController
             'configuration' => $configuration,
             'form'          => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="sa_configuration_duplicate", methods="GET|POST")
+     *
+     * @param Configuration $configuration
+     *
+     * @return Response
+     */
+    public function duplicate(Configuration $configuration): Response
+    {
+        $newConfiguration = clone $configuration;
+
+        $this->entityManager->persist($newConfiguration);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('sa_configuration_edit', ['id' => $newConfiguration->getId()]);
     }
 }
