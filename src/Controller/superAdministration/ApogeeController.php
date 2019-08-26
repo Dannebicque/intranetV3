@@ -5,8 +5,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:44
+ * @date 26/08/2019 14:16
+ * @lastUpdate 26/08/2019 14:15
  */
 
 namespace App\Controller\superAdministration;
@@ -224,7 +224,7 @@ class ApogeeController extends BaseController
             'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\'5PSP13\'');
         oci_execute($stid);
 
-        echo "<table border='1'>\n";
+        echo "<table>\n";
         while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
             echo "<tr>\n";
             foreach ($row as $key => $item) {

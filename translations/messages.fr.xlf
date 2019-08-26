@@ -4,7 +4,7 @@
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
 <!-- @date 26/08/2019 14:16 -->
-<!-- @lastUpdate 26/08/2019 14:15 -->
+<!-- @lastUpdate 26/08/2019 14:16 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12364,6 +12364,42 @@
           <segment>
               <source>%diff% mois</source>
               <target>1 mois</target>
+          </segment>
+      </unit>
+      <unit id="FIHzSOm" name="variable.configuration">
+          <segment>
+              <source>variable.configuration</source>
+              <target>variable.configuration</target>
+          </segment>
+      </unit>
+      <unit id="4YKHDRv" name="Cle">
+          <segment>
+              <source>Cle</source>
+              <target>Cle</target>
+          </segment>
+      </unit>
+      <unit id="bo8xMtj" name="Valeur">
+          <segment>
+              <source>Valeur</source>
+              <target>Valeur</target>
+          </segment>
+      </unit>
+      <unit id="uq3fcPt" name="Type">
+          <segment>
+              <source>Type</source>
+              <target>Type</target>
+          </segment>
+      </unit>
+      <unit id="B861HTo" name="Fichier">
+          <segment>
+              <source>Fichier</source>
+              <target>Fichier</target>
+          </segment>
+      </unit>
+      <unit id="u7C9X.V" name="Texte">
+          <segment>
+              <source>Texte</source>
+              <target>Texte</target>
           </segment>
       </unit>
   </file>
