@@ -1,12 +1,12 @@
-<?php
-/**
+<?php /**
  * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StageEtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 18/08/2019 11:48
- */
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:13
+ */ /** @noinspection ALL */
+/** @noinspection PhpUnused */
 
 namespace App\Repository;
 

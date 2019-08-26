@@ -1,19 +1,19 @@
-<?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php /**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/BorneRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/24/19 9:34 AM
- */
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:44
+ */ /** @noinspection ALL */
+/** @noinspection PhpUnused */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Borne;
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;

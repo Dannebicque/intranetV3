@@ -1,12 +1,13 @@
-<?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php /**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/GroupeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:53 AM
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:44
  */
+/** @noinspection ALL */
+/** @noinspection PhpUnused */
 
 namespace App\Repository;
 

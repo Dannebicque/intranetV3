@@ -6,6 +6,10 @@
 {% endblock %}
 {% block content %}
     <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0 text-center" style="max-width: 100%">
+        <div class="header-special">
+            <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="Logo de
+            l' {{ settings('NOM_IUT') }}" class="img-fluid" style="height: 100px">
+        </div>
         <div>
             <img class="avatar avatar-xxl" src="{{ asset('upload/photo/'~user.photoName) }}" alt="Photo de {{ user
             .display }}">
@@ -24,7 +28,7 @@
                                    value="{{ departement.id }}"
                                    name="departement">
                             <label class="custom-control-label"
-                                   for="departement_{{ departement.id }}" style="background-color: {{ departement
+                                   for="departement_{{ departement.id }}" style="padding: 5px; background-color: {{ departement
                             .departement.couleur }}; color:white;
                                    display:block">{{ departement.departement.libelle }}</label>
                         </div>

@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelMultiExport.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 18/08/2019 09:37
+ * @date 26/08/2019 13:45
+ * @lastUpdate 25/08/2019 10:20
  */
 
 /**
@@ -218,7 +218,6 @@ class MyExcelMultiExport
             'nbJustifie'
         ]);
         $ligne = 2;
-        //todo: en param ?
         $colonne = 1;
         foreach ($myAbsences->getEtudiants() as $etudiant) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
@@ -264,7 +263,6 @@ class MyExcelMultiExport
 
         $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire']);
         $ligne = 2;
-        //todo: en param ?
         $colonne = 1;
         /** @var Etudiant $etudiant */
         //todo: peut être a améliorer avec un filtre des étudiants?

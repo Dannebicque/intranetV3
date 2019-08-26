@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-  ~ @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf
-  ~ @author     David Annebicque
-  ~ @project intranetv3
-  ~ @date 23/08/2019 11:28
-  ~ @lastUpdate 23/08/2019 11:28
-  -->
+<!-- Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
+<!-- @author     David Annebicque -->
+<!-- @project intranetv3 -->
+<!-- @date 26/08/2019 13:45 -->
+<!-- @lastUpdate 26/08/2019 13:44 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12354,6 +12352,18 @@
           <segment>
               <source>groupes.parents.synchronises</source>
               <target>groupes.parents.synchronises</target>
+          </segment>
+      </unit>
+      <unit id="3Lxw4Mw" name="%diff% jour">
+          <segment>
+              <source>%diff% jour</source>
+              <target>8 jour</target>
+          </segment>
+      </unit>
+      <unit id="PGaKetK" name="%diff% mois">
+          <segment>
+              <source>%diff% mois</source>
+              <target>1 mois</target>
           </segment>
       </unit>
   </file>

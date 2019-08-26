@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/AppExtension.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:44
  */
 
 namespace App\Twig;
@@ -14,6 +14,7 @@ use App\Entity\Constantes;
 use App\MesClasses\Configuration;
 use DateTime;
 use Exception;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -31,11 +32,15 @@ class AppExtension extends AbstractExtension
 
     private $tabMois;
     private $tabJour;
+    /** @var TranslatorInterface */
+    private $translator;
 
     /**
      * AppExtension constructor.
+     *
+     * @param TranslatorInterface $translator
      */
-    public function __construct()
+    public function __construct(TranslatorInterface $translator)
     {
         $this->tabMois = array(
             '01' => 'janvier',
@@ -52,7 +57,7 @@ class AppExtension extends AbstractExtension
             '12' => 'décembre'
         );
         $this->tabJour = array('', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
-
+        $this->translator = $translator;
     }
     /**
      * @return array
@@ -234,38 +239,24 @@ class AppExtension extends AbstractExtension
      *
      * @return mixed|string
      */
-    public function timeAgo($time)
+    function timeAgo(DateTime $date)
     {
-        $time = strtotime($time->format('Y-m-d H:i:s'));
-        $now = time(); // current time
-        $diff = $now - $time; // difference between the current and the provided dates
+        $timestamp = $date->getTimestamp();
 
-        if ($diff < 60) {
-            // it happened now
-            return Constantes::TIMEBEFORE_NOW;
-        } elseif ($diff < 3600) {
-            // it happened X minutes ago
-            return str_replace(
-                '{num}',
-                $out = round($diff / 60),
-                $out == 1 ? Constantes::TIMEBEFORE_MINUTE : Constantes::TIMEBEFORE_MINUTES
-            );
-        } elseif ($diff < 3600 * 24) {
-            // it happened X hours ago
-            return str_replace(
-                '{num}',
-                $out = round($diff / 3600),
-                $out == 1 ? Constantes::TIMEBEFORE_HOUR : Constantes::TIMEBEFORE_HOURS
-            );
-        } elseif ($diff < 3600 * 24 * 2) {
-            // it happened yesterday
-            return Constantes::TIMEBEFORE_YESTERDAY;
-        } else {
-            // falling back on a usual date format as it happened later than yesterday
-            return strftime(date(
-                'Y',
-                $time
-            ) == date('Y') ? Constantes::TIMEBEFORE_FORMAT : Constantes::TIMEBEFORE_FORMAT_YEAR, $time);
+        $strTime = ["seconde", "minute", "heure", "jour", "mois", "année"];
+        $length = ["60", "60", "24", "30", "12", "10"];
+
+        $currentTime = time();
+        if ($currentTime >= $timestamp) {
+            $diff = time() - $timestamp;
+            for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
+                $diff /= $length[$i];//todo: ne gère pas le cas des mois sur 28, 29 30 ou 31. C'est une moyenne à 30.
+            }
+
+            $diff = round($diff);
+
+            //todo: gérer la traduction avec pluralisation. Voir https://symfony.com/doc/current/translation/message_format.html
+            return $this->translator->trans('%diff% ' . $strTime[$i], ['%diff%' => $diff]);
         }
     }
 }
