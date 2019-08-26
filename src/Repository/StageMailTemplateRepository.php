@@ -1,12 +1,12 @@
-<?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php /**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StageMailTemplateRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 24/07/2019 12:11
- */
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:13
+ */ /** @noinspection ALL */
+/** @noinspection PhpUnused */
 
 namespace App\Repository;
 

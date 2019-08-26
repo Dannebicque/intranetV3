@@ -1,12 +1,11 @@
-<?php
-/**
+<?php /**
  * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/EdtPlanning.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
- */
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:13
+ */ /** @noinspection SummerTimeUnsafeTimeManipulationInspection */
 
 namespace App\Entity;
 

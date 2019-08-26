@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Constantes.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:32
- * @lastUpdate 21/08/2019 12:29
+ * @date 26/08/2019 13:45
+ * @lastUpdate 25/08/2019 10:59
  */
 
 /**
@@ -35,15 +35,6 @@ class Constantes
     public const ROLE_MAT = 'ROLE_MAT';
     public const ROLE_PERMANENT = 'ROLE_PERMANENT';
 
-
-    public const TIMEBEFORE_NOW = 'now';
-    public const TIMEBEFORE_MINUTE = '{num} minute ago';
-    public const TIMEBEFORE_MINUTES = '{num} minutes ago';
-    public const TIMEBEFORE_HOUR = '{num} hour ago';
-    public const TIMEBEFORE_HOURS = '{num} hours ago';
-    public const TIMEBEFORE_YESTERDAY = 'yesterday';
-    public const TIMEBEFORE_FORMAT = '%e %b';
-    public const TIMEBEFORE_FORMAT_YEAR = '%e %b, %Y';
     public const DUREE_SEMESTRE = 5;
 
     public const FLASHBAG_SUCCESS = 'success';

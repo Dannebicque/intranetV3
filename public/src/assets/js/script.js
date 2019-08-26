@@ -1,11 +1,9 @@
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 24/07/2019 13:02
- */
+// Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 26/08/2019 13:45
+// @lastUpdate 21/08/2019 12:32
 
 'use strict'
 
@@ -686,14 +684,12 @@ $(document).on('click', '.enseignanttrombi', function(e) {
 
 
 /*
- * Copyright (C) 2013 - 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- *
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/personnel.js
- * @author David annebicque
+ * @author     David Annebicque
  * @project intranetv3
- * @date  05/05/2019 11:55
- * @lastUpdate 05/05/2019 11:55
- *
+ * @date 21/08/2019 12:32
+ * @lastUpdate 21/08/2019 10:06
  */
 
 $(document).on('keyup', '#login_urca', function () {

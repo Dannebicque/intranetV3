@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/GroupeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/19/19 8:27 PM
+ * @date 26/08/2019 13:45
+ * @lastUpdate 26/08/2019 13:44
  */
 
 namespace App\Controller\administration;
@@ -14,7 +14,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use App\Form\GroupeType;
 use App\MesClasses\MyExport;
 use App\Repository\GroupeRepository;
 use App\Repository\ParcourRepository;
@@ -163,43 +162,43 @@ class GroupeController extends BaseController
         return $response;
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_groupe_edit", methods="POST", options={"expose"=true})
-     * @param Request $request
-     * @param Groupe  $groupe
-     *
-     * @return Response
-     */
-    public function edit(Request $request, Groupe $groupe): Response
-    {
-        if ($groupe->getTypeGroupe() !== null && $groupe->getTypeGroupe()->getSemestre() !== null) {
-            $form = $this->createForm(
-                GroupeType::class,
-                $groupe,
-                [
-                    'semestre' => $groupe->getTypeGroupe()->getSemestre(),
-                    'attr'     => [
-                        'data-provide' => 'validation'
-                    ]
-                ]
-            );
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->entityManager->flush();
-                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.edit.success.flash');
-
-                return $this->redirectToRoute('administration_groupe_index');
-            }
-
-            return $this->render('administration/groupe/edit.html.twig', [
-                'groupe' => $groupe,
-                'form'   => $form->createView(),
-            ]);
-        }
-
-        return $this->redirectToRoute('erreur_666');
-    }
+//    /**
+//     * @Route("/{id}/edit", name="administration_groupe_edit", methods="POST", options={"expose"=true})
+//     * @param Request $request
+//     * @param Groupe  $groupe
+//     *
+//     * @return Response
+//     */
+//    public function edit(Request $request, Groupe $groupe): Response
+//    {
+//        if ($groupe->getTypeGroupe() !== null && $groupe->getTypeGroupe()->getSemestre() !== null) {
+//            $form = $this->createForm(
+//                GroupeType::class,
+//                $groupe,
+//                [
+//                    'semestre' => $groupe->getTypeGroupe()->getSemestre(),
+//                    'attr'     => [
+//                        'data-provide' => 'validation'
+//                    ]
+//                ]
+//            );
+//            $form->handleRequest($request);
+//
+//            if ($form->isSubmitted() && $form->isValid()) {
+//                $this->entityManager->flush();
+//                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.edit.success.flash');
+//
+//                return $this->redirectToRoute('administration_groupe_index');
+//            }
+//
+//            return $this->render('administration/groupe/edit.html.twig', [
+//                'groupe' => $groupe,
+//                'form'   => $form->createView(),
+//            ]);
+//        }
+//
+//        return $this->redirectToRoute('erreur_666');
+//    }
 
     /**
      * @Route("/{id}/duplicate", name="administration_groupe_duplicate", methods="GET|POST")
