@@ -1,10 +1,10 @@
 <component name="CopyrightManager">
   <settings default="David">
-    <module2copyright>
-      <element module="Changed Files" copyright="David" />
-    </module2copyright>
     <LanguageOptions name="PHP">
       <option name="fileTypeOverride" value="3" />
+    </LanguageOptions>
+    <LanguageOptions name="__TEMPLATE__">
+      <option name="block" value="false" />
     </LanguageOptions>
   </settings>
 </component>

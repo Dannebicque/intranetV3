@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:03
+ * @date 26/08/2019 13:43
+ * @lastUpdate 23/08/2019 12:52
  */
 
 namespace App\Repository;
@@ -272,5 +272,18 @@ class EtudiantRepository extends ServiceEntityRepository
             ->setParameter('code', $code)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findBySemestreArray(Semestre $semestre)
+    {
+        $etudiants = $this->findBySemestre($semestre);
+        $t = [];
+
+        /** @var Etudiant $etudiant */
+        foreach ($etudiants as $etudiant) {
+            $t[$etudiant->getNumEtudiant()] = $etudiant;
+        }
+
+        return $t;
     }
 }
