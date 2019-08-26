@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EtudiantGroupeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 23/08/2019 11:28
- * @lastUpdate 23/08/2019 11:28
+ * @date 26/08/2019 13:43
+ * @lastUpdate 23/08/2019 12:46
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\MesClasses\MyGroupes;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,14 +63,14 @@ class EtudiantGroupeController extends BaseController
 
     /**
      * @Route("/synchro/apogee/{semestre}", name="administration_etudiant_groupe_synchro_apogee")
-     * @param EtudiantRepository $etudiantRepository
-     *
-     * @param Semestre           $semestre
+     * @param MyGroupes $myGroupes
+     * @param Semestre  $semestre
      *
      * @return Response
      */
-    public function synchroApogee(EtudiantRepository $etudiantRepository, Semestre $semestre): Response
+    public function synchroApogee(MyGroupes $myGroupes, Semestre $semestre): Response
     {
+        $myGroupes->updateFromApogee($semestre);
 
         $this->addFlashBag('success', 'groupes.synchronises');
 
@@ -80,40 +81,14 @@ class EtudiantGroupeController extends BaseController
     /**
      * @Route("/synchro/parent/{semestre}", name="administration_etudiant_groupe_synchro_parent")
      *
-     * @param GroupeRepository $groupeRepository
-     * @param Semestre         $semestre
+     * @param MyGroupes $myGroupes
+     * @param Semestre  $semestre
      *
      * @return Response
      */
-    public function synchroParent(GroupeRepository $groupeRepository, Semestre $semestre): Response
+    public function synchroParent(MyGroupes $myGroupes, Semestre $semestre): Response
     {
-        $groupes = $groupeRepository->findBySemestre($semestre);
-        /** @var Groupe $groupe */
-        foreach ($groupes as $groupe) {
-            //pas d'enfant c'est le groupe de plus bas  niveau
-            if (count($groupe->getEnfants()) === 0) {
-                $groupeParents = [];
-                $g = $groupe;
-                while ($g->getParent() !== null) {
-                    $groupeParents[] = $g->getParent();
-                    $g = $g->getParent();
-                }
-
-                foreach ($groupe->getEtudiants() as $etudiant) {
-                    //supprimer les groupes de l'étudiant
-                    foreach ($etudiant->getGroupes() as $gr) {
-                        $etudiant->removeGroupe($gr);
-                    }
-                    //remettre le groupe en cours
-                    $etudiant->addGroupe($groupe);
-                    //ajouter les parents
-                    foreach ($groupeParents as $gp) {
-                        $etudiant->addGroupe($gp);
-                    }
-                }
-            }
-        }
-        $this->entityManager->flush();
+        $myGroupes->updateParent($semestre);
         $this->addFlashBag('success', 'groupes.parents.synchronises');
 
         return $this->redirectToRoute('administration_etudiant_groupe_semestre_index',

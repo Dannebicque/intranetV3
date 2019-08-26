@@ -11,8 +11,8 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
@@ -115,5 +115,24 @@ class GroupeRepository extends ServiceEntityRepository
             ->orderBy('g.libelle', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Semestre $semestre
+     *
+     * @return array
+     */
+    public function findBySemestreArray(Semestre $semestre): array
+    {
+        $groupes = $this->findBySemestre($semestre);
+        $t = [];
+
+        /** @var Groupe $groupe */
+        foreach ($groupes as $groupe) {
+            $t[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $t;
+
     }
 }
