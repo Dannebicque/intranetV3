@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 26/08/2019 15:14
+ * @date 04/09/2019 17:39
+ * @lastUpdate 04/09/2019 17:03
  */
 
 namespace App\Entity;
@@ -136,6 +136,7 @@ class Diplome extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Annee", mappedBy="diplome")
+     * @ORM\OrderBy({"libelle"="ASC"})
      */
     private $annees;
 
