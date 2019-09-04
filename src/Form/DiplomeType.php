@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DiplomeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 04/09/2019 14:42
  */
 
 namespace App\Form;
@@ -15,6 +15,7 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
 use App\Form\Type\YesNoType;
+use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -48,22 +49,33 @@ class DiplomeType extends AbstractType
                 'label' => 'label.sigle'
             ])
             ->add('responsable_diplome', EntityType::class, [
-                'class'        => Personnel::class,
-                'choice_label' => 'display',
-                'label'        => 'label.responsable_diplome'
+                'class'         => Personnel::class,
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'choice_label'  => 'display',
+                'label'         => 'label.responsable_diplome'
             ])
             ->add('assistant_diplome', EntityType::class, [
-                'class'        => Personnel::class,
-                'choice_label' => 'display',
-                'label'        => 'label.assistant_diplome'
+                'class'         => Personnel::class,
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'choice_label'  => 'display',
+                'label'         => 'label.assistant_diplome'
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.annee_courante',
                 'class'        => AnneeUniversitaire::class,
                 'choice_label' => 'displayAnneeUniversitaire'
             ])
+            ->add('codeDiplome', TextType::class, [
+                'label' => 'label.code_diplome'
+            ])
             ->add('code_apogee', TextType::class, [
-                'label' => 'label.code_apogee'
+                'label' => 'label.code_etape'
             ])
             ->add('code_version', TextType::class, [
                 'label' => 'label.code_version'

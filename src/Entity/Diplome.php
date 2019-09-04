@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/25/19 9:26 PM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 26/08/2019 15:14
  */
 
 namespace App\Entity;
@@ -158,6 +158,11 @@ class Diplome extends BaseEntity
      * @ORM\Column(type="integer")
      */
     private $optSemainesVisibles = 2;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $code_diplome;
 
     public function __construct(Departement $departement)
     {
@@ -650,6 +655,18 @@ class Diplome extends BaseEntity
     public function setOptSemainesVisibles(int $optSemainesVisibles): self
     {
         $this->optSemainesVisibles = $optSemainesVisibles;
+
+        return $this;
+    }
+
+    public function getCodeDiplome(): ?string
+    {
+        return $this->code_diplome;
+    }
+
+    public function setCodeDiplome(string $code_diplome): self
+    {
+        $this->code_diplome = $code_diplome;
 
         return $this;
     }

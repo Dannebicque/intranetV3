@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/StagePeriodeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 30/07/2019 08:39
+ * @date 04/09/2019 14:43
+ * @lastUpdate 04/09/2019 14:42
  */
 
 namespace App\Form;
@@ -69,6 +69,7 @@ class StagePeriodeType extends AbstractType
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.anneeUniversitaire',

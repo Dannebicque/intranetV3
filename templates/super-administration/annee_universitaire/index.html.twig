@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                 {% for annee_universitaire in annee_universitaires %}
-                    <tr id="ligne_{{ annee_universitaire.id }}" {% if annee_universitaire.active == true %}class="bg-success"{% endif %}>
+                    <tr id="ligne_{{ annee_universitaire.id }}" {% if annee_universitaire.active == true %}class="bg-success-pale"{% endif %}>
                         <td>{{ annee_universitaire.libelle }}</td>
                         <td>{{ annee_universitaire.annee }}</td>
                         <td>{{ annee_universitaire.commentaire }}</td>

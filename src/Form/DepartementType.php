@@ -1,19 +1,20 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DepartementType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 04/09/2019 14:42
  */
 
 namespace App\Form;
 
 use App\Entity\Departement;
 use App\Entity\Personnel;
-use App\Entity\Site;
+use App\Entity\Ufr;
 use App\Form\Type\YesNoType;
+use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -133,15 +134,19 @@ class DepartementType extends AbstractType
                 ]
             )
             ->add('respri', EntityType::class, [
-                'class'        => Personnel::class,
-                'choice_label' => 'display',
-                'label'        => 'label.respri',
-                'required'     => false
+                'class'         => Personnel::class,
+                'choice_label'  => 'display',
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'label'         => 'label.respri',
+                'required'      => false
             ])
-            ->add('site', EntityType::class, [
-                'class'        => Site::class,
+            ->add('ufr', EntityType::class, [
+                'class'        => Ufr::class,
                 'choice_label' => 'libelle',
-                'label'        => 'label.site'
+                'label'        => 'label.ufr'
             ]);
     }
 
