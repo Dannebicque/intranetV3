@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Departement.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 26/08/2019 15:05
+ * @date 04/09/2019 17:39
+ * @lastUpdate 04/09/2019 17:02
  */
 
 namespace App\Entity;
@@ -161,8 +161,10 @@ class Departement extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="departement")
      */
     private $trelloTaches;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
+     * @ORM\OrderBy({"libelle"="ASC"})
      */
     private $diplomes;
     /**

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Annee.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/19/19 7:25 PM
+ * @date 04/09/2019 17:39
+ * @lastUpdate 04/09/2019 17:38
  */
 
 namespace App\Entity;
@@ -89,6 +89,7 @@ class Annee extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="annee")
+     * @ORM\OrderBy({"libelle"="ASC"})
      */
     private $semestres;
 
