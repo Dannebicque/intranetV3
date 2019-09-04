@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
+<!-- Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 26/08/2019 14:16 -->
-<!-- @lastUpdate 26/08/2019 14:16 -->
+<!-- @date 04/09/2019 14:43 -->
+<!-- @lastUpdate 04/09/2019 14:42 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12400,6 +12400,30 @@
           <segment>
               <source>Texte</source>
               <target>Texte</target>
+          </segment>
+      </unit>
+      <unit id="7uq8xx2" name="adm.structure.departement.new.heading">
+          <segment>
+              <source>adm.structure.departement.new.heading</source>
+              <target>adm.structure.departement.new.heading</target>
+          </segment>
+      </unit>
+      <unit id="DdW5EV0" name="label.logoFile">
+          <segment>
+              <source>label.logoFile</source>
+              <target>label.logoFile</target>
+          </segment>
+      </unit>
+      <unit id="tFPY_1N" name="departement.add.success.flash">
+          <segment>
+              <source>departement.add.success.flash</source>
+              <target>departement.add.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="aJnCCEk" name="semestre.duplicate.success.flash">
+          <segment>
+              <source>semestre.duplicate.success.flash</source>
+              <target>semestre.duplicate.success.flash</target>
           </segment>
       </unit>
   </file>

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/SemestreType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 04/09/2019 14:42
  */
 
 namespace App\Form;
@@ -16,6 +16,7 @@ use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\AnneeRepository;
+use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -122,10 +123,14 @@ class SemestreType extends AbstractType
                 ]
             )
             ->add('optDestMailReleve', EntityType::class, [
-                'class'        => Personnel::class,
-                'choice_label' => 'display',
-                'label'        => 'label.opt_destinataire_mail_releve',
-                'required'     => false
+                'class'         => Personnel::class,
+                'choice_label'  => 'display',
+                'label'         => 'label.opt_destinataire_mail_releve',
+                'required'      => false,
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ])
             ->add(
                 'optEvaluationModifiable',
@@ -144,10 +149,14 @@ class SemestreType extends AbstractType
                 ]
             )
             ->add('optDestMailModifNote', EntityType::class, [
-                'class'        => Personnel::class,
-                'choice_label' => 'display',
-                'label'        => 'label.opt_destinataire_mail_modification_note',
-                'required'     => false
+                'class'         => Personnel::class,
+                'choice_label'  => 'display',
+                'label'         => 'label.opt_destinataire_mail_modification_note',
+                'required'      => false,
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ])
             ->add(
                 'optEvaluationVisible',
@@ -182,10 +191,14 @@ class SemestreType extends AbstractType
                 ]
             )
             ->add('optDestMailAbsenceResp', EntityType::class, [
-                'class'        => Personnel::class,
-                'choice_label' => 'display',
-                'label'        => 'label.opt_destinataire_mail_absence_responsable',
-                'required'     => false
+                'class'         => Personnel::class,
+                'choice_label'  => 'display',
+                'label'         => 'label.opt_destinataire_mail_absence_responsable',
+                'required'      => false,
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ])
             ->add(
                 'optMailAbsenceEtudiant',

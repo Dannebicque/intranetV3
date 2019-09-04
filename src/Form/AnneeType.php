@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/AnneeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 26/08/2019 15:29
  */
 
 namespace App\Form;
@@ -66,6 +66,10 @@ class AnneeType extends AbstractType
             ])
             ->add('ordre', TextType::class, [
                 'label' => 'label.ordre'
+            ])
+            ->add('couleur', ColorType::class, [
+                'label'    => 'label.couleur',
+                'required' => true
             ])
             ->add('couleurCm', ColorType::class, [
                 'label'    => 'label.couleur_cm',

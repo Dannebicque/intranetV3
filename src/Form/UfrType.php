@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/UfrType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 04/09/2019 14:42
  */
 
 namespace App\Form;
@@ -13,6 +13,7 @@ namespace App\Form;
 use App\Entity\Personnel;
 use App\Entity\Site;
 use App\Entity\Ufr;
+use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,11 +36,15 @@ class UfrType extends AbstractType
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('responsable', EntityType::class, [
-                'class'        => Personnel::class,
-                'label'        => 'label.responsable_site',
-                'choice_label' => 'displayPr',
-                'expanded'     => false,
-                'multiple'     => false
+                'class'         => Personnel::class,
+                'label'         => 'label.responsable_site',
+                'choice_label'  => 'displayPr',
+                'expanded'      => false,
+                'multiple'      => false,
+                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    return $personnelRepository->findAllOrder();
+                },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ])
             ->add('sitePrincipal', EntityType::class, [
                 'class'        => Site::class,

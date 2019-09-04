@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Departement.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/2/19 4:18 AM
+ * @date 04/09/2019 14:43
+ * @lastUpdate 26/08/2019 15:05
  */
 
 namespace App\Entity;
@@ -188,10 +188,11 @@ class Departement extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $preparationAnnee;
+    private $preparationAnnee = false;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="departements")
      */
+
     private $anneeUniversitairePrepare;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="departement")

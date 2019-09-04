@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/EvaluationsPersonnelsType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
+ * @date 04/09/2019 14:43
+ * @lastUpdate 04/09/2019 14:42
  */
 
 namespace App\Form;
@@ -44,6 +44,7 @@ class EvaluationsPersonnelsType extends AbstractType
                 'query_builder' => function (PersonnelRepository $repo) {
                     return $repo->findBySemestreBuilder($this->semestre);
                 },
+                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ));
     }
 
