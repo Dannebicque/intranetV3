@@ -1,17 +1,18 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/UeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 04/09/2019 16:58
+ * @lastUpdate 04/09/2019 16:57
  */
 
 namespace App\Form;
 
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -51,6 +52,7 @@ class UeType extends AbstractType
 
             ])
             ->add('numero_ue', ChoiceType::class, ['choices' => range(0, 20), 'label' => 'label.numero_ue'])
+            ->add('bonification', YesNoType::class, ['label' => 'label.bonification', 'help' => 'help.bonification'])
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
             ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
