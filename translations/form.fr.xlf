@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/form.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 04/09/2019 14:43 -->
-<!-- @lastUpdate 04/09/2019 14:42 -->
+<!-- @date 21/09/2019 09:14 -->
+<!-- @lastUpdate 21/09/2019 09:14 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -4006,6 +4006,24 @@
           <segment>
               <source>label.code_etape</source>
               <target>label.code_etape</target>
+          </segment>
+      </unit>
+      <unit id="8LpPorv" name="label.ue_bonification">
+          <segment>
+              <source>label.ue_bonification</source>
+              <target>label.ue_bonification</target>
+          </segment>
+      </unit>
+      <unit id="NNYDQyf" name="label.bonification">
+          <segment>
+              <source>label.bonification</source>
+              <target>label.bonification</target>
+          </segment>
+      </unit>
+      <unit id="yUljhJW" name="help.bonification">
+          <segment>
+              <source>help.bonification</source>
+              <target>help.bonification</target>
           </segment>
       </unit>
   </file>

@@ -9,6 +9,22 @@
     {#</div>#}
 {#{% endblock %}#}
 
+{% block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="row">
+            {%- for child in form %}
+                <div class="col-sm-12 col-md-3">
+                    {{- form_widget(child, {
+                        parent_label_class: label_attr.class|default(''),
+                        translation_domain: choice_translation_domain,
+                        valid: valid,
+                    }) -}}
+                </div>
+            {% endfor -%}
+        </div>
+    </div>
+{%- endblock choice_widget_expanded %}
+
 {% block vich_file_row -%}
     {% set force_error = true %}
     {{- block('form_row') }}

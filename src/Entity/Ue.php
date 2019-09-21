@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Ue.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 09:03
- * @lastUpdate 21/09/2019 08:58
+ * @date 21/09/2019 09:14
+ * @lastUpdate 21/09/2019 09:03
  */
 
 namespace App\Entity;
@@ -78,7 +78,7 @@ class Ue extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $bonification;
+    private $bonification = false;
 
     /**
      * Ue constructor.
