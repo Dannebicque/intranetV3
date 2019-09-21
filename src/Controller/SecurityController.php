@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:44
+ * @date 21/09/2019 17:39
+ * @lastUpdate 21/09/2019 17:39
  */
 
 namespace App\Controller;
@@ -28,18 +28,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/connexion/{message}", name="security_login")
+     * @Route("/connexion/{type}/{message}", name="security_login")
      * @param AuthenticationUtils $authenticationUtils
      * @param string              $message
      *
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
+    public function login(AuthenticationUtils $authenticationUtils, $type = 'login', $message = ''): Response
     {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+        if ($type === 'login') {
+            // get the login error if there is one
+            $error = $authenticationUtils->getLastAuthenticationError();
+            // last username entered by the user
+            $lastUsername = $authenticationUtils->getLastUsername();
+        } else if ($type === 'CAS') {
+
+        }
 
         return $this->render('security/login.html.twig',
             ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);

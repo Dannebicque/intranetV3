@@ -116,17 +116,8 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.36"
     },
-    "guzzlehttp/guzzle": {
-        "version": "6.3.3"
-    },
-    "guzzlehttp/promises": {
-        "version": "v1.3.1"
-    },
-    "guzzlehttp/psr7": {
-        "version": "1.6.1"
-    },
     "jasig/phpcas": {
-        "version": "1.3.6"
+        "version": "1.3.8"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -136,9 +127,6 @@
     },
     "khanamiryan/qrcode-detector-decoder": {
         "version": "1.0.2"
-    },
-    "l3/cas-bundle": {
-        "version": "1.1.12"
     },
     "markbaker/complex": {
         "version": "1.4.7"
@@ -194,26 +182,17 @@
     "phpoffice/phpspreadsheet": {
         "version": "1.5.2"
     },
-    "prayno/casauth-bundle": {
-        "version": "1.3.2"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
     },
-    "psr/http-message": {
-        "version": "1.0.1"
-    },
     "psr/log": {
         "version": "1.1.0"
     },
     "psr/simple-cache": {
         "version": "1.0.1"
-    },
-    "ralouphie/getallheaders": {
-        "version": "3.0.3"
     },
     "ramsey/uuid": {
         "version": "3.8.0"
@@ -431,6 +410,15 @@
     },
     "symfony/security-core": {
         "version": "v4.2.1"
+    },
+    "symfony/security-csrf": {
+        "version": "v4.3.4"
+    },
+    "symfony/security-guard": {
+        "version": "v4.3.4"
+    },
+    "symfony/security-http": {
+        "version": "v4.3.4"
     },
     "symfony/serializer": {
         "version": "v4.2.1"
