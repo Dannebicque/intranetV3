@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PersonnelRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 26/08/2019 15:06
+ * @date 21/09/2019 08:28
+ * @lastUpdate 21/09/2019 08:11
  */
 
 namespace App\Repository;
@@ -191,21 +191,23 @@ class PersonnelRepository extends ServiceEntityRepository
         //todo: ordre des colonnes? ou essayer de récupérer les noms?
         switch ($order[0]['column']) {
             case 0:
+                $qb->orderBy('u.numeroHarpege', $order[0]['dir']);
+                break;
+            case 2:
                 $qb->orderBy('u.prenom', $order[0]['dir']);
                 $qb->addOrderBy('u.nom', $order[0]['dir']);
                 break;
-            case 1:
-                $qb->orderBy('u.slug', $order[0]['dir']);
-                break;
-            case 2:
-                $qb->orderBy('u.nom', $order[0]['dir']);
-                break;
             case 3:
-                $qb->orderBy('u.prenom', $order[0]['dir']);
-                break;
-            case 4:
                 $qb->orderBy('u.username', $order[0]['dir']);
                 break;
+            case 1:
+                $qb->orderBy('u.nom', $order[0]['dir']);
+                break;
+            case 5:
+                $qb->orderBy('u.deleted', $order[0]['dir']);
+                break;
+            default:
+                $qb->addOrderBy('u.nom', $order[0]['dir']);
         }
 
         if ($query) {

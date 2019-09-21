@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/api/EtudiantApiController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 21/09/2019 08:28
+ * @lastUpdate 21/09/2019 08:14
  */
 
 namespace App\Controller\api;
@@ -99,7 +99,7 @@ class EtudiantApiController extends BaseController
         );
 
         $output = [
-            'draw'            => 1,
+            'draw'            => $request->get('draw'),
             'data'            => $users,
             'recordsFiltered' => count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
