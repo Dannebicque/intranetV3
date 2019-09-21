@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Ue.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 16:58
- * @lastUpdate 04/09/2019 16:56
+ * @date 21/09/2019 09:03
+ * @lastUpdate 21/09/2019 08:58
  */
 
 namespace App\Entity;
@@ -51,6 +51,7 @@ class Ue extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ue")
+     * @ORM\OrderBy({"libelle"="ASC"})
      */
     private $matieres;
 

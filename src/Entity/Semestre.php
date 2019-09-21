@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Semestre.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 17:39
- * @lastUpdate 04/09/2019 17:38
+ * @date 21/09/2019 09:03
+ * @lastUpdate 05/09/2019 08:19
  */
 
 namespace App\Entity;
@@ -223,7 +223,7 @@ class Semestre extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ue", mappedBy="semestre")
-     * @ORM\OrderBy({"codeApogee" = "ASC"})
+     * @ORM\OrderBy({"numeroUe" = "ASC"})
      */
     private $ues;
 

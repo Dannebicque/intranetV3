@@ -190,7 +190,8 @@
                         {% for ue in semestre.ues %}
                             <div class="row gap-y ue_{{ semestre.id }} lignehover">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeApogee }}</div>
+                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeApogee }} {% if ue
+                                        .bonification==true %}(Bonification){% endif %}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ '_ue_duplicate', {'id': ue.id}) }}"
                                        class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
@@ -228,7 +229,50 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            {% for matiere in ue.matieres %}
+                                <div class="row gap-y matiere_{{ ue.id }} lignehover">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-5">{{ matiere.codeMatiere }} | {{ matiere.codeApogee }}
+                                                                                    | {{ matiere.libelle }}</div>
+                                    <div class="col-md-2">
+                                        <a href="{{ path(baseurl ~ '_matiere_duplicate', {'id': matiere.id}) }}"
+                                           class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                                    class="{{ iconDuplicate }}"></i></a>
+                                        <a href="{{ path(baseurl ~ '_matiere_show', {'id': matiere.id}) }}"
+                                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                                    class="{{ iconShow }}"></i></a>
 
+                                        <a href="{{ path(baseurl ~ '_matiere_edit', {'id': matiere.id}) }}"
+                                           class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
+                                                                                                    data-provide="tooltip"
+                                                                                                    data-placement="bottom"
+                                                                                                    title="{{ 'atitle.modifier'|trans }}"></i></a>
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                            {% if semestre.actif == true %}
+                                                <a href="{{ path(baseurl ~ '_matiere_activate', {'matiere': matiere
+                                                    .id, etat:1}) }}"
+                                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
+                                                   data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                       fa-eye-slash"></i></a>
+                                            {% else %}
+                                                <a href="{{ path(baseurl ~ '_matiere_activate', {'matiere': matiere
+                                                    .id, etat:0}) }}"
+                                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
+                                                   data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                       fa-eye"></i></a>
+                                            {% endif %}
+                                            <a href="{{ path(baseurl ~ '_matiere_delete', {id: matiere.id}) }}"
+                                               data-csrf="{{ csrf_token('delete' ~ matiere.id) }}"
+                                               class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
+                                                        class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                                        title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            {% endfor %}
                         {% endfor %}
                         <div class="row gap-y lignehover" id="ue_new_{{ semestre.id }}">
                             <div class="col-md-4"></div>
