@@ -25,12 +25,13 @@
             </div>
         {% endif %}
         <p>Etudiants ou personnels de l'Université, connectez-vous avec l'authentification de
-           l'Université .<a href="{{ path('default_homepage') }}" class="btn btn-bold btn-block btn-primary">Connexion
+           l'Université .<a href="{{ path('security_login', {type:'CAS'}) }}" class="btn btn-bold btn-block
+           btn-primary">Connexion
                                                                                                              URCA</a>
         </p>
         <div class="divider">{{ 'security.login.sign-with'|trans }}</div>
 
-        <form class="form-type-material" action="{{ path('security_login') }}" method="post">
+        <form class="form-type-material" action="{{ path('security_login', {type:'login'}) }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
             <div class="form-group">
