@@ -1,11 +1,9 @@
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 24/07/2019 13:02
- */
+// Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 21/09/2019 09:14
+// @lastUpdate 21/09/2019 08:28
 
 'use strict'
 
@@ -685,14 +683,12 @@ $(document).on('click', '.enseignanttrombi', function(e) {
 });
 
 
-/*
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/personnel.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/08/2019 12:32
- * @lastUpdate 21/08/2019 10:06
- */
+// Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/personnel.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 21/09/2019 08:28
+// @lastUpdate 21/09/2019 08:28
 
 $(document).on('keyup', '#login_urca', function () {
   const $val = $(this).val()
@@ -815,7 +811,7 @@ $('#datatableRh').DataTable({
   'ajax': Routing.generate('api_all_personnel'),
   'sAjaxDataProp': 'data',
   'pageLength': 25,
-  'order': [[ 1, "asc" ]],
+  'order': [[1, 'asc']],
   'columns': [
     {'data': 'numero_harpege'},
     {'data': 'nom'},

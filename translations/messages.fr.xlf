@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 04/09/2019 14:43 -->
-<!-- @lastUpdate 04/09/2019 14:42 -->
+<!-- @date 21/09/2019 09:14 -->
+<!-- @lastUpdate 21/09/2019 09:14 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12339,19 +12339,19 @@
       <unit id="8mLMdpS" name="atitle.synchro_parent">
           <segment>
               <source>atitle.synchro_parent</source>
-              <target>atitle.synchro_parent</target>
+              <target>Synchronisation des parents</target>
           </segment>
       </unit>
       <unit id="FqvoAXR" name="atitle.synchro_apogee">
           <segment>
               <source>atitle.synchro_apogee</source>
-              <target>atitle.synchro_apogee</target>
+              <target>Synchronisation apogée</target>
           </segment>
       </unit>
       <unit id="PQK1IZu" name="groupes.parents.synchronises">
           <segment>
               <source>groupes.parents.synchronises</source>
-              <target>groupes.parents.synchronises</target>
+              <target>Groupes Parents synchronisés</target>
           </segment>
       </unit>
       <unit id="3Lxw4Mw" name="%diff% jour">
@@ -12369,13 +12369,13 @@
       <unit id="FIHzSOm" name="variable.configuration">
           <segment>
               <source>variable.configuration</source>
-              <target>variable.configuration</target>
+              <target>Variable de Configuration</target>
           </segment>
       </unit>
       <unit id="4YKHDRv" name="Cle">
           <segment>
               <source>Cle</source>
-              <target>Cle</target>
+              <target>Clé</target>
           </segment>
       </unit>
       <unit id="bo8xMtj" name="Valeur">
@@ -12405,25 +12405,25 @@
       <unit id="7uq8xx2" name="adm.structure.departement.new.heading">
           <segment>
               <source>adm.structure.departement.new.heading</source>
-              <target>adm.structure.departement.new.heading</target>
+              <target>Création d'un département</target>
           </segment>
       </unit>
       <unit id="DdW5EV0" name="label.logoFile">
           <segment>
               <source>label.logoFile</source>
-              <target>label.logoFile</target>
+              <target>Logo du département</target>
           </segment>
       </unit>
       <unit id="tFPY_1N" name="departement.add.success.flash">
           <segment>
               <source>departement.add.success.flash</source>
-              <target>departement.add.success.flash</target>
+              <target>Département ajouté avec succès</target>
           </segment>
       </unit>
       <unit id="aJnCCEk" name="semestre.duplicate.success.flash">
           <segment>
               <source>semestre.duplicate.success.flash</source>
-              <target>semestre.duplicate.success.flash</target>
+              <target>Semestre dupliqué avec succès</target>
           </segment>
       </unit>
   </file>

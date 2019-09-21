@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Matiere.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/18/19 9:02 AM
+ * @date 21/09/2019 09:14
+ * @lastUpdate 21/09/2019 08:56
  */
 
 namespace App\Entity;
@@ -85,7 +85,7 @@ class Matiere extends BaseEntity
      *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $commentaire;
+    private $commentaire = '';
 
     /**
      * @var integer
@@ -375,7 +375,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $commentaire
      */
-    public function setCommentaire(string $commentaire): void
+    public function setCommentaire(?string $commentaire): void
     {
         $this->commentaire = $commentaire;
     }
@@ -456,7 +456,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $objectifsModule
      */
-    public function setObjectifsModule(string $objectifsModule): void
+    public function setObjectifsModule(?string $objectifsModule): void
     {
         $this->objectifsModule = $objectifsModule;
     }
@@ -472,7 +472,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $competencesVisees
      */
-    public function setCompetencesVisees(string $competencesVisees): void
+    public function setCompetencesVisees(?string $competencesVisees): void
     {
         $this->competencesVisees = $competencesVisees;
     }
@@ -488,7 +488,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $contenu
      */
-    public function setContenu(string $contenu): void
+    public function setContenu(?string $contenu): void
     {
         $this->contenu = $contenu;
     }
@@ -504,7 +504,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $preRequis
      */
-    public function setPreRequis(string $preRequis): void
+    public function setPreRequis(?string $preRequis): void
     {
         $this->preRequis = $preRequis;
     }
@@ -520,7 +520,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $modalites
      */
-    public function setModalites(string $modalites): void
+    public function setModalites(?string $modalites): void
     {
         $this->modalites = $modalites;
     }
@@ -536,7 +536,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $prolongements
      */
-    public function setProlongements(string $prolongements): void
+    public function setProlongements(?string $prolongements): void
     {
         $this->prolongements = $prolongements;
     }
@@ -552,7 +552,7 @@ class Matiere extends BaseEntity
     /**
      * @param string $motsCles
      */
-    public function setMotsCles(string $motsCles): void
+    public function setMotsCles(?string $motsCles): void
     {
         $this->motsCles = $motsCles;
     }

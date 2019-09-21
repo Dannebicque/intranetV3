@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/MatiereType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 21/09/2019 09:14
+ * @lastUpdate 21/09/2019 08:37
  */
 
 namespace App\Form;
@@ -182,7 +182,7 @@ class MatiereType extends AbstractType
                 ]);
     }
 
-    protected function onPreSubmit(FormEvent $event): void
+    public function onPreSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -191,7 +191,7 @@ class MatiereType extends AbstractType
         $this->addElements($form, $semestre);
     }
 
-    protected function onPreSetData(FormEvent $event): void
+    public function onPreSetData(FormEvent $event): void
     {
         $matiere = $event->getData();
         $form = $event->getForm();
