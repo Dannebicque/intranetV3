@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 21/09/2019 09:14 -->
-<!-- @lastUpdate 21/09/2019 09:14 -->
+<!-- @date 21/09/2019 11:53 -->
+<!-- @lastUpdate 21/09/2019 11:53 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12424,6 +12424,18 @@
           <segment>
               <source>semestre.duplicate.success.flash</source>
               <target>Semestre dupliqué avec succès</target>
+          </segment>
+      </unit>
+      <unit id="DsoLVRc" name="sadm.gestion.rh.import.ldap.heading">
+          <segment>
+              <source>sadm.gestion.rh.import.ldap.heading</source>
+              <target>sadm.gestion.rh.import.ldap.heading</target>
+          </segment>
+      </unit>
+      <unit id="QZyZ6Tw" name="username.import">
+          <segment>
+              <source>username.import</source>
+              <target>username.import</target>
           </segment>
       </unit>
   </file>
