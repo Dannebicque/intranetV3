@@ -1,9 +1,11 @@
-// Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
-// @author     David Annebicque
-// @project intranetv3
-// @date 26/08/2019 14:16
-// @lastUpdate 26/08/2019 13:45
+/*
+ * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 30/07/2019 08:40
+ * @lastUpdate 24/07/2019 13:02
+ */
 
 'use strict'
 
@@ -813,6 +815,7 @@ $('#datatableRh').DataTable({
   'ajax': Routing.generate('api_all_personnel'),
   'sAjaxDataProp': 'data',
   'pageLength': 25,
+  'order': [[ 1, "asc" ]],
   'columns': [
     {'data': 'numero_harpege'},
     {'data': 'nom'},
