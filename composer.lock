@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-  "content-hash": "2c76bde696323fb4c36242ac8fee1a8e",
+  "content-hash": "7ec5a3c18cbbe1115a3794ee3b060867",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1770,59 +1770,191 @@
             "time": "2019-03-17T18:16:12+00:00"
         },
         {
-            "name": "jasig/phpcas",
-            "version": "1.3.7",
+          "name": "guzzlehttp/guzzle",
+          "version": "6.3.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/apereo/phpCAS.git",
-                "reference": "b5b29102c3a42f570c4a3e852f3cf67cae6d6082"
+              "url": "https://github.com/guzzle/guzzle.git",
+              "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apereo/phpCAS/zipball/b5b29102c3a42f570c4a3e852f3cf67cae6d6082",
-                "reference": "b5b29102c3a42f570c4a3e852f3cf67cae6d6082",
+              "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+              "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
                 "shasum": ""
             },
             "require": {
+              "guzzlehttp/promises": "^1.0",
+              "guzzlehttp/psr7": "^1.4",
+              "php": ">=5.5"
+            },
+          "require-dev": {
                 "ext-curl": "*",
-                "php": ">=5.4.0"
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+            "psr/log": "^1.0"
+          },
+          "suggest": {
+            "psr/log": "Required for using the Log middleware"
+          },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "6.3-dev"
+            }
+          },
+          "autoload": {
+            "files": [
+              "src/functions_include.php"
+            ],
+            "psr-4": {
+              "GuzzleHttp\\": "src/"
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Michael Dowling",
+              "email": "mtdowling@gmail.com",
+              "homepage": "https://github.com/mtdowling"
+            }
+          ],
+          "description": "Guzzle is a PHP HTTP client library",
+          "homepage": "http://guzzlephp.org/",
+          "keywords": [
+            "client",
+            "curl",
+            "framework",
+            "http",
+            "http client",
+            "rest",
+            "web service"
+          ],
+          "time": "2018-04-22T15:46:56+00:00"
+        },
+      {
+        "name": "guzzlehttp/promises",
+        "version": "v1.3.1",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/guzzle/promises.git",
+          "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+          "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+          "shasum": ""
+        },
+        "require": {
+          "php": ">=5.5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~3.7.10"
+              "phpunit/phpunit": "^4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev"
+                  "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
-                "classmap": [
-                    "source/"
+              "psr-4": {
+                "GuzzleHttp\\Promise\\": "src/"
+              },
+              "files": [
+                "src/functions_include.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+              "MIT"
             ],
             "authors": [
                 {
-                    "name": "Joachim Fritschi",
-                    "homepage": "https://wiki.jasig.org/display/~fritschi"
-                },
-                {
-                    "name": "Adam Franco",
-                    "homepage": "https://wiki.jasig.org/display/~adamfranco"
+                  "name": "Michael Dowling",
+                  "email": "mtdowling@gmail.com",
+                  "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "Provides a simple API for authenticating users against a CAS server",
-            "homepage": "https://wiki.jasig.org/display/CASC/phpCAS",
+        "description": "Guzzle promises library",
             "keywords": [
-                "apereo",
-                "cas",
-                "jasig"
+              "promise"
             ],
-            "time": "2019-04-22T19:48:16+00:00"
+        "time": "2016-12-20T10:07:11+00:00"
+      },
+      {
+        "name": "guzzlehttp/psr7",
+        "version": "1.6.1",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/guzzle/psr7.git",
+          "reference": "239400de7a173fe9901b9ac7c06497751f00727a"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/guzzle/psr7/zipball/239400de7a173fe9901b9ac7c06497751f00727a",
+          "reference": "239400de7a173fe9901b9ac7c06497751f00727a",
+          "shasum": ""
+        },
+        "require": {
+          "php": ">=5.4.0",
+          "psr/http-message": "~1.0",
+          "ralouphie/getallheaders": "^2.0.5 || ^3.0.0"
+        },
+        "provide": {
+          "psr/http-message-implementation": "1.0"
+        },
+        "require-dev": {
+          "ext-zlib": "*",
+          "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
+        },
+        "suggest": {
+          "zendframework/zend-httphandlerrunner": "Emit PSR-7 responses"
+        },
+        "type": "library",
+        "extra": {
+          "branch-alias": {
+            "dev-master": "1.6-dev"
+          }
+        },
+        "autoload": {
+          "psr-4": {
+            "GuzzleHttp\\Psr7\\": "src/"
+          },
+          "files": [
+            "src/functions_include.php"
+          ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "MIT"
+            ],
+        "authors": [
+          {
+            "name": "Michael Dowling",
+            "email": "mtdowling@gmail.com",
+            "homepage": "https://github.com/mtdowling"
+          },
+          {
+            "name": "Tobias Schultze",
+            "homepage": "https://github.com/Tobion"
+          }
+        ],
+        "description": "PSR-7 message implementation that also provides common utility methods",
+        "keywords": [
+          "http",
+          "message",
+          "psr-7",
+          "request",
+          "response",
+          "stream",
+          "uri",
+          "url"
+        ],
+        "time": "2019-07-01T23:21:34+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1980,50 +2112,6 @@
                 "zxing"
             ],
             "time": "2018-04-26T11:41:33+00:00"
-        },
-        {
-            "name": "l3/cas-bundle",
-            "version": "1.1.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/l3-team/CasBundle.git",
-                "reference": "308ad66d5fe9062c3462ae2f97804053834c205f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/l3-team/CasBundle/zipball/308ad66d5fe9062c3462ae2f97804053834c205f",
-                "reference": "308ad66d5fe9062c3462ae2f97804053834c205f",
-                "shasum": ""
-            },
-            "require": {
-                "jasig/phpcas": "~1.3",
-                "php": ">=7.1.3",
-                "symfony/framework-bundle": "~4.0,>=4.2",
-                "symfony/security-bundle": "~4.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "L3\\Bundle\\CasBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Pierre Pélisset",
-                    "email": "pierre.pelisset@univ-lille3.fr"
-                },
-                {
-                    "name": "Mathieu Hétru",
-                    "email": "mathieu.hetru@univ-lille.fr"
-                }
-            ],
-            "description": "PHPCas wrapper for Symfony2, Symfony3, Symfony4",
-            "homepage": "https://github.com/l3-team/CasBundle",
-            "time": "2019-07-11T09:24:46+00:00"
         },
         {
             "name": "markbaker/complex",
@@ -2740,6 +2828,57 @@
             "time": "2019-07-08T21:21:25+00:00"
         },
         {
+          "name": "prayno/casauth-bundle",
+          "version": "1.3.2",
+          "target-dir": "PRayno/CasAuthBundle",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/PRayno/CasAuthBundle.git",
+            "reference": "984649b831a7b6792ab17844bac95f9bc6925bf2"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PRayno/CasAuthBundle/zipball/984649b831a7b6792ab17844bac95f9bc6925bf2",
+            "reference": "984649b831a7b6792ab17844bac95f9bc6925bf2",
+            "shasum": ""
+          },
+          "require": {
+            "guzzlehttp/guzzle": "^6.2",
+            "symfony/config": "^3.0|^4.0",
+            "symfony/dependency-injection": "^3.0|^4.0",
+            "symfony/http-foundation": "^3.0|^4.0",
+            "symfony/http-kernel": "^3.0|^4.0",
+            "symfony/security": "^3.0|^4.0",
+            "symfony/security-core": "^3.0|^4.0"
+          },
+          "type": "symfony-bundle",
+          "autoload": {
+            "psr-0": {
+              "PRayno\\CasAuthBundle": ""
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Pierre Raynaud",
+              "email": "pierre.raynaud@uca.fr"
+            }
+          ],
+          "description": "Basic CAS (SSO) authenticator for Symfony 3 and 4",
+          "keywords": [
+            "PRayno",
+            "SSO",
+            "Symfony 3",
+            "Symfony 4",
+            "cas",
+            "guard"
+          ],
+          "time": "2019-04-02T16:04:46+00:00"
+        },
+      {
             "name": "psr/cache",
             "version": "1.0.1",
             "source": {
@@ -2835,6 +2974,56 @@
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
+          "name": "psr/http-message",
+          "version": "1.0.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/http-message.git",
+            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+            "shasum": ""
+          },
+          "require": {
+            "php": ">=5.3.0"
+          },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "1.0.x-dev"
+            }
+          },
+          "autoload": {
+            "psr-4": {
+              "Psr\\Http\\Message\\": "src/"
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "PHP-FIG",
+              "homepage": "http://www.php-fig.org/"
+            }
+          ],
+          "description": "Common interface for HTTP messages",
+          "homepage": "https://github.com/php-fig/http-message",
+          "keywords": [
+            "http",
+            "http-message",
+            "psr",
+            "psr-7",
+            "request",
+            "response"
+          ],
+          "time": "2016-08-06T14:39:51+00:00"
+        },
+      {
             "name": "psr/log",
             "version": "1.1.0",
             "source": {
@@ -2930,6 +3119,46 @@
             "time": "2017-10-23T01:57:42+00:00"
         },
         {
+          "name": "ralouphie/getallheaders",
+          "version": "3.0.3",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/ralouphie/getallheaders.git",
+            "reference": "120b605dfeb996808c31b6477290a714d356e822"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
+            "reference": "120b605dfeb996808c31b6477290a714d356e822",
+            "shasum": ""
+          },
+          "require": {
+            "php": ">=5.6"
+          },
+          "require-dev": {
+            "php-coveralls/php-coveralls": "^2.1",
+            "phpunit/phpunit": "^5 || ^6.5"
+          },
+          "type": "library",
+          "autoload": {
+            "files": [
+              "src/getallheaders.php"
+            ]
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Ralph Khattar",
+              "email": "ralph.khattar@gmail.com"
+            }
+          ],
+          "description": "A polyfill for getallheaders.",
+          "time": "2019-03-08T08:55:37+00:00"
+        },
+      {
             "name": "ramsey/uuid",
             "version": "3.8.0",
             "source": {
@@ -4683,6 +4912,64 @@
             "time": "2019-07-24T14:47:54+00:00"
         },
         {
+          "name": "symfony/ldap",
+          "version": "v4.3.4",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/ldap.git",
+            "reference": "ba0a1f675ab863cd321f1cf4d501f9b0657d190f"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/ldap/zipball/ba0a1f675ab863cd321f1cf4d501f9b0657d190f",
+            "reference": "ba0a1f675ab863cd321f1cf4d501f9b0657d190f",
+            "shasum": ""
+          },
+          "require": {
+            "ext-ldap": "*",
+            "php": "^7.1.3",
+            "symfony/options-resolver": "~4.2"
+          },
+          "conflict": {
+            "symfony/options-resolver": "<4.2"
+          },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "4.3-dev"
+            }
+          },
+          "autoload": {
+            "psr-4": {
+              "Symfony\\Component\\Ldap\\": ""
+            },
+            "exclude-from-classmap": [
+              "/Tests/"
+            ]
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Charles Sarrazin",
+              "email": "charles@sarraz.in"
+            },
+            {
+              "name": "Symfony Community",
+              "homepage": "https://symfony.com/contributors"
+            }
+          ],
+          "description": "An abstraction in front of PHP's LDAP functions, compatible with PHP 5.3.9 onwards.",
+          "homepage": "https://symfony.com",
+          "keywords": [
+            "active directory",
+            "ldap"
+          ],
+          "time": "2019-08-14T12:26:46+00:00"
+        },
+      {
             "name": "symfony/mime",
             "version": "v4.3.3",
             "source": {
@@ -5388,6 +5675,88 @@
             "time": "2019-07-23T14:43:56+00:00"
         },
         {
+          "name": "symfony/security",
+          "version": "v4.3.3",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/security.git",
+            "reference": "b503d6ec5d4fea00d0af161977c723502775fbf8"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/security/zipball/b503d6ec5d4fea00d0af161977c723502775fbf8",
+            "reference": "b503d6ec5d4fea00d0af161977c723502775fbf8",
+            "shasum": ""
+          },
+          "require": {
+            "php": "^7.1.3",
+            "symfony/event-dispatcher-contracts": "^1.1",
+            "symfony/http-foundation": "~3.4|~4.0",
+            "symfony/http-kernel": "^4.3",
+            "symfony/property-access": "~3.4|~4.0",
+            "symfony/service-contracts": "^1.1"
+          },
+          "replace": {
+            "symfony/security-core": "self.version",
+            "symfony/security-csrf": "self.version",
+            "symfony/security-guard": "self.version",
+            "symfony/security-http": "self.version"
+          },
+          "require-dev": {
+            "psr/container": "^1.0",
+            "psr/log": "~1.0",
+            "symfony/expression-language": "~3.4|~4.0",
+            "symfony/finder": "~3.4|~4.0",
+            "symfony/ldap": "~3.4|~4.0",
+            "symfony/polyfill-ctype": "~1.8",
+            "symfony/polyfill-intl-icu": "~1.0",
+            "symfony/routing": "~3.4|~4.0",
+            "symfony/validator": "~3.4|~4.0"
+          },
+          "suggest": {
+            "psr/container-implementation": "To instantiate the Security class",
+            "symfony/expression-language": "For using the expression voter",
+            "symfony/form": "",
+            "symfony/ldap": "For using the LDAP user and authentication providers",
+            "symfony/routing": "For using the HttpUtils class to create sub-requests, redirect the user, and match URLs",
+            "symfony/validator": "For using the user password constraint"
+          },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "4.3-dev"
+            }
+          },
+          "autoload": {
+            "psr-4": {
+              "Symfony\\Component\\Security\\": ""
+            },
+            "exclude-from-classmap": [
+              "/Core/Tests/",
+              "/Csrf/Tests/",
+              "/Guard/Tests/",
+              "/Http/Tests/"
+            ]
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Fabien Potencier",
+              "email": "fabien@symfony.com"
+            },
+            {
+              "name": "Symfony Community",
+              "homepage": "https://symfony.com/contributors"
+            }
+          ],
+          "description": "Symfony Security Component",
+          "homepage": "https://symfony.com",
+          "time": "2019-07-24T13:33:23+00:00"
+        },
+      {
             "name": "symfony/security-bundle",
             "version": "v4.3.3",
             "source": {
@@ -5470,256 +5839,6 @@
             "description": "Symfony SecurityBundle",
             "homepage": "https://symfony.com",
             "time": "2019-07-27T06:42:46+00:00"
-        },
-        {
-            "name": "symfony/security-core",
-            "version": "v4.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/security-core.git",
-                "reference": "6b06369e0d624b18e3b206b9218461eb6c3b45d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-core/zipball/6b06369e0d624b18e3b206b9218461eb6c3b45d8",
-                "reference": "6b06369e0d624b18e3b206b9218461eb6c3b45d8",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/event-dispatcher-contracts": "^1.1",
-                "symfony/service-contracts": "^1.1"
-            },
-            "conflict": {
-                "symfony/event-dispatcher": "<4.3",
-                "symfony/security-guard": "<4.3"
-            },
-            "require-dev": {
-                "psr/container": "^1.0",
-                "psr/log": "~1.0",
-                "symfony/event-dispatcher": "^4.3",
-                "symfony/expression-language": "~3.4|~4.0",
-                "symfony/http-foundation": "~3.4|~4.0",
-                "symfony/ldap": "~3.4|~4.0",
-                "symfony/validator": "~3.4|~4.0"
-            },
-            "suggest": {
-                "psr/container-implementation": "To instantiate the Security class",
-                "symfony/event-dispatcher": "",
-                "symfony/expression-language": "For using the expression voter",
-                "symfony/http-foundation": "",
-                "symfony/ldap": "For using LDAP integration",
-                "symfony/validator": "For using the user password constraint"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Security\\Core\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Security Component - Core Library",
-            "homepage": "https://symfony.com",
-            "time": "2019-07-24T13:33:23+00:00"
-        },
-        {
-            "name": "symfony/security-csrf",
-            "version": "v4.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/security-csrf.git",
-                "reference": "e7e3509ef7de66ea4970c75f9a0a72bf132d452e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/e7e3509ef7de66ea4970c75f9a0a72bf132d452e",
-                "reference": "e7e3509ef7de66ea4970c75f9a0a72bf132d452e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/security-core": "~3.4|~4.0"
-            },
-            "conflict": {
-                "symfony/http-foundation": "<3.4"
-            },
-            "require-dev": {
-                "symfony/http-foundation": "~3.4|~4.0"
-            },
-            "suggest": {
-                "symfony/http-foundation": "For using the class SessionTokenStorage."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Security\\Csrf\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Security Component - CSRF Library",
-            "homepage": "https://symfony.com",
-            "time": "2019-05-30T16:10:05+00:00"
-        },
-        {
-            "name": "symfony/security-guard",
-            "version": "v4.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/security-guard.git",
-                "reference": "c64285b5c19c2fa0e2235909fd1cca5463132aa5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-guard/zipball/c64285b5c19c2fa0e2235909fd1cca5463132aa5",
-                "reference": "c64285b5c19c2fa0e2235909fd1cca5463132aa5",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/security-core": "~3.4.22|^4.2.3",
-                "symfony/security-http": "^4.3"
-            },
-            "require-dev": {
-                "psr/log": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Security\\Guard\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Security Component - Guard",
-            "homepage": "https://symfony.com",
-            "time": "2019-07-02T14:28:51+00:00"
-        },
-        {
-            "name": "symfony/security-http",
-            "version": "v4.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/security-http.git",
-                "reference": "18301380a2bbe91ee6acdf2bf307ac085444ca24"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-http/zipball/18301380a2bbe91ee6acdf2bf307ac085444ca24",
-                "reference": "18301380a2bbe91ee6acdf2bf307ac085444ca24",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/http-foundation": "~3.4|~4.0",
-                "symfony/http-kernel": "^4.3",
-                "symfony/property-access": "~3.4|~4.0",
-                "symfony/security-core": "^4.3"
-            },
-            "conflict": {
-                "symfony/security-csrf": "<3.4.11|~4.0,<4.0.11"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/routing": "~3.4|~4.0",
-                "symfony/security-csrf": "^3.4.11|^4.0.11"
-            },
-            "suggest": {
-                "symfony/routing": "For using the HttpUtils class to create sub-requests, redirect the user, and match URLs",
-                "symfony/security-csrf": "For using tokens to protect authentication/logout attempts"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Security\\Http\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Security Component - HTTP Integration",
-            "homepage": "https://symfony.com",
-            "time": "2019-07-23T11:21:36+00:00"
         },
         {
             "name": "symfony/serializer",
@@ -7098,6 +7217,105 @@
             "time": "2018-04-21T14:08:18+00:00"
         },
         {
+          "name": "jasig/phpcas",
+          "version": "1.3.7",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/apereo/phpCAS.git",
+            "reference": "b5b29102c3a42f570c4a3e852f3cf67cae6d6082"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/apereo/phpCAS/zipball/b5b29102c3a42f570c4a3e852f3cf67cae6d6082",
+            "reference": "b5b29102c3a42f570c4a3e852f3cf67cae6d6082",
+            "shasum": ""
+          },
+          "require": {
+            "ext-curl": "*",
+            "php": ">=5.4.0"
+          },
+          "require-dev": {
+            "phpunit/phpunit": "~3.7.10"
+          },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "1.3.x-dev"
+            }
+          },
+          "autoload": {
+            "classmap": [
+              "source/"
+            ]
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "Apache-2.0"
+          ],
+          "authors": [
+            {
+              "name": "Joachim Fritschi",
+              "homepage": "https://wiki.jasig.org/display/~fritschi"
+            },
+            {
+              "name": "Adam Franco",
+              "homepage": "https://wiki.jasig.org/display/~adamfranco"
+            }
+          ],
+          "description": "Provides a simple API for authenticating users against a CAS server",
+          "homepage": "https://wiki.jasig.org/display/CASC/phpCAS",
+          "keywords": [
+            "apereo",
+            "cas",
+            "jasig"
+          ],
+          "time": "2019-04-22T19:48:16+00:00"
+        },
+      {
+        "name": "l3/cas-bundle",
+        "version": "1.1.13",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/l3-team/CasBundle.git",
+          "reference": "308ad66d5fe9062c3462ae2f97804053834c205f"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/l3-team/CasBundle/zipball/308ad66d5fe9062c3462ae2f97804053834c205f",
+          "reference": "308ad66d5fe9062c3462ae2f97804053834c205f",
+          "shasum": ""
+        },
+        "require": {
+          "jasig/phpcas": "~1.3",
+          "php": ">=7.1.3",
+          "symfony/framework-bundle": "~4.0,>=4.2",
+          "symfony/security-bundle": "~4.0"
+        },
+        "type": "symfony-bundle",
+        "autoload": {
+          "psr-4": {
+            "L3\\Bundle\\CasBundle\\": ""
+          }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "LGPL-3.0-or-later"
+        ],
+        "authors": [
+          {
+            "name": "Pierre Pélisset",
+            "email": "pierre.pelisset@univ-lille3.fr"
+          },
+          {
+            "name": "Mathieu Hétru",
+            "email": "mathieu.hetru@univ-lille.fr"
+          }
+        ],
+        "description": "PHPCas wrapper for Symfony2, Symfony3, Symfony4",
+        "homepage": "https://github.com/l3-team/CasBundle",
+        "time": "2019-07-11T09:24:46+00:00"
+      },
+      {
             "name": "nyholm/nsa",
             "version": "1.1.0",
             "source": {

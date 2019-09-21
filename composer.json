@@ -20,6 +20,7 @@
         "symfony/flex": "^1.1",
         "symfony/form": "^4.3",
         "symfony/framework-bundle": "^4.3",
+        "symfony/ldap": "^4.3",
         "symfony/mime": "^4.3",
         "symfony/monolog-bundle": "^3.3",
         "symfony/orm-pack": "^1.0",

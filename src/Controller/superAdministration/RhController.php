@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/RhController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
+ * @date 21/09/2019 11:53
+ * @lastUpdate 21/09/2019 11:53
  */
 
 namespace App\Controller\superAdministration;
@@ -17,6 +17,7 @@ use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Ldap\Ldap;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -51,8 +52,27 @@ class RhController extends BaseController
     /**
      * @Route("/import", name="sa_rh_import_personnel")
      */
-    public function import(): Response
+    public function import(Request $request): Response
     {
+        //Todo: si fonctionne à faire en ajax?
+        if ($request->getMethod() === 'POST') {
+            $username = $request->request->get('username');
+            $ldap = Ldap::create('ext_ldap', [
+                'host'       => 'ldap.univ-reims.fr',
+                'encryption' => 'ssl',
+            ]);
+            $ldap->bind('uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr', 'heXzHr7p7MKuccQ2UqKu');
+//supannEmpId ou uid
+            $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
+                '(|(supannEmpId=' . $username . ')(uid=' . $username . ')(mail=' . $username . ')(sn=' . $username . '))');
+            $results = $query->execute();
+            dump($results);
+
+            return $this->render('super-administration/rh/liste-result.html.twig', [
+            ]);
+
+        }
+
         return $this->render('super-administration/rh/import.html.twig', [
         ]);
     }
