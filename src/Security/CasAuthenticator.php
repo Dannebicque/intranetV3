@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 12:06
- * @lastUpdate 30/09/2019 12:06
+ * @date 30/09/2019 12:08
+ * @lastUpdate 30/09/2019 12:08
  */
 
 namespace App\Security;
@@ -92,7 +92,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
 
-        if ($request->headers->get('referer') !== null) {
+        if ($request->headers->get('referer') === null) {
+            phpCAS::setFixedServiceURL('https://intranetv3.iut-troyes.univ-reims.fr');
+        } else {
             phpCAS::setFixedServiceURL($request->headers->get('referer'));
         }
 
