@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 09:56
- * @lastUpdate 28/09/2019 08:20
+ * @date 30/09/2019 10:04
+ * @lastUpdate 30/09/2019 10:04
  */
 
 namespace App\Security;
@@ -112,7 +112,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     {
         // todo
         dump($request);
-        return new RedirectResponse($this->server_login_url . 'login?service=' . urlencode($request->getUri()));
+
+        return new RedirectResponse($this->server_login_url . 'login?service=' . urlencode($request['server']['HTTP_REFERER']));
 
     }
 
