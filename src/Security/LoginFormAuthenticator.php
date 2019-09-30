@@ -1,18 +1,16 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/07/2019 08:41
- * @lastUpdate 13/07/2019 08:25
+ * @date 30/09/2019 16:43
+ * @lastUpdate 30/09/2019 16:43
  */
 
 namespace App\Security;
 
 use App\Entity\Departement;
-use App\Entity\Etudiant;
-use App\Entity\Personnel;
 use App\Events;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +20,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -92,24 +89,26 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $userPersonnel = $this->entityManager->getRepository(Personnel::class)->findOneBy(['username' => $credentials['username']]);
-        $userEtudiant = $this->entityManager->getRepository(Etudiant::class)->findOneBy(['username' => $credentials['username']]);
+        return $userProvider->loadUserByUsername($credentials['username']);
 
-        if (!$userPersonnel && !$userEtudiant) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
-        }
-
-        if ($userPersonnel !== null && $userEtudiant === null) {
-            $this->user = $userPersonnel;
-            return $userPersonnel;
-        }
-
-        if ($userPersonnel === null && $userEtudiant !== null) {
-            $this->user = $userEtudiant;
-            return $userEtudiant;
-        }
-            return null;
+//        $userPersonnel = $this->entityManager->getRepository(Personnel::class)->findOneBy(['username' => $credentials['username']]);
+//        $userEtudiant = $this->entityManager->getRepository(Etudiant::class)->findOneBy(['username' => $credentials['username']]);
+//
+//        if (!$userPersonnel && !$userEtudiant) {
+//            // fail authentication with a custom error
+//            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+//        }
+//
+//        if ($userPersonnel !== null && $userEtudiant === null) {
+//            $this->user = $userPersonnel;
+//            return $userPersonnel;
+//        }
+//
+//        if ($userPersonnel === null && $userEtudiant !== null) {
+//            $this->user = $userEtudiant;
+//            return $userEtudiant;
+//        }
+//            return null;
 
     }
 
