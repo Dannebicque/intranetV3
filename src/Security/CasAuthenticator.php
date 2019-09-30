@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 10:23
- * @lastUpdate 30/09/2019 10:23
+ * @date 30/09/2019 10:24
+ * @lastUpdate 30/09/2019 10:24
  */
 
 namespace App\Security;
@@ -105,7 +105,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         // the ticket parameter removed so that it is hidden from end-users.
         if ($request->query->has($this->ticket)) {
             dump('ok');
-            return new RedirectResponse($this->removeCasTicket($request->getUri()));
+            dump($this->removeCasTicket($request->getUri()));
+            //return new RedirectResponse($this->removeCasTicket($request->getUri()));
         } else {
             return null;
         }
