@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 11:50
- * @lastUpdate 30/09/2019 11:49
+ * @date 30/09/2019 11:55
+ * @lastUpdate 30/09/2019 11:55
  */
 
 namespace App\Security;
@@ -70,7 +70,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request)
     {
-        return '/fr/connexion' !== $request->getPathInfo();
+        return '/fr/connexion/CAS' === $request->getPathInfo();
 
 
         //return (bool) $request->get($this->ticket);
@@ -219,7 +219,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse($this->server_login_url . 'login?service=' . urlencode($request->headers->get('referer')));
+        return new RedirectResponse($this->server_login_url . 'login?service=' . ($request->headers->get('referer')));
     }
 
     public function supportsRememberMe()
