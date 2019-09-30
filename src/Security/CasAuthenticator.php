@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 10:36
- * @lastUpdate 30/09/2019 10:35
+ * @date 30/09/2019 10:53
+ * @lastUpdate 30/09/2019 10:53
  */
 
 namespace App\Security;
@@ -16,6 +16,7 @@ use App\Events;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
+use phpCAS;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,7 +25,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -88,48 +88,49 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 // Port of your CAS server. Normally for a https server it's 443
         $cas_port = 443;
         //dump($request->headers->get('referer'));
-        \phpCAS::setDebug();
-        \phpCAS::setVerbose(true);
-        \phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
-        \phpCAS::setFixedServiceURL($request->headers->get('referer'));
+        phpCAS::setDebug();
+        phpCAS::setVerbose(true);
+        phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
+        phpCAS::setFixedServiceURL($request->headers->get('referer'));
 
-        return \phpCAS::forceAuthentication();
+        phpCAS::forceAuthentication();
 
-        //\phpCAS::getUser();
-//        $url = $this->server_login_url . 'login?' . $this->ticket . '=' .
-//            $request->get($this->ticket) . '&service=' . urlencode($this->removeCasTicket($request->getUri()));
-//        dump($url);
-//
-//        return new RedirectResponse($url);
-        //return [];
+        if (phpCAS::getUser()) {
+            return phpCAS::getUser();
+        }
+
+        return null;
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $userPersonnel = $this->personnelRepository->findOneBy(['username' => $credentials['username']]);
-        $userEtudiant = $this->etudiantRepository->findOneBy(['username' => $credentials['username']]);
-
-        if (!$userPersonnel && !$userEtudiant) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
-        }
-
-        if ($userPersonnel !== null && $userEtudiant === null) {
-            $this->user = $userPersonnel;
-
-            return $userPersonnel;
-        }
-
-        if ($userPersonnel === null && $userEtudiant !== null) {
-            $this->user = $userEtudiant;
-
-            return $userEtudiant;
-        }
+        return $userProvider->loadUserByUsername($credentials);
+//        dump($credentials);
+//        $userPersonnel = $this->personnelRepository->findOneBy(['username' => $credentials['username']]);
+//        $userEtudiant = $this->etudiantRepository->findOneBy(['username' => $credentials['username']]);
+//
+//        if (!$userPersonnel && !$userEtudiant) {
+//            // fail authentication with a custom error
+//            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+//        }
+//
+//        if ($userPersonnel !== null && $userEtudiant === null) {
+//            $this->user = $userPersonnel;
+//
+//            return $userPersonnel;
+//        }
+//
+//        if ($userPersonnel === null && $userEtudiant !== null) {
+//            $this->user = $userEtudiant;
+//
+//            return $userEtudiant;
+//        }
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
         // todo
+        return true;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -148,6 +149,10 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        if (phpCAS::isInitialized()) {
+            $token->setAttributes(phpCAS::getAttributes());
+        }
+
         dump('authentifié');
         dump('ok');
         dump($this->removeCasTicket($request->getUri()));
@@ -216,11 +221,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // todo
-        dump($request);
-
         return new RedirectResponse($this->server_login_url . 'login?service=' . urlencode($request->headers->get('referer')));
-
     }
 
     public function supportsRememberMe()
