@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 12:05
- * @lastUpdate 30/09/2019 12:05
+ * @date 30/09/2019 12:06
+ * @lastUpdate 30/09/2019 12:06
  */
 
 namespace App\Security;
@@ -91,7 +91,10 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setDebug();
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
-        phpCAS::setFixedServiceURL($request->headers->get('referer'));
+
+        if ($request->headers->get('referer') !== null) {
+            phpCAS::setFixedServiceURL($request->headers->get('referer'));
+        }
 
         phpCAS::forceAuthentication();
         dump(phpCAS::getUser());
