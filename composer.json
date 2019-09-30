@@ -84,7 +84,6 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.1",
-        "easycorp/easy-deploy-bundle": "^1.0",
         "php-translation/symfony-bundle": "^0.8.1",
         "symfony/maker-bundle": "^1.11",
         "symfony/test-pack": "^1.0",
