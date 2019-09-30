@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 10:21
- * @lastUpdate 30/09/2019 10:21
+ * @date 30/09/2019 10:23
+ * @lastUpdate 30/09/2019 10:23
  */
 
 namespace App\Security;
@@ -56,11 +56,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         $cas_context = '/cas';
 // Port of your CAS server. Normally for a https server it's 443
         $cas_port = 443;
-        dump($request->headers->get('referer'));
+        //dump($request->headers->get('referer'));
         \phpCAS::setDebug();
         \phpCAS::setVerbose(true);
         \phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
-        \phpCAS::setFixedServiceURL(urlencode($request->headers->get('referer')));
+        \phpCAS::setFixedServiceURL($request->headers->get('referer'));
 
         return \phpCAS::forceAuthentication();
 
