@@ -22,10 +22,9 @@ security:
       anonymous: true
       guard:
         authenticators:
-          - App\Security\LoginFormAuthenticator
+          #- App\Security\LoginFormAuthenticator
           - App\Security\CasAuthenticator
         entry_point: App\Security\CasAuthenticator
-      #http_basic: ~
       # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
       pattern: ^/
 
@@ -38,7 +37,6 @@ security:
       provider: chain_provider
         #guard:
         #authenticators:
-      #- App\Security\LoginFormAuthenticator
 
   access_control:
     # Les regles de securité
