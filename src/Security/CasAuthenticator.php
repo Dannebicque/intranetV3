@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 16:45
- * @lastUpdate 30/09/2019 16:45
+ * @date 30/09/2019 16:46
+ * @lastUpdate 30/09/2019 16:46
  */
 
 namespace App\Security;
@@ -129,9 +129,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator
                 }
             }
 
-            if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            /*if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
                 return new RedirectResponse($targetPath);
-            }
+            }*/
 
             $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
