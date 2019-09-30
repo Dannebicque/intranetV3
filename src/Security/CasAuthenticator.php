@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 10:10
- * @lastUpdate 30/09/2019 10:09
+ * @date 30/09/2019 10:21
+ * @lastUpdate 30/09/2019 10:21
  */
 
 namespace App\Security;
@@ -59,8 +59,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         dump($request->headers->get('referer'));
         \phpCAS::setDebug();
         \phpCAS::setVerbose(true);
-        \phpCAS::setServerServiceValidateURL(urlencode($request->headers->get('referer')));
         \phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
+        \phpCAS::setFixedServiceURL(urlencode($request->headers->get('referer')));
 
         return \phpCAS::forceAuthentication();
 
@@ -99,10 +99,12 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        dump('authentifié');
         // todo
         // If authentication was successful, redirect to the current URI with
         // the ticket parameter removed so that it is hidden from end-users.
         if ($request->query->has($this->ticket)) {
+            dump('ok');
             return new RedirectResponse($this->removeCasTicket($request->getUri()));
         } else {
             return null;
