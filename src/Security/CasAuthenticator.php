@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 10:59
- * @lastUpdate 30/09/2019 10:59
+ * @date 30/09/2019 11:50
+ * @lastUpdate 30/09/2019 11:49
  */
 
 namespace App\Security;
@@ -70,7 +70,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request)
     {
-        return '/fr/connexion/CAS' === $request->getPathInfo();
+        return '/fr/connexion' !== $request->getPathInfo();
 
 
         //return (bool) $request->get($this->ticket);
@@ -92,7 +92,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setFixedServiceURL($request->headers->get('referer'));
 
         phpCAS::forceAuthentication();
-
+        dump(phpCAS::getUser());
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
         }
@@ -102,6 +102,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        dump($credentials);
         return $userProvider->loadUserByUsername($credentials);
 //        dump($credentials);
 //        $userPersonnel = $this->personnelRepository->findOneBy(['username' => $credentials['username']]);
