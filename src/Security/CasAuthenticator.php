@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/10/2019 09:09
- * @lastUpdate 01/10/2019 09:08
+ * @date 01/10/2019 09:11
+ * @lastUpdate 01/10/2019 09:11
  */
 
 namespace App\Security;
@@ -114,7 +114,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
                 //init de la session departement
                 $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
                 if (count($departements) > 1) {
-                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
+                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement', [],
+                        UrlGeneratorInterface::ABSOLUTE_URL));
                 }
 
                 if (count($departements) === 1) {
