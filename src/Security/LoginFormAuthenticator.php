@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 16:43
- * @lastUpdate 30/09/2019 16:43
+ * @date 01/10/2019 09:18
+ * @lastUpdate 01/10/2019 09:18
  */
 
 namespace App\Security;
@@ -89,8 +89,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        return $userProvider->loadUserByUsername($credentials['username']);
+        $this->user = $userProvider->loadUserByUsername($credentials['username']);
 
+        return $this->user;
 //        $userPersonnel = $this->entityManager->getRepository(Personnel::class)->findOneBy(['username' => $credentials['username']]);
 //        $userEtudiant = $this->entityManager->getRepository(Etudiant::class)->findOneBy(['username' => $credentials['username']]);
 //
