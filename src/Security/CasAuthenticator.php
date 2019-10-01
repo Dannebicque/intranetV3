@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/10/2019 09:11
- * @lastUpdate 01/10/2019 09:11
+ * @date 01/10/2019 09:13
+ * @lastUpdate 01/10/2019 09:13
  */
 
 namespace App\Security;
@@ -59,7 +59,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setDebug();
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
-        phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
+        phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage', [],
+            UrlGeneratorInterface::ABSOLUTE_URL));
 //        if ($request->headers->get('referer') === null) {
 //            //phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
 //            todo: Ca tourne en boucle
@@ -114,8 +115,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
                 //init de la session departement
                 $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
                 if (count($departements) > 1) {
-                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement', [],
-                        UrlGeneratorInterface::ABSOLUTE_URL));
+                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
                 }
 
                 if (count($departements) === 1) {
