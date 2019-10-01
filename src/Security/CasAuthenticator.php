@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/10/2019 09:00
- * @lastUpdate 01/10/2019 08:56
+ * @date 01/10/2019 09:07
+ * @lastUpdate 01/10/2019 09:07
  */
 
 namespace App\Security;
@@ -139,7 +139,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
                 return new RedirectResponse($targetPath);
             }*/
 
-            $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
+            //$redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
             //c'est aucun des rôles...
             $redirection = new RedirectResponse($this->urlGenerator->generate('security_login',
