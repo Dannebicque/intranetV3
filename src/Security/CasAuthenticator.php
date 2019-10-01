@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 30/09/2019 16:46
- * @lastUpdate 30/09/2019 16:46
+ * @date 01/10/2019 09:00
+ * @lastUpdate 01/10/2019 08:56
  */
 
 namespace App\Security;
@@ -60,6 +60,12 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL('https://intranetv3.iut-troyes.univ-reims.fr/fr/tableau-de-bord');
+//        if ($request->headers->get('referer') === null) {
+//            //phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
+//            todo: Ca tourne en boucle
+//        } else {
+//            phpCAS::setFixedServiceURL($request->headers->get('referer'));
+//        }
 
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
