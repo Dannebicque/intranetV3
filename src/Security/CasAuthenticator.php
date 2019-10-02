@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/10/2019 09:13
- * @lastUpdate 01/10/2019 09:13
+ * @date 02/10/2019 07:34
+ * @lastUpdate 02/10/2019 07:34
  */
 
 namespace App\Security;
@@ -70,7 +70,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
-        dump(phpCAS::getUser());
+        //  dump(phpCAS::getUser());
 
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
@@ -82,7 +82,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        dump($credentials);
+        // dump($credentials);
         $this->user = $userProvider->loadUserByUsername($credentials);
 
         return $this->user;
@@ -140,7 +140,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
                 return new RedirectResponse($targetPath);
             }*/
 
-            //$redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
+            $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
             //c'est aucun des rôles...
             $redirection = new RedirectResponse($this->urlGenerator->generate('security_login',

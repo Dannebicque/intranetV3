@@ -24,7 +24,7 @@ security:
         authenticators:
           - App\Security\LoginFormAuthenticator
           - App\Security\CasAuthenticator
-        entry_point: App\Security\CasAuthenticator
+        entry_point: App\Security\LoginFormAuthenticator
       # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
       pattern: ^/
 
