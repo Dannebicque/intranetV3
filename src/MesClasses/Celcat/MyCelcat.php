@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:40
- * @lastUpdate 16/10/2019 18:39
+ * @date 16/10/2019 18:52
+ * @lastUpdate 16/10/2019 18:48
  */
 
 /**
@@ -124,14 +124,14 @@ abstract class MyCelcat
                     $event->setSemaineFormation($semaine);
                     $event->setType($type);
                     $event->setCodeModule(odbc_result($result, 7));
-                    $event->setLibModule(odbc_result($result, 8));
+                    $event->setLibModule(utf8_encode(odbc_result($result, 8)));
                     $event->setCodePersonnel(odbc_result($result, 9));
-                    $event->setLibPersonnel(odbc_result($result, 10));
+                    $event->setLibPersonnel(utf8_encode(odbc_result($result, 10)));
                     $event->setDepartementId($codeCelcatDepartement);
                     $event->setCodeGroupe(odbc_result($result, 13));
-                    $event->setLibGroupe(odbc_result($result, 14));
+                    $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
                     $event->setCodeSalle(odbc_result($result, 11));
-                    $event->setLibSalle(odbc_result($result, 12));
+                    $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
                     $event->setUpdateEvent(new DateTime(odbc_result($result, 15)));
 
                     $entity->persist($event);
