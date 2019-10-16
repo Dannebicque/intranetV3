@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:17
- * @lastUpdate 16/10/2019 18:17
+ * @date 16/10/2019 18:20
+ * @lastUpdate 16/10/2019 18:20
  */
 
 /**
@@ -69,7 +69,8 @@ abstract class MyCelcat
             echo "Query failed " . odbc_error();
         }
         $departements = [];
-        while (odbc_fetch_row($results)) {
+        while (odbc_fetch_array($results)) {
+            dump(odbc_result_all($results));
             $dept['nom'] = odbc_result($results, 1);
             $dept['code'] = odbc_result($results, 0);
             $departements[] = $dept;
