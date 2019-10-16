@@ -1,16 +1,18 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Materiel.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
+ * @date 16/10/2019 17:41
+ * @lastUpdate 05/10/2019 07:46
  */
 
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
@@ -43,7 +45,7 @@ class Materiel extends BaseEntity
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $photoName;
 
@@ -53,6 +55,26 @@ class Materiel extends BaseEntity
      * @Vich\UploadableField(mapping="materiel", fileNameProperty="photoName")
      */
     private $photoFile;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $codebarre;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $empruntable;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntMateriel", mappedBy="materiel")
+     */
+    private $empruntMateriels;
+
+    public function __construct()
+    {
+        $this->empruntMateriels = new ArrayCollection();
+    }
 
     public function getTypeMateriel(): ?TypeMateriel
     {
@@ -128,6 +150,61 @@ class Materiel extends BaseEntity
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;
+    }
+
+    public function getCodebarre(): ?string
+    {
+        return $this->codebarre;
+    }
+
+    public function setCodebarre(?string $codebarre): self
+    {
+        $this->codebarre = $codebarre;
+
+        return $this;
+    }
+
+    public function getEmpruntable(): ?bool
+    {
+        return $this->empruntable;
+    }
+
+    public function setEmpruntable(bool $empruntable): self
+    {
+        $this->empruntable = $empruntable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmpruntMateriel[]
+     */
+    public function getEmpruntMateriels(): Collection
+    {
+        return $this->empruntMateriels;
+    }
+
+    public function addEmpruntMateriel(EmpruntMateriel $empruntMateriel): self
+    {
+        if (!$this->empruntMateriels->contains($empruntMateriel)) {
+            $this->empruntMateriels[] = $empruntMateriel;
+            $empruntMateriel->setMateriel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmpruntMateriel(EmpruntMateriel $empruntMateriel): self
+    {
+        if ($this->empruntMateriels->contains($empruntMateriel)) {
+            $this->empruntMateriels->removeElement($empruntMateriel);
+            // set the owning side to null (unless already changed)
+            if ($empruntMateriel->getMateriel() === $this) {
+                $empruntMateriel->setMateriel(null);
+            }
+        }
+
+        return $this;
     }
 
 

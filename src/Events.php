@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Events.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:10
+ * @date 16/10/2019 17:41
+ * @lastUpdate 06/10/2019 09:07
  */
 
 /**
@@ -75,6 +75,14 @@ class Events
 
     public const REDIRECT_TO_LOGIN = 'redirect.to.login';
     public const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
+
+    public const MAIL_CHGT_ETAT_EMPRUNT_DEMANDE = 'mail.chgt.emprunt.demande';
+    public const MAIL_CHGT_ETAT_EMPRUNT_REFUS = 'mail.chgt.emprunt.refus';
+    public const MAIL_CHGT_ETAT_EMPRUNT_ACCEPTE = 'mail.chgt.emprunt.accepte';
+
+    public const CHGT_ETAT_EMPRUNT_DEMANDE = 'chgt.emprunt.demande';
+    public const CHGT_ETAT_EMPRUNT_ACCEPTE = 'chgt.emprunt.refus';
+    public const CHGT_ETAT_EMPRUNT_REFUS = 'chgt.emprunt.accepte';
 
     public static function getConstante($constante)
     {

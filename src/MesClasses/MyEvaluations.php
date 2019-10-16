@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluations.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:00
+ * @date 16/10/2019 17:41
+ * @lastUpdate 10/10/2019 07:15
  */
 
 /**
@@ -111,7 +111,7 @@ class MyEvaluations
     public function getEvaluationsSemestre(): array
     {
         $evaluations = $this->evaluationRespository->findBySemestre($this->semestre,
-            $this->semestre->getAnneeUniversitaire()->getAnnee());
+            $this->semestre->getAnneeUniversitaire());
         $tab = array();
         /** @var Evaluation $eval */
         foreach ($evaluations as $eval) {

@@ -1,17 +1,18 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/MaterielType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/29/19 10:35 AM
+ * @date 16/10/2019 17:41
+ * @lastUpdate 05/10/2019 07:35
  */
 
 namespace App\Form;
 
 use App\Entity\Materiel;
 use App\Entity\TypeMateriel;
+use App\Form\Type\YesNoType;
 use App\Repository\TypeMaterielRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +31,9 @@ class MaterielType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('description', TextType::class, ['label' => 'label.libelle'])
+            ->add('description', TextType::class, ['label' => 'label.description'])
+            ->add('codebarre', TextType::class, ['label' => 'label.codebarre', 'required' => false])
+            ->add('empruntable', YesNoType::class, ['label' => 'label.empruntable'])
             ->add('photoFile', VichFileType::class, [
                 'required'       => false,
                 'label'          => 'label.photo',

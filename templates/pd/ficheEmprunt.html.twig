@@ -1,0 +1,37 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+    <table style="width: 100%; border:none;">
+        <tr>
+            <td style="text-align: center; width:20%">
+                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
+            </td>
+            <td style="text-align: center; width:60%">
+                <h2>Fiche d'emprunt de matériel | {{ user_data.displayAnneeUniversitaire }}</h2>
+            </td>
+            <td style="text-align: center; width:20%">
+                <img
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
+                        alt="logo"
+                        height="75px"/>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Matériel emprunté par <strong>{{ emprunt.etudiant.displayPr }}</strong></h3>
+
+    <h4>Le {{ emprunt.dateDebut|date('d/m/Y H:i') }}, retour <strong>{{ emprunt.dateFin|date('d/m/Y H:i') }}</strong>
+    </h4>
+    <p>Contact : {{ emprunt.telephone }}</p>
+    <br/>
+    <p><strong>Motif : </strong> {{ emprunt.motif }}</p>
+    <br/>
+    <p><strong>Projet : </strong> {{ emprunt.description }}</p>
+    <br>
+    <p>Matriel emprunté :</p>
+    <ul>
+        {% for mat in emprunt.empruntMateriels %}
+            <li>{{ mat.materiel.libelle }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -7,9 +7,13 @@
         'App\\Controller\\ProfilPersonnelController::stage', {slug: user.slug}
     )) }}
 
+{% elseif user.typeUser == 'etudiant' %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::about', {slug: user.slug}
+    )) }}
 {% else %}
     {{ render(controller(
-        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
+        'App\\Controller\\ProfilPersonnelController::about', {slug: user.slug}
     )) }}
     {#    {{ render(controller(#}
     {#        'App\\Controller\\ProfilPersonnelController::timeline', {slug: user.slug}#}

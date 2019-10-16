@@ -1,0 +1,27 @@
+Bonjour {{ emprunt.etudiant.prenom|capitalize }},
+
+Ta demande demande de matériel a été enregistrée.
+Cette demande sera étudiée dans les plus brefs délais.
+
+Pour rappel :
+Demande faite par {{ emprunt.etudiant.displayPr }} | {{ emprunt.etudiant.semestre.display }}
+Contact : {{ emprunt.telephone }}
+
+Du {{ emprunt.dateDebut|date('d/m/Y H:i' ) }}, au {{ pret.dateRetour|date('d/m/Y H:i') }}.
+
+Matériel souhaité :
+{% for mat in emprunt.empruntMateriels %}
+	* {{ mat.materiels.libelle }}
+{% endfor %}
+
+Motif:
+{{ emprunt.motif }}
+
+Description:
+{{ emprunt.description }}
+
+Bien cordialement
+{{ emprunt.responsable.displayPr }}
+
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.
+

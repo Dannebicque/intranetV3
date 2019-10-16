@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
+ * @date 16/10/2019 17:41
+ * @lastUpdate 16/10/2019 17:40
  */
 
 namespace App\MesClasses;
@@ -171,7 +171,7 @@ class MyEtudiant
      */
     public function setUuidEtudiant($uuid): void
     {
-        $this->etudiant = $this->etudiantRepository->findOneByUuid($uuid);
+        $this->etudiant = $this->etudiantRepository->findOneBy(['uuid' => $uuid]);
     }
 
     /**
@@ -230,7 +230,7 @@ class MyEtudiant
             //update
             $note[0]->setNote(Tools::convertToFloat($data['note']));
             $note[0]->setCommentaire($data['commentaire']);
-            if ($data['absence'] === 'true') {
+            if (isset($data['absence']) && $data['absence'] === 'true') {
                 $note[0]->setAbsenceJustifie(true);
             } else {
                 $note[0]->setAbsenceJustifie(false);

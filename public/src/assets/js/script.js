@@ -1,9 +1,9 @@
-// Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
 // @author     David Annebicque
 // @project intranetv3
-// @date 30/09/2019 09:56
-// @lastUpdate 21/09/2019 17:39
+// @date 16/10/2019 17:41
+// @lastUpdate 16/10/2019 17:40
 
 'use strict'
 
@@ -965,11 +965,15 @@ $(document).on('change', '#selectsemestre', function () {
           .attr("value", "")
           .text("Choisir une matière"));
         jQuery.each(data, function (index, matiere) {
-
           selectMatiere.append($("<option></option>")
             .attr("value", matiere.id)
             .text(matiere.libelle));
         });
+        // selectMatiere.selectpicker({
+        //   liveSearch: true
+        // })
+        selectMatiere.attr('data-provide', 'selectpicker')
+        selectMatiere.attr('data-live-search', 'true')
       },
       error: function () {
 //todo: message ?

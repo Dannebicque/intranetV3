@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/ProfilPersonnelController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:47 PM
+ * @date 16/10/2019 17:41
+ * @lastUpdate 16/10/2019 17:40
  */
 
 namespace App\Controller;
@@ -95,6 +95,7 @@ class ProfilPersonnelController extends BaseController
 
         return $this->render('user/composants/previsionnel.html.twig', [
             'previsionnel' => $myPrevisionnel,
+            'personnel'    => $personnel
         ]);
     }
 }
