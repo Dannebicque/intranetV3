@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyPrevisionnel.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
+ * @date 16/10/2019 17:41
+ * @lastUpdate 09/10/2019 18:21
  */
 
 /**
@@ -91,6 +91,15 @@ class MyPrevisionnel
      * @var MyUpload
      */
     private $myUpload;
+    private $anneePrevi;
+
+    /**
+     * @return mixed
+     */
+    public function getAnneePrevi()
+    {
+        return $this->anneePrevi;
+    }
 
     /**
      * @return Departement[]
@@ -349,6 +358,7 @@ class MyPrevisionnel
      */
     public function getPrevisionnelEnseignantBySemestre($annee): void
     {
+        $this->anneePrevi = $annee;
         $previsionnels = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($this->personnel, $annee);
 
         $tprev = [];

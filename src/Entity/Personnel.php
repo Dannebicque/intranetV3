@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Personnel.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:21
+ * @date 16/10/2019 17:41
+ * @lastUpdate 06/10/2019 09:33
  */
 
 namespace App\Entity;
@@ -199,11 +199,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     private $alternances;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MaterielPret", mappedBy="personnel")
-     */
-    private $materielPrets;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $deleted = false;
@@ -226,7 +221,17 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="personnel")
      */
-    private $progressionPedagogiques; //todo: a gérer
+    private $progressionPedagogiques;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntPersonnel", mappedBy="personnel")
+     */
+    private $emprunts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="respMateriel")
+     */
+    private $departements; //todo: a gérer
 
     public function __construct()
     {
@@ -249,6 +254,8 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->indisponibilitePersonnels = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
         $this->progressionPedagogiques = new ArrayCollection();
+        $this->empruntPersonnels = new ArrayCollection();
+        $this->departements = new ArrayCollection();
     }
 
     /**
@@ -1036,37 +1043,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
-    /**
-     * @return Collection|MaterielPret[]
-     */
-    public function getMaterielPrets(): Collection
-    {
-        return $this->materielPrets;
-    }
-
-    public function addMaterielPret(MaterielPret $materielPret): self
-    {
-        if (!$this->materielPrets->contains($materielPret)) {
-            $this->materielPrets[] = $materielPret;
-            $materielPret->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMaterielPret(MaterielPret $materielPret): self
-    {
-        if ($this->materielPrets->contains($materielPret)) {
-            $this->materielPrets->removeElement($materielPret);
-            // set the owning side to null (unless already changed)
-            if ($materielPret->getPersonnel() === $this) {
-                $materielPret->setPersonnel(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDeleted(): ?bool
     {
         return $this->deleted;
@@ -1230,6 +1206,68 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             // set the owning side to null (unless already changed)
             if ($progressionPedagogique->getPersonnel() === $this) {
                 $progressionPedagogique->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmpruntPersonnel[]
+     */
+    public function getEmpruntPersonnels(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmpruntPersonnel(EmpruntPersonnel $empruntPersonnel): self
+    {
+        if (!$this->emprunts->contains($empruntPersonnel)) {
+            $this->emprunts[] = $empruntPersonnel;
+            $empruntPersonnel->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmpruntPersonnel(EmpruntPersonnel $empruntPersonnel): self
+    {
+        if ($this->emprunts->contains($empruntPersonnel)) {
+            $this->emprunts->removeElement($empruntPersonnel);
+            // set the owning side to null (unless already changed)
+            if ($empruntPersonnel->getPersonnel() === $this) {
+                $empruntPersonnel->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Departement[]
+     */
+    public function getDepartements(): Collection
+    {
+        return $this->departements;
+    }
+
+    public function addDepartement(Departement $departement): self
+    {
+        if (!$this->departements->contains($departement)) {
+            $this->departements[] = $departement;
+            $departement->setRespMateriel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepartement(Departement $departement): self
+    {
+        if ($this->departements->contains($departement)) {
+            $this->departements->removeElement($departement);
+            // set the owning side to null (unless already changed)
+            if ($departement->getRespMateriel() === $this) {
+                $departement->setRespMateriel(null);
             }
         }
 

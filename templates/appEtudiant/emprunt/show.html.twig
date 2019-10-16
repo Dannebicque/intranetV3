@@ -1,0 +1,15 @@
+<h3>Demande du {{ emprunt.created ? emprunt.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</h3>
+
+<div class="row">
+
+    <div class="col-sm-12">
+        <p>{{ emprunt.dateDebut|date('d/m/Y H:i' ) }} | {{ emprunt.datefin|date('d/m/Y H:i') }}</p>
+        <p>Motif : {{ emprunt.motif }}</p>
+        <p>Description : {{ emprunt.description }}</p>
+        <ul>
+            {% for materiel in emprunt.empruntMateriels %}
+                <li>{{ materiel.materiel.libelle }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

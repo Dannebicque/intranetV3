@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Etudiant.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 19/08/2019 09:08
- * @lastUpdate 19/08/2019 09:07
+ * @date 16/10/2019 17:41
+ * @lastUpdate 10/10/2019 07:14
  */
 
 namespace App\Entity;
@@ -113,7 +113,8 @@ class Etudiant extends Utilisateur implements Serializable
     private $etudiantDemandeur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant")
+     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant", fetch="EAGER")
+     * @ORM\OrderBy({"ordre":"ASC"})
      */
     private $scolarites;
 
@@ -164,11 +165,6 @@ class Etudiant extends Utilisateur implements Serializable
     private $alternances;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MaterielPret", mappedBy="etudiant")
-     */
-    private $materielPrets;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $deleted = false;
@@ -204,6 +200,12 @@ class Etudiant extends Utilisateur implements Serializable
     private $anneeSortie = 0;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntEtudiant", mappedBy="etudiant")
+     * @ORM\OrderBy({"created":"DESC"})
+     */
+    private $emprunts;
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
@@ -229,6 +231,8 @@ class Etudiant extends Utilisateur implements Serializable
         $this->promotion = date('Y');
         $this->anneeBac = date('Y');
         $this->typeUser = 'ETU';
+        $this->emprunts = new ArrayCollection();
+        $this->empruntEtudiants = new ArrayCollection();
     }
 
     /**
@@ -921,37 +925,6 @@ class Etudiant extends Utilisateur implements Serializable
         return null;
     }
 
-    /**
-     * @return Collection|MaterielPret[]
-     */
-    public function getMaterielPrets(): Collection
-    {
-        return $this->materielPrets;
-    }
-
-    public function addMaterielPret(MaterielPret $materielPret): self
-    {
-        if (!$this->materielPrets->contains($materielPret)) {
-            $this->materielPrets[] = $materielPret;
-            $materielPret->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMaterielPret(MaterielPret $materielPret): self
-    {
-        if ($this->materielPrets->contains($materielPret)) {
-            $this->materielPrets->removeElement($materielPret);
-            // set the owning side to null (unless already changed)
-            if ($materielPret->getEtudiant() === $this) {
-                $materielPret->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDeleted(): ?bool
     {
         return $this->deleted;
@@ -1100,6 +1073,68 @@ class Etudiant extends Utilisateur implements Serializable
                 $this->$key($value);
             }
         }
+    }
+
+    /**
+     * @return Collection|Emprunt[]
+     */
+    public function getEmprunts(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmprunt(Emprunt $emprunt): self
+    {
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts[] = $emprunt;
+            $emprunt->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmprunt(Emprunt $emprunt): self
+    {
+        if ($this->emprunts->contains($emprunt)) {
+            $this->emprunts->removeElement($emprunt);
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getEtudiant() === $this) {
+                $emprunt->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmpruntEtudiant[]
+     */
+    public function getEmpruntEtudiants(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmpruntEtudiant(EmpruntEtudiant $empruntEtudiant): self
+    {
+        if (!$this->emprunts->contains($empruntEtudiant)) {
+            $this->emprunts[] = $empruntEtudiant;
+            $empruntEtudiant->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmpruntEtudiant(EmpruntEtudiant $empruntEtudiant): self
+    {
+        if ($this->emprunts->contains($empruntEtudiant)) {
+            $this->emprunts->removeElement($empruntEtudiant);
+            // set the owning side to null (unless already changed)
+            if ($empruntEtudiant->getEtudiant() === $this) {
+                $empruntEtudiant->setEtudiant(null);
+            }
+        }
+
+        return $this;
     }
 
 }

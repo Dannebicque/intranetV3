@@ -4026,5 +4026,17 @@
               <target>help.bonification</target>
           </segment>
       </unit>
+      <unit id="g4h_a2O" name="label.codebarre">
+          <segment>
+              <source>label.codebarre</source>
+              <target>label.codebarre</target>
+          </segment>
+      </unit>
+      <unit id="w9xolBt" name="label.empruntable">
+          <segment>
+              <source>label.empruntable</source>
+              <target>label.empruntable</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:13
+ * @date 16/10/2019 17:41
+ * @lastUpdate 10/10/2019 07:51
  */
 
 namespace App\Controller\appPersonnel;
@@ -151,7 +151,7 @@ class NoteController extends BaseController
 
         $nbNotes = count($tnote);
         for ($i = 0; $i < $nbNotes; $i++) {
-            $myEtudiant->setIdEtudiant($tnote[$i]['id']);
+            $myEtudiant->setUuidEtudiant($tnote[$i]['id']);
             $myEtudiant->addNote($evaluation, $tnote[$i]);
         }
 

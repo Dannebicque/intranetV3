@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Departement.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 17:39
- * @lastUpdate 04/09/2019 17:02
+ * @date 16/10/2019 17:41
+ * @lastUpdate 06/10/2019 09:33
  */
 
 namespace App\Entity;
@@ -179,10 +179,7 @@ class Departement extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\TypeMateriel", mappedBy="departement")
      */
     private $typeMateriels;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MaterielPret", mappedBy="departement")
-     */
-    private $materielPrets;
+
     /**
      * @ORM\Column(type="boolean")
      */
@@ -206,6 +203,16 @@ class Departement extends BaseEntity
     private $articleCategories;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Emprunt", mappedBy="departement")
+     */
+    private $emprunts;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="departements")
+     */
+    private $respMateriel;
+
+    /**
      * Departement constructor.
      * @throws Exception
      */
@@ -224,6 +231,7 @@ class Departement extends BaseEntity
         $this->materielPrets = new ArrayCollection();
         $this->creneauCours = new ArrayCollection();
         $this->articleCategories = new ArrayCollection();
+        $this->emprunts = new ArrayCollection();
     }
 
     /**
@@ -849,37 +857,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection|MaterielPret[]
-     */
-    public function getMaterielPrets(): Collection
-    {
-        return $this->materielPrets;
-    }
-
-    public function addMaterielPret(MaterielPret $materielPret): self
-    {
-        if (!$this->materielPrets->contains($materielPret)) {
-            $this->materielPrets[] = $materielPret;
-            $materielPret->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMaterielPret(MaterielPret $materielPret): self
-    {
-        if ($this->materielPrets->contains($materielPret)) {
-            $this->materielPrets->removeElement($materielPret);
-            // set the owning side to null (unless already changed)
-            if ($materielPret->getDepartement() === $this) {
-                $materielPret->setDepartement(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getActif(): ?bool
     {
         return $this->actif;
@@ -974,6 +951,49 @@ class Departement extends BaseEntity
                 $articleCategory->setDepartement(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Emprunt[]
+     */
+    public function getEmprunts(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmprunt(Emprunt $emprunt): self
+    {
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts[] = $emprunt;
+            $emprunt->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmprunt(Emprunt $emprunt): self
+    {
+        if ($this->emprunts->contains($emprunt)) {
+            $this->emprunts->removeElement($emprunt);
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getDepartement() === $this) {
+                $emprunt->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getRespMateriel(): ?Personnel
+    {
+        return $this->respMateriel;
+    }
+
+    public function setRespMateriel(?Personnel $respMateriel): self
+    {
+        $this->respMateriel = $respMateriel;
 
         return $this;
     }

@@ -78,10 +78,9 @@
                         <td>
                             {% set nbEval = 0 %}
                             <div class="btn-toolbar">
-
                                 {% if evaluations[matiere.id] is defined %}
                                     {% for evaluation in evaluations[matiere.id] %}
-                                        <div class="btn-group mr-2">
+                                        <div class="btn-group mt-2 mr-2">
                                             <a class="btn btn-success"
                                                href="{{ path('administration_evaluation_show', {uuid:evaluation.uuidString}) }}"
                                                data-provide="tooltip"
@@ -119,7 +118,7 @@
                                 {% endif %}
                                 {% if nbEval < matiere.nbNotes %}
                                     {% for i in (nbEval+1)..matiere.nbNotes %}
-                                        <div class="btn-group">
+                                        <div class="btn-group mt-2">
                                             <button class="btn btn-label btn-primary"
                                                     data-provide="tooltip"
                                                     data-placement="bottom"

@@ -11,7 +11,7 @@
 {% block headeractions %}
     <div class="header-action bg-white">
         <nav class="nav">
-            {% if user.typeUser == 'permanent' %}
+            {% if user.typeUser == 'permanent' or user.typeUser == 'vacataire' %}
                 {{ include('user/composants/menu_personnel.html.twig') }}
             {% elseif user.typeUser == 'etudiant' %}
                 {{ include('user/composants/menu_etudiant.html.twig') }}
@@ -23,7 +23,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-8" id="profilContent">
-            {% if user.typeUser == 'permanent' %}
+            {% if user.typeUser == 'permanent' or user.typeUser == 'vacataire' %}
                 {{ include('user/composants/content_personnel.html.twig') }}
             {% elseif user.typeUser == 'etudiant' %}
                 {{ include('user/composants/content_etudiant.html.twig') }}
@@ -35,7 +35,7 @@
                 <div class="text-white card-body bg-img text-center py-50"
                      style="background-image: url({{ asset('assets/bg/2.jpg') }});">
                     <a href="#">
-                        {% if user.typeUser == 'permanent' %}
+                        {% if user.typeUser == 'permanent' or user.typeUser == 'vacataire' %}
                             <img class="avatar avatar-xxl avatar-bordered"
                                  src="{{ asset('upload/personnels/'~user.photoName) }}"
                                  alt="avatar de {{ user.display }}"

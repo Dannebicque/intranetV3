@@ -30,5 +30,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4 col-lg-4 col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'adm.emprunts'|trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <div class="row gap-y">
+                        <div class="col-md-12">
+                            <div>
+                                <a href="{{ path('administration_emprunts_index') }}"
+                                   class="btn btn-block btn-primary">{{ 'gestion.des.emprunts'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 </div>

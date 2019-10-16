@@ -7,7 +7,7 @@
 {% block headerright %}
     <div class="right gap-items-2">
         {% for sem in user_data.semestresActifs %}
-            <a href="{{ path('administration_semestre_index', {semestre:sem.id}) }}"
+            <a href="{{ path('administration_etudiant_parcours_semestre_index', {semestre:sem.id}) }}"
                class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'changer.de.semestre'|trans }}"
                data-provide="tooltip"
@@ -41,19 +41,19 @@
                     <th>Prénom</th>
                     <th>Semestre courant</th>
                     <th>Parcours</th>
-                    <th>A suivre</th>
+                    {#                    <th>A suivre</th>#}
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for etudiant in etudiants %}
                     <tr>
-                        <td>{{ etudiant.numeroEtudiant }}</td>
+                        <td>{{ etudiant.numEtudiant }}</td>
                         <td>{{ etudiant.nom }}</td>
                         <td>{{ etudiant.prenom }}</td>
                         <td>{{ etudiant.semestre.display }}</td>
-                        <td>{{ etudiant.parcours }}</td>
-                        <td>{{ etudiant.suvire }}</td>
+                        <td>{% for scolarite in etudiant.scolarites %}{{ scolarite.semestre.display }}{% endfor %}</td>
+                        {#                        <td>{{ etudiant.suivre }}</td>#}
                         <td>
                             actions
                         </td>

@@ -1,16 +1,9 @@
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/applications.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/applications.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 16/10/2019 17:41
+// @lastUpdate 16/10/2019 17:40
 
 
 $(document).on('click', '.changeapplication', function(e) {
@@ -37,11 +30,15 @@ $(document).on('change', '#selectsemestre', function () {
           .attr("value", "")
           .text("Choisir une matière"));
         jQuery.each(data, function (index, matiere) {
-
           selectMatiere.append($("<option></option>")
             .attr("value", matiere.id)
             .text(matiere.libelle));
         });
+        // selectMatiere.selectpicker({
+        //   liveSearch: true
+        // })
+        selectMatiere.attr('data-provide', 'selectpicker')
+        selectMatiere.attr('data-live-search', 'true')
       },
       error: function () {
 //todo: message ?

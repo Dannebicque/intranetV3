@@ -1,8 +1,7 @@
 Bouton pour Synchro avec Celcat ou pour Synchro avec Fils (2 TP donne  TD)
-<table class="table table-striped table-bordered" data-provide="datatables">
+<table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="false" data-order="2">
     <thead>
     <tr>
-        <th></th>
         <th>N°</th>
         <th>Nom</th>
         <th>Prénom</th>
@@ -19,7 +18,6 @@ Bouton pour Synchro avec Celcat ou pour Synchro avec Fils (2 TP donne  TD)
         {% set grp='' %}
         {% set grp_etu='' %}
         <tr id="ligne_{{ etudiant.id }}">
-            <td></td>
             <td>{{ etudiant.numetudiant }}</td>
             <td>{{ etudiant.nom|upper }}</td>
             <td>{{ etudiant.prenom|capitalize }}</td>
