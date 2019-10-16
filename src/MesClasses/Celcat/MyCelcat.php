@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:38
- * @lastUpdate 16/10/2019 18:38
+ * @date 16/10/2019 18:40
+ * @lastUpdate 16/10/2019 18:39
  */
 
 /**
@@ -132,7 +132,7 @@ abstract class MyCelcat
                     $event->setLibGroupe(odbc_result($result, 14));
                     $event->setCodeSalle(odbc_result($result, 11));
                     $event->setLibSalle(odbc_result($result, 12));
-                    $event->setUpdateEvent(odbc_result($result, 15));
+                    $event->setUpdateEvent(new DateTime(odbc_result($result, 15)));
 
                     $entity->persist($event);
                 } //endif
