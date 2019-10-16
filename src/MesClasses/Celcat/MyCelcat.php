@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:25
- * @lastUpdate 16/10/2019 18:25
+ * @date 16/10/2019 18:34
+ * @lastUpdate 16/10/2019 18:33
  */
 
 /**
@@ -102,7 +102,8 @@ abstract class MyCelcat
             ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id';
         $result = odbc_exec(self::$conn, $query);
 
-        while (odbc_fetch_row($result)) {
+        while (odbc_fetch_array($result)) {
+            dump(odbc_result_all($result));
             $eventId = odbc_result($result, 1);
 
             //Et on ecrit la nouvelle version ou la nouvelle ligne
