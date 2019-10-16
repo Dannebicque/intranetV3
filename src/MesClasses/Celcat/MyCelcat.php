@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:20
- * @lastUpdate 16/10/2019 18:20
+ * @date 16/10/2019 18:21
+ * @lastUpdate 16/10/2019 18:21
  */
 
 /**
@@ -59,7 +59,7 @@ abstract class MyCelcat
     {
 //        self::connect();
         $conn = odbc_connect('MSSQLSRV', getenv('MSSQL_USER'), getenv('MSSQL_PASS'));
-        $query = 'SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=\'CT_DEPT\'';
+        $query = 'SELECT * FROM \'CT_DEPT\'';
         //$query = 'SELECT * FROM CT_DEPT ORDER BY name';
         $results = odbc_exec($conn, $query);
         dump(odbc_num_rows($results));
