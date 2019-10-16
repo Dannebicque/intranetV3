@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:00
- * @lastUpdate 16/10/2019 18:00
+ * @date 16/10/2019 18:15
+ * @lastUpdate 16/10/2019 18:15
  */
 
 /**
@@ -57,15 +57,20 @@ abstract class MyCelcat
 
     public static function getDiplomes(): array
     {
-        self::connect();
-        dump(getenv('MSSQL_PASS'));
+//        self::connect();
         $conn = odbc_connect('MSSQLSRV', getenv('MSSQL_USER'), getenv('MSSQL_PASS'));
         $query = 'SELECT * FROM CT_DEPT ORDER BY name';
-        $result = odbc_exec($conn, $query);
+        $results = odbc_exec($conn, $query);
+        dump(odbc_num_rows($results));
+        if ($results) {
+            echo "Query Executed";
+        } else {
+            echo "Query failed " . odbc_error();
+        }
         $departements = [];
-        while (odbc_fetch_row($result)) {
-            $dept['nom'] = odbc_result($result, 1);
-            $dept['code'] = odbc_result($result, 0);
+        while (odbc_fetch_row($results)) {
+            $dept['nom'] = odbc_result($results, 1);
+            $dept['code'] = odbc_result($results, 0);
             $departements[] = $dept;
         }
         return $departements;
