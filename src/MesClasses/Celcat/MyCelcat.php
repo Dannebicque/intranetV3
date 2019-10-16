@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:21
- * @lastUpdate 16/10/2019 18:21
+ * @date 16/10/2019 18:23
+ * @lastUpdate 16/10/2019 18:23
  */
 
 /**
@@ -70,9 +70,8 @@ abstract class MyCelcat
         }
         $departements = [];
         while (odbc_fetch_array($results)) {
-            dump(odbc_result_all($results));
-            $dept['nom'] = odbc_result($results, 1);
-            $dept['code'] = odbc_result($results, 0);
+            $dept['nom'] = odbc_result($results, 'name');
+            $dept['code'] = odbc_result($results, 'dept_id');
             $departements[] = $dept;
         }
         return $departements;
