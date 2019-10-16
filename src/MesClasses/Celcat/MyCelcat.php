@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 17:58
- * @lastUpdate 16/10/2019 17:58
+ * @date 16/10/2019 17:59
+ * @lastUpdate 16/10/2019 17:59
  */
 
 /**
@@ -58,6 +58,7 @@ abstract class MyCelcat
     public static function getDiplomes(): array
     {
         self::connect();
+        dump(getenv('MSSQL_USER'));
         $conn = odbc_connect('MSSQLSRV', getenv('MSSQL_USER'), getenv('MSSQL_PASS'));
         $query = 'SELECT * FROM CT_DEPT ORDER BY name';
         $result = odbc_exec($conn, $query);
