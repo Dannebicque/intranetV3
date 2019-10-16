@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 26/08/2019 13:43
- * @lastUpdate 26/08/2019 13:43
+ * @date 16/10/2019 17:58
+ * @lastUpdate 16/10/2019 17:58
  */
 
 /**
@@ -58,9 +58,9 @@ abstract class MyCelcat
     public static function getDiplomes(): array
     {
         self::connect();
-
+        $conn = odbc_connect('MSSQLSRV', getenv('MSSQL_USER'), getenv('MSSQL_PASS'));
         $query = 'SELECT * FROM CT_DEPT ORDER BY name';
-        $result = odbc_exec(self::$conn, $query);
+        $result = odbc_exec($conn, $query);
         $departements = [];
         while (odbc_fetch_row($result)) {
             $dept['nom'] = odbc_result($result, 1);
