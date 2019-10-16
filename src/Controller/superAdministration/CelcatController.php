@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
+ * @date 16/10/2019 18:25
+ * @lastUpdate 16/10/2019 18:25
  */
 
 namespace App\Controller\superAdministration;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CelcatController extends BaseController
 {
     /**
-     * @Route("/index", methods={"GET"}, name="sa_celcat_index")
+     * @Route("/index", methods={"GET"}, name="super_admin_celcat_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @param DiplomeRepository $diplomeRepository
      *
