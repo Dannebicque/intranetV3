@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:25
- * @lastUpdate 16/10/2019 18:25
+ * @date 16/10/2019 18:27
+ * @lastUpdate 16/10/2019 18:27
  */
 
 namespace App\Controller\superAdministration;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CelcatController extends BaseController
 {
     /**
-     * @Route("/index", methods={"GET"}, name="super_admin_celcat_index")
+     * @Route("/index", methods={"GET"}, name="sa_celcat_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @param DiplomeRepository $diplomeRepository
      *
@@ -40,7 +40,7 @@ class CelcatController extends BaseController
     }
 
     /**
-     * @Route("/extraction", methods={"GET"}, name="super_admin_celcat_extraction_code")
+     * @Route("/extraction", methods={"GET"}, name="sa_celcat_extraction_code")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      */
@@ -52,7 +52,7 @@ class CelcatController extends BaseController
     }
 
     /**
-     * @Route("/update/{id}", methods={"GET"}, name="super_admin_celcat_update_events")
+     * @Route("/update/{id}", methods={"GET"}, name="sa_celcat_update_events")
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param Diplome                $diplome

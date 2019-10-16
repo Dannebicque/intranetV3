@@ -8,7 +8,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('super_admin_celcat_extraction_code') }}" class="btn btn-info btn-sm btn-float"
+            <a href="{{ path('sa_celcat_extraction_code') }}" class="btn btn-info btn-sm btn-float"
                data-provide="tooltip"
                target="_blank"
                data-placement="bottom" title="{{ 'atitle.code_celcat'|trans }}"><i
@@ -47,7 +47,7 @@
                                                                                  data-provide="tooltip"
                                                                                  data-placement="bottom"
                                                                                  title="{{ 'atitle.modifier'|trans }}"></i></a>
-                            <a href="{{ path('super_admin_celcat_update_events', {'id': diplome.id}) }}"
+                            <a href="{{ path('sa_celcat_update_events', {'id': diplome.id}) }}"
                                class="btn btn-success btn-outline btn-square" target="_blank"><i class="fa fa-refresh"
                                                                                                  data-provide="tooltip"
                                                                                                  data-placement="bottom"
