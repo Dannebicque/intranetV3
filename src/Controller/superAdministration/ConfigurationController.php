@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ConfigurationController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 17:39
- * @lastUpdate 21/09/2019 12:39
+ * @date 18/10/2019 08:06
+ * @lastUpdate 21/09/2019 17:39
  */
 
 namespace App\Controller\superAdministration;
@@ -77,6 +77,7 @@ class ConfigurationController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($configuration);
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.add.success.flash');
 
             return $this->redirectToRoute('sa_configuration_index');
         }
@@ -112,6 +113,7 @@ class ConfigurationController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.edit.success.flash');
 
             return $this->redirectToRoute('sa_configuration_edit', ['id' => $configuration->getId()]);
         }
@@ -135,6 +137,7 @@ class ConfigurationController extends BaseController
 
         $this->entityManager->persist($newConfiguration);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_configuration_edit', ['id' => $newConfiguration->getId()]);
     }
