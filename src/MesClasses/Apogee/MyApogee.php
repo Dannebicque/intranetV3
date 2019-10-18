@@ -5,7 +5,7 @@
  * @author     David Annebicque
  * @project intranetv3
  * @date 18/10/2019 12:17
- * @lastUpdate 18/10/2019 12:16
+ * @lastUpdate 18/10/2019 12:17
  */
 
 /**
@@ -71,7 +71,7 @@ abstract class MyApogee
     {
         self::connect();
         $stid = oci_parse(self::$conn,
-            'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\'3TW1\'');
+            'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\'3TW1\'');
         oci_execute($stid);
 
         return $stid;
