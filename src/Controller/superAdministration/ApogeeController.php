@@ -5,8 +5,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/ApogeeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/10/2019 11:41
- * @lastUpdate 18/10/2019 11:41
+ * @date 18/10/2019 12:02
+ * @lastUpdate 18/10/2019 12:01
  */
 
 namespace App\Controller\superAdministration;
@@ -14,7 +14,7 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
-use App\MesClasses\Celcat\MyApogee;
+use App\MesClasses\Apogee\MyApogee;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use Exception;
