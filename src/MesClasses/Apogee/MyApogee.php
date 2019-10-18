@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Apogee/MyApogee.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/10/2019 12:09
- * @lastUpdate 18/10/2019 12:08
+ * @date 18/10/2019 12:14
+ * @lastUpdate 18/10/2019 12:14
  */
 
 /**
@@ -62,6 +62,17 @@ abstract class MyApogee
         self::connect();
         $stid = oci_parse(self::$conn,
             'SELECT * FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\'3TW1\'');
+        oci_execute($stid);
+
+        return $stid;
+    }
+
+    public static function getHierarchieGroupesSemestre(Semestre $semestre)
+    {
+        self::connect();
+        $stid = oci_parse(self::$conn,
+            'SELECT * FROM GPE_INCLUS_GPE 
+                INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\'3TW1\'');
         oci_execute($stid);
 
         return $stid;
