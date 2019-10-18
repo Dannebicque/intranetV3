@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
+<!-- Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 21/09/2019 11:53 -->
-<!-- @lastUpdate 21/09/2019 11:53 -->
+<!-- @date 18/10/2019 08:07 -->
+<!-- @lastUpdate 18/10/2019 08:07 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12436,6 +12436,150 @@
           <segment>
               <source>username.import</source>
               <target>username.import</target>
+          </segment>
+      </unit>
+      <unit id="Q_42rmv" name="nbCoursManques">
+          <segment>
+              <source>nbCoursManques</source>
+              <target>nbCoursManques</target>
+          </segment>
+      </unit>
+      <unit id="A4kHa0O" name="totalDuree">
+          <segment>
+              <source>totalDuree</source>
+              <target>totalDuree</target>
+          </segment>
+      </unit>
+      <unit id="4gxvCWm" name="nbNonJustifie">
+          <segment>
+              <source>nbNonJustifie</source>
+              <target>nbNonJustifie</target>
+          </segment>
+      </unit>
+      <unit id="kT.e1k." name="nbJustifie">
+          <segment>
+              <source>nbJustifie</source>
+              <target>nbJustifie</target>
+          </segment>
+      </unit>
+      <unit id="5eTB1Hn" name="type_materiel.add.success.flash">
+          <segment>
+              <source>type_materiel.add.success.flash</source>
+              <target>type_materiel.add.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="OBz.ak0" name="type_materiel.duplicate.success.flash">
+          <segment>
+              <source>type_materiel.duplicate.success.flash</source>
+              <target>type_materiel.duplicate.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="wgzP643" name="type_materiel.edit.success.flash">
+          <segment>
+              <source>type_materiel.edit.success.flash</source>
+              <target>type_materiel.edit.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="cVfBkSa" name="materiel.add.success.flash">
+          <segment>
+              <source>materiel.add.success.flash</source>
+              <target>materiel.add.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="5r2nP5T" name="materiel.edit.success.flash">
+          <segment>
+              <source>materiel.edit.success.flash</source>
+              <target>materiel.edit.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="8Rk28_G" name="gestion.des.emprunts">
+          <segment>
+              <source>gestion.des.emprunts</source>
+              <target>gestion.des.emprunts</target>
+          </segment>
+      </unit>
+      <unit id="ZOEySjD" name="adm.emprunts.index.heading">
+          <segment>
+              <source>adm.emprunts.index.heading</source>
+              <target>adm.emprunts.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="rHuGEAR" name="adm.emprunt.show.heading">
+          <segment>
+              <source>adm.emprunt.show.heading</source>
+              <target>adm.emprunt.show.heading</target>
+          </segment>
+      </unit>
+      <unit id="C0Z45Ws" name="atitle.emprunt_accepte">
+          <segment>
+              <source>atitle.emprunt_accepte</source>
+              <target>atitle.emprunt_accepte</target>
+          </segment>
+      </unit>
+      <unit id="qY9pTCK" name="atitle.emprunt_refuse">
+          <segment>
+              <source>atitle.emprunt_refuse</source>
+              <target>atitle.emprunt_refuse</target>
+          </segment>
+      </unit>
+      <unit id="ZtOUYN0" name="atitle.imprimer">
+          <segment>
+              <source>atitle.imprimer</source>
+              <target>atitle.imprimer</target>
+          </segment>
+      </unit>
+      <unit id="piDEGw4" name="mail.chgt.emprunt.accepte">
+          <segment>
+              <source>mail.chgt.emprunt.accepte</source>
+              <target>mail.chgt.emprunt.accepte</target>
+          </segment>
+      </unit>
+      <unit id="gdLtTsC" name="atitle.emprunt_sortie">
+          <segment>
+              <source>atitle.emprunt_sortie</source>
+              <target>atitle.emprunt_sortie</target>
+          </segment>
+      </unit>
+      <unit id="_25uIAZ" name="atitle.emprunt_revenu">
+          <segment>
+              <source>atitle.emprunt_revenu</source>
+              <target>atitle.emprunt_revenu</target>
+          </segment>
+      </unit>
+      <unit id="O1e0.51" name="atitle.historique.emprunt">
+          <segment>
+              <source>atitle.historique.emprunt</source>
+              <target>atitle.historique.emprunt</target>
+          </segment>
+      </unit>
+      <unit id="DIuDn2L" name="adm.emprunts.historique.heading">
+          <segment>
+              <source>adm.emprunts.historique.heading</source>
+              <target>adm.emprunts.historique.heading</target>
+          </segment>
+      </unit>
+      <unit id="PTfQf18" name="atitle.retour_emprunt">
+          <segment>
+              <source>atitle.retour_emprunt</source>
+              <target>atitle.retour_emprunt</target>
+          </segment>
+      </unit>
+      <unit id="7Lj.T8d" name="REVENU">
+          <segment>
+              <source>REVENU</source>
+              <target>REVENU</target>
+          </segment>
+      </unit>
+      <unit id="_vJ.QeY" name="app.etudiant.emprunt.show.heading">
+          <segment>
+              <source>app.etudiant.emprunt.show.heading</source>
+              <target>app.etudiant.emprunt.show.heading</target>
+          </segment>
+      </unit>
+      <unit id="2HwQsuS" name="adm.emprunts">
+          <segment>
+              <source>adm.emprunts</source>
+              <target>adm.emprunts</target>
           </segment>
       </unit>
   </file>
