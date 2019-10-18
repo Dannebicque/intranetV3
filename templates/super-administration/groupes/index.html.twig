@@ -1,0 +1,116 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'super-admin.groupes-departement.heading'|trans({"%departement%": departement.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            {% for semestre in semestres %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %}active show{% endif %}" data-toggle="tab"
+                       href="#semestre{{ semestre.id }}" role="tab">{{ semestre.libelle }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="buttons">
+            <a href="{{ path('sa_groupes_departement_synchro_all', {departement:departement.id}) }}" class="btn
+            btn-info btn-float btn-sm"
+               data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.synchro_apogee'|trans }}"><i
+                        class="ti-import"></i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="tab-content">
+        {% for semestre in semestres %}
+            <div class="tab-pane {% if loop.first %} active show{% endif %}"
+                 id="semestre{{ semestre.id }}" role="tabpanel">
+                <div class="card">
+                    <header class="card-header">
+                        <h2 class="card-title">Groupes du semestre {{ semestre.libelle }}</h2>
+                        <div class="card-header-actions" style="">
+                            <a class="btn btn-sm btn-primary"
+                               title="{{ 'sa.ajouter.personnel'|trans }}"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               href="{{ path('sa_groupes_departement_synchro_semestre', {semestre:semestre.id}) }}"
+                            >
+                                <i class="ti ti-import"></i>
+                            </a>
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i><span
+                                                class="sr-only">Menu Export</span></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="{{ path('administration_groupe_export', {_format:'pdf',
+                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa
+                                            fa-file-pdf-o"></i> PDF</a>
+                                        <a href="{{ path('administration_groupe_export', {_format:'xlsx',
+                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-excel-o"></i>
+                                            Excel</a>
+                                        <a href="{{ path('administration_groupe_export', {_format:'csv',
+                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-text-o"></i>
+                                            CSV</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+
+                    <div class="card-body" id="groupe_bloc">
+                        {{ include('administration/groupe/_liste.html.twig') }}
+                    </div>
+                </div>
+
+                {#                <div class="card">#}
+                {#                    <header class="card-header">#}
+                {#                        <h2 class="card-title">Types de Groupe du semestre {{ semestre.libelle }}</h2>#}
+                {#                    </header>#}
+
+                {#                    <div class="card-body">#}
+                {#                        <table class="table table-separated">#}
+                {#                            <tbody id="typgeGroupe_bloc">#}
+                {#                            {{ include('administration/type_groupe/_liste.html.twig') }}#}
+                {#                            </tbody>#}
+                {#                            <tfoot>#}
+                {#                            <tr id="ligne_add">#}
+                {#                                <td>#}
+                {#                                    <label for="type_groupe_libelle" class="sr-only">Libellé du type de groupe</label>#}
+                {#                                    <input type="text"#}
+                {#                                           class="form-control"#}
+                {#                                           placeholder="Libellé du type de groupe"#}
+                {#                                           id="type_groupe_libelle">#}
+                {#                                </td>#}
+                {#                                <td>#}
+                {#                                    <div class="form-check">#}
+                {#                                        <input class="form-check-input"#}
+                {#                                               type="radio"#}
+                {#                                               name="type_groupe_defaut"#}
+                {#                                               id="type_groupe_defaut"#}
+                {#                                               value="true">#}
+                {#                                        <label class="form-check-label" for="type_groupe_defaut">#}
+                {#                                            Par défaut#}
+                {#                                        </label>#}
+                {#                                    </div>#}
+                {#                                </td>#}
+                {#                                <td class="text-right table-actions">#}
+                {#                                    <button class="btn btn-primary btn-block" id="add_type_groupe"#}
+                {#                                            data-semestre="{{ semestre.id }}"><span#}
+                {#                                                class="ti-plus"></span> Ajouter</button>#}
+                {#                                </td>#}
+                {#                            </tr>#}
+                {#                            </tfoot>#}
+                {#                        </table>#}
+                {#                    </div>#}
+                {#                </div>#}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
