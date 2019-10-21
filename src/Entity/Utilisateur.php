@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Utilisateur.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/30/19 2:48 PM
+ * @date 21/10/2019 09:52
+ * @lastUpdate 20/10/2019 08:24
  */
 
 namespace App\Entity;
@@ -266,6 +266,14 @@ abstract class Utilisateur implements UserInterface
      */
     public function getSiteUniv()
     {
+        if ($this->siteUniv !== '' && $this->siteUniv !== null) {
+            if (strpos($this->siteUniv, 'http') === 0) {
+                return $this->siteUniv;
+            } else {
+                return 'https://' . $this->siteUniv;
+            }
+        }
+
         return $this->siteUniv;
     }
 
@@ -275,6 +283,7 @@ abstract class Utilisateur implements UserInterface
     public function setSiteUniv($siteUniv): void
     {
         $this->siteUniv = $siteUniv;
+
     }
 
     /**
@@ -282,6 +291,14 @@ abstract class Utilisateur implements UserInterface
      */
     public function getSitePerso()
     {
+        if ($this->sitePerso !== '' && $this->sitePerso !== null) {
+            if (strpos($this->sitePerso, 'http') === 0) {
+                return $this->sitePerso;
+            } else {
+                return 'https://' . $this->sitePerso;
+            }
+        }
+
         return $this->sitePerso;
     }
 
@@ -291,6 +308,7 @@ abstract class Utilisateur implements UserInterface
     public function setSitePerso($sitePerso): void
     {
         $this->sitePerso = $sitePerso;
+
     }
 
     /**
@@ -523,7 +541,7 @@ abstract class Utilisateur implements UserInterface
      */
     public function getMails(): array
     {
-        $mails = array();
+        $mails = [];
         if ($this->getMailUniv() !== null && trim($this->getMailUniv()) !== '') {
             $mails[] = trim($this->getMailUniv());
         }

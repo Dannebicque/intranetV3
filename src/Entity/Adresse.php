@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Adresse.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/8/19 7:14 PM
+ * @date 21/10/2019 09:52
+ * @lastUpdate 20/10/2019 08:19
  */
 
 namespace App\Entity;
@@ -50,7 +50,7 @@ class Adresse extends BaseEntity
     private $ville;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"adresse"})
      */
     private $pays = 'France';
@@ -196,7 +196,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setPays(string $pays = 'France'): self
+    public function setPays(?string $pays = 'France'): self
     {
         $this->pays = $pays;
 

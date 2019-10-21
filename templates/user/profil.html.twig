@@ -65,14 +65,16 @@
                     </li>
                     <li class="br-1 border-light">
                         <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
-                        <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank"
-                                               title="{{ 'consulter.espace.travail'|trans }}" data-provide="tooltip"
+                        <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" {% if user.siteUniv == ''
+                                or user.siteUniv == null %}class="isDisabled" title="{{ 'pas.d.espace.travail'|trans }}"
+                                    {% else %} title="{{ 'consulter.espace.travail'|trans }}" {% endif %}
+                                                data-provide="tooltip"
                                                data-placement="bottom"><i class="fa fa-globe"></i></a></span>
                     </li>
-                    <li>
-                        <span class="text-muted">Tweets</span><br>
-                        <span class="fs-22">165</span>
-                    </li>
+                    {#                    <li>#}
+                    {#                        <span class="text-muted">Tweets</span><br>#}
+                    {#                        <span class="fs-22">165</span>#}
+                    {#                    </li>#}
                 </ul>
             </div>
 
