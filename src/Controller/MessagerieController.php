@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:04
+ * @date 21/10/2019 09:52
+ * @lastUpdate 19/10/2019 17:54
  */
 
 namespace App\Controller;
@@ -56,32 +56,35 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @Route("/starred", name="messagerie_starred", options={"expose":true})
+     * @Route("/change-etat", name="messagerie_change_etat", options={"expose":true})
      * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
      * @param Request                                $request
      *
      * @return JsonResponse
+     * @throws NonUniqueResultException
      */
-    public function starred(
+    public function changeEtat(
         MessageDestinatairePersonnelRepository $messagePersonnelRepository,
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
+        MessageRepository $messageRepository,
         Request $request
     ): JsonResponse {
-        $message = $request->request->get('message');
-        $valeur = $request->request->get('valeur') !== 'false';
+        $message = $messageRepository->find($request->request->get('message'));
+        $etat = $request->request->get('etat');
 
 
         if ($this->getConnectedUser() instanceof Etudiant) {
-            $messageDest = $messageEtudiantRepository->find($message);
-
+            $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
-            $messageDest = $messagePersonnelRepository->find($message);
+            $messaged = $messagePersonnelRepository->findDest($this->getConnectedUser(), $message);
+        } else {
+            return $this->redirectToRoute('erreur_666');
         }
 
-        if ($messageDest !== null) {
-            $messageDest->setStarred($valeur);
-            $this->entityManager->persist($messageDest);
+        if ($messaged !== null) {
+            $messaged->setEtat($etat);
+            $this->entityManager->persist($messaged);
             $this->entityManager->flush();
 
             return $this->json(true, Response::HTTP_OK);

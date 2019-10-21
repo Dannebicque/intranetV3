@@ -2,8 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
 // @author     David Annebicque
 // @project intranetv3
-// @date 16/10/2019 17:41
-// @lastUpdate 16/10/2019 17:40
+// @date 21/10/2019 09:52
+// @lastUpdate 21/10/2019 09:51
 
 'use strict'
 
@@ -925,20 +925,12 @@ $(document).on( 'click', '.changegroupe', function() {
 });
 
 
-
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/applications.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/applications.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 16/10/2019 17:41
+// @lastUpdate 16/10/2019 17:40
 
 
 $(document).on('click', '.changeapplication', function(e) {
@@ -1549,14 +1541,29 @@ $(document).on('click', '#messageSent', function (e) {
 
 $(document).on('click', '.starred', function () {
   $.ajax({
-    url: Routing.generate('messagerie_starred'),
+    url: Routing.generate('messagerie_change_etat'),
     method: 'POST',
     data: {
-      valeur: $(this).is(':checked'),
-      message: $(this).dataAttr('message')
+      valeur: 'S',
+      message: $(this).data('message')
     },
     error: function () {
-      $(this).prop('checked', false)//todo: annuler le check
+      $(this).prop('checked', false)
+    }
+  })
+})
+
+  $(document).on('click', '#deleteMessage', function () {
+    console.log($(this).data('message'))
+    $.ajax({
+      url: Routing.generate('messagerie_change_etat'),
+      method: 'POST',
+      data: {
+        etat: 'D',
+        message: $(this).data('message')
+      },
+      success: function () {
+        //todo: retourner à la page avant
     }
   })
 })

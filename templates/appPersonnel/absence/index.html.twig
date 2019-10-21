@@ -83,11 +83,17 @@
                                 {% else %}
                                     <div class="col-md-12">
                                         <div class="alert alert-warning">
-                                            Aucun groupe n'existe dans ce semestre. <a
+                                            {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement
+                                                ('ROLE_DDE') %}
+                                                Aucun groupe n'existe dans ce semestre. <a
                                                     href="{{ path('administration_groupe_index') }}">Veuillez
                                                                                                      d'abord ajouter des
                                                                                                      types de groupe et
                                                                                                      des groupes.</a>
+                                            {% else %}
+                                                Aucun groupe n'existe dans ce semestre. Contactez les responsables du
+                                                département.
+                                            {% endif %}
                                         </div>
                                     </div>
                                 {% endfor %}
