@@ -1,0 +1,31 @@
+# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+  # valid drivers options include "gd" or "gmagick" or "imagick"
+  driver: "gd"
+
+  # configure resolvers
+  resolvers:
+
+    # setup the default resolver
+    default:
+
+      # use the default web path
+      web_path: ~
+
+  # your filter sets are defined here
+  filter_sets:
+
+    # use the default cache configuration
+    cache: ~
+
+    # the name of the "filter set"
+    thumb:
+      # adjust the image quality to 75%
+      quality: 75
+
+      # list of transformations to apply (the "filters")
+      filters:
+
+        # create a thumbnail: set size to 120x90 and use the "outbound" mode
+        # to crop the image when the size ratio of the input differs
+        thumbnail: { size: [120, 120], mode: inset }

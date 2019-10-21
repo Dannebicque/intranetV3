@@ -1,18 +1,18 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/config/bundles.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 17:39
- * @lastUpdate 21/09/2019 17:39
+ * @date 21/10/2019 09:53
+ * @lastUpdate 21/10/2019 09:53
  */
 
 return [
-    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
-    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
-    Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
-    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
+    Symfony\Bundle\TwigBundle\TwigBundle::class                          => ['all' => true],
+    Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class       => ['all' => true],
+    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class                 => ['all' => true],
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class     => ['all' => true],
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class            => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class                        => ['all' => true],
@@ -26,4 +26,5 @@ return [
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class            => ['dev' => true, 'test' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class         => ['dev' => true, 'test' => true],
     Translation\Bundle\TranslationBundle::class                          => ['all' => true],
+    Liip\ImagineBundle\LiipImagineBundle::class                          => ['all' => true],
 ];
