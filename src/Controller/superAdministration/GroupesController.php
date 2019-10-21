@@ -5,8 +5,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/GroupesController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/10/2019 12:17
- * @lastUpdate 18/10/2019 12:17
+ * @date 21/10/2019 09:53
+ * @lastUpdate 18/10/2019 16:49
  */
 
 namespace App\Controller\superAdministration;
@@ -68,6 +68,10 @@ class GroupesController extends BaseController
      */
     public function synchroApogeeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
+        //supprimer les groupes du semestre
+        //récupérer les gorupes
+        //calcluler l'aroborescence
+
 //        $groupes = MyApogee::getGroupesSemestre($semestre);
 //
 //        while ($row = oci_fetch_array($groupes, OCI_ASSOC + OCI_RETURN_NULLS)) {
