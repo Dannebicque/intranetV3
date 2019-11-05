@@ -1,16 +1,15 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Ue.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 09:14
- * @lastUpdate 21/09/2019 09:03
+ * @date 05/11/2019 11:51
+ * @lastUpdate 05/11/2019 11:50
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,8 +20,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ue extends BaseEntity
 {
-    use ApogeeTrait;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -79,6 +76,11 @@ class Ue extends BaseEntity
      * @ORM\Column(type="boolean")
      */
     private $bonification = false;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    private $codeElement;
 
     /**
      * Ue constructor.
@@ -317,6 +319,18 @@ class Ue extends BaseEntity
     public function setBonification(bool $bonification): self
     {
         $this->bonification = $bonification;
+
+        return $this;
+    }
+
+    public function getCodeElement(): ?string
+    {
+        return $this->codeElement;
+    }
+
+    public function setCodeElement(string $codeElement): self
+    {
+        $this->codeElement = $codeElement;
 
         return $this;
     }

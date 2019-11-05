@@ -41,8 +41,7 @@
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td colspan="3">{{ semestre.libelle }} | {{ semestre.codeApogee }}
-                            | {{ semestre.codeVersion }}</td>
+                        <td colspan="3">{{ semestre.libelle }} | {{ semestre.codeElement }}</td>
 
                     </tr>
                     {% for ue in semestre.ues %}
@@ -52,8 +51,7 @@
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td colspan="2">{{ ue.numeroUe }} | {{ ue.libelle }} | {{ ue.codeApogee }}
-                                | {{ ue.codeVersion }}</td>
+                            <td colspan="2">{{ ue.numeroUe }} | {{ ue.libelle }} | {{ ue.codeElement }}</td>
                         </tr>
                         {% for matiere in ue.matieres %}
 
@@ -63,7 +61,7 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>{{ matiere.codeMatiere }} | {{ matiere.libelle }} | {{ matiere.codeApogee }}</td>
+                                <td>{{ matiere.codeMatiere }} | {{ matiere.libelle }} | {{ matiere.codeElement }}</td>
                             </tr>
                         {% endfor %}
                     {% endfor %}

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
+<!-- Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 21/10/2019 09:52 -->
-<!-- @lastUpdate 21/10/2019 09:51 -->
+<!-- @date 05/11/2019 11:51 -->
+<!-- @lastUpdate 05/11/2019 11:50 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12592,6 +12592,12 @@
           <segment>
               <source>pas.d.espace.travail</source>
               <target>pas.d.espace.travail</target>
+          </segment>
+      </unit>
+      <unit id="nMN3bAV" name="table.code_element">
+          <segment>
+              <source>table.code_element</source>
+              <target>table.code_element</target>
           </segment>
       </unit>
   </file>

@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/UeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 16:58
- * @lastUpdate 04/09/2019 16:57
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 10:09
  */
 
 namespace App\Form;
@@ -39,6 +39,7 @@ class UeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('semestre', EntityType::class, [
                 'class'         => Semestre::class,
@@ -54,10 +55,7 @@ class UeType extends AbstractType
             ->add('numero_ue', ChoiceType::class, ['choices' => range(0, 20), 'label' => 'label.numero_ue'])
             ->add('bonification', YesNoType::class, ['label' => 'label.bonification', 'help' => 'help.bonification'])
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
-            ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
-            ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
-            ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
-            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement']);
+            ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects']);
     }
 
     /**

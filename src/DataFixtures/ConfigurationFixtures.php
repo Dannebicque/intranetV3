@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/ConfigurationFixtures.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/29/19 10:35 AM
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 11:23
  */
 
 namespace App\DataFixtures;
@@ -53,6 +53,11 @@ class ConfigurationFixtures extends Fixture
         $conf = new Configuration();
         $conf->setCle('ADRESSE_IUT');
         $conf->setValeur('Iut de Troyes, 9, Rue de Québec, CS90396, 10026 Troyes Cedex');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('BASE_PATH');
+        $conf->setValeur('src/public/upload/');
         $manager->persist($conf);
 
         $conf = new Configuration();

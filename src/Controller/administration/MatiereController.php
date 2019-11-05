@@ -1,11 +1,11 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+/**
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/MatiereController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
+ * @date 05/11/2019 11:51
+ * @lastUpdate 05/11/2019 11:50
  */
 
 namespace App\Controller\administration;
@@ -15,6 +15,9 @@ use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Form\MatiereType;
+use App\MesClasses\Configuration;
+use App\MesClasses\MyExport;
+use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,14 +53,49 @@ class MatiereController extends BaseController
 
 
     /**
-     * @Route("/export.{_format}", name="administration_matiere_export", methods="GET",
+     * @Route("/{diplome}/export.{_format}", name="administration_matiere_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport $myExport
+     * @param MatiereRepository $matiereRepository
+     * @param Diplome $diplome
+     * @param                   $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(
+        MyExport $myExport,
+        MatiereRepository $matiereRepository,
+        Diplome $diplome,
+        $_format
+    ): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $actualites = $matiereRepository->findByDiplome($diplome);
+        $response = $myExport->genereFichierGenerique(
+            $_format,
+            $actualites,
+            'matieres',
+            ['matiere', 'matiere_administration'],
+            [
+                'libelle',
+                'codeMatiere',
+                'cmPpn',
+                'tdPpn',
+                'tpPpn',
+                'cmFormation',
+                'tdFormation',
+                'tpFormation',
+                'nbNotes',
+                'coefficient',
+                'pac',
+                'nbEcts',
+                'suspendu'
+            ]
+        );
+
+        return $response;
     }
+
 
     /**
      * @Route("/new/{diplome}", name="administration_matiere_new", methods="GET|POST")
@@ -69,27 +107,32 @@ class MatiereController extends BaseController
      */
     public function create(Request $request, Diplome $diplome): Response
     {
-        $matiere = new Matiere();
-        $form = $this->createForm(MatiereType::class, $matiere, [
-            'diplome' => $diplome,
-            'attr'    => [
-                'data-provide' => 'validation'
-            ]
-        ]);
-        $form->handleRequest($request);
+        if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($matiere);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
+            $matiere = new Matiere();
+            $form = $this->createForm(MatiereType::class, $matiere, [
+                'diplome' => $diplome,
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
+            $form->handleRequest($request);
 
-            return $this->redirectToRoute('administration_matiere_index');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($matiere);
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
+
+                return $this->redirectToRoute('administration_matiere_index');
+            }
+
+            return $this->render('administration/matiere/new.html.twig', [
+                'matiere' => $matiere,
+                'form'    => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/matiere/new.html.twig', [
-            'matiere' => $matiere,
-            'form'    => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -112,25 +155,29 @@ class MatiereController extends BaseController
      */
     public function edit(Request $request, Matiere $matiere): Response
     {
-        $form = $this->createForm(MatiereType::class, $matiere, [
-            'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
-            'attr'    => [
-                'data-provide' => 'validation'
-            ]
-        ]);
-        $form->handleRequest($request);
+        if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
+            $form = $this->createForm(MatiereType::class, $matiere, [
+                'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
+                'attr'    => [
+                    'data-provide' => 'validation'
+                ]
+            ]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.edit.success.flash');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.edit.success.flash');
 
-            return $this->redirectToRoute('administration_matiere_index');
+                return $this->redirectToRoute('administration_matiere_index');
+            }
+
+            return $this->render('administration/matiere/edit.html.twig', [
+                'matiere' => $matiere,
+                'form'    => $form->createView(),
+            ]);
         }
 
-        return $this->render('administration/matiere/edit.html.twig', [
-            'matiere' => $matiere,
-            'form'    => $form->createView(),
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
 
@@ -142,13 +189,17 @@ class MatiereController extends BaseController
      */
     public function duplicate(Matiere $matiere): Response
     {
-        $newMatiere = clone $matiere;
+        if ((int)Configuration::get('MODIFICATION_PPN')) {
+            $newMatiere = clone $matiere;
 
-        $this->entityManager->persist($newMatiere);
-        $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.duplicate.success.flash');
+            $this->entityManager->persist($newMatiere);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_matiere_edit', ['id' => $newMatiere->getId()]);
+            return $this->redirectToRoute('administration_matiere_edit', ['id' => $newMatiere->getId()]);
+        }
+
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**

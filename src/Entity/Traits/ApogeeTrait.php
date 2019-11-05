@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Traits/ApogeeTrait.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 8/26/18 11:09 AM
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 10:08
  */
 
 /**
@@ -23,7 +23,7 @@ trait ApogeeTrait {
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeApogee;
+    private $codeApogee; //code etape ou code diplome
 
     /**
      * @ORM\Column(type="string", length=10)

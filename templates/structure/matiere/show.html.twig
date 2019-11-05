@@ -30,9 +30,7 @@
                 {{ table.line('table.code_matiere', matiere.codeMatiere) }}
                 {{ table.line('table.created', matiere.created ? matiere.created|localizeddate('long', 'short', app.request.getLocale()) : '') }}
                 {{ table.line('table.updated', matiere.updated ? matiere.updated|localizeddate('long', 'short', app.request.getLocale()) : '') }}
-                {{ table.line('table.code_apogee', matiere.codeApogee) }}
-                {{ table.line('table.code_version', matiere.codeVersion) }}
-                {{ table.line('table.code_departement', matiere.codeDepartement) }}
+                {{ table.line('table.code_element', matiere.codeElement) }}
                 {{ table.line('table.ue', matiere.ue ? matiere.ue.libelle : 'non.defini'|trans) }}
                 {{ table.line('table.ppn', matiere.ppn ? matiere.ppn.libelle : 'non.defini'|trans) }}
                 {{ table.line('table.parcours', matiere.parcours ? matiere.parcours.libelle : 'non.defini'|trans) }}

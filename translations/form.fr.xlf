@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
+<!-- Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/form.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 21/10/2019 09:52 -->
-<!-- @lastUpdate 21/10/2019 09:51 -->
+<!-- @date 05/11/2019 11:51 -->
+<!-- @lastUpdate 05/11/2019 11:50 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -4036,6 +4036,12 @@
           <segment>
               <source>label.empruntable</source>
               <target>label.empruntable</target>
+          </segment>
+      </unit>
+      <unit id="6Lu7js6" name="label.code_element">
+          <segment>
+              <source>label.code_element</source>
+              <target>label.code_element</target>
           </segment>
       </unit>
   </file>

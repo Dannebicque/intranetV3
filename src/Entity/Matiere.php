@@ -1,16 +1,15 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Matiere.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 09:14
- * @lastUpdate 21/09/2019 08:56
+ * @date 05/11/2019 11:51
+ * @lastUpdate 05/11/2019 11:50
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Matiere extends BaseEntity
 {
-    use ApogeeTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,6 +40,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $cmPpn = 0;
 
@@ -49,6 +48,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $tdPpn = 0;
 
@@ -56,6 +56,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $tpPpn = 0;
 
@@ -63,6 +64,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $cmFormation = 0;
 
@@ -70,6 +72,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $tdFormation = 0;
 
@@ -77,6 +80,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $tpFormation = 0;
 
@@ -91,6 +95,7 @@ class Matiere extends BaseEntity
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Groups({"matiere_administration"})
      */
     private $nbNotes = 2;
 
@@ -98,6 +103,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $coefficient = 1;
 
@@ -105,6 +111,7 @@ class Matiere extends BaseEntity
      * @var Boolean
      *
      * @ORM\Column(type="boolean")
+     * @Groups({"matiere_administration"})
      */
     private $pac = false;
 
@@ -112,6 +119,7 @@ class Matiere extends BaseEntity
      * @var float
      *
      * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
      */
     private $nbEcts = 1;
 
@@ -196,6 +204,7 @@ class Matiere extends BaseEntity
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"matiere_administration"})
      */
     private $suspendu = false;
 
@@ -224,6 +233,11 @@ class Matiere extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="matiere")
      */
     private $progressionPedagogiques;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $codeElement;
 
     public function __construct()
     {
@@ -933,6 +947,18 @@ class Matiere extends BaseEntity
                 $progressionPedagogique->setMatiere(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodeElement(): ?string
+    {
+        return $this->codeElement;
+    }
+
+    public function setCodeElement(string $codeElement): self
+    {
+        $this->codeElement = $codeElement;
 
         return $this;
     }

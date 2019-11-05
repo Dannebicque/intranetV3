@@ -1,16 +1,15 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Parcour.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 8/26/18 11:09 AM
+ * @date 05/11/2019 11:51
+ * @lastUpdate 05/11/2019 11:50
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,8 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Parcour extends BaseEntity
 {
-    use ApogeeTrait;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -36,6 +33,11 @@ class Parcour extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="parcours")
      */
     private $semestre;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $codeElement;
 
     public function __construct(Semestre $semestre)
     {
@@ -136,5 +138,17 @@ class Parcour extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getCodeElement(): ?string
+    {
+        return $this->codeElement;
+    }
+
+    public function setCodeElement(string $codeElement): self
+    {
+        $this->codeElement = $codeElement;
+
+        return $this;
     }
 }
