@@ -1,16 +1,15 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Semestre.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 09:03
- * @lastUpdate 05/09/2019 08:19
+ * @date 05/11/2019 11:51
+ * @lastUpdate 05/11/2019 11:50
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,8 +23,6 @@ use function ord;
  */
 class Semestre extends BaseEntity
 {
-    use ApogeeTrait;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"article_administration", "semestre"})
@@ -258,6 +255,11 @@ class Semestre extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="semestres")
      */
     private $ppn_actif;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $codeElement;
 
     public function __construct()
     {
@@ -1251,6 +1253,18 @@ class Semestre extends BaseEntity
                 $hr->setSemestre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodeElement(): ?string
+    {
+        return $this->codeElement;
+    }
+
+    public function setCodeElement(string $codeElement): self
+    {
+        $this->codeElement = $codeElement;
 
         return $this;
     }

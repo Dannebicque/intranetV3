@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/MatiereType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 09:14
- * @lastUpdate 21/09/2019 08:37
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 10:09
  */
 
 namespace App\Form;
@@ -87,9 +87,7 @@ class MatiereType extends AbstractType
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
-            ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
-            ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
-            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('suspendu', YesNoType::class, [
                 'label' => 'label.suspendu'
             ])

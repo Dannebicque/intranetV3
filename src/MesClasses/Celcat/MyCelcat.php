@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 16/10/2019 18:52
- * @lastUpdate 16/10/2019 18:48
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 16:04
  */
 
 /**
@@ -62,11 +62,11 @@ abstract class MyCelcat
         $query = 'SELECT * FROM CT_DEPT';
         //$query = 'SELECT * FROM CT_DEPT ORDER BY name';
         $results = odbc_exec(self::$conn, $query);
-        if ($results) {
-            echo "Query Executed";
-        } else {
-            echo "Query failed " . odbc_error();
-        }
+//        if (!$results) {
+//            echo "Query Executed";
+//        } else {
+//            echo "Query failed " . odbc_error();
+//        }
         $departements = [];
         while (odbc_fetch_array($results)) {
             $dept['nom'] = odbc_result($results, 'name');

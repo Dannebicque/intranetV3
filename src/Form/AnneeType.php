@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/AnneeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 26/08/2019 15:29
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 10:11
  */
 
 namespace App\Form;
@@ -56,7 +56,7 @@ class AnneeType extends AbstractType
                 'label'         => 'label.diplome'
             ])
             ->add('codeApogee', TextType::class, [
-                'label' => 'label.code_apogee'
+                'label' => 'label.code_etape'
             ])
             ->add('codeVersion', TextType::class, [
                 'label' => 'label.code_version'

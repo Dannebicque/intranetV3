@@ -144,7 +144,7 @@
 
                         <div class="row gap-y dip_semestre_{{ diplome.id }} semestre_{{ annee.id }} lignehover">
                             <div class="col-md-3"></div>
-                            <div class="col-md-7">{{ semestre.libelle }} | {{ semestre.codeApogee }}</div>
+                            <div class="col-md-7">{{ semestre.libelle }} | {{ semestre.codeElement }}</div>
                             <div class="col-md-2">
                                 <a href="{{ path(baseurl ~ '_semestre_duplicate', {'id': semestre.id}) }}"
                                    class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
@@ -190,7 +190,7 @@
                         {% for ue in semestre.ues %}
                             <div class="row gap-y ue_{{ semestre.id }} lignehover">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeApogee }} {% if ue
+                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeElement }} {% if ue
                                         .bonification==true %}(Bonification){% endif %}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ '_ue_duplicate', {'id': ue.id}) }}"
@@ -232,7 +232,7 @@
                             {% for matiere in ue.matieres %}
                                 <div class="row gap-y matiere_{{ ue.id }} lignehover">
                                     <div class="col-md-5"></div>
-                                    <div class="col-md-5">{{ matiere.codeMatiere }} | {{ matiere.codeApogee }}
+                                    <div class="col-md-5">{{ matiere.codeMatiere }} | {{ matiere.codeElement }}
                                                                                     | {{ matiere.libelle }}</div>
                                     <div class="col-md-2">
                                         <a href="{{ path(baseurl ~ '_matiere_duplicate', {'id': matiere.id}) }}"
@@ -290,7 +290,7 @@
                             <div class="row gap-y parcour_{{ semestre.id }} lignehover">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-6">Parcours/Options {{ parcour.libelle }}
-                                                      | {{ parcour.codeApogee }}</div>
+                                                      | {{ parcour.codeElement }}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ '_parcour_duplicate', {'id': parcour.id}) }}"
                                        class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"

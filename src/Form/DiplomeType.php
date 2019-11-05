@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DiplomeType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 04/09/2019 14:42
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 10:10
  */
 
 namespace App\Form;
@@ -71,11 +71,8 @@ class DiplomeType extends AbstractType
                 'class'        => AnneeUniversitaire::class,
                 'choice_label' => 'displayAnneeUniversitaire'
             ])
-            ->add('codeDiplome', TextType::class, [
-                'label' => 'label.code_diplome'
-            ])
             ->add('code_apogee', TextType::class, [
-                'label' => 'label.code_etape'
+                'label' => 'label.code_diplome'
             ])
             ->add('code_version', TextType::class, [
                 'label' => 'label.code_version'

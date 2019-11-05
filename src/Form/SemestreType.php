@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/SemestreType.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 04/09/2019 14:42
+ * @date 05/11/2019 11:51
+ * @lastUpdate 21/10/2019 10:10
  */
 
 namespace App\Form;
@@ -58,14 +58,8 @@ class SemestreType extends AbstractType
                 },
                 'label'         => 'label.annee'
             ])
-            ->add('codeApogee', TextType::class, [
-                'label' => 'label.code_apogee'
-            ])
-            ->add('codeVersion', TextType::class, [
-                'label' => 'label.code_version'
-            ])
-            ->add('codeDepartement', TextType::class, [
-                'label' => 'label.code_departement'
+            ->add('codeElement', TextType::class, [
+                'label' => 'label.code_element'
             ])
             ->add('couleur', ColorType::class, [
                 'label' => 'label.couleur'
