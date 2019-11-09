@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 05/11/2019 11:51 -->
-<!-- @lastUpdate 05/11/2019 11:50 -->
+<!-- @date 09/11/2019 10:16 -->
+<!-- @lastUpdate 09/11/2019 10:12 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12598,6 +12598,96 @@
           <segment>
               <source>table.code_element</source>
               <target>table.code_element</target>
+          </segment>
+      </unit>
+      <unit id="2tsXFuR" name="menu.qualite">
+          <segment>
+              <source>menu.qualite</source>
+              <target>menu.qualite</target>
+          </segment>
+      </unit>
+      <unit id="WXTAKeB" name="enquete.index.heading">
+          <segment>
+              <source>enquete.index.heading</source>
+              <target>enquete.index.heading</target>
+          </segment>
+      </unit>
+      <unit id=".snqpiH" name="menu.questions">
+          <segment>
+              <source>menu.questions</source>
+              <target>menu.questions</target>
+          </segment>
+      </unit>
+      <unit id="XuCvAGp" name="quizz.question.index.heading">
+          <segment>
+              <source>quizz.question.index.heading</source>
+              <target>quizz.question.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="lCzVw3d" name="retour.administratif">
+          <segment>
+              <source>retour.administratif</source>
+              <target>retour.administratif</target>
+          </segment>
+      </unit>
+      <unit id="LE4.Mad" name="quizz.question.index.index.heading">
+          <segment>
+              <source>quizz.question.index.index.heading</source>
+              <target>quizz.question.index.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="pmlAXKa" name="quizz.question.new.heading">
+          <segment>
+              <source>quizz.question.new.heading</source>
+              <target>quizz.question.new.heading</target>
+          </segment>
+      </unit>
+      <unit id="t5yskm4" name="Help">
+          <segment>
+              <source>Help</source>
+              <target>Help</target>
+          </segment>
+      </unit>
+      <unit id="ef6yFwQ" name="Quizz questionnaires">
+          <segment>
+              <source>Quizz questionnaires</source>
+              <target>Quizz questionnaires</target>
+          </segment>
+      </unit>
+      <unit id="zTzux2y" name="label.question.help">
+          <segment>
+              <source>label.question.help</source>
+              <target>label.question.help</target>
+          </segment>
+      </unit>
+      <unit id="9M9jANX" name="qcu">
+          <segment>
+              <source>qcu</source>
+              <target>qcu</target>
+          </segment>
+      </unit>
+      <unit id="PVI3iWx" name="qcm">
+          <segment>
+              <source>qcm</source>
+              <target>qcm</target>
+          </segment>
+      </unit>
+      <unit id="ZV7YsaC" name="yesno">
+          <segment>
+              <source>yesno</source>
+              <target>yesno</target>
+          </segment>
+      </unit>
+      <unit id="4eQJbKQ" name="echelle">
+          <segment>
+              <source>echelle</source>
+              <target>echelle</target>
+          </segment>
+      </unit>
+      <unit id="eCUyFvd" name="libre">
+          <segment>
+              <source>libre</source>
+              <target>libre</target>
           </segment>
       </unit>
   </file>

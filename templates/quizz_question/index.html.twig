@@ -1,0 +1,72 @@
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-administratif.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'quizz.question.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('quizz_question_new') }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="ti-plus"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
+            {% if is_granted('ROLE_ADMINISTRATIF') %}
+                <a href="{{ path('administratif_homepage') }}"
+                   class="btn btn-primary btn-float"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   title="{{ 'retour.administratif'|trans }}">
+                    <i class="ti-home"></i>
+                    <span class="sr-only">{{ 'retour.administratif'|trans }}</span>
+                </a>
+            {% elseif is_granted('ROLE_PERMANENT') %}
+                <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                            class="material-icons">dashboard</i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'quizz.question.index.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered">
+
+                <thead>
+                <tr>
+                    <th>Libelle</th>
+                    <th>Help</th>
+                    <th>Type</th>
+                    <th>Updated</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for quizz_question in quizz_questions %}
+                    <tr>
+                        <td>{{ quizz_question.libelle }}</td>
+                        <td>{{ quizz_question.help }}</td>
+                        <td>{{ quizz_question.type }}</td>
+                        <td>{{ quizz_question.updated ? quizz_question.updated|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            <a href="{{ path('quizz_question_show', {'id': quizz_question.id}) }}">show</a>
+                            <a href="{{ path('quizz_question_edit', {'id': quizz_question.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,17 +1,17 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/DiplomeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/17/19 8:12 AM
+ * @date 09/11/2019 10:16
+ * @lastUpdate 09/11/2019 10:12
  */
 
 namespace App\Repository;
 
-use App\Entity\Diplome;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -57,5 +57,15 @@ class DiplomeRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement)
             ->orderBy('d.libelle');
+    }
+
+    public function findActifs()
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.actif = :actif')
+            ->setParameter('actif', true)
+            ->orderBy('d.libelle')
+            ->getQuery()
+            ->getResult();
     }
 }

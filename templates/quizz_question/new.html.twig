@@ -1,0 +1,29 @@
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-administratif.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'quizz.question.new.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('quizz_question_index') }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="ti-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'quizz.question.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

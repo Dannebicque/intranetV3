@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 10:11
+ * @date 09/11/2019 10:16
+ * @lastUpdate 09/11/2019 10:12
  */
 
 namespace App\Entity;
@@ -160,6 +160,11 @@ class Diplome extends BaseEntity
      */
     private $optSemainesVisibles = 2;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaire", mappedBy="diplome")
+     */
+    private $qualiteQuestionnaires;
+
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -167,6 +172,7 @@ class Diplome extends BaseEntity
         $this->ppns = new ArrayCollection();
         $this->competences = new ArrayCollection();
         $this->annees = new ArrayCollection();
+        $this->qualiteQuestionnaires = new ArrayCollection();
     }
 
     /**
@@ -651,6 +657,44 @@ class Diplome extends BaseEntity
     public function setOptSemainesVisibles(int $optSemainesVisibles): self
     {
         $this->optSemainesVisibles = $optSemainesVisibles;
+
+        return $this;
+    }
+
+    public function getLibelleLong()
+    {
+        if ($this->getTypeDiplome() !== null) {
+            return $this->getTypeDiplome()->getSigle() . ' ' . $this->getLibelle();
+        }
+    }
+
+    /**
+     * @return Collection|QualiteQuestionnaire[]
+     */
+    public function getQualiteQuestionnaires(): Collection
+    {
+        return $this->qualiteQuestionnaires;
+    }
+
+    public function addQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
+    {
+        if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
+            $this->qualiteQuestionnaires[] = $qualiteQuestionnaire;
+            $qualiteQuestionnaire->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
+    {
+        if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
+            $this->qualiteQuestionnaires->removeElement($qualiteQuestionnaire);
+            // set the owning side to null (unless already changed)
+            if ($qualiteQuestionnaire->getDiplome() === $this) {
+                $qualiteQuestionnaire->setDiplome(null);
+            }
+        }
 
         return $this;
     }
