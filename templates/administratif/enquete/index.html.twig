@@ -1,0 +1,45 @@
+{% extends 'base-administratif.html.twig' %}
+
+{% block header %}
+    {{ 'enquete.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'enquete.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Formation</th>
+                    <th>Nb Etudiant</th>
+                    <th colspan="2">S1</th>
+                    <th colspan="2">S2</th>
+                    <th colspan="2">Formateurs</th>
+                    <th colspan="2">Entreprises</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for diplome in diplomes %}
+                    <tr>
+                        <td>{{ diplome.libelleLong }}</td>
+                        <td>Nb Etudiant</td>
+                        <td colspan="2">S1</td>
+                        <td colspan="2">S2</td>
+                        <td colspan="2">Formateurs</td>
+                        <td colspan="2">Entreprises</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

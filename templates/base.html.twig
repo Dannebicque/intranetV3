@@ -36,7 +36,8 @@
 
 <!-- Sidebar -->
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
-    <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') %}{{ user_data.departement.couleur }}{% else %}#926DDF{% endif %}">
+    <header class="sidebar-header" style="background-color: {% if not is_granted('ROLE_SUPER_ADMIN') and not
+        is_granted('ROLE_ADMINISTRATIF') %}{{ user_data.departement.couleur }}{% else %}{{ settings('COLOR_IUT') }}{% endif %}">
         <span class="logo text-center">
           <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}">
               <img src="{{ asset('build/images/logo-icon-light.png') }}"

@@ -22,5 +22,17 @@
             <span class="title">{{ 'menu.csa_previsionnel'|trans }}</span>
         </a>
     </li>
+    <li class="menu-item" id="menu-super-administration">
+        <a class="menu-link" href="{{ path('administratif_enquete_index') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.qualite'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item" id="menu-super-administration">
+        <a class="menu-link" href="{{ path('quizz_question_index') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.questions'|trans }}</span>
+        </a>
+    </li>
 {% endblock %}
 
