@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 09/11/2019 10:16 -->
-<!-- @lastUpdate 09/11/2019 10:12 -->
+<!-- @date 11/11/2019 12:10 -->
+<!-- @lastUpdate 11/11/2019 12:10 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12688,6 +12688,72 @@
           <segment>
               <source>libre</source>
               <target>libre</target>
+          </segment>
+      </unit>
+      <unit id="bWqXUCX" name="scolarite.index.heading">
+          <segment>
+              <source>scolarite.index.heading</source>
+              <target>scolarite.index.heading</target>
+          </segment>
+      </unit>
+      <unit id="9dfEF_y" name="scolarite.diplome.heading">
+          <segment>
+              <source>scolarite.diplome.heading</source>
+              <target>scolarite.diplome.heading</target>
+          </segment>
+      </unit>
+      <unit id="6w5pAOd" name="atitle.export_apogee">
+          <segment>
+              <source>atitle.export_apogee</source>
+              <target>atitle.export_apogee</target>
+          </segment>
+      </unit>
+      <unit id="9SEDvHu" name="atitle.retour_scolarite">
+          <segment>
+              <source>atitle.retour_scolarite</source>
+              <target>atitle.retour_scolarite</target>
+          </segment>
+      </unit>
+      <unit id="KJMuG_y" name="scolarite.semestre.heading">
+          <segment>
+              <source>scolarite.semestre.heading</source>
+              <target>scolarite.semestre.heading</target>
+          </segment>
+      </unit>
+      <unit id="CMfO1_p" name="atitle.retour_diplome">
+          <segment>
+              <source>atitle.retour_diplome</source>
+              <target>atitle.retour_diplome</target>
+          </segment>
+      </unit>
+      <unit id="ywyrnmG" name="atitle.retour_administratif">
+          <segment>
+              <source>atitle.retour_administratif</source>
+              <target>atitle.retour_administratif</target>
+          </segment>
+      </unit>
+      <unit id="6RjGqzJ" name="administratif_homepage.heading">
+          <segment>
+              <source>administratif_homepage.heading</source>
+              <target>administratif_homepage.heading</target>
+          </segment>
+      </unit>
+      <unit id="u7yX.85" name="recherche.etudiant.heading">
+          <segment>
+              <source>recherche.etudiant.heading</source>
+              <target>recherche.etudiant.heading</target>
+          </segment>
+      </unit>
+      <unit id="3wwEtea" name="recherche.personnel.heading">
+          <segment>
+              <source>recherche.personnel.heading</source>
+              <target>recherche.personnel.heading</target>
+          </segment>
+      </unit>
+      <unit id="VvnCvPS" name="scolarite.recherche.heading">
+          <segment>
+              <source>scolarite.recherche.heading</source>
+              <target>scolarite.recherche.heading</target>
           </segment>
       </unit>
   </file>

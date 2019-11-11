@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 01/10/2019 09:18
- * @lastUpdate 01/10/2019 09:18
+ * @date 11/11/2019 12:10
+ * @lastUpdate 11/11/2019 08:41
  */
 
 namespace App\Security;
@@ -121,7 +121,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $rolesTab = $token->getRoleNames();
-
         if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
             $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));

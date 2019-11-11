@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelWriter.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
+ * @date 11/11/2019 12:10
+ * @lastUpdate 11/11/2019 10:27
  */
 
 /**
@@ -143,6 +143,7 @@ class MyExcelWriter
         $this->sheet->setCellValue($adresse, $value);
 
         if (is_array($options) && array_key_exists('style', $options)) {
+            //style n'est pas un tableau
             switch ($options['style']) {
                 case 'HORIZONTAL_RIGHT':
                     $this->sheet->getStyle($adresse)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);

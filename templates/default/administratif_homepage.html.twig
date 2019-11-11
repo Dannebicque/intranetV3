@@ -1,10 +1,46 @@
 {% extends 'base-administratif.html.twig' %}
 
 {% block content %}
-Administratif
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h4 class="card-title">Accès Scolarité de
+                                       l'Intranet {{ settings('NOM_IUT') }}
+                </h4>
+                <div class="card-body">
+                    <p>N'hésitez pas à contacter David Annebicque (IUT de Troyes) s'il y a des bugs ou pour des besoins
+                       spécifiques. david.annebicque@univ-reims.fr ou 87129.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+
+            <div class="card">
+                <h4 class="card-title">{{ 'recherche.etudiant.heading'|trans }}</h4>
+                <div class="card-body">
+                    {{ include('administratif/recherche/_etudiant.html.twig') }}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="card ">
+                <h4 class="card-title">{{ 'recherche.personnel.heading'|trans }}</h4>
+                <div class="card-body">
+                    {{ include('administratif/recherche/_personnel.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block header %}
+    {{ 'administratif_homepage.heading'|trans }}
+{% endblock %}
 
+{% block headeractions %}
+    <div class="header-action">
+
+    </div>
 {% endblock %}
 

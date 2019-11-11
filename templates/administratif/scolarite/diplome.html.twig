@@ -1,0 +1,70 @@
+{% extends 'base-administratif.html.twig' %}
+
+{% block header %}
+    {{ 'scolarite.diplome.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administratif_scolarite') }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_scolarite'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="ti-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_scolarite'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'scolarite.diplome.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Semestre</th>
+                    <th>Effectif</th>
+                    <th>Actif</th>
+                    <th>Export Apogée</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for semestre in semestres %}
+                    <tr>
+                        <td>{{ semestre.libelle }}</td>
+                        <td>{{ semestre.etudiants|length }}</td>
+                        <td>{{ semestre.actif == true ? 'Actif' : 'Désactivé' }}</td>
+                        <!-- mettre un switch pour actif desactivé.. -->
+
+                        <td><a href="{{ path('administratif_scolarite_semestre_export_apogee', {'semestre': semestre
+                                .id}) }}"
+                               class="btn btn-success btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.export_apogee'|trans }}">
+                                <i class="fa fa-download"></i>
+                                <span class="sr-only">{{ 'atitle.export_apogee'|trans }}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('administratif_scolarite_semestre', {'semestre': semestre.id}) }}"
+                               class="btn btn-info btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.details'|trans }}">
+                                <i class="{{ iconShow }}"></i>
+                                <span class="sr-only">{{ 'atitle.details'|trans }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

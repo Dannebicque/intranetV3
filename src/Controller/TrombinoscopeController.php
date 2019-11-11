@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/TrombinoscopeController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:08
+ * @date 11/11/2019 12:10
+ * @lastUpdate 11/11/2019 10:04
  */
 
 namespace App\Controller;
@@ -55,12 +55,37 @@ class TrombinoscopeController extends BaseController
         $_format
     ): ?StreamedResponse {
         return $myExportListing->genereFichier(
-            Constantes::TYPEDOCUMENT_LISTE,
+            Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
             [],
             $typeGroupe->getId()
         );
     }
+
+    /**
+     * @Route("/etudiant/export-groupe/{groupe}.{_format}", name="trombinoscope_etudiant_export_groupe", methods="GET",
+     *                                                   requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExportListing  $myExportListing
+     * @param TypeGroupe       $typeGroupe
+     * @param                  $_format
+     *
+     * @return null|StreamedResponse
+     * @throws Exception
+     */
+    public function trombiEtudiantExportGroupe(
+        MyExportListing $myExportListing,
+        TypeGroupe $typeGroupe,
+        $_format
+    ): ?StreamedResponse {
+        return $myExportListing->genereFichier(
+            Constantes::TYPEDOCUMENT_EMARGEMENT,
+            $_format,
+            [],
+            $typeGroupe->getId()
+        );
+    }
+
+
 
     /**
      * @Route("/etudiant/export-image/{typeGroupe}.pdf", name="trombinoscope_etudiant_image", methods="GET",

@@ -1,0 +1,67 @@
+<div class="row mb-10">
+    <div class="col-sm-2">
+        <a href="" rel="tooltip"
+           data-placement="bottom" data-original-title="Accéder au profil" target="_blank"><img
+                    src="{{ asset('upload/personnels/'~reponse.photo) }}"
+                    alt="photo Etudiant" width="80"/></a>
+    </div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="col-sm-9 search-info">
+                <a href="" rel="tooltip"
+                   data-placement="bottom" data-original-title="Accéder au profil"
+                   target="_blank">{{ reponse.displayPr }}</a><br/>
+                <a href="mailto:{{ reponse.mail_univ }}" rel="tooltip" data-placement="bottom"
+                   data-original-title="Ecrire" target="_blank">{{ reponse.mail_univ }}</a><br/>
+                <a href="mailto:{{ reponse.mail_perso }}" rel="tooltip" data-placement="bottom"
+                   data-original-title="Ecrire" target="_blank">{{ reponse.mail_perso }}</a>
+            </div>
+            <div class="col-sm-3">
+                <a href="" class="btn btn-info"
+                   rel="tooltip" data-placement="bottom" title="Voir le profil" target="_blank"><i
+                            class="fa fa-eye"></i></a>
+            </div>
+        </div>
+        {#        <div class="row">#}
+        {#            <div class="col-sm-12 col-md-4">#}
+        {#                <label for="chgt_etudiant_semestre">Semestre actuel</label>#}
+        {#                <select class="form-control chgt_etudiant_semestre"#}
+        {#                        name="semestre"#}
+        {#                        id="chgt_etudiant_semestre"#}
+        {#                        data-etudiant="{{ reponse.slug }}"#}
+        {#                        data-provide="selectpicker"#}
+        {#                        data-live-search="true">#}
+        {#                    {% for semestre in semestres %}#}
+        {#                        <option value="{{ semestre.id }}" {% if reponse.semestre != null and semestre.id == reponse#}
+        {#                            .semestreId %} selected {% endif %}>{{ semestre.display }}</option>#}
+        {#                    {% endfor %}#}
+        {#                    <option value="null" {% if reponse.semestre == null %} selected {% endif %}>#}
+        {#                        Aucun semestre#}
+        {#                    </option>#}
+        {#                </select>#}
+        {#            </div>#}
+        {#            <div class="col-sm-12 col-md-4">#}
+        {#                <label for="chgt_etudiant_formation">Formation actuelle</label>#}
+        {#                <select class="form-control chgt_etudiant_formation" name="formation" data-etudiant="{{ reponse.slug }}" data-provide="selectpicker" data-live-search="true">#}
+        {#                    {% for diplome in diplomes %}#}
+        {#                        <option value="{{ diplome.id }}" {% if diplome.id == reponse#}
+        {#                            .diplomeId %} selected {% endif %}>{{ diplome.libelle }}</option>#}
+        {#                    {% endfor %}#}
+        {#                    <option value="null">Aucune formation</option>#}
+        {#                </select>#}
+        {#            </div>#}
+        {#            <div class="col-sm-12 col-md-4">#}
+        {#                <label for="chgt_etudiant_fin">Année sortie DUT/LP/IUT</label>#}
+        {#                <select class="form-control chgt_etudiant_fin" name="fin" data-etudiant="{{ reponse.slug }}"#}
+        {#                        data-provide="selectpicker" data-live-search="true">#}
+        {#                    {% set thisYear = "now"|date('Y') %}#}
+        {#                    <option value="0" selected>Formation en cours</option>#}
+        {#                    {% for an in 2010.. thisYear %}#}
+        {#                        <option value="{{ an }}" {% if an == reponse.anneeSortie %} selected {% endif %}>{{ an }}</option>#}
+        {#                    {% endfor %}#}
+
+        {#                </select>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+</div>

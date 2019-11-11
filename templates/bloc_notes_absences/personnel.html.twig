@@ -1,8 +1,8 @@
 <div class="col-md-12">
     <div class="card">
-        <h4 class="card-header card-title">
+        <h3 class="card-header card-title">
             {{ 'mes_cours.heading'|trans }}
-        </h4>
+        </h3>
         <div class="card-body">
             <div class="tabs">
                 <ul class="nav nav-tabs">
@@ -17,7 +17,7 @@
             <div class="tab-content">
                 {% for semestre in user_data.semestresActifs %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="sem{{ semestre.id }}">
-                        <h3>{{ 'vos.modules.du.semestre'|trans({'%semestre%':semestre.display}) }}</h3>
+                        <h4>{{ 'vos.modules.du.semestre'|trans({'%semestre%':semestre.display}) }}</h4>
                         <div class="wrapper-notes-absences">
                             <div class="col-notes-header">{{ 'table.matiere'|trans }}</div>
                             <div class="col-notes-header">{{ 'table.previ'|trans }}</div>

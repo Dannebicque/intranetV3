@@ -22,7 +22,9 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="absence-matiere">{{ 'matiere'|trans }}</label>
-                        <select class="form-control" id="absence-matiere" data-provide="selectpicker"
+                        <select class="form-control"
+                                id="absence-matiere"
+                                data-provide="selectpicker"
                                 data-live-search="true">
                             {% for mati in matieres %}
                                 <option value="{{ mati.id }}"
