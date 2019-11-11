@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyExportListing.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:55 AM
+ * @date 11/11/2019 12:10
+ * @lastUpdate 11/11/2019 12:10
  */
 
 /**
@@ -85,7 +85,7 @@ class MyExportListing
         $this->dataUserSession = $dataUserSession;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
-        $this->base = $kernel->getProjectDir() . '/../';
+        $this->base = $kernel->getProjectDir() . '/';
     }
 
     /**
@@ -165,10 +165,6 @@ class MyExportListing
                 $this->colonnesEnTete[] = 'Note';
                 $this->colonnesEnTete[] = 'Remise Copie';
                 break;
-            case Constantes::TYPEDOCUMENT_LISTE:
-                $this->titre = 'LISTING - Semestre ' . $semestre;
-                $this->name = 'listing-' . $semestre;
-                break;
         }
     }
 
@@ -198,7 +194,7 @@ class MyExportListing
         foreach ($this->groupes as $groupe) {
             $this->myExcelWriter->createSheet($groupe->getLibelle());
             $this->writeSpecialHeader($groupe);
-            $this->myExcelWriter->writeHeader($this->colonnesEnTete, 1, 15);
+            $this->myExcelWriter->writeHeader($this->colonnesEnTete, 1, 17);
             $this->newLine();
 
             $id = 0;
@@ -213,16 +209,19 @@ class MyExportListing
                 $this->newLine();
             }
 
-            $this->myExcelWriter->writeCellName('A11', $id);
+            $this->myExcelWriter->writeCellName('A17', $id);
 
-            $this->myExcelWriter->borderCells('A12:H' . $this->ligne);
+            $this->myExcelWriter->borderCells('A14:J' . $this->ligne);
 
             $this->myExcelWriter->getColumnDimension('A', 3);
             $this->myExcelWriter->getColumnAutoSize('B');
             $this->myExcelWriter->getColumnAutoSize('C');
-            $this->myExcelWriter->getColumnDimension('E', 15);
-            $this->myExcelWriter->getColumnDimension('F', 15);
-            $this->myExcelWriter->getColumnDimension('G', 15);
+            $this->myExcelWriter->getColumnDimension('E', 8);
+            $this->myExcelWriter->getColumnDimension('F', 8);
+            $this->myExcelWriter->getColumnDimension('G', 8);
+            $this->myExcelWriter->getColumnDimension('H', 8);
+            $this->myExcelWriter->getColumnDimension('I', 8);
+            $this->myExcelWriter->getColumnDimension('J', 8);
 
             $this->setMiseEnPage();
         }
@@ -249,15 +248,15 @@ class MyExportListing
     private function writeSpecialHeader(Groupe $groupe): void
     {
         //gérer les infos par le diplôme
-        $dbt = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire();
+        $dbt = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->getLibelle();
         $fin = $dbt + 1;
 
-        $this->myExcelWriter->writeCellName('H1', 'Année Universitaire - ' . $dbt . ' - ' . $fin,
-            ['style' => ['HORIZONTAL_RIGHT']]);
-        $this->myExcelWriter->writeCellName('H2',
+        $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - ' . $dbt . ' - ' . $fin,
+            ['style' => 'HORIZONTAL_RIGHT']);
+        $this->myExcelWriter->writeCellName('J4',
             'IUT de Troyes - ' . $this->dataUserSession->getDepartement()->getLibelle(),
-            ['style' => ['HORIZONTAL_RIGHT']]);
-        $this->myExcelWriter->writeCellName('H4', $this->titre, ['style' => ['HORIZONTAL_RIGHT']]);
+            ['style' => 'HORIZONTAL_RIGHT']);
+        $this->myExcelWriter->writeCellName('J3', $this->titre, ['style' => 'HORIZONTAL_RIGHT']);
 
         $base = $this->base . 'public/upload/';
 
@@ -272,7 +271,66 @@ class MyExportListing
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
+                $this->myExcelWriter->writeCellName(
+                    'A8',
+                    'NOM DE L\'ENSEIGNANT :'
+                );
+                $this->myExcelWriter->writeCellName(
+                    'A10',
+                    'MATIERE ENSEIGNEE :'
+                );
 
+                $this->myExcelWriter->writeCellName(
+                    'J5',
+                    'Période du 1er Novembre au 30 Novembre 2019',
+                    ['style' => 'HORIZONTAL_RIGHT']
+                );
+                $this->myExcelWriter->writeCellName(
+                    'G12',
+                    '*Toutes les cases grisées sont à remplir par l\'enseignant. Merci !',
+                    ['style' => 'HORIZONTAL_RIGHT']
+                );
+
+                $this->myExcelWriter->writeCellName(
+                    'H7',
+                    'Total des heures',
+                    ['style' => 'HORIZONTAL_CENTER']
+                );
+                $this->myExcelWriter->writeCellName(
+                    'H8',
+                    'faites sur la période',
+                    ['style' => 'HORIZONTAL_CENTER']
+                );
+
+                $this->myExcelWriter->mergeCells('A14:C14');
+                $this->myExcelWriter->mergeCells('A15:C15');
+                $this->myExcelWriter->mergeCells('A16:C16');
+
+                $this->myExcelWriter->writeCellName(
+                    'A14',
+                    'Date de la séance',
+                    ['style' => 'HORIZONTAL_CENTER']
+                );
+
+                $this->myExcelWriter->writeCellName(
+                    'A15',
+                    'Nombre d\'heures	',
+                    ['style' => 'HORIZONTAL_CENTER']
+                );
+
+                $this->myExcelWriter->writeCellName(
+                    'A16',
+                    'Nom-Prénom / Horaire',
+                    ['style' => 'HORIZONTAL_CENTER']
+                );
+
+                $this->myExcelWriter->mergeCells('H7:J7');
+                $this->myExcelWriter->mergeCells('H8:J8');
+                $this->myExcelWriter->mergeCells('H9:J12');
+                $this->myExcelWriter->borderCellsRange(8, 7, 10, 12);
+                $this->myExcelWriter->colorCells('H7:J12', 'ffC0C0C0');
+                $this->myExcelWriter->colorCells('A14:J16', 'ffC0C0C0');
+                $this->ligne = 17;
                 break;
             case Constantes::TYPEDOCUMENT_EVALUATION:
                 $this->myExcelWriter->writeCellName(
@@ -294,9 +352,6 @@ class MyExportListing
                 $this->myExcelWriter->mergeCells('B14:C14');
                 $this->myExcelWriter->writeCellName('B14', 'Groupe ' . $groupe->getLibelle(),
                     ['style' => ['HORIZONTAL_RIGHT']]);
-                break;
-            case Constantes::TYPEDOCUMENT_LISTE:
-
                 break;
         }
     }

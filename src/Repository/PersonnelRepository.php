@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PersonnelRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/09/2019 08:28
- * @lastUpdate 21/09/2019 08:11
+ * @date 11/11/2019 12:10
+ * @lastUpdate 10/11/2019 17:28
  */
 
 namespace App\Repository;
@@ -96,14 +96,15 @@ class PersonnelRepository extends ServiceEntityRepository
             $tt['prenom'] = $personnel->getPrenom();
             $tt['username'] = $personnel->getUsername();
             $tt['mail_univ'] = $personnel->getMailUniv();
+            $tt['mail_perso'] = $personnel->getMailPerso();
             $tt['profil'] = '<a href="'.$this->router->generate('user_profil', ['type' => 'personnel', 'slug' => $personnel->getSlug()]).'"
        class="btn btn-info btn-outline btn-square"
        data-provide="tooltip"
        target="_blank"
        data-placement="bottom"
-       title="Profil de l\'étudiant">
+       title="Profil du personne">
         <i class="fa fa-info"></i>
-        <span class="sr-only">Profil de l\'étudiant</span>
+        <span class="sr-only">Profil du personnel</span>
     </a>';
 
             $t[] = $tt;

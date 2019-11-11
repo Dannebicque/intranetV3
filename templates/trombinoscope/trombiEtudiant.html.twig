@@ -59,7 +59,7 @@
                                         py-20"
                                          style="min-height: 230px">
                                         <div class="flexbox">
-                                            <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                            <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
                                                 <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
                                                     ('upload/etudiants/'~etudiant.photoName)| imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
                                             </a>

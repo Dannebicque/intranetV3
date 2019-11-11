@@ -8,7 +8,7 @@
 {% block headeractions %}
 
     <div class="header-action bg-white">
-        <nav class="nav">
+        <nav class="nav nav-tabs">
             {% for diplome in user_data.diplomes %}
                 <a class="nav-link {% if loop.first %}active{% endif %} change-diplome"
                    href="#" data-diplome="{{ diplome.id }}">{{ diplome.libelle }}</a>

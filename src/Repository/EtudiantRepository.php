@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 26/08/2019 13:43
- * @lastUpdate 23/08/2019 12:52
+ * @date 11/11/2019 12:10
+ * @lastUpdate 10/11/2019 17:20
  */
 
 namespace App\Repository;
@@ -185,6 +185,13 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['displayPr'] = $etudiant->getDisplayPr();
             $tt['slug'] = $etudiant->getSlug();
             $tt['photo'] = $etudiant->getPhotoName();
+            $tt['mailUniv'] = $etudiant->getMailUniv();
+            $tt['mailPerso'] = $etudiant->getMailPerso();
+            $tt['semestre'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getLibelle() : null;
+            $tt['semestreId'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getId() : null;
+            $tt['diplomeId'] = $etudiant->getSemestre() !== null ? $etudiant->getDiplome()->getId() : null;
+            $tt['promo'] = $etudiant->getPromotion();
+            $tt['anneeSortie'] = $etudiant->getAnneeSortie();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
                 $gr .= $groupe->getLibelle().', ';
