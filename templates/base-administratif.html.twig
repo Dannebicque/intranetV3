@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block link_homepage %}{{ path('administratif_homepage') }}{% endblock %}
+
+
 {% block content %}
     Administratif
 {% endblock %}
@@ -20,6 +23,12 @@
         <a class="menu-link" href="{{ path('administratif_homepage') }}">
             <span class="material-icons">access_time</span>
             <span class="title">{{ 'menu.csa_previsionnel'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item" id="menu-super-administration">
+        <a class="menu-link" href="{{ path('administratif_scolarite') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.scolarite'|trans }}</span>
         </a>
     </li>
     <li class="menu-item" id="menu-super-administration">
