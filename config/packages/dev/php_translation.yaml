@@ -3,9 +3,5 @@ translation:
         enabled: true
     webui:
         enabled: true
-    edit_in_place:
-        enabled: true
-        config_name: default # the first one or one of your configs
-        activator: php_translation.edit_in_place.activator
     auto_add_missing_translations:
         config_name: 'default'

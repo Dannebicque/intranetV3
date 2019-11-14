@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/MatiereRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 12:15
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 08:14
  */
 
 namespace App\Repository;
@@ -17,6 +17,7 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -33,7 +34,7 @@ class MatiereRepository extends ServiceEntityRepository
      *
      * @param RegistryInterface $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Matiere::class);
     }

@@ -1,18 +1,18 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ScolaritePromoUeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 3/18/19 6:56 AM
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 14:56
  */
 
 namespace App\Repository;
 
 use App\Entity\ScolaritePromoUe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method ScolaritePromoUe|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +22,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ScolaritePromoUeRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ScolaritePromoUe::class);
     }

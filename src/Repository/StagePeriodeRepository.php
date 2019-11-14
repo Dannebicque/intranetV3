@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/StagePeriodeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:08
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 14:56
  */
 
 namespace App\Repository;
@@ -17,8 +17,8 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method StagePeriode|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,7 +28,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class StagePeriodeRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, StagePeriode::class);
     }

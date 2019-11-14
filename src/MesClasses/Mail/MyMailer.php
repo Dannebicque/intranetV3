@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Mail/MyMailer.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:47 AM
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 14:56
  */
 
 /**
@@ -21,7 +21,6 @@ use App\MesClasses\Configuration;
 use App\Twig\DatabaseTwigLoader;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -38,7 +37,7 @@ class MyMailer
     /** @var Swift_Mailer */
     private $mailer;
 
-    /** @var EngineInterface */
+    /** @var Environment */
     protected $templating;
 
     private $template;
@@ -59,7 +58,7 @@ class MyMailer
      */
     public function __construct(
         Swift_Mailer $mailer,
-        EngineInterface $templating,
+        Environment $templating,
         DatabaseTwigLoader $databaseTwigLoader,
         TranslatorInterface $translator
     )

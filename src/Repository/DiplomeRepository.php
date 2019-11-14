@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/DiplomeRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 09/11/2019 10:12
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 08:13
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ namespace App\Repository;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -29,7 +30,7 @@ class DiplomeRepository extends ServiceEntityRepository
      *
      * @param RegistryInterface $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Diplome::class);
     }
