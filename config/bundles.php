@@ -1,17 +1,16 @@
 <?php
 /**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/config/bundles.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/10/2019 09:53
- * @lastUpdate 21/10/2019 09:53
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 14:56
  */
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class                          => ['all' => true],
-    Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class       => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class                 => ['all' => true],
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class     => ['all' => true],
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class            => ['all' => true],

@@ -1,9 +1,9 @@
-// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script.js
 // @author     David Annebicque
 // @project intranetv3
-// @date 21/10/2019 09:52
-// @lastUpdate 21/10/2019 09:51
+// @date 14/11/2019 14:57
+// @lastUpdate 14/11/2019 14:56
 
 'use strict'
 
@@ -253,6 +253,30 @@ function addCallout (message, label) {
   $('.callout').delay(5000).slideUp('slow')
 }
 
+//Editable
+let myEditInitialContent = ''
+
+$(document).on('click', '.myedit', function () {
+  myEditInitialContent = $(this).outerHTML()
+  let html = genereInput($(this))
+  $(this).replaceWith(html)
+})
+
+
+$(document).on('click', '#myedit-valide', function () {
+  $(this).replaceWith(html)
+})
+
+$(document).on('click', '#myedit-annule', function () {
+  $(this).parent().replaceWith(myEditInitialContent)
+})
+
+function genereInput ($obj) {
+  let $html = '<div><input type="text" value="' + $obj.html() + '" class="myedit-input" />'
+  $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="ti-check"></i></button>'
+  $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="ti-close"></i></button></div>'
+  return $html
+}
 
 
 /** CSS **/
@@ -925,6 +949,7 @@ $(document).on( 'click', '.changegroupe', function() {
 });
 
 
+
 // Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/applications.js
 // @author     David Annebicque
@@ -1470,19 +1495,12 @@ $(document).on('change', '.changeOptionSelect', function () {
 });
 
 
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/messagerie.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/messagerie.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 21/10/2019 09:52
+// @lastUpdate 19/10/2019 17:49
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault();

@@ -31,7 +31,7 @@
         <div class="card-body">
 
             <div class="row gap-y ">
-                <div class="col-md-10">{{ departement.libelle }}</div>
+                <div class="col-md-10"><a href="#" class="myedit">{{ departement.libelle }}</a></div>
                 <div class="col-md-2">
 
                     <a href="{{ path(baseurl ~ 'structure_departement_show', {'id': departement.id}) }}"

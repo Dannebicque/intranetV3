@@ -41,9 +41,6 @@
             "ref": "453e89b78ded666f351617baca5ae40d20622351"
         }
     },
-    "doctrine/doctrine-cache-bundle": {
-        "version": "1.3.5"
-    },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.0",
         "recipe": {
@@ -89,14 +86,8 @@
     "dompdf/dompdf": {
         "version": "v0.8.3"
     },
-    "easycorp/easy-deploy-bundle": {
-        "version": "v1.0.5"
-    },
     "egulias/email-validator": {
         "version": "2.1.7"
-    },
-    "endroid/installer": {
-        "version": "1.0.8"
     },
     "endroid/qr-code": {
         "version": "3.5.2"
@@ -288,14 +279,14 @@
     "symfony/dotenv": {
         "version": "v4.2.1"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.0-beta2"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
     },
     "symfony/event-dispatcher-contracts": {
         "version": "v1.1.1"
-    },
-    "symfony/expression-language": {
-        "version": "v4.2.4"
     },
     "symfony/filesystem": {
         "version": "v4.2.1"

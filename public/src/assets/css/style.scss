@@ -1,9 +1,9 @@
-// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/css/style.scss
 // @author     David Annebicque
 // @project intranetv3
-// @date 21/10/2019 09:52
-// @lastUpdate 20/10/2019 08:01
+// @date 14/11/2019 14:57
+// @lastUpdate 11/11/2019 12:57
 
 Partie /*!
  * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
@@ -13,7 +13,6 @@ Partie /*!
  * @date 18/08/2019 11:48
  * @lastUpdate 18/08/2019 10:36
  */
-
 #planning thead {
   height: 30px;
 }
@@ -72,14 +71,14 @@ fieldset legend {
 }
 
 .alternance {
-  background-color:red;
+  background-color: red;
 }
 
 .stage {
   background-color: green;
 }
 
-.bloquercreneau_eviter{
+.bloquercreneau_eviter {
   background-color: orange;
 }
 
@@ -139,7 +138,7 @@ fieldset legend {
 .col-notes-header {
   background-color: lightgrey;
   padding: 1em;
-  margin:0;
+  margin: 0;
   grid-column-gap: 0px;
 }
 
@@ -150,8 +149,6 @@ fieldset legend {
   grid-column-gap: 10px;
   grid-row-gap: 1em;
 }
-
-
 
 
 .edt-etudiant-col1 {
@@ -210,11 +207,11 @@ thead {
   }
 
   .col-edt-hide {
-    display:none;
+    display: none;
   }
 
   .hide {
-    display:none;
+    display: none;
   }
 }
 
@@ -306,4 +303,21 @@ thead {
   cursor: not-allowed;
   opacity: 0.5;
   text-decoration: none;
+}
+
+.myedit {
+  color: #4d5259;
+  text-decoration: none;
+  border-bottom: dotted 1px #4d5259;
+}
+
+.myedit:after {
+  content: '\f044';
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+
+  margin-left: 5px;
+  color: lightgrey;
 }

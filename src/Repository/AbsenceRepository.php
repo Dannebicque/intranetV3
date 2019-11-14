@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AbsenceRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 17/08/2019 07:58
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 08:12
  */
 
 namespace App\Repository;
@@ -18,7 +18,7 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method Absence|null find($id, $lockMode = null, $lockVersion = null)
@@ -33,7 +33,7 @@ class AbsenceRepository extends ServiceEntityRepository
      *
      * @param RegistryInterface $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Absence::class);
     }

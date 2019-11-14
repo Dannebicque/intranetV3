@@ -4,8 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 11/11/2019 12:10
- * @lastUpdate 10/11/2019 17:20
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 08:13
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -36,7 +37,7 @@ class EtudiantRepository extends ServiceEntityRepository
      * @param RegistryInterface $registry
      * @param RouterInterface   $router
      */
-    public function __construct(RegistryInterface $registry, RouterInterface $router)
+    public function __construct(ManagerRegistry $registry, RouterInterface $router)
     {
         parent::__construct($registry, Etudiant::class);
         $this->router = $router;

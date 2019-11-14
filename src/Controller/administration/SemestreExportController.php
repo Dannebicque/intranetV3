@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
  * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/SemestreExportController.php
  * @author     David Annebicque
  * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:27
+ * @date 14/11/2019 14:57
+ * @lastUpdate 13/11/2019 12:51
  */
 
 namespace App\Controller\administration;
@@ -55,7 +55,7 @@ class SemestreExportController extends BaseController
     }
 
     /**
-     * @Route("/définitif/{slug}/{semestre}", name="administration_semestre_export_releve_definitif")
+     * @Route("/definitif/{slug}/{semestre}", name="administration_semestre_export_releve_definitif")
      * @param MyEtudiant $myEtudiant
      * @param Etudiant   $etudiant
      * @param Semestre   $semestre

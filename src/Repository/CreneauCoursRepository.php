@@ -5,6 +5,13 @@
  * @project intranetv3
  * @date 26/08/2019 13:45
  * @lastUpdate 26/08/2019 13:13
+ */ /**
+ * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/CreneauCoursRepository.php
+ * @author     David Annebicque
+ * @project intranetv3
+ * @date 14/11/2019 14:57
+ * @lastUpdate 14/11/2019 14:56
  */ /** @noinspection ALL */
 /** @noinspection PhpUnused */
 
@@ -13,7 +20,7 @@ namespace App\Repository;
 use App\Entity\CreneauCours;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method CreneauCours|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,7 +30,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CreneauCoursRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CreneauCours::class);
     }

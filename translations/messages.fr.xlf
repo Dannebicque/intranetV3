@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 11/11/2019 12:10 -->
-<!-- @lastUpdate 11/11/2019 12:10 -->
+<!-- @date 14/11/2019 14:57 -->
+<!-- @lastUpdate 14/11/2019 14:56 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12754,6 +12754,12 @@
           <segment>
               <source>scolarite.recherche.heading</source>
               <target>scolarite.recherche.heading</target>
+          </segment>
+      </unit>
+      <unit id="AnJvT_I" name="diplome.duplicate.success.flash">
+          <segment>
+              <source>diplome.duplicate.success.flash</source>
+              <target>diplome.duplicate.success.flash</target>
           </segment>
       </unit>
   </file>

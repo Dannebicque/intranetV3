@@ -1,11 +1,9 @@
-/*
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/util.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 18/08/2019 11:47
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/util.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 14/11/2019 14:57
+// @lastUpdate 14/11/2019 14:56
 
 function readUrlMenu($url) {
   const $elt = $url.split('/')
@@ -142,3 +140,27 @@ function addCallout (message, label) {
   $('.callout').delay(5000).slideUp('slow')
 }
 
+//Editable
+let myEditInitialContent = ''
+
+$(document).on('click', '.myedit', function () {
+  myEditInitialContent = $(this).outerHTML()
+  let html = genereInput($(this))
+  $(this).replaceWith(html)
+})
+
+
+$(document).on('click', '#myedit-valide', function () {
+  $(this).replaceWith(html)
+})
+
+$(document).on('click', '#myedit-annule', function () {
+  $(this).parent().replaceWith(myEditInitialContent)
+})
+
+function genereInput ($obj) {
+  let $html = '<div><input type="text" value="' + $obj.html() + '" class="myedit-input" />'
+  $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="ti-check"></i></button>'
+  $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="ti-close"></i></button></div>'
+  return $html
+}
