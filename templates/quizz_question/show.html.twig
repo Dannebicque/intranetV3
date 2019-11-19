@@ -1,20 +1,10 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}QuizzQuestion{% endblock %}
-
-{% block body %}
     <h1>QuizzQuestion</h1>
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ quizz_question.id }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ quizz_question.created ? quizz_question.created|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
+
+
         <tr>
             <th>Updated</th>
             <td>{{ quizz_question.updated ? quizz_question.updated|date('Y-m-d H:i:s') : '' }}</td>
@@ -31,12 +21,15 @@
             <th>Type</th>
             <td>{{ quizz_question.type }}</td>
         </tr>
+        {% for reponse in quizz_question.quizzReponses %}
+            <tr>
+                <td>Réponse {{ loop.index }}</td>
+                <td>{{ reponse.libelle }} ({{ reponse.valeur }})</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('quizz_question_index') }}">back to list</a>
-
-    <a href="{{ path('quizz_question_edit', {'id': quizz_question.id}) }}">edit</a>
-
-    {{ include('quizz_question/_delete_form.html.twig') }}
-{% endblock %}
+    {% if quizz_question.type == 'qcu' %}
+        {{ include('quizz_question/_qcu.html.twig', {question:quizz_question}) }}
+    {% endif %}
