@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Event/CASAuthenticationFailureEvent.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 14:56
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Event/CASAuthenticationFailureEvent.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:34
 
 namespace App\Event;
 
@@ -33,7 +31,7 @@ class CASAuthenticationFailureEvent extends Event
     /**
      * @return Response
      */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }
@@ -41,7 +39,7 @@ class CASAuthenticationFailureEvent extends Event
     /**
      * @param Response $response
      */
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): void
     {
         $this->response = $response;
     }
@@ -49,7 +47,7 @@ class CASAuthenticationFailureEvent extends Event
     /**
      * @return Request
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
@@ -57,7 +55,7 @@ class CASAuthenticationFailureEvent extends Event
     /**
      * @return AuthenticationException
      */
-    public function getException()
+    public function getException(): AuthenticationException
     {
         return $this->exception;
     }
@@ -65,7 +63,7 @@ class CASAuthenticationFailureEvent extends Event
     /**
      * @return string
      */
-    public function getExceptionType()
+    public function getExceptionType(): string
     {
         return get_class($this->exception);
     }

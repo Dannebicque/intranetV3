@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyExport.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 29/07/2019 08:56
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyExport.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:33
 
 /**
  * Created by PhpStorm.
@@ -17,7 +15,7 @@
 
 namespace App\MesClasses;
 
-use App\Entity\Semestre;
+use App\Entity\Evaluation;
 use App\MesClasses\Excel\MyExcelMultiExport;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -100,8 +98,9 @@ class MyExport
     }
 
 
-    public function genereModeleImportNote(Semestre $semestre): ?Response
+    public function genereModeleImportNote(Evaluation $evaluation): ?Response
     {
+        $semestre = $evaluation->getSemestre();
         $this->excel->genereModeleExcel($semestre);
 
         return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());

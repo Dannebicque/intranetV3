@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EmpruntsController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 16/10/2019 17:40
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/EmpruntsController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:33
 
 namespace App\Controller\administration;
 
@@ -15,7 +13,6 @@ use App\Entity\Constantes;
 use App\Entity\Emprunt;
 use App\MesClasses\MyEmprunts;
 use App\MesClasses\MyExport;
-use App\Repository\EmpruntRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -33,7 +30,7 @@ class EmpruntsController extends BaseController
     /**
      * @Route("/", name="administration_emprunts_index")
      *
-     * @param EmpruntRepository $empruntRepository
+     * @param MyEmprunts $myEmprunts
      *
      * @return Response
      */
@@ -51,7 +48,7 @@ class EmpruntsController extends BaseController
     /**
      * @Route("/historique", name="administration_emprunt_historique")
      *
-     * @param EmpruntRepository $empruntRepository
+     * @param MyEmprunts $myEmprunts
      *
      * @return Response
      */
@@ -69,6 +66,8 @@ class EmpruntsController extends BaseController
     /**
      * @Route("/detail/{emprunt}", name="administration_emprunt_show")
      *
+     * @param Emprunt $emprunt
+     *
      * @return Response
      */
     public function show(Emprunt $emprunt): Response
@@ -80,6 +79,8 @@ class EmpruntsController extends BaseController
 
     /**
      * @Route("/fiche/{emprunt}", name="administration_emprunt_imprimer_fiche")
+     *
+     * @param Emprunt $emprunt
      *
      * @return Response
      */
@@ -104,6 +105,10 @@ class EmpruntsController extends BaseController
     /**
      * @Route("/change-etat/{emprunt}/{etat}", name="administration_emprunt_change_etat")
      *
+     * @param MyEmprunts $myEmprunts
+     * @param Emprunt    $emprunt
+     * @param string     $etat
+     *
      * @return Response
      */
     public function changeEtat(MyEmprunts $myEmprunts, Emprunt $emprunt, string $etat): Response
@@ -117,8 +122,7 @@ class EmpruntsController extends BaseController
      * @Route("/export.{_format}", name="administration_emprunts_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport            $myExport
-     * @param EmpruntRepository   $empruntRepository
-     *
+     * @param MyEmprunts          $myEmprunts
      * @param                     $_format
      *
      * @return Response

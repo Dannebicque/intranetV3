@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DiplomeType.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 10:10
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DiplomeType.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:22
 
 namespace App\Form;
 
@@ -50,7 +48,7 @@ class DiplomeType extends AbstractType
             ])
             ->add('responsable_diplome', EntityType::class, [
                 'class'         => Personnel::class,
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
@@ -59,7 +57,7 @@ class DiplomeType extends AbstractType
             ])
             ->add('assistant_diplome', EntityType::class, [
                 'class'         => Personnel::class,
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],

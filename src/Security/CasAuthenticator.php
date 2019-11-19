@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 02/10/2019 07:34
- * @lastUpdate 02/10/2019 07:34
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:34
 
 namespace App\Security;
 
@@ -43,7 +41,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         $this->session = $session;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return !in_array($request->getPathInfo(), ['/', '/fr/', '/fr/connexion']);
     }
@@ -80,7 +78,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
         // dump($credentials);
         $this->user = $userProvider->loadUserByUsername($credentials);
@@ -88,7 +86,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         return $this->user;
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         return true;
     }
@@ -157,7 +155,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         return new RedirectResponse('cas.univ-reims.fr/cas/login?service=' . ($request->headers->get('referer')));
     }
 
-    public function supportsRememberMe()
+    public function supportsRememberMe(): bool
     {
         return false;
     }

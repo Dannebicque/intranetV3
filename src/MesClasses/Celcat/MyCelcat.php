@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 16:04
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Celcat/MyCelcat.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:22
 
 /**
  * Created by PhpStorm.
@@ -80,6 +78,8 @@ abstract class MyCelcat
      * @param int                    $codeCelcatDepartement
      * @param AnneeUniversitaire     $anneeUniversitaire
      * @param EntityManagerInterface $entity
+     *
+     * @throws \Exception
      */
     public static function getEvents(
         int $codeCelcatDepartement,
@@ -150,9 +150,9 @@ abstract class MyCelcat
         EntityManagerInterface $entityManager
     ): void {
         self::connect();
-        $query = "SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
+        $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
-INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=" . $semestre->getDiplome()->getCodeCelcatDepartement();
+INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
         $result = odbc_exec(self::$conn, $query);
         while (odbc_fetch_row($result)) {
             // Vérifier si l'event est déjà dans l'intranet

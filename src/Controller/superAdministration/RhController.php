@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/RhController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/09/2019 11:53
- * @lastUpdate 21/09/2019 11:53
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/RhController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:20
 
 namespace App\Controller\superAdministration;
 
@@ -51,6 +49,9 @@ class RhController extends BaseController
 
     /**
      * @Route("/import", name="sa_rh_import_personnel")
+     * @param Request $request
+     *
+     * @return Response
      */
     public function import(Request $request): Response
     {

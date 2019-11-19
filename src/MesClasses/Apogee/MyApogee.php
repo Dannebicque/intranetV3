@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Apogee/MyApogee.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 11/11/2019 12:10
- * @lastUpdate 11/11/2019 12:10
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Apogee/MyApogee.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:14
 
 /**
  * Created by PhpStorm.
@@ -22,6 +20,7 @@ use App\Entity\Semestre;
 use App\MesClasses\Tools;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -112,12 +111,11 @@ abstract class MyApogee
      * @param string $fichier
      * @param        $nomfichier
      *
-     * @throws \PHPExcel_Exception
-     * @throws \PHPExcel_Reader_Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @return StreamedResponse|null
+     * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public static function transformeApogeeTexte($fichier, $nomfichier)
+    public static function transformeApogeeTexte($fichier, $nomfichier): ?StreamedResponse
     {
         $objPEENotes = new Spreadsheet();
         $objPEENotes->setActiveSheetIndex(0);
@@ -332,15 +330,6 @@ abstract class MyApogee
                 'Cache-Control'       => 'max-age=0'
             ]
         );
-//        $response = new Response();
-//        $response->headers->set('Content-Type', 'text/plain');
-//        $response->headers->set('Content-Disposition', 'attachment;filename="' . $nomfichier . '.txt"');
-//        $response->headers->set('Cache-Control', 'max-age=0');
-//        $response->sendHeaders();
-//        $date = new \DateTime('now');
-//        file_put_contents($dir . '/export-' . $date->format('HmidmY') . '.txt', $f);
-        echo $f; //??
-
     }
 
     /**

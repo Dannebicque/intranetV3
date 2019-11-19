@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEmprunts.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 16/10/2019 17:40
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEmprunts.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:35
 
 namespace App\MesClasses;
 
@@ -81,13 +79,13 @@ class MyEmprunts
         return $this->jours;
     }
 
-    public function listeEmprunts(Departement $departement)
+    public function listeEmprunts(Departement $departement): void
     {
         $this->emprunts = $this->empruntRepository->findByDepartement($departement);
         $this->calculStatistiques();
     }
 
-    private function calculStatistiques()
+    private function calculStatistiques(): void
     {
         /** @var Emprunt $emprunt */
         foreach ($this->emprunts as $emprunt) {
@@ -111,7 +109,7 @@ class MyEmprunts
         return $this->statistiques;
     }
 
-    public function changeEtat(Emprunt $emprunt, string $etat)
+    public function changeEtat(Emprunt $emprunt, string $etat): void
     {
         $eventMail = '';
         $eventNotif = '';
@@ -157,7 +155,7 @@ class MyEmprunts
         $this->entityManager->flush();
     }
 
-    public function calculGrille($role = 'ETU')
+    public function calculGrille($role = 'ETU'): array
     {
         $this->jours = [];
 

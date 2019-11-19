@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/SemestreType.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 10:10
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Form/SemestreType.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:22
 
 namespace App\Form;
 
@@ -121,7 +119,7 @@ class SemestreType extends AbstractType
                 'choice_label'  => 'display',
                 'label'         => 'label.opt_destinataire_mail_releve',
                 'required'      => false,
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
@@ -147,7 +145,7 @@ class SemestreType extends AbstractType
                 'choice_label'  => 'display',
                 'label'         => 'label.opt_destinataire_mail_modification_note',
                 'required'      => false,
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
@@ -189,7 +187,7 @@ class SemestreType extends AbstractType
                 'choice_label'  => 'display',
                 'label'         => 'label.opt_destinataire_mail_absence_responsable',
                 'required'      => false,
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],

@@ -133,6 +133,15 @@
                            class="btn btn-block btn-primary">
                             {{ 'afficher.les.notes'|trans }}
                         </a>
+                        <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
+                           class="btn btn-block btn-primary">
+                            {{ 'initialiser.les.evaluations'|trans }}
+                        </a>
+                        {#                        <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"#}
+                        {#                           class="btn btn-block btn-primary">#}
+                        {#                            {{ 'afficher.les.notes'|trans }}#}
+                        {#                        </a>#}
+                        {# todo: affecter les enseignants aux groupes#}
                         <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
                            class="btn btn-block btn-primary">
                             {{ 'demandes.rattrapages'|trans }}

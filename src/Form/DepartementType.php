@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DepartementType.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 04/09/2019 14:43
- * @lastUpdate 04/09/2019 14:42
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Form/DepartementType.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:22
 
 namespace App\Form;
 
@@ -136,7 +134,7 @@ class DepartementType extends AbstractType
             ->add('respri', EntityType::class, [
                 'class'         => Personnel::class,
                 'choice_label'  => 'display',
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],

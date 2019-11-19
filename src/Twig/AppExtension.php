@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/AppExtension.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:44
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Twig/AppExtension.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:17
 
 namespace App\Twig;
 
@@ -235,11 +233,11 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param $time
+     * @param DateTime $date
      *
      * @return mixed|string
      */
-    function timeAgo(DateTime $date)
+    public function timeAgo(DateTime $date)
     {
         $timestamp = $date->getTimestamp();
 

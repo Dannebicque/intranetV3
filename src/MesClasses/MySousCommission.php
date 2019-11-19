@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySousCommission.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:29
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySousCommission.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:20
 
 /**
  * Created by PhpStorm.
@@ -17,6 +15,7 @@
 
 namespace App\MesClasses;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -103,7 +102,7 @@ class MySousCommission
      * @param Semestre $semestre
      * @param          $annee
      */
-    public function init(Semestre $semestre, $annee): void
+    public function init(Semestre $semestre, AnneeUniversitaire $annee): void
     {
         //récupérer les notes du semestre.
         //faire un tableau etudiant/matieres/notes
@@ -173,13 +172,13 @@ class MySousCommission
     }
 
     /**
-     * @param Semestre $semestre
-     * @param int      $anneeUniversitaire
+     * @param Semestre           $semestre
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
      * @return StreamedResponse
      * @throws Exception
      */
-    public function export(Semestre $semestre, int $anneeUniversitaire): StreamedResponse
+    public function export(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
         $this->init($semestre, $anneeUniversitaire);
 

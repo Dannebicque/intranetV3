@@ -1,13 +1,11 @@
 <?php
 
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administratif/scolarite/RechercheController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 11/11/2019 12:10
- * @lastUpdate 11/11/2019 12:10
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administratif/scolarite/RechercheController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:20
 
 namespace App\Controller\administratif\scolarite;
 
@@ -30,6 +28,8 @@ class RechercheController extends BaseController
      * @Route("/{type}", name="administratif_scolarite_recherche")
      * @param EtudiantRepository  $etudiantRepository
      * @param PersonnelRepository $personnelRepository
+     * @param SemestreRepository  $semestreRepository
+     * @param DiplomeRepository   $diplomeRepository
      * @param Request             $request
      * @param                     $type
      *

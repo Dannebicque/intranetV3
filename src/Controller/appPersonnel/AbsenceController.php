@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/AbsenceController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:27
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/AbsenceController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:17
 
 namespace App\Controller\appPersonnel;
 
@@ -88,7 +86,6 @@ class AbsenceController extends BaseController
      *
      * @param MatiereRepository      $matiereRepository
      * @param CalendrierRepository   $calendrierRepository
-     * @param AbsenceRepository      $absenceRepository
      * @param EdtPlanningRepository  $edtPlanningRepository
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param MyGroupes              $myGroupes

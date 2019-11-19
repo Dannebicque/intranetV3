@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelMultiExport.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 18/10/2019 08:07
- * @lastUpdate 02/10/2019 17:19
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelMultiExport.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:17
 
 /**
  * Created by PhpStorm.
@@ -205,7 +203,9 @@ class MyExcelMultiExport
     }
 
     /**
-     * @param $myAbsences
+     * @param MyAbsences $myAbsences
+     *
+     * @throws Exception
      */
     public function genereExcelAbsence(MyAbsences $myAbsences): void
     {

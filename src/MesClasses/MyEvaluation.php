@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluation.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 18/08/2019 11:47
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEvaluation.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:35
 
 /**
  * Created by PhpStorm.
@@ -91,7 +89,7 @@ class MyEvaluation
     }
 
 
-    public function calculStatistiquesGlobales()
+    public function calculStatistiquesGlobales(): MyEvaluation
     {
         $this->notes = $this->evaluation->getNotes();
         $tgroupes = [];

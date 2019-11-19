@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administratif/scolarite/ScolariteController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 11/11/2019 12:10
- * @lastUpdate 11/11/2019 12:10
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administratif/scolarite/ScolariteController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:34
 
 namespace App\Controller\administratif\scolarite;
 
@@ -17,6 +15,8 @@ use App\Repository\DiplomeRepository;
 use App\Repository\SemestreRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,8 +28,11 @@ class ScolariteController extends AbstractController
 {
     /**
      * @Route("/", name="administratif_scolarite")
+     * @param DiplomeRepository $diplomeRepository
+     *
+     * @return Response
      */
-    public function index(DiplomeRepository $diplomeRepository)
+    public function index(DiplomeRepository $diplomeRepository): Response
     {
         return $this->render('administratif/scolarite/index.html.twig', [
             'diplomes' => $diplomeRepository->findAll()
@@ -38,8 +41,12 @@ class ScolariteController extends AbstractController
 
     /**
      * @Route("/diplome/{diplome}", name="administratif_scolarite_diplome")
+     * @param SemestreRepository $semestreRepository
+     * @param Diplome            $diplome
+     *
+     * @return Response
      */
-    public function diplomeShow(SemestreRepository $semestreRepository, Diplome $diplome)
+    public function diplomeShow(SemestreRepository $semestreRepository, Diplome $diplome): Response
     {
         return $this->render('administratif/scolarite/diplome.html.twig', [
             'diplome' => $diplome,
@@ -49,6 +56,9 @@ class ScolariteController extends AbstractController
 
     /**
      * @Route("/semestre/{semestre}", name="administratif_scolarite_semestre")
+     * @param Semestre $semestre
+     *
+     * @return Response
      */
     public function semestreShow(Semestre $semestre)
     {
@@ -59,8 +69,11 @@ class ScolariteController extends AbstractController
 
     /**
      * @Route("/export-apogee/{semestre}", name="administratif_scolarite_semestre_export_apogee")
+     * @param Semestre $semestre
+     *
+     * @return Response
      */
-    public function exportApogee(Semestre $semestre)
+    public function exportApogee(Semestre $semestre): Response
     {
         return $this->render('administratif/scolarite/export-apogee.html.twig', [
 
@@ -68,9 +81,9 @@ class ScolariteController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param Semestre                                  $semestre
-     * @param MyExcelRead                               $myExcelRead
+     * @param Request     $request
+     * @param Semestre    $semestre
+     * @param MyExcelRead $myExcelRead
      *
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
@@ -81,10 +94,10 @@ class ScolariteController extends AbstractController
      *     requirements={"semestre":"\d+"})
      */
     public function genereFichierApogee(
-        \Symfony\Component\HttpFoundation\Request $request,
+        Request $request,
         Semestre $semestre,
         MyExcelRead $myExcelRead
-    ) {
+    ): void {
         $file = $request->files->get('fichier');
         $originalName = $file->getClientOriginalName();
         $dir = $this->container->getParameter('kernel.root_dir') . '/../web/uploads/apogee';

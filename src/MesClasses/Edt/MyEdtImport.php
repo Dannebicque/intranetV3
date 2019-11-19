@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdtImport.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:53 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdtImport.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:35
 
 namespace App\MesClasses\Edt;
 
@@ -78,7 +76,7 @@ class MyEdtImport
     }
 
 
-    public function init($file, DataUserSession $dataUserSession)
+    public function init($file, DataUserSession $dataUserSession): MyEdtImport
     {
         $this->dataUserSession = $dataUserSession;
 

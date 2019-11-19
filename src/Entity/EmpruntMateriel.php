@@ -1,15 +1,14 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/EmpruntMateriel.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 06/10/2019 08:21
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/EmpruntMateriel.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:21
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,8 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EmpruntMateriel
 {
-    const ETAT_MATERIEL_DISPO = 'DISPO';
-    const ETAT_MATERIEL_SORTI = 'SORTI';
+    public const ETAT_MATERIEL_DISPO = 'DISPO';
+    public const ETAT_MATERIEL_SORTI = 'SORTI';
 
     /**
      * @ORM\Id()
@@ -93,24 +92,24 @@ class EmpruntMateriel
         return $this;
     }
 
-    public function getDatesortie(): ?\DateTimeInterface
+    public function getDatesortie(): ?DateTimeInterface
     {
         return $this->datesortie;
     }
 
-    public function setDatesortie(\DateTimeInterface $datesortie): self
+    public function setDatesortie(DateTimeInterface $datesortie): self
     {
         $this->datesortie = $datesortie;
 
         return $this;
     }
 
-    public function getDaterentree(): ?\DateTimeInterface
+    public function getDaterentree(): ?DateTimeInterface
     {
         return $this->daterentree;
     }
 
-    public function setDaterentree(\DateTimeInterface $daterentree): self
+    public function setDaterentree(DateTimeInterface $daterentree): self
     {
         $this->daterentree = $daterentree;
 
