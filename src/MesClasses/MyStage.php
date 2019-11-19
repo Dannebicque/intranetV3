@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyStage.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 22/07/2019 17:32
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyStage.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:38
 
 /**
  * Created by PhpStorm.
@@ -62,7 +60,7 @@ class MyStage
     }
 
 
-    public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire = 0)
+    public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire = 0): MyStage
     {
         if ($anneeUniversitaire === 0) {
             $anneeUniversitaire = $stagePeriode->getSemestre() ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : date('Y');

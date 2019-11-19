@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 11/11/2019 12:10
- * @lastUpdate 11/11/2019 08:41
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Security/LoginFormAuthenticator.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:35
 
 namespace App\Security;
 
@@ -82,7 +80,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {

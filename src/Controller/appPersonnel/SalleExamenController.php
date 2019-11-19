@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/SalleExamenController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:27
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/SalleExamenController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:17
 
 namespace App\Controller\appPersonnel;
 
@@ -18,6 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class QuizzController
@@ -50,6 +51,9 @@ class SalleExamenController extends BaseController
      *
      *
      * @return void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @Route("/application/salle-examen/genere/document",
      *     name="application_personnel_salle_examen_genere_placement",
      *     methods={"POST"})

@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/EmpruntSubscriber.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 16/10/2019 17:40
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/EmpruntSubscriber.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:33
 
 namespace App\EventSubscriber;
 
@@ -14,7 +12,6 @@ use App\Entity\Notification;
 use App\Entity\StageEtudiant;
 use App\Events;
 use App\MesClasses\Mail\MyMailer;
-use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -40,10 +37,9 @@ class EmpruntSubscriber implements EventSubscriberInterface
     /**
      * StageSubscriber constructor.
      *
-     * @param EntityManagerInterface      $entityManager
-     * @param RouterInterface             $router
-     * @param MyMailer                    $myMailer
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
+     * @param EntityManagerInterface $entityManager
+     * @param RouterInterface        $router
+     * @param MyMailer               $myMailer
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -86,7 +82,6 @@ class EmpruntSubscriber implements EventSubscriberInterface
      * @param GenericEvent $event
      * @param              $codeEvent
      *
-     * @throws NonUniqueResultException
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

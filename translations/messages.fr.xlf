@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 14/11/2019 14:57 -->
-<!-- @lastUpdate 14/11/2019 14:56 -->
+<!-- @date 19/11/2019 07:35 -->
+<!-- @lastUpdate 19/11/2019 07:34 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12760,6 +12760,96 @@
           <segment>
               <source>diplome.duplicate.success.flash</source>
               <target>diplome.duplicate.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="bx6Ym.Z" name="table.opt_evaluation_pre_initialisee">
+          <segment>
+              <source>table.opt_evaluation_pre_initialisee</source>
+              <target>table.opt_evaluation_pre_initialisee</target>
+          </segment>
+      </unit>
+      <unit id="YCBKHnl" name="help.opt_evaluation_pre_initialisee">
+          <segment>
+              <source>help.opt_evaluation_pre_initialisee</source>
+              <target>help.opt_evaluation_pre_initialisee</target>
+          </segment>
+      </unit>
+      <unit id="aQ7ulKp" name="initialiser.les.evaluations">
+          <segment>
+              <source>initialiser.les.evaluations</source>
+              <target>initialiser.les.evaluations</target>
+          </segment>
+      </unit>
+      <unit id="h.ILNGv" name="enquete.semestre.heading">
+          <segment>
+              <source>enquete.semestre.heading</source>
+              <target>enquete.semestre.heading</target>
+          </segment>
+      </unit>
+      <unit id="JLcekbU" name="atitle.retour_enquete">
+          <segment>
+              <source>atitle.retour_enquete</source>
+              <target>atitle.retour_enquete</target>
+          </segment>
+      </unit>
+      <unit id="PKrZ85c" name="enquete.create.heading">
+          <segment>
+              <source>enquete.create.heading</source>
+              <target>enquete.create.heading</target>
+          </segment>
+      </unit>
+      <unit id="eOeSABC" name="Titre">
+          <segment>
+              <source>Titre</source>
+              <target>Titre</target>
+          </segment>
+      </unit>
+      <unit id="iva1dm." name="Texte explication">
+          <segment>
+              <source>Texte explication</source>
+              <target>Texte explication</target>
+          </segment>
+      </unit>
+      <unit id="Xpo0gbo" name="Date ouverture">
+          <segment>
+              <source>Date ouverture</source>
+              <target>Date ouverture</target>
+          </segment>
+      </unit>
+      <unit id="urR2div" name="Date fermeture">
+          <segment>
+              <source>Date fermeture</source>
+              <target>Date fermeture</target>
+          </segment>
+      </unit>
+      <unit id="J9ONM1S" name="Quizz reponses">
+          <segment>
+              <source>Quizz reponses</source>
+              <target>Quizz reponses</target>
+          </segment>
+      </unit>
+      <unit id="le023yQ" name="__name__label__">
+          <segment>
+              <source>__name__label__</source>
+              <target>__name__label__</target>
+          </segment>
+      </unit>
+      <unit id="to4iuyd" name="quizz_question.show.heading">
+          <segment>
+              <source>quizz_question.show.heading</source>
+              <target>quizz_question.show.heading</target>
+          </segment>
+      </unit>
+      <unit id="IAvFZQW" name="texte d'aide">
+          <segment>
+              <source>texte d'aide</source>
+              <target>texte d'aide</target>
+          </segment>
+      </unit>
+      <unit id="b_dfkEj" name="note.saisie">
+          <segment>
+              <source>note.saisie</source>
+              <target>note.saisie</target>
           </segment>
       </unit>
   </file>

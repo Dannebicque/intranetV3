@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/09/2019 17:39
- * @lastUpdate 21/09/2019 17:39
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/SecurityController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:26
 
 namespace App\Controller;
 
@@ -30,6 +28,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion/{type}/{message}", name="security_login")
      * @param AuthenticationUtils $authenticationUtils
+     * @param string              $type
      * @param string              $message
      *
      * @return Response
@@ -151,12 +150,12 @@ class SecurityController extends AbstractController
                     $session->set('departement', $departement->getDepartement()->getUuidString()); //on sauvegarde
 
                     return $this->redirectToRoute('default_homepage');
-                } else {
-                    $flashBag->add('error', $translator->trans('formation.par.defaut.erreur'));
-
-                    return $this->render('security/choix-departement.html.twig',
-                        ['departements' => $departements, 'user' => $user]);
                 }
+
+                $flashBag->add('error', $translator->trans('formation.par.defaut.erreur'));
+
+                return $this->render('security/choix-departement.html.twig',
+                    ['departements' => $departements, 'user' => $user]);
             }
 
             return $this->render('security/choix-departement.html.twig',

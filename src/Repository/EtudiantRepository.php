@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 08:13
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EtudiantRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:35
 
 namespace App\Repository;
 
@@ -18,7 +16,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -34,8 +31,8 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * EtudiantRepository constructor.
      *
-     * @param RegistryInterface $registry
-     * @param RouterInterface   $router
+     * @param ManagerRegistry $registry
+     * @param RouterInterface $router
      */
     public function __construct(ManagerRegistry $registry, RouterInterface $router)
     {
@@ -282,7 +279,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findBySemestreArray(Semestre $semestre)
+    public function findBySemestreArray(Semestre $semestre): array
     {
         $etudiants = $this->findBySemestre($semestre);
         $t = [];

@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 09/11/2019 10:12
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:34
 
 namespace App\Entity;
 
@@ -160,11 +158,6 @@ class Diplome extends BaseEntity
      */
     private $optSemainesVisibles = 2;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaire", mappedBy="diplome")
-     */
-    private $qualiteQuestionnaires;
-
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -172,7 +165,6 @@ class Diplome extends BaseEntity
         $this->ppns = new ArrayCollection();
         $this->competences = new ArrayCollection();
         $this->annees = new ArrayCollection();
-        $this->qualiteQuestionnaires = new ArrayCollection();
     }
 
     /**
@@ -661,41 +653,27 @@ class Diplome extends BaseEntity
         return $this;
     }
 
-    public function getLibelleLong()
+    /**
+     * @return string
+     */
+    public function getLibelleLong(): string
     {
         if ($this->getTypeDiplome() !== null) {
             return $this->getTypeDiplome()->getSigle() . ' ' . $this->getLibelle();
         }
+
+        return $this->getLibelle();
     }
 
-    /**
-     * @return Collection|QualiteQuestionnaire[]
-     */
-    public function getQualiteQuestionnaires(): Collection
+    public function getSemestres(): array
     {
-        return $this->qualiteQuestionnaires;
-    }
-
-    public function addQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
-    {
-        if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
-            $this->qualiteQuestionnaires[] = $qualiteQuestionnaire;
-            $qualiteQuestionnaire->setDiplome($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
-    {
-        if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
-            $this->qualiteQuestionnaires->removeElement($qualiteQuestionnaire);
-            // set the owning side to null (unless already changed)
-            if ($qualiteQuestionnaire->getDiplome() === $this) {
-                $qualiteQuestionnaire->setDiplome(null);
+        $semestres = [];
+        foreach ($this->getAnnees() as $annee) {
+            foreach ($annee->getSemestres() as $semestre) {
+                $semestres[] = $semestre;
             }
         }
 
-        return $this;
+        return $semestres;
     }
 }

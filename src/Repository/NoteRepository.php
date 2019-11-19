@@ -1,12 +1,11 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/NoteRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 08:14
- */
+
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/NoteRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:11
 
 namespace App\Repository;
 
@@ -19,7 +18,6 @@ use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Note|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,25 +30,24 @@ class NoteRepository extends ServiceEntityRepository
     /**
      * NoteRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Note::class);
     }
 
-    public function findBySemestre(Semestre $semestre, int $annee)
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $annee)
     {
         return $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation=e.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere=m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
-
             ->where('u.semestre= :semestre')
             ->andWhere('j.annee = :annee')
             ->setParameter('semestre', $semestre)
-            ->setParameter('annee', $annee)
+            ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.id')
             ->getQuery()
             ->getResult();
@@ -77,7 +74,7 @@ class NoteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantSemestreArray(Semestre $semestre, $annee, $etudiants): array
+    public function findByEtudiantSemestreArray(Semestre $semestre, AnneeUniversitaire $annee, $etudiants): array
     {
 
         $notes = $this->findBySemestre($semestre, $annee);

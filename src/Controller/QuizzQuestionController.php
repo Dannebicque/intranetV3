@@ -25,6 +25,9 @@ class QuizzQuestionController extends AbstractController
 {
     /**
      * @Route("/", name="quizz_question_index", methods={"GET"})
+     * @param QuizzQuestionRepository $quizzQuestionRepository
+     *
+     * @return Response
      */
     public function index(QuizzQuestionRepository $quizzQuestionRepository): Response
     {
@@ -35,6 +38,9 @@ class QuizzQuestionController extends AbstractController
 
     /**
      * @Route("/new", name="quizz_question_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -58,6 +64,9 @@ class QuizzQuestionController extends AbstractController
 
     /**
      * @Route("/{id}", name="quizz_question_show", methods={"GET"})
+     * @param QuizzQuestion $quizzQuestion
+     *
+     * @return Response
      */
     public function show(QuizzQuestion $quizzQuestion): Response
     {
@@ -68,6 +77,10 @@ class QuizzQuestionController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="quizz_question_edit", methods={"GET","POST"})
+     * @param Request       $request
+     * @param QuizzQuestion $quizzQuestion
+     *
+     * @return Response
      */
     public function edit(Request $request, QuizzQuestion $quizzQuestion): Response
     {
@@ -88,6 +101,10 @@ class QuizzQuestionController extends AbstractController
 
     /**
      * @Route("/{id}", name="quizz_question_delete", methods={"DELETE"})
+     * @param Request       $request
+     * @param QuizzQuestion $quizzQuestion
+     *
+     * @return Response
      */
     public function delete(Request $request, QuizzQuestion $quizzQuestion): Response
     {

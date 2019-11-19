@@ -1,13 +1,11 @@
 <?php
 
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/GroupesController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/10/2019 09:53
- * @lastUpdate 18/10/2019 16:49
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/GroupesController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:17
 
 namespace App\Controller\superAdministration;
 
@@ -47,7 +45,8 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/departement/{departement}", name="sa_groupes_departement_synchro_all")
-     * @param Departement $departement
+     * @param GroupeRepository $groupeRepository
+     * @param Departement      $departement
      *
      * @return Response
      */

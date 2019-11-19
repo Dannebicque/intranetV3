@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/10/2019 09:52
- * @lastUpdate 19/10/2019 17:54
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/MessagerieController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:20
 
 namespace App\Controller;
 
@@ -59,6 +57,7 @@ class MessagerieController extends BaseController
      * @Route("/change-etat", name="messagerie_change_etat", options={"expose":true})
      * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
      * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
+     * @param MessageRepository                      $messageRepository
      * @param Request                                $request
      *
      * @return JsonResponse

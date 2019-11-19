@@ -587,6 +587,22 @@
                                     <div class="col-md-6">
                                         <div class="media">
                                             <div class="media-body">
+                                                <p><strong>{{ 'table.opt_evaluation_pre_initialisee'|trans }}</strong>
+                                                </p>
+                                                <p>{{ 'help.opt_evaluation_pre_initialisee'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optEvaluationPreInitialisee_{{ semestre.id }}">
+                                                <input type="checkbox" {{ semestre.optEvaluationPreInitialisee ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optEvaluationPreInitialisee_{{ semestre.id }}"
+                                                       id="optEvaluationPreInitialisee_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+                                        <div class="media">
+                                            <div class="media-body">
                                                 <p><strong>{{ 'table.opt_evaluation_visible'|trans }}</strong></p>
                                                 <p>{{ 'help.opt_evaluation_visible'|trans }}</p>
                                             </div>

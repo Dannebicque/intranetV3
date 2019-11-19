@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/MatiereController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 05/11/2019 11:50
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/MatiereController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:06
 
 namespace App\Controller\administration;
 
@@ -18,6 +16,7 @@ use App\Form\MatiereType;
 use App\MesClasses\Configuration;
 use App\MesClasses\MyExport;
 use App\Repository\MatiereRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,7 +60,7 @@ class MatiereController extends BaseController
      * @param                   $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function export(
         MyExport $myExport,

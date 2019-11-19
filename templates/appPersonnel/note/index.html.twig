@@ -9,8 +9,9 @@
                 {% for eval in evaluations.evaluations %}
                     <li class="nav-item">
                         <a href="#eval{{ eval.id }}" data-toggle="tab"
-                           class="nav-link {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active{% endif %}">{{ 'evaluation'|trans }} N° {{ loop.index }}
-                            ({{ eval.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }})</a>
+                           class="nav-link {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active{% endif %}">{{ 'evaluation'|trans }}N° {{ loop.index }}
+                                                                                                                                                         ({{ eval.libelle }}
+                                                                                                                                                         )</a>
                     </li>
                 {% endfor %}
 
@@ -135,9 +136,9 @@
                             <h4 class="card-title">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})</h4>
                             <div class="card-body">
                                 <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.id}) }}"
-                                   class="btn btn-block btn-large btn-primary">{{ 'note.saisie.manuelle'|trans }}</a>
-                                <a href="{{ path('application_personnel_note_import', {matiere:matiere.id}) }}"
-                                   class="btn btn-block btn-large btn-primary">{{ 'note.import'|trans }}</a>
+                                   class="btn btn-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
+                                {#                                <a href="{{ path('application_personnel_note_import', {matiere:matiere.id}) }}"#}
+                                {#                                   class="btn btn-block btn-large btn-primary">{{ 'note.import'|trans }}</a>#}
                             </div>
                         </div>
                     </div>

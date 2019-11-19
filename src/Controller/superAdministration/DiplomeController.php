@@ -1,12 +1,10 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/DiplomeController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/DiplomeController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:24
 
 namespace App\Controller\superAdministration;
 
@@ -103,7 +101,7 @@ class DiplomeController extends BaseController
             ]);
         }
 
-        throw new Exception('Le diplôme n\'est pas attaché à un département');
+        throw new \RuntimeException('Le diplôme n\'est pas attaché à un département');
     }
 
     /**

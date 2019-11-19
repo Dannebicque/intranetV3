@@ -1,12 +1,10 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PpnController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PpnController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:24
 
 namespace App\Controller\administration;
 
@@ -82,7 +80,7 @@ class PpnController extends BaseController
             return $this->redirectToRoute('administration_ppn_index');
         }
 
-        throw new Exception('Pas de PPN trouvé');
+        throw new \RuntimeException('Pas de PPN trouvé');
     }
 
     /**

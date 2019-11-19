@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Mail/MyMailer.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 14:56
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Mail/MyMailer.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:20
 
 /**
  * Created by PhpStorm.
@@ -52,7 +50,7 @@ class MyMailer
      * MyMailer constructor.
      *
      * @param Swift_Mailer        $mailer
-     * @param EngineInterface     $templating
+     * @param Environment         $templating
      * @param DatabaseTwigLoader  $databaseTwigLoader
      * @param TranslatorInterface $translator
      */
@@ -111,6 +109,10 @@ class MyMailer
     /**
      * @param $template
      * @param $data
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function setTemplate($template, $data): void
     {

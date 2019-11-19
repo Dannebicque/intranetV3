@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySerializer.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MySerializer.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:38
 
 /**
  * Created by PhpStorm.
@@ -29,7 +27,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class MySerializer
 {
-    public function serialize($data, $groups)
+    public function serialize($data, $groups): string
     {
         //pour prendre en compte les annotations groups et maxdepth
         $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));

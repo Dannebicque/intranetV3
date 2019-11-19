@@ -1,18 +1,18 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Emprunt.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 16/10/2019 17:40
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Emprunt.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:21
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -25,13 +25,13 @@ use Ramsey\Uuid\UuidInterface;
  */
 abstract class Emprunt extends BaseEntity
 {
-    const DEMANDE = 'DEMANDE';
-    const ACCEPTE = 'ACCEPTE';
-    const SORTIE = 'SORTIE';
-    const REFUS = 'REFUS';
-    const REVENU = 'REVENU';
+    public const DEMANDE = 'DEMANDE';
+    public const ACCEPTE = 'ACCEPTE';
+    public const SORTIE = 'SORTIE';
+    public const REFUS = 'REFUS';
+    public const REVENU = 'REVENU';
 
-    const ETATS = [
+    public const ETATS = [
         Emprunt::DEMANDE => 'Demandes A valider',
         Emprunt::ACCEPTE => 'Demandes acceptées',
         Emprunt::SORTIE  => 'Matériel sorti',
@@ -88,6 +88,10 @@ abstract class Emprunt extends BaseEntity
      */
     private $departement;
 
+    /**
+     * Emprunt constructor.
+     * @throws Exception
+     */
     public function __construct()
     {
         $this->uuid = Uuid::uuid4();
@@ -110,24 +114,24 @@ abstract class Emprunt extends BaseEntity
         return $this->uuid;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $datefin): self
+    public function setDateFin(DateTimeInterface $datefin): self
     {
         $this->dateFin = $datefin;
 
@@ -182,24 +186,24 @@ abstract class Emprunt extends BaseEntity
         return $this;
     }
 
-    public function getDateSortie(): ?\DateTimeInterface
+    public function getDateSortie(): ?DateTimeInterface
     {
         return $this->dateSortie;
     }
 
-    public function setDateSortie(\DateTimeInterface $datesortie): self
+    public function setDateSortie(DateTimeInterface $datesortie): self
     {
         $this->dateSortie = $datesortie;
 
         return $this;
     }
 
-    public function getDateRetour(): ?\DateTimeInterface
+    public function getDateRetour(): ?DateTimeInterface
     {
         return $this->dateRetour;
     }
 
-    public function setDateRetour(\DateTimeInterface $dateretour): self
+    public function setDateRetour(DateTimeInterface $dateretour): self
     {
         $this->dateRetour = $dateretour;
 
@@ -237,12 +241,12 @@ abstract class Emprunt extends BaseEntity
         return $this;
     }
 
-    public function getDateValidation(): ?\DateTimeInterface
+    public function getDateValidation(): ?DateTimeInterface
     {
         return $this->dateValidation;
     }
 
-    public function setDateValidation(\DateTimeInterface $dateValidation): self
+    public function setDateValidation(DateTimeInterface $dateValidation): self
     {
         $this->dateValidation = $dateValidation;
 

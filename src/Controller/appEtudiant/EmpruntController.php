@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/EmpruntController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 16/10/2019 17:40
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/EmpruntController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:17
 
 namespace App\Controller\appEtudiant;
 
@@ -66,6 +64,9 @@ class EmpruntController extends BaseController
     /**
      * @Route("/imprimer/{emprunt}", name="app_etudiant_emprunt_imprimer_fiche")
      * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
+     * @param Emprunt $emprunt
+     *
+     * @return Response
      */
     public function imprimerFiche(Emprunt $emprunt): Response
     {

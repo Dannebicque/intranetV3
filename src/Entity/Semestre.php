@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Semestre.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 05/11/2019 11:50
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Semestre.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 09:39
 
 namespace App\Entity;
 
@@ -261,6 +259,16 @@ class Semestre extends BaseEntity
      */
     private $codeElement;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $optEvaluationPreInitialisee;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaire", mappedBy="semestre")
+     */
+    private $qualiteQuestionnaires;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -275,6 +283,7 @@ class Semestre extends BaseEntity
         $this->stagePeriodes = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
+        $this->qualiteQuestionnaires = new ArrayCollection();
     }
 
     /**
@@ -1265,6 +1274,49 @@ class Semestre extends BaseEntity
     public function setCodeElement(string $codeElement): self
     {
         $this->codeElement = $codeElement;
+
+        return $this;
+    }
+
+    public function getOptEvaluationPreInitialisee(): ?bool
+    {
+        return $this->optEvaluationPreInitialisee;
+    }
+
+    public function setOptEvaluationPreInitialisee(bool $optEvaluationPreInitialisee): self
+    {
+        $this->optEvaluationPreInitialisee = $optEvaluationPreInitialisee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QualiteQuestionnaire[]
+     */
+    public function getQualiteQuestionnaires(): ?Collection
+    {
+        return $this->qualiteQuestionnaires;
+    }
+
+    public function addQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
+    {
+        if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
+            $this->qualiteQuestionnaires[] = $qualiteQuestionnaire;
+            $qualiteQuestionnaire->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
+    {
+        if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
+            $this->qualiteQuestionnaires->removeElement($qualiteQuestionnaire);
+            // set the owning side to null (unless already changed)
+            if ($qualiteQuestionnaire->getSemestre() === $this) {
+                $qualiteQuestionnaire->setSemestre(null);
+            }
+        }
 
         return $this;
     }

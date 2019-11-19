@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdt.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdt.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:35
 
 /**
  * Created by PhpStorm.
@@ -166,7 +164,7 @@ class MyEdt extends BaseEdt
     }
 
 
-    public function initAdministration($departement, $semaine, $filtre, $valeur)
+    public function initAdministration($departement, $semaine, $filtre, $valeur): MyEdt
     {
         if ($valeur === ''){
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
@@ -645,7 +643,7 @@ class MyEdt extends BaseEdt
         return [];
     }
 
-    public function initSemestre(int $semaine, Semestre $semestre)
+    public function initSemestre(int $semaine, Semestre $semestre): MyEdt
     {
         $this->semestre = $semestre;
         $this->init('promo', $semestre->getId(), $semaine);

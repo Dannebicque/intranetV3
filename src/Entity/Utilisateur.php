@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Utilisateur.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/10/2019 09:52
- * @lastUpdate 20/10/2019 08:24
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Utilisateur.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:26
 
 namespace App\Entity;
 
@@ -269,9 +267,9 @@ abstract class Utilisateur implements UserInterface
         if ($this->siteUniv !== '' && $this->siteUniv !== null) {
             if (strpos($this->siteUniv, 'http') === 0) {
                 return $this->siteUniv;
-            } else {
-                return 'https://' . $this->siteUniv;
             }
+
+            return 'https://' . $this->siteUniv;
         }
 
         return $this->siteUniv;
@@ -294,9 +292,9 @@ abstract class Utilisateur implements UserInterface
         if ($this->sitePerso !== '' && $this->sitePerso !== null) {
             if (strpos($this->sitePerso, 'http') === 0) {
                 return $this->sitePerso;
-            } else {
-                return 'https://' . $this->sitePerso;
             }
+
+            return 'https://' . $this->sitePerso;
         }
 
         return $this->sitePerso;

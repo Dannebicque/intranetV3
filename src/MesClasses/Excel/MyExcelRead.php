@@ -1,17 +1,16 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelRead.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 11/11/2019 12:10
- * @lastUpdate 11/11/2019 12:10
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Excel/MyExcelRead.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:38
 
 namespace App\MesClasses\Excel;
 
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -45,10 +44,10 @@ class MyExcelRead
     /**
      * @param string $fichier
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function readFile($fichier)
+    public function readFile($fichier): void
     {
         $inputFileType = IOFactory::identify($fichier);
         /**  Create a new Reader of the type that has been identified  **/
@@ -76,9 +75,9 @@ class MyExcelRead
             $this->line++;
 
             return $t;
-        } else {
-            return false;
         }
+
+        return false;
 
     }
 
@@ -114,7 +113,7 @@ class MyExcelRead
      * @param $lig
      * @param $valeur
      */
-    public function writeCellColLigne($col, $lig, $valeur)
+    public function writeCellColLigne($col, $lig, $valeur): void
     {
         $cell = Cell::stringFromColumnIndex($col) . $lig;
         $this->sheet->setCellValue($cell, $valeur);
@@ -125,7 +124,7 @@ class MyExcelRead
      *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function output($filename)
+    public function output($filename): void
     {
         $this->response = new Response();
 
@@ -144,7 +143,7 @@ class MyExcelRead
      *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function sauvegarde($filename)
+    public function sauvegarde($filename): void
     {
         $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Excel5');
         $objWriter->save($filename);

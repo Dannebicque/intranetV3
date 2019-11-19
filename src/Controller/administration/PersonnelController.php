@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PersonnelController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:13
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PersonnelController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:26
 
 namespace App\Controller\administration;
 
@@ -245,14 +243,16 @@ class PersonnelController extends BaseController
                 $this->entityManager->flush();
 
                 return $this->json($droit, Response::HTTP_OK);
-            } else {
-                //pas présent on ajoute
-                $pf[0]->addRole($droit);
-                $this->entityManager->flush();
-
-                return $this->json($droit, Response::HTTP_OK);
             }
-        } elseif (count($pf) === 0 && in_array($droit, Constantes::ROLE_LISTE, true)) {
+
+            //pas présent on ajoute
+            $pf[0]->addRole($droit);
+            $this->entityManager->flush();
+
+            return $this->json($droit, Response::HTTP_OK);
+        }
+
+        if (count($pf) === 0 && in_array($droit, Constantes::ROLE_LISTE, true)) {
             //etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement();
             $pf->setDepartement($this->dataUserSession->getDepartement());

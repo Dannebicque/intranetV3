@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 10/10/2019 07:51
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/NoteController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 17/11/2019 19:18
 
 namespace App\Controller\appPersonnel;
 
@@ -28,7 +26,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
  * Class NotesController
@@ -149,79 +146,55 @@ class NoteController extends BaseController
         //vérifier $this->get('request')->request->get('notes)['notes']
         $tnote = $request->request->get('notes')['notes'];
 
-        $nbNotes = count($tnote);
-        for ($i = 0; $i < $nbNotes; $i++) {
-            $myEtudiant->setUuidEtudiant($tnote[$i]['id']);
-            $myEtudiant->addNote($evaluation, $tnote[$i]);
+        foreach ($tnote as $iValue) {
+            $myEtudiant->setUuidEtudiant($iValue['id']);
+            $myEtudiant->addNote($evaluation, $iValue);
         }
 
         return new Response();
     }
 
     /**
-     * @Route("/import/{matiere}", name="application_personnel_note_import", requirements={"matiere"="\d+"})
+     * @Route("/import/{evaluation}", name="application_personnel_note_import", requirements={"evaluation"="\d+"})
      * @param Request      $request
      * @param MyUpload     $myUpload
      * @param MyEvaluation $myEvaluation
-     * @param Matiere      $matiere
+     * @param Evaluation   $evaluation
      *
      * @return Response
-     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public function import(Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Matiere $matiere): Response
-    {
-        $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
-        $form = $this->createForm(
-            EvaluationType::class,
-            $evaluation,
-            [
-                'departement'     => $this->dataUserSession->getDepartement(),
-                'semestre'        => $matiere->getUe() !== null ? $matiere->getUe()->getSemestre() : '',
-                'import'          => true,
-                'matiereDisabled' => true,
-                'locale'          => $request->getLocale(),
-                'attr'            => [
-                    'data-provide' => 'validation'
-                ]
-            ]
-        );
+    public function import(
+        Request $request,
+        MyUpload $myUpload,
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation
+    ): Response {
+        //upload
+        $fichier = $myUpload->upload($request->files->get('fichier_import'), 'temp/');
 
-        $form->handleRequest($request);
+        //traitement de l'import des notes.
+        $notes = $myEvaluation->importEvaluation($evaluation, $fichier);
+        $this->addFlashBag('success', 'import_note_a_verifier');
 
-        if ($form->isSubmitted()) { //&& $form->isValid()
-            $this->entityManager->persist($evaluation);
-            $this->entityManager->flush();
-
-            //upload
-            $fichier = $myUpload->upload($request->files->get('evaluation')['fichier_import'], 'temp/');
-
-            //traitement de l'import des notes.
-            $notes = $myEvaluation->importEvaluation($evaluation, $fichier);
-            $this->addFlashBag('success', 'import_note_a_verifier');
-
-            return $this->render('appPersonnel/note/saisie_2.html.twig', [
-                'evaluation' => $evaluation,
-                'notes'      => $notes,
-                'import'     => true
-            ]);
-        }
-
-        return $this->render('appPersonnel/note/import.html.twig', [
-            'matiere' => $matiere,
-            'form'    => $form->createView()
+        return $this->render('appPersonnel/note/saisie_2.html.twig', [
+            'evaluation' => $evaluation,
+            'notes'      => $notes,
+            'import'     => true
         ]);
     }
 
     /**
-     * @Route("/modele-import/{semestre}", name="application_personnel_note_import_modele", methods="GET")
+     * @Route("/modele-import/{evaluation}", name="application_personnel_note_import_modele", methods="GET")
      * @param MyExport $myExport
      * @param Semestre $semestre
      *
      * @return Response|null
      */
-    public function modeleImport(MyExport $myExport, Semestre $semestre): ?Response
+    public function modeleImport(MyExport $myExport, Evaluation $evaluation): ?Response
     {
-        return $myExport->genereModeleImportNote($semestre);
+        return $myExport->genereModeleImportNote($evaluation);
     }
 
     /**

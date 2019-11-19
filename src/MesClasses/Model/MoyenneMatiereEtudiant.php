@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Model/MoyenneMatiereEtudiant.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 25/08/2019 10:35
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Model/MoyenneMatiereEtudiant.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:38
 
 /**
  * Created by PhpStorm.
@@ -39,7 +37,7 @@ class MoyenneMatiereEtudiant
     /** @var int */
     private $bonif = 0;
 
-    private $penalite = 0;
+    private $penalite;
 
     /** @var double */
     private $moyennePenalisee = -0.01;

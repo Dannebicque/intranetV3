@@ -1,15 +1,14 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/QualiteQuestionnaire.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 09/11/2019 10:12
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/QualiteQuestionnaire.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 12:12
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,11 +24,6 @@ class QualiteQuestionnaire extends BaseEntity
     private $libelle;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="qualiteQuestionnaires")
-     */
-    private $diplome;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $dateOuverture;
@@ -39,6 +33,25 @@ class QualiteQuestionnaire extends BaseEntity
      */
     private $dateFermeture;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="qualiteQuestionnaires")
+     */
+    private $semestre;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $titre;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $texteExplication;
+
+    public function __construct(Semestre $semestre)
+    {
+        $this->semestre = $semestre;
+    }
 
     public function getLibelle(): ?string
     {
@@ -52,38 +65,62 @@ class QualiteQuestionnaire extends BaseEntity
         return $this;
     }
 
-    public function getDiplome(): ?Diplome
-    {
-        return $this->diplome;
-    }
-
-    public function setDiplome(?Diplome $diplome): self
-    {
-        $this->diplome = $diplome;
-
-        return $this;
-    }
-
-    public function getDateOuverture(): ?\DateTimeInterface
+    public function getDateOuverture(): ?DateTimeInterface
     {
         return $this->dateOuverture;
     }
 
-    public function setDateOuverture(\DateTimeInterface $dateOuverture): self
+    public function setDateOuverture(DateTimeInterface $dateOuverture): self
     {
         $this->dateOuverture = $dateOuverture;
 
         return $this;
     }
 
-    public function getDateFermeture(): ?\DateTimeInterface
+    public function getDateFermeture(): ?DateTimeInterface
     {
         return $this->dateFermeture;
     }
 
-    public function setDateFermeture(\DateTimeInterface $dateFermeture): self
+    public function setDateFermeture(DateTimeInterface $dateFermeture): self
     {
         $this->dateFermeture = $dateFermeture;
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    public function getTexteExplication(): ?string
+    {
+        return $this->texteExplication;
+    }
+
+    public function setTexteExplication(?string $texteExplication): self
+    {
+        $this->texteExplication = $texteExplication;
 
         return $this;
     }

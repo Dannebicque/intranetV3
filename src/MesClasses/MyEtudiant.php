@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 16/10/2019 17:41
- * @lastUpdate 16/10/2019 17:40
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:33
 
 namespace App\MesClasses;
 
@@ -27,7 +25,6 @@ use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -167,7 +164,6 @@ class MyEtudiant
     /**
      * @param $uuid
      *
-     * @throws NonUniqueResultException
      */
     public function setUuidEtudiant($uuid): void
     {

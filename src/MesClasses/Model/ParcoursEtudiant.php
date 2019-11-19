@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Model/ParcoursEtudiant.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/08/2019 12:29
- * @lastUpdate 21/08/2019 12:15
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Model/ParcoursEtudiant.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 15/11/2019 07:38
 
 /**
  * Created by PhpStorm.
@@ -52,7 +50,7 @@ class ParcoursEtudiant
 
     }
 
-    public function calculScolarite(Etudiant $etudiant, Semestre $semestreCourant)
+    public function calculScolarite(Etudiant $etudiant, Semestre $semestreCourant): ParcoursEtudiant
     {
         $this->etudiant = $etudiant;
         $this->semestreCourant = $semestreCourant;

@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/QuizzQuestionType.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 09/11/2019 10:12
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Form/QuizzQuestionType.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:35
+// @lastUpdate 19/11/2019 07:34
 
 namespace App\Form;
 
@@ -19,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuizzQuestionType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
@@ -28,7 +26,7 @@ class QuizzQuestionType extends AbstractType
                 ['expanded' => true, 'multiple' => false, 'choices' => QuizzQuestion::LISTE_TYPE_QUESTION]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuizzQuestion::class,
