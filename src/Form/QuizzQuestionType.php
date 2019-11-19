@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Form/QuizzQuestionType.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 19/11/2019 07:34
+// @date 19/11/2019 07:36
+// @lastUpdate 19/11/2019 07:35
 
 namespace App\Form;
 
@@ -23,8 +23,14 @@ class QuizzQuestionType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('help', TextType::class, ['label' => 'label.question.help'])
             ->add('type', ChoiceType::class,
-                ['expanded' => true, 'multiple' => false, 'choices' => QuizzQuestion::LISTE_TYPE_QUESTION]);
+                [
+                    'expanded' => true,
+                    'multiple' => false,
+                    'choices'  => QuizzQuestion::LISTE_TYPE_QUESTION,
+                    'help'     => 'texte d\'aide'
+                ]);
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

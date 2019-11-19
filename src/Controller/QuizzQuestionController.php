@@ -1,19 +1,18 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/QuizzQuestionController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 09/11/2019 10:12
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/QuizzQuestionController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:36
+// @lastUpdate 19/11/2019 07:35
 
 namespace App\Controller;
 
+use App\Entity\Constantes;
 use App\Entity\QuizzQuestion;
+use App\Entity\QuizzReponse;
 use App\Form\QuizzQuestionType;
 use App\Repository\QuizzQuestionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/quizz/question")
  */
-class QuizzQuestionController extends AbstractController
+class QuizzQuestionController extends BaseController
 {
     /**
      * @Route("/", name="quizz_question_index", methods={"GET"})
@@ -49,9 +48,24 @@ class QuizzQuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($quizzQuestion);
-            $entityManager->flush();
+            $this->entityManager->persist($quizzQuestion);
+
+            //fonction du type on ajoute
+            switch ($quizzQuestion->getType()) {
+                case 'qcu':
+                    $nbreponses = count($request->request->get('question_qcu'));
+                    for ($i = 1; $i <= $nbreponses; $i++) {
+                        $reponse = new QuizzReponse();
+                        $reponse->setQuestion($quizzQuestion);
+                        $reponse->setLibelle($request->request->get('question_qcu')[$i]);
+                        $reponse->setValeur($request->request->get('question_qcu_valeur')[$i]);
+                        $this->entityManager->persist($reponse);
+                    }
+                    break;
+            }
+
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'quizz_question.add.success.flash');
 
             return $this->redirectToRoute('quizz_question_index');
         }
@@ -115,5 +129,21 @@ class QuizzQuestionController extends AbstractController
         }
 
         return $this->redirectToRoute('quizz_question_index');
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="quizz_question_duplicate", methods="GET|POST")
+     *
+     * @return Response
+     */
+    public function duplicate(QuizzQuestion $quizzQuestion): Response
+    {
+        $newQuizzQuestion = clone $quizzQuestion;
+
+        $this->entityManager->persist($newQuizzQuestion);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'quizz_question.duplicate.success.flash');
+
+        return $this->redirectToRoute('quizz_question_edit', ['id' => $newQuizzQuestion->getId()]);
     }
 }

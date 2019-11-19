@@ -1,11 +1,9 @@
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 30/07/2019 08:40
- * @lastUpdate 24/07/2019 13:02
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/main.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:36
+// @lastUpdate 17/11/2019 08:50
 
 'use strict'
 
@@ -141,6 +139,7 @@ app.ready(function () {
   require('./partials/admEdt')
   require('./partials/articles')
   require('./partials/stage')
+  require('./partials/quizz')
   //require('./partials/sousCommission')
 
   //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.

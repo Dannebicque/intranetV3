@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/QuizzQuestion.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 09/11/2019 10:08
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/QuizzQuestion.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 19/11/2019 07:36
+// @lastUpdate 17/11/2019 09:07
 
 namespace App\Entity;
 
@@ -49,7 +47,7 @@ class QuizzQuestion extends BaseEntity
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizzReponse", mappedBy="question")
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzReponse", mappedBy="question", cascade={"persist", "remove"})
      */
     private $quizzReponses;
 
