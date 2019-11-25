@@ -1,6 +1,7 @@
 {% for typeGroupe in semestre.typeGroupes %}
     <tr id="ligne_{{ typeGroupe.id }}">
         <th scope="row">{{ typeGroupe.libelle }}</th>
+        <th scope="row">{{ typeGroupe.type }}</th>
         <td>
             <div class="form-check">
                 <input class="form-check-input typegroupe_defaut" type="radio"

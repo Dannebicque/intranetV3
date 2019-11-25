@@ -1,12 +1,10 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TypeGroupeController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:21 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/TypeGroupeController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 25/11/2019 06:55
 
 namespace App\Controller\administration;
 
@@ -28,38 +26,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeGroupeController extends BaseController
 {
     /**
-     * @Route("/new", name="administration_type_groupe_new", methods="POST", options={"expose"=true})
+     * @Route("/new/{semestre}", name="administration_type_groupe_new", methods="POST", options={"expose"=true})
      * @param SemestreRepository $semestreRepository
      * @param Request            $request
      *
      * @return Response
      */
-    public function create(SemestreRepository $semestreRepository, Request $request): Response
+    public function create(SemestreRepository $semestreRepository, Request $request, Semestre $semestre): Response
     {
-        $semestre = $semestreRepository->find($request->request->get('semestre'));
-        if ($semestre) {
-            $typeGroupe = new TypeGroupe($semestre);
-            $typeGroupe->setLibelle($request->request->get('libelle'));
+        $typeGroupe = new TypeGroupe($semestre);
+        $typeGroupe->setLibelle($request->request->get('libelle'));
+        $typeGroupe->setType($request->request->get('type'));
 
-            if ($request->request->get('defaut') === 'true') {
-                //tous les autres à faux.
-                foreach ($semestre->getTypeGroupes() as $tg) {
-                    $tg->setDefaut(false);
-                    $this->entityManager->persist($tg);
-                }
-                $typeGroupe->setDefaut(true);
-            } else {
-                $typeGroupe->setDefaut(false);
+        if ($request->request->get('defaut') === 'true') {
+            //tous les autres à faux.
+            foreach ($semestre->getTypeGroupes() as $tg) {
+                $tg->setDefaut(false);
+                $this->entityManager->persist($tg);
             }
-
-            $this->entityManager->persist($typeGroupe);
-            $this->entityManager->flush();
-
-            return $this->json($typeGroupe->getArray(), Response::HTTP_OK);
-
+            $typeGroupe->setDefaut(true);
+        } else {
+            $typeGroupe->setDefaut(false);
         }
 
-        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        $this->entityManager->persist($typeGroupe);
+        $this->entityManager->flush();
+
+        return $this->json($typeGroupe->getArray(), Response::HTTP_OK);
     }
 
     /**
@@ -71,7 +64,9 @@ class TypeGroupeController extends BaseController
     public function refreshListe(Semestre $semestre): Response
     {
 
-        return $this->render('administration/groupe/_liste.html.twig', ['semestre' => $semestre]);
+        return $this->render('administration/type_groupe/_liste.html.twig', [
+            'semestre' => $semestre
+        ]);
     }
 
     /**

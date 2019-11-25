@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/PpnController.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 15/11/2019 07:24
+// @date 25/11/2019 10:20
+// @lastUpdate 24/11/2019 21:01
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Entity\Ppn;
 use App\Form\PpnType;
 use App\Repository\PpnRepository;
@@ -84,14 +85,15 @@ class PpnController extends BaseController
     }
 
     /**
-     * @Route("/new", name="administration_ppn_new", methods="GET|POST")
+     * @Route("/new/{diplome}", name="administration_ppn_new", methods="GET|POST")
      * @param Request $request
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(Request $request, Diplome $diplome = null): Response
     {
         $ppn = new Ppn();
+        $ppn->setDiplome($diplome);
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
@@ -108,7 +110,7 @@ class PpnController extends BaseController
             return $this->redirectToRoute('administration_ppn_index');
         }
 
-        return $this->render('administration/ppn/new.html.twig', [
+        return $this->render('structure/ppn/new.html.twig', [
             'ppn'  => $ppn,
             'form' => $form->createView(),
         ]);
@@ -122,7 +124,7 @@ class PpnController extends BaseController
      */
     public function show(Ppn $ppn): Response
     {
-        return $this->render('administration/ppn/show.html.twig', ['ppn' => $ppn]);
+        return $this->render('structure/ppn/show.html.twig', ['ppn' => $ppn]);
     }
 
     /**
@@ -149,7 +151,7 @@ class PpnController extends BaseController
             return $this->redirectToRoute('administration_ppn_index');
         }
 
-        return $this->render('administration/ppn/edit.html.twig', [
+        return $this->render('structure/ppn/edit.html.twig', [
             'ppn'  => $ppn,
             'form' => $form->createView(),
         ]);

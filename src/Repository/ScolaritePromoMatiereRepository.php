@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ScolaritePromoMatiereRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 14:56
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ScolaritePromoMatiereRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:21
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Repository;
 

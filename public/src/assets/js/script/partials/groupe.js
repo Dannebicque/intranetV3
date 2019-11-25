@@ -1,16 +1,9 @@
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/groupe.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/groupe.js
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 25/11/2019 10:18
 
 $(document).on('change', '.typegroupe_defaut', function (e) {
   $.ajax({
@@ -27,18 +20,19 @@ $(document).on('change', '.typegroupe_defaut', function (e) {
   })
 })
 
-$(document).on('click', '#add_type_groupe', function () {
+$(document).on('click', '.add_type_groupe', function () {
   const $semestre = $(this).data('semestre')
   $.ajax({
-    url: Routing.generate('administration_type_groupe_new'),
+    url: Routing.generate('administration_type_groupe_new', {semestre: $semestre}),
     method: 'POST',
     data: {
-      libelle: $('#type_groupe_libelle').val(),
-      semestre: $semestre,
-      defaut: $('#type_groupe_defaut').prop('checked')
+      libelle: $('#type_groupe_libelle_' + $semestre).val(),
+      type: $('#type_groupe_type_' + $semestre).val(),
+      defaut: $('#type_groupe_defaut_' + $semestre).prop('checked')
     },
     success: function (data) {
-      $('#typgeGroupe_bloc').empty().load(Routing.generate('administration_type_groupe_refresh', {semestre: $semestre}))
+      $('#typgeGroupe_bloc_' + $semestre).empty().load(Routing.generate('administration_type_groupe_refresh', {semestre: $semestre}))
+      //todo: le refresh ne fait pas la bonne liste?
       addCallout('Type de groupe ajouté', 'success')
     }, error: function (e) {
       addCallout('Erreur lors de l\'ajout du type de groupe', 'danger')

@@ -1,12 +1,10 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/AnneeUniversitaireController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 25/11/2019 10:18
 
 namespace App\Controller\superAdministration;
 
@@ -37,6 +35,24 @@ class AnneeUniversitaireController extends BaseController
         return $this->render('super-administration/annee_universitaire/index.html.twig', [
             'annee_universitaires' => $anneeUniversitaireRepository->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/annee-active/change/{annee}", name="sa_annee_universitaire_change_active", options={"expose":true})
+     * @param Request            $request
+     *
+     * @param AnneeUniversitaire $annee
+     *
+     * @return Response
+     */
+    public function changeOption(Request $request, AnneeUniversitaire $annee): Response
+    {
+        dump($request->request->get('value'));
+        $value = $request->request->get('value');
+        $annee->setActive($value === 'true');
+        $this->entityManager->flush();
+
+        return new Response('', Response::HTTP_OK);
     }
 
     /**

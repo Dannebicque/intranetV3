@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 19/11/2019 07:33
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\MesClasses;
 

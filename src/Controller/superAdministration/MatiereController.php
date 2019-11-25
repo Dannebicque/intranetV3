@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/MatiereController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/09/2019 09:03
- * @lastUpdate 21/09/2019 09:03
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/MatiereController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 25/11/2019 10:18
 
 namespace App\Controller\superAdministration;
 
@@ -14,6 +12,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
+use App\Entity\Ue;
 use App\Form\MatiereType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,18 +37,19 @@ class MatiereController extends BaseController
 
 
     /**
-     * @Route("/new/{diplome}", name="sa_matiere_new", methods="GET|POST")
+     * @Route("/new/{ue}", name="sa_matiere_new", methods="GET|POST")
      * @param Request $request
      *
      * @param Diplome $diplome
      *
      * @return Response
      */
-    public function create(Request $request, Diplome $diplome): Response
+    public function create(Request $request, Ue $ue): Response
     {
         $matiere = new Matiere();
+        $matiere->setUe($ue);
         $form = $this->createForm(MatiereType::class, $matiere, [
-            'diplome' => $diplome,
+            'diplome' => $ue->getDiplome(),
             'attr'    => [
                 'data-provide' => 'validation'
             ]
@@ -61,10 +61,11 @@ class MatiereController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
 
-            return $this->redirectToRoute('administration_matiere_index');
+            return $this->redirectToRoute('sa_structure_index',
+                ['departement' => $matiere->getSemestre()->getDiplome()->getDepartement()->getId()]);
         }
 
-        return $this->render('administration/matiere/new.html.twig', [
+        return $this->render('structure/matiere/new.html.twig', [
             'matiere' => $matiere,
             'form'    => $form->createView(),
         ]);
@@ -127,7 +128,7 @@ class MatiereController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_matiere_edit', ['id' => $newMatiere->getId()]);
+        return $this->redirectToRoute('sa_matiere_edit', ['id' => $newMatiere->getId()]);
     }
 
     /**

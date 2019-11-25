@@ -60,32 +60,44 @@
 
                     <div class="card-body">
                         <table class="table table-separated">
-                            <tbody id="typgeGroupe_bloc">
+                            <tbody id="typgeGroupe_bloc_{{ semestre.id }}">
                             {{ include('administration/type_groupe/_liste.html.twig') }}
                             </tbody>
                             <tfoot>
                             <tr id="ligne_add">
                                 <td>
-                                    <label for="type_groupe_libelle" class="sr-only">Libellé du type de groupe</label>
+                                    <label for="type_groupe_libelle_{{ semestre.id }}" class="sr-only">Libellé du type
+                                                                                                       de groupe</label>
                                     <input type="text"
                                            class="form-control"
                                            placeholder="Libellé du type de groupe"
-                                           id="type_groupe_libelle">
+                                           id="type_groupe_libelle_{{ semestre.id }}">
+                                </td>
+                                <td>
+                                    <label for="type_groupe_type_{{ semestre.id }}" class="sr-only">Type de
+                                                                                                    groupe</label>
+                                    <select
+                                            class="form-control"
+                                            id="type_groupe_type_{{ semestre.id }}">
+                                        <option value="CM">CM</option>
+                                        <option value="TD">TD</option>
+                                        <option value="TP">TP</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <div class="form-check">
                                         <input class="form-check-input"
                                                type="radio"
-                                               name="type_groupe_defaut"
-                                               id="type_groupe_defaut"
+                                               name="type_groupe_defaut_{{ semestre.id }}"
+                                               id="type_groupe_defaut_{{ semestre.id }}"
                                                value="true">
-                                        <label class="form-check-label" for="type_groupe_defaut">
+                                        <label class="form-check-label" for="type_groupe_defaut_{{ semestre.id }}">
                                             Par défaut
                                         </label>
                                     </div>
                                 </td>
                                 <td class="text-right table-actions">
-                                    <button class="btn btn-primary btn-block" id="add_type_groupe"
+                                    <button class="btn btn-primary btn-block add_type_groupe"
                                             data-semestre="{{ semestre.id }}"><span
                                                 class="ti-plus"></span> Ajouter</button>
                                 </td>

@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% if is_granted('ROLE_SUPER_ADMIN') %}
-    {% set baseurl = 'sa' %}
+    {% set baseurl = 'sa_' %}
 {% else %}
     {% set baseurl = 'administration_' %}
 {% endif %}
@@ -34,24 +34,24 @@
                 <div class="col-md-10"><a href="#" class="myedit">{{ departement.libelle }}</a></div>
                 <div class="col-md-2">
 
-                    <a href="{{ path(baseurl ~ 'structure_departement_show', {'id': departement.id}) }}"
+                    <a href="{{ path(baseurl ~ 'departement_show', {'id': departement.id}) }}"
                        class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                        data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
-                    <a href="{{ path(baseurl ~ 'structure_departement_edit', {'id': departement.id}) }}"
+                    <a href="{{ path(baseurl ~ 'departement_edit', {'id': departement.id}) }}"
                        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                                 data-provide="tooltip"
                                                                                 data-placement="bottom"
                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         {% if departement.actif == true %}
-                            <a href="{{ path(baseurl ~ '_departement_activate', {'departement': departement.id,
+                            <a href="{{ path(baseurl ~ 'departement_activate', {'departement': departement.id,
                                 etat:0}) }}"
                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                         {% else %}
-                            <a href="{{ path(baseurl ~ '_departement_activate', {'departement': departement.id,
+                            <a href="{{ path(baseurl ~ 'departement_activate', {'departement': departement.id,
                                 etat:1}) }}"
                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
@@ -67,32 +67,32 @@
                         | {{ diplome.libelle }} | {{ diplome.codeApogee }}</div>
                     <div class="col-md-2">
 
-                        <a href="{{ path(baseurl ~ 'structure_diplome_duplicate', {'id': diplome.id}) }}"
+                        <a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
                            class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
                            data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
-                        <a href="{{ path(baseurl ~ 'structure_diplome_show', {'id': diplome.id}) }}"
+                        <a href="{{ path(baseurl ~ 'diplome_show', {'id': diplome.id}) }}"
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                            data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
-                        <a href="{{ path(baseurl ~ 'structure_diplome_edit', {'id': diplome.id}) }}"
+                        <a href="{{ path(baseurl ~ 'diplome_edit', {'id': diplome.id}) }}"
                            class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                                     data-provide="tooltip"
                                                                                     data-placement="bottom"
                                                                                     title="{{ 'atitle.modifier'|trans }}"></i></a>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if diplome.actif == true %}
-                                <a href="{{ path(baseurl ~ '_diplome_activate', {'diplome': diplome.id, etat:0}) }}"
+                                <a href="{{ path(baseurl ~ 'diplome_activate', {'diplome': diplome.id, etat:0}) }}"
                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                    data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                             {% else %}
-                                <a href="{{ path(baseurl ~ '_diplome_activate', {'diplome': diplome.id, etat:1}) }}"
+                                <a href="{{ path(baseurl ~ 'diplome_activate', {'diplome': diplome.id, etat:1}) }}"
                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                    data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                             {% endif %}
                             {% if diplome.annees|length == 0 %}
-                                <a href="{{ path(baseurl ~ 'structure_diplome_delete', {id: diplome.id}) }}"
+                                <a href="{{ path(baseurl ~ 'diplome_delete', {id: diplome.id}) }}"
                                    data-csrf="{{ csrf_token('delete' ~ diplome.id) }}"
                                    class="btn btn-danger btn-outline btn-square btn-xs supprimer"><i
                                             class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
@@ -106,32 +106,32 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeApogee }}</div>
                         <div class="col-md-2">
-                            <a href="{{ path(baseurl ~ 'structure_annee_duplicate', {'id': annee.id}) }}"
+                            <a href="{{ path(baseurl ~ 'annee_duplicate', {'id': annee.id}) }}"
                                class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
-                            <a href="{{ path(baseurl ~ 'structure_annee_show', {'id': annee.id}) }}"
+                            <a href="{{ path(baseurl ~ 'annee_show', {'id': annee.id}) }}"
                                class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                                data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
-                            <a href="{{ path(baseurl ~ 'structure_annee_edit', {'id': annee.id}) }}"
+                            <a href="{{ path(baseurl ~ 'annee_edit', {'id': annee.id}) }}"
                                class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                                         data-provide="tooltip"
                                                                                         data-placement="bottom"
                                                                                         title="{{ 'atitle.modifier'|trans }}"></i></a>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 {% if annee.actif == true %}
-                                    <a href="{{ path(baseurl ~ '_annee_activate', {'annee': annee.id, etat:0}) }}"
+                                    <a href="{{ path(baseurl ~ 'annee_activate', {'annee': annee.id, etat:0}) }}"
                                        class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                 {% else %}
-                                    <a href="{{ path(baseurl ~ '_annee_activate', {'annee': annee.id, etat:1}) }}"
+                                    <a href="{{ path(baseurl ~ 'annee_activate', {'annee': annee.id, etat:1}) }}"
                                        class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                 {% endif %}
                                 {% if annee.semestres|length == 0 %}
-                                    <a href="{{ path(baseurl ~ 'structure_annee_delete', {id: annee.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'annee_delete', {id: annee.id}) }}"
                                        data-csrf="{{ csrf_token('delete' ~ annee.id) }}"
                                        class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
                                                 class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
@@ -146,16 +146,16 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-7">{{ semestre.libelle }} | {{ semestre.codeElement }}</div>
                             <div class="col-md-2">
-                                <a href="{{ path(baseurl ~ 'structure_semestre_duplicate', {'id': semestre.id}) }}"
+                                <a href="{{ path(baseurl ~ 'semestre_duplicate', {'id': semestre.id}) }}"
                                    class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
                                    data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
                                             class="{{ iconDuplicate }}"></i></a>
-                                <a href="{{ path(baseurl ~ 'structure_semestre_show', {'id': semestre.id}) }}"
+                                <a href="{{ path(baseurl ~ 'semestre_show', {'id': semestre.id}) }}"
                                    class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                                    data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
                                             class="{{ iconShow }}"></i></a>
 
-                                <a href="{{ path(baseurl ~ 'structure_semestre_edit', {'id': semestre.id}) }}"
+                                <a href="{{ path(baseurl ~ 'semestre_edit', {'id': semestre.id}) }}"
                                    class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                                             data-provide="tooltip"
                                                                                             data-placement="bottom"
@@ -163,13 +163,13 @@
 
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                     {% if semestre.actif == true %}
-                                        <a href="{{ path(baseurl ~ '_semestre_activate', {'semestre': semestre.id,
+                                        <a href="{{ path(baseurl ~ 'semestre_activate', {'semestre': semestre.id,
                                             etat:0}) }}"
                                            class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                            data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                     {% else %}
-                                        <a href="{{ path(baseurl ~ '_semestre_activate', {'semestre': semestre.id,
+                                        <a href="{{ path(baseurl ~ 'semestre_activate', {'semestre': semestre.id,
                                             etat:1}) }}"
                                            class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                            data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
@@ -177,7 +177,7 @@
                                     {% endif %}
                                     {% if semestre.ues|length == 0 and semestre
                                         .parcours|length == 0 and semestre.etudiants|length == 0 %}
-                                        <a href="{{ path(baseurl ~ 'structure_semestre_delete', {id: semestre.id}) }}"
+                                        <a href="{{ path(baseurl ~ 'semestre_delete', {id: semestre.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ semestre.id) }}"
                                            class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
                                                     class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
@@ -193,34 +193,34 @@
                                 <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeElement }} {% if ue
                                         .bonification==true %}(Bonification){% endif %}</div>
                                 <div class="col-md-2">
-                                    <a href="{{ path(baseurl ~ 'structure_ue_duplicate', {'id': ue.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'ue_duplicate', {'id': ue.id}) }}"
                                        class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
                                                 class="{{ iconDuplicate }}"></i></a>
-                                    <a href="{{ path(baseurl ~ 'structure_ue_show', {'id': ue.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'ue_show', {'id': ue.id}) }}"
                                        class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
                                                 class="{{ iconShow }}"></i></a>
 
-                                    <a href="{{ path(baseurl ~ 'structure_ue_edit', {'id': ue.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'ue_edit', {'id': ue.id}) }}"
                                        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                                                 data-provide="tooltip"
                                                                                                 data-placement="bottom"
                                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                                         {% if semestre.actif == true %}
-                                            <a href="{{ path(baseurl ~ '_ue_activate', {'ue': ue.id, etat:0}) }}"
+                                            <a href="{{ path(baseurl ~ 'ue_activate', {'ue': ue.id, etat:0}) }}"
                                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                         {% else %}
-                                            <a href="{{ path(baseurl ~ '_ue_activate', {'ue': ue.id, etat:1}) }}"
+                                            <a href="{{ path(baseurl ~ 'ue_activate', {'ue': ue.id, etat:1}) }}"
                                                class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                         {% endif %}
                                         {% if ue.matieres|length == 0 %}
-                                            <a href="{{ path(baseurl ~ 'structure_ue_delete', {id: ue.id}) }}"
+                                            <a href="{{ path(baseurl ~ 'ue_delete', {id: ue.id}) }}"
                                                data-csrf="{{ csrf_token('delete' ~ ue.id) }}"
                                                class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
                                                         class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
@@ -251,19 +251,19 @@
                                                                                                     title="{{ 'atitle.modifier'|trans }}"></i></a>
                                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                                             {% if semestre.actif == true %}
-                                                <a href="{{ path(baseurl ~ '_matiere_activate', {'matiere': matiere
+                                                <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere
                                                     .id, etat:1}) }}"
                                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                    data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                             {% else %}
-                                                <a href="{{ path(baseurl ~ '_matiere_activate', {'matiere': matiere
+                                                <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere
                                                     .id, etat:0}) }}"
                                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                    data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                             {% endif %}
-                                            <a href="{{ path(baseurl ~ '_matiere_delete', {id: matiere.id}) }}"
+                                            <a href="{{ path(baseurl ~ 'matiere_delete', {id: matiere.id}) }}"
                                                data-csrf="{{ csrf_token('delete' ~ matiere.id) }}"
                                                class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
                                                         class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
@@ -271,14 +271,37 @@
                                         {% endif %}
                                     </div>
                                 </div>
-
                             {% endfor %}
+                            {% if diplome.ppns|length == 0 %}
+                                <div class="row gap-y lignehover">
+                                    <div class="col-md-4"></div>
+
+                                    <div class="col-md-8">
+                                        <a href="{{ path(baseurl ~ 'ppn_new', {diplome: diplome.id}) }}"
+                                           class="btn btn-warning addPpn btn-block" title="Ajouter un PPN"><i
+                                                    class="fa fa-plus-circle"></i> Aucun PPN dans le diplôme. Vous
+                                                                                   devez en ajouter un.</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="row gap-y lignehover" id="matiere_new_{{ ue.id }}">
+                                    <div class="col-md-4"></div>
+
+                                    <div class="col-md-8">
+                                        <a href="{{ path(baseurl ~ 'matiere_new', {ue: ue.id}) }}"
+                                           class="btn btn-success addMatiere btn-block" title="Ajouter une Matière"
+                                           data-ue="{{ ue.id }}"><i
+                                                    class="fa fa-plus-circle"></i> Ajouter une Matière dans l'UE
+                                            {{ ue.libelle }}</a>
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                         <div class="row gap-y lignehover" id="ue_new_{{ semestre.id }}">
                             <div class="col-md-4"></div>
 
                             <div class="col-md-8">
-                                <a href="{{ path(baseurl ~ 'structure_ue_new', {semestre: semestre.id}) }}"
+                                <a href="{{ path(baseurl ~ 'ue_new', {semestre: semestre.id}) }}"
                                    class="btn btn-success addUe btn-block" title="Ajouter une UE"
                                    data-semestre="{{ semestre.id }}"><i
                                             class="fa fa-plus-circle"></i> Ajouter une UE au
@@ -292,21 +315,21 @@
                                 <div class="col-md-6">Parcours/Options {{ parcour.libelle }}
                                                       | {{ parcour.codeElement }}</div>
                                 <div class="col-md-2">
-                                    <a href="{{ path(baseurl ~ 'structure_parcour_duplicate', {'id': parcour.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'parcour_duplicate', {'id': parcour.id}) }}"
                                        class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
                                                 class="{{ iconDuplicate }}"></i></a>
-                                    <a href="{{ path(baseurl ~ 'structure_parcour_show', {'id': parcour.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'parcour_show', {'id': parcour.id}) }}"
                                        class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                                        data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
                                                 class="{{ iconShow }}"></i></a>
 
-                                    <a href="{{ path(baseurl ~ 'structure_parcour_edit', {'id': parcour.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'parcour_edit', {'id': parcour.id}) }}"
                                        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                                                 data-provide="tooltip"
                                                                                                 data-placement="bottom"
                                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
-                                    <a href="{{ path(baseurl ~ 'structure_parcour_delete', {id: parcour.id}) }}"
+                                    <a href="{{ path(baseurl ~ 'parcour_delete', {id: parcour.id}) }}"
                                        data-csrf="{{ csrf_token('delete' ~ parcour.id) }}"
                                        class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
                                                 class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
@@ -318,7 +341,7 @@
                         <div class="row gap-y lignehover">
                             <div class="col-md-4"></div>
                             <div class="col-md-8">
-                                <a href="{{ path(baseurl ~ 'structure_parcour_new', {semestre: semestre.id}) }}"
+                                <a href="{{ path(baseurl ~ 'parcour_new', {semestre: semestre.id}) }}"
                                    class="btn btn-success btn-block" title="Ajouter un Parcour/Options"><i
                                             class="fa fa-plus-circle"></i> Ajouter un Parcour/Options au
                                                                            semestre {{ semestre.libelle }}</a>
@@ -337,7 +360,7 @@
                         {#<td>&nbsp;</td>#}
                         {#<td colspan="2">{{ opt.nomoption }}</td>#}
                         {#<td>#}
-                        {#<a href="{{ path('da_kernel_administration_structure_modif_option',{id:opt.id}) }}"#}
+                        {#<a href="{{ path('da_kernel_administration_modif_option',{id:opt.id}) }}"#}
                         {#class="btn btn-warning" rel="tooltip"#}
                         {#data-placement="left" title=" Modifier "><i#}
                         {#class="{{ iconEdit }}"></i></a>#}
@@ -358,7 +381,7 @@
                         {#<td colspan="2">{{ u.numeroue }} | {{ u.nomue }}#}
                         {#| {{ u.codeetape }}</td>#}
                         {#<td>#}
-                        {#<a href="{{ path('da_kernel_administration_structure_modif_ue',{id:u.id}) }}"#}
+                        {#<a href="{{ path('da_kernel_administration_modif_ue',{id:u.id}) }}"#}
                         {#class="btn btn-warning" rel="tooltip" data-placement="left"#}
                         {#title=" Modifier "><i class="{{ iconEdit }}"></i></a>#}
 
@@ -377,7 +400,7 @@
                         {#<input type="text" class="form-control" placeholder="Code Apogée"#}
                         {#id="codeApogeeOption-{{ semestre.id }}"/>#}
                         {##}
-                        {#<a href="{{ path('da_kernel_administration_structure_add_option',{semestre:semestre.id}) }}" class="btn btn-block btn-large btn-primary">Ajouter un parcours au semestre</a>#}
+                        {#<a href="{{ path('da_kernel_administration_add_option',{semestre:semestre.id}) }}" class="btn btn-block btn-large btn-primary">Ajouter un parcours au semestre</a>#}
                         {# </td>#}
                         {#<td>#}
                         {#<input type="text" class="form-control"#}
@@ -396,7 +419,7 @@
                     <div class="row gap-y lignehover" id="semestre_new_{{ annee.id }}">
                         <div class="col-md-3"></div>
                         <div class="col-md-9">
-                            <a href="{{ path(baseurl ~ 'structure_semestre_new', {annee: annee.id}) }}"
+                            <a href="{{ path(baseurl ~ 'semestre_new', {annee: annee.id}) }}"
                                class="btn btn-success btn-block addSemestre" title="Ajouter un semestre"
                                data-annee="{{ annee.id }}"><i class="fa fa-plus-circle"></i> Ajouter un semestre à
                                                                                              l'année {{ annee.libelle }}
@@ -407,7 +430,7 @@
                 <div id="dip_new_{{ diplome.id }}" class="row gap-y lignehover">
                     <div class="col-md-2">&nbsp;</div>
                     <div class="col-md-10"><a
-                                href="{{ path(baseurl ~ 'structure_annee_new',{diplome:diplome.id}) }}"
+                                href="{{ path(baseurl ~ 'annee_new',{diplome:diplome.id}) }}"
                                 class="btn btn-block btn-success" data-iddip="{{ diplome.id }}"><i
                                     class="fa fa-plus-circle"></i> {{ 'ajouter.annee.diplome'|trans({'%libelle%':diplome.libelle}) }}
                         </a></div>
@@ -416,7 +439,7 @@
             <div class="row gap-y lignehover">
                 <div class="col-md-1"></div>
                 <div class="col-md-11">
-                    <a href="{{ path(baseurl ~ 'structure_diplome_new', {departement:departement.id}) }}"
+                    <a href="{{ path(baseurl ~ 'diplome_new', {departement:departement.id}) }}"
                        class="btn btn-block btn-success "><i
                                 class="fa fa-plus-circle"></i> {{ 'ajouter.diplome.departement'|trans({'%libelle%': departement.libelle}) }}
                     </a></div>

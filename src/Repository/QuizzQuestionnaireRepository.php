@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/QuizzQuestionnaireRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 09/11/2019 10:16
- * @lastUpdate 06/11/2019 17:13
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/QuizzQuestionnaireRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:21
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Repository;
 

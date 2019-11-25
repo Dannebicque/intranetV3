@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/VichUploaderBundle.fr.xlf -->
+<!-- @author     David Annebicque -->
+<!-- @project intranetv3 -->
+<!-- @date 25/11/2019 10:21 -->
+<!-- @lastUpdate 25/11/2019 10:18 -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="VichUploaderBundle.fr">
     <unit id="MVIu471" name="label.fichier">
@@ -70,5 +77,11 @@
         <target>Votre CV</target>
       </segment>
     </unit>
+      <unit id="Kz21ZMp" name="Logo du département">
+          <segment>
+              <source>Logo du département</source>
+              <target>Logo du département</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

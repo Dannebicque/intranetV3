@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Adresse.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 21/10/2019 09:52
- * @lastUpdate 20/10/2019 08:19
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Adresse.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Entity;
 

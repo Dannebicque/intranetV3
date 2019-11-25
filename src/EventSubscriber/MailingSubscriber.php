@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/MailingSubscriber.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 5/26/19 7:25 PM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/MailingSubscriber.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;

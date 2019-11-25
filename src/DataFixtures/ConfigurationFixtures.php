@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/ConfigurationFixtures.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 11:23
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/ConfigurationFixtures.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\DataFixtures;
 
@@ -18,8 +16,6 @@ class ConfigurationFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
         $conf = new Configuration();
         $conf->setCle('MAIL_FROM');
         $conf->setValeur('intranet@iut-troyes.univ-reims.fr');
@@ -37,7 +33,7 @@ class ConfigurationFixtures extends Fixture
 
         $conf = new Configuration();
         $conf->setCle('LOGO_IUT');
-        $conf->setValeur('logo.jpg');
+        $conf->setValeur('logo_iut.png');
         $manager->persist($conf);
 
         $conf = new Configuration();
@@ -57,12 +53,27 @@ class ConfigurationFixtures extends Fixture
 
         $conf = new Configuration();
         $conf->setCle('BASE_PATH');
-        $conf->setValeur('src/public/upload/');
+        $conf->setValeur('upload/');
         $manager->persist($conf);
 
         $conf = new Configuration();
-        $conf->setCle('BASE_PATH');
-        $conf->setValeur('src/public/upload/');
+        $conf->setCle('LOGO_UNIVERSITE');
+        $conf->setValeur('urca.jpeg');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('COLOR_IUT');
+        $conf->setValeur('#FAB001');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('MODIFICATION_PPN');
+        $conf->setValeur(true);
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('MODIFICATION_GROUPE');
+        $conf->setValeur(true);
         $manager->persist($conf);
 
         $manager->flush();

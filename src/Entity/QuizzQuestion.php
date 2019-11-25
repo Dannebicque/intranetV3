@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/QuizzQuestion.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:36
-// @lastUpdate 17/11/2019 09:07
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Entity;
 

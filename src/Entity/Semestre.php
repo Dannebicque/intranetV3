@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Semestre.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 15/11/2019 09:39
+// @date 25/11/2019 10:20
+// @lastUpdate 24/11/2019 19:12
 
 namespace App\Entity;
 
@@ -262,7 +262,7 @@ class Semestre extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $optEvaluationPreInitialisee;
+    private $optEvaluationPreInitialisee = false;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaire", mappedBy="semestre")

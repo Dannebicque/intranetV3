@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PpnRepository.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 15/11/2019 07:13
+// @date 25/11/2019 10:21
+// @lastUpdate 24/11/2019 21:06
 
 namespace App\Repository;
 
@@ -41,6 +41,7 @@ class PpnRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->where('p.diplome = :diplome')
-            ->setParameter('diplome', $diplome->getId());
+            ->setParameter('diplome', $diplome->getId())
+            ->orderBy('p.annee', 'ASC');
     }
 }

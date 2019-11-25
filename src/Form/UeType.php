@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Form/UeType.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 05/11/2019 11:51
- * @lastUpdate 21/10/2019 10:09
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Form/UeType.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 24/11/2019 19:14
 
 namespace App\Form;
 
@@ -39,8 +37,8 @@ class UeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('semestre', EntityType::class, [
                 'class'         => Semestre::class,
                 'required'      => true,

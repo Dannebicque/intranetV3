@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/AbsenceSubscriber.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 6/9/19 8:47 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/AbsenceSubscriber.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
