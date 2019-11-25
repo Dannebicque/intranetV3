@@ -33,13 +33,16 @@
                         <td>{{ annee_universitaire.annee }}</td>
                         <td>{{ annee_universitaire.commentaire }}</td>
                         <td>
-                            <input type="radio" name="active" {% if annee_universitaire.active == true %}checked{% endif %}>
+                            <label class="switch" for="annee_{{ annee_universitaire.id }}">
+                                <input type="checkbox" {{ annee_universitaire.active ? 'checked': '' }}
+                                       class="activeAnneeUniversitaire"
+                                       id="annee_{{ annee_universitaire.id }}"
+                                       data-id="{{ annee_universitaire.id }}">
+                                <span class="switch-indicator"></span>
+                            </label>
                         </td>
-                        {# todo: gérer la modification #}
                         <td>
-                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'annee_universitaire', id: annee_universitaire
-                                .id}) }}
-
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'annee_universitaire', id: annee_universitaire.id}) }}
                         </td>
                     </tr>
                 {% else %}

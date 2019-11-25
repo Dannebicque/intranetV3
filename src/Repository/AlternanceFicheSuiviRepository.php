@@ -12,7 +12,12 @@
  * @project intranetv3
  * @date 14/11/2019 14:57
  * @lastUpdate 14/11/2019 14:56
- */ /** @noinspection ALL */
+ */ // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AlternanceFicheSuiviRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 /** @noinspection PhpUnused */
 
 namespace App\Repository;

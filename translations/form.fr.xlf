@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/form.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 19/11/2019 07:35 -->
-<!-- @lastUpdate 19/11/2019 07:34 -->
+<!-- @date 25/11/2019 10:21 -->
+<!-- @lastUpdate 25/11/2019 10:18 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -3993,7 +3993,7 @@
       <unit id="cWS8mH9" name="label.ufr">
           <segment>
               <source>label.ufr</source>
-              <target>label.ufr</target>
+              <target>UFR</target>
           </segment>
       </unit>
       <unit id="i9SZXBV" name="label.code_diplome">
@@ -4017,13 +4017,13 @@
       <unit id="NNYDQyf" name="label.bonification">
           <segment>
               <source>label.bonification</source>
-              <target>label.bonification</target>
+              <target>UE de bonification</target>
           </segment>
       </unit>
       <unit id="yUljhJW" name="help.bonification">
           <segment>
               <source>help.bonification</source>
-              <target>help.bonification</target>
+              <target>UE comptabilisée comme une bonification de semestre</target>
           </segment>
       </unit>
       <unit id="g4h_a2O" name="label.codebarre">
@@ -4041,7 +4041,13 @@
       <unit id="6Lu7js6" name="label.code_element">
           <segment>
               <source>label.code_element</source>
-              <target>label.code_element</target>
+              <target>Code élément</target>
+          </segment>
+      </unit>
+      <unit id="f4dQeWo" name="label.annee.par.defaut">
+          <segment>
+              <source>label.annee.par.defaut</source>
+              <target>Année par défaut</target>
           </segment>
       </unit>
   </file>

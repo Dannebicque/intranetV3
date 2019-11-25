@@ -12,7 +12,12 @@
  * @project intranetv3
  * @date 14/11/2019 14:57
  * @lastUpdate 14/11/2019 08:15
- */ /** @noinspection ALL */
+ */ // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/SemestreRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:21
+// @lastUpdate 24/11/2019 21:15
 /** @noinspection PhpUnused */
 
 namespace App\Repository;
@@ -55,7 +60,8 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
-            ->setParameter('departement', $departement);
+            ->setParameter('departement', $departement)
+            ->orderBy('s.ordreLmd', 'ASC');
     }
 
     /**
@@ -85,7 +91,8 @@ class SemestreRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
-            ->setParameter('diplome', $diplome);
+            ->setParameter('diplome', $diplome)
+            ->orderBy('s.ordreLmd', 'ASC');
     }
 
     /**

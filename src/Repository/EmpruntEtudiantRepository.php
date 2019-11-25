@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EmpruntEtudiantRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 18/10/2019 08:06
- * @lastUpdate 05/10/2019 09:16
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/EmpruntEtudiantRepository.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:21
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Repository;
 

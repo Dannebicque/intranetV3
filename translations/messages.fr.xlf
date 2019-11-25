@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 19/11/2019 07:35 -->
-<!-- @lastUpdate 19/11/2019 07:34 -->
+<!-- @date 25/11/2019 10:21 -->
+<!-- @lastUpdate 25/11/2019 10:18 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12850,6 +12850,54 @@
           <segment>
               <source>note.saisie</source>
               <target>note.saisie</target>
+          </segment>
+      </unit>
+      <unit id="uP26BoL" name="configuration.edit.success.flash">
+          <segment>
+              <source>configuration.edit.success.flash</source>
+              <target>configuration.edit.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="hgxSZPK" name="table.active">
+          <segment>
+              <source>table.active</source>
+              <target>Active</target>
+          </segment>
+      </unit>
+      <unit id="UWSofaX" name="annee_universitaire.add.success.flash">
+          <segment>
+              <source>annee_universitaire.add.success.flash</source>
+              <target>annee_universitaire.add.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="ToCuMH2" name="departement.activate..flash">
+          <segment>
+              <source>departement.activate..flash</source>
+              <target>departement.activate..flash</target>
+          </segment>
+      </unit>
+      <unit id="oad9MDH" name="departement.activate.1.flash">
+          <segment>
+              <source>departement.activate.1.flash</source>
+              <target>departement.activate.1.flash</target>
+          </segment>
+      </unit>
+      <unit id="zOF5r_P" name="ue.edit.success.flash">
+          <segment>
+              <source>ue.edit.success.flash</source>
+              <target>ue.edit.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="f92EClm" name="matiere.duplicate.success.flash">
+          <segment>
+              <source>matiere.duplicate.success.flash</source>
+              <target>matiere.duplicate.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="22qj.5U" name="type_groupe.delete.success.flash">
+          <segment>
+              <source>type_groupe.delete.success.flash</source>
+              <target>type_groupe.delete.success.flash</target>
           </segment>
       </unit>
   </file>

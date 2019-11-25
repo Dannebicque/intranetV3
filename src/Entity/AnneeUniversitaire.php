@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AnneeUniversitaire.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 16/08/2019 07:33
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AnneeUniversitaire.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Entity;
 
@@ -18,14 +16,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnneeUniversitaireRepository")
  */
-class AnneeUniversitaire
+class AnneeUniversitaire extends BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -113,11 +105,6 @@ class AnneeUniversitaire
         $this->progressionPedagogiques = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLibelle(): ?string

@@ -1,12 +1,10 @@
 <?php
-/*
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/DepartementController.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 7/12/19 11:23 AM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/structure/DepartementController.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Controller\administration\structure;
 
@@ -24,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DepartementController extends BaseController
 {
     /**
-     * @Route("/{id}", name="administration_structure_departement_show", methods="GET")
+     * @Route("/{id}", name="administration_departement_show", methods="GET")
      * @param Departement $departement
      *
      * @return Response
@@ -35,7 +33,7 @@ class DepartementController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_structure_departement_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="administration_departement_edit", methods="GET|POST")
      * @param Request     $request
      * @param Departement $departement
      *
@@ -54,7 +52,7 @@ class DepartementController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('administration_structure_departement_edit', ['id' => $departement->getId()]);
+            return $this->redirectToRoute('administration_departement_edit', ['id' => $departement->getId()]);
         }
 
         return $this->render('structure/departement/edit.html.twig', [

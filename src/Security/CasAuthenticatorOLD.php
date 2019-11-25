@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 9 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticatorOLD.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 30/09/2019 16:22
- * @lastUpdate 30/09/2019 16:22
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticatorOLD.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:21
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\Security;
 

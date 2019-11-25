@@ -1,12 +1,10 @@
 <?php
-/**
- * Copyright (C) 7 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/UserFixtures.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 7/12/19 11:23 AM
- * @lastUpdate 4/28/19 8:46 PM
- */
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetv3/src/DataFixtures/UserFixtures.php
+// @author     David Annebicque
+// @project intranetv3
+// @date 25/11/2019 10:20
+// @lastUpdate 23/11/2019 09:14
 
 namespace App\DataFixtures;
 
@@ -39,6 +37,7 @@ class UserFixtures extends Fixture
         $user3->setRoles(['ROLE_SUPER_ADMIN']);
         $user3->setPhotoName('noimage.png');
         $user3->setCreated(new DateTime('now'));
+        $user3->setUpdatedValue(new DateTime('now'));
         $manager->persist($user3);
 
         $manager->flush();

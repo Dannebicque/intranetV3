@@ -91,7 +91,9 @@
                         <span class="title">{{ 'menu.informations'|trans }}</span>
                     </a>
                 </li>
-                {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_RP') or user_data
+                    .isGoodDepartement('ROLE_DDE') or
+                    user_data.isGoodDepartement('ROLE_ASS') %}
                     <li class="menu-item" id="menu-administration">
                         <a class="menu-link" href="{{ path('administration_index') }}">
                             <span class="material-icons">build</span>

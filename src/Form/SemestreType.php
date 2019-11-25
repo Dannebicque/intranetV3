@@ -3,18 +3,20 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Form/SemestreType.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 15/11/2019 07:22
+// @date 25/11/2019 10:20
+// @lastUpdate 24/11/2019 21:07
 
 namespace App\Form;
 
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
+use App\Entity\Ppn;
 use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\AnneeRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\PpnRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,6 +48,9 @@ class SemestreType extends AbstractType
             ->add('libelle', TextType::class, [
                 'label' => 'label.libelle'
             ])
+            ->add('codeElement', TextType::class, [
+                'label' => 'label.code_element'
+            ])
             ->add('annee', EntityType::class, [
                 'class'         => Annee::class,
                 'required'      => true,
@@ -56,9 +61,7 @@ class SemestreType extends AbstractType
                 },
                 'label'         => 'label.annee'
             ])
-            ->add('codeElement', TextType::class, [
-                'label' => 'label.code_element'
-            ])
+
             ->add('couleur', ColorType::class, [
                 'label' => 'label.couleur'
             ])
@@ -208,6 +211,15 @@ class SemestreType extends AbstractType
                     'label' => 'label.opt_point_penalite_absence'
                 ]
             )
+            ->add('ppn_actif', EntityType::class, [
+                'class'         => Ppn::class,
+                'required'      => false,
+                'choice_label'  => 'libelle',
+                'query_builder' => function(PpnRepository $ppnRepository) {
+                    return $ppnRepository->findByDiplomeBuilder($this->diplome);
+                },
+                'label'         => 'label.ppn_actif'
+            ])
             ->add('precedent', EntityType::class, [
                 'class'         => Semestre::class,
                 'required'      => false,

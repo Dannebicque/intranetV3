@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/Edt/MyEdt.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:35
-// @lastUpdate 15/11/2019 07:35
+// @date 25/11/2019 10:20
+// @lastUpdate 24/11/2019 21:32
 
 /**
  * Created by PhpStorm.
@@ -89,7 +89,7 @@ class MyEdt extends BaseEdt
         $this->user = $personnel;
         $this->init('prof', $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
-        $this->calculEdt();//todo: pour des datas en BDD sasn scelcat. Ajouter test.
+        $this->calculEdt();//todo: pour des datas en BDD sans scelcat. Ajouter test.
         return $this;
     }
 
