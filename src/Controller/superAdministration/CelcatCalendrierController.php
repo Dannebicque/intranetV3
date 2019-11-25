@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/CelcatCalendrierController.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 25/11/2019 10:58
+// @lastUpdate 25/11/2019 10:58
 
 namespace App\Controller\superAdministration;
 
@@ -108,9 +108,12 @@ class CelcatCalendrierController extends BaseController
             } else {
                 $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'celcat_calendrier.create_year.error.flash');
             }
+
+            return $this->redirectToRoute('sa_celcat_calendrier_index');
         }
 
-        return $this->redirectToRoute('sa_celcat_calendrier_index');
+        return $this->render('super-administration/celcat_calendrier/create_new_year.html.twig',
+            ['annees' => $anneeUniversitaireRepository->findAll()]);
     }
 
     /**
