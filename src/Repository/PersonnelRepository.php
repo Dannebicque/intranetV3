@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/PersonnelRepository.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:21
-// @lastUpdate 23/11/2019 09:14
+// @date 25/11/2019 18:20
+// @lastUpdate 25/11/2019 18:20
 
 namespace App\Repository;
 
@@ -180,7 +180,6 @@ class PersonnelRepository extends ServiceEntityRepository
         $qb = $this->_em->createQueryBuilder();
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
-
         $qb
             ->select('u')
             ->from(Personnel::class, 'u');
@@ -188,25 +187,27 @@ class PersonnelRepository extends ServiceEntityRepository
         // ->andWhere('u.anneesortie = :anneesortie')
 
         //todo: ordre des colonnes? ou essayer de récupérer les noms?
-        switch ($order[0]['column']) {
-            case 0:
-                $qb->orderBy('u.numeroHarpege', $order[0]['dir']);
-                break;
-            case 2:
-                $qb->orderBy('u.prenom', $order[0]['dir']);
-                $qb->addOrderBy('u.nom', $order[0]['dir']);
-                break;
-            case 3:
-                $qb->orderBy('u.username', $order[0]['dir']);
-                break;
-            case 1:
-                $qb->orderBy('u.nom', $order[0]['dir']);
-                break;
-            case 5:
-                $qb->orderBy('u.deleted', $order[0]['dir']);
-                break;
-            default:
-                $qb->addOrderBy('u.nom', $order[0]['dir']);
+        if ($order !== null && count($order) > 0) {
+            switch ($order[0]['column']) {
+                case 0:
+                    $qb->orderBy('u.numeroHarpege', $order[0]['dir']);
+                    break;
+                case 2:
+                    $qb->orderBy('u.prenom', $order[0]['dir']);
+                    $qb->addOrderBy('u.nom', $order[0]['dir']);
+                    break;
+                case 3:
+                    $qb->orderBy('u.username', $order[0]['dir']);
+                    break;
+                case 1:
+                    $qb->orderBy('u.nom', $order[0]['dir']);
+                    break;
+                case 5:
+                    $qb->orderBy('u.deleted', $order[0]['dir']);
+                    break;
+                default:
+                    $qb->addOrderBy('u.nom', $order[0]['dir']);
+            }
         }
 
         if ($query) {
