@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Utilisateur.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 25/11/2019 15:43
+// @lastUpdate 25/11/2019 15:40
 
 namespace App\Entity;
 
@@ -153,6 +153,7 @@ abstract class Utilisateur implements UserInterface
 
     public function __construct()
     {
+        $this->updated = new DateTime('now');
     }
 
     /**
