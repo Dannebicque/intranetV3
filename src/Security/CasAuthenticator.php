@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 14:37
-// @lastUpdate 28/11/2019 14:37
+// @date 28/11/2019 14:42
+// @lastUpdate 28/11/2019 14:41
 
 namespace App\Security;
 
 use App\Entity\Departement;
+use App\Event\CASAuthenticationFailureEvent;
 use App\Events;
 use App\Repository\DepartementRepository;
 use phpCAS;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -27,6 +29,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     private $urlGenerator;
     private $session;
     private $user;
+    protected $server_login_url = 'https://cas.univ-reims.fr/cas/';
+
 
     /** @var DepartementRepository */
     private $departementRepository;
@@ -60,7 +64,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage', [],
             UrlGeneratorInterface::ABSOLUTE_URL));
 //        if ($request->headers->get('referer') === null) {
-//            //phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
+        phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
 //            todo: Ca tourne en boucle
 //        } else {
 //            phpCAS::setFixedServiceURL($request->headers->get('referer'));
@@ -93,7 +97,15 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // todo
+        $data = [
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+        ];
+
+        $def_response = new JsonResponse($data, 403);
+        $event = new CASAuthenticationFailureEvent($request, $exception, $def_response);
+        $this->eventDispatcher->dispatch(CASAuthenticationFailureEvent::POST_MESSAGE, $event);
+
+        return $event->getResponse();
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -150,9 +162,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // dump($request->headers->get('referer'));
-
-        return new RedirectResponse('https://cas.univ-reims.fr/cas/login?service=' . ($request->headers->get('referer')));
+        return new RedirectResponse($this->server_login_url . 'login?service=' . ($request->headers->get('referer')));
     }
 
     public function supportsRememberMe(): bool
