@@ -77,9 +77,6 @@ class MatiereApiController extends BaseController
      */
     public function matiereAjax(Matiere $matiere): JsonResponse
     {
-        //$serializer = new Serializer([new GetSetMethodNormalizer()]);
-        //dump($serializer->normalize($matiere));
-        //return new Response($serializer->serialize($matiere, 'json'));
 
         //todo: sérializer
         $t = [];

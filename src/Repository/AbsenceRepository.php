@@ -47,7 +47,6 @@ class AbsenceRepository extends ServiceEntityRepository
         $absences = $this->getByMatiere($matiere, $anneeUniversitaire);
 
         $tab = array();
-        //dump($absences);
         /** @var Absence $absence */
         foreach ($absences as $absence) {
             $date = $absence->getDate() !== null ? $absence->getDate()->format('Y-m-d') : '';
@@ -55,12 +54,10 @@ class AbsenceRepository extends ServiceEntityRepository
 
             if (!array_key_exists($date, $tab)) {
                 $tab[$date] = array();
-                //echo 'date';
             }
 
             if (!array_key_exists($heure, $tab[$date])) {
                 $tab[$date][$heure] = array();
-                //echo 'heure';
             }
 
             $tab[$date][$heure][] = $absence->getEtudiant() !== null ? $absence->getEtudiant()->getId() : '';

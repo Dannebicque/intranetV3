@@ -217,9 +217,9 @@ class MyEvaluation
             } else {
                 //note sans étudiant, on la supprime ?
                 $this->deleteNote($note);
-                $this->entityManager->flush();
             }
         }
+        $this->entityManager->flush();
 
         return $tabEtudiant;
     }

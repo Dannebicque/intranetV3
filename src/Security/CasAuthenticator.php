@@ -60,22 +60,18 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         $cas_context = '/cas';
         // Port of your CAS server. Normally for a https server it's 443
         $cas_port = 443;
-        //dump($request->headers->get('referer'));
+
         phpCAS::setDebug();
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage', [],
             UrlGeneratorInterface::ABSOLUTE_URL));
-//        if ($request->headers->get('referer') === null) {
+
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
-//            todo: Ca tourne en boucle
-//        } else {
-//            phpCAS::setFixedServiceURL($request->headers->get('referer'));
-//        }
+
 
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
-        dump(phpCAS::getUser());
 
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
@@ -87,7 +83,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
-        dump($credentials);
         $this->user = $userProvider->loadUserByUsername($credentials);
 
         return $this->user;
@@ -106,16 +101,13 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
         $def_response = new JsonResponse($data, 403);
         $event = new CASAuthenticationFailureEvent($request, $exception, $def_response);
-
-        //$this->eventDispatcher->dispatch(CASAuthenticationFailureEvent::POST_MESSAGE, $event);
-
+        
         return $event->getResponse();
 
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        dump(phpCAS::getAttributes());
         if (phpCAS::isInitialized()) {
             $rolesTab = $token->getRoleNames();
 

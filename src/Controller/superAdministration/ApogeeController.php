@@ -76,7 +76,6 @@ class ApogeeController extends BaseController
                     //on met à jour
                     $etudiant->updateFromApogee($dataApogee['etudiant']);
                     $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
-                    $this->entityManager->flush();
                     $etudiants[$numEtudiant]['etat'] = 'maj';
                     $etudiants[$numEtudiant]['data'] = $etudiant;
                 } else {
@@ -88,11 +87,11 @@ class ApogeeController extends BaseController
                     $this->entityManager->persist($adresse);
                     $etudiant->setAdresse($adresse);
                     $this->entityManager->persist($etudiant);
-                    $this->entityManager->flush();
                     $etudiants[$numEtudiant]['etat'] = 'add';
                     $etudiants[$numEtudiant]['data'] = $etudiant;
                 }
             }
+            $this->entityManager->flush();
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
             return $this->render('super-administration/apogee/confirmation.html.twig', [
@@ -141,12 +140,12 @@ class ApogeeController extends BaseController
                     $this->entityManager->persist($adresse);
                     $etudiant->setAdresse($adresse);
                     $this->entityManager->persist($etudiant);
-                    $this->entityManager->flush();
                     $etudiants[$numEtudiant]['etat'] = 'add';
                     $etudiants[$numEtudiant]['data'] = $etudiant;
                 }
             }
         }
+        $this->entityManager->flush();
         $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [

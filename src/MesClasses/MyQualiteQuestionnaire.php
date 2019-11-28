@@ -17,8 +17,7 @@ class MyQualiteQuestionnaire
 
     public function traduitLigne(string $ligne)
     {
-        $code = substr($ligne, 0, 1);
-        dump($ligne);
+        $code = $ligne[0];
         switch ($code) {
             case '#': //titre
                 return '<h2>' . trim(substr($ligne, 1, strlen($ligne))) . '</h2>';
