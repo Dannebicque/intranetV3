@@ -166,7 +166,6 @@ class MyEdtCelcat extends BaseEdt
             $gr[$groupe->getCodeapogee()] = $groupe->getOrdre();
         }
 
-        //var_dump($pl);
         $tab = array();
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {

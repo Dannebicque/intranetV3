@@ -1,7 +1,8 @@
 {
+  "name": "Intranet V3",
   "description": "Intranet, Version 3 de l'IUT de Troyes et de Reims Châlons Charleville.",
   "type": "project",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": "^7.1.3",
     "dompdf/dompdf": "^0.8.3",

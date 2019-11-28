@@ -47,7 +47,6 @@ class AnneeUniversitaireController extends BaseController
      */
     public function changeOption(Request $request, AnneeUniversitaire $annee): Response
     {
-        dump($request->request->get('value'));
         $value = $request->request->get('value');
         $annee->setActive($value === 'true');
         $this->entityManager->flush();

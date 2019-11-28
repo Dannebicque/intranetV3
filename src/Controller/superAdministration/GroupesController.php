@@ -71,18 +71,10 @@ class GroupesController extends BaseController
         //récupérer les gorupes
         //calcluler l'aroborescence
 
-//        $groupes = MyApogee::getGroupesSemestre($semestre);
-//
-//        while ($row = oci_fetch_array($groupes, OCI_ASSOC + OCI_RETURN_NULLS)) {
-//
-//            dump($row);
-//        }
-
         $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
 
         while ($row = oci_fetch_array($groupes, OCI_ASSOC + OCI_RETURN_NULLS)) {
 
-            dump($row);
         }
     }
 }

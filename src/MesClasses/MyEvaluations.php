@@ -137,7 +137,6 @@ class MyEvaluations
         foreach ($this->getEvaluations() as $evaluation) {
             $this->statistiques[$evaluation->getId()] = $this->myEvaluation->setEvaluation($evaluation)->calculStatistiquesGlobales()->getStatistiques();
         }
-        //dump($this->statistiques);
     }
 
     /**
