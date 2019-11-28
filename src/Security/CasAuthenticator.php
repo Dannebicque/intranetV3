@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 15:05
-// @lastUpdate 28/11/2019 15:05
+// @date 28/11/2019 15:24
+// @lastUpdate 28/11/2019 15:23
 
 namespace App\Security;
 
@@ -112,58 +112,64 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         //$this->eventDispatcher->dispatch(CASAuthenticationFailureEvent::POST_MESSAGE, $event);
 
         return $event->getResponse();
+
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $rolesTab = $token->getRoleNames();
+        dump(phpCAS::getAttributes());
+        if (phpCAS::isInitialized()) {
+            $rolesTab = $token->getRoleNames();
 
-        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
-            // c'est un super administrateur : on le rediriger vers l'espace super-admin
-            $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
-        } elseif (in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
-            // c'est un administratif : on le rediriger vers l'espace administration
-            $redirection = new RedirectResponse($this->urlGenerator->generate('administratif_homepage'));
-        } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {
-            // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
+            if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true)) {
+                // c'est un super administrateur : on le rediriger vers l'espace super-admin
+                $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
+            } elseif (in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
+                // c'est un administratif : on le rediriger vers l'espace administration
+                $redirection = new RedirectResponse($this->urlGenerator->generate('administratif_homepage'));
+            } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {
+                // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
 
-            if (in_array('ROLE_PERMANENT', $rolesTab, true)) {
-                //init de la session departement
-                $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
-                if (count($departements) > 1) {
-                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
-                }
-
-                if (count($departements) === 1) {
-                    /** @var Departement $departement */
-                    $departement = $departements[0];
-                    $this->session->set('departement', $departement->getUuidString()); //on sauvegarde
-                } else {
-                    echo 'pas de departement par defaut';
-                    //pas de departement par défaut, ou pas de departement du tout.
-                    $departements = $this->departementRepository->findDepartementPersonnel($this->user);
-                    if (count($departements) === 0) {
-                        return new RedirectResponse($this->urlGenerator->generate('security_login',
-                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
+                if (in_array('ROLE_PERMANENT', $rolesTab, true)) {
+                    //init de la session departement
+                    $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
+                    if (count($departements) > 1) {
+                        return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
                     }
 
-                    //donc il y a une departement, mais pas une par défaut.
-                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
+                    if (count($departements) === 1) {
+                        /** @var Departement $departement */
+                        $departement = $departements[0];
+                        $this->session->set('departement', $departement->getUuidString()); //on sauvegarde
+                    } else {
+                        echo 'pas de departement par defaut';
+                        //pas de departement par défaut, ou pas de departement du tout.
+                        $departements = $this->departementRepository->findDepartementPersonnel($this->user);
+                        if (count($departements) === 0) {
+                            return new RedirectResponse($this->urlGenerator->generate('security_login',
+                                ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
+                        }
+
+                        //donc il y a une departement, mais pas une par défaut.
+                        return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
+                    }
                 }
+
+                /*if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+                    return new RedirectResponse($targetPath);
+                }*/
+
+                $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
+            } else {
+                //c'est aucun des rôles...
+                $redirection = new RedirectResponse($this->urlGenerator->generate('security_login',
+                    ['message' => 'erreur_role']));
             }
 
-            /*if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-                return new RedirectResponse($targetPath);
-            }*/
-
-            $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
-        } else {
-            //c'est aucun des rôles...
-            $redirection = new RedirectResponse($this->urlGenerator->generate('security_login',
-                ['message' => 'erreur_role']));
+            return $redirection;
         }
 
-        return $redirection;
+        return null;
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
