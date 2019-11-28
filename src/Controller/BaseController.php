@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class BaseController
  * @package App\Controller
  */
-class BaseController extends AbstractController implements TokenAuthenticatedController
+class BaseController extends AbstractController implements TokenAuthenticatedControllerInterface
 {
     /** @var DataUserSession */
     protected $dataUserSession;

@@ -73,12 +73,12 @@ class AppExtension extends AbstractExtension
             new TwigFilter('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
             new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
             new TwigFilter('border', [$this, 'border']),
-            new TwigFilter('format_note', [$this, 'format_note'],['is_safe' => ['html']]),
+            new TwigFilter('format_note', [$this, 'formatNote'],['is_safe' => ['html']]),
 
         );
     }
 
-    public function format_note($note, $nbdecimales = 2, $seuil = 10)
+    public function formatNote($note, $nbdecimales = 2, $seuil = 10)
     {
         if ($note < $seuil)
         {
