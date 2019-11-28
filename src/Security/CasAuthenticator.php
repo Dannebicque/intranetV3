@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 15:00
-// @lastUpdate 28/11/2019 15:00
+// @date 28/11/2019 15:05
+// @lastUpdate 28/11/2019 15:05
 
 namespace App\Security;
 
@@ -77,7 +77,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
-        //  dump(phpCAS::getUser());
+        dump(phpCAS::getUser());
 
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
@@ -89,7 +89,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
-        // dump($credentials);
+        dump($credentials);
         $this->user = $userProvider->loadUserByUsername($credentials);
 
         return $this->user;
