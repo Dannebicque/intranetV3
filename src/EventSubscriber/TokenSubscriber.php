@@ -3,21 +3,16 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/TokenSubscriber.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 28/11/2019 15:37
+// @lastUpdate 28/11/2019 15:37
 
 namespace App\EventSubscriber;
 
-use App\Controller\TokenAuthenticatedController;
 use App\Entity\Departement;
-use App\Entity\Etudiant;
-use App\Entity\Personnel;
-use App\Events;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -63,81 +58,81 @@ class TokenSubscriber implements EventSubscriberInterface
      */
     public function onKernelController(ControllerEvent $event): void
     {
-        $controller = $event->getController();
+//        $controller = $event->getController();
+//
+//        /*
+//         * $controller passed can be either a class or a Closure.
+//         * This is not usual in Symfony but it may happen.
+//         * If it is a class, it comes in array format
+//         */
+//        if (!is_array($controller)) {
+//            return;
+//        }
 
-        /*
-         * $controller passed can be either a class or a Closure.
-         * This is not usual in Symfony but it may happen.
-         * If it is a class, it comes in array format
-         */
-        if (!is_array($controller)) {
-            return;
-        }
-
-        if ($controller[0] instanceof TokenAuthenticatedController) {
-
-            if ($this->getUser() instanceof Etudiant) {
-                $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
-                if ($this->departement === null) {
-                    //On déclenche l'event
-                    $event->setController(function() {
-                        return new RedirectResponse($this->router->generate('security_login',
-                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
-                    });
-                }
-            } elseif ($this->getUser() instanceof Personnel) {
-                if ($this->authChecker->isGranted('ROLE_PERMANENT')) {
-                    //todo: maintenant toute cette partie est faire dans le guard... Encore utile ? Si pas de département déconnexion?
-                    if ($this->session->get('departement') !== null) {
-                        $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->session->get('departement')]);
-                    }
-
-                    if ($this->departement === null) {
-                        echo 'pas de session';
-                        $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->getUser());
-
-                        if (count($departements) > 1) {
-                            echo 'plus d une departement  par défaut';
-
-                            $event->setController(function() {
-                                return new RedirectResponse($this->router->generate('security_choix_departement'));
-                            });
-                        } elseif (count($departements) === 1) {
-                            echo 'une departement par defaut';
-                            $this->departement = $departements[0];
-                            dump($this->departement->getUuidString());
-                            $this->session->set('departement', $this->departement->getUuidString()); //on sauvegarde
-                        } else {
-                            echo 'pas de departement par defaut';
-                            //pas de departement par défaut, ou pas de departement du tout.
-                            $departements = $this->departementRepository->findDepartementPersonnel($this->getUser());
-                            if (count($departements) === 0) {
-                                echo 'aucune departement';
-                                //On déclenche l'event
-
-                                $event->setController(function() {
-                                    return new RedirectResponse($this->router->generate('security_login',
-                                        ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
-                                });
-                            } else {
-                                //donc il y a une departement, mais pas une par défaut.
-                                echo 'des formations, mais pas par défaut';
-
-                                $event->setController(function() {
-                                    return new RedirectResponse($this->router->generate('security_choix_departement'));
-                                });
-                            }
-                        }
-                    }
-                }
-            } else {
-                //ni étudiant, ni personnel... étrange
-                $event->setController(function() {
-                    return new RedirectResponse($this->router->generate('security_login',
-                        ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'erreur-type-user']));
-                });
-            }
-        }
+//        if ($controller[0] instanceof TokenAuthenticatedController) {
+//
+//            if ($this->getUser() instanceof Etudiant) {
+//                $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
+//                if ($this->departement === null) {
+//                    //On déclenche l'event
+//                    $event->setController(function() {
+//                        return new RedirectResponse($this->router->generate('security_login',
+//                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
+//                    });
+//                }
+//            } elseif ($this->getUser() instanceof Personnel) {
+//                if ($this->authChecker->isGranted('ROLE_PERMANENT')) {
+//                    //todo: maintenant toute cette partie est faire dans le guard... Encore utile ? Si pas de département déconnexion?
+//                    if ($this->session->get('departement') !== null) {
+//                        $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->session->get('departement')]);
+//                    }
+//
+//                    if ($this->departement === null) {
+//                        echo 'pas de session';
+//                        $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->getUser());
+//
+//                        if (count($departements) > 1) {
+//                            echo 'plus d une departement  par défaut';
+//
+//                            $event->setController(function() {
+//                                return new RedirectResponse($this->router->generate('security_choix_departement'));
+//                            });
+//                        } elseif (count($departements) === 1) {
+//                            echo 'une departement par defaut';
+//                            $this->departement = $departements[0];
+//                            dump($this->departement->getUuidString());
+//                            $this->session->set('departement', $this->departement->getUuidString()); //on sauvegarde
+//                        } else {
+//                            echo 'pas de departement par defaut';
+//                            //pas de departement par défaut, ou pas de departement du tout.
+//                            $departements = $this->departementRepository->findDepartementPersonnel($this->getUser());
+//                            if (count($departements) === 0) {
+//                                echo 'aucune departement';
+//                                //On déclenche l'event
+//
+//                                $event->setController(function() {
+//                                    return new RedirectResponse($this->router->generate('security_login',
+//                                        ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
+//                                });
+//                            } else {
+//                                //donc il y a une departement, mais pas une par défaut.
+//                                echo 'des formations, mais pas par défaut';
+//
+//                                $event->setController(function() {
+//                                    return new RedirectResponse($this->router->generate('security_choix_departement'));
+//                                });
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                //ni étudiant, ni personnel... étrange
+//                $event->setController(function() {
+//                    return new RedirectResponse($this->router->generate('security_login',
+//                        ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'erreur-type-user']));
+//                });
+//            }
+//        }
     }
 
     private function getUser()
