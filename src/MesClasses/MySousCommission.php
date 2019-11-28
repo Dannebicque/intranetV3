@@ -167,7 +167,7 @@ class MySousCommission
         return $this->sousCommissionEtudiants;
     }
 
-    public function SauvegardeTravail(): void
+    public function sauvegardeTravail(): void
     {
     }
 
