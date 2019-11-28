@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 14:45
-// @lastUpdate 28/11/2019 14:44
+// @date 28/11/2019 14:47
+// @lastUpdate 28/11/2019 14:47
 
 namespace App\Security;
 
@@ -108,7 +108,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
         $def_response = new JsonResponse($data, 403);
         $event = new CASAuthenticationFailureEvent($request, $exception, $def_response);
-        $this->eventDispatcher->dispatch(CASAuthenticationFailureEvent::POST_MESSAGE, $event);
+
+        //$this->eventDispatcher->dispatch(CASAuthenticationFailureEvent::POST_MESSAGE, $event);
 
         return $event->getResponse();
     }
