@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 15:24
-// @lastUpdate 28/11/2019 15:23
+// @date 28/11/2019 15:30
+// @lastUpdate 28/11/2019 15:27
 
 namespace App\Security;
 
@@ -174,7 +174,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse($this->server_login_url . 'login?service=' . ($request->headers->get('referer')));
+        return new RedirectResponse($this->server_login_url . 'login?service=' . $request->getUri());
     }
 
     public function supportsRememberMe(): bool
