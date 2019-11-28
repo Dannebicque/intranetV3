@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 14:42
-// @lastUpdate 28/11/2019 14:41
+// @date 28/11/2019 14:45
+// @lastUpdate 28/11/2019 14:44
 
 namespace App\Security;
 
@@ -13,6 +13,7 @@ use App\Event\CASAuthenticationFailureEvent;
 use App\Events;
 use App\Repository\DepartementRepository;
 use phpCAS;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     private $session;
     private $user;
     protected $server_login_url = 'https://cas.univ-reims.fr/cas/';
+    private $eventDispatcher;
 
 
     /** @var DepartementRepository */
@@ -38,11 +40,14 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         DepartementRepository $departementRepository,
-        SessionInterface $session
+        SessionInterface $session,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->departementRepository = $departementRepository;
         $this->session = $session;
+        $this->eventDispatcher = $eventDispatcher;
+
     }
 
     public function supports(Request $request): bool
