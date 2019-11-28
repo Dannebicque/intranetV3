@@ -2,8 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/quizz.js
 // @author     David Annebicque
 // @project intranetv3
-// @date 19/11/2019 07:36
-// @lastUpdate 19/11/2019 07:36
+// @date 28/11/2019 14:27
+// @lastUpdate 27/11/2019 12:39
 
 $(document).on('change', 'input[type=radio][name="quizz_question[type]"]', function () {
   let $type = $('input[type=radio][name="quizz_question[type]"]:checked').val()
@@ -87,6 +87,10 @@ function addChampQcm ($nb) {
   let $html = '<div class="form-group">'
   $html = $html + '<label for="question_qcm[' + $nb + ']" class="required">Libellé réponse ' + $nb + '</label>'
   $html = $html + '<input type="text" id="question_qcm[' + $nb + ']" name="question_qcm[' + $nb + ']" required="required" class="form-control">'
+  $html = $html + '</div>'
+  $html = $html + '<div class="form-group">'
+  $html = $html + '<label for="question_qcm_valeur[' + $nb + ']" class="required">Valeur pour la réponse ' + $nb + '</label>'
+  $html = $html + '<input type="text" id="question_qcm_valeur[' + $nb + ']" name="question_qcm_valeur[' + $nb + ']" required="required" class="form-control">'
   $html = $html + '</div>'
 
   return $html

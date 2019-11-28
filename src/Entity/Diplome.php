@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Diplome.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 28/11/2019 14:27
+// @lastUpdate 28/11/2019 13:46
 
 namespace App\Entity;
 
@@ -121,11 +121,6 @@ class Diplome extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\Ppn", mappedBy="diplome")
      */
     private $ppns;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competence", mappedBy="diplome")
-     */
-    private $competences;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="diplomes")
@@ -483,47 +478,6 @@ class Diplome extends BaseEntity
         if (method_exists($this, $method)) {
             $this->$method($value);
         }
-    }
-
-    /**
-     * @return Collection|Competence[]
-     */
-    public function getCompetences(): Collection
-    {
-        return $this->competences;
-    }
-
-    /**
-     * @param Competence $competence
-     *
-     * @return Diplome
-     */
-    public function addCompetence(Competence $competence): self
-    {
-        if (!$this->competences->contains($competence)) {
-            $this->competences[] = $competence;
-            $competence->setDiplome($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Competence $competence
-     *
-     * @return Diplome
-     */
-    public function removeCompetence(Competence $competence): self
-    {
-        if ($this->competences->contains($competence)) {
-            $this->competences->removeElement($competence);
-            // set the owning side to null (unless already changed)
-            if ($competence->getDiplome() === $this) {
-                $competence->setDiplome(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

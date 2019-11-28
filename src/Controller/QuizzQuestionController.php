@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/QuizzQuestionController.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 28/11/2019 14:27
+// @lastUpdate 28/11/2019 14:27
 
 namespace App\Controller;
 
@@ -59,6 +59,53 @@ class QuizzQuestionController extends BaseController
                         $reponse->setQuestion($quizzQuestion);
                         $reponse->setLibelle($request->request->get('question_qcu')[$i]);
                         $reponse->setValeur($request->request->get('question_qcu_valeur')[$i]);
+                        $this->entityManager->persist($reponse);
+                    }
+                    break;
+                case 'qcm':
+                    $nbreponses = count($request->request->get('question_qcm'));
+                    for ($i = 1; $i <= $nbreponses; $i++) {
+                        $reponse = new QuizzReponse();
+                        $reponse->setQuestion($quizzQuestion);
+                        $reponse->setLibelle($request->request->get('question_qcm')[$i]);
+                        $reponse->setValeur($request->request->get('question_qcm_valeur')[$i]);
+                        $this->entityManager->persist($reponse);
+                    }
+                    break;
+                case 'yesno':
+                    //transformer en deux input radio.
+                    $reponse = new QuizzReponse();
+                    $reponse->setQuestion($quizzQuestion);
+                    $reponse->setLibelle($request->request->get('question_libre_oui'));
+                    $reponse->setValeur(1);
+                    $this->entityManager->persist($reponse);
+                    $reponse = new QuizzReponse();
+                    $reponse->setQuestion($quizzQuestion);
+                    $reponse->setLibelle($request->request->get('question_libre_non'));
+                    $reponse->setValeur(0);
+                    $this->entityManager->persist($reponse);
+                    break;
+                case 'echelle':
+                    //transformer en deux input radio.
+                    $min = $request->request->get('question_min');
+                    $max = $request->request->get('question_max');
+
+                    $reponse = new QuizzReponse();
+                    $reponse->setQuestion($quizzQuestion);
+                    $reponse->setLibelle($request->request->get('question_min_sens'));
+                    $reponse->setValeur($min);
+                    $this->entityManager->persist($reponse);
+                    $reponse = new QuizzReponse();
+                    $reponse->setQuestion($quizzQuestion);
+                    $reponse->setLibelle($request->request->get('question_max_sens'));
+                    $reponse->setValeur($max);
+                    $this->entityManager->persist($reponse);
+
+                    for ($i = $min + 1; $i < $max; $i++) {
+                        $reponse = new QuizzReponse();
+                        $reponse->setQuestion($quizzQuestion);
+                        $reponse->setLibelle($i);
+                        $reponse->setValeur($i);
                         $this->entityManager->persist($reponse);
                     }
                     break;

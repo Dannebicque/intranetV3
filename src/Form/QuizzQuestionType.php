@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Form/QuizzQuestionType.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 28/11/2019 14:27
+// @lastUpdate 27/11/2019 12:53
 
 namespace App\Form;
 
@@ -21,7 +21,7 @@ class QuizzQuestionType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('help', TextType::class, ['label' => 'label.question.help'])
+            ->add('help', TextType::class, ['label' => 'label.question.help', 'required' => false])
             ->add('type', ChoiceType::class,
                 [
                     'expanded' => true,

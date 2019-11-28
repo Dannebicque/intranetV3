@@ -3,8 +3,8 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
 <!-- @author     David Annebicque -->
 <!-- @project intranetv3 -->
-<!-- @date 25/11/2019 10:21 -->
-<!-- @lastUpdate 25/11/2019 10:18 -->
+<!-- @date 28/11/2019 14:27 -->
+<!-- @lastUpdate 28/11/2019 14:27 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -12898,6 +12898,12 @@
           <segment>
               <source>type_groupe.delete.success.flash</source>
               <target>type_groupe.delete.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="aGb8dhs" name="quizz_question.add.success.flash">
+          <segment>
+              <source>quizz_question.add.success.flash</source>
+              <target>quizz_question.add.success.flash</target>
           </segment>
       </unit>
   </file>
