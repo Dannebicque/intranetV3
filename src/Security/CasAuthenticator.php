@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Security/CasAuthenticator.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 28/11/2019 14:47
-// @lastUpdate 28/11/2019 14:47
+// @date 28/11/2019 15:00
+// @lastUpdate 28/11/2019 15:00
 
 namespace App\Security;
 
@@ -52,7 +52,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request): bool
     {
-        return !in_array($request->getPathInfo(), ['/', '/fr/', '/fr/connexion']);
+        return true; //!in_array($request->getPathInfo(), ['/', '/fr/', '/fr/connexion']);
     }
 
     public function getCredentials(Request $request)
