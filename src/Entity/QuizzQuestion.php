@@ -3,8 +3,8 @@
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/QuizzQuestion.php
 // @author     David Annebicque
 // @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// @date 28/11/2019 14:27
+// @lastUpdate 27/11/2019 13:12
 
 namespace App\Entity;
 
@@ -37,7 +37,7 @@ class QuizzQuestion extends BaseEntity
     private $libelle;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $help;
 
@@ -48,6 +48,7 @@ class QuizzQuestion extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QuizzReponse", mappedBy="question", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"valeur"="ASC"})
      */
     private $quizzReponses;
 

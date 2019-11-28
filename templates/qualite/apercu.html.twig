@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    {% for ligne in tab %}
+        {{ ligne|raw }}
+    {% endfor %}
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
