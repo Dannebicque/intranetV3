@@ -8,7 +8,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Departement;
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,8 +23,6 @@ class TokenSubscriber implements EventSubscriberInterface
 {
     private $user;
 
-    /** @var Departement */
-    private $departement;
 
     /** @var RouterInterface */
     private $router;

@@ -56,15 +56,9 @@ abstract class MyCelcat
     public static function getDiplomes(): array
     {
         self::connect();
-//        $conn = odbc_connect('MSSQLSRV', getenv('MSSQL_USER'), getenv('MSSQL_PASS'));
         $query = 'SELECT * FROM CT_DEPT';
-        //$query = 'SELECT * FROM CT_DEPT ORDER BY name';
         $results = odbc_exec(self::$conn, $query);
-//        if (!$results) {
-//            echo "Query Executed";
-//        } else {
-//            echo "Query failed " . odbc_error();
-//        }
+
         $departements = [];
         while (odbc_fetch_array($results)) {
             $dept['nom'] = odbc_result($results, 'name');
@@ -98,9 +92,10 @@ abstract class MyCelcat
             INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id
             INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id
             INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id
-            WHERE dept_id=' . $codeCelcatDepartement . '
+            WHERE dept_id=?
             ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id';
-        $result = odbc_exec(self::$conn, $query);
+        $stmt = odbc_prepare(self::$conn, $query);
+        $result  = odbc_execute($stmt, array($codeCelcatDepartement));
 
         while (odbc_fetch_row($result)) {
             $eventId = odbc_result($result, 1);
@@ -152,8 +147,11 @@ abstract class MyCelcat
         self::connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
-INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
-        $result = odbc_exec(self::$conn, $query);
+INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=?' ;
+
+        $stmt = odbc_prepare(self::$conn, $query);
+        $result  = odbc_execute($stmt, array($semestre->getDiplome()->getCodeCelcatDepartement()));
+
         while (odbc_fetch_row($result)) {
             // Vérifier si l'event est déjà dans l'intranet
             $gr = odbc_result($result, 1);
