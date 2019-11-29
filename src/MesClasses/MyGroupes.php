@@ -84,7 +84,7 @@ class MyGroupes
      *
      * @return MyGroupes
      */
-    public function getGroupesPlanning($planning): MyGroupes
+    public function getGroupesPlanning(EdtPlanning $planning): MyGroupes
     {
         //todo: tester le type si planning ou celcat
         $this->typeGroupes = $this->typeGroupeRepository->findBySemestre($planning->getSemestre());
