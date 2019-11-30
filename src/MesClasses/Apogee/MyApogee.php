@@ -6,18 +6,13 @@
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 14/02/2019
- * Time: 12:49
- */
-
 namespace App\MesClasses\Apogee;
 
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\MesClasses\Tools;
+use PDO;
+use PDOException;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -27,49 +22,56 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class MyApogee
 {
+    /** @var PDO */
     private static $conn;
 
     public static function getEtudiantsDiplome(Diplome $diplome)
     {
         self::connect();
-        $stid = oci_parse(self::$conn,
+        $stid = self::$conn->prepare(
             'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\':codeetape\' AND COD_ANU_SRT_IND=NULL');
-        oci_bind_by_name($stid, ':codeetape', $diplome->getCodeApogee() );
-        oci_execute($stid);
+        $stid->execute(array(':codeetape' => $diplome->getCodeApogee()));
 
         return $stid;
     }
 
-    private static function connect()
+    private static function connect(): ?PDO
     {
-        self::$conn = oci_connect(getenv('APOGEE_LOGIN'), getenv('APOGEE_PASSWORD'), getenv('APOGEE_STRING'));
+        $tns = '
+            (DESCRIPTION =
+                (ADDRESS_LIST =
+                  (ADDRESS = (PROTOCOL = TCP)(HOST = ' . getenv('APOGEE_IP') . ')(PORT = ' . getenv('APOGEE_PORT') . '))
+                )
+                (CONNECT_DATA =
+                  (SERVICE_NAME = ' . getenv('APOGEE_SERVICE') . ')
+                )
+              )';
 
-        if (!self::$conn) {
-            $e = oci_error();
-            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        try {
+            self::$conn = new PDO('oci:dbname=' . getenv('APOGEE_STRING'), getenv('APOGEE_LOGIN'),
+                getenv('APOGEE_PASSWORD'));
+
+            return self::$conn;
+        } catch (PDOException $e) {
+            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), E_USER_ERROR);
         }
-
-        return self::$conn;
     }
 
     public static function getEtudiant($etudiant)
     {
         self::connect();
-        $stid = oci_parse(self::$conn,
+        $stid = self::$conn->prepare(
             'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_ETU=\':etudiant\'');
-        oci_bind_by_name($stid, ':etudiant', $etudiant );
-        oci_execute($stid);
-
+        $stid->execute(array(':etudiant' => $etudiant));
         return $stid;
     }
 
     public static function getGroupesSemestre(Semestre $semestre)
     {
         self::connect();
-        $stid = oci_parse(self::$conn,
+        $stid = self::$conn->prepare(
             'SELECT * FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\':semestre\'');
-        oci_bind_by_name($stid, ':semestre', $semestre->getCodeElement() );
-        oci_execute($stid);
+        $stid->execute(array(':semestre' => $semestre->getCodeElement()));
 
         return $stid;
     }
@@ -77,11 +79,9 @@ abstract class MyApogee
     public static function getHierarchieGroupesSemestre(Semestre $semestre)
     {
         self::connect();
-        $stid = oci_parse(self::$conn,
+        $stid = self::$conn->prepare(
             'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\':semestre\'');
-        oci_bind_by_name($stid, ':semestre', $semestre->getCodeElement() );
-
-        oci_execute($stid);
+        $stid->execute([':semestre'=> $semestre->getCodeElement()]);
 
         return $stid;
     }
