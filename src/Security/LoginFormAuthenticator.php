@@ -32,7 +32,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private $entityManager;
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
@@ -43,7 +42,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     private $departementRepository;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
         UserPasswordEncoderInterface $passwordEncoder,
@@ -51,7 +49,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         SessionInterface $session
 
     ) {
-        $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
@@ -90,24 +87,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->user = $userProvider->loadUserByUsername($credentials['username']);
 
         return $this->user;
-//        $userPersonnel = $this->entityManager->getRepository(Personnel::class)->findOneBy(['username' => $credentials['username']]);
-//        $userEtudiant = $this->entityManager->getRepository(Etudiant::class)->findOneBy(['username' => $credentials['username']]);
-//
-//        if (!$userPersonnel && !$userEtudiant) {
-//            // fail authentication with a custom error
-//            throw new CustomUserMessageAuthenticationException('Username could not be found.');
-//        }
-//
-//        if ($userPersonnel !== null && $userEtudiant === null) {
-//            $this->user = $userPersonnel;
-//            return $userPersonnel;
-//        }
-//
-//        if ($userPersonnel === null && $userEtudiant !== null) {
-//            $this->user = $userEtudiant;
-//            return $userEtudiant;
-//        }
-//            return null;
 
     }
 
