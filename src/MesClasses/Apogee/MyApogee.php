@@ -30,7 +30,7 @@ abstract class MyApogee
         echo $diplome->getCodeEtape();
         self::connect();
         $stid = self::$conn->prepare(
-            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=\':codeetape\' AND COD_ANU_SRT_IND=NULL');
+            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=:codeetape AND COD_ANU_SRT_IND=NULL');
         $stid->execute(array(':codeetape' => $diplome->getCodeEtape()));
 
         return $stid;
