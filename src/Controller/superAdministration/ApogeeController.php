@@ -67,8 +67,8 @@ class ApogeeController extends BaseController
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = MyApogee::getEtudiantsDiplome($diplome);
-            dump($stid);
-            while ($row = $stid->fetch(OCI_ASSOC + OCI_RETURN_NULLS)) {
+            while ($row = $stid->fetch()) {
+                dump($row);
                 $dataApogee = $this->transformeApogeeToArray($row);
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
