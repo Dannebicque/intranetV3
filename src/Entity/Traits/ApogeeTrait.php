@@ -21,7 +21,12 @@ trait ApogeeTrait {
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeApogee; //code etape ou code diplome
+    private $codeEtape; //code etape ou code diplome
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $codeDiplome; //code etape ou code diplome
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -36,17 +41,33 @@ trait ApogeeTrait {
     /**
      * @return mixed
      */
-    public function getCodeApogee()
+    public function getCodeDiplome()
     {
-        return $this->codeApogee;
+        return $this->codeDiplome;
     }
 
     /**
-     * @param mixed $codeApogee
+     * @param mixed $codeDiplome
      */
-    public function setCodeApogee($codeApogee): void
+    public function setCodeDiplome($codeDiplome): void
     {
-        $this->codeApogee = $codeApogee;
+        $this->codeDiplome = $codeDiplome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCodeEtape()
+    {
+        return $this->codeEtape;
+    }
+
+    /**
+     * @param mixed $codeEtape
+     */
+    public function setCodeEtape($codeEtape): void
+    {
+        $this->codeEtape = $codeEtape;
     }
 
     /**
