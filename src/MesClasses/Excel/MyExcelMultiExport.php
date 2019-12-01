@@ -42,17 +42,14 @@ class MyExcelMultiExport
     /** @var MyExcelWriter */
     private $myExcelWriter;
 
-    /** @var TranslatorInterface */
-    private $translator;
+
 
     public function __construct(
-        TranslatorInterface $translator,
         MySerializer $mySerializer,
         MyExcelWriter $myExcelWriter
     ) {
         $this->serializer = $mySerializer;
         $this->myExcelWriter = $myExcelWriter;
-        $this->translator = $translator;
     }
 
     /**
@@ -102,12 +99,11 @@ class MyExcelMultiExport
 
     /**
      * @param       $name
-     * @param array $options
      *
      * @return StreamedResponse
      * @throws Exception
      */
-    public function saveCsv($name, array $options = []): StreamedResponse
+    public function saveCsv($name): StreamedResponse
     {
         $this->pageSetup($name);
         $writer = new Csv($this->myExcelWriter->getSpreadsheet());

@@ -43,8 +43,7 @@ class MyEdt extends BaseEdt
      * @var GroupeRepository
      */
     private $groupeRepository;
-    /** @var PersonnelRepository */
-    private $personnelRepository;
+
     /** @var MatiereRepository */
     private $matiereRepository;
 
@@ -56,7 +55,6 @@ class MyEdt extends BaseEdt
      * @param EdtPlanningRepository $edtPlanningRepository
      * @param SemestreRepository    $semestreRepository
      * @param GroupeRepository      $groupeRepository
-     * @param PersonnelRepository   $personnelRepository
      * @param MatiereRepository     $matiereRepository
      */
     public function __construct(
@@ -64,14 +62,12 @@ class MyEdt extends BaseEdt
         EdtPlanningRepository $edtPlanningRepository,
         SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
-        PersonnelRepository $personnelRepository,
         MatiereRepository $matiereRepository
     ) {
         parent::__construct($celcatCalendrierRepository);
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->semestreRepository = $semestreRepository;
         $this->groupeRepository = $groupeRepository;
-        $this->personnelRepository = $personnelRepository;
         $this->matiereRepository = $matiereRepository;
     }
 

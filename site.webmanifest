@@ -1,0 +1,49 @@
+// <root-dir>/site.webmanifest
+{
+    // the primary locale of the app as a valid HTML language attribute
+    // (see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang)
+    "lang": "fr-FR",
+
+    // the name of the web application as it is usually displayed to the user
+    "name": "Intranet IUT Troyes & IUT Reims-Chalons-Charleville",
+    // a shorter variant of the app name to be displayed when there is not
+    // enough space (e.g. as a label for an icon on the phone home screen).
+    "short_name": "Intranet IUT",
+
+    // use it to explain what the application does
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+
+    // the preferred URL to be loaded when the user launches the web app
+    // (this is just a hint, so user agents can ignore this value)
+    "start_url": "https://intranet.iut-troyes.univ)reims.fr",
+
+    // a relative path (/app/), a host name (https://example.com/) or a subdirectory
+    // (https://example.com/app/) where the manifest is applied to. Any URL outside
+    // of this scope will revert to a normal web page inside a browser tab or window.
+    "scope": "/app/",
+
+    // the preferred orientation of the web app contents
+    // (see https://developer.mozilla.org/en-US/docs/Web/Manifest/orientation)
+    "orientation": "landscape",
+
+    // determines how much of browser interface is displayed when running the app
+    // "browser" = display the full browser window; "fullscreen" = display no browser interface
+    // (see https://developer.mozilla.org/en-US/docs/Web/Manifest/display)
+    "display": "fullscreen",
+
+    // the placeholeder background color used for the app before its stylesheet is loaded
+    // Once the stylesheet is loaded, the real background color from the app is used
+    "background_color": "#42a7ff",
+    // the default theme color for the application, which affects how the operating system
+    // displays the site (e.g. on Android's task switcher, the theme color surrounds the site)
+    "theme_color": "rgb(29, 164, 14)",
+
+    // an array of objects representing image files that can serve as app icons for different contexts
+    // (see https://developer.mozilla.org/en-US/docs/Web/Manifest/icons)
+    "icons": [
+        { "src": "icon/lowres.webp", "sizes": "48x48", "type": "image/webp" },
+        { "src": "icon/lowres", "sizes": "48x48" },
+        { "src": "icon/hd_hi.ico", "sizes": "72x72 96x96 128x128 256x256" },
+        { "src": "icon/hd_hi.svg", "sizes": "72x72" }
+    ]
+}

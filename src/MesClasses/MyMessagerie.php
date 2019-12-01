@@ -21,12 +21,15 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Swift_Mailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 
 
 class MyMessagerie
 {
-    /** @var MyMailer */
+    /** @var MailerInterface */
     private $myMailer;
 
     /** @var EntityManagerInterface */
@@ -36,9 +39,6 @@ class MyMessagerie
 
     private $message;
     private $pjs;
-
-    /** @var Departement */
-    private $departement;
 
     private $nbMessagesEnvoyes = 0;
     private $nbEtudiants = 0;
@@ -64,7 +64,7 @@ class MyMessagerie
     /**
      * MyMessagerie constructor.
      *
-     * @param MyMailer               $myMailer
+     * @param MailerInterface        $mailer
      * @param EntityManagerInterface $entityManager
      * @param GroupeRepository       $groupeRepository
      * @param EtudiantRepository     $etudiantRepository
@@ -72,14 +72,14 @@ class MyMessagerie
      * @param TypeGroupeRepository   $typeGroupeRepository
      */
     public function __construct(
-        MyMailer $myMailer,
+        MailerInterface $mailer,
         EntityManagerInterface $entityManager,
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
         PersonnelRepository $personnelRepository,
         TypeGroupeRepository $typeGroupeRepository
     ) {
-        $this->myMailer = $myMailer;
+        $this->myMailer = $mailer;
         $this->entityManager = $entityManager;
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
@@ -88,6 +88,11 @@ class MyMessagerie
     }
 
 
+    /**
+     * @param $destinataires
+     *
+     * @throws TransportExceptionInterface
+     */
     public function sendToPersonnels($destinataires): void
     {
         //mail réel + notification (utiliser le busMessage ?
@@ -98,7 +103,7 @@ class MyMessagerie
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase('permanents');
+        $mess = $this->saveMessageDatabase();
 
         foreach ($destinataires as $destinataire) {
             $personnel = $this->personnelRepository->find($destinataire);
@@ -109,13 +114,17 @@ class MyMessagerie
 
                 $this->saveDestinatairePersonnelDatabase($mess, $personnel);
                 $this->nbEtudiants++;
-                //$this->nbMessagesEnvoyes += $this->get('mailer')->send($message);
+                $this->myMailer->send($message);
+                $this->nbMessagesEnvoyes ++;
                 //todo: envoyer notification ?
             }
         }
         $this->entityManager->flush();
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendToEtudiants(): void
     {
         $this->nbMessagesEnvoyes = 0;
@@ -128,15 +137,16 @@ class MyMessagerie
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase('etudiants');
+        $mess = $this->saveMessageDatabase();
 
         //récupération des fichiers uploadés
 //        $files = $this->getDoctrine()->getRepository('DAKernelBundle:MessagePJ')->findBy(['cle' => $this->get('session')->get('clemessage')]);
 //
-//        foreach ($files as $file) {
-//            $message->attach(Swift_Attachment::fromPath($this->get('kernel')->getRootDir() . '/../web/uploads/mails/' . $connect->getFormation()->getId() . '/' . $file->getFichier()));
+//       foreach ($files as $file) {
+//           $message->attachFromPath($this->get('kernel')->getRootDir() . '/../web/uploads/mails/'  . $file->getFichier());
+//
 //            $file->setMessage($mess);
-//            $em->persist($file);
+//            $this->entityManager->persist($file);
 //        }
 
 
@@ -148,7 +158,8 @@ class MyMessagerie
 
             $this->saveDestinataireEtudiantDatabase($mess, $etu);
             $this->nbEtudiants++;
-            //$this->nbMessagesEnvoyes += $this->get('mailer')->send($message);
+            $this->myMailer->send($message);
+            $this->nbMessagesEnvoyes ++;
             //todo: envoyer notification ?
         }
 
@@ -172,6 +183,9 @@ class MyMessagerie
 
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendSynthese(): void
     {
         //envoi de la synthèse à l'auteur
@@ -187,8 +201,17 @@ class MyMessagerie
                 'nbetudiant' => $this->nbEtudiants
             ]);
 
+        $this->myMailer->send($email);
+
     }
 
+    /**
+     * @param             $destinataires
+     * @param             $typeDestinataire
+     * @param Departement $departement
+     *
+     * @throws TransportExceptionInterface
+     */
     public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement): void
     {
         $this->departement = $departement;
@@ -214,12 +237,10 @@ class MyMessagerie
 
     }
 
-    private function saveMessageDatabase(string $type): Message
+    private function saveMessageDatabase(): Message
     {
 
         $mess = new Message();
-
-        //$mess->setType($type);
         $mess->setMessage($this->message);
         $mess->setSujet($this->sujet);
         $mess->setExpediteur($this->expediteur);
@@ -241,7 +262,6 @@ class MyMessagerie
 
     private function saveDestinatairePersonnelDatabase(Message $message, $personnel): void
     {
-        echo 'detinataires';
         $dest = new MessageDestinatairePersonnel();
         $dest->setMessage($message);
         $dest->setPersonnel($personnel);

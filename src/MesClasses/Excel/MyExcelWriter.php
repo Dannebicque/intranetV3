@@ -84,20 +84,6 @@ class MyExcelWriter
     public function setHeader($logo = true): void
     {
         //todo: a fusionner avec le header de writeSpecialHeader dans MyExportListing
-       /*$dbt = $this->formation->getAnneecourante();
-        $fin = $dbt + 1;
-
-        $this->sheet->setCellValue('H1', 'Année Universitaire - ' . $dbt . ' - ' . $fin);
-        $this->sheet->setCellValue('H2', 'IUT de Troyes - ' . $this->formation->getNomformation());
-        $this->sheet->setCellValue('H4', $this->titre);
-        $this->sheet->getStyle('H1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-        $this->sheet->getStyle('H2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-        $this->sheet->getStyle('H4')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-
-
-        if ($logo === true) {
-            $this->addLogo();
-        }*/
     }
 
     /**

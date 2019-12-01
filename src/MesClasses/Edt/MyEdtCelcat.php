@@ -199,7 +199,8 @@ class MyEdtCelcat extends BaseEdt
             }
 
             $groupefin = $groupe + $tab[$jour][$dbtEdt][$groupe]['largeur'];
-            for ($i = $dbtEdt; $i < $p->getFin(); $i++) {
+            $fin= $p->getFin();
+            for ($i = $dbtEdt; $i < $fin; $i++) {
                 for ($j = $groupe; $j < $groupefin; $j++) {
                     $tab[$jour][$i][$j]['texte'] = 'xx';
                 }
