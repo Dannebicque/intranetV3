@@ -69,8 +69,11 @@ class DiplomeType extends AbstractType
                 'class'        => AnneeUniversitaire::class,
                 'choice_label' => 'displayAnneeUniversitaire'
             ])
-            ->add('code_apogee', TextType::class, [
+            ->add('code_diplome', TextType::class, [
                 'label' => 'label.code_diplome'
+            ])
+            ->add('code_etape', TextType::class, [
+                'label' => 'label.code_etape'
             ])
             ->add('code_version', TextType::class, [
                 'label' => 'label.code_version'
