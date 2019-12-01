@@ -60,7 +60,7 @@ class ApogeeController extends BaseController
         EtudiantRepository $etudiantRepository,
         $type
     ): Response {
-        phpinfo();
+
         $diplome = $diplomeRepository->find($request->request->get('diplomeforce'));
         if ($diplome) {
             $etudiants = [];
