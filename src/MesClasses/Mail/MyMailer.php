@@ -19,6 +19,10 @@ use App\MesClasses\Configuration;
 use App\Twig\DatabaseTwigLoader;
 use Swift_Mailer;
 use Swift_Message;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -32,7 +36,7 @@ use function count;
  */
 class MyMailer
 {
-    /** @var Swift_Mailer */
+    /** @var MailerInterface */
     private $mailer;
 
     /** @var Environment */
@@ -49,13 +53,13 @@ class MyMailer
     /**
      * MyMailer constructor.
      *
-     * @param Swift_Mailer        $mailer
+     * @param MailerInterface        $mailer
      * @param Environment         $templating
      * @param DatabaseTwigLoader  $databaseTwigLoader
      * @param TranslatorInterface $translator
      */
     public function __construct(
-        Swift_Mailer $mailer,
+        MailerInterface $mailer,
         Environment $templating,
         DatabaseTwigLoader $databaseTwigLoader,
         TranslatorInterface $translator
@@ -71,18 +75,18 @@ class MyMailer
      * @param array  $to
      * @param string $subject
      * @param array  $options
+     *
+     * @throws TransportExceptionInterface
      */
     public function sendMessage(array $to, $subject, array $options = []): void
     {
-        $mail = new Swift_Message();
-
-        $mail
-            ->setFrom($this->getFrom($options))
-            ->setTo($this->checkTo($to))
-            ->setSubject($this->translator->trans($subject))
+        $mail = (new TemplatedEmail())
+            ->from($this->getFrom($options))
+            ->to($this->checkTo($to))
+            ->subject($this->translator->trans($subject))
             ->setBody($this->template)
-            ->setReplyTo($this->getReplyTo($options))
-            ->setContentType($this->getContentType($options));
+            ->replyTo($this->getReplyTo($options));
+            //->setContentType($this->getContentType($options));
 
         $this->mailer->send($mail);
     }
