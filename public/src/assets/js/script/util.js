@@ -8,7 +8,6 @@
 function readUrlMenu($url) {
   const $elt = $url.split('/')
   let $firstElt = 2
-  console.log($elt);
     if ($elt[1] === 'index.php') {
       if ($elt.length > 1) {
         $firstElt = 3;
@@ -31,43 +30,26 @@ function readUrlMenu($url) {
 readUrlMenu($(location).attr('pathname'))
 
 function updateAffichage (date, heure) {
-  console.log('aff')
   $.ajax({
     type: 'GET',
     url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
     dataType: 'json',
     success: function (data) {
-
-      // const tabsences = data
-      //console.log('date ' + date)
-      //console.log(data)
       const t = date.split('/')
       const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
-      //console.log('ddate ' + ddate)
       if (heure.length === 4) {
         heure = '0' + heure
       }
-      //console.log('heure ' + heure)
-      // var obj = tabsences[ddate]
-      // console.log('tabsences[ddate] ' + obj)
+
       for (let d in data) {
-        //console.log('d ' + d)
         if (d == ddate) {
-          //console.log('ok')
           if (typeof data[d][heure] !== 'undefined') {
             for (let i = 0; i < data[d][heure].length; i++) {
-              //console.log('marquage')
-              //console.log('tabsences[ddate][heure][i] ' + data[d][heure][i])
               $('#etu_' + data[d][heure][i]).addClass('absent')
             }
           }
         }
       }
-      //if (typeof tabsences[ddate] !== 'undefined') {
-      //if (typeof tabsences[ddate][heure] !== 'undefined') {
-
-      // }
-      //}
     }
   })
 }

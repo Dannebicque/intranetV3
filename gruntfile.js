@@ -105,7 +105,7 @@ module.exports = function(grunt) {
         },
         options: {
           watchTask: true,
-          server: "src"
+          server: "public/src"
         }
       }
     },
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
 
       dist: {
         files: [
-          {expand: true, cwd: 'public/src/', src: ['**'], dest: 'dist'}
+          {expand: true, cwd: 'src/', src: ['**'], dest: 'dist'}
         ],
       },
 

@@ -7,7 +7,6 @@
 
 'use strict'
 
-
 require('./config')
 require('./util')
 
@@ -79,29 +78,9 @@ app.ready(function () {
   |
   */
 
-
-  //require('./plugins/documents.js'
   require('./plugins/myModal.js')
   require('./plugins/pagination')
 
-
-  // $.fn.editableform.buttons =
-  //   '<button type="submit" class="btn btn-primary btn-sm editable-submit">' +
-  //   '<i class="fa fa-fw fa-check"></i>' +
-  //   '</button>' +
-  //   '<button type="button" class="btn btn-default btn-sm editable-cancel">' +
-  //   '<i class="fa fa-fw fa-times"></i>' +
-  //   '</button>'
-
-
-  /*$('#username').editable({
-    type: 'text',
-    pk: 1,
-    url: '/post',
-    title: 'Enter username'
-  });*/
-
-  //require('./plugins/calendar');
 
   /*
   |--------------------------------------------------------------------------
@@ -142,8 +121,6 @@ app.ready(function () {
   require('./partials/quizz')
   //require('./partials/sousCommission')
 
-  //$.fn.dataTable.moment( 'Do MMMM  YYYY à h:mm' ); pour trier les datatable selon une date. Ne fonctionne pas.
-
   require('./plugins/myQuill')
 
   const preloader = $('.preloader')
@@ -162,6 +139,5 @@ app.ready(function () {
   })
 
   $('.callout').delay(5000).slideUp('slow')
-
 
 })
