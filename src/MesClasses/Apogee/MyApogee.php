@@ -32,24 +32,13 @@ abstract class MyApogee
         $stid = self::$conn->prepare(
             'SELECT * FROM INS_ADM_ETP WHERE COD_ETP=:codeetape');
         $stid->execute(array(':codeetape' => $diplome->getCodeEtape()));
-        dump($stid);
-        dump(self::$conn);
         return $stid;
 
         //SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=:codeetape AND COD_ANU_SRT_IND=NULL
     }
+
     private static function connect(): ?PDO
     {
-        $tns = '
-            (DESCRIPTION =
-                (ADDRESS_LIST =
-                  (ADDRESS = (PROTOCOL = TCP)(HOST = ' . getenv('APOGEE_IP') . ')(PORT = ' . getenv('APOGEE_PORT') . '))
-                )
-                (CONNECT_DATA =
-                  (SERVICE_NAME = ' . getenv('APOGEE_SERVICE') . ')
-                )
-              )';
-
         try {
             self::$conn = new PDO('oci:dbname=' . getenv('APOGEE_STRING'), getenv('APOGEE_LOGIN'),
                 getenv('APOGEE_PASSWORD'));
@@ -64,7 +53,7 @@ abstract class MyApogee
     {
         self::connect();
         $stid = self::$conn->prepare(
-            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_ETU=\':etudiant\'');
+            'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_ETU=:etudiant');
         $stid->execute(array(':etudiant' => $etudiant));
         return $stid;
     }
@@ -73,7 +62,7 @@ abstract class MyApogee
     {
         self::connect();
         $stid = self::$conn->prepare(
-            'SELECT * FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\':semestre\'');
+            'SELECT * FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
         $stid->execute(array(':semestre' => $semestre->getCodeElement()));
 
         return $stid;
@@ -83,7 +72,7 @@ abstract class MyApogee
     {
         self::connect();
         $stid = self::$conn->prepare(
-            'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=\':semestre\'');
+            'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
         $stid->execute([':semestre'=> $semestre->getCodeElement()]);
 
         return $stid;

@@ -69,7 +69,7 @@ class ApogeeController extends BaseController
             $stid = MyApogee::getEtudiantsDiplome($diplome);
             while ($row = $stid->fetch()) {
                 dump($row);
-                $dataApogee = $this->transformeApogeeToArray($row);
+                $dataApogee = MyApogee::transformeApogeeToArray($row);
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                 if ($etudiant && $type === 'force') {
@@ -122,7 +122,7 @@ class ApogeeController extends BaseController
         foreach ($listeetudiants as $etudiant) {
             $stid = MyApogee::getEtudiant($etudiant);
 
-            while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+            while ($row = $stid->fetch()) {
                 //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
                 $dataApogee = MyApogee::transformeApogeeToArray($row);
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
