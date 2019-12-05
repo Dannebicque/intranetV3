@@ -9,7 +9,12 @@
 namespace App\Controller;
 
 use App\Entity\Departement;
+use App\MesClasses\Mail\MyMailer;
+use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
+use App\Repository\PersonnelRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,8 +23,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -58,21 +65,103 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/mot-de-passe-perdu", name="security_password_lost")
-     * @param Request $request
+     * @param Request                 $request
+     *
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param EntityManagerInterface  $entityManager
      *
      * @return Response
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function passwordLost(Request $request): Response
-    {
+    public function passwordLost(
+        Request $request,
+        TokenGeneratorInterface $tokenGenerator,
+        EntityManagerInterface $entityManager,
+        MyMailer $myMailer,
+        PersonnelRepository $personnelRepository,
+        EtudiantRepository $etudiantRepository
+    ): Response {
         $submittedToken = $request->request->get('token');
 
         if ($request->isMethod('POST') && $this->isCsrfTokenValid('password-lost', $submittedToken)) {
 
-            //todo: password-lost : token + mail
+            $email = $request->request->get('email');
+
+            $etudiant = $etudiantRepository->findOneBy(['mailUniv' => $email]);
+            $personnel = $personnelRepository->findOneBy(['mailUniv' => $email]);
+            $user = null;
+            if ($personnel !== null && $etudiant === null) {
+                $user = $personnel;
+            } else if ($personnel === null && $etudiant !== null) {
+                $user = $etudiant;
+            }
+
+            if ($user === null) {
+                return $this->redirectToRoute('security_login', ['message' => 'Email Inconnu']);
+            }
+            $token = $tokenGenerator->generateToken();
+
+            try {
+                $user->setResetToken($token);
+                $entityManager->flush();
+            } catch (Exception $e) {
+                return $this->redirectToRoute('security_login', ['message' => $e->getMessage()]);
+            }
+
+            $url = $this->generateUrl('security_reset_password', ['token' => $token],
+                UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $myMailer->setTemplate('mails/passwordLost.txt.twig', ['url' => $url, 'user' => $user]);
+            $myMailer->sendMessage([$user->getMailUniv()], 'Mot de passe perdu');
+
+
             return $this->render('security/passwordLostConfirm.html.twig');
         }
 
         return $this->render('security/passwordLost.html.twig');
+    }
+
+    /**
+     * @Route("/reset-password/{token}", name="security_reset_password")
+     * @param Request                      $request
+     *
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     *
+     * @return Response
+     */
+    public function resetPassword(
+        Request $request,
+        string $token,
+        PersonnelRepository $personnelRepository,
+        EtudiantRepository $etudiantRepository,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $entityManager
+    ) {
+
+        if ($request->isMethod('POST')) {
+
+            $etudiant = $etudiantRepository->findOneBy(['resetToken' => $token]);
+            $personnel = $personnelRepository->findOneBy(['resetToken' => $token]);
+
+            $user = null;
+            if ($personnel !== null && $etudiant === null) {
+                $user = $personnel;
+            } else if ($personnel === null && $etudiant !== null) {
+                $user = $etudiant;
+            }
+
+            if ($user === null) {
+                return $this->redirectToRoute('security_login', ['message' => 'Token Inconnu']);
+            }
+
+            $user->setResetToken(null);
+            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            $entityManager->flush();
+
+            return $this->redirectToRoute('security_login', ['message' => 'Mot de passe mis à jour']);
+        }
+
+        return $this->render('security/reset_password.html.twig', ['token' => $token]);
     }
 
     /**

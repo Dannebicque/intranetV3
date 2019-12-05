@@ -77,20 +77,7 @@ class MatiereApiController extends BaseController
      */
     public function matiereAjax(Matiere $matiere): JsonResponse
     {
-
-        //todo: sérializer
-        $t = [];
-        $t['id'] = $matiere->getId();
-        $t['libelle'] = $matiere->getLibelle();
-        $t['display'] = $matiere->getUe() ? $matiere->getUe()->getLibelle() : '-';
-        $t['cmFormation'] = $matiere->getCmFormation();
-        $t['tdFormation'] = $matiere->getTdFormation();
-        $t['tpFormation'] = $matiere->getTpFormation();
-        $t['cmPpn'] = $matiere->getCmPpn();
-        $t['tdPpn'] = $matiere->getTdPpn();
-        $t['tpPpn'] = $matiere->getTpPpn();
-
-        return new JsonResponse($t);
+        return new JsonResponse($matiere->getJson());
     }
 
     /**

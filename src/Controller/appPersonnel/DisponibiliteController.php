@@ -68,7 +68,6 @@ class DisponibiliteController extends BaseController
         Request $request,
         DisponibiliteRepository $disponibiliteRepository
     ): JsonResponse {
-        //todo: a gérer année universitaire
         $jour = $request->request->get('jour');
         $heure = $request->request->get('heure');
         $etat = $request->request->get('etat');

@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved -->
-<!-- @file /Users/davidannebicque/htdocs/intranetv3/translations/messages.fr.xlf -->
-<!-- @author     David Annebicque -->
-<!-- @project intranetv3 -->
-<!-- @date 28/11/2019 14:27 -->
-<!-- @lastUpdate 28/11/2019 14:27 -->
-
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
     <unit id="vLWpzeo" name="menu.dashboard">
@@ -8528,7 +8521,7 @@
     <unit id="NDZ8uR_" name="type_document.add.success.flash">
       <segment>
         <source>type_document.add.success.flash</source>
-          <target>Type de document ajouté avec succès</target>
+        <target>Type de document ajouté avec succès</target>
       </segment>
     </unit>
     <unit id="iopVV5B" name="document.add.success.flash">
@@ -8702,25 +8695,25 @@
     <unit id="mPZsf9l" name="table.promo">
       <segment>
         <source>table.promo</source>
-          <target>Promo.</target>
+        <target>Promo.</target>
       </segment>
     </unit>
     <unit id="whFh5FJ" name="table.minimum">
       <segment>
         <source>table.minimum</source>
-          <target>Minimum</target>
+        <target>Minimum</target>
       </segment>
     </unit>
     <unit id="KbIg1Jz" name="exporter">
       <segment>
         <source>exporter</source>
-          <target>Exporter</target>
+        <target>Exporter</target>
       </segment>
     </unit>
     <unit id="RrTvUlx" name="eval.du">
       <segment>
         <source>eval.du</source>
-          <target>Evaluation du</target>
+        <target>Evaluation du</target>
       </segment>
     </unit>
     <unit id="hf7had4" name="app.personnel.note.saisie.titre">
@@ -9182,7 +9175,7 @@
     <unit id="rCneeU2" name="gestion.personnel.droit.access">
       <segment>
         <source>gestion.personnel.droit.access</source>
-          <target>Gestion des droits d'accès des personnels</target>
+        <target>Gestion des droits d'accès des personnels</target>
       </segment>
     </unit>
     <unit id="n4rfXMx" name="ROLE_CDD">
@@ -9278,7 +9271,7 @@
     <unit id="Nwr4vS." name="table.duree_demi_journee">
       <segment>
         <source>table.duree_demi_journee</source>
-          <target>Durée en demi-journée</target>
+        <target>Durée en demi-journée</target>
       </segment>
     </unit>
     <unit id="uJCTsow" name="numero.ine">
@@ -9458,19 +9451,19 @@
     <unit id=".ZniRt1" name="trello.add.success.flash">
       <segment>
         <source>trello.add.success.flash</source>
-          <target>Tâche ajoutée avec succès</target>
+        <target>Tâche ajoutée avec succès</target>
       </segment>
     </unit>
     <unit id="dbi0sXn" name="trello.duplicate.success.flash">
       <segment>
         <source>trello.duplicate.success.flash</source>
-          <target>Tâche dupliquée avec succès</target>
+        <target>Tâche dupliquée avec succès</target>
       </segment>
     </unit>
     <unit id="2KtTYtx" name="trello.edit.success.flash">
       <segment>
         <source>trello.edit.success.flash</source>
-          <target>Tâche modifiée avec succès</target>
+        <target>Tâche modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="L4ZzJ1N" name="atitle.board">
@@ -9587,7 +9580,7 @@
     <unit id="cXVRejc" name="or">
       <segment>
         <source>or</source>
-          <target>ou</target>
+        <target>ou</target>
       </segment>
     </unit>
     <unit id="YBssJHO" name="du">
@@ -9919,7 +9912,7 @@
     <unit id="_fvVtrT" name="salle_examen.edit.success.flash">
       <segment>
         <source>salle_examen.edit.success.flash</source>
-          <target>Salle d'examen modifiée avec succès</target>
+        <target>Salle d'examen modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="8f5iKKb" name="adm.salle_examen.show.heading">
@@ -9955,7 +9948,7 @@
     <unit id="OWoUqyB" name="ri">
       <segment>
         <source>ri</source>
-          <target>Relations Internationales</target>
+        <target>Relations Internationales</target>
       </segment>
     </unit>
     <unit id="NuGD.DL" name="table.categorie">
@@ -10677,7 +10670,7 @@
     <unit id="98QvGbd" name="adm.structure.departement">
       <segment>
         <source>adm.structure.departement</source>
-          <target>Structure du département (maquette)</target>
+        <target>Structure du département (maquette)</target>
       </segment>
     </unit>
     <unit id="qQ.yKx1" name="adm.parametres.departement">
@@ -11592,1318 +11585,1336 @@
         <target>Lien pour la synchronisation de l'EDT via ICAL</target>
       </segment>
     </unit>
-      <unit id="cJfy41b" name="annee.en.apprentissage">
-          <segment>
-              <source>annee.en.apprentissage</source>
-              <target>Année en apprentissage</target>
-          </segment>
-      </unit>
-      <unit id="fjam7IK" name="aucune.convention.a.envoyer">
-          <segment>
-              <source>aucune.convention.a.envoyer</source>
-              <target>Aucune convention à envoyer</target>
-          </segment>
-      </unit>
-      <unit id="U8TpKG." name="mail.chgt.etat_stage.autorise">
-          <segment>
-              <source>mail.chgt.etat_stage.autorise</source>
-              <target>Saisie des informations du stage autorisée</target>
-          </segment>
-      </unit>
-      <unit id="PzQFUty" name="copie mail.chgt.etat_stage.autorise">
-          <segment>
-              <source>copie mail.chgt.etat_stage.autorise</source>
-              <target>[COPIE] Saisie des informations du stage autorisée</target>
-          </segment>
-      </unit>
-      <unit id="7R25jpq" name="mail.chgt.etat_stage.depose">
-          <segment>
-              <source>mail.chgt.etat_stage.depose</source>
-              <target>Formulaire complété par l'étudiant</target>
-          </segment>
-      </unit>
-      <unit id="HbK16.Z" name="copie mail.chgt.etat_stage.depose">
-          <segment>
-              <source>copie mail.chgt.etat_stage.depose</source>
-              <target>[COPIE] Formulaire complété par l'étudiant</target>
-          </segment>
-      </unit>
-      <unit id="BaUZo_C" name="Formulaire de stage complété">
-          <segment>
-              <source>Formulaire de stage complété</source>
-              <target>Formulaire de stage complété</target>
-          </segment>
-      </unit>
-      <unit id="7r22tl3" name="table.securite_sociale">
-          <segment>
-              <source>table.securite_sociale</source>
-              <target>Mutuelle étudiante ou sécurité sociale</target>
-          </segment>
-      </unit>
-      <unit id="dpm6hxI" name="table.adresse_securite_sociale">
-          <segment>
-              <source>table.adresse_securite_sociale</source>
-              <target>Adresse mutuelle étudiante ou sécurité sociale</target>
-          </segment>
-      </unit>
-      <unit id="HTyY9yd" name="stage_etudiant.change_tuteur.success.flash">
-          <segment>
-              <source>stage_etudiant.change_tuteur.success.flash</source>
-              <target>Tuteur modifié avec succès</target>
-          </segment>
-      </unit>
-      <unit id="mK_lhAE" name="mail.chgt.etat_stage.valide">
-          <segment>
-              <source>mail.chgt.etat_stage.valide</source>
-              <target>Votre stage est validé</target>
-          </segment>
-      </unit>
-      <unit id="bmE.L6C" name="copie mail.chgt.etat_stage.valide">
-          <segment>
-              <source>copie mail.chgt.etat_stage.valide</source>
-              <target>[COPIE] Votre stage est validé</target>
-          </segment>
-      </unit>
-      <unit id=".VuvPdM" name="chgt.etat_stage.valide">
-          <segment>
-              <source>chgt.etat_stage.valide</source>
-              <target>Votre stage est validé</target>
-          </segment>
-      </unit>
-      <unit id="uxuuM4c" name="mail.chgt.etat_stage.convention_envoyee">
-          <segment>
-              <source>mail.chgt.etat_stage.convention_envoyee</source>
-              <target>Votre convention de stage est envoyée à l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="nkjjYma" name="copie mail.chgt.etat_stage.convention_envoyee">
-          <segment>
-              <source>copie mail.chgt.etat_stage.convention_envoyee</source>
-              <target>[COPIE] Votre convention de stage est envoyée à l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="zaqZWuX" name="mail.chgt.etat_stage.convention_recue">
-          <segment>
-              <source>mail.chgt.etat_stage.convention_recue</source>
-              <target>Votre convention de stage est revenue signée par l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="ZhbUwFT" name="copie mail.chgt.etat_stage.convention_recue">
-          <segment>
-              <source>copie mail.chgt.etat_stage.convention_recue</source>
-              <target>[COPIE] Votre convention de stage est revenue signée par l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="YJdZxhn" name="ETAT_STAGE_AUTORISE">
-          <segment>
-              <source>ETAT_STAGE_AUTORISE</source>
-              <target>Saisie Stage Autorisée</target>
-          </segment>
-      </unit>
-      <unit id="R8pNITG" name="ETAT_STAGE_DEPOSE">
-          <segment>
-              <source>ETAT_STAGE_DEPOSE</source>
-              <target>Formulaire stage complété</target>
-          </segment>
-      </unit>
-      <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
-          <segment>
-              <source>ETAT_STAGE_VALIDE</source>
-              <target>Stage validé</target>
-          </segment>
-      </unit>
-      <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
-          <segment>
-              <source>ETAT_STAGE_REFUS</source>
-              <target>Formulaire ou Stage refusé</target>
-          </segment>
-      </unit>
-      <unit id="6n7fjVa" name="ETAT_STAGE_INCOMPLET">
-          <segment>
-              <source>ETAT_STAGE_INCOMPLET</source>
-              <target>Formulaire de stage incomplet</target>
-          </segment>
-      </unit>
-      <unit id="ZIHlkWz" name="ETAT_STAGE_IMPRIME">
-          <segment>
-              <source>ETAT_STAGE_IMPRIME</source>
-              <target>Convention de stage imprimée</target>
-          </segment>
-      </unit>
-      <unit id="FLHSsmy" name="ETAT_STAGE_CONVENTION_ENVOYEE">
-          <segment>
-              <source>ETAT_STAGE_CONVENTION_ENVOYEE</source>
-              <target>Convention de stage envoyée</target>
-          </segment>
-      </unit>
-      <unit id="FjIF_WV" name="ETAT_STAGE_CONVENTION_RECUE">
-          <segment>
-              <source>ETAT_STAGE_CONVENTION_RECUE</source>
-              <target>Convention de stage récupérée</target>
-          </segment>
-      </unit>
-      <unit id="I6hImAB" name="numEtudiant">
-          <segment>
-              <source>numEtudiant</source>
-              <target>Numéro Etudiant</target>
-          </segment>
-      </unit>
-      <unit id="KcFzACF" name="prenom">
-          <segment>
-              <source>prenom</source>
-              <target>Prénom</target>
-          </segment>
-      </unit>
-      <unit id="6S33qKT" name="chgt.etat_stage.convention_recue">
-          <segment>
-              <source>chgt.etat_stage.convention_recue</source>
-              <target>Votre convention de stage est revenue signée par l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="kI5JHM8" name="chgt.etat_stage.convention_envoyee">
-          <segment>
-              <source>chgt.etat_stage.convention_envoyee</source>
-              <target>Votre convention de stage est envoyée à l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="bNI0ZJv" name="verificiation">
-          <segment>
-              <source>verificiation</source>
-              <target>Vérificiation</target>
-          </segment>
-      </unit>
-      <unit id="Rogi5P8" name="cm.maquette">
-          <segment>
-              <source>cm.maquette</source>
-              <target>CM Maquette</target>
-          </segment>
-      </unit>
-      <unit id="U9qPp3i" name="td.maquette">
-          <segment>
-              <source>td.maquette</source>
-              <target>TD Maquette</target>
-          </segment>
-      </unit>
-      <unit id="LZupY.Q" name="table.ppn.maquette">
-          <segment>
-              <source>table.ppn.maquette</source>
-              <target>PPN Maquette</target>
-          </segment>
-      </unit>
-      <unit id="2xTukO4" name="importer.photo.zip">
-          <segment>
-              <source>importer.photo.zip</source>
-              <target>Importer un fichier zip</target>
-          </segment>
-      </unit>
-      <unit id="clfA0Hl" name="menu.apogee">
-          <segment>
-              <source>menu.apogee</source>
-              <target>Apogée</target>
-          </segment>
-      </unit>
-      <unit id="NDr17LU" name="adm.apogee.index.heading">
-          <segment>
-              <source>adm.apogee.index.heading</source>
-              <target>Apogée</target>
-          </segment>
-      </unit>
-      <unit id="qfZcBG4" name="maj.liste.etudiant">
-          <segment>
-              <source>maj.liste.etudiant</source>
-              <target>Màj Liste d'étudiants</target>
-          </segment>
-      </unit>
-      <unit id="9WVG4g5" name="forcer.maj.liste">
-          <segment>
-              <source>forcer.maj.liste</source>
-              <target>Forcer une màj</target>
-          </segment>
-      </unit>
-      <unit id="kLzcxOR" name="importer.une.etudiant">
-          <segment>
-              <source>importer.une.etudiant</source>
-              <target>Importer un étudiant</target>
-          </segment>
-      </unit>
-      <unit id="ZjjTy3L" name="Suppression d'une absence enregistrée">
-          <segment>
-              <source>Suppression d'une absence enregistrée</source>
-              <target>Suppression d'une absence enregistrée</target>
-          </segment>
-      </unit>
-      <unit id="z19k6u9" name="num_etudiant">
-          <segment>
-              <source>num_etudiant</source>
-              <target>num_etudiant</target>
-          </segment>
-      </unit>
-      <unit id="cWJJIp0" name="remise copie">
-          <segment>
-              <source>remise copie</source>
-              <target>remise copie</target>
-          </segment>
-      </unit>
-      <unit id="y8Zoo.W" name="nom.evaluation">
-          <segment>
-              <source>nom.evaluation</source>
-              <target>nom.evaluation</target>
-          </segment>
-      </unit>
-      <unit id="1MclTh0" name="ANNEBICQUE David">
-          <segment>
-              <source>ANNEBICQUE David</source>
-              <target>ANNEBICQUE David</target>
-          </segment>
-      </unit>
-      <unit id="vKogjXB" name="ARRIGONI Michael">
-          <segment>
-              <source>ARRIGONI Michael</source>
-              <target>ARRIGONI Michael</target>
-          </segment>
-      </unit>
-      <unit id="hf0vZkh" name="AURIBOT Jérémy">
-          <segment>
-              <source>AURIBOT Jérémy</source>
-              <target>AURIBOT Jérémy</target>
-          </segment>
-      </unit>
-      <unit id="D1qR2s5" name="BAUSER Thierry">
-          <segment>
-              <source>BAUSER Thierry</source>
-              <target>BAUSER Thierry</target>
-          </segment>
-      </unit>
-      <unit id="b8bG203" name="BOGLIETTI Alan">
-          <segment>
-              <source>BOGLIETTI Alan</source>
-              <target>BOGLIETTI Alan</target>
-          </segment>
-      </unit>
-      <unit id="8qFIOE0" name="BOUDIAF Brahim">
-          <segment>
-              <source>BOUDIAF Brahim</source>
-              <target>BOUDIAF Brahim</target>
-          </segment>
-      </unit>
-      <unit id="gcLxqbs" name="BOUDIER Fanny">
-          <segment>
-              <source>BOUDIER Fanny</source>
-              <target>BOUDIER Fanny</target>
-          </segment>
-      </unit>
-      <unit id="PDUq8mb" name="BOULET Hervé">
-          <segment>
-              <source>BOULET Hervé</source>
-              <target>BOULET Hervé</target>
-          </segment>
-      </unit>
-      <unit id="od6lLzd" name="BOURBON Adrien">
-          <segment>
-              <source>BOURBON Adrien</source>
-              <target>BOURBON Adrien</target>
-          </segment>
-      </unit>
-      <unit id="GoJGPsQ" name="BOURGEOIS Karen">
-          <segment>
-              <source>BOURGEOIS Karen</source>
-              <target>BOURGEOIS Karen</target>
-          </segment>
-      </unit>
-      <unit id="Gv4_pQC" name="BRANDT Frédéric">
-          <segment>
-              <source>BRANDT Frédéric</source>
-              <target>BRANDT Frédéric</target>
-          </segment>
-      </unit>
-      <unit id="TGlAn0I" name="BUTET Julien">
-          <segment>
-              <source>BUTET Julien</source>
-              <target>BUTET Julien</target>
-          </segment>
-      </unit>
-      <unit id="_pouQvE" name="CARRÉ Sandrine">
-          <segment>
-              <source>CARRÉ Sandrine</source>
-              <target>CARRÉ Sandrine</target>
-          </segment>
-      </unit>
-      <unit id="0pAapP8" name="CATERINO Paula">
-          <segment>
-              <source>CATERINO Paula</source>
-              <target>CATERINO Paula</target>
-          </segment>
-      </unit>
-      <unit id="PD3E8xA" name="CHÉRAIN Olivier">
-          <segment>
-              <source>CHÉRAIN Olivier</source>
-              <target>CHÉRAIN Olivier</target>
-          </segment>
-      </unit>
-      <unit id="wJ76awf" name="DA SILVA André">
-          <segment>
-              <source>DA SILVA André</source>
-              <target>DA SILVA André</target>
-          </segment>
-      </unit>
-      <unit id="IiMV0MG" name="DETREZ Elodie">
-          <segment>
-              <source>DETREZ Elodie</source>
-              <target>DETREZ Elodie</target>
-          </segment>
-      </unit>
-      <unit id="F7.b4c6" name="DIAS Valentin">
-          <segment>
-              <source>DIAS Valentin</source>
-              <target>DIAS Valentin</target>
-          </segment>
-      </unit>
-      <unit id="Kh19.dl" name="DOE Jane">
-          <segment>
-              <source>DOE Jane</source>
-              <target>DOE Jane</target>
-          </segment>
-      </unit>
-      <unit id="iAhsk09" name="DOE John">
-          <segment>
-              <source>DOE John</source>
-              <target>DOE John</target>
-          </segment>
-      </unit>
-      <unit id="eUuP8_Z" name="DUMAS Samuel">
-          <segment>
-              <source>DUMAS Samuel</source>
-              <target>DUMAS Samuel</target>
-          </segment>
-      </unit>
-      <unit id="h3zlfq3" name="EDOU NZE Charles">
-          <segment>
-              <source>EDOU NZE Charles</source>
-              <target>EDOU NZE Charles</target>
-          </segment>
-      </unit>
-      <unit id="3hVBKLN" name="FAUCHET Ludovic">
-          <segment>
-              <source>FAUCHET Ludovic</source>
-              <target>FAUCHET Ludovic</target>
-          </segment>
-      </unit>
-      <unit id="ZWpJqk." name="FOISSEY Emeline">
-          <segment>
-              <source>FOISSEY Emeline</source>
-              <target>FOISSEY Emeline</target>
-          </segment>
-      </unit>
-      <unit id="AxvJ4l." name="FORT Danièle">
-          <segment>
-              <source>FORT Danièle</source>
-              <target>FORT Danièle</target>
-          </segment>
-      </unit>
-      <unit id="oQEJ5v." name="GALVAN Elena">
-          <segment>
-              <source>GALVAN Elena</source>
-              <target>GALVAN Elena</target>
-          </segment>
-      </unit>
-      <unit id="ji9pQin" name="GOBEAUT Noemie">
-          <segment>
-              <source>GOBEAUT Noemie</source>
-              <target>GOBEAUT Noemie</target>
-          </segment>
-      </unit>
-      <unit id="rSvmVTM" name="GOBERT Olivier">
-          <segment>
-              <source>GOBERT Olivier</source>
-              <target>GOBERT Olivier</target>
-          </segment>
-      </unit>
-      <unit id="8zqDa2B" name="GOMMERY Patrice">
-          <segment>
-              <source>GOMMERY Patrice</source>
-              <target>GOMMERY Patrice</target>
-          </segment>
-      </unit>
-      <unit id="0w3wN2b" name="GROSDOIT-ARTUR Gilles">
-          <segment>
-              <source>GROSDOIT-ARTUR Gilles</source>
-              <target>GROSDOIT-ARTUR Gilles</target>
-          </segment>
-      </unit>
-      <unit id="9f0rv5y" name="HARAOUBIA Mohamed amine">
-          <segment>
-              <source>HARAOUBIA Mohamed amine</source>
-              <target>HARAOUBIA Mohamed amine</target>
-          </segment>
-      </unit>
-      <unit id="1llnqpY" name="HELLE Ines">
-          <segment>
-              <source>HELLE Ines</source>
-              <target>HELLE Ines</target>
-          </segment>
-      </unit>
-      <unit id="fO8n4uW" name="HUEZ Régis">
-          <segment>
-              <source>HUEZ Régis</source>
-              <target>HUEZ Régis</target>
-          </segment>
-      </unit>
-      <unit id="EcUe3v." name="JASMIN Guillaume">
-          <segment>
-              <source>JASMIN Guillaume</source>
-              <target>JASMIN Guillaume</target>
-          </segment>
-      </unit>
-      <unit id="NLzLBr7" name="LALLEMENT Fabien">
-          <segment>
-              <source>LALLEMENT Fabien</source>
-              <target>LALLEMENT Fabien</target>
-          </segment>
-      </unit>
-      <unit id="M7QESzK" name="LANDRÉ Jérôme">
-          <segment>
-              <source>LANDRÉ Jérôme</source>
-              <target>LANDRÉ Jérôme</target>
-          </segment>
-      </unit>
-      <unit id="p.qaH9r" name="LE BRAS Alain">
-          <segment>
-              <source>LE BRAS Alain</source>
-              <target>LE BRAS Alain</target>
-          </segment>
-      </unit>
-      <unit id="YIS5KMa" name="LE BRETON Alexandre">
-          <segment>
-              <source>LE BRETON Alexandre</source>
-              <target>LE BRETON Alexandre</target>
-          </segment>
-      </unit>
-      <unit id="J1FA_tj" name="LE SAULNIER Guillaume">
-          <segment>
-              <source>LE SAULNIER Guillaume</source>
-              <target>LE SAULNIER Guillaume</target>
-          </segment>
-      </unit>
-      <unit id="UaF4nLR" name="LEBRUN Sylvie">
-          <segment>
-              <source>LEBRUN Sylvie</source>
-              <target>LEBRUN Sylvie</target>
-          </segment>
-      </unit>
-      <unit id="Mi8MZoB" name="LESAGE Cyrielle">
-          <segment>
-              <source>LESAGE Cyrielle</source>
-              <target>LESAGE Cyrielle</target>
-          </segment>
-      </unit>
-      <unit id="9ptAAdO" name="LEULLIER Guillaume">
-          <segment>
-              <source>LEULLIER Guillaume</source>
-              <target>LEULLIER Guillaume</target>
-          </segment>
-      </unit>
-      <unit id="7YpuOLM" name="LIBBRECHT Florent">
-          <segment>
-              <source>LIBBRECHT Florent</source>
-              <target>LIBBRECHT Florent</target>
-          </segment>
-      </unit>
-      <unit id="uwyqBO1" name="LIMA Juliette">
-          <segment>
-              <source>LIMA Juliette</source>
-              <target>LIMA Juliette</target>
-          </segment>
-      </unit>
-      <unit id="xZJUxKW" name="LOCURCIO Laurent">
-          <segment>
-              <source>LOCURCIO Laurent</source>
-              <target>LOCURCIO Laurent</target>
-          </segment>
-      </unit>
-      <unit id="FX1nOxd" name="MACHKOURI Brahim">
-          <segment>
-              <source>MACHKOURI Brahim</source>
-              <target>MACHKOURI Brahim</target>
-          </segment>
-      </unit>
-      <unit id="DMN9JWh" name="MARIOT Valerie">
-          <segment>
-              <source>MARIOT Valerie</source>
-              <target>MARIOT Valerie</target>
-          </segment>
-      </unit>
-      <unit id="90OpQq6" name="MATOSIN Marina">
-          <segment>
-              <source>MATOSIN Marina</source>
-              <target>MATOSIN Marina</target>
-          </segment>
-      </unit>
-      <unit id="uv7t8iQ" name="MATRAN Christophe">
-          <segment>
-              <source>MATRAN Christophe</source>
-              <target>MATRAN Christophe</target>
-          </segment>
-      </unit>
-      <unit id="Cph0cpw" name="MEUNIER Marie-Astrid">
-          <segment>
-              <source>MEUNIER Marie-Astrid</source>
-              <target>MEUNIER Marie-Astrid</target>
-          </segment>
-      </unit>
-      <unit id="LL5cZJo" name="MEURVILLE Vianney">
-          <segment>
-              <source>MEURVILLE Vianney</source>
-              <target>MEURVILLE Vianney</target>
-          </segment>
-      </unit>
-      <unit id="d7MMMT6" name="MEUZERET Fabrice">
-          <segment>
-              <source>MEUZERET Fabrice</source>
-              <target>MEUZERET Fabrice</target>
-          </segment>
-      </unit>
-      <unit id="wC2_.br" name="MORDIN Thomas">
-          <segment>
-              <source>MORDIN Thomas</source>
-              <target>MORDIN Thomas</target>
-          </segment>
-      </unit>
-      <unit id="CGJ2e9V" name="ONDERNARD Florent">
-          <segment>
-              <source>ONDERNARD Florent</source>
-              <target>ONDERNARD Florent</target>
-          </segment>
-      </unit>
-      <unit id="C0DAWEr" name="PALLOT Marc">
-          <segment>
-              <source>PALLOT Marc</source>
-              <target>PALLOT Marc</target>
-          </segment>
-      </unit>
-      <unit id="piqaUV1" name="PESCHEUX Benjamin">
-          <segment>
-              <source>PESCHEUX Benjamin</source>
-              <target>PESCHEUX Benjamin</target>
-          </segment>
-      </unit>
-      <unit id="fWmWRyx" name="PETIT Michel">
-          <segment>
-              <source>PETIT Michel</source>
-              <target>PETIT Michel</target>
-          </segment>
-      </unit>
-      <unit id="QDFtXs1" name="PETRIGNET Thomas">
-          <segment>
-              <source>PETRIGNET Thomas</source>
-              <target>PETRIGNET Thomas</target>
-          </segment>
-      </unit>
-      <unit id="nfp7JY8" name="PIAT-MILLOT Sandrine">
-          <segment>
-              <source>PIAT-MILLOT Sandrine</source>
-              <target>PIAT-MILLOT Sandrine</target>
-          </segment>
-      </unit>
-      <unit id="nvK7G3a" name="POMMIER Eric">
-          <segment>
-              <source>POMMIER Eric</source>
-              <target>POMMIER Eric</target>
-          </segment>
-      </unit>
-      <unit id="Aue4h8g" name="PRIEUR-CORONADO Mariana">
-          <segment>
-              <source>PRIEUR-CORONADO Mariana</source>
-              <target>PRIEUR-CORONADO Mariana</target>
-          </segment>
-      </unit>
-      <unit id="FLKuAK4" name="ROUSSEAU Marjorie">
-          <segment>
-              <source>ROUSSEAU Marjorie</source>
-              <target>ROUSSEAU Marjorie</target>
-          </segment>
-      </unit>
-      <unit id="4WGuhR7" name="SAINT LOUIS Marie">
-          <segment>
-              <source>SAINT LOUIS Marie</source>
-              <target>SAINT LOUIS Marie</target>
-          </segment>
-      </unit>
-      <unit id="n9nXup_" name="SEULLIET Tristan">
-          <segment>
-              <source>SEULLIET Tristan</source>
-              <target>SEULLIET Tristan</target>
-          </segment>
-      </unit>
-      <unit id="Tsvpgz." name="SÉVERIN-LIGABUE Julie">
-          <segment>
-              <source>SÉVERIN-LIGABUE Julie</source>
-              <target>SÉVERIN-LIGABUE Julie</target>
-          </segment>
-      </unit>
-      <unit id="_WH7QEA" name="STIOT Ludovic">
-          <segment>
-              <source>STIOT Ludovic</source>
-              <target>STIOT Ludovic</target>
-          </segment>
-      </unit>
-      <unit id="dgQp_To" name="THIROINE Damien">
-          <segment>
-              <source>THIROINE Damien</source>
-              <target>THIROINE Damien</target>
-          </segment>
-      </unit>
-      <unit id="l06zzhB" name="THOMAS Jérôme">
-          <segment>
-              <source>THOMAS Jérôme</source>
-              <target>THOMAS Jérôme</target>
-          </segment>
-      </unit>
-      <unit id="Gh8FHh5" name="VAN DE WINKEL Aurore">
-          <segment>
-              <source>VAN DE WINKEL Aurore</source>
-              <target>VAN DE WINKEL Aurore</target>
-          </segment>
-      </unit>
-      <unit id="2_a3UQD" name="VEBER Maxime">
-          <segment>
-              <source>VEBER Maxime</source>
-              <target>VEBER Maxime</target>
-          </segment>
-      </unit>
-      <unit id="EIZrsAo" name="VENET Delphine">
-          <segment>
-              <source>VENET Delphine</source>
-              <target>VENET Delphine</target>
-          </segment>
-      </unit>
-      <unit id="pI7d1JP" name="VILLAIN Philippe">
-          <segment>
-              <source>VILLAIN Philippe</source>
-              <target>VILLAIN Philippe</target>
-          </segment>
-      </unit>
-      <unit id="hp0GUpB" name="VUILLEMARD Bastien">
-          <segment>
-              <source>VUILLEMARD Bastien</source>
-              <target>VUILLEMARD Bastien</target>
-          </segment>
-      </unit>
-      <unit id="kG5Q1Gd" name="ZILIOLI Simon">
-          <segment>
-              <source>ZILIOLI Simon</source>
-              <target>ZILIOLI Simon</target>
-          </segment>
-      </unit>
-      <unit id="3rZUaXy" name="ROLE_ABS">
-          <segment>
-              <source>ROLE_ABS</source>
-              <target>Responsable des absences</target>
-          </segment>
-      </unit>
-      <unit id="Z6mwVJn" name="ROLE_STA">
-          <segment>
-              <source>ROLE_STA</source>
-              <target>Responsable des stages</target>
-          </segment>
-      </unit>
-      <unit id="76MF.JZ" name="ROLE_NOTES">
-          <segment>
-              <source>ROLE_NOTES</source>
-              <target>Responsable des notes</target>
-          </segment>
-      </unit>
-      <unit id="ylKUtLT" name="menu.administration_abs">
-          <segment>
-              <source>menu.administration_abs</source>
-              <target>Adm. Abs.</target>
-          </segment>
-      </unit>
-      <unit id="VwW_T9p" name="menu.administration_notes">
-          <segment>
-              <source>menu.administration_notes</source>
-              <target>Adm. Notes</target>
-          </segment>
-      </unit>
-      <unit id="p0vDuC8" name="menu.administration_edt">
-          <segment>
-              <source>menu.administration_edt</source>
-              <target>Adm. Edt</target>
-          </segment>
-      </unit>
-      <unit id="ZcWl5nS" name="menu.administration_stage">
-          <segment>
-              <source>menu.administration_stage</source>
-              <target>Adm. Stages</target>
-          </segment>
-      </unit>
-      <unit id="8mLMdpS" name="atitle.synchro_parent">
-          <segment>
-              <source>atitle.synchro_parent</source>
-              <target>Synchronisation des parents</target>
-          </segment>
-      </unit>
-      <unit id="FqvoAXR" name="atitle.synchro_apogee">
-          <segment>
-              <source>atitle.synchro_apogee</source>
-              <target>Synchronisation apogée</target>
-          </segment>
-      </unit>
-      <unit id="PQK1IZu" name="groupes.parents.synchronises">
-          <segment>
-              <source>groupes.parents.synchronises</source>
-              <target>Groupes Parents synchronisés</target>
-          </segment>
-      </unit>
-      <unit id="3Lxw4Mw" name="%diff% jour">
-          <segment>
-              <source>%diff% jour</source>
-              <target>8 jour</target>
-          </segment>
-      </unit>
-      <unit id="PGaKetK" name="%diff% mois">
-          <segment>
-              <source>%diff% mois</source>
-              <target>1 mois</target>
-          </segment>
-      </unit>
-      <unit id="FIHzSOm" name="variable.configuration">
-          <segment>
-              <source>variable.configuration</source>
-              <target>Variable de Configuration</target>
-          </segment>
-      </unit>
-      <unit id="4YKHDRv" name="Cle">
-          <segment>
-              <source>Cle</source>
-              <target>Clé</target>
-          </segment>
-      </unit>
-      <unit id="bo8xMtj" name="Valeur">
-          <segment>
-              <source>Valeur</source>
-              <target>Valeur</target>
-          </segment>
-      </unit>
-      <unit id="uq3fcPt" name="Type">
-          <segment>
-              <source>Type</source>
-              <target>Type</target>
-          </segment>
-      </unit>
-      <unit id="B861HTo" name="Fichier">
-          <segment>
-              <source>Fichier</source>
-              <target>Fichier</target>
-          </segment>
-      </unit>
-      <unit id="u7C9X.V" name="Texte">
-          <segment>
-              <source>Texte</source>
-              <target>Texte</target>
-          </segment>
-      </unit>
-      <unit id="7uq8xx2" name="adm.structure.departement.new.heading">
-          <segment>
-              <source>adm.structure.departement.new.heading</source>
-              <target>Création d'un département</target>
-          </segment>
-      </unit>
-      <unit id="DdW5EV0" name="label.logoFile">
-          <segment>
-              <source>label.logoFile</source>
-              <target>Logo du département</target>
-          </segment>
-      </unit>
-      <unit id="tFPY_1N" name="departement.add.success.flash">
-          <segment>
-              <source>departement.add.success.flash</source>
-              <target>Département ajouté avec succès</target>
-          </segment>
-      </unit>
-      <unit id="aJnCCEk" name="semestre.duplicate.success.flash">
-          <segment>
-              <source>semestre.duplicate.success.flash</source>
-              <target>Semestre dupliqué avec succès</target>
-          </segment>
-      </unit>
-      <unit id="DsoLVRc" name="sadm.gestion.rh.import.ldap.heading">
-          <segment>
-              <source>sadm.gestion.rh.import.ldap.heading</source>
-              <target>sadm.gestion.rh.import.ldap.heading</target>
-          </segment>
-      </unit>
-      <unit id="QZyZ6Tw" name="username.import">
-          <segment>
-              <source>username.import</source>
-              <target>username.import</target>
-          </segment>
-      </unit>
-      <unit id="Q_42rmv" name="nbCoursManques">
-          <segment>
-              <source>nbCoursManques</source>
-              <target>nbCoursManques</target>
-          </segment>
-      </unit>
-      <unit id="A4kHa0O" name="totalDuree">
-          <segment>
-              <source>totalDuree</source>
-              <target>totalDuree</target>
-          </segment>
-      </unit>
-      <unit id="4gxvCWm" name="nbNonJustifie">
-          <segment>
-              <source>nbNonJustifie</source>
-              <target>nbNonJustifie</target>
-          </segment>
-      </unit>
-      <unit id="kT.e1k." name="nbJustifie">
-          <segment>
-              <source>nbJustifie</source>
-              <target>nbJustifie</target>
-          </segment>
-      </unit>
-      <unit id="5eTB1Hn" name="type_materiel.add.success.flash">
-          <segment>
-              <source>type_materiel.add.success.flash</source>
-              <target>type_materiel.add.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="OBz.ak0" name="type_materiel.duplicate.success.flash">
-          <segment>
-              <source>type_materiel.duplicate.success.flash</source>
-              <target>type_materiel.duplicate.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="wgzP643" name="type_materiel.edit.success.flash">
-          <segment>
-              <source>type_materiel.edit.success.flash</source>
-              <target>type_materiel.edit.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="cVfBkSa" name="materiel.add.success.flash">
-          <segment>
-              <source>materiel.add.success.flash</source>
-              <target>materiel.add.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="5r2nP5T" name="materiel.edit.success.flash">
-          <segment>
-              <source>materiel.edit.success.flash</source>
-              <target>materiel.edit.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="8Rk28_G" name="gestion.des.emprunts">
-          <segment>
-              <source>gestion.des.emprunts</source>
-              <target>gestion.des.emprunts</target>
-          </segment>
-      </unit>
-      <unit id="ZOEySjD" name="adm.emprunts.index.heading">
-          <segment>
-              <source>adm.emprunts.index.heading</source>
-              <target>adm.emprunts.index.heading</target>
-          </segment>
-      </unit>
-      <unit id="rHuGEAR" name="adm.emprunt.show.heading">
-          <segment>
-              <source>adm.emprunt.show.heading</source>
-              <target>adm.emprunt.show.heading</target>
-          </segment>
-      </unit>
-      <unit id="C0Z45Ws" name="atitle.emprunt_accepte">
-          <segment>
-              <source>atitle.emprunt_accepte</source>
-              <target>atitle.emprunt_accepte</target>
-          </segment>
-      </unit>
-      <unit id="qY9pTCK" name="atitle.emprunt_refuse">
-          <segment>
-              <source>atitle.emprunt_refuse</source>
-              <target>atitle.emprunt_refuse</target>
-          </segment>
-      </unit>
-      <unit id="ZtOUYN0" name="atitle.imprimer">
-          <segment>
-              <source>atitle.imprimer</source>
-              <target>atitle.imprimer</target>
-          </segment>
-      </unit>
-      <unit id="piDEGw4" name="mail.chgt.emprunt.accepte">
-          <segment>
-              <source>mail.chgt.emprunt.accepte</source>
-              <target>mail.chgt.emprunt.accepte</target>
-          </segment>
-      </unit>
-      <unit id="gdLtTsC" name="atitle.emprunt_sortie">
-          <segment>
-              <source>atitle.emprunt_sortie</source>
-              <target>atitle.emprunt_sortie</target>
-          </segment>
-      </unit>
-      <unit id="_25uIAZ" name="atitle.emprunt_revenu">
-          <segment>
-              <source>atitle.emprunt_revenu</source>
-              <target>atitle.emprunt_revenu</target>
-          </segment>
-      </unit>
-      <unit id="O1e0.51" name="atitle.historique.emprunt">
-          <segment>
-              <source>atitle.historique.emprunt</source>
-              <target>atitle.historique.emprunt</target>
-          </segment>
-      </unit>
-      <unit id="DIuDn2L" name="adm.emprunts.historique.heading">
-          <segment>
-              <source>adm.emprunts.historique.heading</source>
-              <target>adm.emprunts.historique.heading</target>
-          </segment>
-      </unit>
-      <unit id="PTfQf18" name="atitle.retour_emprunt">
-          <segment>
-              <source>atitle.retour_emprunt</source>
-              <target>atitle.retour_emprunt</target>
-          </segment>
-      </unit>
-      <unit id="7Lj.T8d" name="REVENU">
-          <segment>
-              <source>REVENU</source>
-              <target>REVENU</target>
-          </segment>
-      </unit>
-      <unit id="_vJ.QeY" name="app.etudiant.emprunt.show.heading">
-          <segment>
-              <source>app.etudiant.emprunt.show.heading</source>
-              <target>app.etudiant.emprunt.show.heading</target>
-          </segment>
-      </unit>
-      <unit id="2HwQsuS" name="adm.emprunts">
-          <segment>
-              <source>adm.emprunts</source>
-              <target>adm.emprunts</target>
-          </segment>
-      </unit>
-      <unit id="ajRlItw" name="super-admin.groupes-departement.heading">
-          <segment>
-              <source>super-admin.groupes-departement.heading</source>
-              <target>super-admin.groupes-departement.heading</target>
-          </segment>
-      </unit>
-      <unit id="WAXNMbj" name="pas.d.espace.travail">
-          <segment>
-              <source>pas.d.espace.travail</source>
-              <target>pas.d.espace.travail</target>
-          </segment>
-      </unit>
-      <unit id="nMN3bAV" name="table.code_element">
-          <segment>
-              <source>table.code_element</source>
-              <target>table.code_element</target>
-          </segment>
-      </unit>
-      <unit id="2tsXFuR" name="menu.qualite">
-          <segment>
-              <source>menu.qualite</source>
-              <target>menu.qualite</target>
-          </segment>
-      </unit>
-      <unit id="WXTAKeB" name="enquete.index.heading">
-          <segment>
-              <source>enquete.index.heading</source>
-              <target>enquete.index.heading</target>
-          </segment>
-      </unit>
-      <unit id=".snqpiH" name="menu.questions">
-          <segment>
-              <source>menu.questions</source>
-              <target>menu.questions</target>
-          </segment>
-      </unit>
-      <unit id="XuCvAGp" name="quizz.question.index.heading">
-          <segment>
-              <source>quizz.question.index.heading</source>
-              <target>quizz.question.index.heading</target>
-          </segment>
-      </unit>
-      <unit id="lCzVw3d" name="retour.administratif">
-          <segment>
-              <source>retour.administratif</source>
-              <target>retour.administratif</target>
-          </segment>
-      </unit>
-      <unit id="LE4.Mad" name="quizz.question.index.index.heading">
-          <segment>
-              <source>quizz.question.index.index.heading</source>
-              <target>quizz.question.index.index.heading</target>
-          </segment>
-      </unit>
-      <unit id="pmlAXKa" name="quizz.question.new.heading">
-          <segment>
-              <source>quizz.question.new.heading</source>
-              <target>quizz.question.new.heading</target>
-          </segment>
-      </unit>
-      <unit id="t5yskm4" name="Help">
-          <segment>
-              <source>Help</source>
-              <target>Help</target>
-          </segment>
-      </unit>
-      <unit id="ef6yFwQ" name="Quizz questionnaires">
-          <segment>
-              <source>Quizz questionnaires</source>
-              <target>Quizz questionnaires</target>
-          </segment>
-      </unit>
-      <unit id="zTzux2y" name="label.question.help">
-          <segment>
-              <source>label.question.help</source>
-              <target>label.question.help</target>
-          </segment>
-      </unit>
-      <unit id="9M9jANX" name="qcu">
-          <segment>
-              <source>qcu</source>
-              <target>qcu</target>
-          </segment>
-      </unit>
-      <unit id="PVI3iWx" name="qcm">
-          <segment>
-              <source>qcm</source>
-              <target>qcm</target>
-          </segment>
-      </unit>
-      <unit id="ZV7YsaC" name="yesno">
-          <segment>
-              <source>yesno</source>
-              <target>yesno</target>
-          </segment>
-      </unit>
-      <unit id="4eQJbKQ" name="echelle">
-          <segment>
-              <source>echelle</source>
-              <target>echelle</target>
-          </segment>
-      </unit>
-      <unit id="eCUyFvd" name="libre">
-          <segment>
-              <source>libre</source>
-              <target>libre</target>
-          </segment>
-      </unit>
-      <unit id="bWqXUCX" name="scolarite.index.heading">
-          <segment>
-              <source>scolarite.index.heading</source>
-              <target>scolarite.index.heading</target>
-          </segment>
-      </unit>
-      <unit id="9dfEF_y" name="scolarite.diplome.heading">
-          <segment>
-              <source>scolarite.diplome.heading</source>
-              <target>scolarite.diplome.heading</target>
-          </segment>
-      </unit>
-      <unit id="6w5pAOd" name="atitle.export_apogee">
-          <segment>
-              <source>atitle.export_apogee</source>
-              <target>atitle.export_apogee</target>
-          </segment>
-      </unit>
-      <unit id="9SEDvHu" name="atitle.retour_scolarite">
-          <segment>
-              <source>atitle.retour_scolarite</source>
-              <target>atitle.retour_scolarite</target>
-          </segment>
-      </unit>
-      <unit id="KJMuG_y" name="scolarite.semestre.heading">
-          <segment>
-              <source>scolarite.semestre.heading</source>
-              <target>scolarite.semestre.heading</target>
-          </segment>
-      </unit>
-      <unit id="CMfO1_p" name="atitle.retour_diplome">
-          <segment>
-              <source>atitle.retour_diplome</source>
-              <target>atitle.retour_diplome</target>
-          </segment>
-      </unit>
-      <unit id="ywyrnmG" name="atitle.retour_administratif">
-          <segment>
-              <source>atitle.retour_administratif</source>
-              <target>atitle.retour_administratif</target>
-          </segment>
-      </unit>
-      <unit id="6RjGqzJ" name="administratif_homepage.heading">
-          <segment>
-              <source>administratif_homepage.heading</source>
-              <target>administratif_homepage.heading</target>
-          </segment>
-      </unit>
-      <unit id="u7yX.85" name="recherche.etudiant.heading">
-          <segment>
-              <source>recherche.etudiant.heading</source>
-              <target>recherche.etudiant.heading</target>
-          </segment>
-      </unit>
-      <unit id="3wwEtea" name="recherche.personnel.heading">
-          <segment>
-              <source>recherche.personnel.heading</source>
-              <target>recherche.personnel.heading</target>
-          </segment>
-      </unit>
-      <unit id="VvnCvPS" name="scolarite.recherche.heading">
-          <segment>
-              <source>scolarite.recherche.heading</source>
-              <target>scolarite.recherche.heading</target>
-          </segment>
-      </unit>
-      <unit id="AnJvT_I" name="diplome.duplicate.success.flash">
-          <segment>
-              <source>diplome.duplicate.success.flash</source>
-              <target>diplome.duplicate.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="bx6Ym.Z" name="table.opt_evaluation_pre_initialisee">
-          <segment>
-              <source>table.opt_evaluation_pre_initialisee</source>
-              <target>table.opt_evaluation_pre_initialisee</target>
-          </segment>
-      </unit>
-      <unit id="YCBKHnl" name="help.opt_evaluation_pre_initialisee">
-          <segment>
-              <source>help.opt_evaluation_pre_initialisee</source>
-              <target>help.opt_evaluation_pre_initialisee</target>
-          </segment>
-      </unit>
-      <unit id="aQ7ulKp" name="initialiser.les.evaluations">
-          <segment>
-              <source>initialiser.les.evaluations</source>
-              <target>initialiser.les.evaluations</target>
-          </segment>
-      </unit>
-      <unit id="h.ILNGv" name="enquete.semestre.heading">
-          <segment>
-              <source>enquete.semestre.heading</source>
-              <target>enquete.semestre.heading</target>
-          </segment>
-      </unit>
-      <unit id="JLcekbU" name="atitle.retour_enquete">
-          <segment>
-              <source>atitle.retour_enquete</source>
-              <target>atitle.retour_enquete</target>
-          </segment>
-      </unit>
-      <unit id="PKrZ85c" name="enquete.create.heading">
-          <segment>
-              <source>enquete.create.heading</source>
-              <target>enquete.create.heading</target>
-          </segment>
-      </unit>
-      <unit id="eOeSABC" name="Titre">
-          <segment>
-              <source>Titre</source>
-              <target>Titre</target>
-          </segment>
-      </unit>
-      <unit id="iva1dm." name="Texte explication">
-          <segment>
-              <source>Texte explication</source>
-              <target>Texte explication</target>
-          </segment>
-      </unit>
-      <unit id="Xpo0gbo" name="Date ouverture">
-          <segment>
-              <source>Date ouverture</source>
-              <target>Date ouverture</target>
-          </segment>
-      </unit>
-      <unit id="urR2div" name="Date fermeture">
-          <segment>
-              <source>Date fermeture</source>
-              <target>Date fermeture</target>
-          </segment>
-      </unit>
-      <unit id="J9ONM1S" name="Quizz reponses">
-          <segment>
-              <source>Quizz reponses</source>
-              <target>Quizz reponses</target>
-          </segment>
-      </unit>
-      <unit id="le023yQ" name="__name__label__">
-          <segment>
-              <source>__name__label__</source>
-              <target>__name__label__</target>
-          </segment>
-      </unit>
-      <unit id="to4iuyd" name="quizz_question.show.heading">
-          <segment>
-              <source>quizz_question.show.heading</source>
-              <target>quizz_question.show.heading</target>
-          </segment>
-      </unit>
-      <unit id="IAvFZQW" name="texte d'aide">
-          <segment>
-              <source>texte d'aide</source>
-              <target>texte d'aide</target>
-          </segment>
-      </unit>
-      <unit id="b_dfkEj" name="note.saisie">
-          <segment>
-              <source>note.saisie</source>
-              <target>note.saisie</target>
-          </segment>
-      </unit>
-      <unit id="uP26BoL" name="configuration.edit.success.flash">
-          <segment>
-              <source>configuration.edit.success.flash</source>
-              <target>configuration.edit.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="hgxSZPK" name="table.active">
-          <segment>
-              <source>table.active</source>
-              <target>Active</target>
-          </segment>
-      </unit>
-      <unit id="UWSofaX" name="annee_universitaire.add.success.flash">
-          <segment>
-              <source>annee_universitaire.add.success.flash</source>
-              <target>annee_universitaire.add.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="ToCuMH2" name="departement.activate..flash">
-          <segment>
-              <source>departement.activate..flash</source>
-              <target>departement.activate..flash</target>
-          </segment>
-      </unit>
-      <unit id="oad9MDH" name="departement.activate.1.flash">
-          <segment>
-              <source>departement.activate.1.flash</source>
-              <target>departement.activate.1.flash</target>
-          </segment>
-      </unit>
-      <unit id="zOF5r_P" name="ue.edit.success.flash">
-          <segment>
-              <source>ue.edit.success.flash</source>
-              <target>ue.edit.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="f92EClm" name="matiere.duplicate.success.flash">
-          <segment>
-              <source>matiere.duplicate.success.flash</source>
-              <target>matiere.duplicate.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="22qj.5U" name="type_groupe.delete.success.flash">
-          <segment>
-              <source>type_groupe.delete.success.flash</source>
-              <target>type_groupe.delete.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="aGb8dhs" name="quizz_question.add.success.flash">
-          <segment>
-              <source>quizz_question.add.success.flash</source>
-              <target>quizz_question.add.success.flash</target>
+    <unit id="cJfy41b" name="annee.en.apprentissage">
+      <segment>
+        <source>annee.en.apprentissage</source>
+        <target>Année en apprentissage</target>
+      </segment>
+    </unit>
+    <unit id="fjam7IK" name="aucune.convention.a.envoyer">
+      <segment>
+        <source>aucune.convention.a.envoyer</source>
+        <target>Aucune convention à envoyer</target>
+      </segment>
+    </unit>
+    <unit id="U8TpKG." name="mail.chgt.etat_stage.autorise">
+      <segment>
+        <source>mail.chgt.etat_stage.autorise</source>
+        <target>Saisie des informations du stage autorisée</target>
+      </segment>
+    </unit>
+    <unit id="PzQFUty" name="copie mail.chgt.etat_stage.autorise">
+      <segment>
+        <source>copie mail.chgt.etat_stage.autorise</source>
+        <target>[COPIE] Saisie des informations du stage autorisée</target>
+      </segment>
+    </unit>
+    <unit id="7R25jpq" name="mail.chgt.etat_stage.depose">
+      <segment>
+        <source>mail.chgt.etat_stage.depose</source>
+        <target>Formulaire complété par l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="HbK16.Z" name="copie mail.chgt.etat_stage.depose">
+      <segment>
+        <source>copie mail.chgt.etat_stage.depose</source>
+        <target>[COPIE] Formulaire complété par l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="BaUZo_C" name="Formulaire de stage complété">
+      <segment>
+        <source>Formulaire de stage complété</source>
+        <target>Formulaire de stage complété</target>
+      </segment>
+    </unit>
+    <unit id="7r22tl3" name="table.securite_sociale">
+      <segment>
+        <source>table.securite_sociale</source>
+        <target>Mutuelle étudiante ou sécurité sociale</target>
+      </segment>
+    </unit>
+    <unit id="dpm6hxI" name="table.adresse_securite_sociale">
+      <segment>
+        <source>table.adresse_securite_sociale</source>
+        <target>Adresse mutuelle étudiante ou sécurité sociale</target>
+      </segment>
+    </unit>
+    <unit id="HTyY9yd" name="stage_etudiant.change_tuteur.success.flash">
+      <segment>
+        <source>stage_etudiant.change_tuteur.success.flash</source>
+        <target>Tuteur modifié avec succès</target>
+      </segment>
+    </unit>
+    <unit id="mK_lhAE" name="mail.chgt.etat_stage.valide">
+      <segment>
+        <source>mail.chgt.etat_stage.valide</source>
+        <target>Votre stage est validé</target>
+      </segment>
+    </unit>
+    <unit id="bmE.L6C" name="copie mail.chgt.etat_stage.valide">
+      <segment>
+        <source>copie mail.chgt.etat_stage.valide</source>
+        <target>[COPIE] Votre stage est validé</target>
+      </segment>
+    </unit>
+    <unit id=".VuvPdM" name="chgt.etat_stage.valide">
+      <segment>
+        <source>chgt.etat_stage.valide</source>
+        <target>Votre stage est validé</target>
+      </segment>
+    </unit>
+    <unit id="uxuuM4c" name="mail.chgt.etat_stage.convention_envoyee">
+      <segment>
+        <source>mail.chgt.etat_stage.convention_envoyee</source>
+        <target>Votre convention de stage est envoyée à l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="nkjjYma" name="copie mail.chgt.etat_stage.convention_envoyee">
+      <segment>
+        <source>copie mail.chgt.etat_stage.convention_envoyee</source>
+        <target>[COPIE] Votre convention de stage est envoyée à l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="zaqZWuX" name="mail.chgt.etat_stage.convention_recue">
+      <segment>
+        <source>mail.chgt.etat_stage.convention_recue</source>
+        <target>Votre convention de stage est revenue signée par l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="ZhbUwFT" name="copie mail.chgt.etat_stage.convention_recue">
+      <segment>
+        <source>copie mail.chgt.etat_stage.convention_recue</source>
+        <target>[COPIE] Votre convention de stage est revenue signée par l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="YJdZxhn" name="ETAT_STAGE_AUTORISE">
+      <segment>
+        <source>ETAT_STAGE_AUTORISE</source>
+        <target>Saisie Stage Autorisée</target>
+      </segment>
+    </unit>
+    <unit id="R8pNITG" name="ETAT_STAGE_DEPOSE">
+      <segment>
+        <source>ETAT_STAGE_DEPOSE</source>
+        <target>Formulaire stage complété</target>
+      </segment>
+    </unit>
+    <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
+      <segment>
+        <source>ETAT_STAGE_VALIDE</source>
+        <target>Stage validé</target>
+      </segment>
+    </unit>
+    <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
+      <segment>
+        <source>ETAT_STAGE_REFUS</source>
+        <target>Formulaire ou Stage refusé</target>
+      </segment>
+    </unit>
+    <unit id="6n7fjVa" name="ETAT_STAGE_INCOMPLET">
+      <segment>
+        <source>ETAT_STAGE_INCOMPLET</source>
+        <target>Formulaire de stage incomplet</target>
+      </segment>
+    </unit>
+    <unit id="ZIHlkWz" name="ETAT_STAGE_IMPRIME">
+      <segment>
+        <source>ETAT_STAGE_IMPRIME</source>
+        <target>Convention de stage imprimée</target>
+      </segment>
+    </unit>
+    <unit id="FLHSsmy" name="ETAT_STAGE_CONVENTION_ENVOYEE">
+      <segment>
+        <source>ETAT_STAGE_CONVENTION_ENVOYEE</source>
+        <target>Convention de stage envoyée</target>
+      </segment>
+    </unit>
+    <unit id="FjIF_WV" name="ETAT_STAGE_CONVENTION_RECUE">
+      <segment>
+        <source>ETAT_STAGE_CONVENTION_RECUE</source>
+        <target>Convention de stage récupérée</target>
+      </segment>
+    </unit>
+    <unit id="I6hImAB" name="numEtudiant">
+      <segment>
+        <source>numEtudiant</source>
+        <target>Numéro Etudiant</target>
+      </segment>
+    </unit>
+    <unit id="KcFzACF" name="prenom">
+      <segment>
+        <source>prenom</source>
+        <target>Prénom</target>
+      </segment>
+    </unit>
+    <unit id="6S33qKT" name="chgt.etat_stage.convention_recue">
+      <segment>
+        <source>chgt.etat_stage.convention_recue</source>
+        <target>Votre convention de stage est revenue signée par l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="kI5JHM8" name="chgt.etat_stage.convention_envoyee">
+      <segment>
+        <source>chgt.etat_stage.convention_envoyee</source>
+        <target>Votre convention de stage est envoyée à l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="bNI0ZJv" name="verificiation">
+      <segment>
+        <source>verificiation</source>
+        <target>Vérificiation</target>
+      </segment>
+    </unit>
+    <unit id="Rogi5P8" name="cm.maquette">
+      <segment>
+        <source>cm.maquette</source>
+        <target>CM Maquette</target>
+      </segment>
+    </unit>
+    <unit id="U9qPp3i" name="td.maquette">
+      <segment>
+        <source>td.maquette</source>
+        <target>TD Maquette</target>
+      </segment>
+    </unit>
+    <unit id="LZupY.Q" name="table.ppn.maquette">
+      <segment>
+        <source>table.ppn.maquette</source>
+        <target>PPN Maquette</target>
+      </segment>
+    </unit>
+    <unit id="2xTukO4" name="importer.photo.zip">
+      <segment>
+        <source>importer.photo.zip</source>
+        <target>Importer un fichier zip</target>
+      </segment>
+    </unit>
+    <unit id="clfA0Hl" name="menu.apogee">
+      <segment>
+        <source>menu.apogee</source>
+        <target>Apogée</target>
+      </segment>
+    </unit>
+    <unit id="NDr17LU" name="adm.apogee.index.heading">
+      <segment>
+        <source>adm.apogee.index.heading</source>
+        <target>Apogée</target>
+      </segment>
+    </unit>
+    <unit id="qfZcBG4" name="maj.liste.etudiant">
+      <segment>
+        <source>maj.liste.etudiant</source>
+        <target>Màj Liste d'étudiants</target>
+      </segment>
+    </unit>
+    <unit id="9WVG4g5" name="forcer.maj.liste">
+      <segment>
+        <source>forcer.maj.liste</source>
+        <target>Forcer une màj</target>
+      </segment>
+    </unit>
+    <unit id="kLzcxOR" name="importer.une.etudiant">
+      <segment>
+        <source>importer.une.etudiant</source>
+        <target>Importer un étudiant</target>
+      </segment>
+    </unit>
+    <unit id="ZjjTy3L" name="Suppression d'une absence enregistrée">
+      <segment>
+        <source>Suppression d'une absence enregistrée</source>
+        <target>Suppression d'une absence enregistrée</target>
+      </segment>
+    </unit>
+    <unit id="z19k6u9" name="num_etudiant">
+      <segment>
+        <source>num_etudiant</source>
+        <target>num_etudiant</target>
+      </segment>
+    </unit>
+    <unit id="cWJJIp0" name="remise copie">
+      <segment>
+        <source>remise copie</source>
+        <target>remise copie</target>
+      </segment>
+    </unit>
+    <unit id="y8Zoo.W" name="nom.evaluation">
+      <segment>
+        <source>nom.evaluation</source>
+        <target>nom.evaluation</target>
+      </segment>
+    </unit>
+    <unit id="1MclTh0" name="ANNEBICQUE David">
+      <segment>
+        <source>ANNEBICQUE David</source>
+        <target>ANNEBICQUE David</target>
+      </segment>
+    </unit>
+    <unit id="vKogjXB" name="ARRIGONI Michael">
+      <segment>
+        <source>ARRIGONI Michael</source>
+        <target>ARRIGONI Michael</target>
+      </segment>
+    </unit>
+    <unit id="hf0vZkh" name="AURIBOT Jérémy">
+      <segment>
+        <source>AURIBOT Jérémy</source>
+        <target>AURIBOT Jérémy</target>
+      </segment>
+    </unit>
+    <unit id="D1qR2s5" name="BAUSER Thierry">
+      <segment>
+        <source>BAUSER Thierry</source>
+        <target>BAUSER Thierry</target>
+      </segment>
+    </unit>
+    <unit id="b8bG203" name="BOGLIETTI Alan">
+      <segment>
+        <source>BOGLIETTI Alan</source>
+        <target>BOGLIETTI Alan</target>
+      </segment>
+    </unit>
+    <unit id="8qFIOE0" name="BOUDIAF Brahim">
+      <segment>
+        <source>BOUDIAF Brahim</source>
+        <target>BOUDIAF Brahim</target>
+      </segment>
+    </unit>
+    <unit id="gcLxqbs" name="BOUDIER Fanny">
+      <segment>
+        <source>BOUDIER Fanny</source>
+        <target>BOUDIER Fanny</target>
+      </segment>
+    </unit>
+    <unit id="PDUq8mb" name="BOULET Hervé">
+      <segment>
+        <source>BOULET Hervé</source>
+        <target>BOULET Hervé</target>
+      </segment>
+    </unit>
+    <unit id="od6lLzd" name="BOURBON Adrien">
+      <segment>
+        <source>BOURBON Adrien</source>
+        <target>BOURBON Adrien</target>
+      </segment>
+    </unit>
+    <unit id="GoJGPsQ" name="BOURGEOIS Karen">
+      <segment>
+        <source>BOURGEOIS Karen</source>
+        <target>BOURGEOIS Karen</target>
+      </segment>
+    </unit>
+    <unit id="Gv4_pQC" name="BRANDT Frédéric">
+      <segment>
+        <source>BRANDT Frédéric</source>
+        <target>BRANDT Frédéric</target>
+      </segment>
+    </unit>
+    <unit id="TGlAn0I" name="BUTET Julien">
+      <segment>
+        <source>BUTET Julien</source>
+        <target>BUTET Julien</target>
+      </segment>
+    </unit>
+    <unit id="_pouQvE" name="CARRÉ Sandrine">
+      <segment>
+        <source>CARRÉ Sandrine</source>
+        <target>CARRÉ Sandrine</target>
+      </segment>
+    </unit>
+    <unit id="0pAapP8" name="CATERINO Paula">
+      <segment>
+        <source>CATERINO Paula</source>
+        <target>CATERINO Paula</target>
+      </segment>
+    </unit>
+    <unit id="PD3E8xA" name="CHÉRAIN Olivier">
+      <segment>
+        <source>CHÉRAIN Olivier</source>
+        <target>CHÉRAIN Olivier</target>
+      </segment>
+    </unit>
+    <unit id="wJ76awf" name="DA SILVA André">
+      <segment>
+        <source>DA SILVA André</source>
+        <target>DA SILVA André</target>
+      </segment>
+    </unit>
+    <unit id="IiMV0MG" name="DETREZ Elodie">
+      <segment>
+        <source>DETREZ Elodie</source>
+        <target>DETREZ Elodie</target>
+      </segment>
+    </unit>
+    <unit id="F7.b4c6" name="DIAS Valentin">
+      <segment>
+        <source>DIAS Valentin</source>
+        <target>DIAS Valentin</target>
+      </segment>
+    </unit>
+    <unit id="Kh19.dl" name="DOE Jane">
+      <segment>
+        <source>DOE Jane</source>
+        <target>DOE Jane</target>
+      </segment>
+    </unit>
+    <unit id="iAhsk09" name="DOE John">
+      <segment>
+        <source>DOE John</source>
+        <target>DOE John</target>
+      </segment>
+    </unit>
+    <unit id="eUuP8_Z" name="DUMAS Samuel">
+      <segment>
+        <source>DUMAS Samuel</source>
+        <target>DUMAS Samuel</target>
+      </segment>
+    </unit>
+    <unit id="h3zlfq3" name="EDOU NZE Charles">
+      <segment>
+        <source>EDOU NZE Charles</source>
+        <target>EDOU NZE Charles</target>
+      </segment>
+    </unit>
+    <unit id="3hVBKLN" name="FAUCHET Ludovic">
+      <segment>
+        <source>FAUCHET Ludovic</source>
+        <target>FAUCHET Ludovic</target>
+      </segment>
+    </unit>
+    <unit id="ZWpJqk." name="FOISSEY Emeline">
+      <segment>
+        <source>FOISSEY Emeline</source>
+        <target>FOISSEY Emeline</target>
+      </segment>
+    </unit>
+    <unit id="AxvJ4l." name="FORT Danièle">
+      <segment>
+        <source>FORT Danièle</source>
+        <target>FORT Danièle</target>
+      </segment>
+    </unit>
+    <unit id="oQEJ5v." name="GALVAN Elena">
+      <segment>
+        <source>GALVAN Elena</source>
+        <target>GALVAN Elena</target>
+      </segment>
+    </unit>
+    <unit id="ji9pQin" name="GOBEAUT Noemie">
+      <segment>
+        <source>GOBEAUT Noemie</source>
+        <target>GOBEAUT Noemie</target>
+      </segment>
+    </unit>
+    <unit id="rSvmVTM" name="GOBERT Olivier">
+      <segment>
+        <source>GOBERT Olivier</source>
+        <target>GOBERT Olivier</target>
+      </segment>
+    </unit>
+    <unit id="8zqDa2B" name="GOMMERY Patrice">
+      <segment>
+        <source>GOMMERY Patrice</source>
+        <target>GOMMERY Patrice</target>
+      </segment>
+    </unit>
+    <unit id="0w3wN2b" name="GROSDOIT-ARTUR Gilles">
+      <segment>
+        <source>GROSDOIT-ARTUR Gilles</source>
+        <target>GROSDOIT-ARTUR Gilles</target>
+      </segment>
+    </unit>
+    <unit id="9f0rv5y" name="HARAOUBIA Mohamed amine">
+      <segment>
+        <source>HARAOUBIA Mohamed amine</source>
+        <target>HARAOUBIA Mohamed amine</target>
+      </segment>
+    </unit>
+    <unit id="1llnqpY" name="HELLE Ines">
+      <segment>
+        <source>HELLE Ines</source>
+        <target>HELLE Ines</target>
+      </segment>
+    </unit>
+    <unit id="fO8n4uW" name="HUEZ Régis">
+      <segment>
+        <source>HUEZ Régis</source>
+        <target>HUEZ Régis</target>
+      </segment>
+    </unit>
+    <unit id="EcUe3v." name="JASMIN Guillaume">
+      <segment>
+        <source>JASMIN Guillaume</source>
+        <target>JASMIN Guillaume</target>
+      </segment>
+    </unit>
+    <unit id="NLzLBr7" name="LALLEMENT Fabien">
+      <segment>
+        <source>LALLEMENT Fabien</source>
+        <target>LALLEMENT Fabien</target>
+      </segment>
+    </unit>
+    <unit id="M7QESzK" name="LANDRÉ Jérôme">
+      <segment>
+        <source>LANDRÉ Jérôme</source>
+        <target>LANDRÉ Jérôme</target>
+      </segment>
+    </unit>
+    <unit id="p.qaH9r" name="LE BRAS Alain">
+      <segment>
+        <source>LE BRAS Alain</source>
+        <target>LE BRAS Alain</target>
+      </segment>
+    </unit>
+    <unit id="YIS5KMa" name="LE BRETON Alexandre">
+      <segment>
+        <source>LE BRETON Alexandre</source>
+        <target>LE BRETON Alexandre</target>
+      </segment>
+    </unit>
+    <unit id="J1FA_tj" name="LE SAULNIER Guillaume">
+      <segment>
+        <source>LE SAULNIER Guillaume</source>
+        <target>LE SAULNIER Guillaume</target>
+      </segment>
+    </unit>
+    <unit id="UaF4nLR" name="LEBRUN Sylvie">
+      <segment>
+        <source>LEBRUN Sylvie</source>
+        <target>LEBRUN Sylvie</target>
+      </segment>
+    </unit>
+    <unit id="Mi8MZoB" name="LESAGE Cyrielle">
+      <segment>
+        <source>LESAGE Cyrielle</source>
+        <target>LESAGE Cyrielle</target>
+      </segment>
+    </unit>
+    <unit id="9ptAAdO" name="LEULLIER Guillaume">
+      <segment>
+        <source>LEULLIER Guillaume</source>
+        <target>LEULLIER Guillaume</target>
+      </segment>
+    </unit>
+    <unit id="7YpuOLM" name="LIBBRECHT Florent">
+      <segment>
+        <source>LIBBRECHT Florent</source>
+        <target>LIBBRECHT Florent</target>
+      </segment>
+    </unit>
+    <unit id="uwyqBO1" name="LIMA Juliette">
+      <segment>
+        <source>LIMA Juliette</source>
+        <target>LIMA Juliette</target>
+      </segment>
+    </unit>
+    <unit id="xZJUxKW" name="LOCURCIO Laurent">
+      <segment>
+        <source>LOCURCIO Laurent</source>
+        <target>LOCURCIO Laurent</target>
+      </segment>
+    </unit>
+    <unit id="FX1nOxd" name="MACHKOURI Brahim">
+      <segment>
+        <source>MACHKOURI Brahim</source>
+        <target>MACHKOURI Brahim</target>
+      </segment>
+    </unit>
+    <unit id="DMN9JWh" name="MARIOT Valerie">
+      <segment>
+        <source>MARIOT Valerie</source>
+        <target>MARIOT Valerie</target>
+      </segment>
+    </unit>
+    <unit id="90OpQq6" name="MATOSIN Marina">
+      <segment>
+        <source>MATOSIN Marina</source>
+        <target>MATOSIN Marina</target>
+      </segment>
+    </unit>
+    <unit id="uv7t8iQ" name="MATRAN Christophe">
+      <segment>
+        <source>MATRAN Christophe</source>
+        <target>MATRAN Christophe</target>
+      </segment>
+    </unit>
+    <unit id="Cph0cpw" name="MEUNIER Marie-Astrid">
+      <segment>
+        <source>MEUNIER Marie-Astrid</source>
+        <target>MEUNIER Marie-Astrid</target>
+      </segment>
+    </unit>
+    <unit id="LL5cZJo" name="MEURVILLE Vianney">
+      <segment>
+        <source>MEURVILLE Vianney</source>
+        <target>MEURVILLE Vianney</target>
+      </segment>
+    </unit>
+    <unit id="d7MMMT6" name="MEUZERET Fabrice">
+      <segment>
+        <source>MEUZERET Fabrice</source>
+        <target>MEUZERET Fabrice</target>
+      </segment>
+    </unit>
+    <unit id="wC2_.br" name="MORDIN Thomas">
+      <segment>
+        <source>MORDIN Thomas</source>
+        <target>MORDIN Thomas</target>
+      </segment>
+    </unit>
+    <unit id="CGJ2e9V" name="ONDERNARD Florent">
+      <segment>
+        <source>ONDERNARD Florent</source>
+        <target>ONDERNARD Florent</target>
+      </segment>
+    </unit>
+    <unit id="C0DAWEr" name="PALLOT Marc">
+      <segment>
+        <source>PALLOT Marc</source>
+        <target>PALLOT Marc</target>
+      </segment>
+    </unit>
+    <unit id="piqaUV1" name="PESCHEUX Benjamin">
+      <segment>
+        <source>PESCHEUX Benjamin</source>
+        <target>PESCHEUX Benjamin</target>
+      </segment>
+    </unit>
+    <unit id="fWmWRyx" name="PETIT Michel">
+      <segment>
+        <source>PETIT Michel</source>
+        <target>PETIT Michel</target>
+      </segment>
+    </unit>
+    <unit id="QDFtXs1" name="PETRIGNET Thomas">
+      <segment>
+        <source>PETRIGNET Thomas</source>
+        <target>PETRIGNET Thomas</target>
+      </segment>
+    </unit>
+    <unit id="nfp7JY8" name="PIAT-MILLOT Sandrine">
+      <segment>
+        <source>PIAT-MILLOT Sandrine</source>
+        <target>PIAT-MILLOT Sandrine</target>
+      </segment>
+    </unit>
+    <unit id="nvK7G3a" name="POMMIER Eric">
+      <segment>
+        <source>POMMIER Eric</source>
+        <target>POMMIER Eric</target>
+      </segment>
+    </unit>
+    <unit id="Aue4h8g" name="PRIEUR-CORONADO Mariana">
+      <segment>
+        <source>PRIEUR-CORONADO Mariana</source>
+        <target>PRIEUR-CORONADO Mariana</target>
+      </segment>
+    </unit>
+    <unit id="FLKuAK4" name="ROUSSEAU Marjorie">
+      <segment>
+        <source>ROUSSEAU Marjorie</source>
+        <target>ROUSSEAU Marjorie</target>
+      </segment>
+    </unit>
+    <unit id="4WGuhR7" name="SAINT LOUIS Marie">
+      <segment>
+        <source>SAINT LOUIS Marie</source>
+        <target>SAINT LOUIS Marie</target>
+      </segment>
+    </unit>
+    <unit id="n9nXup_" name="SEULLIET Tristan">
+      <segment>
+        <source>SEULLIET Tristan</source>
+        <target>SEULLIET Tristan</target>
+      </segment>
+    </unit>
+    <unit id="Tsvpgz." name="SÉVERIN-LIGABUE Julie">
+      <segment>
+        <source>SÉVERIN-LIGABUE Julie</source>
+        <target>SÉVERIN-LIGABUE Julie</target>
+      </segment>
+    </unit>
+    <unit id="_WH7QEA" name="STIOT Ludovic">
+      <segment>
+        <source>STIOT Ludovic</source>
+        <target>STIOT Ludovic</target>
+      </segment>
+    </unit>
+    <unit id="dgQp_To" name="THIROINE Damien">
+      <segment>
+        <source>THIROINE Damien</source>
+        <target>THIROINE Damien</target>
+      </segment>
+    </unit>
+    <unit id="l06zzhB" name="THOMAS Jérôme">
+      <segment>
+        <source>THOMAS Jérôme</source>
+        <target>THOMAS Jérôme</target>
+      </segment>
+    </unit>
+    <unit id="Gh8FHh5" name="VAN DE WINKEL Aurore">
+      <segment>
+        <source>VAN DE WINKEL Aurore</source>
+        <target>VAN DE WINKEL Aurore</target>
+      </segment>
+    </unit>
+    <unit id="2_a3UQD" name="VEBER Maxime">
+      <segment>
+        <source>VEBER Maxime</source>
+        <target>VEBER Maxime</target>
+      </segment>
+    </unit>
+    <unit id="EIZrsAo" name="VENET Delphine">
+      <segment>
+        <source>VENET Delphine</source>
+        <target>VENET Delphine</target>
+      </segment>
+    </unit>
+    <unit id="pI7d1JP" name="VILLAIN Philippe">
+      <segment>
+        <source>VILLAIN Philippe</source>
+        <target>VILLAIN Philippe</target>
+      </segment>
+    </unit>
+    <unit id="hp0GUpB" name="VUILLEMARD Bastien">
+      <segment>
+        <source>VUILLEMARD Bastien</source>
+        <target>VUILLEMARD Bastien</target>
+      </segment>
+    </unit>
+    <unit id="kG5Q1Gd" name="ZILIOLI Simon">
+      <segment>
+        <source>ZILIOLI Simon</source>
+        <target>ZILIOLI Simon</target>
+      </segment>
+    </unit>
+    <unit id="3rZUaXy" name="ROLE_ABS">
+      <segment>
+        <source>ROLE_ABS</source>
+        <target>Responsable des absences</target>
+      </segment>
+    </unit>
+    <unit id="Z6mwVJn" name="ROLE_STA">
+      <segment>
+        <source>ROLE_STA</source>
+        <target>Responsable des stages</target>
+      </segment>
+    </unit>
+    <unit id="76MF.JZ" name="ROLE_NOTES">
+      <segment>
+        <source>ROLE_NOTES</source>
+        <target>Responsable des notes</target>
+      </segment>
+    </unit>
+    <unit id="ylKUtLT" name="menu.administration_abs">
+      <segment>
+        <source>menu.administration_abs</source>
+        <target>Adm. Abs.</target>
+      </segment>
+    </unit>
+    <unit id="VwW_T9p" name="menu.administration_notes">
+      <segment>
+        <source>menu.administration_notes</source>
+        <target>Adm. Notes</target>
+      </segment>
+    </unit>
+    <unit id="p0vDuC8" name="menu.administration_edt">
+      <segment>
+        <source>menu.administration_edt</source>
+        <target>Adm. Edt</target>
+      </segment>
+    </unit>
+    <unit id="ZcWl5nS" name="menu.administration_stage">
+      <segment>
+        <source>menu.administration_stage</source>
+        <target>Adm. Stages</target>
+      </segment>
+    </unit>
+    <unit id="8mLMdpS" name="atitle.synchro_parent">
+      <segment>
+        <source>atitle.synchro_parent</source>
+        <target>Synchronisation des parents</target>
+      </segment>
+    </unit>
+    <unit id="FqvoAXR" name="atitle.synchro_apogee">
+      <segment>
+        <source>atitle.synchro_apogee</source>
+        <target>Synchronisation apogée</target>
+      </segment>
+    </unit>
+    <unit id="PQK1IZu" name="groupes.parents.synchronises">
+      <segment>
+        <source>groupes.parents.synchronises</source>
+        <target>Groupes Parents synchronisés</target>
+      </segment>
+    </unit>
+    <unit id="3Lxw4Mw" name="%diff% jour">
+      <segment>
+        <source>%diff% jour</source>
+        <target>8 jour</target>
+      </segment>
+    </unit>
+    <unit id="PGaKetK" name="%diff% mois">
+      <segment>
+        <source>%diff% mois</source>
+        <target>1 mois</target>
+      </segment>
+    </unit>
+    <unit id="FIHzSOm" name="variable.configuration">
+      <segment>
+        <source>variable.configuration</source>
+        <target>Variable de Configuration</target>
+      </segment>
+    </unit>
+    <unit id="4YKHDRv" name="Cle">
+      <segment>
+        <source>Cle</source>
+        <target>Clé</target>
+      </segment>
+    </unit>
+    <unit id="bo8xMtj" name="Valeur">
+      <segment>
+        <source>Valeur</source>
+        <target>Valeur</target>
+      </segment>
+    </unit>
+    <unit id="uq3fcPt" name="Type">
+      <segment>
+        <source>Type</source>
+        <target>Type</target>
+      </segment>
+    </unit>
+    <unit id="B861HTo" name="Fichier">
+      <segment>
+        <source>Fichier</source>
+        <target>Fichier</target>
+      </segment>
+    </unit>
+    <unit id="u7C9X.V" name="Texte">
+      <segment>
+        <source>Texte</source>
+        <target>Texte</target>
+      </segment>
+    </unit>
+    <unit id="7uq8xx2" name="adm.structure.departement.new.heading">
+      <segment>
+        <source>adm.structure.departement.new.heading</source>
+        <target>Création d'un département</target>
+      </segment>
+    </unit>
+    <unit id="DdW5EV0" name="label.logoFile">
+      <segment>
+        <source>label.logoFile</source>
+        <target>Logo du département</target>
+      </segment>
+    </unit>
+    <unit id="tFPY_1N" name="departement.add.success.flash">
+      <segment>
+        <source>departement.add.success.flash</source>
+        <target>Département ajouté avec succès</target>
+      </segment>
+    </unit>
+    <unit id="aJnCCEk" name="semestre.duplicate.success.flash">
+      <segment>
+        <source>semestre.duplicate.success.flash</source>
+        <target>Semestre dupliqué avec succès</target>
+      </segment>
+    </unit>
+    <unit id="DsoLVRc" name="sadm.gestion.rh.import.ldap.heading">
+      <segment>
+        <source>sadm.gestion.rh.import.ldap.heading</source>
+        <target>sadm.gestion.rh.import.ldap.heading</target>
+      </segment>
+    </unit>
+    <unit id="QZyZ6Tw" name="username.import">
+      <segment>
+        <source>username.import</source>
+        <target>username.import</target>
+      </segment>
+    </unit>
+    <unit id="Q_42rmv" name="nbCoursManques">
+      <segment>
+        <source>nbCoursManques</source>
+        <target>nbCoursManques</target>
+      </segment>
+    </unit>
+    <unit id="A4kHa0O" name="totalDuree">
+      <segment>
+        <source>totalDuree</source>
+        <target>totalDuree</target>
+      </segment>
+    </unit>
+    <unit id="4gxvCWm" name="nbNonJustifie">
+      <segment>
+        <source>nbNonJustifie</source>
+        <target>nbNonJustifie</target>
+      </segment>
+    </unit>
+    <unit id="kT.e1k." name="nbJustifie">
+      <segment>
+        <source>nbJustifie</source>
+        <target>nbJustifie</target>
+      </segment>
+    </unit>
+    <unit id="5eTB1Hn" name="type_materiel.add.success.flash">
+      <segment>
+        <source>type_materiel.add.success.flash</source>
+        <target>type_materiel.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="OBz.ak0" name="type_materiel.duplicate.success.flash">
+      <segment>
+        <source>type_materiel.duplicate.success.flash</source>
+        <target>type_materiel.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="wgzP643" name="type_materiel.edit.success.flash">
+      <segment>
+        <source>type_materiel.edit.success.flash</source>
+        <target>type_materiel.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="cVfBkSa" name="materiel.add.success.flash">
+      <segment>
+        <source>materiel.add.success.flash</source>
+        <target>materiel.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="5r2nP5T" name="materiel.edit.success.flash">
+      <segment>
+        <source>materiel.edit.success.flash</source>
+        <target>materiel.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="8Rk28_G" name="gestion.des.emprunts">
+      <segment>
+        <source>gestion.des.emprunts</source>
+        <target>gestion.des.emprunts</target>
+      </segment>
+    </unit>
+    <unit id="ZOEySjD" name="adm.emprunts.index.heading">
+      <segment>
+        <source>adm.emprunts.index.heading</source>
+        <target>adm.emprunts.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="rHuGEAR" name="adm.emprunt.show.heading">
+      <segment>
+        <source>adm.emprunt.show.heading</source>
+        <target>adm.emprunt.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="C0Z45Ws" name="atitle.emprunt_accepte">
+      <segment>
+        <source>atitle.emprunt_accepte</source>
+        <target>atitle.emprunt_accepte</target>
+      </segment>
+    </unit>
+    <unit id="qY9pTCK" name="atitle.emprunt_refuse">
+      <segment>
+        <source>atitle.emprunt_refuse</source>
+        <target>atitle.emprunt_refuse</target>
+      </segment>
+    </unit>
+    <unit id="ZtOUYN0" name="atitle.imprimer">
+      <segment>
+        <source>atitle.imprimer</source>
+        <target>atitle.imprimer</target>
+      </segment>
+    </unit>
+    <unit id="piDEGw4" name="mail.chgt.emprunt.accepte">
+      <segment>
+        <source>mail.chgt.emprunt.accepte</source>
+        <target>mail.chgt.emprunt.accepte</target>
+      </segment>
+    </unit>
+    <unit id="gdLtTsC" name="atitle.emprunt_sortie">
+      <segment>
+        <source>atitle.emprunt_sortie</source>
+        <target>atitle.emprunt_sortie</target>
+      </segment>
+    </unit>
+    <unit id="_25uIAZ" name="atitle.emprunt_revenu">
+      <segment>
+        <source>atitle.emprunt_revenu</source>
+        <target>atitle.emprunt_revenu</target>
+      </segment>
+    </unit>
+    <unit id="O1e0.51" name="atitle.historique.emprunt">
+      <segment>
+        <source>atitle.historique.emprunt</source>
+        <target>atitle.historique.emprunt</target>
+      </segment>
+    </unit>
+    <unit id="DIuDn2L" name="adm.emprunts.historique.heading">
+      <segment>
+        <source>adm.emprunts.historique.heading</source>
+        <target>adm.emprunts.historique.heading</target>
+      </segment>
+    </unit>
+    <unit id="PTfQf18" name="atitle.retour_emprunt">
+      <segment>
+        <source>atitle.retour_emprunt</source>
+        <target>atitle.retour_emprunt</target>
+      </segment>
+    </unit>
+    <unit id="7Lj.T8d" name="REVENU">
+      <segment>
+        <source>REVENU</source>
+        <target>REVENU</target>
+      </segment>
+    </unit>
+    <unit id="_vJ.QeY" name="app.etudiant.emprunt.show.heading">
+      <segment>
+        <source>app.etudiant.emprunt.show.heading</source>
+        <target>app.etudiant.emprunt.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="2HwQsuS" name="adm.emprunts">
+      <segment>
+        <source>adm.emprunts</source>
+        <target>adm.emprunts</target>
+      </segment>
+    </unit>
+    <unit id="ajRlItw" name="super-admin.groupes-departement.heading">
+      <segment>
+        <source>super-admin.groupes-departement.heading</source>
+        <target>super-admin.groupes-departement.heading</target>
+      </segment>
+    </unit>
+    <unit id="WAXNMbj" name="pas.d.espace.travail">
+      <segment>
+        <source>pas.d.espace.travail</source>
+        <target>pas.d.espace.travail</target>
+      </segment>
+    </unit>
+    <unit id="nMN3bAV" name="table.code_element">
+      <segment>
+        <source>table.code_element</source>
+        <target>table.code_element</target>
+      </segment>
+    </unit>
+    <unit id="2tsXFuR" name="menu.qualite">
+      <segment>
+        <source>menu.qualite</source>
+        <target>menu.qualite</target>
+      </segment>
+    </unit>
+    <unit id="WXTAKeB" name="enquete.index.heading">
+      <segment>
+        <source>enquete.index.heading</source>
+        <target>enquete.index.heading</target>
+      </segment>
+    </unit>
+    <unit id=".snqpiH" name="menu.questions">
+      <segment>
+        <source>menu.questions</source>
+        <target>menu.questions</target>
+      </segment>
+    </unit>
+    <unit id="XuCvAGp" name="quizz.question.index.heading">
+      <segment>
+        <source>quizz.question.index.heading</source>
+        <target>quizz.question.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="lCzVw3d" name="retour.administratif">
+      <segment>
+        <source>retour.administratif</source>
+        <target>retour.administratif</target>
+      </segment>
+    </unit>
+    <unit id="LE4.Mad" name="quizz.question.index.index.heading">
+      <segment>
+        <source>quizz.question.index.index.heading</source>
+        <target>quizz.question.index.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="pmlAXKa" name="quizz.question.new.heading">
+      <segment>
+        <source>quizz.question.new.heading</source>
+        <target>quizz.question.new.heading</target>
+      </segment>
+    </unit>
+    <unit id="t5yskm4" name="Help">
+      <segment>
+        <source>Help</source>
+        <target>Help</target>
+      </segment>
+    </unit>
+    <unit id="ef6yFwQ" name="Quizz questionnaires">
+      <segment>
+        <source>Quizz questionnaires</source>
+        <target>Quizz questionnaires</target>
+      </segment>
+    </unit>
+    <unit id="zTzux2y" name="label.question.help">
+      <segment>
+        <source>label.question.help</source>
+        <target>label.question.help</target>
+      </segment>
+    </unit>
+    <unit id="9M9jANX" name="qcu">
+      <segment>
+        <source>qcu</source>
+        <target>qcu</target>
+      </segment>
+    </unit>
+    <unit id="PVI3iWx" name="qcm">
+      <segment>
+        <source>qcm</source>
+        <target>qcm</target>
+      </segment>
+    </unit>
+    <unit id="ZV7YsaC" name="yesno">
+      <segment>
+        <source>yesno</source>
+        <target>yesno</target>
+      </segment>
+    </unit>
+    <unit id="4eQJbKQ" name="echelle">
+      <segment>
+        <source>echelle</source>
+        <target>echelle</target>
+      </segment>
+    </unit>
+    <unit id="eCUyFvd" name="libre">
+      <segment>
+        <source>libre</source>
+        <target>libre</target>
+      </segment>
+    </unit>
+    <unit id="bWqXUCX" name="scolarite.index.heading">
+      <segment>
+        <source>scolarite.index.heading</source>
+        <target>scolarite.index.heading</target>
+      </segment>
+    </unit>
+    <unit id="9dfEF_y" name="scolarite.diplome.heading">
+      <segment>
+        <source>scolarite.diplome.heading</source>
+        <target>scolarite.diplome.heading</target>
+      </segment>
+    </unit>
+    <unit id="6w5pAOd" name="atitle.export_apogee">
+      <segment>
+        <source>atitle.export_apogee</source>
+        <target>atitle.export_apogee</target>
+      </segment>
+    </unit>
+    <unit id="9SEDvHu" name="atitle.retour_scolarite">
+      <segment>
+        <source>atitle.retour_scolarite</source>
+        <target>atitle.retour_scolarite</target>
+      </segment>
+    </unit>
+    <unit id="KJMuG_y" name="scolarite.semestre.heading">
+      <segment>
+        <source>scolarite.semestre.heading</source>
+        <target>scolarite.semestre.heading</target>
+      </segment>
+    </unit>
+    <unit id="CMfO1_p" name="atitle.retour_diplome">
+      <segment>
+        <source>atitle.retour_diplome</source>
+        <target>atitle.retour_diplome</target>
+      </segment>
+    </unit>
+    <unit id="ywyrnmG" name="atitle.retour_administratif">
+      <segment>
+        <source>atitle.retour_administratif</source>
+        <target>atitle.retour_administratif</target>
+      </segment>
+    </unit>
+    <unit id="6RjGqzJ" name="administratif_homepage.heading">
+      <segment>
+        <source>administratif_homepage.heading</source>
+        <target>administratif_homepage.heading</target>
+      </segment>
+    </unit>
+    <unit id="u7yX.85" name="recherche.etudiant.heading">
+      <segment>
+        <source>recherche.etudiant.heading</source>
+        <target>recherche.etudiant.heading</target>
+      </segment>
+    </unit>
+    <unit id="3wwEtea" name="recherche.personnel.heading">
+      <segment>
+        <source>recherche.personnel.heading</source>
+        <target>recherche.personnel.heading</target>
+      </segment>
+    </unit>
+    <unit id="VvnCvPS" name="scolarite.recherche.heading">
+      <segment>
+        <source>scolarite.recherche.heading</source>
+        <target>scolarite.recherche.heading</target>
+      </segment>
+    </unit>
+    <unit id="AnJvT_I" name="diplome.duplicate.success.flash">
+      <segment>
+        <source>diplome.duplicate.success.flash</source>
+        <target>diplome.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="bx6Ym.Z" name="table.opt_evaluation_pre_initialisee">
+      <segment>
+        <source>table.opt_evaluation_pre_initialisee</source>
+        <target>table.opt_evaluation_pre_initialisee</target>
+      </segment>
+    </unit>
+    <unit id="YCBKHnl" name="help.opt_evaluation_pre_initialisee">
+      <segment>
+        <source>help.opt_evaluation_pre_initialisee</source>
+        <target>help.opt_evaluation_pre_initialisee</target>
+      </segment>
+    </unit>
+    <unit id="aQ7ulKp" name="initialiser.les.evaluations">
+      <segment>
+        <source>initialiser.les.evaluations</source>
+        <target>initialiser.les.evaluations</target>
+      </segment>
+    </unit>
+    <unit id="h.ILNGv" name="enquete.semestre.heading">
+      <segment>
+        <source>enquete.semestre.heading</source>
+        <target>enquete.semestre.heading</target>
+      </segment>
+    </unit>
+    <unit id="JLcekbU" name="atitle.retour_enquete">
+      <segment>
+        <source>atitle.retour_enquete</source>
+        <target>atitle.retour_enquete</target>
+      </segment>
+    </unit>
+    <unit id="PKrZ85c" name="enquete.create.heading">
+      <segment>
+        <source>enquete.create.heading</source>
+        <target>enquete.create.heading</target>
+      </segment>
+    </unit>
+    <unit id="eOeSABC" name="Titre">
+      <segment>
+        <source>Titre</source>
+        <target>Titre</target>
+      </segment>
+    </unit>
+    <unit id="iva1dm." name="Texte explication">
+      <segment>
+        <source>Texte explication</source>
+        <target>Texte explication</target>
+      </segment>
+    </unit>
+    <unit id="Xpo0gbo" name="Date ouverture">
+      <segment>
+        <source>Date ouverture</source>
+        <target>Date ouverture</target>
+      </segment>
+    </unit>
+    <unit id="urR2div" name="Date fermeture">
+      <segment>
+        <source>Date fermeture</source>
+        <target>Date fermeture</target>
+      </segment>
+    </unit>
+    <unit id="J9ONM1S" name="Quizz reponses">
+      <segment>
+        <source>Quizz reponses</source>
+        <target>Quizz reponses</target>
+      </segment>
+    </unit>
+    <unit id="le023yQ" name="__name__label__">
+      <segment>
+        <source>__name__label__</source>
+        <target>__name__label__</target>
+      </segment>
+    </unit>
+    <unit id="to4iuyd" name="quizz_question.show.heading">
+      <segment>
+        <source>quizz_question.show.heading</source>
+        <target>quizz_question.show.heading</target>
+      </segment>
+    </unit>
+    <unit id="IAvFZQW" name="texte d'aide">
+      <segment>
+        <source>texte d'aide</source>
+        <target>texte d'aide</target>
+      </segment>
+    </unit>
+    <unit id="b_dfkEj" name="note.saisie">
+      <segment>
+        <source>note.saisie</source>
+        <target>note.saisie</target>
+      </segment>
+    </unit>
+    <unit id="uP26BoL" name="configuration.edit.success.flash">
+      <segment>
+        <source>configuration.edit.success.flash</source>
+        <target>configuration.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="hgxSZPK" name="table.active">
+      <segment>
+        <source>table.active</source>
+        <target>Active</target>
+      </segment>
+    </unit>
+    <unit id="UWSofaX" name="annee_universitaire.add.success.flash">
+      <segment>
+        <source>annee_universitaire.add.success.flash</source>
+        <target>annee_universitaire.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="ToCuMH2" name="departement.activate..flash">
+      <segment>
+        <source>departement.activate..flash</source>
+        <target>departement.activate..flash</target>
+      </segment>
+    </unit>
+    <unit id="oad9MDH" name="departement.activate.1.flash">
+      <segment>
+        <source>departement.activate.1.flash</source>
+        <target>departement.activate.1.flash</target>
+      </segment>
+    </unit>
+    <unit id="zOF5r_P" name="ue.edit.success.flash">
+      <segment>
+        <source>ue.edit.success.flash</source>
+        <target>ue.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="f92EClm" name="matiere.duplicate.success.flash">
+      <segment>
+        <source>matiere.duplicate.success.flash</source>
+        <target>matiere.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="22qj.5U" name="type_groupe.delete.success.flash">
+      <segment>
+        <source>type_groupe.delete.success.flash</source>
+        <target>type_groupe.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="aGb8dhs" name="quizz_question.add.success.flash">
+      <segment>
+        <source>quizz_question.add.success.flash</source>
+        <target>quizz_question.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="K7XBk.L" name="Mot de passe perdu">
+      <segment>
+        <source>Mot de passe perdu</source>
+        <target>Mot de passe perdu</target>
+      </segment>
+    </unit>
+    <unit id="XohImNo" name="password">
+      <segment>
+        <source>password</source>
+        <target>password</target>
+      </segment>
+    </unit>
+      <unit id="0">
+          <segment>
+              <source>formation.par.defaut.erreur</source>
+              <target>messages</target>
           </segment>
       </unit>
   </file>

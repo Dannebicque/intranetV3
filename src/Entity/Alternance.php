@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlternanceRepository")
@@ -29,27 +30,34 @@ class Alternance extends BaseEntity
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", cascade={"persist", "remove"})
-     * @Groups({"absences_administration"})
+     * @Groups({"alternance_administration"})
      */
     private $entreprise;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
+     * @MaxDepth(2)
+     * @Groups({"alternance_administration"})
      */
     private $tuteur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="alternances")
+     * @MaxDepth(2)
+     * @Groups({"alternance_administration"})
      */
     private $etudiant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="alternances")
+     * @MaxDepth(2)
+     * @Groups({"alternance_administration"})
      */
     private $tuteurUniversitaire;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"alternance_administration"})
      */
     private $typeContrat;
 
@@ -65,11 +73,13 @@ class Alternance extends BaseEntity
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"alternance_administration"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"alternance_administration"})
      */
     private $dateFin;
 

@@ -23,6 +23,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -49,6 +50,10 @@ class MyMailer
 
     /** @var TranslatorInterface */
     protected $translator;
+    /**
+     * @var TemplatedEmail
+     */
+    private $mail;
 
     /**
      * MyMailer constructor.
@@ -69,6 +74,7 @@ class MyMailer
         $this->translator = $translator;
         $this->templating = $templating;
         $this->databaseTwigLoader = $databaseTwigLoader;
+        $this->mail = (new TemplatedEmail());
     }
 
     /**
@@ -80,33 +86,25 @@ class MyMailer
      */
     public function sendMessage(array $to, $subject, array $options = []): void
     {
-        $mail = (new TemplatedEmail())
-            ->from($this->getFrom($options))
-            ->to($this->checkTo($to))
+        $this->mail->from($this->getFrom($options))
             ->subject($this->translator->trans($subject))
-            ->setBody($this->template)
             ->replyTo($this->getReplyTo($options));
-            //->setContentType($this->getContentType($options));
 
-        $this->mailer->send($mail);
+        $this->checkTo($to);
+        $this->mailer->send($this->mail);
     }
 
     /**
      * @param array $mails
      *
-     * @return array
      */
-    private function checkTo(array $mails): array
+    private function checkTo(array $mails): void
     {
-        $to = array();
-
         foreach ($mails as $m) {
             if ($m !== null && trim($m) !== '') {
-                $to[] = trim($m);
+                $this->mail->addTo(new Address(trim($m)));
             }
         }
-
-        return $to;
     }
 
 
@@ -114,28 +112,26 @@ class MyMailer
      * @param $template
      * @param $data
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
     public function setTemplate($template, $data): void
     {
-        $this->template = $this->templating->render($template, $data);
+        $this->mail->htmlTemplate($template)
+            ->context($data);
     }
 
     /**
      *
      * @param array $options
      *
-     * @return array
+     * @return Address
      */
-    private function getFrom(array $options): array
+    private function getFrom(array $options): Address
     {
         if (array_key_exists('from', $options) && count($options['from']) > 0) {
-            return $this->checkTo($options['from']);
+            return new Address($options['from']);
         }
 
-        return [Configuration::get('MAIL_FROM')];
+        return new Address(Configuration::get('MAIL_FROM'));
     }
 
     /**
@@ -146,24 +142,10 @@ class MyMailer
     private function getReplyTo(array $options)
     {
         if (array_key_exists('replyTofrom', $options) && count($options['replyTo']) > 0) {
-            return $this->checkTo($options['replyTo']);
+            return new Address($options['replyTo']);
         }
 
-        return [Configuration::get('MAIL_FROM')];
-    }
-
-    /**
-     * @param $options
-     *
-     * @return string
-     */
-    private function getContentType(array $options): string
-    {
-        if (array_key_exists('content-type', $options) && $options['content-type'] !== '') {
-            return $options['content-type'];
-        }
-
-        return 'text/plain';
+        return new Address(Configuration::get('MAIL_FROM'));
     }
 
     /**

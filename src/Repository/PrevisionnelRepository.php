@@ -170,4 +170,21 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findServiceSemestre(Personnel $user, Semestre $semestre, $annePrevi)
+    {
+
+        return$this->createQueryBuilder('s')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 's.personnel = p.id')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 's.matiere = m.id')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.UE = u.id')
+            ->where('p.id = :user')
+            ->andWhere('s.annee = :annee')
+            ->andWhere('u.semestre = :semestre')
+            ->setParameters(array('user' => $user->getId(), 'annee' => $annePrevi, 'semestre' => $semestre->getId()))
+            ->groupBy('m.id')
+            ->orderBy('m.codeMatiere', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
