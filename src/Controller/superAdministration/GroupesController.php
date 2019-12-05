@@ -73,7 +73,7 @@ class GroupesController extends BaseController
 
         $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
 
-        while ($row = oci_fetch_array($groupes, OCI_ASSOC + OCI_RETURN_NULLS)) {
+        while ($row = $groupes->fetch($groupes)) {
 
         }
     }

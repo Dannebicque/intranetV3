@@ -12,3 +12,5 @@ twig:
         iconPrint: 'fa fa-print'
         iconDuplicate: 'fa fa-copy'
         linuxpath: 'http://newintranet:8888/public'
+
+    exception_controller: null # This is needed to fix the deprecation in Symfony 4.4

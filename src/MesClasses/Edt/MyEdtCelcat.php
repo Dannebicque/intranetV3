@@ -35,36 +35,31 @@ class MyEdtCelcat extends BaseEdt
     /** @var CelcatEventsRepository */
     protected $celcatEventsRepository;
 
-    private $groupecm;
 
     /** @var Annee */
     private $annee;
-
-    /** @var SemestreRepository */
-    private $semestreRepository;
-
+    
     /**
      * @var GroupeRepository
      */
     private $groupeRepository;
-    /** @var PersonnelRepository */
-    private $personnelRepository;
+    
     /** @var MatiereRepository */
     private $matiereRepository;
+    /**
+     * @var string|null
+     */
+    private $groupecm;
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
         CelcatEventsRepository $celcatEventsRepository,
-        SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
-        PersonnelRepository $personnelRepository,
         MatiereRepository $matiereRepository
     ) {
         parent::__construct($celcatCalendrierRepository);
         $this->celcatEventsRepository = $celcatEventsRepository;
-        $this->semestreRepository = $semestreRepository;
         $this->groupeRepository = $groupeRepository;
-        $this->personnelRepository = $personnelRepository;
         $this->matiereRepository = $matiereRepository;
     }
 
@@ -178,23 +173,18 @@ class MyEdtCelcat extends BaseEdt
             $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
             $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte();
 
-
-            $taille = 0;
             switch ($p->getType()) {
                 case 'CM':
                 case 'cm':
                     $tab[$jour][$dbtEdt][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
-                    $taille = 0;
                     break;
                 case 'TP':
                 case 'tp':
                     $tab[$jour][$dbtEdt][$groupe]['largeur'] = 1;
-                    $taille = 4;
                     break;
                 case 'TD':
                 case 'td':
                     $tab[$jour][$dbtEdt][$groupe]['largeur'] = 2;
-                    $taille = 8;
                     break;
             }
 
@@ -272,7 +262,7 @@ class MyEdtCelcat extends BaseEdt
 
                 $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
                 $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-                $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = '#ffffff'; //$this->getCouleurTexte($p);
+                $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->annee->getCouleurTexte();
 
             }
         }

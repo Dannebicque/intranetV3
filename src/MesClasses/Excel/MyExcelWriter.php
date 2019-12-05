@@ -113,6 +113,29 @@ class MyExcelWriter
     {
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
         //traiter les options
+        //style n'est pas un tableau
+        if (is_array($options) && array_key_exists('style', $options) && $this->sheet->getCellByColumnAndRow($col,
+                $row)) {
+                    switch ($options['style']) {
+                        case 'HORIZONTAL_RIGHT':
+                            $this->sheet->getCellByColumnAndRow($col,
+                                $row)->getStyle()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                            break;
+                        case 'HORIZONTAL_CENTER':
+                            $this->sheet->getCellByColumnAndRow($col,
+                                $row)->getStyle()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                            break;
+                        case 'numerique':
+                            $this->sheet->getCellByColumnAndRow($col,
+                                $row)->getStyle()->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                            break;
+                        case 'numerique3':
+                            $this->sheet->getCellByColumnAndRow($col,
+                                $row)->getStyle()->getNumberFormat()->setFormatCode('#,##0.000');
+                            break;
+
+                    }
+                }
     }
 
     /**

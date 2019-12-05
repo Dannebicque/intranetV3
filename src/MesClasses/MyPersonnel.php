@@ -17,7 +17,6 @@ namespace App\MesClasses;
 
 use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class MyPersonnel
@@ -28,19 +27,15 @@ class MyPersonnel
     /** @var PersonnelRepository */
     private $personnelRepository;
 
-    /** @var RouterInterface */
-    private $router;
 
     /**
      * MyPersonnel constructor.
      *
      * @param PersonnelRepository $personnelRepository
-     * @param RouterInterface     $router
      */
-    public function __construct(PersonnelRepository $personnelRepository, RouterInterface $router)
+    public function __construct(PersonnelRepository $personnelRepository)
     {
         $this->personnelRepository = $personnelRepository;
-        $this->router = $router;
     }
 
 
