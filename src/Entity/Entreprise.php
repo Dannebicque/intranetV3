@@ -30,7 +30,7 @@ class Entreprise extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"absences_administration"})
+     * @Groups({"alternance_administration"})
      */
     private $libelle;
 

@@ -9,11 +9,10 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\EdtPlanning;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
-use App\Entity\Semestre;
+use App\MesClasses\MyEdtCompare;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
@@ -71,78 +70,26 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @param PrevisionnelRepository $previsionnelRepository
-     * @param Semestre               $semestre
-     * @param Matiere                $matiere
-     * @param Personnel              $personnel
+     * @param MyEdtCompare $myEdtCompare
+     * @param Matiere      $matiere
+     * @param Personnel    $personnel
      *
      * @return Response
      * @Route("/service-realise/{semestre}/{matiere}/{personnel}", name="administration_edt_service_realise_affiche",
      *                                                             options={"expose"=true}, methods={"POST","GET"})
      */
     public function serviceRealisePersonnelMatiere(
-        PrevisionnelRepository $previsionnelRepository,
-        Semestre $semestre,
+        MyEdtCompare $myEdtCompare,
         Matiere $matiere,
         Personnel $personnel
     ): Response {
         if ($matiere && $personnel) {
-            //todo: mettre dans un service MyEDT ?
-            $m = $this->edtPlanningRepository->findBy([
-                'matiere'     => $matiere->getId(),
-                'intervenant' => $personnel->getId()
-            ],
-                [
-                    'semaine' => 'ASC',
-                    'jour'    => 'ASC',
-                    'debut'   => 'ASC'
-                ]);
-
-            $calendrier = $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
-
-            $p = $previsionnelRepository->findBy([
-                'personnel' => $personnel->getId(),
-                'matiere'   => $matiere->getId(),
-                'annee'     => $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel()
-            ]);
-
-            $t = [];
-            $t['cm']['previ'] = 0;
-            $t['td']['previ'] = 0;
-            $t['tp']['previ'] = 0;
-            $t['cm']['real'] = 0;
-            $t['td']['real'] = 0;
-            $t['tp']['real'] = 0;
-
-            foreach ($p as $pr) {
-                $t['cm']['previ'] += $pr->getNbHCM();
-                $t['td']['previ'] += $pr->getNbHTD() * $pr->getNbGrTD();
-                $t['tp']['previ'] += $pr->getNbHTP() * $pr->getNbGrTP();
-            }
-
-            /** @var EdtPlanning $ma */
-            foreach ($m as $ma) {
-                switch ($ma->getType()) {
-                    case 'CM':
-                    case 'cm':
-                        $t['cm']['real'] += $ma->getDureeInt();
-                        break;
-                    case 'TD':
-                    case 'td':
-                        $t['td']['real'] += $ma->getDureeInt();
-                        break;
-                    case 'TP':
-                    case 'tp':
-                        $t['tp']['real'] += $ma->getDureeInt();
-                        break;
-                }
-            }
-
+            $t = $myEdtCompare->realise($matiere, $personnel, $this->dataUserSession->getAnneePrevisionnel());
 
             return $this->render('administration/edtRealise/detailPersonnelMatiere.html.twig', [
-                'planning'   => $m,
+                'planning'   => $myEdtCompare->getPlanning(),
                 'matiere'    => $matiere,
-                'calendrier' => $calendrier,
+                'calendrier' => $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire()),
                 'personnel'  => $personnel,
                 't'          => $t
             ]);
@@ -171,8 +118,8 @@ class EdtRealiseController extends BaseController
         $personnel = $personnelRepository->find($request->request->get('personnel'));
 
         if ($semestre !== null && $personnel !== null) {
-            $matieres = $previsionnelRepository->findServiceSemestre($personnel->getId(),
-                $semestre->getId(), $semestre->getAnnee()->getDiplome()->getDepartement()->getAnneeprevi());
+            $matieres = $previsionnelRepository->findServiceSemestre($personnel,
+                $semestre, $this->dataUserSession->getAnneePrevisionnel());
 
             $array = [];
             $i = 1;

@@ -960,4 +960,19 @@ class Matiere extends BaseEntity
 
         return $this;
     }
+
+    public function getJson() {
+        $t = [];
+        $t['id'] = $this->getId();
+        $t['libelle'] = $this->getLibelle();
+        $t['display'] = $this->getUe() ? $this->getUe()->getLibelle() : '-';
+        $t['cmFormation'] = $this->getCmFormation();
+        $t['tdFormation'] = $this->getTdFormation();
+        $t['tpFormation'] = $this->getTpFormation();
+        $t['cmPpn'] = $this->getCmPpn();
+        $t['tdPpn'] = $this->getTdPpn();
+        $t['tpPpn'] = $this->getTpPpn();
+
+        return $t;
+    }
 }

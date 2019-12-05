@@ -151,6 +151,11 @@ abstract class Utilisateur implements UserInterface
      */
     protected $updated;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
     public function __construct()
     {
         $this->updated = new DateTime('now');
@@ -582,5 +587,17 @@ abstract class Utilisateur implements UserInterface
     public function setMailPerso($mailPerso): void
     {
         $this->mailPerso = $mailPerso;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
     }
 }

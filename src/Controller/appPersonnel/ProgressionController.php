@@ -40,10 +40,7 @@ class ProgressionController extends BaseController
         PrevisionnelRepository $previsionnelRepository,
         ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
     ): Response {
-        //todo: a gérer année universitaire
         $progressions = $progressionPedagogiqueRepository->getProgressionsArray($this->getConnectedUser());
-
-
         $matieres = $previsionnelRepository->findPrevisionnelEnseignantDepartement($this->getConnectedUser(),
             $this->dataUserSession->getDepartement());
 
@@ -67,7 +64,6 @@ class ProgressionController extends BaseController
         Matiere $matiere,
         ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
     ): JsonResponse {
-        //todo: a gérer année universitaire
         $semaine = $request->request->get('semaine');
         $typeCours = $request->request->get('typecours');
         $nbSeances = $request->request->get('nbSeances');

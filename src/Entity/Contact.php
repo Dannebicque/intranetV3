@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
@@ -17,36 +18,43 @@ class Contact extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"alternance_administration"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"alternance_administration"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"alternance_administration"})
      */
     private $fonction;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Groups({"alternance_administration"})
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"alternance_administration"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Groups({"alternance_administration"})
      */
     private $portable;
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"alternance_administration"})
      */
     private $civilite;
 

@@ -79,7 +79,7 @@ class AlternanceController extends BaseController
             if ($exist === null) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
-                $alternance->setAnneeUniversitaire($annee->getAnneeUniversitaire());
+                $alternance->setAnneeUniversitaire($annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
                 $alternance->setAnnee($annee);
                 $alternance->setEtat('init');
                 $this->entityManager->persist($alternance);
@@ -105,7 +105,7 @@ class AlternanceController extends BaseController
     {
         $alternance = new Alternance();
         $alternance->setEtudiant($etudiant);
-        $alternance->setAnneeUniversitaire($annee->getAnneeUniversitaire());
+        $alternance->setAnneeUniversitaire($annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
         $alternance->setAnnee($annee);
 
         if ($action === 'init-false') {
@@ -141,15 +141,13 @@ class AlternanceController extends BaseController
         $_format
     ): Response {
         $actualites = $alternanceRepository->findByAnnee($annee, $annee->getAnneeUniversitaire());
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'alternances',
-            ['alternances_administration', 'utilisateur'],
-            ['entreprise' => ['libelle'], 'texte', 'departement' => ['libelle']]//todo: a parametrer avec alternance
+            ['alternance_administration', 'utilisateur'],
+            ['entreprise' => ['libelle'], 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'], 'etudiant' => ['nom', 'prenom', 'mail_univ'],'tuteurUniversitaire' => ['nom', 'prenom', 'mail_univ'], 'typeContrat', 'dateDebut', 'dateFin']
         );
-
-        return $response;
     }
 
     /**

@@ -99,12 +99,6 @@ class EmpruntController extends BaseController
         //todo: a faire
         $id = $emprunt->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-//            $this->entityManager->remove($emprunt);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(
-//                Constantes::FLASHBAG_SUCCESS,
-//                'actualite.delete.success.flash'
-//            );
 
             return $this->json($id, Response::HTTP_OK);
         }
