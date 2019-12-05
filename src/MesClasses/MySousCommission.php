@@ -63,9 +63,6 @@ class MySousCommission
     /** @var Semestre[] */
     private $semestres = [];
 
-    /** @var Semestre */
-    private $semestre;
-
     /** @var MyEtudiantSousCommission[] */
     private $sousCommissionEtudiants = [];
 
@@ -106,7 +103,6 @@ class MySousCommission
     {
         //récupérer les notes du semestre.
         //faire un tableau etudiant/matieres/notes
-        $this->semestre = $semestre;
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
         $this->matieres = $this->matiereRepository->findBySemestre($semestre);
         $this->ues = $this->ueRepository->findBySemestre($semestre);
@@ -218,7 +214,7 @@ class MySousCommission
 
         /** @var Matiere $matiere */
         foreach ($this->matieres as $matiere) {
-            if ($matiere->getUE()->getSemestre()->getId() == $semestre->getId() && $matiere->getNbnotes() != 0) {
+            if ($matiere->getNbnotes() !== 0 && $matiere->getUE()->getSemestre()->getId() === $semestre->getId()) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $matiere->getCodeMatiere());
                 $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $matiere->getCoefficient());
                 $colonne++;

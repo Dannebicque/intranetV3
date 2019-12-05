@@ -16,16 +16,12 @@
 namespace App\MesClasses\Model;
 
 
-use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 
 class MoyennesSemestreEtudiant
 {
-    /** @var Etudiant */
-    private $etudiant;
-
     /** @var Semestre */
     private $semestre;
 
@@ -40,18 +36,22 @@ class MoyennesSemestreEtudiant
     private $decision = '';
 
     private $proposition = '';
+    /**
+     * @var MoyenneUeEtudiant[]|array
+     */
+    private $moyenneUes;
 
+    /** @var Ue[] */
+    private $ues;
 
 
     /**
      * MoyennesSemestreEtudiant constructor.
      *
-     * @param Etudiant $etudiant
      * @param Semestre $semestre
      */
-    public function __construct(Etudiant $etudiant, Semestre $semestre)
+    public function __construct(Semestre $semestre)
     {
-        $this->etudiant = $etudiant;
         $this->semestre = $semestre;
     }
 
@@ -142,6 +142,9 @@ class MoyennesSemestreEtudiant
      */
     public function calculMoyenneUes(array $moyenneUes, $ues): void
     {
+        $this->moyenneUes = $moyenneUes;
+        $this->ues = $ues;
+
         $totcoeff = 0;
         $totue = 0;
         $totueP = 0;
@@ -149,8 +152,8 @@ class MoyennesSemestreEtudiant
 
         /** @var Ue $ue */
         foreach ($ues as $ue) {
-            $totue += $moyenneUes[$ue->getNumeroUe()]->getMoyenne() * $ue->getCoefficient();
-            $totueP += $moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee() * $ue->getCoefficient();
+            $totue += $this->moyenneUes[$ue->getNumeroUe()]->getMoyenne() * $ue->getCoefficient();
+            $totueP += $this->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee() * $ue->getCoefficient();
             $totcoeff += $ue->getCoefficient();
         }
 
@@ -183,7 +186,12 @@ class MoyennesSemestreEtudiant
 
     private function hasPoleFaible(): bool
     {
-        //todo: a finaliser
+        foreach ($this->ues as $ue) {
+            if (($this->semestre->isOptPenaliteAbsence() === true && $this->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee() < 8) || ($this->semestre->isOptPenaliteAbsence() === false && $this->moyenneUes[$ue->getNumeroUe()]->getMoyenne() < 8 )) {
+                return true;
+            }
+        }
+
         return false;
     }
 

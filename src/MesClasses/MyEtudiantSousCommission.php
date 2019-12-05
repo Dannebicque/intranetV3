@@ -29,12 +29,6 @@ use App\Repository\ScolariteRepository;
 
 class MyEtudiantSousCommission
 {
-    /** @var Etudiant */
-    private $etudiant;
-
-    /** @var Semestre */
-    private $semestre;
-
     /** @var MoyenneMatiereEtudiant[] */
     private $moyenneMatieres = [];
 
@@ -56,9 +50,6 @@ class MyEtudiantSousCommission
 
     private $nbSemestres = 1;
 
-    /** @var ScolariteRepository */
-    private $scolariteRepository;
-
     /**
      * @return int
      */
@@ -78,10 +69,6 @@ class MyEtudiantSousCommission
      */
     public function __construct(ScolariteRepository $scolariteRepository, Etudiant $etudiant, Semestre $semestre, $matieres, $notes)
     {
-        $this->etudiant = $etudiant;
-        $this->semestre = $semestre;
-        $this->scolariteRepository = $scolariteRepository;
-        $this->notes = $notes;
 
         /** @var Matiere $matiere */
         foreach ($matieres as $matiere) {
@@ -89,7 +76,7 @@ class MyEtudiantSousCommission
                 $matId = $matiere->getId();
                 if (array_key_exists($matId, $this->notes)) {
                     $this->moyenneMatieres[$matId] = new MoyenneMatiereEtudiant($etudiant, $matiere,
-                        $this->notes[$matId]);
+                        $notes[$matId]);
                 } else {
                     $this->moyenneMatieres[$matId] = new MoyenneMatiereEtudiant($etudiant, $matiere, []);
                 }
@@ -103,21 +90,23 @@ class MyEtudiantSousCommission
 
         }
 
-        $this->moyenneSemestre = new MoyennesSemestreEtudiant($etudiant, $semestre);
+        $this->moyenneSemestre = new MoyennesSemestreEtudiant($semestre);
 
-        if ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_MODULES) {
-            $this->moyenneSemestre->calculMoyenneModules($this->moyenneMatieres, $matieres);
-        } elseif ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_UES) {
-            $this->moyenneSemestre->calculMoyenneUes($this->moyenneUes, $semestre->getUes());
-        } else {
-            //erreur
+        if ($semestre->getDiplome() !== null) {
+            if ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_MODULES) {
+                $this->moyenneSemestre->calculMoyenneModules($this->moyenneMatieres, $matieres);
+            } elseif ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_UES) {
+                $this->moyenneSemestre->calculMoyenneUes($this->moyenneUes, $semestre->getUes());
+            } else {
+                //erreur
+            }
         }
 
         $semprec = $semestre->getPrecedent();
 
         while ($semprec !== null) {
             $this->nbSemestres++; //todo: pas le bon calcul...
-            $pe = new ParcoursEtudiant($this->scolariteRepository);
+            $pe = new ParcoursEtudiant($scolariteRepository);
             $this->parcours[$semprec->getOrdreLmd()] = $pe->calculScolarite($etudiant, $semprec);
             $semprec = $semprec->getPrecedent();
         }
