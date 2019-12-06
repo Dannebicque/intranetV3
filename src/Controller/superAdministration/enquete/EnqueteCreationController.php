@@ -6,7 +6,7 @@
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
 
-namespace App\Controller\administratif\enquete;
+namespace App\Controller\superAdministration\enquete;
 
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\Semestre;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/enquete-creation")
+ * @Route("/super-administration/enquete-creation")
  */
 class EnqueteCreationController extends AbstractController
 {
@@ -35,7 +35,7 @@ class EnqueteCreationController extends AbstractController
             ]
         ]);
 
-        return $this->render('administratif/enqueteCreation/wizard1.html.twig', [
+        return $this->render('super-administration/enqueteCreation/wizard1.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -1,0 +1,43 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.etudiant.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sa_etudiant_ajouter') }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.import_etudiant'|trans }}"><i class="ti-import"></i></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h4 class="card-title">{{ 'sadm.etudiant.heading'|trans }}</h4>
+    <div class="card-body">
+        <div class="form-group">
+            <label class="control-label" for="etudiant">Login URCA, nom, prénom, numéro étudiant ou numéro INE
+                de l'étudiant</label>
+
+            <input type="text" name="login_urca" id="etudiant" class="form-control"
+                   placeholder="Saisissez les premiers caractères">
+
+        </div>
+        <div>
+            <button type="submit" class="btn btn-block btn-warning">Recherchez l'étudiant
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h4 class="card-title">{{ 'sadm.etudiant.resultat.heading'|trans }}</h4>
+    <div class="card-body" id="resultat">
+        <div class="alert alert-info">Veuillez saisir les premiers caractères de votre recherche</div>
+    </div>
+</div>
+{% endblock %}

@@ -6,7 +6,7 @@
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
 
-namespace App\Controller\administratif\enquete;
+namespace App\Controller\superAdministration\enquete;
 
 use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/enquete")
+ * @Route("/super-administration/enquete")
  */
 class EnqueteController extends AbstractController
 {
@@ -27,7 +27,7 @@ class EnqueteController extends AbstractController
      */
     public function index(DiplomeRepository $diplomeRepository): Response
     {
-        return $this->render('administratif/enquete/index.html.twig', [
+        return $this->render('super-administration/enquete/index.html.twig', [
             'diplomes' => $diplomeRepository->findActifs()
         ]);
     }
@@ -41,7 +41,7 @@ class EnqueteController extends AbstractController
      */
     public function semestre(Semestre $semestre): Response
     {
-        return $this->render('administratif/enquete/semestre.html.twig', [
+        return $this->render('super-administration/enquete/semestre.html.twig', [
             'semestre' => $semestre
         ]);
     }
@@ -55,7 +55,7 @@ class EnqueteController extends AbstractController
      */
     public function create(Semestre $semestre): Response
     {
-        return $this->render('administratif/enquete/create.html.twig', [
+        return $this->render('super-administration/enquete/create.html.twig', [
             'semestre' => $semestre
         ]);
     }

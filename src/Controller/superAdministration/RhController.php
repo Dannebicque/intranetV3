@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class RhController
  * @package App\Controller\superAdministration
- * @Route("/ressources-humaines")
+ * @Route("/super-administration/ressources-humaines")
  */
 class RhController extends BaseController
 {

@@ -12596,7 +12596,7 @@
     <unit id="2tsXFuR" name="menu.qualite">
       <segment>
         <source>menu.qualite</source>
-        <target>menu.qualite</target>
+        <target>Qualité</target>
       </segment>
     </unit>
     <unit id="WXTAKeB" name="enquete.index.heading">
@@ -12608,7 +12608,7 @@
     <unit id=".snqpiH" name="menu.questions">
       <segment>
         <source>menu.questions</source>
-        <target>menu.questions</target>
+        <target>Questions</target>
       </segment>
     </unit>
     <unit id="XuCvAGp" name="quizz.question.index.heading">
@@ -12911,11 +12911,17 @@
         <target>password</target>
       </segment>
     </unit>
-      <unit id="0">
-          <segment>
-              <source>formation.par.defaut.erreur</source>
-              <target>messages</target>
-          </segment>
-      </unit>
+    <unit id="rPQVquO" name="formation.par.defaut.erreur">
+      <segment>
+        <source>formation.par.defaut.erreur</source>
+        <target>messages</target>
+      </segment>
+    </unit>
+    <unit id="YpBxDdK" name="menu.etudiants">
+      <segment>
+        <source>menu.etudiants</source>
+        <target>Etudiants</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
