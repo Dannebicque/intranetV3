@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block header %}
-
+    Administration Intranet
 {% endblock %}
 
 {% block sidebar_menu %}
@@ -15,6 +15,12 @@
         <a class="menu-link" href="{{ path('super_admin_homepage') }}">
             <span class="material-icons">dashboard</span>
             <span class="title">{{ 'menu.dashboard'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item active" id="menu-etudiants">
+        <a class="menu-link" href="{{ path('sa_etudiant_index') }}">
+            <span class="material-icons">perm_identity</span>
+            <span class="title">{{ 'menu.etudiants'|trans }}</span>
         </a>
     </li>
     <li class="menu-item active" id="menu-scolarite">
@@ -41,6 +47,19 @@
             <span class="title">{{ 'menu.celcat'|trans }}</span>
         </a>
     </li>
+    <li class="menu-item" id="menu-enquete">
+        <a class="menu-link" href="{{ path('administratif_enquete_index') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.qualite'|trans }}</span>
+        </a>
+    </li>
+    <li class="menu-item" id="menu-quizz">
+        <a class="menu-link" href="{{ path('quizz_question_index') }}">
+            <span class="material-icons">access_time</span>
+            <span class="title">{{ 'menu.questions'|trans }}</span>
+        </a>
+    </li>
+
     <li class="menu-item active" id="menu-apogee">
         <a class="menu-link" href="{{ path('sa_apogee_index') }}">
             <span class="material-icons">access_time</span>
