@@ -52,17 +52,13 @@ class StagePeriodeController extends BaseController
     public function export(MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
     {
         $dates = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $dates,
-            'dates',
+            'periodes_stage',
             ['stage_periode_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            ['numeroPeriode', 'libelle', 'numeroPeriode', 'dateDebut','dateFin','nbSemaines','nbJours','nbEcts']
         );
-
-        //todo: définir les colonnes. copier/coller ici
-
-        return $response;
     }
 
     /**

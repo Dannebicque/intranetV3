@@ -23,7 +23,10 @@
     </div>
 {% endblock %}
 
-{% block javascript %}
-$('.selector-stagePeriodeSoutenances').collection();
-$('.selector-stagePeriodeInterruptions').collection();
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $('.selector-stagePeriodeSoutenances').collection();
+    $('.selector-stagePeriodeInterruptions').collection();
+</script>
 {% endblock %}

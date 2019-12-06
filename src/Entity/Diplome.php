@@ -42,8 +42,6 @@ class Diplome extends BaseEntity
      */
     private $assistantDiplome;
 
-    //todo: faire une collection avec personnel + role
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDiplome", inversedBy="diplomes")
      */

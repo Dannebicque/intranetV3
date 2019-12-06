@@ -28,6 +28,17 @@ class Date extends BaseEntity
     public const TYPE_RENTREE = 'type.rentree';
     public const TYPE_VACANCES = 'type.vacances';
 
+    public const COULEUR_BADGE = [
+        Date::TYPE_STAGE      => 'badge-primary',
+        Date::TYPE_SOUTENANCE => 'badge-danger',
+        Date::TYPE_PROJET     => 'badge-purple',
+        Date::TYPE_AUTRE      => 'badge-pink',
+        Date::TYPE_COMMISSION => 'badge-warning',
+        Date::TYPE_REUNION    => 'badge-yellow',
+        Date::TYPE_RENTREE    => 'badge-success',
+        Date::TYPE_VACANCES   => 'badge-info'
+    ];
+
     public const QUI_ETUDIANT = 'E';
     public const QUI_PERSONNEL = 'P';
 
@@ -117,7 +128,7 @@ class Date extends BaseEntity
      */
     public static function getTypeList(): array
     {
-        return array(
+        return [
             self::TYPE_AUTRE,
             self::TYPE_COMMISSION,
             self::TYPE_PROJET,
@@ -125,7 +136,7 @@ class Date extends BaseEntity
             self::TYPE_SOUTENANCE,
             self::TYPE_STAGE,
             self::TYPE_RENTREE,
-        );
+        ];
     }
 
     /**
@@ -350,5 +361,10 @@ class Date extends BaseEntity
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getCouleurBadge()
+    {
+        return self::COULEUR_BADGE[$this->type];
     }
 }

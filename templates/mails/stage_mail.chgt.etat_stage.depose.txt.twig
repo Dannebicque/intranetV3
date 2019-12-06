@@ -2,4 +2,43 @@ Bonjour {{ stageEtudiant.etudiant.prenom|capitalize }},
 
 
 Récapitulatif des infos du stage.
-{# todo: info du stage dans le mail de synthèse.#}
+
+* Stage pour la période : {{ stageEtudiant.$stagePeriode.libelle }}
+* {{ stageEtudiant.entreprise.libelle }}
+* Responsable de l'entreprise : {{ stageEtudiant.entreprise.responsable.display }}
+* Adresse du siège de l'entreprise : {{ stageEtudiant.entreprise.adresse.display }}
+* Tuteur entreprise : {{ stageEtudiant.entreprise.adresse.display }}
+* Adresse du stage : {{ stageEtudiant.adresseStage.display }}
+* Service d'accueil : {{ stageEtudiant.serviceStageEntreprise }}
+* Dte du début du stage : {{ stageEtudiant.dateDebutStage|date('d/m/Y') }}
+* Date de fin du stage : {{ stageEtudiant.dateFinStage|date('d/m/Y') }}
+* Sujet du stage : {{ stageEtudiant.sujetStage }}
+* Activités : {{ stageEtudiant.activites }}
+* Amménagements : {{ stageEtudiant.amenagementStage }}
+* Gratification : {{ stageEtudiant.gratification == true ? 'Oui'  'Non' }}
+* Gratification montant : {{ stageEtudiant.gratificationMontant }}
+* Gratification période : {{ stageEtudiant.gratificationPeriode }}
+* Autres avantages : {{ stageEtudiant.avantages }}
+* Durée hebdomadaire : {{ stageEtudiant.dureeHebdomadaire }}
+* Nb de jours : {{ stageEtudiant.dureeJoursStage }}
+
+Si les informations ci-dessous sont erronés, contactez au plus vite le responsable des stages
+
+Le(s) responsable(s) de la période de stage
+{% for resp in stageEtudiant.stagePeriode.Responsbles %}
+{{ resp.displayPr }}
+{% endfor %}
+
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.
+
+
+
+
+
+
+
+
+
+
+
+

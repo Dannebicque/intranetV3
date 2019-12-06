@@ -49,15 +49,13 @@ class ConfigurationController extends BaseController
     public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, $_format): Response
     {
         $configurations = $configurationRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $configurations,
             'configurations',
             ['configuration_administration'],
             ['cle', 'valeur']
         );
-
-        return $response;
     }
 
     /**

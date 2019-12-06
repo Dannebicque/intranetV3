@@ -12,7 +12,6 @@
 {% endblock %}
 
 {% block content %}
-    {# feature: création directement dans le datatable ??? #}
     <div class="card">
         <h4 class="card-title">{{ 'sadm.configuration.index.heading'|trans }}</h4>
         <div class="card-body">
@@ -21,6 +20,7 @@
                 <tr>
                     <th>{{ 'table.cle'|trans }}</th>
                     <th>{{ 'table.valeur'|trans }}</th>
+                    <th>{{ 'table.type_variable'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -29,6 +29,7 @@
                     <tr>
                         <td>{{ configuration.cle }}</td>
                         <td>{{ configuration.valeur }}</td>
+                        <td>{{ configuration.typeLong }}</td>
                         <td>
                             <a href="{{ path('sa_configuration_duplicate', {'id': configuration.id}) }}"
                                class="btn btn-success btn-outline btn-square" data-provide="tooltip"

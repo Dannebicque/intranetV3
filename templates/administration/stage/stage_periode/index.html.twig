@@ -36,7 +36,7 @@
                         <td>{{ stage_periode.libelle }}</td>
                         <td>{{ stage_periode.anneeUniversitaire ? stage_periode.anneeUniversitaire.annee : 'non.defini'|trans }}</td>
                         <td>{{ stage_periode.nbSemaines }} sem. soit
-                        {{ stage_periode.nbJours }}</td>
+                        {{ stage_periode.nbJours }} jours</td>
                         <td>{{ stage_periode.dateDebut ? stage_periode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
                         </td>
                         <td>{{ stage_periode.dateFin ? stage_periode.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}

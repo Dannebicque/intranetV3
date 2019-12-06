@@ -18,6 +18,7 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -47,26 +48,32 @@ class StagePeriode extends BaseEntity
     private $documentFile;
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"stage_periode_administration"})
      */
     private $numeroPeriode = 1;
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"stage_periode_administration"})
      */
     private $libelle = 'stage';
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"stage_periode_administration"})
      */
     private $nbSemaines = 10;
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"stage_periode_administration"})
      */
     private $nbJours = 40;
     /**
      * @ORM\Column(type="date")
+     * @Groups({"stage_periode_administration"})
      */
     private $dateDebut;
     /**
      * @ORM\Column(type="date")
+     * @Groups({"stage_periode_administration"})
      */
     private $dateFin;
     /**
@@ -91,6 +98,7 @@ class StagePeriode extends BaseEntity
     private $documentRendre = 'texte';
     /**
      * @ORM\Column(type="float")
+     * @Groups({"stage_periode_administration"})
      */
     private $nbEcts = 12;
     /**
@@ -116,6 +124,7 @@ class StagePeriode extends BaseEntity
     private $stagePeriodeSoutenances;
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="stagePeriodes")
+     * @Groups({"stage_periode_administration"})
      */
     private $responsables;
 

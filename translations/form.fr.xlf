@@ -2402,37 +2402,37 @@
     <unit id="Pc3pfsS" name="help.libelleStagePeriode">
       <segment>
         <source>help.libelleStagePeriode</source>
-        <target>help.libelleStagePeriode</target>
+        <target>Nom de la période de stage (affichée pour les étudiants)</target>
       </segment>
     </unit>
     <unit id="V1dv9so" name="label.nbSemaines">
       <segment>
         <source>label.nbSemaines</source>
-        <target>label.nbSemaines</target>
+        <target>Nombre de semaine de stage</target>
       </segment>
     </unit>
     <unit id="Bl0vwPA" name="help.nbSemaines">
       <segment>
         <source>help.nbSemaines</source>
-        <target>help.nbSemaines</target>
+        <target>Indiquez le nombre de semaine où l'étudiant sera en stage (nécessaire pour la convention)</target>
       </segment>
     </unit>
     <unit id="cSLudtO" name="label.nbJours">
       <segment>
         <source>label.nbJours</source>
-        <target>label.nbJours</target>
+        <target>Nombre de jours de stage</target>
       </segment>
     </unit>
     <unit id="Qfg3I0i" name="help.nbJours">
       <segment>
         <source>help.nbJours</source>
-        <target>help.nbJours</target>
+        <target>Indiquez le nombre de jours de stage sur la période (nécessaire pour la convention de stage)</target>
       </segment>
     </unit>
     <unit id="wgxVE4y" name="label.datesFlexibles">
       <segment>
         <source>label.datesFlexibles</source>
-        <target>label.datesFlexibles</target>
+        <target>Dates de stage flexibles</target>
       </segment>
     </unit>
     <unit id="CpBAdjn" name="Oui">
@@ -2450,115 +2450,115 @@
     <unit id="9tTuIC3" name="help.datesFlexibles">
       <segment>
         <source>help.datesFlexibles</source>
-        <target>help.datesFlexibles</target>
+        <target>Si les dates sont flexibles, l'étudiant pourra les modifier dans le formulaire qu'il va remplir pour établir la convention</target>
       </segment>
     </unit>
     <unit id="3qPqJfn" name="label.copieAssistant">
       <segment>
         <source>label.copieAssistant</source>
-        <target>label.copieAssistant</target>
+        <target>Copie assistant(e)</target>
       </segment>
     </unit>
     <unit id="Fqs.jVj" name="help.copieAssistant">
       <segment>
         <source>help.copieAssistant</source>
-        <target>help.copieAssistant</target>
+        <target>Permet de mettre en copie des envois automatique de l'intranet l'assistant(e) de la formation</target>
       </segment>
     </unit>
     <unit id="2uzOLeK" name="label.texteLibre">
       <segment>
         <source>label.texteLibre</source>
-        <target>label.texteLibre</target>
+        <target>Commentaire libre</target>
       </segment>
     </unit>
     <unit id="vIyyaL8" name="help.texteLibre">
       <segment>
         <source>help.texteLibre</source>
-        <target>help.texteLibre</target>
+        <target>Commentaire libre sur la période de stage. Sera visible de l'étudiant</target>
       </segment>
     </unit>
     <unit id="SHF5AXn" name="label.competencesVisees">
       <segment>
         <source>label.competencesVisees</source>
-        <target>label.competencesVisees</target>
+        <target>Competences visées</target>
       </segment>
     </unit>
     <unit id="hQKCyVU" name="help.competencesVisees">
       <segment>
         <source>help.competencesVisees</source>
-        <target>help.competencesVisees</target>
+        <target>Compétences visées pendant la période de stage</target>
       </segment>
     </unit>
     <unit id="qM0SFEW" name="label.modaliteEvaluation">
       <segment>
         <source>label.modaliteEvaluation</source>
-        <target>label.modaliteEvaluation</target>
+        <target>Modalités d'évaluation du stage par l'entreprise</target>
       </segment>
     </unit>
     <unit id="5H3.rOL" name="help.modaliteEvaluation">
       <segment>
         <source>help.modaliteEvaluation</source>
-        <target>help.modaliteEvaluation</target>
+        <target>Modalité d'évaluation du stagiraire par l'entreprise</target>
       </segment>
     </unit>
     <unit id=".8y3Z85" name="label.modaliteEvaluationPedagogique">
       <segment>
         <source>label.modaliteEvaluationPedagogique</source>
-        <target>label.modaliteEvaluationPedagogique</target>
+        <target>Modalités d'évaluations pédagogiques du stage</target>
       </segment>
     </unit>
     <unit id="wpuP6Zp" name="help.modaliteEvaluationPedagogique">
       <segment>
         <source>help.modaliteEvaluationPedagogique</source>
-        <target>help.modaliteEvaluationPedagogique</target>
+        <target>Indiquez la manière dont sera évalué le stage par l'équipe pédagogique</target>
       </segment>
     </unit>
     <unit id="UJDG1Nl" name="label.modaliteEncadrement">
       <segment>
         <source>label.modaliteEncadrement</source>
-        <target>label.modaliteEncadrement</target>
+        <target>Modalité d'encadrement</target>
       </segment>
     </unit>
     <unit id="wOF4YWf" name="help.modaliteEncadrement">
       <segment>
         <source>help.modaliteEncadrement</source>
-        <target>help.modaliteEncadrement</target>
+        <target>Précisez comment sera effectué l'encadrement par le tuteur universitaire</target>
       </segment>
     </unit>
     <unit id="3WLFNKW" name="label.documentRendre">
       <segment>
         <source>label.documentRendre</source>
-        <target>label.documentRendre</target>
+        <target>Documents à rendre</target>
       </segment>
     </unit>
     <unit id="XatVFUZ" name="help.documentRendre">
       <segment>
         <source>help.documentRendre</source>
-        <target>help.documentRendre</target>
+        <target>Documents à rendre par l'étudiant à l'issue du stage</target>
       </segment>
     </unit>
     <unit id="vhFtCpd" name="label.nbEcts">
       <segment>
         <source>label.nbEcts</source>
-        <target>label.nbEcts</target>
+        <target>Nombre d'ECTS</target>
       </segment>
     </unit>
     <unit id="NgcINE0" name="help.nbEcts">
       <segment>
         <source>help.nbEcts</source>
-        <target>help.nbEcts</target>
+        <target>Nombre d'ECTS attribués pour la réalisation et la validation du stage</target>
       </segment>
     </unit>
     <unit id="0hIFHbC" name="label.semestre_stage_periode">
       <segment>
         <source>label.semestre_stage_periode</source>
-        <target>label.semestre_stage_periode</target>
+        <target>Semestre pour lequel compte la période de stage</target>
       </segment>
     </unit>
     <unit id="C8S30K0" name="label.anneeUniversitaire">
       <segment>
         <source>label.anneeUniversitaire</source>
-        <target>label.anneeUniversitaire</target>
+        <target>Année Universitaire</target>
       </segment>
     </unit>
     <unit id="RuZ8UlY" name="2017">
@@ -2660,7 +2660,7 @@
     <unit id="zzgk67Y" name="label.motif">
       <segment>
         <source>label.motif</source>
-        <target>label.motif</target>
+        <target>Motif</target>
       </segment>
     </unit>
     <unit id="JHuhn6l" name="Stage periode soutenances">
@@ -2672,7 +2672,7 @@
     <unit id="4puM4VG" name="label.dateRenduRapport">
       <segment>
         <source>label.dateRenduRapport</source>
-        <target>label.dateRenduRapport</target>
+        <target>Date de rendu du rapport de stage</target>
       </segment>
     </unit>
     <unit id="XyZAxzY" name="label.raisonSociale">
@@ -3128,31 +3128,31 @@
     <unit id="Ieuglhm" name="dateRange.periode">
       <segment>
         <source>dateRange.periode</source>
-        <target>dateRange.periode</target>
+        <target>Période de stage (début / fin)</target>
       </segment>
     </unit>
     <unit id="yjS8zuu" name="dateRange.interruption">
       <segment>
         <source>dateRange.interruption</source>
-        <target>dateRange.interruption</target>
+        <target>Périodes d'interruption du stage</target>
       </segment>
     </unit>
     <unit id="34.sy8_" name="dateRange.soutenance">
       <segment>
         <source>dateRange.soutenance</source>
-        <target>dateRange.soutenance</target>
+        <target>Dates de Soutenance</target>
       </segment>
     </unit>
     <unit id="_CpHYEF" name="label.responsables">
       <segment>
         <source>label.responsables</source>
-        <target>label.responsables</target>
+        <target>Responsables de la période de stage</target>
       </segment>
     </unit>
     <unit id="y7chPjF" name="help.responsables">
       <segment>
         <source>help.responsables</source>
-        <target>help.responsables</target>
+        <target>Indiquez les collègues en charge de la période de stage</target>
       </segment>
     </unit>
     <unit id="z7tVXIL" name="label.matiere.parent">

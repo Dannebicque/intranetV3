@@ -39,7 +39,6 @@ class DateRangeType extends AbstractType
             ->setDefaults(array(
                 'required'          => true,
                 'from_date_options' => array('widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'),
-                //todo: il faudrait caller le format en fonction de la locale?
                 'to_date_options'   => array('widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'),
                 'date_data'         => ['from' => new DateTime('now'), 'to' => new DateTime('now')]
             ));
