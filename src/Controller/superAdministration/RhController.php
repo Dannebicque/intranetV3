@@ -67,7 +67,6 @@ class RhController extends BaseController
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
                 '(|(supannEmpId=' . $username . ')(uid=' . $username . ')(mail=' . $username . ')(sn=' . $username . '))');
             $results = $query->execute();
-            dump($results);
 
             return $this->render('super-administration/rh/liste-result.html.twig', [
             ]);
