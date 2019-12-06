@@ -229,7 +229,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="respMateriel")
      */
-    private $departements; //todo: a gérer
+    private $departements;
 
     public function __construct()
     {

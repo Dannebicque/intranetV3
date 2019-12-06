@@ -56,7 +56,7 @@
                         {% for date in dates %}
                             <li class="timeline-block">
                                 <div class="timeline-point timeline-point-primary">
-                                    <span class="badge badge-ring badge-primary"></span>{# todo: varier les couleurs en fonction des types ? #}
+                                    <span class="badge badge-ring {{ date.couleurBadge }}"></span>
                                 </div>
                                 <div class="timeline-content">
                                     <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|localizeddate('short', 'short', app.request.getLocale()) }}</time>

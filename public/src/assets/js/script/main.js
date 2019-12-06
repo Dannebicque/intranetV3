@@ -9,6 +9,7 @@
 
 require('./config')
 require('./util')
+require('../../vendor/jquery.collection')
 
 /** CSS **/
 require('../../css/style.scss')

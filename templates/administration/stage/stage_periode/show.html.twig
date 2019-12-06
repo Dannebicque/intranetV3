@@ -72,7 +72,9 @@
                                 <li>
                                     Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption
                                     .dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
-                                    au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} </li>
+                                    au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption
+                                    .dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non
+                                    .defini'|trans }} ({{  stagePeriodeInterruption.motif }})</li>
                             {% else %}
                                 {{ 'non.defini'|trans }}
                             {% endfor %}

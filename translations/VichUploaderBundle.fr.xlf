@@ -49,7 +49,7 @@
     <unit id="lgWCmBh" name="help.ficheRenseignement">
       <segment>
         <source>help.ficheRenseignement</source>
-        <target>help.ficheRenseignement</target>
+        <target>Fiche de renseignement à pré-remplir par l'entreprise afin de valider le stage de l'étudiant</target>
       </segment>
     </unit>
     <unit id="B861HTo" name="Fichier">

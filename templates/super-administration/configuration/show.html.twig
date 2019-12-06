@@ -29,7 +29,18 @@
                 </tr>
                 <tr>
                     <th>Valeur</th>
-                    <td>{{ configuration.valeur }}</td>
+                    <td>
+                        {% if configuration.type == 'T' %}
+                            {{ configuration.valeur }}
+                        {% elseif configuration.type == 'F' %}
+                            <a href="{{ asset('upload/logo/'~configuration.valeur) }}" target="_blank">Voir le
+                                                                                                      fichier</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ configuration.typeLong }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
@@ -43,5 +54,4 @@
             </table>
         </div>
     </div>
-    {# todo: ajouter le type et gérer l'upload ? si c'est un fichier ?#}
 {% endblock %}

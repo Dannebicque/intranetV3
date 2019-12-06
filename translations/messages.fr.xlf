@@ -12923,5 +12923,23 @@
         <target>Etudiants</target>
       </segment>
     </unit>
+    <unit id="1rFdJDj" name="sadm.etudiant.heading">
+      <segment>
+        <source>sadm.etudiant.heading</source>
+        <target>Etudiants</target>
+      </segment>
+    </unit>
+    <unit id="tougYTv" name="sadm.etudiant.resultat.heading">
+      <segment>
+        <source>sadm.etudiant.resultat.heading</source>
+        <target>Résultat de la recherche</target>
+      </segment>
+    </unit>
+    <unit id="iVRiNb1" name="table.type_variable">
+      <segment>
+        <source>table.type_variable</source>
+        <target>table.type_variable</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
