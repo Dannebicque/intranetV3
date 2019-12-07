@@ -49,14 +49,4 @@ class DefaultController extends BaseController
             'departements' => $departementRepository->findAll()
         ]);
     }
-
-    /**
-     * @Route("/administratif/", name="administratif_homepage")
-     */
-    public function administratifHomepage(): Response
-    {
-        return $this->render('default/administratif_homepage.html.twig', [
-
-        ]);
-    }
 }

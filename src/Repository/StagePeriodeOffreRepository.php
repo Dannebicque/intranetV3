@@ -8,6 +8,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
+use App\Entity\Departement;
+use App\Entity\Diplome;
+use App\Entity\Semestre;
+use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -23,5 +28,20 @@ class StagePeriodeOffreRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, StagePeriodeOffre::class);
+    }
+
+    public function findOffreDepartement(Departement $departement)
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.stagePeriodes', 'p')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
+            ->groupBy('o.id')
+            ->orderBy('o.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

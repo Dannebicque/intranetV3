@@ -12953,5 +12953,23 @@
         <target>Nombre maximum de jour pour saisir une absence. Mettre 0 pour un délai illimité</target>
       </segment>
     </unit>
+    <unit id="ht7_86o" name="informations.heading">
+      <segment>
+        <source>informations.heading</source>
+        <target>Informations</target>
+      </segment>
+    </unit>
+    <unit id="7oGyJki" name="offre_stage.heading">
+      <segment>
+        <source>offre_stage.heading</source>
+        <target>Offres de stage/Alternance</target>
+      </segment>
+    </unit>
+    <unit id="6luTV6l" name="ville">
+      <segment>
+        <source>ville</source>
+        <target>ville</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
