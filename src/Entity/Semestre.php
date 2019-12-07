@@ -269,6 +269,11 @@ class Semestre extends BaseEntity
      */
     private $qualiteQuestionnaires;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $optNbJoursSaisieAbsence = 10;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -1317,6 +1322,18 @@ class Semestre extends BaseEntity
                 $qualiteQuestionnaire->setSemestre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOptNbJoursSaisieAbsence(): ?int
+    {
+        return $this->optNbJoursSaisieAbsence;
+    }
+
+    public function setOptNbJoursSaisieAbsence(int $optNbJoursSaisieAbsence): self
+    {
+        $this->optNbJoursSaisieAbsence = $optNbJoursSaisieAbsence;
 
         return $this;
     }

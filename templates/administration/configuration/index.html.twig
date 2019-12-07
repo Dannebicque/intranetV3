@@ -682,6 +682,26 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_nb_jours_saisie_absence'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_nb_jours_saisie_absence'|trans }}</p>
+                                            </div>
+                                            <label class="sr-only" for="optNbJoursSaisieAbsence_{{ semestre.id
+                                            }}">optNbJoursSaisieAbsence_{{ semestre.id }}</label>
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optNbJoursSaisieAbsence_{{ semestre.id }}"
+                                                    id="optNbJoursSaisieAbsence_{{ semestre.id }}"
+                                                    data-type="semestre"
+                                                    data-id="{{ semestre.id }}">
+                                                {% for i in 0 .. 30 %}
+                                                    <option value="{{ i }}"
+                                                            {% if semestre.optNbJoursSaisieAbsence == i %}selected{%
+                                                        endif %}>{{ i }} {{ 'jour.s'|trans }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
