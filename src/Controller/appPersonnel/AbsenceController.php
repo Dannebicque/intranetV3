@@ -23,6 +23,7 @@ use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
+use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -235,24 +236,22 @@ class AbsenceController extends BaseController
             //if ($this->saisieAutorise($connect->getDepartement()->getPgNbjourssaisie(), $datesymfony)) {
             $myEtudiant->setEtudiant($etudiant);
 
-            $myEtudiant->addAbsence(
-                $date,
-                $heure,
-                $matiere,
-                $this->getConnectedUser()
-            );
+                $myEtudiant->addAbsence(
+                    $date,
+                    $heure,
+                    $matiere,
+                    $this->getConnectedUser()
+                );
 
-            $absences = $absenceRepository->getByMatiereArray(
-                $matiere,
-                $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
-            );
+                $absences = $absenceRepository->getByMatiereArray(
+                    $matiere,
+                    $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
+                );
 
-            return $this->json($absences);
+                return $this->json($absences);
+            }
 
-
-            //}
-            //saisie interdite
-            //return new response('out', 500);
+            return new response('out', 500);
         }
 
         if (count($absence) === 1) {
@@ -271,5 +270,18 @@ class AbsenceController extends BaseController
         }
 
         return new response('nok', 500);
+    }
+
+    /**
+     * @param          $nbjour
+     * @param DateTime $datesymfony
+     *
+     * @return bool
+     * @throws Exception
+     */
+    private function saisieAutorise($nbjour, DateTime $datesymfony): bool
+    {
+
+        return $nbjour === 0 ? true : (date_diff(new DateTime('now'), $datesymfony)->format('%a') <= $nbjour);
     }
 }

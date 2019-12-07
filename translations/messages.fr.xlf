@@ -12941,5 +12941,17 @@
         <target>table.type_variable</target>
       </segment>
     </unit>
+    <unit id="wskp_ju" name="table.opt_nb_jours_saisie_absence">
+      <segment>
+        <source>table.opt_nb_jours_saisie_absence</source>
+        <target>Nombre de jours pour saisir une absence</target>
+      </segment>
+    </unit>
+    <unit id="g4wJHN5" name="help.opt_nb_jours_saisie_absence">
+      <segment>
+        <source>help.opt_nb_jours_saisie_absence</source>
+        <target>Nombre maximum de jour pour saisir une absence. Mettre 0 pour un délai illimité</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
