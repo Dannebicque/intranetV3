@@ -18,31 +18,31 @@ class Contact extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"alternance_administration"})
+     * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"alternance_administration"})
+     * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"alternance_administration"})
+     * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $fonction;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Groups({"alternance_administration"})
+     * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"alternance_administration"})
+     * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $email;
 

@@ -28,17 +28,19 @@ class AdministrationController extends BaseController
      */
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $periodes = [];
+        $tperiodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
+            echo $diplome->getId();
             $periodes = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
             foreach ($periodes as $periode) {
-                $periodes[] = $periode;
+                $tperiodes[] = $periode;
             }
         }
 
+
         return $this->render(
             'administration/index.html.twig',
-            ['periodes' => $periodes]
+            ['periodes' => $tperiodes]
         );
     }
 }

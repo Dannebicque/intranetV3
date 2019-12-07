@@ -41,12 +41,14 @@ class StageEntrepriseController extends BaseController
         $tEntreprises = [];
         /** @var StageEtudiant $entreprise */
         foreach ($entreprises as $entreprise) {
-            if (array_key_exists(mb_strtolower($entreprise->getEntreprise()->getLibelle()), $tEntreprises)) {
-                $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['entreprise'] = $entreprise->getEntreprise();
-                $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['nbstagiaire']++;
-            } else {
-                $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['entreprise'] = $entreprise->getEntreprise();
-                $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['nbstagiaire'] = 1;
+            if ($entreprise->getEntreprise() !== null) {
+                if (array_key_exists(mb_strtolower($entreprise->getEntreprise()->getLibelle()), $tEntreprises)) {
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['entreprise'] = $entreprise->getEntreprise();
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['nbstagiaire']++;
+                } else {
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['entreprise'] = $entreprise->getEntreprise();
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['nbstagiaire'] = 1;
+                }
             }
         }
 
@@ -90,16 +92,12 @@ class StageEntrepriseController extends BaseController
     ): Response
     {
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $entreprises,
-            'dates',
-            ['stage_periode_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            'Entreprises',
+            ['stage_entreprise_administration', 'adresse'],
+            ['entreprise' => ['raisonSociale', 'libelle', 'responsable' =>['nom', 'prenom', 'fonction', 'telephone', 'email']], 'tuteur' =>['nom', 'prenom', 'fonction', 'telephone', 'email'], 'serviceStageEntreprise', 'type', 'personnel' => ['nom', 'prenom']]
         );
-
-        //todo: définir les colonnes. copier/coller ici
-
-        return $response;
     }
 }
