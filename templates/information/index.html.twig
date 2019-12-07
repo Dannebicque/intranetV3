@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'ri.heading'|trans }}
+    {{ 'informations.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
@@ -25,7 +25,7 @@
 
 {% block content %}
     {% if categories|length == 0 %}
-        Aucune catégorie d'information pour le moment
+        <div class="alert alert-info">Aucune catégorie d'information pour le moment</div>
     {% else %}
         {{ render(controller(
             'App\\Controller\\InformationController::categorie', {categorie: categories[0].id}

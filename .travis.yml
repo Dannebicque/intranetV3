@@ -1,47 +1,51 @@
-sudo: required
+language: php
+sudo: false
 
-language: generic
-
+# Start mysql service
 services:
-  - docker
-
-env:
-  global:
-    - DOCKER_COMPOSE="docker-compose -f docker-compose.ci.yml"
-    - EXEC="$DOCKER_COMPOSE exec -T app"
-    - APP_IMAGE_NAME="mapiot/symfony-docker"
-    - DEV_TAG="dev-`{ find docker -type f -exec sha1sum {} \; && find Dockerfile -exec sha1sum {} \;; } | sort -k 2 | sha1sum | cut -d' ' -f 1 | cut -c1-7`"
+  - mysql
 
 cache:
   directories:
-    - node_modules
     - $HOME/.composer/cache/files
+    - $HOME/symfony-bridge/.phpunit
 
-before_script:
-  - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
-  - docker pull $APP_IMAGE_NAME:dev-latest || true
-  - docker pull $APP_IMAGE_NAME:$DEV_TAG || true
+env:
+  global:
+    - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+    - SYMFONY_VERSION="4.4.*" DB=mysql
+
+matrix:
+  fast_finish: true
+  include:
+    #   - php: 7.1
+    - php: 7.3
+#    - php: nightly
+#  allow_failures:
+#    - php: nightly
+
+before_install:
+  #  - '[[ "$TRAVIS_PHP_VERSION" == "nightly" ]] || phpenv config-rm xdebug.ini'
+  - composer self-update
+
+install:
+  #- cp .env .env.test
+  - mysql -e 'create database testing;'
+  - composer install
+  - php bin/console doctrine:database:create #--env=test
+  - php bin/console doctrine:schema:create #--env=test
+  - bin/console make:migration
+  #- php bin/console doctrine:migrations:migrate
+  #- php bin/console doctrine:fixtures:load -n --env=test
+  #- ./vendor/bin/simple-phpunit install
 
 script:
-  - make build
-  - make up
-  - make assets-build
-  - make vendor
-  - make lint security-check
+  - phpunit --configuration phpunit.xml
+  #- ./vendor/bin/simple-phpunit
 
-before_deploy:
-  - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
-
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: bash docker/scripts/deploy-dev.sh
-    on:
-      repo: mpiot/symfony-docker
-      branch: develop
-  - provider: script
-    skip_cleanup: true
-    script: bash docker/scripts/deploy-prod.sh
-    on:
-      repo: mpiot/symfony-docker
-      tags: true
+notifications:
+  email:
+    recipients:
+      - david.annebicque@gmail.com
+    on_success: always
+    on_failure: always

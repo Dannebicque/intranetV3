@@ -15,7 +15,10 @@
                         <small>{{ 'created'|trans }}: {{ document.updated|localizeddate('long', 'short', app.request.getLocale()) }}</small>
                     </p>
                 </div>
-                <a class="primary" href="#" data-provide="tooltip" title="{{ 'telecharger'|trans }}"><i
+                <a class="primary" href="{{ asset('upload/documents/'~document.typedocument.departement.id~'/'
+                    ~document.fichier) }}"
+                   data-provide="tooltip"
+                   title="{{ 'telecharger'|trans }}"><i
                             class="ti-save"></i></a>
                 <label class="toggler toggler-danger fs-16" data-provide="tooltip" title="{{ 'favori'|trans }}">
                     <input type="checkbox">
