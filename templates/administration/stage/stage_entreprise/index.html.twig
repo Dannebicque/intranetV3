@@ -64,19 +64,19 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('administration_stage_entreprise_export', {_format:'pdf'}),
+            href: path('administration_stage_entreprise_export', {uuid:  stagePeriode.uuidString, _format:'pdf'}),
             title: 'exporter.pdf'|trans,
             icone : "fa fa-file-pdf-o"
         },
         {
             type:'info',
-            href:path('administration_stage_entreprise_export', {_format:'csv'}),
+            href:path('administration_stage_entreprise_export', {uuid:  stagePeriode.uuidString, _format:'csv'}),
             title: 'exporter.csv'|trans,
             icone: 'fa fa-file-text-o'
         },
         {
             type:'info',
-            href:path('administration_stage_entreprise_export', {_format:'xlsx'}),
+            href:path('administration_stage_entreprise_export', {uuid:  stagePeriode.uuidString, _format:'xlsx'}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-file-excel-o'
         },

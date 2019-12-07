@@ -14,7 +14,6 @@ use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use App\Form\StagePeriodeOffreType;
 use App\MesClasses\MyExport;
-use App\Repository\StagePeriodeOffreRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +47,6 @@ class StagePeriodeOffreController extends BaseController
      * @Route("/{stagePeriode}/export.{_format}", name="administration_stage_periode_offre_export", methods="GET",
      *                                            requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExport                    $myExport
-     * @param StagePeriodeOffreRepository $stagePeriodeOffreRepository
      * @param StagePeriode                $stagePeriode
      * @param                             $_format
      *
@@ -58,20 +56,17 @@ class StagePeriodeOffreController extends BaseController
      */
     public function export(
         MyExport $myExport,
-        StagePeriodeOffreRepository $stagePeriodeOffreRepository,
         StagePeriode $stagePeriode,
         $_format
     ): Response {
-        $dates = $stagePeriodeOffreRepository->findByStagePeriode($stagePeriode);
-        $response = $myExport->genereFichierGenerique(
+        $offres = $stagePeriode->getStagePeriodeOffres();
+        return $myExport->genereFichierGenerique(
             $_format,
-            $dates,
-            'dates',
-            ['date_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
-        ); //todo: définir les colonnes. copier/coller ici
-
-        return $response;
+            $offres,
+            'offres_stage',
+            ['stage_offre_administration'],
+            ['libelle', 'entreprise', 'ville']
+        );
     }
 
     /**

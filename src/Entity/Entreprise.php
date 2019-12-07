@@ -25,22 +25,25 @@ class Entreprise extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({ "stage_entreprise_administration"})
      */
     private $raisonSociale;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"alternance_administration"})
+     * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
+     * @Groups({ "stage_entreprise_administration"})
      */
     private $adresse;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
+     * @Groups({"stage_entreprise_administration"})
      */
     private $responsable;
 

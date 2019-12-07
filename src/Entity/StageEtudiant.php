@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StageEtudiantRepository")
@@ -59,11 +60,13 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
+     * @Groups({"stage_entreprise_administration"})
      */
     private $tuteur;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"stage_entreprise_administration"})
      */
     private $serviceStageEntreprise;
 
@@ -154,6 +157,7 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stageEtudiants", cascade={"persist", "remove"})
+     * @Groups({"stage_entreprise_administration"})
      */
     private $entreprise;
 

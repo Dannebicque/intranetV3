@@ -27,7 +27,6 @@ use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use function is_array;
 
 /**
@@ -41,7 +40,6 @@ class MyExcelMultiExport
 
     /** @var MyExcelWriter */
     private $myExcelWriter;
-
 
 
     public function __construct(
@@ -164,14 +162,25 @@ class MyExcelMultiExport
         foreach ($colonne as $value) {
             if (is_array($value)) {
                 foreach ($value as $col) {
+                    if (is_array($col)) {
+                        foreach ($col as $col2) {
 
-                    $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
-                        $i,
-                        $ligne,
-                        $col
-                    );
-                    //todo: utiliser translate pour générer les en-têtes de colonnes
-                    $i++;
+                            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
+                                $i,
+                                $ligne,
+                                $col2
+                            );
+                            $i++;
+                        }
+                    } else {
+                        $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
+                            $i,
+                            $ligne,
+                            $col
+                        );
+                        //todo: utiliser translate pour générer les en-têtes de colonnes
+                        $i++;
+                    }
                 }
             } else {
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $value);

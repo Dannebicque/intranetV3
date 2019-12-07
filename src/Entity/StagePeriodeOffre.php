@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -31,16 +32,19 @@ class StagePeriodeOffre extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"stage_offre_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"stage_offre_administration"})
      */
     private $entreprise;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"stage_offre_administration"})
      */
     private $ville;
 

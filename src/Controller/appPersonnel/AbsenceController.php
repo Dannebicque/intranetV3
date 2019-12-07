@@ -233,8 +233,8 @@ class AbsenceController extends BaseController
         ]);
 
         if ($request->get('action') === 'saisie' && count($absence) === 0) {
-            //if ($this->saisieAutorise($connect->getDepartement()->getPgNbjourssaisie(), $datesymfony)) {
-            $myEtudiant->setEtudiant($etudiant);
+            if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $date)) {
+                $myEtudiant->setEtudiant($etudiant);
 
                 $myEtudiant->addAbsence(
                     $date,

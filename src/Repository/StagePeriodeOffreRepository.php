@@ -8,7 +8,6 @@
 
 namespace App\Repository;
 
-use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -24,14 +23,5 @@ class StagePeriodeOffreRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, StagePeriodeOffre::class);
-    }
-
-    public function findByStagePeriode(StagePeriode $stagePeriode)
-    {
-        return $this->createQueryBuilder('o')
-            ->where('o.stagePeriodes = :periode')
-            ->setParameter('periode', $stagePeriode->getId())
-            ->getQuery()
-            ->getResult();
     }
 }
