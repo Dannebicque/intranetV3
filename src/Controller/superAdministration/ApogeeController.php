@@ -156,5 +156,46 @@ class ApogeeController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/ldap")
+     */
+    public function ldap() {
+        echo '<h3>requête de test de LDAP</h3>';
+        echo 'Connexion ...';
+        $ds=ldap_connect("ldap.univ-reims.fr");  // doit être un serveur LDAP valide !
+        echo 'Le résultat de connexion est ' . $ds . '<br />';
+
+        if ($ds) {
+            echo 'Liaison ...';
+            $r=ldap_bind($ds);     // connexion anonyme, typique
+            // pour un accès en lecture seule.
+            echo 'Le résultat de connexion est ' . $r . '<br />';
+
+            echo 'Recherchons (sn=S*) ...';
+            // Recherche par nom de famille
+            $sr=ldap_search($ds, "ou=people,dc=univ-reims,dc=fr", "sn=A*");
+            echo 'Le résultat de la recherche est ' . $sr . '<br />';
+
+            echo 'Le nombre d\'entrées retournées est ' . ldap_count_entries($ds,$sr)
+                . '<br />';
+
+            echo 'Lecture des entrées ...<br />';
+            $info = ldap_get_entries($ds, $sr);
+            echo 'Données pour ' . $info["count"] . ' entrées:<br />';
+
+            for ($i=0; $i<$info["count"]; $i++) {
+                echo 'dn est : ' . $info[$i]["dn"] . '<br />';
+                echo 'premiere entree cn : ' . $info[$i]["cn"][0] . '<br />';
+                echo 'premier email : ' . $info[$i]["mail"][0] . '<br />';
+            }
+
+            echo 'Fermeture de la connexion';
+            ldap_close($ds);
+
+        } else {
+            echo '<h4>Impossible de se connecter au serveur LDAP.</h4>';
+        }
+    }
+
 
 }
