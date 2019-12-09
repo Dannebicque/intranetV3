@@ -32,6 +32,7 @@ abstract class MyLdap
             $etudiant = ldap_first_entry(self::$ds, $sr);
             $t['login'] = $etudiant['uid'][0];
             $t['mail'] = $etudiant['mail'][0];
+            dump($t);
             ldap_unbind(self::$ds);
 
             return $t;

@@ -97,6 +97,7 @@ class ApogeeController extends BaseController
                         $etudiants[$numEtudiant]['etat'] = 'add';
                         $etudiants[$numEtudiant]['data'] = $etudiant;
                     }
+                    dump($etudiant);
                 }
             }
             $this->entityManager->flush();
