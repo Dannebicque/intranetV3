@@ -167,7 +167,9 @@ class ApogeeController extends BaseController
 
         if ($ds) {
             echo 'Liaison ...';
-            $r=ldap_bind($ds);     // connexion anonyme, typique
+            $ldaprdn = 'uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr';
+            $ldappass = 'heXzHr7p7MKuccQ2UqKu';
+            $r = ldap_bind($ds, $ldaprdn, $ldappass);     // connexion anonyme, typique
             // pour un accès en lecture seule.
             echo 'Le résultat de connexion est ' . $r . '<br />';
 
