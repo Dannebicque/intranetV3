@@ -1073,6 +1073,11 @@ class Etudiant extends Utilisateur implements Serializable
         }
     }
 
+    public function updateFromLdap($ldap) {
+        $this->setMailUniv($ldap['mail']);
+        $this->setUsername($ldap['login']);
+    }
+
     /**
      * @return Collection|Emprunt[]
      */
