@@ -162,7 +162,7 @@ class ApogeeController extends BaseController
     public function ldap() {
         echo '<h3>requête de test de LDAP</h3>';
         echo 'Connexion ...';
-        $ds=ldap_connect("ldap.univ-reims.fr");  // doit être un serveur LDAP valide !
+        $ds=ldap_connect("ldap://ldap.univ-reims.fr");  // doit être un serveur LDAP valide !
         echo 'Le résultat de connexion est ' . $ds . '<br />';
 
         if ($ds) {
