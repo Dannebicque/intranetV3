@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
 use App\MesClasses\Apogee\MyApogee;
+use App\MesClasses\Tools;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use Exception;
@@ -68,27 +69,29 @@ class ApogeeController extends BaseController
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = MyApogee::getEtudiantsDiplome($diplome);
             while ($row = $stid->fetch()) {
-                $dataApogee = MyApogee::transformeApogeeToArray($row);
-                $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
-                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-                if ($etudiant && $type === 'force') {
-                    //todo: une classe ?
-                    //on met à jour
-                    $etudiant->updateFromApogee($dataApogee['etudiant']);
-                    $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
-                    $etudiants[$numEtudiant]['etat'] = 'maj';
-                    $etudiants[$numEtudiant]['data'] = $etudiant;
-                } else {
-                    //n'existe pas on ajoute.
-                    $etudiant = new Etudiant();
-                    $etudiant->updateFromApogee($dataApogee['etudiant']);
-                    $adresse = new Adresse();
-                    $adresse->updateFromApogee($dataApogee['adresse']);
-                    $this->entityManager->persist($adresse);
-                    $etudiant->setAdresse($adresse);
-                    $this->entityManager->persist($etudiant);
-                    $etudiants[$numEtudiant]['etat'] = 'add';
-                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                if (Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === (string)$diplome->getAnneeUniversitaire()->getAnnee()) {
+                    $dataApogee = MyApogee::transformeApogeeToArray($row);
+                    $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+                    $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                    if ($etudiant && $type === 'force') {
+                        //todo: une classe ?
+                        //on met à jour
+                        $etudiant->updateFromApogee($dataApogee['etudiant']);
+                        $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
+                        $etudiants[$numEtudiant]['etat'] = 'maj';
+                        $etudiants[$numEtudiant]['data'] = $etudiant;
+                    } else {
+                        //n'existe pas on ajoute.
+                        $etudiant = new Etudiant();
+                        $etudiant->updateFromApogee($dataApogee['etudiant']);
+                        $adresse = new Adresse();
+                        $adresse->updateFromApogee($dataApogee['adresse']);
+                        $this->entityManager->persist($adresse);
+                        $etudiant->setAdresse($adresse);
+                        $this->entityManager->persist($etudiant);
+                        $etudiants[$numEtudiant]['etat'] = 'add';
+                        $etudiants[$numEtudiant]['data'] = $etudiant;
+                    }
                 }
             }
             $this->entityManager->flush();
