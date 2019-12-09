@@ -29,12 +29,24 @@ abstract class MyApogee
     {
         echo $diplome->getCodeEtape();
         self::connect();
-        $stid = self::$conn->prepare(
-            'SELECT * FROM INS_ADM_ETP WHERE COD_ETP=:codeetape');
-        $stid->execute(array(':codeetape' => $diplome->getCodeEtape()));
-        return $stid;
+//        $stid = self::$conn->prepare(
+//            'SELECT LIB_NOM_PAT_IND, COD_ANU_SRT_IND, INDIVIDU.COD_IND  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=:codeetape');
+//        $stid->execute(array(':codeetape' => $diplome->getCodeEtape()));
+//        return $stid;
+
+        $stid = self::$conn->prepare('SELECT *  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_IND=179489;');
+        $stid->execute();
+        dump($stid->fetch());
+echo '----';
+        $stid = self::$conn->prepare('SELECT *  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_IND=192274;');
+        $stid->execute();
+        dump($stid->fetch());
+
+
+//        SELECT INDIVIDU.COD_IND, LIB_NOM_PAT_IND  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP='5PSP13';
 
         //SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=:codeetape AND COD_ANU_SRT_IND=NULL
+
     }
 
     private static function connect(): ?PDO
