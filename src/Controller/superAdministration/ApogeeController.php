@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
 use App\MesClasses\Apogee\MyApogee;
+use App\MesClasses\LDAP\MyLdap;
 use App\MesClasses\Tools;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
@@ -71,12 +72,15 @@ class ApogeeController extends BaseController
             while ($row = $stid->fetch()) {
                 if (Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === (string)$diplome->getAnneeUniversitaire()->getAnnee()) {
                     $dataApogee = MyApogee::transformeApogeeToArray($row);
+
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+                    $etuLdap = MyLdap::getInfoEtudiant($numEtudiant);
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if ($etudiant && $type === 'force') {
                         //todo: une classe ?
                         //on met à jour
                         $etudiant->updateFromApogee($dataApogee['etudiant']);
+                        $etudiant->updateFromLdap($etuLdap);
                         $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
                         $etudiants[$numEtudiant]['etat'] = 'maj';
                         $etudiants[$numEtudiant]['data'] = $etudiant;
@@ -84,6 +88,7 @@ class ApogeeController extends BaseController
                         //n'existe pas on ajoute.
                         $etudiant = new Etudiant();
                         $etudiant->updateFromApogee($dataApogee['etudiant']);
+                        $etudiant->updateFromLdap($etuLdap);
                         $adresse = new Adresse();
                         $adresse->updateFromApogee($dataApogee['adresse']);
                         $this->entityManager->persist($adresse);
@@ -154,51 +159,6 @@ class ApogeeController extends BaseController
         return $this->render('super-administration/apogee/confirmation.html.twig', [
             'etudiants' => $etudiants
         ]);
-    }
-
-    /**
-     * @Route("/ldap")
-     */
-    public function ldap() {
-        echo '<h3>requête de test de LDAP</h3>';
-        echo 'Connexion ...';
-        $ds=ldap_connect("ldap://ldap.univ-reims.fr");  // doit être un serveur LDAP valide !
-        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-        echo 'Le résultat de connexion est ' . $ds . '<br />';
-
-        if ($ds) {
-            echo 'Liaison ...';
-            $ldaprdn = 'uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr';
-            $ldappass = 'heXzHr7p7MKuccQ2UqKu';
-            $r = ldap_bind($ds, $ldaprdn, $ldappass);     // connexion anonyme, typique
-            // pour un accès en lecture seule.
-            echo 'Le résultat de connexion est ' . $r . '<br />';
-
-            echo 'Recherchons (sn=S*) ...';
-            // Recherche par nom de famille
-            $sr=ldap_search($ds, "ou=people,dc=univ-reims,dc=fr", "sn=ANCELIN");
-            echo 'Le résultat de la recherche est ' . $sr . '<br />';
-
-            echo 'Le nombre d\'entrées retournées est ' . ldap_count_entries($ds,$sr)
-                . '<br />';
-
-            echo 'Lecture des entrées ...<br />';
-            $info = ldap_get_entries($ds, $sr);
-            echo 'Données pour ' . $info["count"] . ' entrées:<br />';
-
-            for ($i=0; $i<$info["count"]; $i++) {
-                dump($info[$i]);
-                echo 'dn est : ' . $info[$i]["dn"] . '<br />';
-                echo 'premiere entree cn : ' . $info[$i]["cn"][0] . '<br />';
-                echo 'premier email : ' . $info[$i]["mail"][0] . '<br />';
-            }
-
-            echo 'Fermeture de la connexion';
-            ldap_close($ds);
-
-        } else {
-            echo '<h4>Impossible de se connecter au serveur LDAP.</h4>';
-        }
     }
 
 
