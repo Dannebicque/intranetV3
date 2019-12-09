@@ -176,7 +176,7 @@ class ApogeeController extends BaseController
 
             echo 'Recherchons (sn=S*) ...';
             // Recherche par nom de famille
-            $sr=ldap_search($ds, "ou=people,dc=univ-reims,dc=fr", "sn=A*");
+            $sr=ldap_search($ds, "ou=people,dc=univ-reims,dc=fr", "sn=ANCELIN");
             echo 'Le résultat de la recherche est ' . $sr . '<br />';
 
             echo 'Le nombre d\'entrées retournées est ' . ldap_count_entries($ds,$sr)
@@ -187,6 +187,7 @@ class ApogeeController extends BaseController
             echo 'Données pour ' . $info["count"] . ' entrées:<br />';
 
             for ($i=0; $i<$info["count"]; $i++) {
+                dump($info[$i]);
                 echo 'dn est : ' . $info[$i]["dn"] . '<br />';
                 echo 'premiere entree cn : ' . $info[$i]["cn"][0] . '<br />';
                 echo 'premier email : ' . $info[$i]["mail"][0] . '<br />';
