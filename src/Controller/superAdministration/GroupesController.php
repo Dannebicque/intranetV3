@@ -50,11 +50,22 @@ class GroupesController extends BaseController
      *
      * @return Response
      */
-    public function synchroApogeeAll(GroupeRepository $groupeRepository, Departement $departement): Response
+    public function synchroApogeeAll(SemestreRepository $semestreRepository, Departement $departement): Response
     {
-        return $this->render('super-administration/groupes/index.html.twig', [
-            'groupes'     => $groupeRepository->findByDepartement($departement),
-            'departement' => $departement
+        $semestres = $semestreRepository->findByDepartement($departement);
+        foreach ($semestres as $semestre) {
+            $groupes = MyApogee::getGroupesSemestre($semestre);
+            dump($groupes);
+            $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
+            dump($groupes);
+            //récupérer les étudiants dans les groupes et les ajouter
+            $etudiants = MyApogee::getEtudiantsGroupesSemestre($semestre);
+            dump($etudiants);
+        }
+
+        return $this->render('super-administration/groupes/synchro.html.twig', [
+            'departement' => $departement,
+            'semestres' => $semestres
         ]);
     }
 

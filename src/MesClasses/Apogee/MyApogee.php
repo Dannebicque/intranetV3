@@ -27,7 +27,6 @@ abstract class MyApogee
 
     public static function getEtudiantsDiplome(Diplome $diplome)
     {
-        echo $diplome->getCodeEtape();
         self::connect();
         $stid = self::$conn->prepare(
             'SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=:codeetape');
@@ -71,6 +70,18 @@ abstract class MyApogee
         self::connect();
         $stid = self::$conn->prepare(
             'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
+        $stid->execute([':semestre'=> $semestre->getCodeElement()]);
+
+        return $stid;
+    }
+
+    public static function getEtudiantsGroupesSemestre(Semestre $semestre)
+    {
+        self::connect();
+        $stid = self::$conn->prepare(
+            'SELECT INDIVIDU.COD_ETU, GPE_OBJ.COD_ELP FROM IND_AFFECTE_GPE 
+INNER JOIN INDIVIDU ON INDIVIDU.COD_IND=IND_AFFECTE_GPE.COD_IND
+INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE=GPE_OBJ.IND_AFFECTE_GPE.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
         $stid->execute([':semestre'=> $semestre->getCodeElement()]);
 
         return $stid;

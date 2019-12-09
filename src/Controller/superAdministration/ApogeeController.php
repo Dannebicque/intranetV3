@@ -70,7 +70,7 @@ class ApogeeController extends BaseController
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = MyApogee::getEtudiantsDiplome($diplome);
             while ($row = $stid->fetch()) {
-                if (Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === (string)$diplome->getAnneeUniversitaire()->getAnnee()) {
+                if ((int) Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $diplome->getAnneeUniversitaire()->getAnnee()) {
                     $dataApogee = MyApogee::transformeApogeeToArray($row);
 
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
