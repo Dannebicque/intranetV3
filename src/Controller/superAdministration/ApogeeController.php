@@ -97,10 +97,10 @@ class ApogeeController extends BaseController
                         $etudiants[$numEtudiant]['etat'] = 'add';
                         $etudiants[$numEtudiant]['data'] = $etudiant;
                     }
-                    dump($etudiant);
+                    $this->entityManager->flush();
                 }
             }
-            $this->entityManager->flush();
+
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
             return $this->render('super-administration/apogee/confirmation.html.twig', [

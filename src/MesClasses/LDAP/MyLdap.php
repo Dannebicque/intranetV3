@@ -29,10 +29,9 @@ abstract class MyLdap
         self::connect();
         $sr = ldap_search(self::$ds, getenv('LDAP_BASE_DN'), 'supannetuid=' . $numetudiant);
         if (ldap_count_entries(self::$ds, $sr) === 1) {
-            $etudiant = ldap_first_entry(self::$ds, $sr);
-            $t['login'] = $etudiant['uid'][0];
-            $t['mail'] = $etudiant['mail'][0];
-            dump($t);
+            $etudiant = ldap_get_entries(self::$ds, $sr);
+            $t['login'] = $etudiant[0]['uid'][0];
+            $t['mail'] = $etudiant[0]['mail'][0];
             ldap_unbind(self::$ds);
 
             return $t;
