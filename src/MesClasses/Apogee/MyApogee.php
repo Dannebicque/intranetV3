@@ -34,12 +34,12 @@ abstract class MyApogee
 //        $stid->execute(array(':codeetape' => $diplome->getCodeEtape()));
 //        return $stid;
 
-        $stid = self::$conn->prepare('SELECT *  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_IND=179489;');
-        $stid->execute();
+        $stid = self::$conn->prepare('SELECT *  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_IND=:etudiant;');
+        $stid->execute(['etudiant' => 179489]);
         dump($stid->fetch());
 echo '----';
-        $stid = self::$conn->prepare('SELECT *  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_IND=192274;');
-        $stid->execute();
+        $stid = self::$conn->prepare('SELECT *  FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_IND=:etudiant;');
+        $stid->execute(['etudiant' => 192274]);
         dump($stid->fetch());
 
 
