@@ -37,7 +37,15 @@
                         <h2 class="card-title">Groupes du semestre {{ semestre.libelle }}</h2>
                         <div class="card-header-actions" style="">
                             <a class="btn btn-sm btn-primary"
-                               title="{{ 'sa.ajouter.personnel'|trans }}"
+                               title="{{ 'sa.synchro_apogee_groupe_etudiant_semestre'|trans }}"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               href="{{ path('sa_groupes_etudiant_synchro_semestre', {semestre:semestre.id}) }}"
+                            >
+                                <i class="ti ti-loop"></i>
+                            </a>
+                            <a class="btn btn-sm btn-primary"
+                               title="{{ 'sa.synchro_apogee_semestre'|trans }}"
                                data-provide="tooltip"
                                data-placement="bottom"
                                href="{{ path('sa_groupes_departement_synchro_semestre', {semestre:semestre.id}) }}"
