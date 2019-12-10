@@ -9,7 +9,7 @@
     <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
 
     {% block stylesheets %}
-        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+        <link href="{{ asset('assets/fonts/font.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">

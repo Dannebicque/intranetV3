@@ -11,7 +11,9 @@ namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Departement;
+use App\Entity\Groupe;
 use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use App\MesClasses\Apogee\MyApogee;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
@@ -45,22 +47,50 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/departement/{departement}", name="sa_groupes_departement_synchro_all")
-     * @param GroupeRepository $groupeRepository
-     * @param Departement      $departement
+     * @param SemestreRepository $semestreRepository
+     * @param Departement        $departement
      *
      * @return Response
      */
     public function synchroApogeeAll(SemestreRepository $semestreRepository, Departement $departement): Response
     {
         $semestres = $semestreRepository->findByDepartement($departement);
+        /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
-            $groupes = MyApogee::getGroupesSemestre($semestre);
-            dump($groupes);
             $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
-            dump($groupes);
-            //récupérer les étudiants dans les groupes et les ajouter
-            $etudiants = MyApogee::getEtudiantsGroupesSemestre($semestre);
-            dump($etudiants);
+            $nbgroupes = $groupes->rowCount();
+            //todo: déplacer dans une classe si OK.
+            if ($nbgroupes === 0) {
+                //pas de hierarchie
+                $groupes = MyApogee::getGroupesSemestre($semestre);
+                $i = 0;
+                if (count($semestre->getTypeGroupes()) > 0) {
+                    $tg = $semestre->getTypeGroupes()[0];
+                } else {
+                    //si pas de type de groupe on en ajoute un par défaut.
+                    $tg = new TypeGroupe();
+                    $tg->setLibelle('Defaut');
+                    $tg->setDefaut(true);
+                    $tg->setType('TD');
+                    $tg->setSemestre($semestre);
+                    $this->entityManager->persist($tg);
+                }
+
+                while($ligne = $groupes->fetch()) {
+                    $groupe = new Groupe();
+                    $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
+                    $groupe->setLibelle($ligne['LIB_GPE']);
+                    $groupe->setOrdre($i);
+                    $groupe->setTypeGroupe($tg);
+                    $i++;
+                    $this->entityManager->persist($groupe);
+                }
+                $this->entityManager->flush();
+            } else {
+
+            }
+
+
         }
 
         return $this->render('super-administration/groupes/synchro.html.twig', [

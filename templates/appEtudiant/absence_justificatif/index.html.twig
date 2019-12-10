@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             {% for absence_justificatif in absence_justificatifs %}
-                <tr>
+                <tr id="ligne_{{ absence_justificatif.uuidString }}">
 
                     <td>{{ absence_justificatif.dateDebut ? absence_justificatif.dateDebut|localizeddate('long',
                             'none', app.request.getLocale()) : '' }}, {{ absence_justificatif.heureDebut ?

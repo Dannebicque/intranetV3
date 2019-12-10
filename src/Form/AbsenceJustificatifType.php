@@ -25,7 +25,7 @@ class AbsenceJustificatifType extends AbstractType
             ->add('dateDebut', DateType::class, ['label' => 'label.date_debut', 'widget' => 'single_text'])
             ->add('heureDebut', TimeType::class, ['label' => 'label.heure_debut', 'widget' => 'single_text'])
             ->add('dateFin', DateType::class, ['label' => 'label.date_fin', 'widget' => 'single_text'])
-            ->add('heureFin', TimeType::class, ['label' => 'label.heure_debut', 'widget' => 'single_text'])
+            ->add('heureFin', TimeType::class, ['label' => 'label.heure_fin', 'widget' => 'single_text'])
             ->add('motif', TextType::class, ['label' => 'label.motif'])
             ->add('fichierFile', VichFileType::class, [
                 'required'       => false,
