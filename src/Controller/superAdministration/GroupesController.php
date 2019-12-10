@@ -64,6 +64,7 @@ class GroupesController extends BaseController
             if ($nbgroupes === 0) {
                 //pas de hierarchie
                 $groupes = MyApogee::getGroupesSemestre($semestre);
+                dump($groupes);
                 $i = 0;
                 if (count($semestre->getTypeGroupes()) > 0) {
                     $tg = $semestre->getTypeGroupes()[0];
