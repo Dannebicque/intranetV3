@@ -68,20 +68,18 @@ class GroupesController extends BaseController
                     $tg = $semestre->getTypeGroupes()[0];
                 } else {
                     //si pas de type de groupe on en ajoute un par défaut.
-                    $tg = new TypeGroupe();
+                    $tg = new TypeGroupe($semestre);
                     $tg->setLibelle('Defaut');
                     $tg->setDefaut(true);
                     $tg->setType('TD');
-                    $tg->setSemestre($semestre);
                     $this->entityManager->persist($tg);
                 }
 
                 while($ligne = $groupes->fetch()) {
-                    $groupe = new Groupe();
+                    $groupe = new Groupe($tg);
                     $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
                     $groupe->setLibelle($ligne['LIB_GPE']);
                     $groupe->setOrdre($i);
-                    $groupe->setTypeGroupe($tg);
                     $i++;
                     $this->entityManager->persist($groupe);
                 }
