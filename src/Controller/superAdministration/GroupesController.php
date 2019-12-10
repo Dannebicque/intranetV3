@@ -59,6 +59,7 @@ class GroupesController extends BaseController
         foreach ($semestres as $semestre) {
             $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
             $nbgroupes = $groupes->rowCount();
+            dump($nbgroupes);
             //todo: déplacer dans une classe si OK.
             if ($nbgroupes === 0) {
                 //pas de hierarchie
@@ -76,6 +77,7 @@ class GroupesController extends BaseController
                 }
 
                 while($ligne = $groupes->fetch()) {
+                    dump($ligne);
                     $groupe = new Groupe($tg);
                     $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
                     $groupe->setLibelle($ligne['LIB_GPE']);
