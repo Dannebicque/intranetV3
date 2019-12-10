@@ -145,7 +145,7 @@ class GroupesController extends BaseController
         //récupération des groupes
         $groupes = MyApogee::getEtudiantsGroupesSemestre($semestre);
 
-        foreach ($groupes as $groupe) {
+        while ($groupe = $groupes->fetch()) {
             if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_GPE'], $tGroupes)) {
                 $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_GPE']]);
                 $tGroupes[$groupe['COD_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
