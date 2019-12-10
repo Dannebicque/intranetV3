@@ -291,4 +291,12 @@ class EtudiantRepository extends ServiceEntityRepository
 
         return $t;
     }
+
+    public function findEtudiantEnFormation()
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.anneeSortie = 0')
+            ->getQuery()
+            ->getResult();
+    }
 }

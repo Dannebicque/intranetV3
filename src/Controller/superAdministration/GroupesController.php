@@ -16,6 +16,7 @@ use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\MesClasses\Apogee\MyApogee;
+use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -123,11 +124,11 @@ class GroupesController extends BaseController
      *
      * @return Response
      */
-    public function synchroApogeeEtudiantSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
+    public function synchroApogeeEtudiantSemestre(EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
         //suppression des groupes d'origine.
         $tEtudiants = [];
-        $etudiants = $semestre->getEtudiants();
+        $etudiants = $etudiantRepository->findEtudiantEnFormation();
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
             $tEtudiants[$etudiant->getNumEtudiant()] = $etudiant;
