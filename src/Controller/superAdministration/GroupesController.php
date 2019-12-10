@@ -11,10 +11,12 @@ namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Departement;
+use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\MesClasses\Apogee\MyApogee;
+use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,13 +61,11 @@ class GroupesController extends BaseController
         foreach ($semestres as $semestre) {
             $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
             $nbgroupes = $groupes->rowCount();
-            dump($nbgroupes);
             //todo: déplacer dans une classe si OK.
             if ($nbgroupes === 0) {
                 //pas de hierarchie
                 $groupes = MyApogee::getGroupesSemestre($semestre);
-                dump($groupes);
-                $i = 0;
+                $i = 1;
                 if (count($semestre->getTypeGroupes()) > 0) {
                     $tg = $semestre->getTypeGroupes()[0];
                 } else {
@@ -78,7 +78,6 @@ class GroupesController extends BaseController
                 }
 
                 while($ligne = $groupes->fetch()) {
-                    dump($ligne);
                     $groupe = new Groupe($tg);
                     $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
                     $groupe->setLibelle($ligne['LIB_GPE']);
@@ -93,11 +92,8 @@ class GroupesController extends BaseController
 
 
         }
-
-        return $this->render('super-administration/groupes/synchro.html.twig', [
-            'departement' => $departement,
-            'semestres' => $semestres
-        ]);
+        $this->addFlashBag('success', 'sa_groupes_departement_synchro_all.success');
+        return $this->redirectToRoute('sa_groupes_departement_index', ['departement' => $departement->getId()]);
     }
 
     /**
@@ -118,5 +114,45 @@ class GroupesController extends BaseController
         while ($row = $groupes->fetch($groupes)) {
 
         }
+    }
+
+    /**
+     * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
+     * @param GroupeRepository $groupeRepository
+     * @param Semestre         $semestre
+     *
+     * @return Response
+     */
+    public function synchroApogeeEtudiantSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
+    {
+        //suppression des groupes d'origine.
+        $tEtudiants = [];
+        $etudiants = $semestre->getEtudiants();
+        /** @var Etudiant $etudiant */
+        foreach ($etudiants as $etudiant) {
+            $tEtudiants[$etudiant->getNumEtudiant()] = $etudiant;
+            foreach($etudiant->getGroupes() as $groupe) {
+                $etudiant->removeGroupe($groupe);
+            }
+        }
+
+        $groupes = $groupeRepository->findBySemestre($semestre);
+        $tGroupes = [];
+        /** @var Groupe $groupe */
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+        //récupération des groupes
+        $groupes = MyApogee::getEtudiantsGroupesSemestre($semestre);
+
+        foreach ($groupes as $groupe)
+        {
+            $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_GPE']]);
+            $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_GPE']]->getTypeGroupe()->getSemestre());
+        }
+        $this->entityManager->flush();
+        $this->addFlashBag('success', 'sa_groupes_etudiant_synchro_semestre.success');
+        return $this->redirectToRoute('sa_groupes_departement_index', ['departement' => $semestre->getAnnee()->getDiplome()->getDepartement()->getId()]);
+
     }
 }
