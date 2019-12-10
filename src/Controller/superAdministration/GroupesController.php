@@ -146,10 +146,10 @@ class GroupesController extends BaseController
         $groupes = MyApogee::getEtudiantsGroupesSemestre($semestre);
 
         while ($groupe = $groupes->fetch()) {
-            if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_GPE'], $tGroupes)) {
-                $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_GPE']]);
-                $tGroupes[$groupe['COD_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
-                $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_GPE']]->getTypeGroupe()->getSemestre());
+            if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'], $tGroupes)) {
+                $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
+                $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
+                $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_EXT_GPE']]->getTypeGroupe()->getSemestre());
             }
         }
         $this->entityManager->flush();
