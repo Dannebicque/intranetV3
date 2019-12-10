@@ -148,6 +148,7 @@ class GroupesController extends BaseController
         foreach ($groupes as $groupe) {
             if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_GPE'], $tGroupes)) {
                 $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_GPE']]);
+                $tGroupes[$groupe['COD_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
                 $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_GPE']]->getTypeGroupe()->getSemestre());
             }
         }
