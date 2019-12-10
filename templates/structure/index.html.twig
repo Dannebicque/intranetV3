@@ -104,7 +104,7 @@
                 {% for annee in diplome.annees %}
                     <div class="row gap-y dip_{{ diplome.id }} lignehover">
                         <div class="col-md-2"></div>
-                        <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeApogee }}</div>
+                        <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeEtape }}</div>
                         <div class="col-md-2">
                             <a href="{{ path(baseurl ~ 'annee_duplicate', {'id': annee.id}) }}"
                                class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"

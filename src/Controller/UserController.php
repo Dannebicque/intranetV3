@@ -34,7 +34,7 @@ class UserController extends BaseController
      *
      * @return Response
      */
-    public function monProfil($onglet = 'timeline'): Response
+    public function monProfil($onglet = 'scolarite'): Response
     {
         return $this->render('user/profil.html.twig', [
             'user'      => $this->getConnectedUser(),

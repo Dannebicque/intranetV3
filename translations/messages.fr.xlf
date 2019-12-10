@@ -12971,5 +12971,53 @@
         <target>ville</target>
       </segment>
     </unit>
+    <unit id="L2v0Wyd" name="absence_justificatif.edit.success.flash">
+      <segment>
+        <source>absence_justificatif.edit.success.flash</source>
+        <target>absence_justificatif.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="TZALTuK" name="absence_justificatif.delete.success.flash">
+      <segment>
+        <source>absence_justificatif.delete.success.flash</source>
+        <target>absence_justificatif.delete.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="uvLUewa" name="ETUDIANT">
+      <segment>
+        <source>ETUDIANT</source>
+        <target>ETUDIANT</target>
+      </segment>
+    </unit>
+    <unit id="eMbfxMR" name="sa_qualite.heading">
+      <segment>
+        <source>sa_qualite.heading</source>
+        <target>Qualité</target>
+      </segment>
+    </unit>
+    <unit id="RF5ut5L" name="sa_enquete.heading">
+      <segment>
+        <source>sa_enquete.heading</source>
+        <target>Enquêtes qualité</target>
+      </segment>
+    </unit>
+    <unit id="aZY0ll_" name="enquete.index">
+      <segment>
+        <source>enquete.index</source>
+        <target>Gérer les enquêtes</target>
+      </segment>
+    </unit>
+    <unit id="M.VkWjD" name="sa_quizz.heading">
+      <segment>
+        <source>sa_quizz.heading</source>
+        <target>Gérer les quizz et les questions</target>
+      </segment>
+    </unit>
+    <unit id="FhKcjUU" name="questions.index">
+      <segment>
+        <source>questions.index</source>
+        <target>Gérer les questions</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

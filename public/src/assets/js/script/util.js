@@ -60,21 +60,19 @@ $(document).on('click', '.supprimer', function (e) {
   const url = $(this).attr('href')
   const csrf = $(this).data('csrf')
   swal({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    title: 'Confirmer la suppression ?',
+    text: "L'opération ne pourra pas être annulée.",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!',
-    cancelButtonText: 'No, cancel!',
+    confirmButtonText: 'Oui, je confirme',
+    cancelButtonText: 'Non, Annuler',
     confirmButtonClass: 'btn btn-primary',
     cancelButtonClass: 'btn btn-secondary',
     buttonsStyling: false
   }).then(function (result) {
-    console.log(result)
     if (result.value) {
-      console.log(url);
       $.ajax({
         url: url,
         type: "DELETE",
@@ -85,13 +83,13 @@ $(document).on('click', '.supprimer', function (e) {
           $("#ligne_" + id).closest('tr').remove();
           addCallout('Suppression effectuée avec succès', 'success')
           swal(
-            'Deleted!',
-            'Your file has been deleted.',
+            'Supprimé!',
+            'L\'enregistrement a été supprimé.',
             'success'
           )
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          swal("Error deleting!", "Please try again", "error");
+          swal("Erreur lors de la suppression!", "Merci de renouveler l\'opération", "error");
           addCallout('Erreur lors de la tentative de suppression', 'danger')
         }
       });
@@ -102,7 +100,7 @@ $(document).on('click', '.supprimer', function (e) {
     ) {
       swal(
         'Cancelled',
-        'Your imaginary file is safe :)',
+        'OK! Tout est comme avant !',
         'error'
       )
     }

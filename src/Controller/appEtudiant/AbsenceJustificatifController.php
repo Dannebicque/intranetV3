@@ -77,14 +77,17 @@ class AbsenceJustificatifController extends BaseController
      */
     public function edit(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
-        $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
+        $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif, [
+            'action' => $this->generateUrl('app_etudiant_absence_justificatif_edit', [
+                'id' => $absenceJustificatif->getUuidString()])]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.edit.success.flash');
 
             return $this->redirectToRoute('app_etudiant_absence_justificatif_edit',
-                ['id' => $absenceJustificatif->getId()]);
+                ['id' => $absenceJustificatif->getUuidString()]);
         }
 
         return $this->render('appEtudiant/absence_justificatif/edit.html.twig', [

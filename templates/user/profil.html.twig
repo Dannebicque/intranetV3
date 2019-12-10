@@ -23,9 +23,9 @@
 {% block content %}
     <div class="row">
         <div class="col-md-8" id="profilContent">
-            {% if user.typeUser == 'permanent' or user.typeUser == 'vacataire' %}
+            {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                 {{ include('user/composants/content_personnel.html.twig') }}
-            {% elseif user.typeUser == 'etudiant' %}
+            {% elseif user.typeUser|lower == 'etudiant' %}
                 {{ include('user/composants/content_etudiant.html.twig') }}
             {% endif %}
         </div>

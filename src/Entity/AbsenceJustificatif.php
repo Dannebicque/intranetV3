@@ -220,7 +220,7 @@ class AbsenceJustificatif extends BaseEntity
     /**
      * @param string $fichierName
      */
-    public function setFichierName(string $fichierName): void
+    public function setFichierName(?string $fichierName): void
     {
         $this->fichierName = $fichierName;
     }
