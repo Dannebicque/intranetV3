@@ -46,7 +46,7 @@ class Ue extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ue")
-     * @ORM\OrderBy({"libelle"="ASC"})
+     * @ORM\OrderBy({"codeMatiere"="ASC"})
      */
     private $matieres;
 
