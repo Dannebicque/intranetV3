@@ -2260,22 +2260,13 @@
         <target>Slug</target>
       </segment>
     </unit>
-    <unit id="9kldPxo" name="label.competence_parent">
-      <notes>
-        <note priority="1">src/Form/CompetenceType.php:36</note>
-      </notes>
-      <segment>
-        <source>label.competence_parent</source>
-        <target>label.competence_parent</target>
-      </segment>
-    </unit>
     <unit id="CrpCHLo" name="label.adresseParentale">
       <notes>
         <note priority="1">src/Form/EtudiantProfilType.php:32</note>
       </notes>
       <segment>
         <source>label.adresseParentale</source>
-        <target>label.adresseParentale</target>
+        <target>Adresse parentale</target>
       </segment>
     </unit>
     <unit id="PJaDAX_" name="value1">
@@ -2600,7 +2591,7 @@
     <unit id="Hs23Twr" name="label.stagePeriodes">
       <segment>
         <source>label.stagePeriodes</source>
-        <target>label.stagePeriodes</target>
+        <target>Période de stage</target>
       </segment>
     </unit>
     <unit id="gROiwmw" name="Stage periode interruptions">
@@ -2648,13 +2639,13 @@
     <unit id="CpXy8SJ" name="label.dateDebut">
       <segment>
         <source>label.dateDebut</source>
-        <target>label.dateDebut</target>
+        <target>Date de début</target>
       </segment>
     </unit>
     <unit id="T1Hbte." name="label.dateFin">
       <segment>
         <source>label.dateFin</source>
-        <target>label.dateFin</target>
+        <target>Date de fin</target>
       </segment>
     </unit>
     <unit id="zzgk67Y" name="label.motif">
@@ -2762,7 +2753,7 @@
     <unit id="0aivzEP" name="help.dateDebutStage">
       <segment>
         <source>help.dateDebutStage</source>
-        <target>help.dateDebutStage</target>
+        <target>Date de début de stage</target>
       </segment>
     </unit>
     <unit id="EjA7qT8" name="label.dateFinStage">
@@ -2774,7 +2765,7 @@
     <unit id="SYy0RLN" name="help.dateFinStage">
       <segment>
         <source>help.dateFinStage</source>
-        <target>help.dateFinStage</target>
+        <target>Date de fin de stage</target>
       </segment>
     </unit>
     <unit id="TYrIg41" name="label.dureeJoursStage">
@@ -2846,7 +2837,7 @@
     <unit id="RlvHvfK" name="help.dureeHebdomadaire">
       <segment>
         <source>help.dureeHebdomadaire</source>
-        <target>help.dureeHebdomadaire</target>
+        <target>Durée hebdomadaire de travail pendant la période de stage</target>
       </segment>
     </unit>
     <unit id="p9pFSd0" name="label.commentaireDureeHebdomadaire">
@@ -2945,18 +2936,6 @@
         <target>Période d'affichage</target>
       </segment>
     </unit>
-    <unit id="O.iYcEm" name="Left date">
-      <segment>
-        <source>Left date</source>
-        <target>Left date</target>
-      </segment>
-    </unit>
-    <unit id="0zTxLZx" name="Right date">
-      <segment>
-        <source>Right date</source>
-        <target>Right date</target>
-      </segment>
-    </unit>
     <unit id="7inZ5_j" name="Si erreur contacté les RH">
       <segment>
         <source>Si erreur contacté les RH</source>
@@ -2972,13 +2951,13 @@
     <unit id="E6.qDyX" name="label.codeVersion">
       <segment>
         <source>label.codeVersion</source>
-        <target>label.codeVersion</target>
+        <target>Code version</target>
       </segment>
     </unit>
     <unit id="GBLZVd8" name="label.codeDepartement">
       <segment>
         <source>label.codeDepartement</source>
-        <target>label.codeDepartement</target>
+        <target>Code département</target>
       </segment>
     </unit>
     <unit id="X_zrZv." name="0">
@@ -3116,7 +3095,7 @@
     <unit id="n80hyE_" name="label.type_materiel">
       <segment>
         <source>label.type_materiel</source>
-        <target>label.type_materiel</target>
+        <target>Type de matériel</target>
       </segment>
     </unit>
     <unit id="FLExqEN" name="label.type_materiel.libelle">
@@ -3158,7 +3137,7 @@
     <unit id="z7tVXIL" name="label.matiere.parent">
       <segment>
         <source>label.matiere.parent</source>
-        <target>label.matiere.parent</target>
+        <target>Matière parente</target>
       </segment>
     </unit>
     <unit id="SwAMHFv" name="Entreprise">
@@ -3212,31 +3191,31 @@
     <unit id="1EVBLGd" name="label.contrat_alternance">
       <segment>
         <source>label.contrat_alternance</source>
-        <target>label.contrat_alternance</target>
+        <target>Type de contrat d'alternance</target>
       </segment>
     </unit>
     <unit id="GjogBEt" name="label.etat_alternance">
       <segment>
         <source>label.etat_alternance</source>
-        <target>label.etat_alternance</target>
+        <target>Etat du formulaire de l'alternance</target>
       </segment>
     </unit>
     <unit id="rA0.vtx" name="label.tuteur">
       <segment>
         <source>label.tuteur</source>
-        <target>label.tuteur</target>
+        <target>Tuteur entreprise</target>
       </segment>
     </unit>
     <unit id="bXWce2i" name="label.tuteur_universitaire">
       <segment>
         <source>label.tuteur_universitaire</source>
-        <target>label.tuteur_universitaire</target>
+        <target>Tuteur universitaire</target>
       </segment>
     </unit>
     <unit id="gZf7P8B" name="help.tuteur_universitaire">
       <segment>
         <source>help.tuteur_universitaire</source>
-        <target>help.tuteur_universitaire</target>
+        <target>Tuteur universitaire en charge du suivi de l'alternance de l'étudiant</target>
       </segment>
     </unit>
     <unit id="Vv_UAOk" name="Heure">

@@ -1,8 +1,11 @@
-$(document).on('change', '#tuteurUniversitaire', function () {
+$(document).on('change', '.tuteurUniversitaireAlternance', function () {
   $.ajax({
-    url: Routing.generate('administration_alternance_update_tuteur_universitaire', {alternance: $(this).data('alternance'), personnel: $(this).val()}),
+    url: Routing.generate('administration_alternance_update_tuteur_universitaire', {
+      alternance: $(this).data('alternance'),
+      personnel: $(this).val()
+    }),
     success: function () {
-      addCallout('Justificatif d\'absence refusé !', 'success')
+      addCallout('Tuteur universitaire enregistré !', 'success')
     },
     error: function () {
       addCallout('Une erreur est survenue !', 'danger')
@@ -11,12 +14,12 @@ $(document).on('change', '#tuteurUniversitaire', function () {
 })
 
 $(document).on('click', '.initAllAlternance', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   const url = $(this).attr('href')
 
   swal({
     title: 'Etes vous sûr?',
-    text: "Vous allez initialiser tous les suivis d'alternances. Cela effacera les données déjà présente. !",
+    text: 'Vous allez initialiser tous les suivis d\'alternances. Cela effacera les données déjà présente. !',
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -30,7 +33,7 @@ $(document).on('click', '.initAllAlternance', function (e) {
     if (result.value) {
       $.ajax({
         url: url,
-        type: "POST",
+        type: 'POST',
         success: function () {
           addCallout('Initialisation effectuée avec succès', 'success')
           swal(
@@ -40,10 +43,10 @@ $(document).on('click', '.initAllAlternance', function (e) {
           )
         },
         error: function () {
-          swal("Error deleting!", "Please try again", "error");
+          swal('Error deleting!', 'Please try again', 'error')
           addCallout('Erreur lors de la tentative d\'initialisation', 'danger')
         }
-      });
+      })
 
     } else if (
       // Read more about handling dismissals
@@ -56,4 +59,4 @@ $(document).on('click', '.initAllAlternance', function (e) {
       )
     }
   })
-});
+})

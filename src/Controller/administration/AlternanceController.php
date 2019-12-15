@@ -48,7 +48,7 @@ class AlternanceController extends BaseController
         return $this->render('administration/alternance/index.html.twig',
             [
                 'alternances' => $alternanceRepository->findByAnneeArray($annee,
-                    $annee->getAnneeUniversitaire()),
+                    $annee->getDiplome()->getAnneeUniversitaire()),
                 'annee'       => $annee,
                 'etudiants'   => $etudiants,
             ]);
@@ -150,32 +150,32 @@ class AlternanceController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="administration_alternance_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function create(Request $request): Response
-    {
-        $alternance = new Alternance();
-        $form = $this->createForm(AlternanceType::class, $alternance,
-            ['departement' => $this->dataUserSession->getDepartement()]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($alternance);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'alternance.add.success.flash');
-
-            return $this->redirectToRoute('administration_alternance_index');
-        }
-
-        return $this->render('administration/alternance/new.html.twig', [
-            'alternance' => $alternance,
-            'form'       => $form->createView(),
-        ]);
-    }
+//    /**
+//     * @Route("/new", name="administration_alternance_new", methods="GET|POST")
+//     * @param Request $request
+//     *
+//     * @return Response
+//     */
+//    public function create(Request $request): Response
+//    {
+//        $alternance = new Alternance();
+//        $form = $this->createForm(AlternanceType::class, $alternance,
+//            ['departement' => $this->dataUserSession->getDepartement()]);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $this->entityManager->persist($alternance);
+//            $this->entityManager->flush();
+//            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'alternance.add.success.flash');
+//
+//            return $this->redirectToRoute('administration_alternance_index');
+//        }
+//
+//        return $this->render('administration/alternance/new.html.twig', [
+//            'alternance' => $alternance,
+//            'form'       => $form->createView(),
+//        ]);
+//    }
 
     /**
      * @Route("/details/{id}", name="administration_alternance_show", methods="GET")
@@ -243,7 +243,7 @@ class AlternanceController extends BaseController
     /**
      * @param Alternance $alternance
      * @param Personnel  $personnel
-     * @Route("/update/tuteur-universitaire/{alternance}/{personnel}", name="administration_alternance_update_tuteur_universitaire")
+     * @Route("/update/tuteur-universitaire/{alternance}/{personnel}", name="administration_alternance_update_tuteur_universitaire", options={"expose":true})
      *
      * @return JsonResponse
      */

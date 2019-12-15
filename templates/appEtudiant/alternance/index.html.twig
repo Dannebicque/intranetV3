@@ -1,0 +1,13 @@
+<div class="card">
+    <h4 class="card-title">Votre alternance</h4>
+    <div class="card-body">
+        {% if form is defined %}
+            {{ include('composants/adm-form.html.twig') }}
+        {% else %}
+            <div class="alert alert-info">
+            Formulaire non disponible pour le moment.
+            </div>
+        {% endif %}
+
+    </div>
+</div>
