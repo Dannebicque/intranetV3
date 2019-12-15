@@ -24,7 +24,7 @@ trait ApogeeTrait {
     private $codeEtape; //code etape ou code diplome
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $codeDiplome; //code etape ou code diplome
 

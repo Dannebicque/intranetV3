@@ -156,7 +156,7 @@ class MatiereType extends AbstractType
             'required' => true,
             'placeholder' => 'Choisir d\'abord un semestre ...',
             'class' => Ue::class,
-            'choice_label' => 'libelle',
+            'choice_label' => 'display',
             'query_builder' => $ues,
         ));
 
