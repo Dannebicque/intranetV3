@@ -191,7 +191,9 @@
                                                                          title="Informations sur l'entreprise"
                                                                          data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if alternance.adresseAlternance != null %}{{ alternance.adresseAlternance.ville }} ({{ alternance.adresseAlternance.codePostal }}){% else %} - {% endif %}</td>
+                            <td>{% if alternance.entreprise != null and alternance.entreprise.adresse != null %}{{
+                                alternance.entreprise.adresse.ville }}
+                                    ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
                         </tr>
                     {% else %}

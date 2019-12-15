@@ -32,6 +32,7 @@
                     <th>{{ 'table.entreprise'|trans }}</th>
                     <th>{{ 'table.tuteur_entreprise'|trans }}</th>
                     <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                    <th>{{ 'table.fiche_suivi'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -45,17 +46,21 @@
                         {% if alternances[etudiant.id] is defined %}
                             {% set alternance = alternances[etudiant.id] %}
                             <td>{{ alternance.typeContrat }}</td>
-                            <td>{{ alternance.entreprise ? alternance.entreprise.nom : 'non.defini'|trans }}</td>
-                            <td>{{ alternance.tuteur ? alternance.tuteur.displayPr : 'non.defini'|trans }}</td>
+                            <td>{{ alternance.entreprise ? alternance.entreprise.libelle : 'non.defini'|trans }}</td>
+                            <td>{{ alternance.tuteur ? alternance.tuteur.display : 'non.defini'|trans }}</td>
                             <td>
                                 <label class="sr-only" for="tuteurUniversitaire">Tuteur universitaire</label>
-                                <select name="tuteurUniversitaire" id="tuteurUniversitaire" class="form-control" data-provide="selectpicker" data-live-search="true">
+                                <select name="tuteurUniversitaire"
+                                        class="form-control tuteurUniversitaireAlternance"
+                                        data-alternance="{{ alternance.id }}"
+                                        data-provide="selectpicker" data-live-search="true">
                                     <option value="" selected>Veuillez choisir</option>
                                     {% for personnel in user_data.personnelsEnseignant %}
                                         <option value="{{ personnel.id }}" {% if alternance.tuteurUniversitaire != null and personnel.id == alternance.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.display }}</option>
                                     {% endfor %}
                                 </select>
                             </td>
+                            <td>{{ alternance.alternanceFicheSuivis|length }}</td>
                             <td>
                                 {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'alternance', id: alternance.id, duplicate:false}) }}
                             </td>

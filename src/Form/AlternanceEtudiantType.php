@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AlternanceType extends AbstractType
+class AlternanceEtudiantType extends AbstractType
 {
     private $departement;
 
@@ -37,21 +37,13 @@ class AlternanceType extends AbstractType
                 'expanded' => true,
                 'label'    => 'label.contrat_alternance'
             ])
-            ->add('etat', ChoiceType::class, [
-                'choices'  => [
-                    Alternance::ALTERNANCE_ETAT_INITIALISE => Alternance::ALTERNANCE_ETAT_INITIALISE,
-                    Alternance::ALTERNANCE_ETAT_COMPLETE   => Alternance::ALTERNANCE_ETAT_COMPLETE,
-                    Alternance::ALTERNANCE_ETAT_VALIDE     => Alternance::ALTERNANCE_ETAT_VALIDE
-                ],
-                'expanded' => true,
-                'label'    => 'label.etat_alternance'
-            ])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
             ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
             ->add('tuteur', ContactType::class, ['label' => 'label.tuteur'])
             ->add('tuteurUniversitaire', EntityType::class, [
                 'label'         => 'label.tuteur_universitaire',
                 'expanded'      => false,
+                'disabled' => true,
                 'multiple'      => false,
                 'class'         => Personnel::class,
                 'help'          => 'help.tuteur_universitaire',

@@ -30,7 +30,6 @@ class AdministrationController extends BaseController
     {
         $tperiodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            echo $diplome->getId();
             $periodes = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
             foreach ($periodes as $periode) {
                 $tperiodes[] = $periode;

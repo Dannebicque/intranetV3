@@ -50,6 +50,10 @@
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\RattrapageController::index'
             )) }}
+        {% elseif user_data.user.annee.optAlternance == true and  onglet == 'alternance' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\AlternanceController::index'
+            )) }}
         {% elseif onglet == 'stage' %}
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\StageController::index'

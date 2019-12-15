@@ -13049,5 +13049,35 @@
         <target>atitle.retour_liste_diplome</target>
       </segment>
     </unit>
+    <unit id="sib58_h" name="alternance.init.one.success.flash">
+      <segment>
+        <source>alternance.init.one.success.flash</source>
+        <target>alternance.init.one.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="AOZiprn" name="menu.alternance">
+      <segment>
+        <source>menu.alternance</source>
+        <target>Alternance</target>
+      </segment>
+    </unit>
+    <unit id="5bVxIMa" name="alternance.edit.success.flash">
+      <segment>
+        <source>alternance.edit.success.flash</source>
+        <target>alternance.edit.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="dbIzNq4" name="table.fiche_suivi">
+      <segment>
+        <source>table.fiche_suivi</source>
+        <target>table.fiche_suivi</target>
+      </segment>
+    </unit>
+    <unit id="_eTnXYw" name="app.personnel.alternance_fiche_suivi.new.heading">
+      <segment>
+        <source>app.personnel.alternance_fiche_suivi.new.heading</source>
+        <target>Ajout d'une fiche de suivi de l'alternance de %etudiant%</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

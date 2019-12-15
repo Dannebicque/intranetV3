@@ -57,6 +57,13 @@
                    href="{{ path('app_etudiant_absence_justificatif_index') }}">{{ 'menu.justificatif'|trans }}</a>
             </li>
 
+            {% if        user_data.user.annee.optAlternance == true  %}
+                <li class="nav-item ">
+                    <a class="nav-link changeapplication {% if onglet == 'alternance' %}active{% endif %}"
+                       href="{{ path('application_etudiant_alternance_index') }}"
+                       role="tab">{{ 'menu.alternance'|trans }}</a>
+                </li>
+            {% endif %}
             {% if user_data.departement.optStage == true %}
                 <li class="nav-item ">
                     <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"

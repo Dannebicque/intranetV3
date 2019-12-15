@@ -923,6 +923,15 @@ class Etudiant extends Utilisateur implements Serializable
         return null;
     }
 
+    public function getAnnee() : ?Annee
+    {
+        if ($this->getSemestre() !== null && $this->getSemestre()->getAnnee() !== null) {
+            return $this->getSemestre()->getAnnee();
+        }
+
+        return null;
+    }
+
     public function getDeleted(): ?bool
     {
         return $this->deleted;
