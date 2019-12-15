@@ -1,6 +1,6 @@
 <div class="card">
     <header class="card-header">
-        <h4 class="card-title">{{ type~'s.heading'|trans }} ({{ personnels|length }})</h4>
+        <h4 class="card-title">{{ type|capitalize ~ 's' }} ({{ personnels|length }})</h4>
         <div class="card-header-actions" style="">
             {% if is_granted('ROLE_PERMANENT') %}
                 <ul class="card-controls">

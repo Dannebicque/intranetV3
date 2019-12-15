@@ -1,0 +1,164 @@
+<div class="row" id="blocadd">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>Action | <strong>Ajout</strong> d'un créneau</h2>
+            </div>
+            <div class="card-body">
+                <form action="{{ path('administration_edt_add_cours') }}" method="post">
+                    <input type="hidden" name="promo" value="{{ edt.semestre.id }}" />
+                    <input type="hidden" name="semaine" value="{{ edt.semaineFormation }}"/>
+                    <input type="hidden" name="semaine2" value="{{ edt.semaine }}"/>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    <input type="radio" name="jourc" id="jourc1" value="1"> Lundi
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="jourc" id="jourc2" value="2"> Mardi
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="jourc" id="jourc3" value="3"> Mercredi
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="jourc" id="jourc4" value="4"> Jeudi
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="jourc" id="jourc5" value="5"> Vendredi
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="typecours" class="control-label">Type de cours</label>
+                                <select name="typecours" id="typecours" class="form-control" data-provide="selectpicker"
+                                        data-live-search="true">
+                                    {% for groupe in groupes %}
+                                        <option value="{{ groupe.id }}">{{ groupe.display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="salle" class="control-label">Salle</label>
+                                <select class="form-control" name="salle" id="salle" data-provide="selectpicker"
+                                        data-live-search="true">
+                                    <option value="">Choisir la salle</option>
+                                    {% for salle in salles %}
+                                        <option value="{{ salle.libelle }}">{{ salle.libelle }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="hdbt" class="control-label">Heure de début</label>
+
+                                <select name="hdbt" id="hdbt" class="form-control" data-provide="selectpicker"
+                                        data-live-search="true">
+                                    {% set k=1 %}
+                                    {% for i in 8..20 %}
+                                        <option value="{{ k }}">{{ i }}h00</option>
+                                        {% set k=k+1 %}
+                                        <option value="{{ k }}">{{ i }}h30</option>
+                                        {% set k=k+1 %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="hfin" class="control-label">Heure de fin</label>
+
+                                <select name="hfin" id="hfin" class="form-control" data-provide="selectpicker"
+                                        data-live-search="true">
+                                    {% set k=2 %}
+                                    {% for i in 8..20 %}
+                                        {% if i==8 %}
+                                            <option value="{{ k }}">{{ i }}h30</option>
+                                            {% set k=k+1 %}
+                                        {% else %}
+                                            <option value="{{ k }}">{{ i }}h00</option>
+                                            {% set k=k+1 %}
+                                            <option value="{{ k }}">{{ i }}h30</option>
+                                            {% set k=k+1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="checkbox inline">
+                                    <input type="checkbox" name="allday" id="allday"> Toute la journée
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="selectmatiere" class="control-label">Matière</label>
+
+                                <select name="selectmatiere" id="selectmatiere" class="form-control" data-provide="selectpicker"
+                                        data-live-search="true">
+                                    <option value="1">* Sans *</option>
+                                    {% for matiere in matieres %}
+                                        <option value="{{ matiere.id }}">{{ matiere.display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="selectenseignant" class="control-label">Enseignant</label>
+
+                                <select name="selectenseignant" id="selectenseignant" class="form-control"
+                                        data-provide="selectpicker"
+                                        data-live-search="true"
+                                        style="width: 100%">
+                                    <option value="0">* Autre *</option>
+                                    {% for enseignant in personnels %}
+                                        <option value="{{ enseignant.id }}">{{ enseignant.display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+
+                                <label class="radio-inline">
+                                    <input type="radio" name="evaluation" value="1"> C'est une évaluation
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="evaluation" value="0" checked="checked"> Ce n'est pas
+                                                                                                       une évaluation
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="texte" class="control-label">Texte</label>
+                                <input type="text" name="texte" id="texte" class="form-control">
+                                <span class="help-block">Vous pouvez saisir un texte libre à la place d'un module</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-block btn-primary">Ajouter le créneau</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

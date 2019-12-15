@@ -13,8 +13,8 @@
  *
  */
 
-const Cells = []
-const Ind = 0
+let Cells = []
+let Ind = 0
 
 const $contextMenuEdt = $('#contextMenuEdt')
 let $rowClicked
@@ -78,70 +78,63 @@ $(document).click(function () {
   $contextMenuEdt.hide();
 });
 
-// //une fois la selection terminée
-// function selectfin() {
-//   console.log('fin');
-//   var valeur;
-//   for (var i = 0; i < Cells.length; i++) {
-//     console.log(Cells[i]);
-//   }
-//   console.log("cell0 " + Cells[0]);
-//   console.log("cell-fin " + Cells[Cells.length - 1]);
-//   var tabdbt = Cells[0].split('_');
-//   $('#hdbt').val(tabdbt[1]);
-//   var tabfin = Cells[Cells.length - 1].split('_');
-//
-//   var fin = parseInt(tabfin[1]) + 1;
-//   $('#hfin').val(fin);
-//   $('#jourc' + tabdbt[2]).iCheck('check');
-//   var diff = parseInt(tabfin[3]) - parseInt(tabdbt[3]);
-//   if (diff === 0)//donc sur la même colonne
-//   {
-//     valeur = 'TP-' + tabdbt[3];
-//   }
-//   else if (diff === 1)//donc sur 2 colonnes)
-//   {
-//     valeur = 'TD-' + tabdbt[3];
-//   }
-//   else {
-//     valeur = 'CM-1';
-//   }
-//   console.log(valeur);
-//   $('#typecours').val(valeur);
-//   $('#salle').val('');
-//   $('#texte').val('');
-//
-//   $('#blocadd').show();
-//   $('#zoneaction').hide();
-// }
-//
-// //au debut de la selection
-// function debut() {
-//   Cells = [];
-//   Ind = 0;
-//   console.log('debut');
-// }
-//
-//
-//   //mémoriser les celulles selectionnées
-//   $('#selectable').selectable({
-//     filter: 'th,td:not(.modedt)',
-//     start: function (event, ui) {
-//       debut()
-//     },
-//     stop: function (event, ui) {
-//       selectfin()
-//     },
-//     selected: function (event, ui) {
-//       var s = $(this).find('.ui-selected');
-//
-//       Cells[Ind] = $(ui.selected).attr('id');
-//       console.log('case' + Cells);
-//       Ind = Ind + 1;
-//
-//     }
-//   });
-//
+//une fois la selection terminée
+function selectfin() {
+  let valeur;
+
+  let tabdbt = Cells[0].split('_')
+  $('#hdbt').selectpicker('val', tabdbt[1]);
+
+  let tabfin = Cells[Cells.length - 1].split('_')
+
+  let fin = parseInt(tabfin[1]) + 1
+  $('#hfin').selectpicker('val', fin);
+
+  $('#jourc' + tabdbt[2]).prop("checked", true);
+
+  let diff = parseInt(tabfin[3]) - parseInt(tabdbt[3])
+  if (diff === 0)//donc sur la même colonne
+  {
+    valeur = 'TP-' + tabdbt[3]
+  }
+  else if (diff === 1)//donc sur 2 colonnes)
+  {
+    valeur = 'TD-' + tabdbt[3]
+  }
+  else {
+    valeur = 'CM-1'
+  }
+
+  $('#typecours').selectpicker('val', valeur);
+  $('#salle').selectpicker('val', '');
+  $('#texte').selectpicker('val', '');
+
+  $('#blocadd').show()
+}
+
+//au debut de la selection
+function debut() {
+  Cells = [];
+  Ind = 0;
+}
+
+
+  //mémoriser les celulles selectionnées
+  $('#selectable').selectable({
+    filter: 'th,td:not(.modedt)',
+    start: function (event, ui) {
+      debut()
+    },
+    stop: function (event, ui) {
+      selectfin()
+    },
+    selected: function (event, ui) {
+      let s = $(this).find('.ui-selected');
+      Cells[Ind] = $(ui.selected).attr('id');
+      Ind = Ind + 1;
+
+    }
+  });
 
 
   //suppression d'une semaine
