@@ -94,7 +94,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setAdresse1(string $adresse1): self
+    public function setAdresse1(?string $adresse1 = ''): self
     {
         $this->adresse1 = $adresse1;
 
@@ -114,7 +114,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setAdresse2($adresse2): self
+    public function setAdresse2(?string $adresse2 = ''): self
     {
         $this->adresse2 = $adresse2;
 
@@ -134,7 +134,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setAdresse3($adresse3): self
+    public function setAdresse3(?string $adresse3 = ''): self
     {
         $this->adresse3 = $adresse3;
 
@@ -154,7 +154,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setCodePostal(string $codePostal): self
+    public function setCodePostal(?string $codePostal = ''): self
     {
         $this->codePostal = $codePostal;
 
@@ -174,7 +174,7 @@ class Adresse extends BaseEntity
      *
      * @return Adresse
      */
-    public function setVille(string $ville): self
+    public function setVille(?string $ville = ''): self
     {
         $this->ville = $ville;
 

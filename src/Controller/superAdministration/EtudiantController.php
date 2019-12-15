@@ -32,21 +32,13 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @Route("/ajouter", name="sa_etudiant_ajouter")
-     */
-    public function addEtudiants(): Response
-    {
-        return $this->render('super-administration/etudiant/ajouter.html.twig', [
-
-        ]);
-    }
-
-    /**
      * @Route("/importer", name="sa_etudiant_importer")
      */
-    public function importerScolarite(): void
+    public function importerListeEtudiant(): void
     {
         //déjà dans administration ?
+        //todo: gérer l'import. En commun avec Administration/EtudiantController
+
     }
 
     /**

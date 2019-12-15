@@ -190,7 +190,8 @@
                         {% for ue in semestre.ues %}
                             <div class="row gap-y ue_{{ semestre.id }} lignehover">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeElement }} {% if ue
+                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeElement }} | {{ ue.libelle }} {%
+                                        if ue
                                         .bonification==true %}(Bonification){% endif %}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ 'ue_duplicate', {'id': ue.id}) }}"

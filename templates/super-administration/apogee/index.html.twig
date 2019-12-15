@@ -20,6 +20,14 @@
                 <a class="nav-link" data-toggle="tab"
                    href="#importun">{{ 'importer.une.etudiant'|trans }}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#ajoutmanuelliste">{{ 'importer.liste.etudiant'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#ajoutmanuelun">{{ 'ajout.manuel.etudiant'|trans }}</a>
+            </li>
         </ul>
         <div class="buttons">
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
@@ -109,6 +117,29 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="tab-pane fade" id="ajoutmanuelliste">
+            <div class="card">
+                <h4 class="card-title">{{ 'sadm.scolarite.import.listing.heading'|trans }}</h4>
+                <div class="card-body">
+                    <form method="POST" action="{{ path('sa_etudiant_importer') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="control-label" for="importer_etudiant">Selectionnez le fichier en
+                                                                                 respectant le format</label>
+                            <input type="file" name="fichier_import" id="importer_etudiant" class="form-control">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-block btn-warning">Importer les étudiants</button>
+                        </div>
+                        <div class="alert alert-info">Le fichier doit contenir les données suivantes et les en-têtes
+                                                      correctement nommées (<a href="">voir le fichier d'exemple</a>)
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="ajoutmanuelun">
+            Formulaire d'ajout manuel d'un étudiant.
         </div>
     </div>
 {% endblock %}
