@@ -53,7 +53,7 @@ class AnneeType extends AbstractType
                 },
                 'label'         => 'label.diplome'
             ])
-            ->add('codeApogee', TextType::class, [
+            ->add('codeEtape', TextType::class, [
                 'label' => 'label.code_etape'
             ])
             ->add('codeVersion', TextType::class, [

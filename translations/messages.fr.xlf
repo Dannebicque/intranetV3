@@ -13022,7 +13022,13 @@
     <unit id="0.31u1O" name="button_update_index">
       <segment>
         <source>button_update_index</source>
-        <target>button_update_index</target>
+        <target>Sauvegarder et revenir à l'index</target>
+      </segment>
+    </unit>
+    <unit id="ZfLxyn2" name="ajouter.ppn.diplome">
+      <segment>
+        <source>ajouter.ppn.diplome</source>
+        <target>Ajouter un PPN au diplôme</target>
       </segment>
     </unit>
   </file>
