@@ -19,10 +19,10 @@
             <h4 class="card-title"><strong>{{ 'super-admin.etudiant-departement.heading'|trans({"%departement%": departement.libelle}) }}</strong></h4>
             <div class="card-header-actions">
                 <a class="btn btn-sm btn-primary"
-                   title="{{ 'sa.ajouter.personnel'|trans }}"
+                   title="{{ 'sa.ajouter.etudiant'|trans }}"
                    data-provide="tooltip"
                    data-placement="bottom"
-                   href="{{ path('sa_etudiant_departement_add', {departement:departement.id}) }}"
+                   href="{{ path('sa_apogee_index') }}"
                 >
                     <i class="ti ti-plus"></i>
                 </a>

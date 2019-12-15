@@ -40,19 +40,6 @@ class EtudiantDepartementController extends BaseController
     }
 
     /**
-     * @Route("/{departement}/add", name="sa_etudiant_departement_add")
-     * @param Departement $departement
-     *
-     * @return Response
-     */
-    public function add(Departement $departement): Response
-    {
-        return $this->render('super-administration/etudiant_departement/add.html.twig', [
-            'departement' => $departement
-        ]);
-    }
-
-    /**
      * @Route("/remove/{id}", name="sa_etudiant_remove", methods="DELETE")
      * @param Request  $request
      *

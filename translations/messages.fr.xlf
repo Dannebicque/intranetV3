@@ -13031,5 +13031,23 @@
         <target>Ajouter un PPN au diplôme</target>
       </segment>
     </unit>
+    <unit id="r3PAWJB" name="sa.ajouter.etudiant">
+      <segment>
+        <source>sa.ajouter.etudiant</source>
+        <target>sa.ajouter.etudiant</target>
+      </segment>
+    </unit>
+    <unit id="Z.PKSNj" name="importer.liste.etudiant">
+      <segment>
+        <source>importer.liste.etudiant</source>
+        <target>Importer une liste d'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="FD4qzko" name="atitle.retour_liste_diplome">
+      <segment>
+        <source>atitle.retour_liste_diplome</source>
+        <target>atitle.retour_liste_diplome</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

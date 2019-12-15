@@ -23,6 +23,7 @@
 {% block content %}
     <div class="tab-content">
         {% for semestre in user_data.semestres %}
+            {% if semestre.diplome.responsableDiplome == user_data.user.id %}
             <div class="tab-pane {% if loop.first %} active show{% endif %}"
                  id="semestre{{ semestre.id }}" role="tabpanel">
                 <div class="card">
@@ -107,6 +108,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
