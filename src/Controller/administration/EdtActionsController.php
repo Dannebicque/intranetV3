@@ -9,8 +9,11 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\EdtPlanning;
+use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,5 +52,24 @@ class EdtActionsController extends BaseController
 
         //pas de semaine trouvée
         return $this->redirectToRoute('administration_edt_index');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @param MyEDT   $myEdt
+     *
+     * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
+     * @return RedirectResponse
+     */
+    public function addCours(Request $request, MyEdt $myEdt)
+    {
+        $pl = $myEdt->addCours($request);
+
+        return $this->redirectToRoute('administration_edt_index', array(
+            'semaine' => $request->request->get('semaine2'),
+            'filtre'  => 'promo',
+            'valeur'  => $pl->getSemestre()->getId()
+        ));
     }
 }

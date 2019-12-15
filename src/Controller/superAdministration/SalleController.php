@@ -120,7 +120,11 @@ class SalleController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle.edit.success.flash');
 
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('sa_salle_index');
+            }
             return $this->redirectToRoute('sa_salle_edit', ['id' => $salle->getId()]);
+
         }
 
         return $this->render('super-administration/salle/edit.html.twig', [

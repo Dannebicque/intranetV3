@@ -11,6 +11,7 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
+use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleRepository;
@@ -54,6 +55,7 @@ class EdtController extends BaseController
      * @param PersonnelRepository $personnelRepository
      * @param MatiereRepository   $matiereRepository
      * @param SalleRepository     $salleRepository
+     * @param GroupeRepository    $groupeRepository
      * @param MyEdt               $myEdt
      * @param                     $semaine
      * @param                     $valeur
@@ -65,17 +67,21 @@ class EdtController extends BaseController
         PersonnelRepository $personnelRepository,
         MatiereRepository $matiereRepository,
         SalleRepository $salleRepository,
+        GroupeRepository $groupeRepository,
         MyEdt $myEdt,
         $semaine,
         $valeur,
         $filtre
     ): Response {
+        $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
+            $valeur);
         return $this->render('administration/edt/edt-intranet.html.twig', [
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles'     => $salleRepository->findAll(),
             'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'edt'        => $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
-                $valeur)
+            'edt'        => $edt,
+            'groupes'   => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
+
         ]);
     }
 

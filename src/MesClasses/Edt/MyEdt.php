@@ -28,7 +28,9 @@ use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class MyEdt extends BaseEdt
 {
@@ -46,29 +48,43 @@ class MyEdt extends BaseEdt
 
     /** @var MatiereRepository */
     private $matiereRepository;
+    /**
+     * @var PersonnelRepository
+     */
+    private $personnelRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
 
     /**
      * MyEdt constructor.
      *
-     * @param CalendrierRepository  $celcatCalendrierRepository
-     * @param EdtPlanningRepository $edtPlanningRepository
-     * @param SemestreRepository    $semestreRepository
-     * @param GroupeRepository      $groupeRepository
-     * @param MatiereRepository     $matiereRepository
+     * @param CalendrierRepository   $celcatCalendrierRepository
+     * @param EdtPlanningRepository  $edtPlanningRepository
+     * @param SemestreRepository     $semestreRepository
+     * @param GroupeRepository       $groupeRepository
+     * @param MatiereRepository      $matiereRepository
+     * @param PersonnelRepository    $personnelRepository
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
         EdtPlanningRepository $edtPlanningRepository,
         SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
-        MatiereRepository $matiereRepository
+        MatiereRepository $matiereRepository,
+        PersonnelRepository $personnelRepository,
+        EntityManagerInterface $entityManager
     ) {
         parent::__construct($celcatCalendrierRepository);
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->semestreRepository = $semestreRepository;
         $this->groupeRepository = $groupeRepository;
         $this->matiereRepository = $matiereRepository;
+        $this->personnelRepository = $personnelRepository;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -86,15 +102,16 @@ class MyEdt extends BaseEdt
         $this->init('prof', $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();//todo: pour des datas en BDD sans scelcat. Ajouter test.
+
         return $this;
     }
-
 
 
     /**
      * @param Etudiant $etudiant
      *
      * @param int      $semaine
+     *
      * @return MyEdt
      * @throws Exception
      */
@@ -104,6 +121,7 @@ class MyEdt extends BaseEdt
         $this->user = $etudiant;
         $this->init('etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
+
         return $this;
     }
 
@@ -162,9 +180,9 @@ class MyEdt extends BaseEdt
 
     public function initAdministration($departement, $semaine, $filtre, $valeur): MyEdt
     {
-        if ($valeur === ''){
+        if ($valeur === '') {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
-            if (count($semestres) >0) {
+            if (count($semestres) > 0) {
                 $valeur = $semestres[0]->getId();
             } else {
                 //erreur
@@ -215,7 +233,7 @@ class MyEdt extends BaseEdt
      *
      * @return array
      */
-    private function transformeEtudiant($pl) : array
+    private function transformeEtudiant($pl): array
     {
         $tab = [];
         $this->groupes();
@@ -242,6 +260,7 @@ class MyEdt extends BaseEdt
 
             }
         }
+
         return $tab;
     }
 
@@ -350,6 +369,7 @@ class MyEdt extends BaseEdt
             if ($p->getMatiere() !== null) {
                 return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';
             }
+
             return '** ' . $p->getTexte() . ' **';
         }
 
@@ -394,11 +414,9 @@ class MyEdt extends BaseEdt
     }
 
 
-
     private function convertEdt($nb): ?int
     {
-        switch ($nb)
-        {
+        switch ($nb) {
             case '1':
                 return 1;
             case '4':
@@ -421,7 +439,7 @@ class MyEdt extends BaseEdt
     /**
      *
      */
-    private function groupes() : void
+    private function groupes(): void
     {
         /** @var Groupe $groupe */
         foreach ($this->user->getGroupes() as $groupe) {
@@ -595,7 +613,7 @@ class MyEdt extends BaseEdt
     public function transformeDetails(?EdtPlanning $pl): ?array
     {
         if ($pl !== null) {
-            $t = array();
+            $t = [];
             $t['matiere'] = $pl->getMatiere() !== null ? $pl->getMatiere()->getDisplay() : $pl->getTexte();
 
 
@@ -645,6 +663,53 @@ class MyEdt extends BaseEdt
         $this->init('promo', $semestre->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();//todo: pour des datas en BDD sasn scelcat. Ajouter test.
+
         return $this;
     }
+
+    public function addCours(Request $request)
+    {
+        $pl = new EdtPlanning();
+        $semestre = $this->semestreRepository->find($request->request->get('promo'));
+        $pl->setSemestre($semestre);
+        $pl->setSemaine($request->request->get('semaine'));
+
+        if ($request->request->get('texte') !== '') {
+            $pl->setTexte($request->request->get('texte'));
+        } else {
+            $module = $this->matiereRepository->find($request->request->get('selectmatiere'));
+            $pl->setMatiere($module);
+        }
+
+        $pl->setDebut($request->request->get('hdbt'));
+        $pl->setFin($request->request->get('hfin'));
+        $pr = $this->personnelRepository->find($request->request->get('selectenseignant'));
+        $pl->setIntervenant($pr);
+        $pl->setSalle($request->request->get('salle'));
+        $pl->setJour($request->request->get('jourc'));
+        $pl->setEvaluation($request->request->get('evaluation'));
+
+        $tc = explode('-', $request->request->get('typecours'));
+        $pl->setType($tc[0]);
+
+        switch ($tc[0]) {
+            case 'cm':
+            case 'CM':
+                $pl->setGroupe(1);
+                break;
+            case 'td':
+            case 'TD':
+            case 'tp':
+            case 'TP':
+                $pl->setGroupe(trim($tc[1]));
+                break;
+        }
+
+
+        $this->entityManager->persist($pl);
+        $this->entityManager->flush();
+
+        return $pl;
+    }
+
 }

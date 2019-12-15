@@ -55,8 +55,7 @@
                             {% if groupe.etudiants|length >0 %}
                                 {% for etudiant in groupe.etudiants %}
                                     <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
-                                    <div class="text-{{ semestre.annee.couleurTexte }} card-body bg-{{ semestre.annee.couleur }}
-                                        py-20"
+                                    <div class="text-white card-body bg-cyan py-20"
                                          style="min-height: 230px">
                                         <div class="flexbox">
                                             <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">

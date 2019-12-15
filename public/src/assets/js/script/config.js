@@ -26,7 +26,7 @@ app.config({
   |
   */
 
-  provide: ['datatables', 'quill', 'momentjs', 'chartjs'],
+  provide: ['datatables', 'quill', 'momentjs', 'chartjs', 'jqueryui'],
 
   /*
   |--------------------------------------------------------------------------

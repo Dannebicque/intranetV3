@@ -135,4 +135,37 @@ class GroupeRepository extends ServiceEntityRepository
         return $t;
 
     }
+
+    /**
+     * @param Semestre $semestre
+     *
+     * @return array
+     */
+    public function findGroupeSemestreEdt(Semestre $semestre)
+    {
+        $groupes = array();
+        $gtp = $this->getGroupesTP($semestre->getId());
+        $gtd = $this->getGroupesTD($semestre->getId());
+
+        $i = 1;
+        $groupes[0]['id'] = 'CM-1';
+        $groupes[0]['display'] = 'CM | CM';
+
+        /** @var  Groupes $g */
+        foreach ($gtp as $g) {
+            $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
+            $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
+            $i++;
+        }
+
+        /** @var  Groupes $g */
+        foreach ($gtd as $g) {
+            $or = $g->getOrdre();
+            $groupes[$i]['id'] = 'TD-' . $or;
+            $groupes[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
+            $i++;
+        }
+
+        return $groupes;
+    }
 }

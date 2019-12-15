@@ -10,6 +10,7 @@
 require('./config')
 require('./util')
 require('../../vendor/jquery.collection')
+require('../../vendor/jqueryui')
 
 /** CSS **/
 require('../../css/style.scss')

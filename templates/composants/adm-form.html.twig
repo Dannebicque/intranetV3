@@ -1,5 +1,11 @@
 {% form_theme form 'form/my-form.html.twig' %}
 {{ form_start(form) }}
     {{ form_widget(form) }}
+
 <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+
+{% if button_label == 'update'|trans %}
+    <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans
+        }}</button>
+{% endif %}
 {{ form_end(form) }}

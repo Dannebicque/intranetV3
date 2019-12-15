@@ -13019,5 +13019,11 @@
         <target>Gérer les questions</target>
       </segment>
     </unit>
+    <unit id="0.31u1O" name="button_update_index">
+      <segment>
+        <source>button_update_index</source>
+        <target>button_update_index</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
