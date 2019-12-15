@@ -3998,7 +3998,7 @@
     <unit id="w.J9NKn" name="label.code_etape">
       <segment>
         <source>label.code_etape</source>
-        <target>label.code_etape</target>
+        <target>Code étape</target>
       </segment>
     </unit>
     <unit id="8LpPorv" name="label.ue_bonification">
@@ -4041,6 +4041,18 @@
       <segment>
         <source>label.annee.par.defaut</source>
         <target>Année par défaut</target>
+      </segment>
+    </unit>
+    <unit id="3exSSul" name="label.ppn_actif">
+      <segment>
+        <source>label.ppn_actif</source>
+        <target>PPN Actif</target>
+      </segment>
+    </unit>
+    <unit id="UzSqxqb" name="label.ppn_actif_add">
+      <segment>
+        <source>label.ppn_actif_add</source>
+        <target>label.ppn_actif_add</target>
       </segment>
     </unit>
   </file>

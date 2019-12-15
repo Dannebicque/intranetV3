@@ -46,7 +46,8 @@ class PpnType extends AbstractType
                     'query_builder' => function(DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
-                    'label'         => 'label.diplome'
+                    'label'         => 'label.diplome',
+                    'data' => $this->diplome
                 ]
             );
     }

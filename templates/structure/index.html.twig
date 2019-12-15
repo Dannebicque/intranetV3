@@ -433,7 +433,8 @@
                                 href="{{ path(baseurl ~ 'annee_new',{diplome:diplome.id}) }}"
                                 class="btn btn-block btn-success" data-iddip="{{ diplome.id }}"><i
                                     class="fa fa-plus-circle"></i> {{ 'ajouter.annee.diplome'|trans({'%libelle%':diplome.libelle}) }}
-                        </a></div>
+                        </a>
+                    </div>
                 </div>
             {% endfor %}
             <div class="row gap-y lignehover">
@@ -442,7 +443,8 @@
                     <a href="{{ path(baseurl ~ 'diplome_new', {departement:departement.id}) }}"
                        class="btn btn-block btn-success "><i
                                 class="fa fa-plus-circle"></i> {{ 'ajouter.diplome.departement'|trans({'%libelle%': departement.libelle}) }}
-                    </a></div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
