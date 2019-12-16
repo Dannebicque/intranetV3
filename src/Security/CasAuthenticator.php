@@ -105,11 +105,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         return null;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        return new RedirectResponse($this->server_login_url . 'login?service=' . $request->getUri());
-    }
-
     public function supportsRememberMe(): bool
     {
         return false;
