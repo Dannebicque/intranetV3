@@ -11,7 +11,6 @@ namespace App\Security;
 use App\Event\CASAuthenticationFailureEvent;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -109,4 +108,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     {
         return false;
     }
+
+    public function start(Request $request, AuthenticationException $authException = null)
+    {}
 }
