@@ -50,8 +50,10 @@
                             <thead>
                             <tr>
                                 <th colspan="4" style="text-align: right">Module</th>
-                                {% for matiere in sousCommission.matieres if matiere.semestre.id == semestre.id and
-                                    matiere.nbnotes!=0 %}
+                                {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
+                                    semestre.id
+                                    and
+                                    matiere.nbnotes!=0) %}
                                     <th colspan="2" class="matiere"><abbr title="{{ matiere.libelle }}">{{ matiere
                                             .codeMatiere
                                             }}</abbr></th>
@@ -59,7 +61,7 @@
                                 <th colspan="{{ (sousCommission.ues|length *2 ) + 7 }}" style="text-align: center">
                                     Semestre {{ semestre.libelle }}</th>
 {#                                 decision semestre#}
-                                {% for sem in sousCommission.semestres if sem.id != semestre.id %}
+                                {% for sem in sousCommission.semestres|filter(sem => sem.id != semestre.id) %}
                                     <th colspan="{{ sem.ues|length+2 }}" style="text-align: center">
                                         Semestre {{ sem.libelle }}</th>
                                 {% endfor %}
@@ -70,8 +72,8 @@
                                 <th>Etudiant</th>
                                 <th>Bac</th>
                                 <th>Coeff.</th>
-                                {% for matiere in sousCommission.matieres if matiere.semestre.id == semestre.id and matiere
-                                    .nbnotes!=0 %}
+                                {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
+                                    semestre.id and matiere.nbnotes!=0) %}
                                     <th style="text-align: center" {% if semestre.optPenaliteAbsence == true
                                     %}colspan="2"{% endif %} class="matiere">{{ matiere.coefficient }}</th>
                                 {% endfor %}
@@ -86,7 +88,7 @@
                                 <th>Décis.</th>
                                 <th></th>
                                 <th>Abs.</th>
-                                {% for sem in sousCommission.semestres if sem.id != semestre.id %}
+                                {% for sem in sousCommission.semestres|filter(sem => sem.id != semestre.id) %}
                                     {% for ue in sem.ues %}
                                         <th>UE {{ ue.numeroue }}</th>
                                     {% endfor %}
@@ -108,8 +110,8 @@
                                     <td>{{ etudiant.numetudiant }}</td>
 
                                       {# matieres #}
-                                    {% for matiere in sousCommission.matieres if matiere.semestre.id == semestre.id and matiere
-                                        .nbnotes!=0 %}
+                                    {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id
+                                        == semestre.id and matiere.nbnotes!=0) %}
                                         <td class="matiere">
                                             {% if myEtudiant.moyenneMatieres[matiere.id].style
                                                 ==
@@ -187,7 +189,7 @@
                                            data-toggle="tooltip">{{ etudiant.display }}</a></td>
                                     <td style="background: {{ myEtudiant.absencesStyle }}">{{ myEtudiant.absences }}</td>
 {#                                     decisions passées #}
-                                    {% for sem in sousCommission.semestres if sem.id != semestre.id %}
+                                    {% for sem in sousCommission.semestres|filter(sem => sem.id != semestre.id) %}
 
                                         {% for ue in sem.ues %}
                                             {% if myEtudiant.parcours[sem.ordreLmd ] is defined %}

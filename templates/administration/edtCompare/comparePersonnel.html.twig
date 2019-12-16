@@ -27,7 +27,7 @@
                     <th>&nbsp;</th>
                 </tr>
                 </thead>
-                {% for personnel in personnels if personnel.typeuser != 'ASS' and personnel.typeuser!='TEC' %}
+                {% for personnel in personnels|filter(personnel => personnel.typeuser != 'ASS' and personnel.typeuser!='TEC') %}
                     <tr style="background-color:#cccccc;">
                         <td colspan="10"
                             style="text-align:center;">{{ personnel.display }}</td>

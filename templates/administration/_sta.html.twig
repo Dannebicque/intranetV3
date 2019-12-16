@@ -34,7 +34,7 @@
                 <div class="row gap-y">
                     <div class="col-md-12">
                         {% set alternance = false %}
-                        {% for annee in user_data.annees if annee.optAlternance == true %}
+                        {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}
                             {% set alternance = true %}
                             <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"
                                class="btn btn-block btn-primary"> Alternances pour l'année {{ annee.libelle }}</a>

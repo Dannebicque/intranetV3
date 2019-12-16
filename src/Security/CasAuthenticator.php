@@ -53,9 +53,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage', [],
             UrlGeneratorInterface::ABSOLUTE_URL));
 
-        phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage'));
-
-
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
 

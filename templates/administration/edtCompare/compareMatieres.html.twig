@@ -42,7 +42,8 @@
                                         <th>&nbsp;</th>
                                     </tr>
                                     </thead>
-                                    {% for matiere in matieres if matiere.ue.semestre.id == semestre.id %}
+                                    {% for matiere in matieres|filter(matiere => matiere.ue.semestre.id == semestre
+                                        .id) %}
                                         <tr style="background-color:#cccccc;">
                                             <td colspan="10" style="text-align:center;">
                                                 <button data-provide="modaler tooltip"

@@ -24,7 +24,8 @@
                             <div class="col-notes-header">{{ 'table.absences'|trans }}</div>
                             <div class="col-notes-header">{{ 'table.notes'|trans }}</div>
                             <div class="col-notes-header">{{ 'table.exports'|trans }}</div>
-                            {% for matiere in previsionnel if matiere.matiere.ue.semestre.id == semestre.id %}
+                            {% for matiere in previsionnel|filter(matiere => matiere.matiere.ue.semestre.id ==
+                                semestre.id) %}
                                     <div>{{ matiere.matiere.display }}</div>
                                     <div>
                                         <button data-provide="modaler tooltip"

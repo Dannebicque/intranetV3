@@ -68,7 +68,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for emprunt in emprunts if emprunt.etat == key %}
+                            {% for emprunt in emprunts|filter(emprunt => emprunt.etat == key) %}
                                 <tr id="ligne_{{ emprunt.id }}">
                                     <td></td>
                                     <th>
