@@ -11,6 +11,7 @@ namespace App\Security;
 use App\Event\CASAuthenticationFailureEvent;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -98,7 +99,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         if (phpCAS::isInitialized()) {
-
+            return new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         }
 
         return null;
