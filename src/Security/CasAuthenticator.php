@@ -36,7 +36,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request): bool
     {
-        return '/sso/cas' === $request->getPathInfo();
+        return $request->getPathInfo() === '/sso/cas';
     }
 
     public function getCredentials(Request $request)
@@ -103,11 +103,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         }
 
         return null;
-    }
-
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        return new RedirectResponse($this->server_login_url . 'login?service=' . $request->getUri());
     }
 
     public function supportsRememberMe(): bool
