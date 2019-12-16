@@ -34,10 +34,12 @@ class SecurityController extends AbstractController
 {
 
     /**
-     * @Route("/sso/cas", name="security_login_cas")
+     * @Route("/sso/redirect/cas", name="sso_cas")
      */
-    public function loginCas() {
-
+    public function redirectToCas()
+    {
+        //TODO : ADD CAS REDIRECT
+        return $this->redirect('https://cas.univ-reims.fr/cas');
     }
 
     /**
