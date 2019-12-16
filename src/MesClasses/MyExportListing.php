@@ -22,6 +22,7 @@ use App\Entity\Matiere;
 use App\Entity\TypeGroupe;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\MesClasses\Pdf\MyPDF;
+use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
@@ -36,6 +37,10 @@ class MyExportListing
 
     /** @var TypeGroupeRepository */
     protected $typeGroupeRepository;
+
+    /** @var GroupeRepository */
+    protected $groupeRepository;
+
     protected $groupes;
     private $name = '';
     private $ligne = 1;
@@ -62,11 +67,16 @@ class MyExportListing
     /** @var MyPDF */
     private $myPdf;
     private $titre = '';
+    /**
+     * @var Groupe|null
+     */
+    private $groupe;
 
     /**
      * MyExport constructor.
      *
      * @param TypeGroupeRepository $typeGroupeRepository
+     * @param GroupeRepository     $groupeRepository
      * @param DataUserSession      $dataUserSession
      * @param KernelInterface      $kernel
      * @param MyExcelWriter        $myExcelWriter
@@ -74,12 +84,14 @@ class MyExportListing
      */
     public function __construct(
         TypeGroupeRepository $typeGroupeRepository,
+        GroupeRepository $groupeRepository,
         DataUserSession $dataUserSession,
         KernelInterface $kernel,
         MyExcelWriter $myExcelWriter,
         MyPDF $myPdf
     ) {
         $this->typeGroupeRepository = $typeGroupeRepository;
+        $this->groupeRepository = $groupeRepository;
         $this->dataUserSession = $dataUserSession;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
@@ -374,6 +386,7 @@ class MyExportListing
 
     private function exportPdf(): void
     {
-        $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name, $this->dataUserSession->getDepartement()->getLibelle());
+        $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name,
+            $this->dataUserSession->getDepartement()->getLibelle());
     }
 }

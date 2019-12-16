@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\Constantes;
+use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\MesClasses\MyExport;
@@ -64,7 +65,7 @@ class TrombinoscopeController extends BaseController
      * @Route("/etudiant/export-groupe/{groupe}.{_format}", name="trombinoscope_etudiant_export_groupe", methods="GET",
      *                                                   requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExportListing  $myExportListing
-     * @param TypeGroupe       $typeGroupe
+     * @param Groupe       $groupe
      * @param                  $_format
      *
      * @return null|StreamedResponse
@@ -72,15 +73,16 @@ class TrombinoscopeController extends BaseController
      */
     public function trombiEtudiantExportGroupe(
         MyExportListing $myExportListing,
-        TypeGroupe $typeGroupe,
+        Groupe $groupe,
         $_format
     ): ?StreamedResponse {
-        return $myExportListing->genereFichier(
-            Constantes::TYPEDOCUMENT_EMARGEMENT,
-            $_format,
-            [],
-            $typeGroupe->getId()
-        );
+//todo: ne fonctionne pas avec groupe
+//        return $myExportListing->genereFichierGroupe(
+//            Constantes::TYPEDOCUMENT_EMARGEMENT,
+//            $_format,
+//            ['nom', 'prenom', 'numeroEtudiant'],
+//            $groupe->getId()
+//        );
     }
 
 
