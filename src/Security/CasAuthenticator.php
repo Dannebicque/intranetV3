@@ -25,7 +25,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 {
     private $urlGenerator;
     private $user;
-    protected $server_login_url = 'https://cas.univ-reims.fr/cas/';
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator
@@ -98,11 +97,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if (phpCAS::isInitialized()) {
+        //if (phpCAS::isInitialized()) {
             return new RedirectResponse($this->urlGenerator->generate('default_homepage'));
-        }
+        //}
 
-        return null;
+        //return null;
     }
 
     public function supportsRememberMe(): bool
