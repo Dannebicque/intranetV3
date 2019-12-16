@@ -143,11 +143,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
                     return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
                 }
             }
-
-            if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-                return new RedirectResponse($targetPath);
-            }
-
             $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
         } else {
             //c'est aucun des rôles...
