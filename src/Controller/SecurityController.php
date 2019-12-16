@@ -39,7 +39,7 @@ class SecurityController extends AbstractController
     public function redirectToCas()
     {
         //TODO : ADD CAS REDIRECT
-        return $this->redirect('https://cas.univ-reims.fr/cas');
+        return $this->redirect('https://cas.univ-reims.fr/cas?service='.$this->generateUrl('default_homepage'));
     }
 
     /**
