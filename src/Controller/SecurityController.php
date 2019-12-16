@@ -32,6 +32,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
+
+    /**
+     * @Route("/sso/cas", name="security_login_cas")
+     */
+    public function loginCas() {
+
+    }
+
     /**
      * @Route("/connexion/{type}/{message}", name="security_login")
      * @param AuthenticationUtils $authenticationUtils

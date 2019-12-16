@@ -36,7 +36,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request): bool
     {
-        return true;
+        return '/sso/cas' === $request->getPathInfo();
     }
 
     public function getCredentials(Request $request)

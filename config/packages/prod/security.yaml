@@ -22,9 +22,9 @@ security:
       anonymous: true
       guard:
         authenticators:
-          # - App\Security\LoginFormAuthenticator
+          - App\Security\LoginFormAuthenticator
           - App\Security\CasAuthenticator
-        #entry_point: App\Security\LoginFormAuthenticator
+        entry_point: App\Security\LoginFormAuthenticator
       # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
       pattern: ^/
 
@@ -43,6 +43,7 @@ security:
     # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
     # peuvent acceder à toutes les pages commençant par /admin
     - { path: '^/admin', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: '^/sso/cas', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/connexion', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/mentions-legales/', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
