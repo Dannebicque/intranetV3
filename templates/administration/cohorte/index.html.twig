@@ -67,7 +67,7 @@
                         {% set i=0 %}
                         {% set nbs=0 %}
                         {% set last = '' %}
-                        {% for parcour in parcours if parcour.etudiant==etudiant %}
+                        {% for parcour in parcours|filter(parcour => parcour.etudiant == etudiant) %}
                             <td><span class="
 			                                {% if parcour.decision=='V' %} label label-success
 			                                {% elseif parcour.decision == 'NV' or parcour.decision =='MNC' %}

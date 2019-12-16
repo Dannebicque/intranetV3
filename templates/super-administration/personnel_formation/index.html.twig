@@ -57,7 +57,7 @@
                    </tr>
                    </thead>
                    <tbody>
-                   {% for personnel in personnels if personnel.personnel != null %}
+                   {% for personnel in personnels|filter(personnel => personnel.personnel != null) %}
                        <tr>
                            <td>{{ personnel.personnel.display }}</td>
                            <td>{{ personnel.personnel.statut }}</td>

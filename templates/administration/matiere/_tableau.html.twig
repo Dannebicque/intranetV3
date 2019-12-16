@@ -67,7 +67,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for matiere in matieres if matiere.semestre.id == semestre.id %}
+                        {% for matiere in matieres|filter(matiere => matiere.semestre.id == semestre.id) %}
                             <tr>
                                 <td>{{ matiere.codeElement }}</td>
                                 <td>{{ matiere.codeMatiere }}</td>

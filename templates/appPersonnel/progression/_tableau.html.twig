@@ -1,6 +1,6 @@
 <button id="refresh" class="btn btn-primary"><i class="fa fa-refresh"></i> Refresh</button>
 
-{% for matiere in matieres if matiere.matiere.ue.semestre.moisDebut == debut %}
+{% for matiere in matieres|filter(matiere matiere.matiere.ue.semestre.moisDebut == debut) %}
     <h4>{{ matiere.matiere.libelle }}</h4>
     <div class="alert alert-info une_matiere" data-matiere="{{ matiere.id }}">
         <ul>

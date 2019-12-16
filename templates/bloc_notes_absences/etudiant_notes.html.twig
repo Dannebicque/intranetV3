@@ -14,7 +14,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for note in notes if note.evaluation.parent == null%}
+            {% for note in notes|filter(note => note.evaluation.parent == null) %}
                 <tr>
 
                     <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>

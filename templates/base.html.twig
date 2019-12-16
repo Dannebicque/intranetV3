@@ -265,7 +265,7 @@
 
             <!-- Notifications -->
             {% set newNotification = false %}
-            {% for notification in user_data.notifications if notification.lu == false %}
+            {% for notification in user_data.notifications|filter(notification => notification.lu == false) %}
                 {% set newNotification = true %}
             {% endfor %}
             <li class="dropdown d-none d-md-block">

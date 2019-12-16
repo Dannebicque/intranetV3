@@ -12,7 +12,7 @@
 
             <div class="card-body">
                 <div class="row gap-y">
-                    {% for semestre in user_data.semestres if semestre.actif == true %}
+                    {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
                         {% if semestre.diplome.responsableDiplome.id == user_data.user.id %}
                         <div class="col-md-2"><a
                                     href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
@@ -22,7 +22,7 @@
                         {% endif %}
                     {% endfor %}
 
-                    {% for semestre in user_data.semestres if semestre.actif == false %}
+                    {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %}
                         {% if semestre.diplome.responsableDiplome.id == user_data.user.id %}
                         <div class="col-md-2"><a
                                     href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
@@ -168,7 +168,7 @@
                 <div class="row gap-y">
                     <div class="col-md-12">}
                         {% set alternance = false %}
-                        {% for annee in user_data.annees if annee.optAlternance == true %}
+                        {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}
                             {% if annee.diplome.responsableDiplome == user_data.user.id %}
                                 {% set alternance = true %}
                                 <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"

@@ -35,7 +35,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for emprunt in emprunts if emprunt.etat == constant('App\\Entity\\Emprunt::REVENU') %}
+                {% for emprunt in emprunts|filter(emprunt => emprunt.etat == constant('App\\Entity\\Emprunt::REVENU')
+                    ) %}
                     <tr id="ligne_{{ emprunt.id }}">
                         <td></td>
                         <th>
