@@ -1416,7 +1416,7 @@
       </notes>
       <segment>
         <source>labele.nbHeuresTd</source>
-        <target>labele.nbHeuresTd</target>
+        <target>Nb heures TD</target>
       </segment>
     </unit>
     <unit id="L83.fq." name="label.personnel">
@@ -1969,7 +1969,7 @@
       </notes>
       <segment>
         <source>label.codeApogee</source>
-        <target>label.codeApogee</target>
+        <target>Code apogée</target>
       </segment>
     </unit>
     <unit id="UzinMEm" name="label.type_groupe">
@@ -3353,7 +3353,7 @@
     <unit id="u9xCs6L" name="label.article_categorie">
       <segment>
         <source>label.article_categorie</source>
-        <target>label.article_categorie</target>
+        <target>Catégorie de l'article</target>
       </segment>
     </unit>
     <unit id="pyZz5V9" name="label.libelle_evaluation">
@@ -3833,7 +3833,7 @@
     <unit id="fTpLsHY" name="help.commentaire_evaluation">
       <segment>
         <source>help.commentaire_evaluation</source>
-        <target>help.commentaire_evaluation</target>
+        <target>Commentaire de l'évaluation</target>
       </segment>
     </unit>
     <unit id="suuRjjV" name="Ordre">
@@ -3923,25 +3923,25 @@
     <unit id="TBVSkAN" name="label.decision">
       <segment>
         <source>label.decision</source>
-        <target>label.decision</target>
+        <target>Décision</target>
       </segment>
     </unit>
     <unit id="QC.ZTjv" name="label.proposition">
       <segment>
         <source>label.proposition</source>
-        <target>label.proposition</target>
+        <target>Proposition</target>
       </segment>
     </unit>
     <unit id="8BSW_ky" name="label.moyenne">
       <segment>
         <source>label.moyenne</source>
-        <target>label.moyenne</target>
+        <target>Moyenne</target>
       </segment>
     </unit>
     <unit id="NdBwveQ" name="label.nbAbsences">
       <segment>
         <source>label.nbAbsences</source>
-        <target>label.nbAbsences</target>
+        <target>Nb Absences</target>
       </segment>
     </unit>
     <unit id="rvQHbxl" name="Choose an option">
@@ -3959,7 +3959,7 @@
     <unit id="6Mv3ykF" name="label.tuteurEntreprise">
       <segment>
         <source>label.tuteurEntreprise</source>
-        <target>label.tuteurEntreprise</target>
+        <target>Tuteur entreprise</target>
       </segment>
     </unit>
     <unit id="cWS8mH9" name="label.ufr">
@@ -3971,7 +3971,7 @@
     <unit id="i9SZXBV" name="label.code_diplome">
       <segment>
         <source>label.code_diplome</source>
-        <target>label.code_diplome</target>
+        <target>Code diplôme</target>
       </segment>
     </unit>
     <unit id="w.J9NKn" name="label.code_etape">
@@ -3983,7 +3983,7 @@
     <unit id="8LpPorv" name="label.ue_bonification">
       <segment>
         <source>label.ue_bonification</source>
-        <target>label.ue_bonification</target>
+        <target>UE de bonification</target>
       </segment>
     </unit>
     <unit id="NNYDQyf" name="label.bonification">
@@ -4001,13 +4001,13 @@
     <unit id="g4h_a2O" name="label.codebarre">
       <segment>
         <source>label.codebarre</source>
-        <target>label.codebarre</target>
+        <target>Code barre</target>
       </segment>
     </unit>
     <unit id="w9xolBt" name="label.empruntable">
       <segment>
         <source>label.empruntable</source>
-        <target>label.empruntable</target>
+        <target>Matériel empruntable</target>
       </segment>
     </unit>
     <unit id="6Lu7js6" name="label.code_element">
@@ -4031,7 +4031,55 @@
     <unit id="UzSqxqb" name="label.ppn_actif_add">
       <segment>
         <source>label.ppn_actif_add</source>
-        <target>label.ppn_actif_add</target>
+        <target>Ajouter un PPN actif</target>
+      </segment>
+    </unit>
+    <unit id="18XNqOA" name="help.libelle.enquete">
+      <segment>
+        <source>help.libelle.enquete</source>
+        <target>Libellé de l'enquête affiché dans l'administration</target>
+      </segment>
+    </unit>
+    <unit id="lEz7GiG" name="help.titre.enquete">
+      <segment>
+        <source>help.titre.enquete</source>
+        <target>Titre de l'enquête affiché pour l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="dk8zOHq" name="label.texteExplication">
+      <segment>
+        <source>label.texteExplication</source>
+        <target>Texte d'explication</target>
+      </segment>
+    </unit>
+    <unit id="ohc538z" name="help.texteExplication.enquete">
+      <segment>
+        <source>help.texteExplication.enquete</source>
+        <target>Texte explicatif des consignes de l'enquête affiché aux étudiants</target>
+      </segment>
+    </unit>
+    <unit id="PvIN6M0" name="label.dateOuverture">
+      <segment>
+        <source>label.dateOuverture</source>
+        <target>Date d'ouverture du questionnaire</target>
+      </segment>
+    </unit>
+    <unit id="pBaJkk9" name="help.dateOuverture.enquete">
+      <segment>
+        <source>help.dateOuverture.enquete</source>
+        <target>Date d'ouverture de l'enquête</target>
+      </segment>
+    </unit>
+    <unit id="TvABkzk" name="label.dateFermeture">
+      <segment>
+        <source>label.dateFermeture</source>
+        <target>Date de fermeture du questionnaire</target>
+      </segment>
+    </unit>
+    <unit id="wc4rf7e" name="help.dateFermeture.enquete">
+      <segment>
+        <source>help.dateFermeture.enquete</source>
+        <target>Date de fermeture de l'enquête (aucune réponse possible passée cette date)</target>
       </segment>
     </unit>
   </file>

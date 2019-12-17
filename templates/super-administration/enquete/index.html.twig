@@ -1,4 +1,4 @@
-{% extends 'base-administratif.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
     {{ 'enquete.index.heading'|trans }}
@@ -37,7 +37,6 @@
                         btn-primary">{{ semestre.libelle }}</a>
                             {% endfor %}
                         </td>
-                        <td colspan="2">S2</td>
                         <td colspan="2">Formateurs</td>
                         <td colspan="2">Entreprises</td>
                     </tr>

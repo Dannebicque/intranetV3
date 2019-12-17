@@ -8,6 +8,7 @@
 
 namespace App\Controller\superAdministration\enquete;
 
+use App\Entity\QualiteQuestionnaire;
 use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,16 +48,39 @@ class EnqueteController extends AbstractController
     }
 
     /**
-     * @Route("/questionnaire/create/{semestre}", name="administratif_enquete_semestre_new")
+     * @Route("/questionnaire/create/{semestre}/{step}/{questionnaire}", name="administratif_enquete_semestre_new")
      *
-     * @param Semestre $semestre
+     * @param Semestre                  $semestre
+     *
+     * @param int                       $step
+     *
+     * @param QualiteQuestionnaire|null $questionnaire
      *
      * @return Response
      */
-    public function create(Semestre $semestre): Response
+    public function create(Semestre $semestre, $step = 1, QualiteQuestionnaire $questionnaire = null): Response
     {
         return $this->render('super-administration/enquete/create.html.twig', [
-            'semestre' => $semestre
+            'questionnaire' => $questionnaire,
+            'semestre' => $semestre,
+            'step' => $step
+        ]);
+    }
+
+    /**
+     * @Route("/questionnaire/edit/{questionnaire}/{step}", name="administratif_enquete_edit")
+     *
+     * @param QualiteQuestionnaire $questionnaire
+     * @param int                  $step
+     *
+     * @return Response
+     */
+    public function edit(QualiteQuestionnaire $questionnaire, $step = 1): Response
+    {
+        return $this->render('super-administration/enquete/edit.html.twig', [
+            'questionnaire' => $questionnaire,
+            'semestre' => $questionnaire->getSemestre(),
+            'step' => $step
         ]);
     }
 }

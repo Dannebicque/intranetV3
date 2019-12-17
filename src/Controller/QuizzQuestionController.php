@@ -43,7 +43,7 @@ class QuizzQuestionController extends BaseController
      */
     public function new(Request $request): Response
     {
-        $quizzQuestion = new QuizzQuestion();
+        $quizzQuestion = new QuizzQuestion($this->getConnectedUser());
         $form = $this->createForm(QuizzQuestionType::class, $quizzQuestion);
         $form->handleRequest($request);
 
