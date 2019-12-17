@@ -231,6 +231,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $departements;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzQuestion", mappedBy="auteur")
+     */
+    private $quizzQuestions;
+
     public function __construct()
     {
         parent::__construct();
@@ -254,6 +259,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->progressionPedagogiques = new ArrayCollection();
         $this->empruntPersonnels = new ArrayCollection();
         $this->departements = new ArrayCollection();
+        $this->quizzQuestions = new ArrayCollection();
     }
 
     /**
@@ -1266,6 +1272,37 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             // set the owning side to null (unless already changed)
             if ($departement->getRespMateriel() === $this) {
                 $departement->setRespMateriel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuizzQuestion[]
+     */
+    public function getQuizzQuestions(): Collection
+    {
+        return $this->quizzQuestions;
+    }
+
+    public function addQuizzQuestion(QuizzQuestion $quizzQuestion): self
+    {
+        if (!$this->quizzQuestions->contains($quizzQuestion)) {
+            $this->quizzQuestions[] = $quizzQuestion;
+            $quizzQuestion->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzQuestion(QuizzQuestion $quizzQuestion): self
+    {
+        if ($this->quizzQuestions->contains($quizzQuestion)) {
+            $this->quizzQuestions->removeElement($quizzQuestion);
+            // set the owning side to null (unless already changed)
+            if ($quizzQuestion->getAuteur() === $this) {
+                $quizzQuestion->setAuteur(null);
             }
         }
 

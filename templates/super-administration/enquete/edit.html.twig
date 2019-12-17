@@ -1,13 +1,13 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'enquete.create.heading'|trans({'%semestre%':semestre.libelle}) }}
+    {{ 'enquete.edit.heading'|trans({'%semestre%': semestre.libelle}) }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administratif_enquete_index') }}"
+            <a href="{{ path('administratif_enquete_semestre', {semestre: semestre.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_enquete'|trans }}"
                data-provide="tooltip"
@@ -21,14 +21,15 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'enquete.create.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
+        <h4 class="card-title">{{ 'enquete.edit.heading'|trans({'%semestre%': semestre.libelle}) }}</h4>
         <div class="card-body">
             {{ include('super-administration/enqueteCreation/_nav.html.twig') }}
 
-
             <div class="tab-content">
                 <div class="tab-pane fade {% if step is not defined or step == 1 %}active show{% endif %}" id="wizard-1" data-provide="validation">
-                    {{ render(path('administratif_enquete_wizard_1', {semestre: semestre.id})) }}
+                    {{ render(path('administratif_enquete_wizard_1', {action: 'edit', semestre: semestre.id,
+                        qualiteQuestionnaire:
+                        questionnaire.id})) }}
                 </div>
 
                 <div class="tab-pane fade {% if step is defined and step == 2 %}active show{% endif %}"
@@ -40,7 +41,8 @@
                     coupures pages et d'ajouter
                     des titres (1 niveau) et du texte.
                     //Possibilité de placer la partie "matières" dans ces questions.
-
+                    {{ render(path('administratif_enquete_wizard_2', {action: 'edit', semestre: semestre.id,
+                        qualiteQuestionnaire: questionnaire.id})) }}
                 </div>
 
                 <div class="tab-pane fade {% if step is defined and step == 3 %}active show{% endif %}"

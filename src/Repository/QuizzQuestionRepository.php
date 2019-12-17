@@ -8,6 +8,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Personnel;
 use App\Entity\QuizzQuestion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -25,32 +26,8 @@ class QuizzQuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizzQuestion::class);
     }
 
-    // /**
-    //  * @return QuizzQuestion[] Returns an array of QuizzQuestion objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByUser(Personnel $getConnectedUser)
     {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findBy(['auteur' => $getConnectedUser->getId()]);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?QuizzQuestion
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

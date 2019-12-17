@@ -12776,19 +12776,19 @@
     <unit id="h.ILNGv" name="enquete.semestre.heading">
       <segment>
         <source>enquete.semestre.heading</source>
-        <target>enquete.semestre.heading</target>
+        <target>Enquête pour le semestre %semestre%</target>
       </segment>
     </unit>
     <unit id="JLcekbU" name="atitle.retour_enquete">
       <segment>
         <source>atitle.retour_enquete</source>
-        <target>atitle.retour_enquete</target>
+        <target>Retour aux enquêtes</target>
       </segment>
     </unit>
     <unit id="PKrZ85c" name="enquete.create.heading">
       <segment>
         <source>enquete.create.heading</source>
-        <target>enquete.create.heading</target>
+        <target>Création d'une enquête qualité</target>
       </segment>
     </unit>
     <unit id="eOeSABC" name="Titre">
@@ -13077,6 +13077,24 @@
       <segment>
         <source>app.personnel.alternance_fiche_suivi.new.heading</source>
         <target>Ajout d'une fiche de suivi de l'alternance de %etudiant%</target>
+      </segment>
+    </unit>
+    <unit id="I6F.Mkj" name="label.save_and_continue">
+      <segment>
+        <source>label.save_and_continue</source>
+        <target>label.save_and_continue</target>
+      </segment>
+    </unit>
+    <unit id="hUePhaG" name="qualiteQuestionnaire.add.success.flash">
+      <segment>
+        <source>qualiteQuestionnaire.add.success.flash</source>
+        <target>qualiteQuestionnaire.add.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="ur8U6.G" name="enquete.edit.heading">
+      <segment>
+        <source>enquete.edit.heading</source>
+        <target>enquete.edit.heading</target>
       </segment>
     </unit>
   </file>

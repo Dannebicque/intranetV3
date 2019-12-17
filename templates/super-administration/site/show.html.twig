@@ -33,7 +33,11 @@
             <tr>
                 <th>{{ 'table.ufr_site'|trans }}</th>
                 <td>
-                    <ul>{% for ufr in site.ufrs %}
+                    <ul>
+                        {% for ufr in site.ufrs %}
+                            <li><a href="{{ path('sa_ufr_show', {id:ufr.id}) }}" target="_blank">{{ ufr.libelle }}</a></li>
+                        {% endfor %}
+                        {% for ufr in site.ufrPrincipales %}
                             <li><a href="{{ path('sa_ufr_show', {id:ufr.id}) }}" target="_blank">{{ ufr.libelle }}</a></li>
                         {% endfor %}
                     </ul>

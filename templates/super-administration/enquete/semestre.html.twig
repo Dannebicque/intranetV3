@@ -1,4 +1,4 @@
-{% extends 'base-administratif.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
     {{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}
@@ -20,15 +20,42 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h4 class="card-title">{{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
-        <div class="card-body">
-            {% if semestre.qualiteQuestionnaires|length > 0 %}
-
+<div class="card">
+    <h4 class="card-title">{{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Libelle</th>
+                <th>Période</th>
+                <th>Nb Réponse</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for questionnaire in  semestre.qualiteQuestionnaires %}
+            <tr>
+                <td>{{ questionnaire.libelle }}</td>
+                <td>du {{ questionnaire.dateOuverture|date('d/m/Y H:i') }} au {{ questionnaire.dateFermeture|date
+                        ('d/m/Y H:i') }}</td>
+                <td>NbReponse</td>
+                <td>
+                    <a href="{{ path('administratif_enquete_edit', {questionnaire:questionnaire.id}) }}">Edit</a>
+                    Edit
+                    Aperçu
+                    Voir réponse
+                </td>
+            </tr>
             {% else %}
-                Aucun questionnaire... En créer un ... <a href="{{ path('administratif_enquete_semestre_new',
-                {semestre:semestre.id}) }}" class="btn btn-primary">Créer un questionnaire</a>
-            {% endif %}
-        </div>
+                <tr>
+                    <td colspan="4">
+                        Aucun questionnaire... En créer un ... <a href="{{ path('administratif_enquete_semestre_new',
+                            {semestre:semestre.id}) }}" class="btn btn-primary">Créer un questionnaire</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
 {% endblock %}

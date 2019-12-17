@@ -112,7 +112,10 @@ class BacController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.edit.success.flash');
 
-            return $this->redirectToRoute('sa_bac_index', ['id' => $bac->getId()]);
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('sa_bac_index');
+            }
+            return $this->redirectToRoute('sa_bac_edit', ['id' => $bac->getId()]);
         }
 
         return $this->render('super-administration/bac/edit.html.twig', [

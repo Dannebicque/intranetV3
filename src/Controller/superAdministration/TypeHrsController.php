@@ -121,6 +121,9 @@ class TypeHrsController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_hrs.edit.success.flash');
 
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('sa_type_hrs_index');
+            }
             return $this->redirectToRoute('sa_type_hrs_edit', ['id' => $typeHr->getId()]);
         }
 

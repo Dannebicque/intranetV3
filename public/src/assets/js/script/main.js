@@ -121,6 +121,7 @@ app.ready(function () {
   require('./partials/articles')
   require('./partials/stage')
   require('./partials/quizz')
+  require('./partials/qualite')
   //require('./partials/sousCommission')
 
   require('./plugins/myQuill')

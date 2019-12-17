@@ -57,10 +57,16 @@ class QuizzQuestion extends BaseEntity
      */
     private $quizzQuestionnaires;
 
-    public function __construct()
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="quizzQuestions")
+     */
+    private $auteur;
+
+    public function __construct(Personnel $personnel)
     {
         $this->quizzReponses = new ArrayCollection();
         $this->quizzQuestionnaires = new ArrayCollection();
+        $this->setAuteur($personnel);
     }
 
     public function getLibelle(): ?string
@@ -154,6 +160,18 @@ class QuizzQuestion extends BaseEntity
             $this->quizzQuestionnaires->removeElement($quizzQuestionnaire);
             $quizzQuestionnaire->removeQuestion($this);
         }
+
+        return $this;
+    }
+
+    public function getAuteur(): ?Personnel
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?Personnel $auteur): self
+    {
+        $this->auteur = $auteur;
 
         return $this;
     }
