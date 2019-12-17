@@ -10,6 +10,7 @@ namespace App\Controller\api;
 
 use App\Controller\BaseController;
 use App\Entity\TypeGroupe;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,16 +23,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class AlexaApiController extends BaseController
 {
     /**
-     * @Route("/", name="api_alexa",
-     *                                        options={"expose":true})
-     *
-     *
-     * @param Request $request
+     * @Route("/", name="api_alexa", options={"expose":true})
+
+     * @param LoggerInterface $logger
      *
      * @return Response
      */
-    public function tests(Request $request): Response
+    public function tests(LoggerInterface $logger): Response
     {
-        return $this->json($request);
+        $logger->info('I just got the logger');
+        $tab= ['test' => 'test'];
+        return $this->json($tab);
     }
 }
