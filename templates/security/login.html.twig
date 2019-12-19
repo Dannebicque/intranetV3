@@ -30,7 +30,7 @@
         </p>
         <div class="divider">{{ 'security.login.sign-with'|trans }}</div>
 
-        <form class="form-type-material" action="{{ path('security_login', {type:'login'}) }}" method="post">
+        <form class="form-type-material" action="{{ path('security_login') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
             <div class="form-group">
