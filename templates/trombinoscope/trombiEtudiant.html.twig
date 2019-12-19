@@ -60,7 +60,7 @@
                                         <div class="flexbox">
                                             <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
                                                 <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
-                                                    ('upload/etudiants/'~etudiant.photoName)| imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
+                                                    ('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
                                             </a>
                                             <div class="flex-grow pl-20">
                                                 <h4><a class="text-white" data-provide="tooltip"
