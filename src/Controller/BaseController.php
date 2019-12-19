@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Class BaseController
  * @package App\Controller
  */
-class BaseController extends AbstractController implements TokenAuthenticatedControllerInterface
+class BaseController extends AbstractController
 {
     /** @var DataUserSession */
     protected $dataUserSession;
@@ -70,7 +70,7 @@ class BaseController extends AbstractController implements TokenAuthenticatedCon
         return $this->getUser();
     }
 
-    public function isEtudiant()
+    public function isEtudiant(): bool
     {
         return $this->isGranted('ROLE_ETUDIANT');
     }

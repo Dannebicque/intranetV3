@@ -48,7 +48,7 @@ class AlternanceController extends BaseController
         return $this->render('administration/alternance/index.html.twig',
             [
                 'alternances' => $alternanceRepository->findByAnneeArray($annee,
-                    $annee->getDiplome()->getAnneeUniversitaire()),
+                    $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire(): null),
                 'annee'       => $annee,
                 'etudiants'   => $etudiants,
             ]);
@@ -140,7 +140,7 @@ class AlternanceController extends BaseController
         Annee $annee,
         $_format
     ): Response {
-        $actualites = $alternanceRepository->findByAnnee($annee, $annee->getAnneeUniversitaire());
+        $actualites = $alternanceRepository->findByAnnee($annee, $annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire(): null);
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
@@ -149,33 +149,6 @@ class AlternanceController extends BaseController
             ['entreprise' => ['libelle'], 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'], 'etudiant' => ['nom', 'prenom', 'mail_univ'],'tuteurUniversitaire' => ['nom', 'prenom', 'mail_univ'], 'typeContrat', 'dateDebut', 'dateFin']
         );
     }
-
-//    /**
-//     * @Route("/new", name="administration_alternance_new", methods="GET|POST")
-//     * @param Request $request
-//     *
-//     * @return Response
-//     */
-//    public function create(Request $request): Response
-//    {
-//        $alternance = new Alternance();
-//        $form = $this->createForm(AlternanceType::class, $alternance,
-//            ['departement' => $this->dataUserSession->getDepartement()]);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->entityManager->persist($alternance);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'alternance.add.success.flash');
-//
-//            return $this->redirectToRoute('administration_alternance_index');
-//        }
-//
-//        return $this->render('administration/alternance/new.html.twig', [
-//            'alternance' => $alternance,
-//            'form'       => $form->createView(),
-//        ]);
-//    }
 
     /**
      * @Route("/details/{id}", name="administration_alternance_show", methods="GET")

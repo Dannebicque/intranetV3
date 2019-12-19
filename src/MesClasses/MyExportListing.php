@@ -67,10 +67,6 @@ class MyExportListing
     /** @var MyPDF */
     private $myPdf;
     private $titre = '';
-    /**
-     * @var Groupe|null
-     */
-    private $groupe;
 
     /**
      * MyExport constructor.
@@ -258,10 +254,9 @@ class MyExportListing
     private function writeSpecialHeader(Groupe $groupe): void
     {
         //gérer les infos par le diplôme
-        $dbt = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->getLibelle();
-        $fin = $dbt + 1;
+        $anneeU = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire();
 
-        $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - ' . $dbt . ' - ' . $fin,
+        $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - ' . $anneeU,
             ['style' => 'HORIZONTAL_RIGHT']);
         $this->myExcelWriter->writeCellName('J4',
             'IUT de Troyes - ' . $this->dataUserSession->getDepartement()->getLibelle(),
@@ -292,7 +287,7 @@ class MyExportListing
 
                 $this->myExcelWriter->writeCellName(
                     'J5',
-                    'Période du 1er Novembre au 30 Novembre 2019',
+                    'Période du 1er '.Constantes::TAB_MOIS[date('n')].' au '.date('t').' '.Constantes::TAB_MOIS[date('n')].' '.date('Y'),
                     ['style' => 'HORIZONTAL_RIGHT']
                 );
                 $this->myExcelWriter->writeCellName(

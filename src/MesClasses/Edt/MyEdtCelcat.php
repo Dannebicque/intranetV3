@@ -17,6 +17,7 @@ namespace App\MesClasses\Edt;
 
 
 use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
@@ -38,12 +39,12 @@ class MyEdtCelcat extends BaseEdt
 
     /** @var Annee */
     private $annee;
-    
+
     /**
      * @var GroupeRepository
      */
     private $groupeRepository;
-    
+
     /** @var MatiereRepository */
     private $matiereRepository;
     /**
@@ -64,32 +65,32 @@ class MyEdtCelcat extends BaseEdt
     }
 
     /**
-     * @param Personnel $personnel
-     * @param int       $semaine
+     * @param Personnel          $personnel
+     * @param AnneeUniversitaire $anneeUniversitaire
+     * @param int                $semaine
      *
      * @return MyEdtCelcat
-     * @throws Exception
      */
-    public function initPersonnel(Personnel $personnel, $semaine = 0): MyEdtCelcat
+    public function initPersonnel(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdtCelcat
     {
         $this->user = $personnel;
-        $this->init('prof', $personnel->getId(), $semaine);
+        $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
         return $this;
     }
 
     /**
-     * @param Etudiant $etudiant
-     * @param int      $semaine
+     * @param Etudiant           $etudiant
+     * @param AnneeUniversitaire $anneeUniversitaire
+     * @param int                $semaine
      *
      * @return MyEdtCelcat
-     * @throws Exception
      */
-    public function initEtudiant(Etudiant $etudiant, $semaine = 0): MyEdtCelcat
+    public function initEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdtCelcat
     {
         $this->user = $etudiant;
-        $this->init('etudiant', $etudiant->getId(), $semaine);
+        $this->init('etudiant', $etudiant->getId(), $semaine, $anneeUniversitaire);
         $this->calculEdt();
         return $this;
     }
@@ -340,10 +341,10 @@ class MyEdtCelcat extends BaseEdt
         }
     }
 
-    public function initSemestre(int $semaine, Semestre $semestre): MyEdtCelcat
+    public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): MyEdtCelcat
     {
         $this->semestre = $semestre;
-        $this->init('promo', $semestre->getId(), $semaine);
+        $this->init('promo', $semestre->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
         return $this;

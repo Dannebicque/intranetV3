@@ -113,8 +113,6 @@ class AppExtension extends AbstractExtension
 
     public function age($dateNaissance): string
     {
-        //return floor((time() - strtotime($dateNaissance->format('d-m-Y'))) / 3600 / 24 / 365);
-
         return date_diff(new DateTime('now'), $dateNaissance)->format('%Y');
     }
 

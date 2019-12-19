@@ -63,7 +63,7 @@ class EdtController extends BaseController
         if ($this->getConnectedUser() !== null) {
 
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-                $this->myEdtCelcat->initPersonnel($this->getConnectedUser(), $semaine);
+                $this->myEdtCelcat->initPersonnel($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
                 return $this->render('edt/_intervenant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
@@ -90,7 +90,7 @@ class EdtController extends BaseController
     {
 
         if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-            $this->myEdtCelcat->initSemestre($semaine, $semestre);
+            $this->myEdtCelcat->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
 
             return $this->render('edt/_semestre.html.twig', [
                 'edt'       => $this->myEdtCelcat,
@@ -100,7 +100,7 @@ class EdtController extends BaseController
             ]);
         }
 
-        $this->myEdt->initSemestre($semaine, $semestre);
+        $this->myEdt->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('edt/_semestre.html.twig', [
             'edt'       => $this->myEdt,
@@ -122,7 +122,7 @@ class EdtController extends BaseController
         if ($this->getConnectedUser() !== null) {
 
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-                $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $semaine);
+                $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
                 return $this->render('edt/_etudiant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
@@ -130,7 +130,7 @@ class EdtController extends BaseController
                 ]);
             }
 
-            $this->myEdt->initEtudiant($this->getConnectedUser(), $semaine);
+            $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
             return $this->render('edt/_etudiant.html.twig', [
                 'edt'       => $this->myEdt,
@@ -214,9 +214,9 @@ class EdtController extends BaseController
         }
 
         if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-            $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $semaine);
+            $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         } else {
-            $edt = $this->myEdt->initEtudiant($this->getConnectedUser(), $semaine);
+            $edt = $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),$semaine);
         }
 
         $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt, 'tabHeures' => self::$tabHeures],

@@ -24,8 +24,8 @@ docker-compose.override.yml
 
 /.idea/dataSources.xml
 /public/upload/
-
+/public/rcc/
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
-/public/rcc/
+

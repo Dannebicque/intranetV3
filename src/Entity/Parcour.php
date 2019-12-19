@@ -37,10 +37,16 @@ class Parcour extends BaseEntity
      */
     private $codeElement;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parcours")
+     */
+    private $groupes;
+
     public function __construct(Semestre $semestre)
     {
         $this->matieres = new ArrayCollection();
         $this->semestre = $semestre;
+        $this->groupes = new ArrayCollection();
     }
 
     /**
@@ -146,6 +152,37 @@ class Parcour extends BaseEntity
     public function setCodeElement(string $codeElement): self
     {
         $this->codeElement = $codeElement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Groupe[]
+     */
+    public function getGroupes(): Collection
+    {
+        return $this->groupes;
+    }
+
+    public function addGroupe(Groupe $groupe): self
+    {
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes[] = $groupe;
+            $groupe->setParcours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupe(Groupe $groupe): self
+    {
+        if ($this->groupes->contains($groupe)) {
+            $this->groupes->removeElement($groupe);
+            // set the owning side to null (unless already changed)
+            if ($groupe->getParcours() === $this) {
+                $groupe->setParcours(null);
+            }
+        }
 
         return $this;
     }

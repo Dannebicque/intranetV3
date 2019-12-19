@@ -14,9 +14,16 @@
         <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">
         <link href="{{ asset('src/assets/vendor/flag-icon/css/flag-icon.css') }}" rel="stylesheet">
-{#        {{ encore_entry_link_tags('app') }}#}
     {% endblock %}
-
+    <style>
+        .btn-primary {
+            background-color: {{ settings('COLOR_IUT') }};
+            border-color: {{ settings('COLOR_IUT') }};
+        }
+        .sidebar .menu:not(.menu-bordery)>.menu-item.active>.menu-link {
+            background-color: {{ settings('COLOR_IUT') }};
+        }
+    </style>
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('apple-icon-60x60.png') }}">

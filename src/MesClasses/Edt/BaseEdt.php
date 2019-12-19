@@ -9,6 +9,7 @@
 namespace App\MesClasses\Edt;
 
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
@@ -65,6 +66,9 @@ Abstract class BaseEdt
 
     protected $planning;
 
+    /** @var AnneeUniversitaire */
+    private $anneeUniversitaire;
+
     /**
      * MyEdt constructor.
      *
@@ -100,9 +104,10 @@ Abstract class BaseEdt
         return $this->tabJour;
     }
 
-    protected function init($filtre = '', $valeur = '', $semaine = 0): BaseEdt
+    protected function init($filtre = '', $valeur = '', $semaine = 0, AnneeUniversitaire $anneeUniversitaire): BaseEdt
     {
-        //$this->syncCelcat = $formation->getOptUpdateCelcat();
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
         $this->total['CM'] = 0;
         $this->total['TD'] = 0;
         $this->total['TP'] = 0;
@@ -284,7 +289,7 @@ Abstract class BaseEdt
      */
     protected function calculSemaines(): array
     {
-        $allsemaine = $this->calendrierRepository->findAll();//todo: pour une anneeuniversitaire donnée
+        $allsemaine = $this->calendrierRepository->findByAnneeUniversitaire($this->anneeUniversitaire);
 
         $t = [];
         $i = 0;
