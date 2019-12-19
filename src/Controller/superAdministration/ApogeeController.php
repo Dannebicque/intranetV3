@@ -78,6 +78,7 @@ class ApogeeController extends BaseController
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if ($etudiant && $type === 'force') {
                         //todo: une classe ?
+                        //todo: Gérer le bac ? Ajouter le code apogée dans la table du bac pour faire la liaison ? Trouver la date d'obtention du bac?
                         //on met à jour
                         $etudiant->updateFromApogee($dataApogee['etudiant']);
                         $etudiant->updateFromLdap($etuLdap);

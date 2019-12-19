@@ -1075,6 +1075,7 @@ class Etudiant extends Utilisateur implements Serializable
 
     public function updateFromApogee($dataApogee)
     {
+        $this->setRoles(["ROLE_ETUDIANT"]);
         foreach ($dataApogee as $key => $value) {
             if (method_exists($this, $key)) {
                 $this->$key($value);

@@ -13,6 +13,8 @@ use App\Entity\TypeGroupe;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -34,5 +36,25 @@ class AlexaApiController extends BaseController
         $logger->info('I just got the logger');
         $tab= ['test' => 'test'];
         return $this->json($tab);
+    }
+
+    /**
+     * @Route("/mail", name="api_alexa_mail", options={"expose":true})
+     */
+    public function testMail(MailerInterface $mailer)
+    {
+        $email = (new Email())
+            ->from('hello@example.com')
+            ->to('david.annebicque@gmail.com')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        $sentEmail = $mailer->send($email);
+        dump($sentEmail);
     }
 }

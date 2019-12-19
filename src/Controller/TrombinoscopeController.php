@@ -76,13 +76,12 @@ class TrombinoscopeController extends BaseController
         Groupe $groupe,
         $_format
     ): ?StreamedResponse {
-//todo: ne fonctionne pas avec groupe
-//        return $myExportListing->genereFichierGroupe(
-//            Constantes::TYPEDOCUMENT_EMARGEMENT,
-//            $_format,
-//            ['nom', 'prenom', 'numeroEtudiant'],
-//            $groupe->getId()
-//        );
+        return $myExportListing->genereFichier(
+            Constantes::TYPEDOCUMENT_EMARGEMENT,
+            $_format,
+            [],
+            $groupe->getTypeGroupe()->getId()
+        );
     }
 
 

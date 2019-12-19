@@ -6,11 +6,14 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             {% for semestre in user_data.semestres %}
+                {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
+                    ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                 <li class="nav-item">
                     <a class="nav-link {% if loop.first %}active show{% endif %}" data-toggle="tab"
                        href="#semestre{{ semestre.id }}" role="tab">{{ semestre.libelle }}
                     </a>
                 </li>
+                {% endif %}
             {% endfor %}
         </ul>
         <div class="buttons">
@@ -23,7 +26,9 @@
 {% block content %}
     <div class="tab-content">
         {% for semestre in user_data.semestres %}
-            {% if semestre.diplome.responsableDiplome == user_data.user.id %}
+            {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement
+                ('ROLE_RP')) or user_data.isGoodDepartement
+                ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
             <div class="tab-pane {% if loop.first %} active show{% endif %}"
                  id="semestre{{ semestre.id }}" role="tabpanel">
                 <div class="card">
