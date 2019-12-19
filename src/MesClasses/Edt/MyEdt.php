@@ -16,6 +16,7 @@
 namespace App\MesClasses\Edt;
 
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
@@ -96,10 +97,10 @@ class MyEdt extends BaseEdt
      * @return MyEdt
      * @throws Exception
      */
-    public function initPersonnel(Personnel $personnel, $semaine = 0): MyEdt
+    public function initPersonnel(Personnel $personnel, $semaine = 0, AnneeUniversitaire $anneeUniversitaire): MyEdt
     {
         $this->user = $personnel;
-        $this->init('prof', $personnel->getId(), $semaine);
+        $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();//todo: pour des datas en BDD sans scelcat. Ajouter test.
 
@@ -115,11 +116,11 @@ class MyEdt extends BaseEdt
      * @return MyEdt
      * @throws Exception
      */
-    public function initEtudiant(Etudiant $etudiant, $semaine = 0): MyEdt
+    public function initEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdt
     {
 
         $this->user = $etudiant;
-        $this->init('etudiant', $etudiant->getId(), $semaine);
+        $this->init('etudiant', $etudiant->getId(), $semaine, $anneeUniversitaire);
         $this->calculEdt();
 
         return $this;
@@ -178,7 +179,7 @@ class MyEdt extends BaseEdt
     }
 
 
-    public function initAdministration($departement, $semaine, $filtre, $valeur): MyEdt
+    public function initAdministration($departement, $semaine, $filtre, $valeur, AnneeUniversitaire $anneeUniversitaire): MyEdt
     {
         if ($valeur === '') {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
@@ -189,7 +190,7 @@ class MyEdt extends BaseEdt
             }
         }
 
-        $this->init($filtre, $valeur, $semaine);
+        $this->init($filtre, $valeur, $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
 
@@ -657,10 +658,10 @@ class MyEdt extends BaseEdt
         return [];
     }
 
-    public function initSemestre(int $semaine, Semestre $semestre): MyEdt
+    public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): MyEdt
     {
         $this->semestre = $semestre;
-        $this->init('promo', $semestre->getId(), $semaine);
+        $this->init('promo', $semestre->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();//todo: pour des datas en BDD sasn scelcat. Ajouter test.
 

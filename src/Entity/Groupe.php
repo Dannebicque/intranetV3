@@ -57,6 +57,11 @@ class Groupe extends BaseEntity
      */
     private $ordre;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parcour", inversedBy="groupes")
+     */
+    private $parcours;
+
     public function __construct(TypeGroupe $typeGroupe)
     {
         $this->typeGroupe = $typeGroupe;
@@ -231,6 +236,18 @@ class Groupe extends BaseEntity
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function getParcours(): ?Parcour
+    {
+        return $this->parcours;
+    }
+
+    public function setParcours(?Parcour $parcours): self
+    {
+        $this->parcours = $parcours;
 
         return $this;
     }
