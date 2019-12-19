@@ -74,7 +74,7 @@ class MyMailer
         $this->translator = $translator;
         $this->templating = $templating;
         $this->databaseTwigLoader = $databaseTwigLoader;
-        $this->mail = (new TemplatedEmail());
+        $this->mail = new TemplatedEmail();
     }
 
     /**

@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -42,23 +43,19 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connexion/{type}/{message}", name="security_login")
+     * @Route("/connexion/{message}", name="security_login")
      * @param AuthenticationUtils $authenticationUtils
-     * @param string              $type
      * @param string              $message
      *
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils, $type = 'login', $message = ''): Response
+    public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
     {
-        if ($type === 'login') {
             // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
-        } else if ($type === 'CAS') {
 
-        }
 
         return $this->render('security/login.html.twig',
             ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
@@ -79,8 +76,12 @@ class SecurityController extends AbstractController
      * @param TokenGeneratorInterface $tokenGenerator
      * @param EntityManagerInterface  $entityManager
      *
+     * @param MyMailer                $myMailer
+     * @param PersonnelRepository     $personnelRepository
+     * @param EtudiantRepository      $etudiantRepository
+     *
      * @return Response
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function passwordLost(
         Request $request,
@@ -134,7 +135,12 @@ class SecurityController extends AbstractController
      * @Route("/reset-password/{token}", name="security_reset_password")
      * @param Request                      $request
      *
+     * @param string                       $token
+     * @param PersonnelRepository          $personnelRepository
+     * @param EtudiantRepository           $etudiantRepository
      * @param UserPasswordEncoderInterface $passwordEncoder
+     *
+     * @param EntityManagerInterface       $entityManager
      *
      * @return Response
      */
