@@ -21,7 +21,7 @@ liip_imagine:
     # the name of the "filter set"
     thumb:
       # adjust the image quality to 75%
-      quality: 75
+      quality: 80
 
       # list of transformations to apply (the "filters")
       filters:
@@ -29,3 +29,11 @@ liip_imagine:
         # create a thumbnail: set size to 120x90 and use the "outbound" mode
         # to crop the image when the size ratio of the input differs
         thumbnail: { size: [120, 120], mode: outbound }
+    avatar:
+      quality: 80
+      filters:
+        thumbnail: { size: [35, 35], mode: outbound }
+    profil:
+      jpeg_quality: 80
+      filters:
+        thumbnail: { size: [256, 256], mode: outbound }
