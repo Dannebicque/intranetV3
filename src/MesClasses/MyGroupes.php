@@ -160,7 +160,7 @@ class MyGroupes
         $this->removeGroupeFromSemestre($semestre);
         $groupes = $this->groupeRepository->findBySemestreArray($semestre);
         $etudiants = $this->etudiantRepository->findBySemestreArray($semestre);
-        MyCelcat::updateGroupeBySemestre($semestre, $groupes, $etudiants, $this->entityManager);
+        MyCelcat::updateGroupeBySemestre($semestre, $groupes, $etudiants);
     }
 
     private function removeGroupeFromSemestre(Semestre $semestre): void

@@ -56,6 +56,7 @@ class CelcatController extends BaseController
      * @param Diplome                $diplome
      *
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function update(CelcatEventsRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
@@ -64,8 +65,7 @@ class CelcatController extends BaseController
             $diplome->getAnneeUniversitaire());
 
         //récupération et ajouts des events.
-        MyCelcat::getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire(),
-            $this->entityManager);
+        MyCelcat::getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
 
         return $this->redirectToRoute('sa_celcat_index');
     }

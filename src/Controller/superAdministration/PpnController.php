@@ -66,11 +66,8 @@ class PpnController extends BaseController
             $this->entityManager->flush();
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.copie.integrale.success.flash');
-
-            return $this->redirectToRoute('sa_ppn_index');
         }
-
-        throw new \RuntimeException('Pas de PPN trouvé');
+        return $this->redirectToRoute('sa_ppn_index');
     }
 
     /**

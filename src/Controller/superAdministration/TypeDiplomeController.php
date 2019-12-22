@@ -166,7 +166,7 @@ class TypeDiplomeController extends BaseController
                 return $this->json($id, Response::HTTP_OK);
             }
 
-            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
+            return $this->json('not_empty', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
