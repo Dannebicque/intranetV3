@@ -103,7 +103,7 @@ class CelcatCalendrierController extends BaseController
         if ($request->isMethod('POST')) {
             $annee = $anneeUniversitaireRepository->find($request->request->get('annee_universitaire'));
             if ($annee) {
-                MyCelcat::getCalendar($this->entityManager);
+                MyCelcat::getCalendar();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.create_year.success.flash');
             } else {
                 $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'celcat_calendrier.create_year.error.flash');

@@ -13097,5 +13097,11 @@
         <target>enquete.edit.heading</target>
       </segment>
     </unit>
+    <unit id="dBbTc9R" name="previsionnel.duplicate.success.flash">
+      <segment>
+        <source>previsionnel.duplicate.success.flash</source>
+        <target>previsionnel.duplicate.success.flash</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

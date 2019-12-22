@@ -71,17 +71,14 @@ class AnneeUniversitaireController extends BaseController
         $_format
     ): Response {
         $annee_universitaires = $anneeUniversitaireRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $annee_universitaires,
             'annee_universitaire',
             ['annee_universitaire'],
             ['libelle', 'annee', 'commentaire']
         );
-
-        return $response;
     }
-
 
     /**
      * @Route("/new", name="sa_annee_universitaire_new", methods={"GET","POST"})
@@ -184,7 +181,7 @@ class AnneeUniversitaireController extends BaseController
                 return $this->json($id, Response::HTTP_OK);
             }
 
-            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);//todo: différencier car non vide
+            return $this->json('not_empty', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -27,6 +27,19 @@ use http\Exception\InvalidArgumentException;
 abstract class MyCelcat
 {
     private static $conn;
+    /** @var EntityManagerInterface  */
+    private static $entityManger;
+
+    /**
+     * MyCelcat constructor.
+     *
+     * @param $entityManger
+     */
+    public function __construct(EntityManagerInterface $entityManger)
+    {
+        self::$entityManger = $entityManger;
+    }
+
 
     private static function connect()
     {
@@ -35,7 +48,7 @@ abstract class MyCelcat
         return self::$conn;
     }
 
-    public static function getCalendar(EntityManagerInterface $entityManager): void
+    public static function getCalendar(): void
     {
         self::connect();
 
@@ -48,9 +61,9 @@ abstract class MyCelcat
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
             $cal->setSemaineReelle(date('W', strtotime($date)));
             $cal->setDateLundi(new DateTime($date));
-            $entityManager->persist($cal);
+            self::$entityManger->persist($cal);
         }
-        $entityManager->flush();
+        self::$entityManger->flush();
     }
 
     public static function getDiplomes(): array
@@ -77,8 +90,7 @@ abstract class MyCelcat
      */
     public static function getEvents(
         int $codeCelcatDepartement,
-        ?AnneeUniversitaire $anneeUniversitaire,
-        EntityManagerInterface $entity
+        ?AnneeUniversitaire $anneeUniversitaire
     ): void {
         if ($anneeUniversitaire === null) {
             throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
@@ -129,20 +141,19 @@ abstract class MyCelcat
                     $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
                     $event->setUpdateEvent(new DateTime(odbc_result($result, 15)));
 
-                    $entity->persist($event);
+                    self::$entityManger->persist($event);
                 } //endif
             } //endfor
         }
 
-        $entity->flush();
+        self::$entityManger->flush();
 
     }
 
     public static function updateGroupeBySemestre(
         Semestre $semestre,
         array $groupes,
-        array $etudiants,
-        EntityManagerInterface $entityManager
+        array $etudiants
     ): void {
         self::connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
@@ -162,6 +173,6 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
             }
         }
 
-        $entityManager->flush();
+        self::$entityManger->flush();
     }
 }
