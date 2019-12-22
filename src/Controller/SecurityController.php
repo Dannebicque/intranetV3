@@ -194,11 +194,14 @@ class SecurityController extends AbstractController
             $isPasswordValid = $passwordEncoder->isPasswordValid($this->getUser(), $credential);
 
             if ($isPasswordValid) {
-                return new RedirectResponse($this->generateUrl('default_homepage')); //todo: gérer selon le rôle...
+                if (in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles()) || in_array('ROLE_SCOLARITE', $this->getUser()->getRoles())) {
+                    return new RedirectResponse($this->generateUrl('super_admin_homepage'));
+                } else {
+                    return new RedirectResponse($this->generateUrl('default_homepage'));
+                }
             }
 
             throw new CustomUserMessageAuthenticationException('Invalid username or password');
-            //todo: ca redirige vers le login, pas forcément top
         }
 
         return $this->render('security/lock.html.twig');

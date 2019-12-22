@@ -28,9 +28,7 @@
                 </tr>
             {% endfor %}
         </table>
-        {% if not loop.last %}
-            <div style="page-break-after: always"></div>
-        {% endif %}
+        <div style="page-break-after: always"></div>
     {% endfor %}
 
     {# affichage par placement#}
@@ -50,7 +48,7 @@
                 <th>Retour copie</th>
             </tr>
             </thead>
-        {% for key, t in tabplace.place|filter(key, t => key|slice(0,1) == (lettre+64)|chr) %}
+        {% for key, t in tabplace.place|filter((key, t) => key|slice(0,1) == (lettre+64)|chr) %}
             <tr style="height: 20px;">
                 <td style="text-align:center">{{ key }}</td>
                 <td>{{ t.numetudiant }}</td>
@@ -62,12 +60,9 @@
             </tr>
         {% endfor %}
         </table>
-        {% if not loop.last %}
             <div style="page-break-after: always"></div>
-        {% endif %}
     {% endfor %}
 
-    <div style="page-break-after: always"></div>
     {# PV d'examen #}
     <table style="width: 100%; border:0;">
         <tr>
@@ -97,18 +92,16 @@
     </i><br /><br />
     <table style="width: 100%">
         <tr>
-            <td style="width:15%">Matière :&nbsp;&nbsp;&nbsp;</td>
-            <td style="border-bottom: 1px dotted black; width:35%">&nbsp;</td>
-            <td style="width:15%">Salle :&nbsp;&nbsp;&nbsp;</td>
-            <td style="border-bottom: 1px dotted black; width:35%">&nbsp;</td>
+            <td colspan="2">Matière :&nbsp;{{ matiere.display }}</td>
+            <td colspan="2">Salle :&nbsp;{{ salle.salle.libelle }}&nbsp;</td>
         </tr>
         <tr>
             <td colspan="4"><h3 style="text-align: center; font-size: 18px; font-weight: bold;">Surveillants</h3></td>
         </tr>
         <tr>
-            <td>Nom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="width:20%">Nom :&nbsp;&nbsp;&nbsp;</td>
             <td style="border-bottom: 1px dotted black">&nbsp;</td>
-            <td>Prénom :&nbsp;&nbsp;&nbsp;</td>
+            <td style="width:20%">Prénom :&nbsp;&nbsp;&nbsp;</td>
             <td style="border-bottom: 1px dotted black">&nbsp;</td>
         </tr>
         <tr>
@@ -127,8 +120,8 @@
     <br /><br />
     <table style="width: 100%">
         <tr>
-            <td style="width:25%">Nombre prévu d'étudiants :&nbsp;&nbsp;&nbsp;</td>
-            <td style="border-bottom: 1px dotted black; width:25%">&nbsp;</td>
+            <td style="width:30%">Nombre prévu d'étudiants :&nbsp;&nbsp;&nbsp;</td>
+            <td style="border-bottom: 1px dotted black; width:15%">&nbsp;</td>
             <td style="width:25%">Nombre de présents :&nbsp;&nbsp;&nbsp;</td>
             <td style="border-bottom: 1px dotted black; width:25%">&nbsp;</td>
         </tr>
@@ -140,7 +133,7 @@
     <br /><br />
     <div style="border: 1px solid black">
         <h3>Procès-verbal en cas de fraude (joindre l'anti-sèche)</h3>
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br /><br /><br />
         <table style="width:100%">
             <tr>
                 <td>Noms et signatures des surveillants</td>
@@ -153,8 +146,8 @@
     <div style="page-break-after: always"></div>
     <h3 style="text-align: center; font-size:20px">Nombre d'étudiants :</h3>
     <h4 style="text-align: center">Récapitulatif des absences</h4>
-    <p>Partiel de </p>
-    <p>Date</p>
+    <p>Partiel de : {{ matiere.display }}</p>
+    <p>Date : {{ depreuve }}</p>
     <table style="width:75%; margin:auto;" class="table">
         <tr>
             <th>Etudiants Absents</th>

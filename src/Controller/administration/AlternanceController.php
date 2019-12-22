@@ -146,7 +146,7 @@ class AlternanceController extends BaseController
             $actualites,
             'alternances',
             ['alternance_administration', 'utilisateur'],
-            ['entreprise' => ['libelle'], 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'], 'etudiant' => ['nom', 'prenom', 'mail_univ'],'tuteurUniversitaire' => ['nom', 'prenom', 'mail_univ'], 'typeContrat', 'dateDebut', 'dateFin']
+            ['entreprise' => ['libelle'], 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'], 'etudiant' => ['nom', 'prenom', 'mailUniv'],'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'], 'typeContrat', 'dateDebut', 'dateFin']
         );
     }
 

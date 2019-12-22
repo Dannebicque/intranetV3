@@ -21,6 +21,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -167,10 +168,10 @@ class MessagerieController extends BaseController
      * @param MyMessagerie $messagerie
      *
      * @return JsonResponse
+     * @throws TransportExceptionInterface
      */
     public function messageSend(Request $request, MyMessagerie $messagerie): JsonResponse
     {
-        //todo: mercure pour notification...
         $typeDestinataire = $request->request->get('typeDestinataire');
         $destinataires = '';
         switch ($typeDestinataire) {

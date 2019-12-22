@@ -73,7 +73,7 @@ class EdtController extends BaseController
                 ]);
             }
 
-            $this->myEdt->initPersonnel($this->getConnectedUser(), $semaine);
+            $this->myEdt->initPersonnel($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
             return $this->render('edt/_intervenant.html.twig', [
                 'edt'       => $this->myEdt,

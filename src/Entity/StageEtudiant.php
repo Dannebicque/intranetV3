@@ -60,18 +60,19 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
-     * @Groups({"stage_entreprise_administration"})
+     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
     private $tuteur;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"stage_entreprise_administration"})
+     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
     private $serviceStageEntreprise;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"stage_entreprise"})
      */
     private $sujetStage;
 
@@ -102,11 +103,13 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
     private $dateDebutStage;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
     private $dateFinStage;
 

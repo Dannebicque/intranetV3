@@ -11,8 +11,10 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\StageEtudiant;
+use App\MesClasses\MyExport;
 use App\Repository\AlternanceRepository;
 use App\Repository\StageEtudiantRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,7 +40,6 @@ class StageController extends BaseController
         AlternanceRepository $alternanceRepository
     ): Response {
 
-        //todo: gérer les années universitaire par diplome
         if ($this->getConnectedUser() !== null) {
             return $this->render('appPersonnel/stage/index.html.twig', [
                 'stagesEnCours'         => $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
@@ -54,6 +55,63 @@ class StageController extends BaseController
 
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
+
+    /**
+     * @Route("/stage/export/{periode}.{_format}", name="application_personnel_stage_export")
+     * @param MyExport                $myExport
+     * @param StageEtudiantRepository $stageEtudiantRepository
+     * @param                         $periode
+     * @param                         $_format
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function exportStage(MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
+    {
+        if ($periode === 'courant') {
+            $stages= $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire());
+        } else {
+            $stages = $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire());
+        }
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $stages,
+            'stages',
+            ['stage_entreprise', 'adresse'],
+            ['entreprise' => ['raisonSociale', 'libelle', 'responsable' =>['nom', 'prenom', 'fonction', 'telephone', 'email']], 'tuteur' =>['nom', 'prenom', 'fonction', 'telephone', 'email'], 'serviceStageEntreprise', 'type', 'personnel' => ['nom', 'prenom'], 'sujetStage', 'dateDebutStage', 'dateFinStage']
+        );
+    }
+
+    /**
+     * @Route("/alternance/export/{periode}.{_format}", name="application_personnel_alternance_export")
+     * @param MyExport                $myExport
+     * @param AlternanceRepository    $alternanceRepository
+     * @param                         $periode
+     * @param                         $_format
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function exportAlternance(MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
+    {
+        if ($periode === 'courant') {
+            $alternances= $alternanceRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire());
+        } else {
+            $alternances = $alternanceRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire());
+        }
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $alternances,
+            'alternances',
+            ['alternance_administration', 'utilisateur'],
+            ['entreprise' => ['libelle'], 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'], 'etudiant' => ['nom', 'prenom', 'mailUniv'],'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'], 'typeContrat', 'dateDebut', 'dateFin']
+        );
+    }
+
 
     /**
      * @Route("/stage/periode/info/{id}", name="application_personnel_stage_periode_info")

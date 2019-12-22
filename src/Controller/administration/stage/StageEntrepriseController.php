@@ -97,7 +97,7 @@ class StageEntrepriseController extends BaseController
             $entreprises,
             'Entreprises',
             ['stage_entreprise_administration', 'adresse'],
-            ['entreprise' => ['raisonSociale', 'libelle', 'responsable' =>['nom', 'prenom', 'fonction', 'telephone', 'email']], 'tuteur' =>['nom', 'prenom', 'fonction', 'telephone', 'email'], 'serviceStageEntreprise', 'type', 'personnel' => ['nom', 'prenom']]
+            ['entreprise' => ['raisonSociale', 'libelle', 'responsable' =>['nom', 'prenom', 'fonction', 'telephone', 'email']], 'tuteur' =>['nom', 'prenom', 'fonction', 'telephone', 'email'], 'serviceStageEntreprise', 'type', 'personnel' => ['nom', 'prenom'], 'dateDebutStage', 'dateFinStage']
         );
     }
 }

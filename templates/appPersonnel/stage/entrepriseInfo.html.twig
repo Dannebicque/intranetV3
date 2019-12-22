@@ -5,7 +5,7 @@
     <li>Lieu de stage (peut être différente du siège):
         <ul>
             <li>Siège : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display }}{% else %} N.C.{% endif %}</li>
-            <li>Stage (si différent du siège) : {% if stageEtudiant.adresseStage != null %}{{ stageEtudiant.adresseStage.display }}{% else %} N.C.{% endif %}</li>
+            <li>Stage (si différent du siège) : {% if stageEtudiant.adresseStage != null %}{{ stageEtudiant.adresseStage.display|raw }}{% else %} N.C.{% endif %}</li>
         </ul>
     </li>
 
