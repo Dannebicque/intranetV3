@@ -15,10 +15,10 @@
 {% block content %}
     <table style="width: 100%; border:0;">
         <tr>
-            <td style="text-align: center; width:20%"><img src="{{ linuxpath~'img/logo/'~user_data.departement.logoName }}" alt="logo"height="70px"/></td>
+            <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"height="70px"/></td>
             <td style="text-align: center; width:60%">&nbsp;</td>
             <td style="text-align: center; width:20%"><img
-                        src="{{ linuxpath~'img/logo/urcapetit.jpg' }}"
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
                         alt="logo"
                         height="70px"/></td>
         </tr>

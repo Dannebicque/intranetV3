@@ -122,7 +122,6 @@ class MySalleExamen
             if ($requesttypegroupe !== '') {
                 $this->typeGroupe = $this->typeGroupeRepository->find($requesttypegroupe);
                 $groupes = $this->typeGroupe->getGroupes();
-                //$typeg = $groupes[0]->getTypeGroupe();
                 $grdetail = array();
                 $etudiants = array();
                 /** @var Groupe $gr */

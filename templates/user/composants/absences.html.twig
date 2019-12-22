@@ -17,16 +17,16 @@
                  <tbody>
                  <tr>
                      <td>
-                             <input placeholder="jj/mm/aaaa" name="jourabs" id="jourabs" class="form-control" data-provide="datepicker"
-                                    data-language="{{ app.request.getLocale() }}"
-                                    value="{{ date("now")|date('d/m/Y') }}">
+                         <input placeholder="jj/mm/aaaa" name="jourabs" id="jourabs" class="form-control" data-provide="datepicker"
+                                data-language="{{ app.request.getLocale() }}"
+                                value="{{ date("now")|date('d/m/Y') }}">
                      </td>
                      <td><select class="form-control heure" name="heureabs" id="heureabs">
                              {% for i in 08..19 %}
                                  <option value="{{ i }}:00">{{ i }}h00</option>
-                                 <option value="{{ i }}:15">{{ i }}h00</option>
+                                 <option value="{{ i }}:15">{{ i }}h15</option>
                                  <option value="{{ i }}:30">{{ i }}h30</option>
-                                 <option value="{{ i }}:45">{{ i }}h30</option>
+                                 <option value="{{ i }}:45">{{ i }}h45</option>
                              {% endfor %}
                          </select></td>
                      <td><select class="form-control" name="moduleabs" id="moduleabs">
@@ -38,11 +38,12 @@
                      <td>
                          <input type="radio" id="justifabs" name="justifabs" value="true"> Oui |
                          <input type="radio" name="justifabs" value="false" checked title="Justification de l'absence">
-                                                                                        Non
+                                                                                           Non
                      </td>
                      <td>
-                         <button class="btn btn-primary btn-block" id="btnabs" data-etudiant="{{ myEtudiant.etudiant.id
-                         }}">Ajouter</button>
+                         <button class="btn btn-primary btn-block" id="btnabs" data-etudiant="{{ myEtudiant.etudiant.id }}">
+                             Ajouter
+                         </button>
                      </td>
                  </tr>
                  </tbody>

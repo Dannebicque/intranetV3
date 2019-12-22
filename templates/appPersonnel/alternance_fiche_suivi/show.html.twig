@@ -5,7 +5,7 @@
         .displayPr }) }}
 {% endblock %}
 
-{%block headeractions %}
+{% block headeractions %}
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('application_personnel_alternance_fiche_suivi_delete', {id: alternance_fiche_suivi.id}) }}"
@@ -33,15 +33,15 @@
                 <i class="{{ iconEdit }}"></i>
                 <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
             </a>
-                <a href="{{ path('application_personnel_alternance_fiche_suivi_alternance', {alternance:
-                    alternance_fiche_suivi.alternance.id}) }}"
-                   class="btn btn-primary btn-float"
-                   title="{{ 'atitle.retour_liste'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom">
-                    <i class="ti-arrow-left"></i>
-                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-                </a>
+            <a href="{{ path('application_personnel_alternance_fiche_suivi_alternance', {alternance:
+                alternance_fiche_suivi.alternance.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="ti-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
         </div>
     </div>
 {% endblock %}
@@ -51,25 +51,34 @@
         <h4 class="card-title"><strong>Résumé de la fiche de suivie</strong> de {{ alternance_fiche_suivi
             .alternance.etudiant.displayPr }}</h4>
         <div class="card-body">
-            <br>
-            <p>Nom de l'étudiant : {{ alternance_fiche_suivi.alternance.etudiant.displayPr }}</p>
-            <p>Entreprise : {{ alternance_fiche_suivi.alternance.entreprise.libelle }}</p>
-            <p>Tuteur Universitaire : {{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
-            <p>Visite réalisée le : {{ alternance_fiche_suivi.date|date('d/m/Y') }}, par {{ alternance_fiche_suivi.methodeLong }}</p>
-            <p>Personne rencontrée : {{ alternance_fiche_suivi.alternance.tuteur }}</p>
-            <p>Missions : {{ alternance_fiche_suivi.missions }}</p>
-            <p>Evaluation de l'alternance :</p>
-            <ul>
-                <li>Intégration dans l'entreprise : {{ alternance_fiche_suivi.integrationLong }}</li>
-                <li>Prise d'initiative : {{ alternance_fiche_suivi.initiativeLong }}</li>
-                <li>Capacité d'adaptation : {{ alternance_fiche_suivi.adaptationLong }}</li>
-                <li>Niveau de performances : {{ alternance_fiche_suivi.performanceLong }}</li>
-                <li>Respect des délais : {{ alternance_fiche_suivi.delaisLong }}</li>
-                <li>Comportement de manière globale : {{ alternance_fiche_suivi.comportementLong }}</li>
-            </ul>
+            <dl>
+                <dt>Nom de l'étudiant :</dt>
+                <dd>{{ alternance_fiche_suivi.alternance.etudiant.displayPr }}</dd>
+                <dt>Entreprise :</dt>
+                <dd>{{ alternance_fiche_suivi.alternance.entreprise.libelle }}</dd>
+                <dt>Tuteur Universitaire :</dt>
+                <dd>{{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</dd>
+                <dt>Visite réalisée le :</dt>
+                <dd>{{ alternance_fiche_suivi.date|date('d/m/Y') }}, par {{ alternance_fiche_suivi.methodeLong }}</dd>
+                <dt>Personne rencontrée :</dt>
+                <dd>{{ alternance_fiche_suivi.alternance.tuteur.display }}</dd>
+                <dt>Missions :</dt>
+                <dd>{{ alternance_fiche_suivi.missions }}</dd>
+                <dt>Evaluation de l'alternance :</dt>
+                <dd>
+                    <ul>
+                        <li>Intégration dans l'entreprise : {{ alternance_fiche_suivi.integrationLong }}</li>
+                        <li>Prise d'initiative : {{ alternance_fiche_suivi.initiativeLong }}</li>
+                        <li>Capacité d'adaptation : {{ alternance_fiche_suivi.adaptationLong }}</li>
+                        <li>Niveau de performances : {{ alternance_fiche_suivi.performanceLong }}</li>
+                        <li>Respect des délais : {{ alternance_fiche_suivi.delaisLong }}</li>
+                        <li>Comportement de manière globale : {{ alternance_fiche_suivi.comportementLong }}</li>
+                    </ul>
+                </dd>
 
-            <p>Commentaire : {{ alternance_fiche_suivi.commentaire }}</p>
-            <br/>
+                <dt>Commentaire :</dt>
+                <dd>{{ alternance_fiche_suivi.commentaire }}</dd>
+            </dl>
         </div>
     </div>
 {% endblock %}

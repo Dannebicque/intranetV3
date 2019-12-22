@@ -90,14 +90,14 @@ class MyEdt extends BaseEdt
 
 
     /**
-     * @param Personnel $personnel
+     * @param Personnel          $personnel
      *
-     * @param int       $semaine
+     * @param AnneeUniversitaire $anneeUniversitaire
+     * @param int                $semaine
      *
      * @return MyEdt
-     * @throws Exception
      */
-    public function initPersonnel(Personnel $personnel, $semaine = 0, AnneeUniversitaire $anneeUniversitaire): MyEdt
+    public function initPersonnel(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdt
     {
         $this->user = $personnel;
         $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
@@ -109,12 +109,12 @@ class MyEdt extends BaseEdt
 
 
     /**
-     * @param Etudiant $etudiant
+     * @param Etudiant           $etudiant
      *
-     * @param int      $semaine
+     * @param AnneeUniversitaire $anneeUniversitaire
+     * @param int                $semaine
      *
      * @return MyEdt
-     * @throws Exception
      */
     public function initEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdt
     {

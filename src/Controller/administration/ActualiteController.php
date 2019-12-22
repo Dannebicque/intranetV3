@@ -52,15 +52,13 @@ class ActualiteController extends BaseController
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
         $actualites = $actualiteRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'actualites',
             ['actualite_administration', 'utilisateur'],
             ['titre', 'texte', 'departement' => ['libelle']]
         );
-
-        return $response;
     }
 
     /**

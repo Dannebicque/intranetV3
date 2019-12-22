@@ -1,0 +1,12 @@
+<h3>{{ alternance.entreprise.libelle }}</h3>
+<p>Contacts :</p>
+<ul><li>Responsable : {{ alternance.entreprise.responsable.display }} | {{ alternance.entreprise.responsable.telephone }} | <a href="mailto:{{ alternance.entreprise.responsable.email }}" target="_blank">{{ alternance.entreprise.responsable.email }}</a></li>
+    <li>Tuteur : {{ alternance.tuteur.display }} | {{ alternance.tuteur.telephone }} | <a href="mailto:{{ alternance.tuteur.email }}" target="_blank">{{ alternance.tuteur.email }}</a></li>
+    <li>Lieu de stage (peut être différente du siège):
+        <ul>
+            <li>Siège : {% if alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.display|raw }}{%
+                    else %} N.C.{% endif %}</li>
+        </ul>
+    </li>
+</ul>
+

@@ -32,7 +32,7 @@ $(document).on('change', '#selectsemestre', function () {
         jQuery.each(data, function (index, matiere) {
           selectMatiere.append($("<option></option>")
             .attr("value", matiere.id)
-            .text(matiere.libelle));
+            .text(matiere.display));
         });
         // selectMatiere.selectpicker({
         //   liveSearch: true

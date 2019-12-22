@@ -1,7 +1,6 @@
 
 <div class="card">
     <h4 class="card-title">{{ 'application.vos.stages.et.alternances.heading'|trans }}</h4>
-
     <div class="card-body">
         <ul class="nav nav-tabs nav-tabs-danger nav-justified" role="tablist">
             <li class="nav-item">
@@ -22,6 +21,22 @@
         </ul>
         <div class="card-body tab-content">
             <div class="tab-pane fade active show" id="onglet_stage_en_cours">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
+                            {periode:'courant', '_format':'xlsx'})
+                        }}">Excel (xlsx)
+                        </a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
+                            {periode:'courant', '_format':'csv'})
+                        }}">Texte (csv)</a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
+                            {periode:'courant', '_format':'pdf'})
+                        }}">Pdf</a>
+                    </div>
+                </div>
+                <br>
                 <table class="table table-striped" data-provide="datatable">
                     <thead>
                     <tr>
@@ -69,6 +84,22 @@
                 </table>
             </div>
             <div class="tab-pane" id="onglet_alternance_en_cours">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
+                            {periode:'courant', '_format':'xlsx'})
+                        }}">Excel (xlsx)
+                        </a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
+                            {periode:'courant', '_format':'csv'})
+                        }}">Texte (csv)</a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
+                            {periode:'courant', '_format':'pdf'})
+                        }}">Pdf</a>
+                    </div>
+                </div>
+                <br>
                 <table class="table table-striped" data-provide="datatable">
                     <thead>
                     <tr>
@@ -115,6 +146,22 @@
                 </table>
             </div>
             <div class="tab-pane" id="onglet_stage_historique">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
+                            {periode:'ancien', '_format':'xlsx'})
+                        }}">Excel (xlsx)
+                        </a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
+                            {periode:'ancien', '_format':'csv'})
+                        }}">Texte (csv)</a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
+                            {periode:'ancien', '_format':'pdf'})
+                        }}">Pdf</a>
+                    </div>
+                </div>
+                <br>
                 <table class="table table-striped" data-provide="datatable">
                     <thead>
                     <tr>
@@ -164,6 +211,22 @@
                 </table>
             </div>
             <div class="tab-pane" id="onglet_alternance_historique">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
+                            {periode:'ancien', '_format':'xlsx'})
+                        }}">Excel (xlsx)
+                        </a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
+                            {periode:'ancien', '_format':'csv'})
+                        }}">Texte (csv)</a>
+                        <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
+                            {periode:'ancien', '_format':'pdf'})
+                        }}">Pdf</a>
+                    </div>
+                </div>
+                <br>
                 <table class="table table-striped" data-provide="datatable">
                     <thead>
                     <tr>
