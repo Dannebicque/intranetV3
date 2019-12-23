@@ -125,23 +125,54 @@ function addCallout (message, label) {
 //Editable
 let myEditInitialContent = ''
 
-$(document).on('click', '.myedit', function () {
-  myEditInitialContent = $(this).outerHTML()
+
+$(document).on('click', '.myedit', function (e) {
+  e.preventDefault();
+  myEditInitialContent = $(this)
   let html = genereInput($(this))
+
   $(this).replaceWith(html)
+  $('#myedit-input').focus()
 })
 
+$(document).on('keyup', '#myedit-input', function (e) {
+  if(e.keyCode === 13)
+  {
+    updateData()
+  } else if(e.keyCode === 27)
+  {
+    $('#myEdit-zone').replaceWith(myEditInitialContent)
+  }
+});
 
-$(document).on('click', '#myedit-valide', function () {
-  $(this).replaceWith(html)
+$(document).on('click', '#myedit-valide', function (e) {
+  e.preventDefault();
+  updateData()
 })
 
-$(document).on('click', '#myedit-annule', function () {
-  $(this).parent().replaceWith(myEditInitialContent)
+$(document).on('click', '#myedit-annule', function (e) {
+  e.preventDefault();
+  $('#myEdit-zone').replaceWith(myEditInitialContent)
 })
+
+function updateData() {
+  let val = $('#myedit-input').val()
+  $.ajax({
+    url: myEditInitialContent.attr('href'),
+    data: {
+      field: myEditInitialContent.data('field'),
+      value: val
+    },
+    method: 'POST',
+    success: function() {
+      myEditInitialContent.html(val)
+      $('#myEdit-zone').replaceWith(myEditInitialContent)
+    }
+  })
+}
 
 function genereInput ($obj) {
-  let $html = '<div><input type="text" value="' + $obj.html() + '" class="myedit-input" />'
+  let $html = '<div id="myEdit-zone"><input type="text" value="' + $obj.html() + '" id="myedit-input" />'
   $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="ti-check"></i></button>'
   $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="ti-close"></i></button></div>'
   return $html

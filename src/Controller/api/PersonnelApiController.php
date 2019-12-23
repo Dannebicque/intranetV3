@@ -137,11 +137,12 @@ class PersonnelApiController extends BaseController
     public function addPersonnelToDepartement(
         PersonnelDepartementRepository $personnelDepartementRepository,
         $slug,
-        Departement $departement
+        ?Departement $departement = null
     ): Response {
         $personnel = $this->personnelRepository->findOneBySlug($slug);
+        $departement = $departement ?? $this->dataUserSession->getDepartement();
 
-        if ($personnel !== null) {
+        if ($personnel !== null && $departement !== null) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),
                 'personnel'   => $personnel->getId()

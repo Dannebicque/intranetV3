@@ -124,25 +124,6 @@ class MyExcelRead
      *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function output($filename): void
-    {
-        $this->response = new Response();
-
-        // Redirect output to a client’s web browser (Excel5)
-        $this->response->headers->set('Content-Type', 'application/vnd.ms-excel');
-        $this->response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '"');
-        $this->response->headers->set('Cache-Control', 'max-age=0');
-        $this->response->sendHeaders();
-        $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Excel5');
-        $objWriter->save('php://output');
-        exit;
-    }
-
-    /**
-     * @param string $filename
-     *
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
-     */
     public function sauvegarde($filename): void
     {
         $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Excel5');

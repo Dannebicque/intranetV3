@@ -327,6 +327,8 @@ class MyExcelMultiExport
                 if (array_key_exists($etudiant->getId(), $notes)) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $notes[$etudiant->getId()]->getNote());
                     $colonne++;
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, '');
+                    $colonne++;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $notes[$etudiant->getId()]->getCommentaire());
 
