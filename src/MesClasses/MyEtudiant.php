@@ -13,6 +13,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Matiere;
+use App\Entity\ModificationNote;
 use App\Entity\Note;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
@@ -213,7 +214,7 @@ class MyEtudiant
      * @return bool
      * @throws Exception
      */
-    public function addNote(Evaluation $evaluation, $data): bool
+    public function addNote(Evaluation $evaluation, $data, Personnel $personnel): bool
     {
         //on cherche si deja une note de présente
         $note = $this->noteRepository->findBy([
@@ -223,6 +224,12 @@ class MyEtudiant
 
         if (count($note) === 1) {
             //update
+            $modif = new ModificationNote();
+            $modif->setNote($note[0]);
+            $modif->setAncienneNote($note[0]->getNote());
+            $modif->setNouvelleNote(Tools::convertToFloat($data['note']));
+            $modif->setPersonnel($personnel);
+            $this->entityManager->persist($modif);
             $note[0]->setNote(Tools::convertToFloat($data['note']));
             $note[0]->setCommentaire($data['commentaire']);
             if (isset($data['absence']) && $data['absence'] === 'true') {
@@ -230,6 +237,9 @@ class MyEtudiant
             } else {
                 $note[0]->setAbsenceJustifie(false);
             }
+
+
+
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
         } elseif (count($note) === 0) {

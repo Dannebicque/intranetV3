@@ -53,6 +53,28 @@ class EvaluationController extends BaseController
     }
 
     /**
+     * @Route("/visible/{uuid}/{etat}", name="application_personnel_evaluation_visible",
+     *                                    requirements={"evaluation"="\d+"})
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
+     *
+     * @return Response
+     */
+    public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
+    {
+        $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
+        $evaluation->setVisible($etat === 'visible');
+        $this->entityManager->flush();
+
+        return $this->render('appPersonnel/note/saisie_2.html.twig', [
+            'evaluation' => $evaluation,
+            'notes'      => $notes,
+            'autorise'   => true
+        ]);
+    }
+
+    /**
      * @Route("/update", name="application_personnel_evaluation_update", options={"expose"=true})
      * @param EvaluationRepository $evaluationRepository
      * @param Request              $request

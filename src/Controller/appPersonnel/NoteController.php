@@ -90,6 +90,7 @@ class NoteController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
                 $this->entityManager->persist($evaluation);
                 $this->entityManager->flush();
 
@@ -123,7 +124,8 @@ class NoteController extends BaseController
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes
+            'notes'      => $notes,
+            'autorise'   => true
         ]);
     }
 
@@ -147,8 +149,8 @@ class NoteController extends BaseController
         $tnote = $request->request->get('notes')['notes'];
 
         foreach ($tnote as $iValue) {
-            $myEtudiant->setUuidEtudiant($iValue['id']);
-            $myEtudiant->addNote($evaluation, $iValue);
+            $myEtudiant->setIdEtudiant($iValue['id']);
+            $myEtudiant->addNote($evaluation, $iValue, $this->getConnectedUser());
         }
 
         return new Response();
@@ -181,7 +183,8 @@ class NoteController extends BaseController
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes,
-            'import'     => true
+            'import'     => true,
+            'autorise'   => true
         ]);
     }
 
