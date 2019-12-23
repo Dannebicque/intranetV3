@@ -103,31 +103,12 @@ class MyAbsences
     public function getAbsencesSemestre(Semestre $semestre): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
-        $this->absences = $this->absenceRepository->findBySemestre($semestre,
-            $semestre->getAnneeUniversitaire()->getAnnee());
+        $this->absences = $this->absenceRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
 
 
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
-            $this->statistiques[$etudiant->getId()]['nbCoursManques'] = 0;
-            $this->statistiques[$etudiant->getId()]['totalDuree'] = new DateTime('00:00');
-            $this->statistiques[$etudiant->getId()]['nbNonJustifie'] = 0;
-            $this->statistiques[$etudiant->getId()]['nbDemiJournee'] = 0; //todo: a gérer dans le calcul
-            $this->statistiques[$etudiant->getId()]['nbJustifie'] = 0;
-        }
-
-        /** @var Absence $absence */
-        foreach ($this->absences as $absence) {
-            $etuId = $absence->getEtudiant() ? $absence->getEtudiant()->getId() : null;
-            if ($etuId !== null && array_key_exists($etuId, $this->statistiques)) {
-                $this->statistiques[$etuId]['nbCoursManques']++;
-
-                if ($absence->getDuree() !== null) {
-                    $this->statistiques[$etuId]['totalDuree']->add(new DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
-                }
-
-                $absence->isJustifie() ? $this->statistiques[$etuId]['nbJustifie']++ : $this->statistiques[$etuId]['nbNonJustifie']++;
-            }
+            $this->statistiques[$etudiant->getId()] = StatsAbsences::calculsStatsSemestre($this->absences, $etudiant);
         }
     }
 }

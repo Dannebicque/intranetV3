@@ -163,7 +163,7 @@ class AbsenceController extends BaseController
         $_format
     ): Response {
         $absences = $absenceRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $absences,
             'absences_' . $semestre->getLibelle(),
@@ -178,8 +178,6 @@ class AbsenceController extends BaseController
                 'personnel' => ['nom', 'prenom']
             ]
         );
-
-        return $response;
     }
 
     /**
