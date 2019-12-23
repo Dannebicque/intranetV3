@@ -10,8 +10,8 @@ namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
+use App\Form\EvaluationsPersonnelsType;
 use App\MesClasses\MyEvaluation;
-use App\Repository\EvaluationRepository;
 use App\Repository\GroupeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -75,17 +75,18 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/update", name="application_personnel_evaluation_update", options={"expose"=true})
-     * @param EvaluationRepository $evaluationRepository
-     * @param Request              $request
+     * @Route("/update/{uuid}", name="application_personnel_evaluation_update")
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param Request    $request
+     *
+     * @param Evaluation $evaluation
      *
      * @return Response
      */
-    public function updateEvaluation(EvaluationRepository $evaluationRepository, Request $request): Response
+    public function updateEvaluation(Request $request, Evaluation $evaluation): Response
     {
         //mise à jour d'un champ d'une évaluation
-        $evaluation = $evaluationRepository->findOneBy(['uuid' => $request->request->get('id')]);
-        $name = $request->request->get('name');
+        $name = $request->request->get('field');
         $value = $request->request->get('value');
         if ($evaluation) {
             $evaluation->updateData($name, $value);
@@ -107,7 +108,7 @@ class EvaluationController extends BaseController
      * @param                  $type
      * @param                  $_format
      *
-     * @return StreamedResponse|null
+     * @return Response|StreamedResponse|null
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -119,7 +120,7 @@ class EvaluationController extends BaseController
         Evaluation $evaluation,
         $type,
         $_format
-    ): ?StreamedResponse {
+    ) {
         $t = explode('_', $type);
         if ($t[0] === 'groupe') {
             $grp = $groupeRepository->find($t[1]);
@@ -127,11 +128,48 @@ class EvaluationController extends BaseController
         } elseif ($t[0] === 'all' && $evaluation->getTypeGroupe() !== null) {
             $data = $evaluation->getTypeGroupe()->getGroupes();
         } else {
-            //todo: groupe par défaut ?
-            $data = [];
+            return $this->render('bundles/TwigBundle/Exception/error666.html.twig');
         }
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
             $this->dataUserSession->getDepartement());
+    }
+
+    /**
+     * @Route("/ajax/gere/{uuid}", name="application_personnel_evaluation_ajax_autorise", methods="GET|POST")
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param Request    $request
+     * @param Evaluation $evaluation
+     *
+     * @return Response
+     */
+    public function ajaxAddPersonneAction(Request $request, Evaluation $evaluation): Response
+    {
+        if ($evaluation !== null)
+        {
+            $form = $this->createForm(EvaluationsPersonnelsType::class, $evaluation, [
+                'attr'     => ['id' => 'formPersonne', 'class' => 'form-horizontal'],
+                'semestre' => $evaluation->getSemestre(),
+                'action'   => $this->generateUrl('application_personnel_evaluation_ajax_autorise',
+                    ['uuid' => $evaluation->getUuidString()])
+            ]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                $this->entityManager->flush();
+
+                return $this->redirectToRoute('application_personnel_evaluation_show',
+                    ['uuid' => $evaluation->getUuidString()]);
+            }
+
+
+            return $this->render('appPersonnel/note/addPersonne.html.twig',
+                [
+                    'form' => $form->createView(),
+                    'eval' => $evaluation
+                ]);
+        }
+
+        return $this->render('bundles/TwigBundle/Exception/error666.html.twig');
     }
 }

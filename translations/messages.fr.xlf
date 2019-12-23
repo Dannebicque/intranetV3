@@ -13115,5 +13115,17 @@
         <target>import_note_a_verifier</target>
       </segment>
     </unit>
+    <unit id="dh4qubH" name="libelle.evaluation">
+      <segment>
+        <source>libelle.evaluation</source>
+        <target>libelle.evaluation</target>
+      </segment>
+    </unit>
+    <unit id=".rqNT6O" name="SUPER Admin">
+      <segment>
+        <source>SUPER Admin</source>
+        <target>SUPER Admin</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

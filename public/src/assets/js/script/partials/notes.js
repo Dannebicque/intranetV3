@@ -56,34 +56,4 @@ $(document).on('keyup', '.noteetudiant', function (e) {
   }
 })
 
-$('.evaluation-edit').editable(
-  Routing.generate('application_personnel_evaluation_update')
-  , {
-    type: 'text',
-    submit: 'OK',
-    cancel: 'Cancel',
-    cssclass: 'editable-class',
-    cancelcssclass: 'btn btn-danger',
-    submitcssclass: 'btn btn-success',
-    indicator: 'Sauvegarde…',
-    label: $(this).data('title'),
-    tooltip: 'Double click pour modifier',
-    submitdata: function (revert, settings, submitdata) {
-      return {
-        id: $(this).data('id'),
-        name: $(this).data('name'),
-        value: submitdata.value
-      }
-    },
-    intercept: function (jsondata) {
-      console.log(jsondata)
-      console.log($(this))
-      if (jsondata == 'true') {
-        $(this).after('OK') //todo: mettre un coche verte
-      } else {
-        $(this).after('NOK') //todo: mettre une croix rouge
-      }
-    }
-  })
-
 

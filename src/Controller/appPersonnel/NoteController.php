@@ -190,39 +190,14 @@ class NoteController extends BaseController
 
     /**
      * @Route("/modele-import/{evaluation}", name="application_personnel_note_import_modele", methods="GET")
-     * @param MyExport $myExport
-     * @param Semestre $semestre
+     * @param MyExport   $myExport
+     *
+     * @param Evaluation $evaluation
      *
      * @return Response|null
      */
     public function modeleImport(MyExport $myExport, Evaluation $evaluation): ?Response
     {
         return $myExport->genereModeleImportNote($evaluation);
-    }
-
-    /**
-     * @Route("/ajax/gere/{uuid}", name="application_personnel_note_ajax_autorise", methods="GET")
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param Evaluation $evaluation
-     *
-     * @return Response
-     */
-    public function ajaxAddPersonneAction(Evaluation $evaluation): Response
-    {
-        if ($evaluation !== null) //todo: tester si c'est le prof ou un admin...
-        {
-            $form = $this->createForm(EvaluationsPersonnelsType::class, $evaluation, [
-                'attr'     => ['id' => 'formPersonne', 'class' => 'form-horizontal'],
-                'semestre' => $evaluation->getMatiere()->getUE()->getSemestre()
-            ]);
-
-            return $this->render('appPersonnel/note/addPersonne.html.twig',
-                [
-                    'form' => $form->createView(),
-                    'eval' => $evaluation
-                ]);
-        }
-
-        return $this->render('bundles/TwigBundle/Exception/error666.html.twig');
     }
 }
