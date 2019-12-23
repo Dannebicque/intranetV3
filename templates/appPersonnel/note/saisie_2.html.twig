@@ -159,14 +159,11 @@
                                               , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les
                                               colonnes doivent être nommées (première ligne) ou
                                               respecter l'odre précédent.
-                    <a href="{{ path('application_personnel_note_import_modele',
-                        {evaluation:evaluation.id}) }}">Vous
-                                                        pouvez récupérer le fichier type pour le
-                                                        semestre
-                                                        ici</a>
+                    <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id}) }}">
+                        Vous pouvez récupérer le fichier type pour le semestre ici
+                    </a>
                 </div>
-                <button class="btn btn-success">{{ button_label|default('label.import'|trans) }}</button>
-
+                <button class="btn btn-success">{{ button_label|default('label.importer.les.notes'|trans) }}</button>
             </form>
             <br>
             <div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
@@ -188,10 +185,26 @@
                 {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option#}
                     <div class="tab-pane {% if loop.index == 1 %} active {% endif %}" id="gr{{ groupe.id }}">
                         {% if import is defined %}
+                            <div class="alert alert-danger">
+                                Cette page affiche la synthèse de l'import de vos notes. Merci de les vérifier.
+                                Aucune note déjà existante n'a été modifée par l'import.
+                                <strong>L'évaluation est pour le moment invisible des étudiants. <a
+                                            href="{{ path('application_personnel_evaluation_visible', {uuid:
+                                                evaluation.uuidString, etat: 'visible'}) }}">Cliquez
+                                                                                             ici pour la diffuser aux
+                                                                                             étudiants après
+                                                                                             vérification de
+                                                                                             l'import.</a></strong>
+                            </div>
+                        {% elseif import is not defined and evaluation.visible == false %}
                             <div class="alert alert-warning">
-                                Cette page affiche la synthèse de l'import de vos notes. Merci de les vérifier, et
-                                d'enregistrer chaque onglet. <strong>Aucune note n'est sauvegardée à ce stade de
-                                                                     l'import !</strong>
+                                <strong>L'évaluation est pour le moment invisible des étudiants. <a
+                                            href="{{ path('application_personnel_evaluation_visible', {uuid:
+                                                evaluation.uuidString, etat: 'visible'}) }}">Cliquez ici pour la
+                                                                                             diffuser aux étudiants
+                                                                                             après
+                                                                                             vérification de
+                                                                                             l'import.</a></strong>
                             </div>
                         {% else %}
                             <div class="alert alert-warning">
@@ -202,7 +215,7 @@
                         {% endif %}
                         <br>
                         <div class="alert alert-info">
-                            Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera
+                            * Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera
                             pas
                             pénalisé par un 0. Laisser non coché si vous n'avez pas encore l'information.
                         </div>
@@ -246,12 +259,14 @@
                                         <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
                                             .display }}</label>
                                         <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
-                                               class="form-control groupe_{{ groupe.id }}"/></td>
+                                               class="form-control groupe_{{ groupe.id }}"
+                                               value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
+                                    </td>
                                 </tr>
                                 {% set tab=tab+1 %}
                             {% else %}
                                 <tr class="bg-warning">
-                                    <td colspan="3">{{ 'pas.etudiant.groupe'|trans }}</td>
+                                    <td colspan="4">{{ 'pas.etudiant.groupe'|trans }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

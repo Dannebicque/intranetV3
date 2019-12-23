@@ -9,9 +9,10 @@
                 {% for eval in evaluations.evaluations %}
                     <li class="nav-item">
                         <a href="#eval{{ eval.id }}" data-toggle="tab"
-                           class="nav-link {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active{% endif %}">{{ 'evaluation'|trans }}N° {{ loop.index }}
-                                                                                                                                                         ({{ eval.libelle }}
-                                                                                                                                                         )</a>
+                           class="nav-link {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %}
+                           active{% endif %}">
+                            {{ 'evaluation'|trans }} N° {{ loop.index }} ({{ eval.libelle }})
+                        </a>
                     </li>
                 {% endfor %}
 
@@ -46,6 +47,11 @@
                                                #{{ eval.id }}
                                                ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
                         <div class="card-body">
+                            {% if eval.visible == false %}
+                            <div class="alert alert-warning">
+                                Cette évaluation n'est pas visible des étudiants.
+                            </div>
+                            {% endif %}
                             <table class="table table-striped table-bordered">
                                 <tr>
                                     <th>{{ 'table.groupe'|trans }}</th>

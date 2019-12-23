@@ -335,6 +335,7 @@ class MyEvaluation
      */
     private function insertNotes(Evaluation $evaluation, $data): array
     {
+        $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
         $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($evaluation->getSemestre());
         $etudiants = [];
@@ -342,18 +343,43 @@ class MyEvaluation
         foreach ($req as $etu) {
             $etudiants[$etu->getNumEtudiant()] = $etu;
         }
-        foreach ($data as $note) {
-            if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
-                $newnote = [];
-                $newnote['idetudiant'] = $etudiants[$note['num_etudiant']]->getId();
-                $newnote['numetudiant'] = $note['num_etudiant'];
-                $newnote['note'] = $note['note'];
-                $newnote['commentaire'] = $note['commentaire'];
-                $newnote['absenceJustifie'] = false;
-                $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
-            }
+
+        foreach ($evaluation->getNotes() as $note) {
+            $notes[$note->getEtudiant()->getNumEtudiant()] = $note;
         }
 
+        foreach ($data as $note) {
+            if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
+                if (array_key_exists((string)$note['num_etudiant'], $notes) && $notes[$note['num_etudiant']] !== '-0.01') {
+                    //déjà une note, on ne remplace pas. On récupère les éléments pour alimenter le tableau
+                    $newnote = [];
+                    $newnote['idetudiant'] = $notes[$note['num_etudiant']]->getEtudiant()->getId();
+                    $newnote['numetudiant'] = $note['num_etudiant'];
+                    $newnote['note'] = $notes[$note['num_etudiant']]->getNote();
+                    $newnote['commentaire'] = $notes[$note['num_etudiant']]->getCommentaire();
+                    $newnote['absenceJustifie'] = false;
+                    $newnote['dejapresente'] = true; //on indique qu'on ne remplace pas car déjà existante
+                    $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
+                } else {
+                    //pas de note, on ajoute
+                    $nnnote = new Note();
+                    $nnnote->setEvaluation($evaluation);
+                    $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
+                    $nnnote->setCommentaire($note['commentaire']);
+                    $nnnote->setNote($note['note']);
+                    $this->entityManager->persist($nnnote);
+                    $newnote = [];
+                    $newnote['idetudiant'] = $etudiants[$note['num_etudiant']]->getId();
+                    $newnote['numetudiant'] = $note['num_etudiant'];
+                    $newnote['note'] = $note['note'];
+                    $newnote['commentaire'] = $note['commentaire'];
+                    $newnote['absenceJustifie'] = false;
+                    $newnote['dejapresente'] = false; //on indique qu'on remplace  car pas de notes
+                    $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
+                }
+            }
+        }
+        $this->entityManager->flush();
         return $notes;
     }
 
@@ -376,7 +402,6 @@ class MyEvaluation
 
         $nblignes = count($sheetData);
         for ($i = 2; $i <= $nblignes; $i++) {
-            //todo: on commence à 2 si ligne d'en-tete, 1 sinon. A detecter
             $nb = count($sheetData[$i]);
             for ($j = 1; $j <= $nb; $j++) {
                 $t[$ordre[$j - 1]] = $sheetData[$i][chr($j + 64)];

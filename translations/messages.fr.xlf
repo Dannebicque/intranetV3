@@ -12842,7 +12842,7 @@
     <unit id="b_dfkEj" name="note.saisie">
       <segment>
         <source>note.saisie</source>
-        <target>note.saisie</target>
+        <target>Saisir les notes</target>
       </segment>
     </unit>
     <unit id="uP26BoL" name="configuration.edit.success.flash">
@@ -13101,6 +13101,18 @@
       <segment>
         <source>previsionnel.duplicate.success.flash</source>
         <target>previsionnel.duplicate.success.flash</target>
+      </segment>
+    </unit>
+    <unit id="gFGiIHc" name="label.importer.les.notes">
+      <segment>
+        <source>label.importer.les.notes</source>
+        <target>Importer le fichier de notes</target>
+      </segment>
+    </unit>
+    <unit id="sm7lhmW" name="import_note_a_verifier">
+      <segment>
+        <source>import_note_a_verifier</source>
+        <target>import_note_a_verifier</target>
       </segment>
     </unit>
   </file>
