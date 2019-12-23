@@ -334,24 +334,7 @@ class MyEtudiant
         $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
             $semestre->getAnneeUniversitaire()->getAnnee());
 
-
-        $this->statistiques['nbCoursManques'] = 0;
-        $this->statistiques['totalDuree'] = new DateTime('00:00');
-        $this->statistiques['nbNonJustifie'] = 0;
-        $this->statistiques['nbDemiJournee'] = 0; //todo: a gérer dans le calcul
-        $this->statistiques['nbJustifie'] = 0;
-
-
-        /** @var Absence $absence */
-        foreach ($this->absences as $absence) {
-            $this->statistiques['nbCoursManques']++;
-
-            if ($absence->getDuree() !== null) {
-                $this->statistiques['totalDuree']->add(new DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
-            }
-
-            $absence->isJustifie() ? $this->statistiques['nbJustifie']++ : $this->statistiques['nbNonJustifie']++;
-        }
+        $this->statistiques = StatsAbsences::calculsStatsSemestre($this->absences);
 
         return $this;
     }

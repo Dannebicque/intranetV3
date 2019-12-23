@@ -197,7 +197,7 @@ class AbsenceController extends BaseController
     ): JsonResponse {
         $absences = $absenceRepository->getByMatiereArray(
             $matiere,
-            $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
+            $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
         );
 
         return $this->json($absences);
@@ -245,7 +245,7 @@ class AbsenceController extends BaseController
 
                 $absences = $absenceRepository->getByMatiereArray(
                     $matiere,
-                    $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
+                    $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
                 );
 
                 return $this->json($absences);
