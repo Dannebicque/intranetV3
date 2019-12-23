@@ -318,6 +318,15 @@
             "ref": "82e2278ff2a74a97837e84c2493c30e7a85ad299"
         }
     },
+    "symfony/google-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
+        }
+    },
     "symfony/http-foundation": {
         "version": "v4.2.1"
     },

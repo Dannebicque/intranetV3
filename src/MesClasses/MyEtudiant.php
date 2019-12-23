@@ -17,18 +17,17 @@ use App\Entity\ModificationNote;
 use App\Entity\Note;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Events;
+use App\Event\AbsenceAddedEvent;
+use App\Event\AbsenceRemovedEvent;
 use App\MesClasses\Pdf\MyPDF;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
-use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -80,7 +79,6 @@ class MyEtudiant
      * @param EtudiantRepository       $etudiantRepository
      * @param NoteRepository           $noteRepository
      * @param AbsenceRepository        $absenceRepository
-     * @param EventDispatcherInterface $eventDispatcher
      * @param MyPDF                    $myPdf
      * @param MyEvaluations            $myEvaluations
      */
@@ -89,8 +87,8 @@ class MyEtudiant
         EtudiantRepository $etudiantRepository,
         NoteRepository $noteRepository,
         AbsenceRepository $absenceRepository,
-        EventDispatcherInterface $eventDispatcher,
         MyPDF $myPdf,
+        EventDispatcherInterface $eventDispatcher,
         MyEvaluations $myEvaluations
     ) {
         $this->entityManager = $entityManager;
@@ -197,12 +195,9 @@ class MyEtudiant
         $this->entityManager->persist($absence);
         $this->entityManager->flush();
 
-        //On déclenche les events
-        $event = new GenericEvent($absence);
-        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED);
-        $this->eventDispatcher->dispatch($event, Events::VERIFICATION_JUSTIFICATIF); //on vérifie s'il faut la valider ou pas
-        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_ADDED_RESPONSABLE);
-        $this->eventDispatcher->dispatch($event, Events::ABSENCE_ADDED);
+        //On déclenche les events : mails étudiants et responsable si actif, notification et vérification avec les justificatifs existants
+        $event = new AbsenceAddedEvent($absence);
+        $this->eventDispatcher->dispatch($event, AbsenceAddedEvent::NAME);
 
         return $absence;
     }
@@ -210,6 +205,8 @@ class MyEtudiant
     /**
      * @param Evaluation $evaluation
      * @param            $data
+     *
+     * @param Personnel  $personnel
      *
      * @return bool
      * @throws Exception
@@ -238,8 +235,6 @@ class MyEtudiant
                 $note[0]->setAbsenceJustifie(false);
             }
 
-
-
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
         } elseif (count($note) === 0) {
@@ -263,14 +258,12 @@ class MyEtudiant
      */
     public function removeAbsence(Absence $absence): void
     {
-        $event = new GenericEvent($absence);
+        $event = new AbsenceRemovedEvent($absence);
         $this->entityManager->remove($absence);
         $this->entityManager->flush();
 
         //On déclenche les events
-        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_REMOVED);
-        $this->eventDispatcher->dispatch($event, Events::MAIL_ABSENCE_REMOVED_RESPONSABLE);
-        $this->eventDispatcher->dispatch($event, Events::ABSENCE_REMOVED);
+        $this->eventDispatcher->dispatch($event, AbsenceRemovedEvent::NAME);
     }
 
     /**
