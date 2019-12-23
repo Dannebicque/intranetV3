@@ -20,8 +20,6 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
-use DateInterval;
-use DateTime;
 use Exception;
 
 /**

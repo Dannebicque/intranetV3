@@ -128,7 +128,7 @@ class MyMailer
     private function getFrom(array $options): Address
     {
         if (array_key_exists('from', $options) && count($options['from']) > 0) {
-            return new Address($options['from']);
+                return new Address($options['from'][0]);
         }
 
         return new Address(Configuration::get('MAIL_FROM'));

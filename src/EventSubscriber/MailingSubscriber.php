@@ -9,15 +9,17 @@
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
 
-use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\Entity\Rattrapage;
+use App\Event\AbsenceAddedEvent;
+use App\Event\AbsenceRemovedEvent;
 use App\Events;
 use App\MesClasses\Mail\MyMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur
@@ -46,13 +48,8 @@ class MailingSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            // le nom de l'event et le nom de la fonction qui sera déclenché
-            //Events::USER_REGISTERED => 'onUserRegistrated',
-
-            Events::MAIL_ABSENCE_ADDED                 => 'onMailAbsenceAdded',
-            Events::MAIL_ABSENCE_ADDED_RESPONSABLE     => 'onMailAbsenceAddedResponsable',
-            Events::MAIL_ABSENCE_REMOVED               => 'onMailAbsenceRemoved',
-            Events::MAIL_ABSENCE_REMOVED_RESPONSABLE   => 'onMailAbsenceRemovedResponsable',
+            AbsenceAddedEvent::NAME                    => 'onMailAbsenceAdded',
+            AbsenceRemovedEvent::NAME                  => 'onMailAbsenceRemoved',
             Events::MAIL_NOTE_MODIFICATION_RESPONSABLE => 'onMailNoteModificationResponsable',
             Events::MAIL_NEW_TRANSCRIPT_RESPONSABLE    => 'onMailNewTranscriptResponsable',
             Events::MAIL_DECISION_RATTRAPAGE           => 'onMailDecisionRattrapage',
@@ -62,16 +59,28 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param AbsenceAddedEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
-    public function onMailAbsenceAdded(GenericEvent $event): void
+    public function onMailAbsenceAdded(AbsenceAddedEvent $event): void
     {
-        /** @var Absence $absence */
-        $absence = $event->getSubject();
+
+        $absence = $event->getAbsence();
+
         if ($absence->getEtudiant() !== null) {
             $this->myMailer->setTemplate('mails/absence_added.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
                 ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+        }
+
+        //envoi en copie au responsable si l'option est activée
+        if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
+            $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig', ['absence' => $absence]);
+            $this->myMailer->sendMessage(
+                $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp()->getMails(),
+                'Nouvelle absence enregistrée'
+            );
         }
     }
 
@@ -131,43 +140,21 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param AbsenceRemovedEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
-    public function onMailAbsenceAddedResponsable(GenericEvent $event): void
+    public function onMailAbsenceRemoved(AbsenceRemovedEvent $event): void
     {
-        /** @var Absence $absence */
-        $absence = $event->getSubject();
-        if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
-            $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig', ['absence' => $absence]);
-            $this->myMailer->sendMessage(
-                $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp()->getMails(),
-                'Nouvelle absence enregistrée'
-            );
-        }
-    }
-
-    /**
-     * @param GenericEvent $event
-     */
-    public function onMailAbsenceRemoved(GenericEvent $event): void
-    {
-        /** @var Absence $absence */
-        $absence = $event->getSubject();
+        $absence = $event->getAbsence();
         if ($absence->getEtudiant() !== null) {
             $this->myMailer->setTemplate('mails/absence_removed.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Suppression d\'une absence enregistrée',
                 ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
-    }
 
-    /**
-     * @param GenericEvent $event
-     */
-    public function onMailAbsenceRemovedResponsable(GenericEvent $event): void
-    {
-        /** @var Absence $absence */
-        $absence = $event->getSubject();
-        if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
+
+        if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
             $this->myMailer->setTemplate('mails/absence_removed_responsable.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage(
                 $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp()->getMails(),

@@ -11,6 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
+use App\Event\AbsenceAddedEvent;
 use App\Events;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
@@ -29,9 +30,6 @@ class AbsenceSubscriber implements EventSubscriberInterface
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var RouterInterface */
-    private $router;
-
     /** @var AbsenceRepository */
     private $absenceRepository;
 
@@ -42,18 +40,15 @@ class AbsenceSubscriber implements EventSubscriberInterface
      * RegistrationNotifySubscriber constructor.
      *
      * @param EntityManagerInterface        $entityManager
-     * @param RouterInterface               $router
      * @param AbsenceRepository             $absenceRepository
      * @param AbsenceJustificatifRepository $absenceJustificatifRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        RouterInterface $router,
         AbsenceRepository $absenceRepository,
         AbsenceJustificatifRepository $absenceJustificatifRepository
     ) {
         $this->entityManager = $entityManager;
-        $this->router = $router;
         $this->absenceRepository = $absenceRepository;
         $this->absenceJustificatifRepository = $absenceJustificatifRepository;
     }
@@ -65,10 +60,8 @@ class AbsenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            // le nom de l'event et le nom de la fonction qui sera déclenché
-            //Events::USER_REGISTERED => 'onUserRegistrated',
-            Events::JUSTIFIE_ABSENCES         => 'onJustifieAbsences',
-            Events::VERIFICATION_JUSTIFICATIF => 'onVerificationJustificatif',
+            Events::JUSTIFIE_ABSENCES => 'onJustifieAbsences',
+            AbsenceAddedEvent::NAME   => 'onVerificationJustificatif',
         ];
     }
 
@@ -89,10 +82,9 @@ class AbsenceSubscriber implements EventSubscriberInterface
 
     }
 
-    public function onVerificationJustificatif(GenericEvent $event): void
+    public function onVerificationJustificatif(AbsenceAddedEvent $event): void
     {
-        /** @var Absence $absence */
-        $absence = $event->getSubject();
+        $absence = $event->getAbsence();
         $justificatifs = $this->absenceJustificatifRepository->findJustificatifByAbsence($absence);
 
         if ($justificatifs) {

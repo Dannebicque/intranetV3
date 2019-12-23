@@ -13,6 +13,7 @@ use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
+use App\Entity\Personnel;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyGroupes;
