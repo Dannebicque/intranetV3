@@ -25,7 +25,6 @@ namespace App\Repository;
 use App\Entity\Favori;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Favori|null find($id, $lockMode = null, $lockVersion = null)
@@ -38,7 +37,7 @@ class FavoriRepository extends ServiceEntityRepository
     /**
      * FavoriRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

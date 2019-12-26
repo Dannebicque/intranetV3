@@ -7,6 +7,7 @@ namespace App\MesClasses;
 use App\Entity\EdtPlanning;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Previsionnel;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PrevisionnelRepository;
 
@@ -19,7 +20,7 @@ class MyEdtCompare
     /** @var PrevisionnelRepository */
     private $previsionnelRepository;
     /**
-     * @var \App\Entity\Previsionnel[]
+     * @var Previsionnel[]
      */
     private $planning;
 
@@ -99,7 +100,7 @@ class MyEdtCompare
     }
 
     /**
-     * @return \App\Entity\Previsionnel[]
+     * @return Previsionnel[]
      */
     public function getPlanning(): array
     {

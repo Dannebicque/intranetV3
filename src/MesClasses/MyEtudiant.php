@@ -79,6 +79,7 @@ class MyEtudiant
      * @param NoteRepository           $noteRepository
      * @param AbsenceRepository        $absenceRepository
      * @param MyPDF                    $myPdf
+     * @param EventDispatcherInterface $eventDispatcher
      * @param MyEvaluations            $myEvaluations
      */
     public function __construct(

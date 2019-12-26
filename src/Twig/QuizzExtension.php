@@ -39,7 +39,7 @@ class QuizzExtension extends AbstractExtension
     }
 
     /**
-     * @param $number
+     * @param $type
      *
      * @return null|string
      */

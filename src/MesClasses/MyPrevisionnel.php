@@ -785,8 +785,9 @@ class MyPrevisionnel
      * @param Departement $departement
      * @param             $annee
      *
+     * @return array
      */
-    public function compareEdtPreviMatiere(Departement $departement, $annee): Array
+    public function compareEdtPreviMatiere(Departement $departement, $annee): array
     {
         $this->recupPlanning($departement, $annee);
         $this->recupMatieres($departement, $annee);

@@ -50,15 +50,14 @@ class TypeDiplomeController extends BaseController
     public function export(MyExport $myExport, TypeDiplomeRepository $typeDiplomeRepository, $_format): Response
     {
         $typeDiplomes = $typeDiplomeRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $typeDiplomes,
             'typeDiplomes',
             ['type_diplome_administration'],
             ['libelle', 'sigle', 'nbSemestres', 'niveauEntree', 'niveauSortie']
         );
-
-        return $response;
     }
 
     /**

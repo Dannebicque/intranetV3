@@ -60,7 +60,8 @@ class NoteController extends BaseController
         $_format
     ): Response {
         $notes = $noteRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $notes,
             'notes_' . $semestre->getLibelle(),
@@ -75,8 +76,6 @@ class NoteController extends BaseController
                 'personnel' => ['nom', 'prenom']
             ]
         );
-
-        return $response;
     }
 
 

@@ -27,12 +27,13 @@ class TypeGroupeController extends BaseController
 {
     /**
      * @Route("/new/{semestre}", name="administration_type_groupe_new", methods="POST", options={"expose"=true})
-     * @param SemestreRepository $semestreRepository
      * @param Request            $request
+     *
+     * @param Semestre           $semestre
      *
      * @return Response
      */
-    public function create(SemestreRepository $semestreRepository, Request $request, Semestre $semestre): Response
+    public function create(Request $request, Semestre $semestre): Response
     {
         $typeGroupe = new TypeGroupe($semestre);
         $typeGroupe->setLibelle($request->request->get('libelle'));

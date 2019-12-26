@@ -40,7 +40,7 @@ class MatiereController extends BaseController
      * @Route("/new/{ue}", name="sa_matiere_new", methods="GET|POST")
      * @param Request $request
      *
-     * @param Diplome $diplome
+     * @param Ue      $ue
      *
      * @return Response
      */

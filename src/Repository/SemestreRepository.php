@@ -29,7 +29,6 @@ use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Semestre|null find($id, $lockMode = null, $lockVersion = null)
@@ -42,7 +41,7 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * SemestreRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -125,7 +124,7 @@ class SemestreRepository extends ServiceEntityRepository
 
         /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
-            $index = substr($semestre->getLibelle(), 1, strlen($semestre->getLibelle()) - 1);
+            $index = substr($semestre->getLibelle(), 1);
 
             if (strlen($index) === 1) {
                 $index = '0' . $index;

@@ -49,16 +49,14 @@ class SalleExamenController extends BaseController
     public function export(MyExport $myExport, SalleExamenRepository $salleExamenRepository, $_format): Response
     {
         $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $salles_examen,
             'salles_examens',
             ['salle_examen_administration', 'salle_administration'],
             ['salle' => ['libelle'], 'nbColonnes', 'nbRangs', 'capacite', 'placesInterdites']
         );
-
-
-        return $response;
     }
 
     /**

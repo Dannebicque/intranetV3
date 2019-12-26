@@ -50,15 +50,14 @@ class TypeMaterielController extends BaseController
     public function export(MyExport $myExport, TypeMaterielRepository $type_materielRepository, $_format): Response
     {
         $type_materiels = $type_materielRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $type_materiels,
             'type_materiels',
             ['type_materiel_administration', 'utilisateur'],
             ['titre', 'texte', 'departement' => ['libelle']]
         );
-
-        return $response;
     }
 
     /**

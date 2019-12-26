@@ -122,6 +122,13 @@ class AlternanceRepository extends ServiceEntityRepository
         return $tab;
     }
 
+    /**
+     * @param Etudiant           $etudiant
+     * @param AnneeUniversitaire $anneeUniversitaire
+     *
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneByEtudiantAnnee(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('a')

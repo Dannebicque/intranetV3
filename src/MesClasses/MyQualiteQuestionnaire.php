@@ -15,7 +15,7 @@ class MyQualiteQuestionnaire
     private $typeQuestion;
     private $obligatoire;
 
-    public function traduitLigne(string $ligne)
+    public function traduitLigne(string $ligne): ?string
     {
         $code = $ligne[0];
         switch ($code) {
@@ -55,7 +55,7 @@ class MyQualiteQuestionnaire
 
     }
 
-    private function isObligatoire()
+    private function isObligatoire(): ?string
     {
         if ($this->obligatoire === 'OBLIGATOIRE') {
             return 'required';

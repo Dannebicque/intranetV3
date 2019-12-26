@@ -50,15 +50,13 @@ class MaterielController extends BaseController
     public function export(MyExport $myExport, MaterielRepository $materielRepository, $_format): Response
     {
         $materiels = $materielRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $materiels,
             'materiels',
             ['materiel_administration', 'utilisateur'],
             ['titre', 'texte', 'departement' => ['libelle']]
         );
-
-        return $response;
     }
 
     /**

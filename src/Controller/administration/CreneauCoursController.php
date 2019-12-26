@@ -78,15 +78,13 @@ class CreneauCoursController extends BaseController
     {
         $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
             $this->dataUserSession->getDepartement() !== null ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : date('Y'));
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $creneaux,
             'creneaux',
             ['creneau_cours_administration', 'utilisateur'],
             ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
         );
-
-        return $response;
     }
 
     /**

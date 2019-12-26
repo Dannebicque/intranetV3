@@ -54,15 +54,14 @@ class PersonnelController extends BaseController
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $personnels,
             'listing_' . $type,
             ['utilisateur'],
             ['nom', 'prenom']
         );
-
-        return $response;
     }
 
     /**

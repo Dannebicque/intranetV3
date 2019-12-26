@@ -28,7 +28,6 @@ use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Annee|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,7 +40,7 @@ class AnneeRepository extends ServiceEntityRepository
     /**
      * AnneeRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

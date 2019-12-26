@@ -70,7 +70,8 @@ class MatiereController extends BaseController
     ): Response
     {
         $actualites = $matiereRepository->findByDiplome($diplome);
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'matieres',
@@ -91,8 +92,6 @@ class MatiereController extends BaseController
                 'suspendu'
             ]
         );
-
-        return $response;
     }
 
 

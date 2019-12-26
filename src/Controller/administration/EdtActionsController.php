@@ -62,7 +62,7 @@ class EdtActionsController extends BaseController
      * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
      * @return RedirectResponse
      */
-    public function addCours(Request $request, MyEdt $myEdt)
+    public function addCours(Request $request, MyEdt $myEdt): RedirectResponse
     {
         $pl = $myEdt->addCours($request);
 

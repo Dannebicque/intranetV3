@@ -69,6 +69,7 @@ class EnqueteCreationController extends BaseController
     /**
      * @Route("/wizard-2/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_2")
      *
+     * @param QuizzQuestionRepository   $quizzQuestionRepository
      * @param string                    $action
      * @param QualiteQuestionnaire|null $qualiteQuestionnaire
      *

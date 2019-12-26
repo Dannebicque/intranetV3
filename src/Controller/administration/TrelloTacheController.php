@@ -93,15 +93,14 @@ class TrelloTacheController extends BaseController
     public function export(MyExport $myExport, TrelloTacheRepository $trelloTacheRepository, $_format): Response
     {
         $trellos = $trelloTacheRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $trellos,
             'treelo_tache',
             ['trello_administration', 'utilisateur'],
             ['libelle', 'deadline', 'description', 'personnels' => ['nom', 'prenom']]
         );
-
-        return $response;
     }
 
 

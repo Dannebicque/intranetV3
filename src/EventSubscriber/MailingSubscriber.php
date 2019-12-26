@@ -167,7 +167,9 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param NoteEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
     public function onMailNoteModificationResponsable(NoteEvent $event): void
     {
@@ -185,7 +187,9 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param EvaluationEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {

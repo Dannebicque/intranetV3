@@ -26,7 +26,6 @@ use App\Entity\Departement;
 use App\Entity\Hrs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Hrs|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,7 +38,7 @@ class HrsRepository extends ServiceEntityRepository
     /**
      * HrsRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

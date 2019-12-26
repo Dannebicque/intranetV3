@@ -961,7 +961,7 @@ class Matiere extends BaseEntity
         return $this;
     }
 
-    public function getJson() {
+    public function getJson(): array {
         $t = [];
         $t['id'] = $this->getId();
         $t['libelle'] = $this->getLibelle();

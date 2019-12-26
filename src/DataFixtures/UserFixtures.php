@@ -37,7 +37,7 @@ class UserFixtures extends Fixture
         $user3->setRoles(['ROLE_SUPER_ADMIN']);
         $user3->setPhotoName('noimage.png');
         $user3->setCreated(new DateTime('now'));
-        $user3->setUpdatedValue(new DateTime('now'));
+        $user3->setUpdatedValue();
         $manager->persist($user3);
 
         $manager->flush();

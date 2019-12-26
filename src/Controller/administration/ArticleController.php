@@ -52,15 +52,13 @@ class ArticleController extends BaseController
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
         $articles = $articleRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $articles,
             'articles',
             ['article_administration', 'utilisateur'],
             ['titre', 'texte', 'categorie' => ['libelle'], 'personnel' => ['nom', 'prenom']]
         );
-
-        return $response;
     }
 
     /**

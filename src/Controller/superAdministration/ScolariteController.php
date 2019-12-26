@@ -60,7 +60,7 @@ class ScolariteController extends AbstractController
      *
      * @return Response
      */
-    public function semestreShow(Semestre $semestre)
+    public function semestreShow(Semestre $semestre): Response
     {
         return $this->render('super-administration/scolarite/semestre.html.twig', [
             'semestre' => $semestre,

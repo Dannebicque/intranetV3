@@ -86,7 +86,11 @@ class Configuration extends BaseEntity
         return $this;
     }
 
-    public function getTypeLong() {
+    /**
+     * @return string
+     */
+    public function getTypeLong(): string
+    {
         return $this->type === 'T' ? 'Texte' : 'Fichier';
     }
 }

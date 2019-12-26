@@ -254,5 +254,7 @@ class AppExtension extends AbstractExtension
             //todo: gérer la traduction avec pluralisation. Voir https://symfony.com/doc/current/translation/message_format.html
             return $this->translator->trans('%diff% ' . $strTime[$i], ['%diff%' => $diff]);
         }
+
+        return 'err.';
     }
 }

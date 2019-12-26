@@ -59,6 +59,8 @@ class EvaluationController extends BaseController
      * @param MyEvaluation $myEvaluation
      * @param Evaluation   $evaluation
      *
+     * @param              $etat
+     *
      * @return Response
      */
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response

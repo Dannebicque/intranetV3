@@ -118,9 +118,7 @@ class AbsenceController extends BaseController
         $_format
     ): Response {
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
-        $response = $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
-
-        return $response;
+        return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
     }
 
     /**
@@ -139,9 +137,7 @@ class AbsenceController extends BaseController
     public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
     {
         $myAbsences->getAbsencesSemestre($semestre);
-        $response = $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
-
-        return $response;
+        return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
     }
 
     /**

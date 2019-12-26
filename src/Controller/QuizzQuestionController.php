@@ -181,6 +181,8 @@ class QuizzQuestionController extends BaseController
     /**
      * @Route("/{id}/duplicate", name="quizz_question_duplicate", methods="GET|POST")
      *
+     * @param QuizzQuestion $quizzQuestion
+     *
      * @return Response
      */
     public function duplicate(QuizzQuestion $quizzQuestion): Response

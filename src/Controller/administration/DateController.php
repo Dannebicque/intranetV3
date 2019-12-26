@@ -48,15 +48,13 @@ class DateController extends BaseController
     public function export(MyExport $myExport, DateRepository $dateRepository, $_format): Response
     {
         $dates = $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $dates,
             'dates',
             ['date_administration', 'utilisateur'],
             ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
         );
-
-        return $response;
     }
 
     /**

@@ -51,15 +51,13 @@ class CelcatCalendrierController extends BaseController
     public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
     {
         $articles = $celcatCalendrierRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $articles,
             'celcat',
             ['celcat_administration'],
             ['semaineFormation', 'semaineReelle', 'dateLundi']
         );
-
-        return $response;
     }
 
     /**
