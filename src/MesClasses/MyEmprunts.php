@@ -12,13 +12,11 @@ namespace App\MesClasses;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Emprunt;
-use App\Events;
+use App\Event\EmpruntEvent;
 use App\Repository\EmpruntRepository;
-use DA\KernelBundle\Entity\Configuration;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyEmprunts
 {
@@ -111,20 +109,17 @@ class MyEmprunts
 
     public function changeEtat(Emprunt $emprunt, string $etat): void
     {
-        $eventMail = '';
         $eventNotif = '';
         $this->emprunt = $emprunt;
         switch ($etat) {
             case Emprunt::DEMANDE:
                 $this->emprunt->setEtat(Emprunt::DEMANDE);
-                $eventMail = Events::MAIL_CHGT_ETAT_EMPRUNT_DEMANDE; //MAIL AU REPSONSABLE + COPIE ETUDIANT
-                $eventNotif = Events::CHGT_ETAT_EMPRUNT_DEMANDE;
+                $eventNotif = EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE;
                 break;
             case Emprunt::ACCEPTE:
                 $this->emprunt->setEtat(Emprunt::ACCEPTE);
                 $this->emprunt->setDateValidation(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_EMPRUNT_ACCEPTE; //MAIL ETUDIANT
-                $eventNotif = Events::CHGT_ETAT_EMPRUNT_ACCEPTE;
+                $eventNotif = EmpruntEvent::CHGT_ETAT_EMPRUNT_ACCEPTE;
                 break;
             case Emprunt::SORTIE:
                 $this->emprunt->setEtat(Emprunt::SORTIE);
@@ -133,8 +128,7 @@ class MyEmprunts
             case Emprunt::REFUS:
                 $this->emprunt->setEtat(Emprunt::REFUS);
                 $this->emprunt->setDateValidation(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_EMPRUNT_REFUS;
-                $eventNotif = Events::CHGT_ETAT_EMPRUNT_REFUS;
+                $eventNotif = EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS;
                 break;
             case Emprunt::REVENU:
                 $this->emprunt->setEtat(Emprunt::REVENU);
@@ -142,10 +136,7 @@ class MyEmprunts
                 break;
         }
 
-        $event = new GenericEvent($this->emprunt);
-        if ($eventMail !== '') {
-            $this->eventDispatcher->dispatch($event, $eventMail);
-        }
+        $event = new EmpruntEvent($this->emprunt);
 
         if ($eventNotif !== '') {
             $this->eventDispatcher->dispatch($event, $eventNotif);

@@ -16,4 +16,4 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
+    ide: phpstorm #pour faire le lien avec l'IDE

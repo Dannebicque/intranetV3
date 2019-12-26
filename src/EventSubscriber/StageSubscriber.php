@@ -11,6 +11,7 @@ namespace App\EventSubscriber;
 use App\Entity\Notification;
 use App\Entity\StageEtudiant;
 use App\Entity\StageMailTemplate;
+use App\Event\StageEvent;
 use App\Events;
 use App\MesClasses\Mail\MyMailer;
 use App\Repository\StageMailTemplateRepository;
@@ -62,31 +63,24 @@ class StageSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            Events::MAIL_CHGT_ETAT_STAGE_AUTORISE           => 'onMailChgtEtatStageAutorise',
-            Events::MAIL_CHGT_ETAT_STAGE_DEPOSE             => 'onMailChgtEtatStageDepose',
-            Events::MAIL_CHGT_ETAT_STAGE_VALIDE             => 'onMailChgtEtatStageValide',
-            Events::MAIL_CHGT_ETAT_STAGE_IMPRIME            => 'onMailChgtEtatStageImprime',
-            Events::MAIL_CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onMailChgtEtatStageConventionEnvoyee',
-            Events::MAIL_CHGT_ETAT_CONVENTION_RECUE         => 'onMailChgtEtatStageConventionRecue',
-
-            Events::CHGT_ETAT_STAGE_AUTORISE           => 'onChgtEtatStageAutorise',
-            Events::CHGT_ETAT_STAGE_DEPOSE             => 'onChgtEtatStageDepose',
-            Events::CHGT_ETAT_STAGE_VALIDE             => 'onChgtEtatStageValide',
-            Events::CHGT_ETAT_STAGE_IMPRIME            => 'onChgtEtatStageImprime',
-            Events::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onChgtEtatStageConventionEnvoyee',
-            Events::CHGT_ETAT_CONVENTION_RECUE         => 'onChgtEtatStageConventionRecue',
+            StageEvent::CHGT_ETAT_STAGE_AUTORISE           => 'onChgtEtatStageAutorise',
+            StageEvent::CHGT_ETAT_STAGE_DEPOSE             => 'onChgtEtatStageDepose',
+            StageEvent::CHGT_ETAT_STAGE_VALIDE             => 'onChgtEtatStageValide',
+            StageEvent::CHGT_ETAT_STAGE_IMPRIME            => 'onChgtEtatStageImprime',
+            StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onChgtEtatStageConventionEnvoyee',
+            StageEvent::CHGT_ETAT_CONVENTION_RECUE         => 'onChgtEtatStageConventionRecue',
         ];
     }
 
-    public function onChgtEtatStageAutorise(GenericEvent $event): void
+    public function onChgtEtatStageAutorise(StageEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_STAGE_AUTORISE);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_AUTORISE);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_AUTORISE);
     }
 
-    private function addNotification(GenericEvent $event, $codeEvent): void
+    private function addNotification(StageEvent $event, $codeEvent): void
     {
-        /** @var StageEtudiant $stageEtudiant */
-        $stageEtudiant = $event->getSubject();
+        $stageEtudiant = $event->getStageEtudiant();
         if ($stageEtudiant->getEtudiant() !== null) {
             $notif = new Notification();
             $notif->setEtudiant($stageEtudiant->getEtudiant());
@@ -101,26 +95,29 @@ class StageSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onChgtEtatStageConventionEnvoyee(GenericEvent $event): void
+    public function onChgtEtatStageConventionEnvoyee(StageEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
+
     }
 
-    public function onChgtEtatStageConventionRecue(GenericEvent $event): void
+    public function onChgtEtatStageConventionRecue(StageEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_CONVENTION_RECUE);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_CONVENTION_RECUE);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_CONVENTION_RECUE);
+
     }
 
-    public function onChgtEtatStageDepose(GenericEvent $event): void
+    public function onChgtEtatStageDepose(StageEvent $event): void
     {
-        /** @var StageEtudiant $stageEtudiant */
-        $stageEtudiant = $event->getSubject();
+        $stageEtudiant = $event->getStageEtudiant();
         if ($stageEtudiant->getStagePeriode() !== null) {
             foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $personnel) {
                 $notif = new Notification();
                 $notif->setPersonnel($personnel);
                 $notif->setTypeUser(Notification::PERSONNEL);
-                $notif->setType(Events::CHGT_ETAT_STAGE_DEPOSE);
+                $notif->setType(StageEvent::CHGT_ETAT_STAGE_DEPOSE);
                 $notif->setUrl($this->router->generate(
                     'application_etudiant_stage_detail',
                     ['id' => $stageEtudiant->getId()]
@@ -129,46 +126,37 @@ class StageSubscriber implements EventSubscriberInterface
             }
             $this->entityManager->flush();
         }
-
-        $this->addNotification($event, Events::CHGT_ETAT_STAGE_DEPOSE);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_DEPOSE);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_DEPOSE);
     }
 
-    public function onChgtEtatStageValide(GenericEvent $event): void
+    public function onChgtEtatStageValide(StageEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_STAGE_VALIDE);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
     }
 
-    public function onChgtEtatStageImprime(GenericEvent $event): void
+    public function onChgtEtatStageImprime(StageEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_STAGE_IMPRIME);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_IMPRIME);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_IMPRIME);
+
     }
 
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws NonUniqueResultException
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEtatStageAutorise(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_STAGE_AUTORISE);
-    }
 
     /**
      * @param GenericEvent $event
      * @param              $codeEvent
      *
-     * @throws NonUniqueResultException
      * @throws LoaderError
+     * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function sendMail(GenericEvent $event, $codeEvent): void
+    public function sendMail(StageEvent $event, $codeEvent): void
     {
-        /** @var StageEtudiant $stageEtudiant */
-        $stageEtudiant = $event->getSubject();
+        $stageEtudiant = $event->getStageEtudiant();
 
         //table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
         /** @var StageMailTemplate $mailTemplate */
@@ -214,7 +202,7 @@ class StageSubscriber implements EventSubscriberInterface
         }
 
         //copie au RP lors du dépôt par l'étudiant
-        if ($codeEvent === Events::MAIL_CHGT_ETAT_STAGE_DEPOSE) {
+        if ($codeEvent === StageEvent::CHGT_ETAT_STAGE_DEPOSE) {
             $this->myMailer->setTemplate('mails/stage_copie_depot_rp.txt.twig',
                 ['stageEtudiant' => $stageEtudiant]);
             $tMails = [];
@@ -223,70 +211,5 @@ class StageSubscriber implements EventSubscriberInterface
             }
             $this->myMailer->sendMessage($tMails, 'Formulaire de stage complété');
         }
-    }
-
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEtatStageConventionEnvoyee(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
-    }
-
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEtatStageConventionRecue(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_CONVENTION_RECUE);
-    }
-
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEtatStageDepose(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_STAGE_DEPOSE);
-    }
-
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEtatStageValide(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_STAGE_VALIDE);
-    }
-
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEtatStageImprime(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_STAGE_IMPRIME);
     }
 }

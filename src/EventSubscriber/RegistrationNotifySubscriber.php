@@ -10,16 +10,15 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Absence;
-use App\Entity\AbsenceJustificatif;
 use App\Entity\Etudiant;
 use App\Entity\Notification;
-use App\Entity\Rattrapage;
-use App\Event\AbsenceAddedEvent;
-use App\Event\AbsenceRemovedEvent;
-use App\Events;
+use App\Event\AbsenceEvent;
+use App\Event\CarnetEvent;
+use App\Event\JustificatifEvent;
+use App\Event\NoteEvent;
+use App\Event\RattrapageEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -57,78 +56,68 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            // le nom de l'event et le nom de la fonction qui sera déclenché
-            //Events::USER_REGISTERED => 'onUserRegistrated',
-            Events::NOTE_ADDED            => 'onNoteAdded',
-            AbsenceAddedEvent::NAME       => 'onAbsenceAdded',
-            AbsenceRemovedEvent::NAME     => 'onAbsenceRemoved',
-            Events::CARNET_ADDED          => 'onCarnetAdded',
-            Events::DECISION_RATTRAPAGE   => 'onDecisionRattrapge',
-            Events::DECISION_JUSTIFICATIF => 'onDecisionJustficatif',
+            NoteEvent::ADDED            => 'onNoteAdded',
+            AbsenceEvent::ADDED         => 'onAbsenceAdded',
+            AbsenceEvent::REMOVED       => 'onAbsenceRemoved',
+            CarnetEvent::ADDED          => 'onCarnetAdded',
+            RattrapageEvent::DECISION   => 'onDecisionRattrapge',
+            JustificatifEvent::DECISION => 'onDecisionJustficatif',
         ];
     }
 
     /**
-     * @param GenericEvent $event
+     * @param CarnetEvent $event
      */
-    public function onCarnetAdded(GenericEvent $event): void
+    public function onCarnetAdded(CarnetEvent $event): void
     {
-        $cahier = $event->getSubject();
-        /** @var Etudiant $etudiant */
-        foreach ($cahier->getSemestre()->getEtudiants() as $etudiant) {
-            $notif = new Notification();
-            $notif->setEtudiant($etudiant);
-            $notif->setTypeUser(Notification::ETUDIANT);
-            $notif->setType(Events::CARNET_ADDED);
-            $notif->setUrl($this->router->generate('application_etudiant_carnet_show', ['id' => $cahier->getId()]));
-            $this->entityManager->persist($notif);
+        $cahier = $event->getCahierTexte();
+
+        if ($cahier->getSemestre() !== null) {
+            /** @var Etudiant $etudiant */
+            foreach ($cahier->getSemestre()->getEtudiants() as $etudiant) {
+                $notif = new Notification();
+                $notif->setEtudiant($etudiant);
+                $notif->setTypeUser(Notification::ETUDIANT);
+                $notif->setType(CarnetEvent::ADDED);
+                $notif->setUrl($this->router->generate('application_etudiant_carnet_show', ['id' => $cahier->getId()]));
+                $this->entityManager->persist($notif);
+            }
+
+            $this->entityManager->flush();
         }
-
-        $this->entityManager->flush();
     }
 
     /**
-     * @param GenericEvent $event
+     * @param NoteEvent $event
      */
-    public function onNoteAdded(GenericEvent $event): void
+    public function onNoteAdded(NoteEvent $event): void
     {
+        //todo: a faire
     }
 
     /**
-     * @param AbsenceAddedEvent $event
+     * @param AbsenceEvent $event
      */
-    public function onAbsenceAdded(AbsenceAddedEvent $event): void
+    public function onAbsenceAdded(AbsenceEvent $event): void
     {
-        $absence = $event->getAbsence();
-
-        $notif = new Notification();
-        $notif->setEtudiant($absence->getEtudiant());
-        $notif->setPersonnel($absence->getPersonnel());
-        $notif->setTypeUser(Notification::ETUDIANT);
-        $notif->setType(AbsenceAddedEvent::NAME);
-        $notif->setUrl($this->router->generate('user_mon_profil', ['onglet' => 'absence']));
-        $this->entityManager->persist($notif);
-        dump($notif);
-
-        $this->entityManager->flush();
+        $this->onAbsence($event->getAbsence(), AbsenceEvent::ADDED);
     }
 
     /**
-     * @param GenericEvent $event
+     * @param RattrapageEvent $event
      */
-    public function onDecisionRattrapge(GenericEvent $event): void
+    public function onDecisionRattrapge(RattrapageEvent $event): void
     {
-        /** @var Rattrapage $rattrapage */
-        $rattrapage = $event->getSubject();
+        $rattrapage = $event->getRattrapage();
 
         $notif = new Notification();
         $notif->setEtudiant($rattrapage->getEtudiant());
         $notif->setPersonnel(null);
         $notif->setTypeUser(Notification::ETUDIANT);
         if ($rattrapage->getEtatDemande() === 'A') {
-            $notif->setType(Events::DECISION_RATTRAPAGE_ACCEPTEE);
+            $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_ACCEPTEE);
         } else {
-            $notif->setType(Events::DECISION_RATTRAPAGE_REFUSEE);
+            $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_REFUSEE);
         }
         $notif->setUrl($this->router->generate('application_index', ['onglet' => 'rattrapage']));
         $this->entityManager->persist($notif);
@@ -139,9 +128,9 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setPersonnel($rattrapage->getPersonnel());
         $notif->setTypeUser(Notification::PERSONNEL);
         if ($rattrapage->getEtatDemande() === 'A') {
-            $notif->setType(Events::DECISION_RATTRAPAGE_ACCEPTEE);
+            $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_ACCEPTEE);
         } else {
-            $notif->setType(Events::DECISION_RATTRAPAGE_REFUSEE);
+            $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_REFUSEE);
         }
         $notif->setUrl($this->router->generate('application_index', ['onglet' => 'rattrapage']));
         $this->entityManager->persist($notif);
@@ -150,21 +139,20 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param JustificatifEvent $event
      */
-    public function onDecisionJustficatif(GenericEvent $event): void
+    public function onDecisionJustficatif(JustificatifEvent $event): void
     {
-        /** @var AbsenceJustificatif $absenceJustificatif */
-        $absenceJustificatif = $event->getSubject();
+        $absenceJustificatif = $event->getAbsenceJustificatif();
 
         $notif = new Notification();
         $notif->setEtudiant($absenceJustificatif->getEtudiant());
         $notif->setPersonnel(null);
         $notif->setTypeUser(Notification::ETUDIANT);
         if ($absenceJustificatif->getEtat() === 'A') {
-            $notif->setType(Events::DECISION_JUSTIFICATIF_ACCEPTEE);
+            $notif->setType(JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE);
         } else {
-            $notif->setType(Events::DECISION_JUSTIFICATIF_REFUSEE);
+            $notif->setType(JustificatifEvent::DECISION_JUSTIFICATIF_REFUSEE);
         }
         $notif->setUrl($this->router->generate('application_index', ['onglet' => 'justificatif']));
         $this->entityManager->persist($notif);
@@ -173,20 +161,27 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param AbsenceRemovedEvent $event
+     * @param AbsenceEvent $event
      */
-    public function onAbsenceRemoved(AbsenceRemovedEvent $event): void
+    public function onAbsenceRemoved(AbsenceEvent $event): void
     {
-        $absence = $event->getAbsence();
+        $this->onAbsence($event->getAbsence(), AbsenceEvent::REMOVED);
+    }
+
+    /**
+     * @param Absence $absence
+     * @param         $etat
+     */
+    private function onAbsence(Absence $absence, $etat): void
+    {
 
         $notif = new Notification();
         $notif->setEtudiant($absence->getEtudiant());
         $notif->setPersonnel($absence->getPersonnel());
         $notif->setTypeUser(Notification::ETUDIANT);
-        $notif->setType(AbsenceRemovedEvent::NAME);
+        $notif->setType($etat);
         $notif->setUrl($this->router->generate('user_mon_profil', ['onglet' => 'absence']));
         $this->entityManager->persist($notif);
-
         $this->entityManager->flush();
     }
 }

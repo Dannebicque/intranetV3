@@ -12,17 +12,16 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
-use App\Events;
+use App\Event\RattrapageEvent;
 use App\MesClasses\MyExport;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class RattrapageController
@@ -107,9 +106,8 @@ class RattrapageController extends BaseController
             $rattrapage->setEtatDemande($etat);
             $this->entityManager->flush();
 
-            $event = new GenericEvent($rattrapage);
-            $eventDispatcher->dispatch($event, Events::MAIL_DECISION_RATTRAPAGE);
-            $eventDispatcher->dispatch($event, Events::DECISION_RATTRAPAGE);
+            $event = new RattrapageEvent($rattrapage);
+            $eventDispatcher->dispatch($event, RattrapageEvent::DECISION);
 
             return new Response('', Response::HTTP_OK);
         }

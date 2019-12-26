@@ -10,12 +10,14 @@ namespace App\EventSubscriber;
 
 use App\Entity\Notification;
 use App\Entity\StageEtudiant;
+use App\Event\EmpruntEvent;
 use App\Events;
 use App\MesClasses\Mail\MyMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -54,42 +56,23 @@ class EmpruntSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            Events::MAIL_CHGT_ETAT_EMPRUNT_DEMANDE => 'onMailChgtEmpruntDemande',
-            Events::MAIL_CHGT_ETAT_EMPRUNT_REFUS   => 'onMailChgtEmpruntRefus',
-            Events::MAIL_CHGT_ETAT_EMPRUNT_ACCEPTE => 'onMailChgtEmpruntAccepte',
-
-            Events::CHGT_ETAT_EMPRUNT_DEMANDE => 'onChgtEmpruntDemande',
-            Events::CHGT_ETAT_EMPRUNT_ACCEPTE => 'onChgtEmpruntAccepte',
-            Events::CHGT_ETAT_EMPRUNT_REFUS   => 'onChgtEmpruntRefus',
+            EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE => 'onChgtEmpruntDemande',
+            EmpruntEvent::CHGT_ETAT_EMPRUNT_ACCEPTE => 'onChgtEmpruntAccepte',
+            EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS   => 'onChgtEmpruntRefus',
 
         ];
     }
 
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEmpruntDemande(GenericEvent $event): void
-    {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_EMPRUNT_DEMANDE);
-    }
 
     /**
-     * @param GenericEvent $event
+     * @param EmpruntEvent $event
      * @param              $codeEvent
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws TransportExceptionInterface
      */
-    public function sendMail(GenericEvent $event, $codeEvent): void
+    public function sendMail(EmpruntEvent $event, $codeEvent): void
     {
-        /** @var StageEtudiant $stageEtudiant */
-        $emprunt = $event->getSubject();
+        $emprunt = $event->getEmprunt();
 
         //mail par défaut
         $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '.txt.twig',
@@ -97,7 +80,7 @@ class EmpruntSubscriber implements EventSubscriberInterface
         $this->myMailer->sendMessage($emprunt->getEtudiant()->getMails(), $codeEvent);
 
         //copie au RP lors du dépôt par l'étudiant
-        if ($codeEvent === Events::MAIL_CHGT_ETAT_EMPRUNT_DEMANDE) {
+        if ($codeEvent === EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE) {
             $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '_copie.txt.twig',
                 ['emprunt' => $emprunt]);
             $this->myMailer->sendMessage($emprunt->getResponsable()->getMails(), 'Formulaire de stage complété');
@@ -105,40 +88,19 @@ class EmpruntSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param EmpruntEvent $event
      *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws TransportExceptionInterface
      */
-    public function onMailChgtEmpruntRefus(GenericEvent $event): void
+    public function onChgtEmpruntDemande(EmpruntEvent $event): void
     {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_EMPRUNT_REFUS);
+        $this->sendMail($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE);
+        $this->addNotification($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE);
     }
 
-    /**
-     * @param GenericEvent $event
-     *
-     * @throws LoaderError
-     * @throws NonUniqueResultException
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function onMailChgtEmpruntAccepte(GenericEvent $event): void
+    private function addNotification(EmpruntEvent $event, $codeEvent): void
     {
-        $this->sendMail($event, Events::MAIL_CHGT_ETAT_EMPRUNT_ACCEPTE);
-    }
-
-    public function onChgtEmpruntDemande(GenericEvent $event): void
-    {
-        $this->addNotification($event, Events::CHGT_ETAT_EMPRUNT_DEMANDE);
-    }
-
-    private function addNotification(GenericEvent $event, $codeEvent): void
-    {
-        /** @var StageEtudiant $stageEtudiant */
-        $emprunt = $event->getSubject();
+        $emprunt = $event->getEmprunt();
         if ($emprunt->getEtudiant() !== null) {
             $notif = new Notification();
             $notif->setEtudiant($emprunt->getEtudiant());
@@ -152,7 +114,7 @@ class EmpruntSubscriber implements EventSubscriberInterface
             $this->entityManager->flush();
         }
 
-        if ($codeEvent === Events::MAIL_CHGT_ETAT_EMPRUNT_DEMANDE) {
+        if ($codeEvent === EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE) {
             $notif = new Notification();
             $notif->setPersonnel($emprunt->getResponsable());
             $notif->setTypeUser(Notification::PERSONNEL);
@@ -166,14 +128,26 @@ class EmpruntSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onChgtEmpruntAccepte(GenericEvent $event): void
+    /**
+     * @param EmpruntEvent $event
+     *
+     * @throws TransportExceptionInterface
+     */
+    public function onChgtEmpruntAccepte(EmpruntEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_EMPRUNT_ACCEPTE);
+        $this->sendMail($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_ACCEPTE);
+        $this->addNotification($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_ACCEPTE);
     }
 
-    public function onChgtEmpruntRefus(GenericEvent $event): void
+    /**
+     * @param EmpruntEvent $event
+     *
+     * @throws TransportExceptionInterface
+     */
+    public function onChgtEmpruntRefus(EmpruntEvent $event): void
     {
-        $this->addNotification($event, Events::CHGT_ETAT_EMPRUNT_REFUS);
+        $this->sendMail($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS);
+        $this->addNotification($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS);
     }
 
 

@@ -17,8 +17,7 @@ use App\Entity\ModificationNote;
 use App\Entity\Note;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Event\AbsenceAddedEvent;
-use App\Event\AbsenceRemovedEvent;
+use App\Event\AbsenceEvent;
 use App\MesClasses\Pdf\MyPDF;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
@@ -196,8 +195,8 @@ class MyEtudiant
         $this->entityManager->flush();
 
         //On déclenche les events : mails étudiants et responsable si actif, notification et vérification avec les justificatifs existants
-        $event = new AbsenceAddedEvent($absence);
-        $this->eventDispatcher->dispatch($event, AbsenceAddedEvent::NAME);
+        $event = new AbsenceEvent($absence);
+        $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
 
         return $absence;
     }

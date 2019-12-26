@@ -12,16 +12,17 @@ use App\Controller\BaseController;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
+use App\Event\JustificatifEvent;
 use App\Events;
 use App\MesClasses\MyExport;
 use App\Repository\AbsenceJustificatifRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AbsenceController
@@ -92,8 +93,8 @@ class AbsenceJustificatifController extends BaseController
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
 
 
-            $event = new GenericEvent($absenceJustificatif);
-            $eventDispatcher->dispatch($event, Events::MAIL_DELETE_JUSTIFICATIF);
+            $event = new JustificatifEvent($absenceJustificatif);
+            $eventDispatcher->dispatch($event, JustificatifEvent::DELETED);
             $this->entityManager->remove($absenceJustificatif);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.justificatif.delete.success.flash');
@@ -144,9 +145,8 @@ class AbsenceJustificatifController extends BaseController
         }
 
         if ($etat === 'A' || $etat === 'R') {
-            $event = new GenericEvent($absenceJustificatif);
-            $eventDispatcher->dispatch($event, Events::MAIL_DECISION_JUSTIFICATIF);
-            $eventDispatcher->dispatch($event, Events::DECISION_JUSTIFICATIF);
+            $event = new JustificatifEvent($absenceJustificatif);
+            $eventDispatcher->dispatch($event, JustificatifEvent::DECISION);
         }
 
         return new Response('', Response::HTTP_OK);

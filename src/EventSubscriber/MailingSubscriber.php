@@ -10,12 +10,12 @@
 namespace App\EventSubscriber;
 
 use App\Entity\AbsenceJustificatif;
-use App\Entity\Evaluation;
-use App\Entity\Note;
-use App\Entity\Rattrapage;
-use App\Event\AbsenceAddedEvent;
-use App\Event\AbsenceRemovedEvent;
-use App\Events;
+
+use App\Event\AbsenceEvent;
+use App\Event\EvaluationEvent;
+use App\Event\JustificatifEvent;
+use App\Event\NoteEvent;
+use App\Event\RattrapageEvent;
 use App\MesClasses\Mail\MyMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -48,22 +48,22 @@ class MailingSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            AbsenceAddedEvent::NAME                    => 'onMailAbsenceAdded',
-            AbsenceRemovedEvent::NAME                  => 'onMailAbsenceRemoved',
-            Events::MAIL_NOTE_MODIFICATION_RESPONSABLE => 'onMailNoteModificationResponsable',
-            Events::MAIL_NEW_TRANSCRIPT_RESPONSABLE    => 'onMailNewTranscriptResponsable',
-            Events::MAIL_DECISION_RATTRAPAGE           => 'onMailDecisionRattrapage',
-            Events::MAIL_DECISION_JUSTIFICATIF         => 'onMailDecisionJustificatif',
-            Events::MAIL_DELETE_JUSTIFICATIF           => 'onMailDeleteJustificatif',
+            AbsenceEvent::ADDED         => 'onMailAbsenceAdded',
+            AbsenceEvent::REMOVED       => 'onMailAbsenceRemoved',
+            NoteEvent::UPDATED          => 'onMailNoteModificationResponsable',
+            EvaluationEvent::ADDED      => 'onMailNewTranscriptResponsable',
+            RattrapageEvent::DECISION   => 'onMailDecisionRattrapage',
+            JustificatifEvent::DECISION => 'onMailDecisionJustificatif',
+            JustificatifEvent::DELETED  => 'onMailDeleteJustificatif',
         ];
     }
 
     /**
-     * @param AbsenceAddedEvent $event
+     * @param AbsenceEvent $event
      *
      * @throws TransportExceptionInterface
      */
-    public function onMailAbsenceAdded(AbsenceAddedEvent $event): void
+    public function onMailAbsenceAdded(AbsenceEvent $event): void
     {
 
         $absence = $event->getAbsence();
@@ -85,12 +85,13 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param RattrapageEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
-    public function onMailDecisionRattrapage(GenericEvent $event): void
+    public function onMailDecisionRattrapage(RattrapageEvent $event): void
     {
-        /** @var Rattrapage $rattrapage */
-        $rattrapage = $event->getSubject();
+        $rattrapage = $event->getRattrapage();
         if ($rattrapage->getEtudiant() !== null) {
             if ($rattrapage->getEtatDemande() === 'A') {
                 $this->myMailer->setTemplate('mails/rattrapage_accepted.txt.twig', ['rattrapage' => $rattrapage]);
@@ -103,12 +104,13 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param JustificatifEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
-    public function onMailDecisionJustificatif(GenericEvent $event): void
+    public function onMailDecisionJustificatif(JustificatifEvent $event): void
     {
-        /** @var AbsenceJustificatif $absenceJustificatif */
-        $absenceJustificatif = $event->getSubject();
+        $absenceJustificatif = $event->getAbsenceJustificatif();
         if ($absenceJustificatif->getEtudiant() !== null) {
             if ($absenceJustificatif->getEtat() === 'A') {
                 $this->myMailer->setTemplate('mails/justificatif_accepted.txt.twig',
@@ -125,12 +127,13 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param GenericEvent $event
+     * @param JustificatifEvent $event
+     *
+     * @throws TransportExceptionInterface
      */
-    public function onMailDeleteJustificatif(GenericEvent $event): void
+    public function onMailDeleteJustificatif(JustificatifEvent $event): void
     {
-        /** @var AbsenceJustificatif $absenceJustificatif */
-        $absenceJustificatif = $event->getSubject();
+        $absenceJustificatif = $event->getAbsenceJustificatif();
         if ($absenceJustificatif->getEtudiant() !== null) {
             $this->myMailer->setTemplate('mails/justificatif_deleted.txt.twig',
                 ['justificatif' => $absenceJustificatif]);
@@ -140,11 +143,11 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param AbsenceRemovedEvent $event
+     * @param AbsenceEvent $event
      *
      * @throws TransportExceptionInterface
      */
-    public function onMailAbsenceRemoved(AbsenceRemovedEvent $event): void
+    public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
         $absence = $event->getAbsence();
         if ($absence->getEtudiant() !== null) {
@@ -166,10 +169,9 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      */
-    public function onMailNoteModificationResponsable(GenericEvent $event): void
+    public function onMailNoteModificationResponsable(NoteEvent $event): void
     {
-        /** @var Note $note */
-        $note = $event->getSubject();
+        $note = $event->getNote();
         if ($note->getEvaluation() !== null &&
             $note->getEvaluation()->getMatiere() !== null &&
             $note->getEvaluation()->getMatiere()->getSemestre() !== null &&
@@ -185,10 +187,9 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param GenericEvent $event
      */
-    public function onMailNewTranscriptResponsable(GenericEvent $event): void
+    public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {
-        /** @var Evaluation $evaluation */
-        $evaluation = $event->getSubject();
+        $evaluation = $event->getEvaluation();
         if ($evaluation->getMatiere() !== null &&
             $evaluation->getMatiere()->getSemestre() !== null &&
             $evaluation->getMatiere()->getSemestre()->getOptDestMailReleve() !== null) {

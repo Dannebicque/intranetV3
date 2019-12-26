@@ -18,14 +18,15 @@ namespace App\MesClasses;
 use App\Entity\Etudiant;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
+use App\Event\StageEvent;
 use App\Events;
 use App\Repository\StageEtudiantRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyStageEtudiant
 {
@@ -73,32 +74,27 @@ class MyStageEtudiant
             case StageEtudiant::ETAT_STAGE_AUTORISE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
                 $this->stageEtudiant->setDateAutorise(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_STAGE_AUTORISE;
-                $eventNotif = Events::CHGT_ETAT_STAGE_AUTORISE;
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_AUTORISE;
                 break;
             case StageEtudiant::ETAT_STAGE_DEPOSE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
                 $this->stageEtudiant->setDateDepotFormulaire(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_STAGE_DEPOSE;
-                $eventNotif = Events::CHGT_ETAT_STAGE_DEPOSE;
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_DEPOSE;
                 break;
             case StageEtudiant::ETAT_STAGE_VALIDE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_VALIDE);
                 $this->stageEtudiant->setDateValidation(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_STAGE_VALIDE;
-                $eventNotif = Events::CHGT_ETAT_STAGE_VALIDE;
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_VALIDE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE);
                 $this->stageEtudiant->setDateConventionEnvoyee(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
-                $eventNotif = Events::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_RECUE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_RECUE);
                 $this->stageEtudiant->setDateConventionRecu(new DateTime('now'));
-                $eventMail = Events::MAIL_CHGT_ETAT_CONVENTION_RECUE;
-                $eventNotif = Events::CHGT_ETAT_CONVENTION_RECUE;
+                $eventNotif = StageEvent::CHGT_ETAT_CONVENTION_RECUE;
                 break;
             case StageEtudiant::ETAT_STAGE_ERASMUS:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_ERASMUS);
@@ -111,10 +107,7 @@ class MyStageEtudiant
                 break;
         }
 
-        $event = new GenericEvent($this->stageEtudiant);
-        if ($eventMail !== '') {
-            $this->eventDispatcher->dispatch($event, $eventMail);
-        }
+        $event = new StageEvent($this->stageEtudiant);
 
         if ($eventNotif !== '') {
             $this->eventDispatcher->dispatch($event, $eventNotif);

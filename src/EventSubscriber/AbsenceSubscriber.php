@@ -11,7 +11,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
-use App\Event\AbsenceAddedEvent;
+use App\Event\AbsenceEvent;
 use App\Events;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
@@ -19,7 +19,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur
@@ -61,7 +60,7 @@ class AbsenceSubscriber implements EventSubscriberInterface
     {
         return [
             Events::JUSTIFIE_ABSENCES => 'onJustifieAbsences',
-            AbsenceAddedEvent::NAME   => 'onVerificationJustificatif',
+            AbsenceEvent::ADDED       => 'onVerificationJustificatif',
         ];
     }
 
@@ -82,7 +81,7 @@ class AbsenceSubscriber implements EventSubscriberInterface
 
     }
 
-    public function onVerificationJustificatif(AbsenceAddedEvent $event): void
+    public function onVerificationJustificatif(AbsenceEvent $event): void
     {
         $absence = $event->getAbsence();
         $justificatifs = $this->absenceJustificatifRepository->findJustificatifByAbsence($absence);
