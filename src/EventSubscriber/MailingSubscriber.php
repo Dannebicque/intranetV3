@@ -9,8 +9,6 @@
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
 
-use App\Entity\AbsenceJustificatif;
-
 use App\Event\AbsenceEvent;
 use App\Event\EvaluationEvent;
 use App\Event\JustificatifEvent;

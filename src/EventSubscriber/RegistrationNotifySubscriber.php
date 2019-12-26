@@ -92,7 +92,15 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
      */
     public function onNoteAdded(NoteEvent $event): void
     {
-        //todo: a faire
+        $note = $event->getNote();
+        $notif = new Notification();
+        $notif->setEtudiant($note->getEtudiant());
+        $notif->setPersonnel(null);
+        $notif->setTypeUser(Notification::ETUDIANT);
+
+        $notif->setType(NoteEvent::ADDED);
+        $notif->setUrl($this->router->generate('user_mon_profil', ['onglet' => 'note']));
+        $this->entityManager->persist($notif);
     }
 
     /**

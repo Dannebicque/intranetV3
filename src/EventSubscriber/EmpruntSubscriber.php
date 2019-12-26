@@ -9,19 +9,12 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Notification;
-use App\Entity\StageEtudiant;
 use App\Event\EmpruntEvent;
-use App\Events;
 use App\MesClasses\Mail\MyMailer;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 
 class EmpruntSubscriber implements EventSubscriberInterface

@@ -27,9 +27,6 @@ use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
-use App\Repository\PersonnelRepository;
-use App\Repository\SemestreRepository;
-use Exception;
 
 class MyEdtCelcat extends BaseEdt
 {

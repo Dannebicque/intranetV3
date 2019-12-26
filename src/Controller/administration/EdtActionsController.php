@@ -9,11 +9,9 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Entity\EdtPlanning;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
-use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

@@ -30,7 +30,7 @@ class AlternanceFicheSuiviController extends AbstractController
      */
     public function index(AlternanceFicheSuiviRepository $alternanceFicheSuiviRepository): Response
     {
-        return $this->render('alternance_fiche_suivi/index.html.twig', [
+        return $this->render('administration/alternance_fiche_suivi/index.html.twig', [
             'alternance_fiche_suivis' => $alternanceFicheSuiviRepository->findAll(),
         ]);
     }
@@ -56,7 +56,7 @@ class AlternanceFicheSuiviController extends AbstractController
             return $this->redirectToRoute('alternance_fiche_suivi_index');
         }
 
-        return $this->render('alternance_fiche_suivi/new.html.twig', [
+        return $this->render('administration/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
             'form'                   => $form->createView(),
         ]);
@@ -70,7 +70,7 @@ class AlternanceFicheSuiviController extends AbstractController
      */
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
-        return $this->render('alternance_fiche_suivi/show.html.twig', [
+        return $this->render('administration/alternance_fiche_suivi/show.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
         ]);
     }
@@ -95,7 +95,7 @@ class AlternanceFicheSuiviController extends AbstractController
             ]);
         }
 
-        return $this->render('alternance_fiche_suivi/edit.html.twig', [
+        return $this->render('administration/alternance_fiche_suivi/edit.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
             'form'                   => $form->createView(),
         ]);
