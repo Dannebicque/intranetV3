@@ -29,6 +29,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApogeeController extends BaseController
 {
     /**
+     * @var array
+     */
+    private $etudiants;
+
+    /**
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
@@ -65,7 +70,7 @@ class ApogeeController extends BaseController
 
         $diplome = $diplomeRepository->find($request->request->get('diplomeforce'));
         if ($diplome) {
-            $etudiants = [];
+            $this->etudiants = [];
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = MyApogee::getEtudiantsDiplome($diplome);
@@ -83,20 +88,14 @@ class ApogeeController extends BaseController
                         $etudiant->updateFromApogee($dataApogee['etudiant']);
                         $etudiant->updateFromLdap($etuLdap);
                         $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
-                        $etudiants[$numEtudiant]['etat'] = 'maj';
-                        $etudiants[$numEtudiant]['data'] = $etudiant;
+                        $this->etudiants[$numEtudiant]['etat'] = 'maj';
+                        $this->etudiants[$numEtudiant]['data'] = $etudiant;
                     } else {
                         //n'existe pas on ajoute.
                         $etudiant = new Etudiant();
                         $etudiant->updateFromApogee($dataApogee['etudiant']);
                         $etudiant->updateFromLdap($etuLdap);
-                        $adresse = new Adresse();
-                        $adresse->updateFromApogee($dataApogee['adresse']);
-                        $this->entityManager->persist($adresse);
-                        $etudiant->setAdresse($adresse);
-                        $this->entityManager->persist($etudiant);
-                        $etudiants[$numEtudiant]['etat'] = 'add';
-                        $etudiants[$numEtudiant]['data'] = $etudiant;
+                        $this->saveAdresse($dataApogee, $etudiant);
                     }
                     $this->entityManager->flush();
                 }
@@ -105,7 +104,7 @@ class ApogeeController extends BaseController
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
             return $this->render('super-administration/apogee/confirmation.html.twig', [
-                'etudiants' => $etudiants
+                'etudiants' => $this->etudiants
             ]);
         }
         $this->addFlashBag('error', 'import.etudiant.apogee.erreur.diplome');
@@ -127,7 +126,7 @@ class ApogeeController extends BaseController
     public function importEtudiant(Request $request, EtudiantRepository $etudiantRepository): Response
     {
         $listeetudiants = explode(';', $request->request->get('listeetudiants'));
-        $etudiants = [];
+        $this->etudiants = [];
         foreach ($listeetudiants as $etudiant) {
             $stid = MyApogee::getEtudiant($etudiant);
 
@@ -139,19 +138,13 @@ class ApogeeController extends BaseController
                 //Stocker réponse dans un tableau pour page confirmation
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                 if ($etudiant) {
-                    $etudiants[$numEtudiant]['etat'] = 'deja';
-                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                    $this->etudiants[$numEtudiant]['etat'] = 'deja';
+                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 } else {
                     //n'existe pas on ajoute.
                     $etudiant = new Etudiant();
                     $etudiant->updateFromApogee($dataApogee['etudiant']);
-                    $adresse = new Adresse();
-                    $adresse->updateFromApogee($dataApogee['adresse']);
-                    $this->entityManager->persist($adresse);
-                    $etudiant->setAdresse($adresse);
-                    $this->entityManager->persist($etudiant);
-                    $etudiants[$numEtudiant]['etat'] = 'add';
-                    $etudiants[$numEtudiant]['data'] = $etudiant;
+                    $this->saveAdresse($dataApogee, $etudiant);
                 }
             }
         }
@@ -159,8 +152,19 @@ class ApogeeController extends BaseController
         $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [
-            'etudiants' => $etudiants
+            'etudiants' => $this->etudiants
         ]);
+    }
+
+    private function saveAdresse($dataApogee, Etudiant $etudiant)
+    {
+        $adresse = new Adresse();
+        $adresse->updateFromApogee($dataApogee['adresse']);
+        $this->entityManager->persist($adresse);
+        $etudiant->setAdresse($adresse);
+        $this->entityManager->persist($etudiant);
+        $this->etudiants[$etudiant->getNumEtudiant()]['etat'] = 'add';
+        $this->etudiants[$etudiant->getNumEtudiant()]['data'] = $etudiant;
     }
 
 

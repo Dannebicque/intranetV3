@@ -109,14 +109,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
     public function recupereEDTBornes(int $semaineReelle, Semestre $semestre, $jsem): array
     {
-        $creneaux = array(
-            1  => array('8h00', '9h30'),
-            4  => array('9h30', '11h00'),
-            7  => array('11h00', '12h30'),
-            10 => array('12h30', '14h00'),
-            13 => array('14h00', '15h30'),
-            16 => array('15h30', '17h00'),
-            19 => array('17h00', '18h30'));
+
 
         $nbgroupetp = $semestre->getNbgroupeTpEdt();
 
@@ -164,7 +157,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             $refmatiere = explode(' ',$row->getLibModule());
 
 
-            if (array_key_exists($casedebut, $creneaux) && $duree % 3 === 0) {
+            if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere[0];
                 $planning[$casedebut][$groupe]['salle'] = substr($row->getLibSalle(), 0, $max);
@@ -193,7 +186,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
                 }
             } else {
                 //pas sur un créneau classique pour le début
-                if (!array_key_exists($casedebut, $creneaux)) {
+                if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
                     $casedebut -= ($duree % 3);
                 }
 

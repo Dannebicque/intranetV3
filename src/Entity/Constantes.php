@@ -105,8 +105,8 @@ class Constantes
         '20:30'
     ];
 
-    public const TAB_HEURES_INDEX = array(
-        '' => 0,
+    public const TAB_HEURES_INDEX = [
+        ''         => 0,
         '08:00:00' => 1,
         '08:30:00' => 2,
         '09:00:00' => 3,
@@ -116,7 +116,7 @@ class Constantes
         '11:00:00' => 7,
         '11:30:00' => 8,
         '12:00:00' => 9,
-        '12:30:00'  => 10,
+        '12:30:00' => 10,
         '13:00:00' => 11,
         '13:30:00' => 12,
         '14:00:00' => 13,
@@ -133,32 +133,55 @@ class Constantes
         '19:30:00' => 24,
         '20:00:00' => 25,
         '20:30:00' => 26
-    );
+    ];
 
     public const MOYENNE_MODULES = 'moymodules';
     public const MOYENNE_UES = 'moyues';
 
-    public const TAB_GROUPES_INDEX = array(
+    public const TAB_GROUPES_INDEX = [
         'S1 DEC TP11' => 1,
         'S1 DEC TP12' => 2,
-        'S1 DEC TD1' => 1,
-        'S2 CM' => 1,
-        'S2 TD1' => 1,
-        'S2 TD2' => 2,
-        'S2 TD3' => 3,
-        'S2 TP11' => 1,
-        'S2 TP12' => 2,
-        'S2 TP21' => 3,
-        'S2 TP22' => 4,
-        'S2 TP31' => 5,
-        'S2 TP32' => 6,
+        'S1 DEC TD1'  => 1,
+        'S2 CM'       => 1,
+        'S2 TD1'      => 1,
+        'S2 TD2'      => 2,
+        'S2 TD3'      => 3,
+        'S2 TP11'     => 1,
+        'S2 TP12'     => 2,
+        'S2 TP21'     => 3,
+        'S2 TP22'     => 4,
+        'S2 TP31'     => 5,
+        'S2 TP32'     => 6,
 
 
-    );
+    ];
 
     public const TAB_JOURS = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
-    public const TAB_MOIS = ['', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    public const TAB_MOIS = [
+        '',
+        'Janvier',
+        'Février',
+        'Mars',
+        'Avril',
+        'Mai',
+        'Juin',
+        'Juillet',
+        'Août',
+        'Septembre',
+        'Octobre',
+        'Novembre',
+        'Décembre'
+    ];
 
+    public const TAB_CRENEAUX = [
+        1  => ['8h00', '9h30'],
+        4  => ['9h30', '11h00'],
+        7  => ['11h00', '12h30'],
+        10 => ['12h30', '14h00'],
+        13 => ['14h00', '15h30'],
+        16 => ['15h30', '17h00'],
+        19 => ['17h00', '18h30']
+    ];
 
 //    /**
 //     * @return array

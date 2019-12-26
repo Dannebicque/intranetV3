@@ -12,7 +12,6 @@ use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
-use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;

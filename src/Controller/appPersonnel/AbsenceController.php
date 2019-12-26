@@ -13,7 +13,6 @@ use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
-use App\Entity\Personnel;
 use App\MesClasses\MyAbsences;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyGroupes;
@@ -103,7 +102,6 @@ class AbsenceController extends BaseController
         MyGroupes $myGroupes,
         $event
     ): Response {
-
 
         if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
             $planning = $celcatEventsRepository->find($event);

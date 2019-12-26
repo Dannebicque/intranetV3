@@ -133,32 +133,6 @@ class CreneauCoursController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_creneau_cours_edit", methods={"GET","POST"})
-     * @param Request      $request
-     * @param CreneauCours $creneauCour
-     *
-     * @return Response
-     */
-    public function edit(Request $request, CreneauCours $creneauCour): Response
-    {
-        $form = $this->createForm(CreneauCoursType::class, $creneauCour);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('administration_creneau_cours_index', [
-                'id' => $creneauCour->getId(),
-            ]);
-        }
-
-        return $this->render('administration/creneau_cours/edit.html.twig', [
-            'creneau_cour' => $creneauCour,
-            'form'         => $form->createView(),
-        ]);
-    }
-
 
     /**
      * @Route("/{id}", name="administration_creneau_cours_delete", methods="DELETE")

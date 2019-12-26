@@ -30,7 +30,6 @@ use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class MyEdt extends BaseEdt

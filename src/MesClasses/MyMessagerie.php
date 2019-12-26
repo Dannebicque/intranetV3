@@ -15,7 +15,6 @@ use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\Personnel;
-use App\MesClasses\Mail\MyMailer;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;

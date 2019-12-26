@@ -19,13 +19,11 @@ use App\Entity\Etudiant;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Event\StageEvent;
-use App\Events;
 use App\Repository\StageEtudiantRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyStageEtudiant

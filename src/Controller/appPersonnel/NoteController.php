@@ -11,8 +11,6 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
-use App\Entity\Semestre;
-use App\Form\EvaluationsPersonnelsType;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEtudiant;
 use App\MesClasses\MyEvaluation;

@@ -9,10 +9,8 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Notification;
-use App\Entity\StageEtudiant;
 use App\Entity\StageMailTemplate;
 use App\Event\StageEvent;
-use App\Events;
 use App\MesClasses\Mail\MyMailer;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;

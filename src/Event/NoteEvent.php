@@ -3,7 +3,6 @@
 
 namespace App\Event;
 
-use App\Entity\Absence;
 use App\Entity\Note;
 use Symfony\Contracts\EventDispatcher\Event;
 
