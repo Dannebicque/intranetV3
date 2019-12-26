@@ -6,10 +6,12 @@ namespace App\Event;
 use App\Entity\Absence;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class AbsenceAddedEvent extends Event
+class AbsenceEvent extends Event
 {
-    public const NAME = 'absence.added';
+    public const ADDED = 'absence.added';
+    public const REMOVED = 'absence.removed';
 
+    /** @var Absence */
     protected $absence;
 
     public function __construct(Absence $absence)
@@ -17,7 +19,7 @@ class AbsenceAddedEvent extends Event
         $this->absence = $absence;
     }
 
-    public function getAbsence()
+    public function getAbsence(): Absence
     {
         return $this->absence;
     }

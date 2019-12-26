@@ -11,18 +11,17 @@ namespace App\Controller\appEtudiant;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StageEtudiant;
-use App\Events;
+use App\Event\StageEvent;
 use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
 use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class StageController
@@ -99,9 +98,8 @@ class StageController extends BaseController
                 $stageEtudiant->setDateDepotFormulaire(new DateTime('now'));
                 $this->entityManager->flush();
 
-                $event = new GenericEvent($stageEtudiant);
-                $eventDispatcher->dispatch($event, Events::CHGT_ETAT_STAGE_DEPOSE);
-                $eventDispatcher->dispatch($event, Events::MAIL_CHGT_ETAT_STAGE_DEPOSE);
+                $event = new StageEvent($stageEtudiant);
+                $eventDispatcher->dispatch($event, StageEvent::CHGT_ETAT_STAGE_DEPOSE);
 
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.formulaire.success.flash');
 

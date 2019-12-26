@@ -11,17 +11,16 @@ namespace App\Controller\appPersonnel;
 use App\Controller\BaseController;
 use App\Entity\CahierTexte;
 use App\Entity\Constantes;
-use App\Events;
+use App\Event\CarnetEvent;
 use App\Form\CahierTexteType;
 use App\MesClasses\MyExport;
 use App\Repository\CahierTexteRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class CarnetController
@@ -107,8 +106,8 @@ class CarnetController extends BaseController
             $this->entityManager->flush();
 
             //On déclenche l'event
-            $event = new GenericEvent($cahierTexte);
-            $eventDispatcher->dispatch($event, Events::CARNET_ADDED);
+            $event = new CarnetEvent($cahierTexte);
+            $eventDispatcher->dispatch($event, CarnetEvent::ADDED);
 
             return $this->redirectToRoute('application_index', ['onglet' => 'carnet']);
         }
