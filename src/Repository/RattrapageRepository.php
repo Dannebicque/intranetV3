@@ -17,6 +17,7 @@ use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * @method Rattrapage|null find($id, $lockMode = null, $lockVersion = null)
@@ -81,6 +82,7 @@ class RattrapageRepository extends ServiceEntityRepository
      *
      * @return mixed
      * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     public function findBySemestreCount(Semestre $semestre, int $annee = 0)
     {

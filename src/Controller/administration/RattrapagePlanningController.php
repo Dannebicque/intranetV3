@@ -64,7 +64,8 @@ class RattrapagePlanningController extends BaseController
         $_format
     ): Response {
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $rattrapages,
             'rattrapages_' . $diplome->getLibelle(),
@@ -82,8 +83,6 @@ class RattrapagePlanningController extends BaseController
                 'etatDemande'
             ]
         );
-
-        return $response;
     }
 
     /**

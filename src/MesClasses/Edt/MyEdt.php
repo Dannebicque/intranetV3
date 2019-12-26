@@ -668,7 +668,7 @@ class MyEdt extends BaseEdt
         return $this;
     }
 
-    public function addCours(Request $request)
+    public function addCours(Request $request): EdtPlanning
     {
         $pl = new EdtPlanning();
         $semestre = $this->semestreRepository->find($request->request->get('promo'));

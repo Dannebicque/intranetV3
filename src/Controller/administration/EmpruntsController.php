@@ -132,15 +132,13 @@ class EmpruntsController extends BaseController
     {
         $myEmprunts->listeEmprunts($this->dataUserSession->getDepartement());
 
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $myEmprunts->getEmprunts(),//todo: a définir
             'materiels',
             ['emprunts_administration', 'utilisateur'],
             ['titre', 'texte', 'departement' => ['libelle']]
         );
-
-        return $response;
     }
 
     /**

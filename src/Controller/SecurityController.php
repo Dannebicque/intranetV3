@@ -37,7 +37,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/sso/redirect/cas", name="sso_cas")
      */
-    public function redirectToCas()
+    public function redirectToCas(): RedirectResponse
     {
         return $this->redirect('https://cas.univ-reims.fr/cas?service='.$this->generateUrl('cas_return', [], UrlGeneratorInterface::ABSOLUTE_URL));
     }
@@ -151,7 +151,7 @@ class SecurityController extends AbstractController
         EtudiantRepository $etudiantRepository,
         UserPasswordEncoderInterface $passwordEncoder,
         EntityManagerInterface $entityManager
-    ) {
+    ): Response {
 
         if ($request->isMethod('POST')) {
 

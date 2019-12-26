@@ -58,7 +58,7 @@ class CarnetController extends BaseController
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {
         $actualites = $cahierTexteRepository->findByPersonnel($this->getConnectedUser());
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'carnet_texte',
@@ -72,8 +72,6 @@ class CarnetController extends BaseController
                 'matiere'   => ['libelle', 'codeMatiere']
             ]
         );
-
-        return $response;
     }
 
     /**

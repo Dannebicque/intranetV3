@@ -119,8 +119,9 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
-     * @param GroupeRepository $groupeRepository
-     * @param Semestre         $semestre
+     * @param EtudiantRepository $etudiantRepository
+     * @param GroupeRepository   $groupeRepository
+     * @param Semestre           $semestre
      *
      * @return Response
      */

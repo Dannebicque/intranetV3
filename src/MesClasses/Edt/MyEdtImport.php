@@ -18,6 +18,7 @@ use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class MyEdtImport
 {
@@ -75,7 +76,13 @@ class MyEdtImport
         $this->myUpload = $myUpload;
     }
 
-
+    /**
+     * @param                 $file
+     * @param DataUserSession $dataUserSession
+     *
+     * @return MyEdtImport
+     * @throws Exception
+     */
     public function init($file, DataUserSession $dataUserSession): MyEdtImport
     {
         $this->dataUserSession = $dataUserSession;
@@ -126,7 +133,7 @@ class MyEdtImport
                         //prof commence par Z, donc, c'est une zone sans enseignant
                         $salle = substr($phrase, 11, 4);
                         $fin = $phrase[15];
-                        $texte = substr($phrase, 16, strlen($phrase) - 15);
+                        $texte = substr($phrase, 16);
 
                         $pl = new EdtPlanning();
                         $pl->setSemestre($tabSemestre[$semestre]);

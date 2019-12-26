@@ -52,7 +52,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
     public function findByDiplomeBuilder(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
 
-        $query = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->where('a.diplome = :diplome')
@@ -61,8 +61,6 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('p.anneeUniversitaire', 'DESC')
             ->addOrderBy('p.numeroPeriode', 'ASC');
-
-        return $query;
     }
 
     public function findStageEtudiant(Semestre $semestre)

@@ -68,7 +68,8 @@ class RattrapageController extends BaseController
         $_format
     ): Response {
         $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $rattrapages,
             'rattrapages_' . $semestre->getLibelle(),
@@ -86,8 +87,6 @@ class RattrapageController extends BaseController
                 'etatDemande'
             ]
         );
-
-        return $response;
     }
 
     /**

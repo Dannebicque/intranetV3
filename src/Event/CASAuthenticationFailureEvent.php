@@ -15,8 +15,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CASAuthenticationFailureEvent extends Event
 {
-
-    const POST_MESSAGE = 'cas_auth.authentication.failure';
     private $request;
     private $exception;
     private $response;

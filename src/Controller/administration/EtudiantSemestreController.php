@@ -175,14 +175,12 @@ class EtudiantSemestreController extends BaseController
         $_format
     ): Response {
         $etudiants = $etudiantRepository->findBySemestre($semestre);
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $etudiants,
             'etudiants_' . $semestre->getLibelle(),
             ['etudiants_administration', 'utilisateur'],
             ['nom', 'prenom', 'sexe', 'numEtudiant', 'bac', 'mailUniv']
         );
-
-        return $response;
     }
 }

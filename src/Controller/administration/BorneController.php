@@ -49,15 +49,13 @@ class BorneController extends BaseController
     public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
         $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $bornes,
             'bornes',
             ['bornes_administration', 'semestre'],
             ['message', 'icone', 'couleur', 'url', 'dateDebutPublication', 'dateFinPublication']
         );
-
-        return $response;
     }
 
     /**

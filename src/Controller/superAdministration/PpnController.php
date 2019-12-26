@@ -74,6 +74,8 @@ class PpnController extends BaseController
      * @Route("/new/{diplome}", name="sa_ppn_new", methods="GET|POST")
      * @param Request $request
      *
+     * @param Diplome $diplome
+     *
      * @return Response
      */
     public function create(Request $request, Diplome $diplome): Response

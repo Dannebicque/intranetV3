@@ -49,15 +49,14 @@ class TypeHrsController extends BaseController
     public function export(MyExport $myExport, TypeHrsRepository $typeHrsRepository, $_format): Response
     {
         $typeHrs = $typeHrsRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $typeHrs,
             'typeHrs',
             ['type_hrs_administration'],
             ['libelle', 'type', 'incluService', 'maximum']
         );
-
-        return $response;
     }
 
     /**

@@ -71,9 +71,7 @@ class AbsenceJustificatifController extends BaseController
     ): Response {
         $justificatifs = $absenceJustificatifRepository->findBySemestre(
             $semestre);
-        $response = $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
-
-        return $response;
+        return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
     }
 
     /**

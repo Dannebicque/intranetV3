@@ -10,13 +10,13 @@ abstract class MyLdap
 {
     private static $ds;
 
-    public static function connect()
+    public static function connect(): void
     {
         try {
             self::$ds = ldap_connect(getenv('LDAP_HOST'));
             ldap_set_option(self::$ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if (self::$ds) {
-                $r = ldap_bind(self::$ds, getenv('LDAP_LOGIN'), getenv('LDAP_PASSWORD'));
+                ldap_bind(self::$ds, getenv('LDAP_LOGIN'), getenv('LDAP_PASSWORD'));
             }
 
         } catch (Exception $e) {

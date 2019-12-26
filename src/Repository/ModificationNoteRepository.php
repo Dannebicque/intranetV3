@@ -25,7 +25,6 @@ namespace App\Repository;
 use App\Entity\ModificationNote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method ModificationNote|null find($id, $lockMode = null, $lockVersion = null)
@@ -38,7 +37,7 @@ class ModificationNoteRepository extends ServiceEntityRepository
     /**
      * ModificationNoteRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

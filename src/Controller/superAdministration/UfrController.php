@@ -48,15 +48,14 @@ class UfrController extends BaseController
     public function export(MyExport $myExport, UfrRepository $ufrRepository, $_format): Response
     {
         $ufrs = $ufrRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $ufrs,
             'ufr',
             ['ufr_administration', 'utilisateur'],
             ['libelle', 'responsable' => ['nom', 'prenom', 'mailUniv']]
         );
-
-        return $response;
     }
 
     /**

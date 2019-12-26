@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use Exception;
+use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,7 +102,7 @@ class DiplomeController extends BaseController
             ]);
         }
 
-        throw new \RuntimeException('Le diplôme n\'est pas attaché à un département');
+        throw new RuntimeException('Le diplôme n\'est pas attaché à un département');
     }
 
     /**

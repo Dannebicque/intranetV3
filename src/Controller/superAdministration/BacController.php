@@ -48,15 +48,13 @@ class BacController extends BaseController
     public function export(MyExport $myExport, BacRepository $bacRepository, $_format): Response
     {
         $bacs = $bacRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGenerique(
             $_format,
             $bacs,
             'bacs',
             ['bac_administration'],
             ['libelle', 'libelleLong']
         );
-
-        return $response;
     }
 
     /**

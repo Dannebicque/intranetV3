@@ -37,7 +37,7 @@ class ActualiteRepository extends ServiceEntityRepository
     /**
      * ActualiteRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

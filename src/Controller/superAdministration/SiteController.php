@@ -48,15 +48,14 @@ class SiteController extends BaseController
     public function export(MyExport $myExport, SiteRepository $siteRepository, $_format): Response
     {
         $sites = $siteRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $sites,
             'sites',
             ['sites_administration', 'adresse'],
             ['libelle', 'adresse' => ['adresse1', 'adresse2', 'adresse3', 'codePostal', 'ville', 'pays']]
         );
-
-        return $response;
     }
 
     /**

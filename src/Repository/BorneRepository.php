@@ -29,7 +29,6 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Borne|null find($id, $lockMode = null, $lockVersion = null)
@@ -42,7 +41,7 @@ class BorneRepository extends ServiceEntityRepository
     /**
      * BorneRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

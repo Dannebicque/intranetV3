@@ -25,7 +25,6 @@ namespace App\Repository;
 use App\Entity\Courrier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Courrier|null find($id, $lockMode = null, $lockVersion = null)
@@ -38,7 +37,7 @@ class CourrierRepository extends ServiceEntityRepository
     /**
      * CourrierRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

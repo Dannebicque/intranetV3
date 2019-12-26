@@ -48,15 +48,14 @@ class SalleController extends BaseController
     public function export(MyExport $myExport, SalleRepository $salleRepository, $_format): Response
     {
         $salles = $salleRepository->findAll();
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $salles,
             'salles',
             ['salle_administration', 'sites_administration'],
             ['libelle', 'capacite', 'type', 'site' => ['libelle']]
         );
-
-        return $response;
     }
 
     /**

@@ -22,6 +22,7 @@ use App\Entity\CelcatEvent;
 use App\Entity\Semestre;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use http\Exception\InvalidArgumentException;
 
 abstract class MyCelcat
@@ -82,11 +83,10 @@ abstract class MyCelcat
     }
 
     /**
-     * @param int                    $codeCelcatDepartement
-     * @param AnneeUniversitaire     $anneeUniversitaire
-     * @param EntityManagerInterface $entity
+     * @param int                $codeCelcatDepartement
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getEvents(
         int $codeCelcatDepartement,

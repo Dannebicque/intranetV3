@@ -13,6 +13,7 @@ use App\Entity\Diplome;
 use App\MesClasses\Celcat\MyCelcat;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\DiplomeRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +57,7 @@ class CelcatController extends BaseController
      * @param Diplome                $diplome
      *
      * @return RedirectResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function update(CelcatEventsRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {

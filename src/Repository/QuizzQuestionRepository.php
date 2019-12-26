@@ -26,7 +26,7 @@ class QuizzQuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizzQuestion::class);
     }
 
-    public function findByUser(Personnel $getConnectedUser)
+    public function findByUser(Personnel $getConnectedUser): array
     {
         return $this->findBy(['auteur' => $getConnectedUser->getId()]);
     }

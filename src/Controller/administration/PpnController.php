@@ -16,6 +16,7 @@ use App\Form\PpnType;
 use App\MesClasses\MyPpn;
 use App\Repository\PpnRepository;
 use Exception;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -82,12 +83,14 @@ class PpnController extends BaseController
             return $this->redirectToRoute('administration_ppn_index');
         }
 
-        throw new \RuntimeException('Pas de PPN trouvé');
+        throw new RuntimeException('Pas de PPN trouvé');
     }
 
     /**
      * @Route("/new/{diplome}", name="administration_ppn_new", methods="GET|POST")
-     * @param Request $request
+     * @param Request      $request
+     *
+     * @param Diplome|null $diplome
      *
      * @return Response
      */

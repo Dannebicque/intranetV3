@@ -170,14 +170,13 @@ class TrombinoscopeController extends BaseController
         $_format
     ): Response {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
-        $response = $myExport->genereFichierGenerique(
+
+        return $myExport->genereFichierGenerique(
             $_format,
             $personnels,
             'listing_' . $type,
             ['utilisateur'],
             ['nom', 'prenom']
         );
-
-        return $response;
     }
 }
