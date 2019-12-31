@@ -9,6 +9,7 @@
 namespace App\MesClasses;
 
 use App\Entity\Absence;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
@@ -141,7 +142,7 @@ class MyEtudiant
      * @param Semestre $semestre
      * @param          $anneeUniversitaire
      */
-    public function getNotesAbsences(Semestre $semestre, $anneeUniversitaire): void
+    public function getNotesAbsences(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
         $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
@@ -258,12 +259,12 @@ class MyEtudiant
      */
     public function removeAbsence(Absence $absence): void
     {
-        $event = new AbsenceRemovedEvent($absence);
+        $event = new AbsenceEvent($absence);
         $this->entityManager->remove($absence);
         $this->entityManager->flush();
 
         //On déclenche les events
-        $this->eventDispatcher->dispatch($event, AbsenceRemovedEvent::NAME);
+        $this->eventDispatcher->dispatch($event, AbsenceEvent::REMOVED);
     }
 
     /**
@@ -288,7 +289,7 @@ class MyEtudiant
      */
     public function exportReleveProvisoire(Semestre $semestre): void
     {
-        $this->getNotesAbsences($semestre);
+        $this->getNotesAbsences($semestre, $semestre->getAnneeUniversitaire());
         $this->myEvaluations->getEvaluationsSemestre();
 
         $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
@@ -325,7 +326,7 @@ class MyEtudiant
         }
 
         $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
-            $semestre->getAnneeUniversitaire()->getAnnee());
+            $semestre->getAnneeUniversitaire());
 
         $this->statistiques = StatsAbsences::calculsStatsSemestre($this->absences);
 
@@ -340,10 +341,10 @@ class MyEtudiant
         return $this->statistiques;
     }
 
-    public function getNotesSemestre(Semestre $semestre, $anneeUniversitaire = 0): array
+    public function getNotesSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire = null): array
     {
-        if ($anneeUniversitaire === 0) {
-            $anneeUniversitaire = $this->etudiant->getAnneeUniversitaire()->getAnnee();
+        if ($anneeUniversitaire === null) {
+            $anneeUniversitaire = $this->etudiant->getAnneeUniversitaire();
         }
         $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
 

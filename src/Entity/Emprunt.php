@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -45,14 +46,17 @@ abstract class Emprunt extends BaseEntity
     protected $uuid;
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"emprunts_administration"})
      */
     private $dateDebut;
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"emprunts_administration"})
      */
     private $dateFin;
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"emprunts_administration"})
      */
     private $motif;
     /**
@@ -61,18 +65,22 @@ abstract class Emprunt extends BaseEntity
     private $description;
     /**
      * @ORM\Column(type="string", length=20)
+     * @Groups({"emprunts_administration"})
      */
     private $telephone;
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"emprunts_administration"})
      */
     private $etat;
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"emprunts_administration"})
      */
     private $dateSortie;
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"emprunts_administration"})
      */
     private $dateRetour;
     /**

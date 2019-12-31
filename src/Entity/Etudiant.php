@@ -980,12 +980,13 @@ class Etudiant extends Utilisateur implements Serializable
         return $this;
     }
 
-    public function getAnneeUniversitaire() {
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
         if ($this->getSemestre() !== null) {
             return $this->getSemestre()->getAnneeUniversitaire();
         }
 
-        return 0;
+        return null;
     }
 
     public function getIntituleSecuriteSociale(): ?string

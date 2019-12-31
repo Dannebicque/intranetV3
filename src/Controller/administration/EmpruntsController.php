@@ -107,7 +107,7 @@ class EmpruntsController extends BaseController
     {
         $myEmprunts->changeEtat($emprunt, $etat);
 
-        return $this->redirectToRoute('administration_emprunts_index'); //todo: a faire en javascript sans reload?
+        return $this->redirectToRoute('administration_emprunts_index');
     }
 
     /**
@@ -126,10 +126,20 @@ class EmpruntsController extends BaseController
 
         return $myExport->genereFichierGenerique(
             $_format,
-            $myEmprunts->getEmprunts(),//todo: a définir
-            'materiels',
+            $myEmprunts->getEmprunts(),
+            'emprunts',
             ['emprunts_administration', 'utilisateur'],
-            ['titre', 'texte', 'departement' => ['libelle']]
+            [
+                'dateDebut',
+                'dateFin',
+                'motif',
+                'telephone',
+                'etat',
+                'dateSortie',
+                'dateRetour',
+                'etudiant'  => ['nom', 'prenom'],
+                'personnel' => ['nom', 'prenom']
+            ]
         );
     }
 

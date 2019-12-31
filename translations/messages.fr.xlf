@@ -12488,7 +12488,7 @@
     <unit id="8Rk28_G" name="gestion.des.emprunts">
       <segment>
         <source>gestion.des.emprunts</source>
-        <target>gestion.des.emprunts</target>
+        <target>Gestion des emprunts</target>
       </segment>
     </unit>
     <unit id="ZOEySjD" name="adm.emprunts.index.heading">
@@ -12572,7 +12572,7 @@
     <unit id="2HwQsuS" name="adm.emprunts">
       <segment>
         <source>adm.emprunts</source>
-        <target>adm.emprunts</target>
+        <target>Emprunts</target>
       </segment>
     </unit>
     <unit id="ajRlItw" name="super-admin.groupes-departement.heading">

@@ -30,6 +30,7 @@ before_install:
 
 install:
   #- cp .env .env.test
+  - cp phpunit.xml.dist phpunit.xml
   - mysql -e 'create database testing;'
   - composer install
   #- php bin/console doctrine:database:create --env=test
