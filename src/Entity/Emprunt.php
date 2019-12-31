@@ -76,7 +76,7 @@ abstract class Emprunt extends BaseEntity
      */
     private $dateRetour;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntMateriel", mappedBy="emprunt")
+     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntMateriel", mappedBy="emprunt", cascade={"remove"})
      */
     private $empruntMateriels;
     /**
@@ -96,6 +96,7 @@ abstract class Emprunt extends BaseEntity
     {
         $this->uuid = Uuid::uuid4();
         $this->empruntMateriels = new ArrayCollection();
+        $this->setEtat(self::DEMANDE);
     }
 
     /**
@@ -253,7 +254,7 @@ abstract class Emprunt extends BaseEntity
         return $this;
     }
 
-    public function getReponsable()
+    public function getResponsable()
     {
         if ($this->getDepartement() !== null) {
             return $this->getDepartement()->getRespMateriel();

@@ -21,7 +21,11 @@ Description:
 {{ emprunt.description }}
 
 Bien cordialement
+{% if emprunt.responsable != null %}
 {{ emprunt.responsable.displayPr }}
+{% else %}
+Le responsable du matériel
+{% endif %}
 
 Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.
 

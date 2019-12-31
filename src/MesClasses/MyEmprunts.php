@@ -13,10 +13,14 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Emprunt;
 use App\Event\EmpruntEvent;
+use App\MesClasses\Pdf\MyPDF;
 use App\Repository\EmpruntRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyEmprunts
 {
@@ -44,6 +48,10 @@ class MyEmprunts
      * @var int
      */
     private $nbjouremprunt;
+    /**
+     * @var MyPDF
+     */
+    private $myPDF;
 
     /**
      * MyEmprunts constructor.
@@ -55,9 +63,11 @@ class MyEmprunts
     public function __construct(
         EmpruntRepository $empruntRepository,
         EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        MyPDF $myPDF
     ) {
         $this->empruntRepository = $empruntRepository;
+        $this->myPDF = $myPDF;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->statistiques = [
@@ -191,6 +201,24 @@ class MyEmprunts
         }
 
         return $this->jours;
+    }
+
+    /**
+     * @param Emprunt $emprunt
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function genereFiche(Emprunt $emprunt): void
+    {
+        $nom = $emprunt->getEtudiant() !== null ? $emprunt->getEtudiant()->getNom() : 'etudiant';
+
+        $this->myPDF::generePdf('pdf/ficheEmprunt.html.twig', [
+            'emprunt' => $emprunt,
+        ],
+            'pret-' . $nom,
+            $emprunt->getDepartement() !== null ? $emprunt->getDepartement()->getLibelle() : 'departement');
     }
 
     /**

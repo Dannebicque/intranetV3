@@ -178,7 +178,6 @@ class MyExcelMultiExport
                             $ligne,
                             $col
                         );
-                        //todo: utiliser translate pour générer les en-têtes de colonnes
                         $i++;
                     }
                 }
@@ -191,16 +190,22 @@ class MyExcelMultiExport
         $ligne++;
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
-                if (is_array($value)) {
-                    foreach ($value as $col) {
-                        $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
+                if ((!is_array($value) && array_key_exists($value, $row)) || (is_array($value) && array_key_exists($key,
+                            $row))) {
+                    if (is_array($value)) {
+                        foreach ($value as $col) {
+                            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
+                            $i++;
+                        }
+                    } else {
+                        $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
                         $i++;
                     }
                 } else {
-                    $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
                     $i++;
                 }
             }
+
 
             $i = 1;
             $ligne++;

@@ -1,9 +1,9 @@
-<form class="form-horizontal" method="post" action="">
+<form class="form-horizontal" method="post" action="{{ path('application_etudiant_emprunt_valide') }}">
     <div class="form-group">
-        <label for="motif" class="control-label required">
+        <label for="listemotif" class="control-label required">
             Raison de l'emprunt *:
         </label>
-        <select name="motif" id="motif" class="form-control"
+        <select name="listemotif" id="listemotif" class="form-control"
                 required="required">
             <option value="">Veuillez Choisir un motif</option>
             <option value="Production Audiovisuelle (M1207/M2207/M3207)">Production Audiovisuelle (M1207/M2207/M3207)

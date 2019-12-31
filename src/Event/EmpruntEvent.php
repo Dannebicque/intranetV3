@@ -9,8 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class EmpruntEvent extends Event
 {
     public const CHGT_ETAT_EMPRUNT_DEMANDE = 'chgt.emprunt.demande';
-    public const CHGT_ETAT_EMPRUNT_ACCEPTE = 'chgt.emprunt.refus';
-    public const CHGT_ETAT_EMPRUNT_REFUS = 'chgt.emprunt.accepte';
+    public const CHGT_ETAT_EMPRUNT_ACCEPTE = 'chgt.emprunt.accepte';
+    public const CHGT_ETAT_EMPRUNT_REFUS = 'chgt.emprunt.refus';
 
     /** @var Emprunt */
     protected $emprunt;

@@ -18,6 +18,7 @@ class EmpruntMateriel
 {
     public const ETAT_MATERIEL_DISPO = 'DISPO';
     public const ETAT_MATERIEL_SORTI = 'SORTI';
+    const ETAT_MATERIEL_RESERVE = 'RESER';
 
     /**
      * @ORM\Id()
