@@ -56,18 +56,17 @@ class NoteRepository extends ServiceEntityRepository
     public function findByEtudiantSemestre(
         Etudiant $etudiant,
         Semestre $semestre,
-        int $annee
+        AnneeUniversitaire $annee
     ) {
 
         return $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation = e.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
-            ->where('j.annee = :annee')
+            ->where('e.anneeUniversitaire = :annee')
             ->andWhere('n.etudiant = :etudiant')
             ->andWhere('u.semestre = :semestre')
-            ->setParameter('annee', $annee)
+            ->setParameter('annee', $annee->getId())
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('semestre', $semestre->getId())
             ->getQuery()

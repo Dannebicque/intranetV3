@@ -45,7 +45,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         $myEtudiant->setEtudiant($this->getConnectedUser());
         $myEtudiant->getNotesAbsences($this->getConnectedUser()->getSemestre(),
-            $this->getConnectedUser()->getAnneeUniversitaire()->getAnnee());
+            $this->getConnectedUser()->getAnneeUniversitaire());
         $myEtudiant->getAbsencesSemestre($this->getConnectedUser()->getSemestre());
 
         return $this->render('bloc_notes_absences/etudiant.html.twig', [
