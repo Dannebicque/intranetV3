@@ -43,7 +43,11 @@
             {{ render(controller(
                 'App\\Controller\\appPersonnel\\ProgressionController::index'
             )) }}
-
+            {#         elseif onglet == 'emprunt' %}#}
+            //gérer en commun avec etudiant ?
+            {#            {{ render(controller(#}
+            {#                'App\\Controller\\appPersonnel\\EmpruntController::index'#}
+            {#            )) }}#}
         {% endif %}
     {% else %}
         {% if onglet == 'rattrapage' %}
@@ -61,6 +65,10 @@
         {% elseif onglet == 'justificatif' %}
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\AbsenceJustificatifController::index'
+            )) }}
+        {% elseif onglet == 'emprunt' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\EmpruntController::index'
             )) }}
         {% else %}
             {{ render(controller(

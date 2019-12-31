@@ -13,12 +13,13 @@ use App\Entity\Constantes;
 use App\Entity\Emprunt;
 use App\MesClasses\MyEmprunts;
 use App\MesClasses\MyExport;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class EmpruntsController
@@ -80,26 +81,17 @@ class EmpruntsController extends BaseController
     /**
      * @Route("/fiche/{emprunt}", name="administration_emprunt_imprimer_fiche")
      *
-     * @param Emprunt $emprunt
+     * @param MyEmprunts $myEmprunts
+     * @param Emprunt    $emprunt
      *
-     * @return Response
+     * @return void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function fiche(Emprunt $emprunt): Response
+    public function imprimerFiche(MyEmprunts $myEmprunts, Emprunt $emprunt): void
     {
-        $html = $this->renderView('pd/ficheEmprunt.html.twig', [
-            'emprunt' => $emprunt,
-        ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('pret-' . $emprunt->getEtudiant()->getNom(),
-            ['Attachment' => 1]));
+        $myEmprunts->genereFiche($emprunt);
     }
 
     /**
@@ -150,20 +142,20 @@ class EmpruntsController extends BaseController
      */
     public function delete(Request $request, Emprunt $emprunt): Response
     {
-        //todo: a faire
+
         $id = $emprunt->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-//            $this->entityManager->remove($emprunt);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(
-//                Constantes::FLASHBAG_SUCCESS,
-//                'actualite.delete.success.flash'
-//            );
+            $this->entityManager->remove($emprunt);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'emprunt.delete.success.flash'
+            );
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

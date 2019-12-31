@@ -18,7 +18,7 @@ class Notification extends BaseEntity
     public const ETUDIANT = 'e';
     public const PERSONNEL = 'p';
 
-    public const TABICONE = array(
+    public const TABICONE = [
         'carnet.added'                       => 'ti-bookmark-alt',
         'absence.removed'                    => 'ti-bookmark-alt',
         'absence.added'                      => 'ti-bookmark-alt',
@@ -28,9 +28,12 @@ class Notification extends BaseEntity
         'chgt.etat_stage.depose'             => 'ti-info',
         'chgt.etat_stage.valide'             => 'ti-info',
         'chgt.etat_stage.convention_envoyee' => 'ti-info',
-        'chgt.etat_stage.convention_recue'   => 'ti-info'
-    );
-    public const TABCOLOR = array(
+        'chgt.etat_stage.convention_recue'   => 'ti-info',
+        'chgt.emprunt.demande'               => 'ti-info',
+        'chgt.emprunt.accepte'               => 'ti-success',
+        'chgt.emprunt.refus'                 => 'ti-danger',
+    ];
+    public const TABCOLOR = [
         'carnet.added'                       => 'info',
         'absence.removed'                    => 'success',
         'absence.added'                      => 'danger',
@@ -40,8 +43,11 @@ class Notification extends BaseEntity
         'chgt.etat_stage.depose'             => 'info',
         'chgt.etat_stage.valide'             => 'info',
         'chgt.etat_stage.convention_envoyee' => 'info',
-        'chgt.etat_stage.convention_recue'   => 'info'
-    );
+        'chgt.etat_stage.convention_recue'   => 'info',
+        'chgt.emprunt.demande'               => 'info',
+        'chgt.emprunt.accepte'               => 'success',
+        'chgt.emprunt.refus'                 => 'danger'
+    ];
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")

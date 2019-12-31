@@ -1,9 +1,13 @@
 Bonjour {{ emprunt.etudiant.prenom|capitalize }},
 
 Ta demande d'emprunt de matériel a été acceptée. Merci de venir chercher le matériel le {{ emprunt.datedebut|date
-('d/m/Y H:i') }} aurpès du secrétariat.
+('d/m/Y H:i') }} auprès du secrétariat.
 
 Bien cordialement
+{% if emprunt.responsable != null %}
 {{ emprunt.responsable.displayPr }}
+{% else %}
+Le responsable du matériel
+{% endif %}
 
 Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.

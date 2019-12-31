@@ -3,6 +3,10 @@ Bonjour {{ emprunt.etudiant.prenom|capitalize }},
 Ta demande d'emprunt de matériel du {{ emprunt.dateDebut|date('d/m/Y') }} a été refusée.
 
 Bien cordialement
+{% if emprunt.responsable != null %}
 {{ emprunt.responsable.displayPr }}
+{% else %}
+Le responsable du matériel
+{% endif %}
 
 Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.

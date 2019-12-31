@@ -7,7 +7,8 @@
                 <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
             </td>
             <td style="text-align: center; width:60%">
-                <h2>Fiche d'emprunt de matériel | {{ user_data.displayAnneeUniversitaire }}</h2>
+                <h2>Fiche d'emprunt de matériel <br>
+                    {{ user_data.displayAnneeUniversitaire }}</h2>
             </td>
             <td style="text-align: center; width:20%">
                 <img
@@ -34,4 +35,29 @@
             <li>{{ mat.materiel.libelle }}</li>
         {% endfor %}
     </ul>
+
+    <table style="width: 100%; border:none;">
+        <tr>
+            <td style="text-align: center; width:35%">
+                Code étudiant
+            </td>
+            <td style="text-align: center; width:30%">
+
+            </td>
+            <td style="text-align: center; width:35%">
+                Code Emprunt
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center; width:35%">
+                <img src="{{ qr_code_data_uri(emprunt.etudiant.numetudiant, {size: 150 }) }}" alt="QRCode etudiant"/>
+            </td>
+            <td style="text-align: center; width:30%">
+
+            </td>
+            <td style="text-align: center; width:35%">
+                <img src="{{ qr_code_data_uri(emprunt.uuidString, { size: 150 }) }}" alt="QR Code emprunt"/>
+            </td>
+        </tr>
+    </table>
 {% endblock %}

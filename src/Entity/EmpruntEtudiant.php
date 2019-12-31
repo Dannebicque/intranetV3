@@ -20,6 +20,20 @@ class EmpruntEtudiant extends Emprunt
      */
     private $etudiant;
 
+    /**
+     * EmpruntEtudiant constructor.
+     *
+     * @param $etudiant
+     *
+     * @throws \Exception
+     */
+    public function __construct($etudiant)
+    {
+        parent::__construct();
+        $this->etudiant = $etudiant;
+    }
+
+
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;

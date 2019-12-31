@@ -12494,31 +12494,31 @@
     <unit id="ZOEySjD" name="adm.emprunts.index.heading">
       <segment>
         <source>adm.emprunts.index.heading</source>
-        <target>adm.emprunts.index.heading</target>
+        <target>Gestion des emprunts</target>
       </segment>
     </unit>
     <unit id="rHuGEAR" name="adm.emprunt.show.heading">
       <segment>
         <source>adm.emprunt.show.heading</source>
-        <target>adm.emprunt.show.heading</target>
+        <target>Détails de l'emprunt</target>
       </segment>
     </unit>
     <unit id="C0Z45Ws" name="atitle.emprunt_accepte">
       <segment>
         <source>atitle.emprunt_accepte</source>
-        <target>atitle.emprunt_accepte</target>
+        <target>Emprunt accepté</target>
       </segment>
     </unit>
     <unit id="qY9pTCK" name="atitle.emprunt_refuse">
       <segment>
         <source>atitle.emprunt_refuse</source>
-        <target>atitle.emprunt_refuse</target>
+        <target>Emprunt refusé</target>
       </segment>
     </unit>
     <unit id="ZtOUYN0" name="atitle.imprimer">
       <segment>
         <source>atitle.imprimer</source>
-        <target>atitle.imprimer</target>
+        <target>Imprimer</target>
       </segment>
     </unit>
     <unit id="piDEGw4" name="mail.chgt.emprunt.accepte">
@@ -12536,13 +12536,13 @@
     <unit id="_25uIAZ" name="atitle.emprunt_revenu">
       <segment>
         <source>atitle.emprunt_revenu</source>
-        <target>atitle.emprunt_revenu</target>
+        <target>Emprunt rendu</target>
       </segment>
     </unit>
     <unit id="O1e0.51" name="atitle.historique.emprunt">
       <segment>
         <source>atitle.historique.emprunt</source>
-        <target>atitle.historique.emprunt</target>
+        <target>Historique des emprunts</target>
       </segment>
     </unit>
     <unit id="DIuDn2L" name="adm.emprunts.historique.heading">
@@ -13125,6 +13125,48 @@
       <segment>
         <source>SUPER Admin</source>
         <target>SUPER Admin</target>
+      </segment>
+    </unit>
+    <unit id="wYx.br7" name="chgt.emprunt.demande">
+      <segment>
+        <source>chgt.emprunt.demande</source>
+        <target>chgt.emprunt.demande</target>
+      </segment>
+    </unit>
+    <unit id="pn3K5kd" name="%diff% minute">
+      <segment>
+        <source>%diff% minute</source>
+        <target>2 minute</target>
+      </segment>
+    </unit>
+    <unit id="n8v7krd" name="DEMANDE">
+      <segment>
+        <source>DEMANDE</source>
+        <target>DEMANDE</target>
+      </segment>
+    </unit>
+    <unit id="UHIHkfB" name="chgt.emprunt.refus">
+      <segment>
+        <source>chgt.emprunt.refus</source>
+        <target>chgt.emprunt.refus</target>
+      </segment>
+    </unit>
+    <unit id="1p.NTqK" name="REFUS">
+      <segment>
+        <source>REFUS</source>
+        <target>REFUS</target>
+      </segment>
+    </unit>
+    <unit id="A29Fp.E" name="ACCEPTE">
+      <segment>
+        <source>ACCEPTE</source>
+        <target>ACCEPTE</target>
+      </segment>
+    </unit>
+    <unit id="TBo7ETa" name="emprunt.delete.success.flash">
+      <segment>
+        <source>emprunt.delete.success.flash</source>
+        <target>emprunt.delete.success.flash</target>
       </segment>
     </unit>
   </file>

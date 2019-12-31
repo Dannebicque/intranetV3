@@ -73,10 +73,11 @@ class EmpruntSubscriber implements EventSubscriberInterface
         $this->myMailer->sendMessage($emprunt->getEtudiant()->getMails(), $codeEvent);
 
         //copie au RP lors du dépôt par l'étudiant
-        if ($codeEvent === EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE) {
+        if ($codeEvent === EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE && $emprunt->getResponsable() !== null) {
             $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '_copie.txt.twig',
                 ['emprunt' => $emprunt]);
-            $this->myMailer->sendMessage($emprunt->getResponsable()->getMails(), 'Formulaire de stage complété');
+
+            $this->myMailer->sendMessage($emprunt->getResponsable()->getMailUniv(), 'Formulaire de stage complété');
         }
     }
 
@@ -101,24 +102,24 @@ class EmpruntSubscriber implements EventSubscriberInterface
             $notif->setType($codeEvent);
             $notif->setUrl($this->router->generate(
                 'application_etudiant_emprunt_detail',
-                ['id' => $emprunt->getId()]
+                ['emprunt' => $emprunt->getUuidString()]
+            ));
+            $this->entityManager->persist($notif);
+            $this->entityManager->flush();
+        } elseif ($emprunt->getPersonnel() !== null) {
+            $notif = new Notification();
+            $notif->setEtudiant($emprunt->getPersonnel());
+            $notif->setTypeUser(Notification::PERSONNEL);
+            $notif->setType($codeEvent);
+            $notif->setUrl($this->router->generate(
+                'application_personnel_emprunt_detail',
+                ['emprunt' => $emprunt->getUuidString()]
             ));
             $this->entityManager->persist($notif);
             $this->entityManager->flush();
         }
 
-        if ($codeEvent === EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE) {
-            $notif = new Notification();
-            $notif->setPersonnel($emprunt->getResponsable());
-            $notif->setTypeUser(Notification::PERSONNEL);
-            $notif->setType($codeEvent);
-            $notif->setUrl($this->router->generate(
-                'application_personnel_emprunt_detail',
-                ['id' => $emprunt->getId()]
-            ));
-            $this->entityManager->persist($notif);
-            $this->entityManager->flush();
-        }
+
     }
 
     /**
