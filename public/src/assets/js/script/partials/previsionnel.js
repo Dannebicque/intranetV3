@@ -9,16 +9,6 @@
 
 let nbLignePrevisionnel = 1
 
-//todo: désactivé car off-line. Ajouter les CDN sur base.html.twig
-//todo: pourquoi ajaxcomplete?
-$(document).ajaxComplete(function () {
-  $('.editPrevi').editable({
-    type: 'text',
-    url: Routing.generate('administration_previsionnel_edit')
-    //todo: si success recalculer toute la ligne.
-  })
-})
-
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault()
   e.stopPropagation()
@@ -173,7 +163,6 @@ function updateSynthesePrevisionnel () {
     totalHeuresCm = totalHeuresCm + parseFloat($cm.val())
     totalHeuresTd = totalHeuresTd + parseFloat($td.val())
     totalHeuresTp = totalHeuresTp + parseFloat($tp.val())
-    //totalEqTd = totalEqTd + totalCm + totalTd + totalTp;
 
     totalEtu = totalEtu + parseFloat($cm.val()) + parseFloat($td.val()) + parseFloat($tp.val())
   }
@@ -215,37 +204,7 @@ function updateSynthesePrevisionnel () {
   } else {
     $('#diffTp').addClass('validePrevi').removeClass('erreurPrevi')
   }
-
-  //$('#totalMatiere').html(totalMatiere.toFixed(2));
 }
-
-/*
-$(document).on('change', '#previsionnel_semestre', function () {
-  const selectMatiere = $('#previsionnel_matiere')
-  if ($(this).val() === '') {
-    selectMatiere.empty()
-    selectMatiere.append($('<option></option>')
-      .attr('value', '')
-      .text('Choisir d\'abord un semestre'))
-  } else {
-    $.ajax({
-      url: Routing.generate('api_matieres_semestre', {'semestre': $(this).val()}),
-      success: function (data) {
-
-        selectMatiere.empty()
-        selectMatiere.append($('<option></option>')
-          .attr('value', '')
-          .text('Choisir une matière'))
-        jQuery.each(data, function (index, matiere) {
-
-          selectMatiere.append($('<option></option>')
-            .attr('value', matiere.id)
-            .text(matiere.libelle))
-        })
-      }
-    })
-  }
-})*/
 
 $(document).on('change', '#previsionnel_matiere', function () {
   const volumeMatiere = $('#volumeMatiere')
@@ -308,57 +267,3 @@ $(document).on('change', '#change_annee_temp_hrs', function (e) {
 $(document).on('change', '#change_annee_temp_previsionnel', function (e) {
   window.location = Routing.generate('administration_previsionnel_index', {annee: $(this).val()})
 })
-
-// $(document).on('click', '.previsionnelModule', function () {
-//   var modalPrevisionnel = $('#modalPrevisionnel');
-//
-//   $.ajax({
-//     url: Routing.generate('api_previsionnel_matiere', {'matiere': $(this).data('matiere')}),
-//     success: function (data) {
-//
-//       modalPrevisionnel.empty();
-//       var html = '<table class="table table-bordered table-condensed">\n' +
-//         '                    <thead>\n' +
-//         '                    <tr>\n' +
-//         '                        <th class="cm">NB h*</th>\n' +
-//         '                        <th class="cm">NB Gr.</th>\n' +
-//         '                        <th class="cm">1.5**</th>\n' +
-//         '\n' +
-//         '                        <th class="previtd">NB h/ Gr.*</th>\n' +
-//         '                        <th class="previtd">NB Gr.</th>\n' +
-//         '                        <th class="previtd">1.5**</th>\n' +
-//         '\n' +
-//         '                        <th class="previtp">NB h/ Gr.*</th>\n' +
-//         '                        <th class="previtp">NB Gr.</th>\n' +
-//         '                        <th class="previtp">1.5**</th>\n' +
-//         '                    </tr>\n' +
-//         '                    </thead>\n' +
-//         '                    <tbody>\n';
-//
-//       jQuery.each(data, function (index, matiere) {
-//         html = html +
-//           '                        <tr>\n' +
-//           '                            <td colspan="9">\n' +
-//           '                                ' + matiere.personnel + '\n' +
-//           '                            </td>\n' +
-//           '                        </tr>\n' +
-//           '                        <tr>\n' +
-//           '                            <td>' + matiere.nbHCm + ' h</td>\n' +
-//           '                            <td>' + matiere.nbGrCm + '</td>\n' +
-//           '                            <td>' + matiere.nbSeanceCm + '</td>\n' +
-//           '                            <td class="previtd">' + matiere.nbHTd + ' h</td>\n' +
-//           '                            <td class="previtd">' + matiere.nbGrTd + '</td>\n' +
-//           '                            <td class="previtd">' + matiere.nbSeanceTd + '</td>\n' +
-//           '                            <td class="previtp">' + matiere.nbHTp + ' h</td>\n' +
-//           '                            <td class="previtp">' + matiere.nbGrTp + '</td>\n' +
-//           '                            <td class="previtp">' + matiere.nbSeanceTp + '</td>\n' +
-//           '                        </tr>\n';
-//
-//       });
-//       html = html + '                    </tbody>\n' +
-//         '                </table>';
-//
-//       modalPrevisionnel.append(html);
-//     }
-//   });
-// })
