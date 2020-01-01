@@ -160,8 +160,8 @@ class AbsenceRepository extends ServiceEntityRepository
 
         //todo: a tester. Prise en compte de l'heure sur le justificatif ? Peut être juste un champs ? Idem pour absence... reconstruire un champs date-heure
         return $this->createQueryBuilder('a')
-            ->where('a.date')
-            ->where('a.date <= :dateFin')
+            ->where('a.date >= :dateDebut')
+            ->andWhere('a.date <= :dateFin')
             ->setParameter('dateDebut', $justificatif->getDateDebut())
             ->setParameter('dateFin', $justificatif->getDateFin())
             ->getQuery()

@@ -84,20 +84,20 @@ class StageEtudiantController extends BaseController
      */
     public function delete(Request $request, StageEtudiant $stageEtudiant): Response
     {
-        //todo: a tester car pas appelé en Ajax...
         $id = $stageEtudiant->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($stageEtudiant);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.delete.success.flash');
-
-            return $stageEtudiant->getStagePeriode() !== null ? $this->redirectToRoute('administration_stage_periode_gestion',
-                ['uuid' => $stageEtudiant->getStagePeriode()->getUuidString()]) : $this->redirectToRoute('administratif_homepage');
+        } else {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'stage_etudiant.delete.error.flash');
         }
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'stage_etudiant.delete.error.flash');
 
-        return $stageEtudiant->getStagePeriode() !== null ? $this->redirectToRoute('administration_stage_periode_gestion',
-            ['uuid' => $stageEtudiant->getStagePeriode()->getUuidString()]) : $this->redirectToRoute('administratif_homepage');
+        return $this->json([
+            'redirect' => true,
+            'url'      => $stageEtudiant->getStagePeriode() !== null ? $this->generateUrl('administration_stage_periode_gestion',
+                ['uuid' => $stageEtudiant->getStagePeriode()->getUuidString()]) : $this->generateUrl('administration_index')
+        ]);
     }
 
     /**

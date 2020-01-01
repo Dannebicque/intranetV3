@@ -3,7 +3,7 @@ Bonjour {{ stageEtudiant.etudiant.prenom|capitalize }},
 
 Récapitulatif des infos du stage.
 
-* Stage pour la période : {{ stageEtudiant.$stagePeriode.libelle }}
+* Stage pour la période : {{ stageEtudiant.stagePeriode.libelle }}
 * {{ stageEtudiant.entreprise.libelle }}
 * Responsable de l'entreprise : {{ stageEtudiant.entreprise.responsable.display }}
 * Adresse du siège de l'entreprise : {{ stageEtudiant.entreprise.adresse.display }}
@@ -15,7 +15,7 @@ Récapitulatif des infos du stage.
 * Sujet du stage : {{ stageEtudiant.sujetStage }}
 * Activités : {{ stageEtudiant.activites }}
 * Amménagements : {{ stageEtudiant.amenagementStage }}
-* Gratification : {{ stageEtudiant.gratification == true ? 'Oui'  'Non' }}
+* Gratification : {{ stageEtudiant.gratification == true ? 'Oui' : 'Non' }}
 * Gratification montant : {{ stageEtudiant.gratificationMontant }}
 * Gratification période : {{ stageEtudiant.gratificationPeriode }}
 * Autres avantages : {{ stageEtudiant.avantages }}
@@ -25,7 +25,7 @@ Récapitulatif des infos du stage.
 Si les informations ci-dessous sont erronés, contactez au plus vite le responsable des stages
 
 Le(s) responsable(s) de la période de stage
-{% for resp in stageEtudiant.stagePeriode.Responsbles %}
+{% for resp in stageEtudiant.stagePeriode.Responsables %}
 {{ resp.displayPr }}
 {% endfor %}
 

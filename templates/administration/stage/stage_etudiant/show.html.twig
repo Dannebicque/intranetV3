@@ -113,28 +113,28 @@
                         .gratificationPeriode|trans }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.avantages'|trans }}</th>
-                    <td>{{ stageEtudiant.avantages }}</td>
+                  <th>{{ 'table.avantages'|trans }}</th>
+                  <td>{{ stageEtudiant.avantages }}</td>
                 </tr>
                 <tr>
-                    <th colspan="2">{{ 'table.tuteur_universitaire'|trans }}</th>
+                  <th colspan="2">{{ 'table.tuteur_universitaire'|trans }}</th>
                 </tr>
                 <tr>
-                    <th>{{ 'table.tuteur_universitaire'|trans }}</th>
-                    <td>
-                        <label for="tuteurUniversitaire" class="sr-only">Tuteur universitaire</label>
-                        <select id="tuteurUniversitaireStage" data-stage="{{ stageEtudiant.id }}"
-                                class="form-control">
+                  <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                  <td>
+                    <label for="tuteurUniversitaire" class="sr-only">Tuteur universitaire</label>
+                    <select data-stage="{{ stageEtudiant.id }}"
+                            class="form-control changetuteur">
 
-                            <option value="" selected>Choisir le tuteur universitaire</option>
-                            {% for personnel in personnels %}
-                                <option value="{{ personnel.id }}" {% if stageEtudiant.tuteurUniversitaire != null
-                                    and personnel.id == stageEtudiant.tuteurUniversitaire.id %}selected{% endif %}>
-                                    {{ personnel.displayPr }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </td>
+                      <option value="" selected>Choisir le tuteur universitaire</option>
+                        {% for personnel in personnels %}
+                          <option value="{{ personnel.id }}" {% if stageEtudiant.tuteurUniversitaire != null
+                              and personnel.id == stageEtudiant.tuteurUniversitaire.id %}selected{% endif %}>
+                              {{ personnel.displayPr }}
+                          </option>
+                        {% endfor %}
+                    </select>
+                  </td>
                 </tr>
                 </tbody>
             </table>

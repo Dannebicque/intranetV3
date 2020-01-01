@@ -141,6 +141,7 @@ class StagePeriodeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_stage_periode_delete", methods="DELETE")
+     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
      * @param Request      $request
      * @param StagePeriode $stagePeriode
      *
@@ -148,7 +149,8 @@ class StagePeriodeController extends BaseController
      */
     public function delete(Request $request, StagePeriode $stagePeriode): Response
     {
-        $id = $stagePeriode->getId();
+        //la suppression entraine la suppression des offres, des templates et des stages déjà présent.
+        $id = $stagePeriode->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($stagePeriode);
             $this->entityManager->flush();
@@ -157,7 +159,6 @@ class StagePeriodeController extends BaseController
                 'stage_periode.delete.success.flash'
             );
 
-            //todo: supprimer les autres éléments ou définir le cas ??
 
             return $this->json($id, Response::HTTP_OK);
         }

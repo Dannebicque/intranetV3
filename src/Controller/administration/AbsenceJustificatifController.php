@@ -136,9 +136,9 @@ class AbsenceJustificatifController extends BaseController
         $this->entityManager->flush();
 
         if ($etat === 'A') {
-            $event = new GenericEvent($absenceJustificatif);
+            $event = new JustificatifEvent($absenceJustificatif);
             // Justification des absences
-            $eventDispatcher->dispatch($event, Events::JUSTIFIE_ABSENCES);
+            $eventDispatcher->dispatch($event, JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.justificatif.valide.success.flash');
         }
 
