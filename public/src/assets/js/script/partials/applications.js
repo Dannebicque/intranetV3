@@ -34,14 +34,11 @@ $(document).on('change', '#selectsemestre', function () {
             .attr("value", matiere.id)
             .text(matiere.display));
         });
-        // selectMatiere.selectpicker({
-        //   liveSearch: true
-        // })
         selectMatiere.attr('data-provide', 'selectpicker')
         selectMatiere.attr('data-live-search', 'true')
       },
       error: function () {
-//todo: message ?
+        addCallout('Erreur lors de la tentative d\'affichage des matières du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'error')
       }
     });
   //groupes
@@ -63,7 +60,7 @@ $(document).on('change', '#selectsemestre', function () {
         });
       },
       error: function () {
-//todo: message ?
+        addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'error')
       }
     });
 });
@@ -85,7 +82,7 @@ $(document).on('change', '#selectgroupes', function () {
         $lgr.html($html);
       },
       error: function () {
-        //todo: message ?
+        addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'error')
       }
     });
 });
@@ -97,5 +94,3 @@ $(document).on('click','#add_rattrapage', function(){
 $(document).on('click','#add_carnet', function(){
   $('#bloc_add_carnet').toggle();
 })
-
-//todo: faire idem avec justificatif ? Implique de changer les méthodes.

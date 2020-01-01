@@ -36,10 +36,9 @@ class TypeGroupeController extends BaseController
     public function create(Request $request, Semestre $semestre): Response
     {
         $typeGroupe = new TypeGroupe($semestre);
-        $typeGroupe->setLibelle($request->request->get('libelle'));
-        $typeGroupe->setType($request->request->get('type'));
-
-        if ($request->request->get('defaut') === 'true') {
+        $typeGroupe->setLibelle($request->request->get('type_groupe_libelle_' . $semestre->getId()));
+        $typeGroupe->setType($request->request->get('type_groupe_type_' . $semestre->getId()));
+        if ($request->request->get('type_groupe_defaut_' . $semestre->getId()) === 'true') {
             //tous les autres à faux.
             foreach ($semestre->getTypeGroupes() as $tg) {
                 $tg->setDefaut(false);
@@ -53,7 +52,7 @@ class TypeGroupeController extends BaseController
         $this->entityManager->persist($typeGroupe);
         $this->entityManager->flush();
 
-        return $this->json($typeGroupe->getArray(), Response::HTTP_OK);
+        return $this->redirectToRoute('administration_groupe_index');
     }
 
     /**
@@ -64,7 +63,6 @@ class TypeGroupeController extends BaseController
      */
     public function refreshListe(Semestre $semestre): Response
     {
-
         return $this->render('administration/type_groupe/_liste.html.twig', [
             'semestre' => $semestre
         ]);

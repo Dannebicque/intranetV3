@@ -2126,19 +2126,6 @@ jQuery.fn.scrollToEnd = function() {
       if ( options.toolbar !== undefined ) {
         var toolbar = options.toolbar.toLowerCase();
         if ( toolbar == 'full' ) {
-
-          // TODO:
-          // Load highlight js
-          /*
-          $LAB.script('highlight/highlight.pack.js');
-          if ( options.codeStyle === undefined ) {
-            app.loadStyle('highlight/styles/monokai-sublime.css', app.dir.vendor);
-          }
-          else {
-            app.loadStyle('highlight/styles/'+ options.codeStyle +'.css', app.dir.vendor);
-          }
-          */
-
           options.modules = {
             //syntax: 'true',
             toolbar: toolbarFullOptions
