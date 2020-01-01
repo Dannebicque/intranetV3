@@ -12,6 +12,7 @@ class JustificatifEvent extends Event
     public const DELETED = 'justificatif.deleted';
     public const DECISION_JUSTIFICATIF_ACCEPTEE = 'decision.justificatif.acceptee';
     public const DECISION_JUSTIFICATIF_REFUSEE = 'decision.justificatif.refusee';
+
     /** @var AbsenceJustificatif */
     protected $absenceJustificatif;
 

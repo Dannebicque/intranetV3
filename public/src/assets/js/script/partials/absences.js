@@ -98,7 +98,6 @@ $(document).on('change', '#absence-matiere', function () {
   let date = $('#absence-date')
   let heure = $('#absence-heure')
   etudiants.removeClass('absent')
-  //etudiants.addClass('absence');
   updateAffichage(date.val(), heure.val())
 })
 
@@ -126,7 +125,6 @@ $(document).on('click', '.etudiant', function () {
     //supprimer absence
     $(this).removeClass('absent')
 
-    //$(this).addClass('absence');
     $.ajax({
       type: 'POST',
       url: Routing.generate('application_personnel_absence_saisie_ajax', {
@@ -185,14 +183,6 @@ $(document).on('click', '.etudiant', function () {
 
 $('#liste-absences').dataTable({
   'language': langueFr,
-  /*'createdRow': function (row, data, dataIndex) {
-    if (data[6] == 'non' || data[6] == 'no' || data[6] == 'No' || data[6] == 'Non')
-    {
-      $(row).addClass('bg-pale-error')
-    } else {
-      $(row).addClass('bg-pale-error')
-    }
-  }*/
   'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
     if (aData[6] === 'non' || aData[6] === 'no' || aData[6] === 'No' || aData[6] === 'Non') {
       $('td', nRow).css('background-color', '#fce3e3')
@@ -212,8 +202,12 @@ $(document).on('click', '.justificatif-accepte', function (e) {
       const bx = $('.bx_' + justificatif)
       const parent = bx.parent()
       bx.remove()
-      parent.prepend('<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Accepté</a>')
-      //todo: gérer la création du bouton annuler.
+      let html = '<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Accepté</a>'
+      html = html + '<button data-justificatif="' + justificatif + '"\n' +
+        'class="btn btn-danger btn-outline btn-square justificatif-annuler bx_' + justificatif + '" data-provide="tooltip" data-placement="bottom"\n' +
+        'title="Annuler"><i\n' +
+        'class="material-icons">undo</i></button>'
+      parent.prepend(html)
       addCallout('Justificatif d\'absence validé !', 'success')
     },
     error: function (e) {
@@ -230,8 +224,12 @@ $(document).on('click', '.justificatif-refuse', function (e) {
       const bx = $('.bx_' + justificatif)
       const parent = bx.parent()
       bx.remove()
-      parent.prepend('<a href="#" class="btn btn-warning btn-outline"><i class="ti-check"></i>Refusé</a>')
-      //todo: gérer la création du bouton annuler.
+      let html = '<a href="#" class="btn btn-warning btn-outline"><i class="ti-check"></i>Refusé</a>'
+      html = html + '<button data-justificatif="' + justificatif + '"\n' +
+        'class="btn btn-danger btn-outline btn-square justificatif-annuler bx_' + justificatif + '" data-provide="tooltip" data-placement="bottom"\n' +
+        'title="Annuler"><i\n' +
+        'class="material-icons">undo</i></button>'
+      parent.prepend(html)
       addCallout('Justificatif d\'absence refusé !', 'success')
     },
     error: function () {
@@ -248,8 +246,6 @@ $(document).on('click', '.justificatif-annuler', function (e) {
       const bx = $('.bx_' + justificatif)
       const parent = bx.parent()
       bx.remove()
-      //todo: gérer la création des deux boutons.
-
       const html = '<a href="#"\n' +
         '                               class="btn btn-success btn-outline btn-square justificatif-accepte bx_' + justificatif + '" data-provide="tooltip"\n' +
         '                               data-justificatif="' + justificatif + '"\n' +

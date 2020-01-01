@@ -139,12 +139,13 @@ class StagePeriode extends BaseEntity
     private $stagePeriodeOffres;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="stagePeriode")
+     * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="stagePeriode", cascade={"persist", "remove"})
      */
     private $stageEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageMailTemplate", mappedBy="stagePeriode")
+     * @ORM\OneToMany(targetEntity="App\Entity\StageMailTemplate", mappedBy="stagePeriode", cascade={"persist",
+     *                                                             "remove"})
      */
     private $stageMailTemplates;
 

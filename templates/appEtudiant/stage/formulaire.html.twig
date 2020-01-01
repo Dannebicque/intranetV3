@@ -16,96 +16,138 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h4 class="card-title">{{ 'applications.etudiant.stage.formulaire.heading'|trans }}</h4>
-        <div class="card-body">
-            {% form_theme form 'form/my-form.html.twig' %}
-            {{ form_start(form) }}
-            <h3 class="titre_rub">Vos informations</h3>
-            <div class="alert alert-warning">Merci de vérifier vos informations ci-dessous.</div>
-            <div class="form-group">
-                <div class="col-sm-2" style="text-align: right">
-                    <b>Organismme de sécurité sociale</b> <span class="required"
-                                                                title="Ce champ est obligatoire">*</span> :
-                </div>
-                <div class="col-sm-10">
-                    {#<a href="#" class="XEStage" data-type="text" data-name="intitulesecu"#}
-                       {#data-pk="{{ proposition.etudiant.id }}"#}
-                       {#data-original-title="Corriger le nom de l'organisme de sécurité sociale">{{ proposition.etudiant.intitulesecu }}</a>#}
-                    (Mutuelle étudiante (LMDE ou MGEL par exemple, ou régime de sécurité sociale)
-                </div>
+<div class="card">
+    <h4 class="card-title">{{ 'applications.etudiant.stage.formulaire.heading'|trans }}</h4>
+    <div class="card-body">
+        {% form_theme form 'form/my-form.html.twig' %}
+        {{ form_start(form) }}
+        <h3 class="titre_rub">Vos informations</h3>
+        <div class="alert alert-warning">Merci de vérifier vos informations ci-dessous.</div>
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Organismme de sécurité sociale</b> <span class="required"
+                                                            title="Ce champ est obligatoire">*</span> :
             </div>
-
-            <div class="form-group">
-                <div class="col-sm-2" style="text-align: right">
-                    <b>Adresse de l'organisme</b> <span class="required" title="Ce champ est obligatoire">*</span> :
-                </div>
-                <div class="col-sm-10">
-                    {#<a href="#" class="XEStage" data-type="text" data-name="adressesecu"#}
-                       {#data-pk="{{ proposition.etudiant.id }}"#}
-                       {#data-original-title="Corriger l'adresse de l'organisme de sécurité sociale ">{{ proposition.etudiant.adressesecu }}</a>#}
-                </div>
+            <div class="col-sm-9">
+                <a class="myedit"
+                   data-field="intituleSecuriteSociale"
+                   href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant
+                       .etudiant.uuidString}) }}"
+                   data-title="Corrigez votre organisme de sécurité social">{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</a>
+                (Mutuelle étudiante (LMDE ou MGEL par exemple, ou régime de sécurité sociale)
             </div>
+        </div>
 
-            <div class="alert alert-danger">Merci de vérifier ou compléter votre adresse ci-dessous.</div>
-            //verification adresse étudiant
-
-            <div class="form-group">
-                <div class="col-sm-2" style="text-align: right">
-                    <b>Téléphone portable</b> <span class="required" title="Ce champ est obligatoire">*</span> :
-                </div>
-                <div class="col-sm-10">
-                    {#<a href="#" class="XEStage" data-type="text" data-name="tel1"#}
-                       {#data-pk="{{ proposition.etudiant.id }}"#}
-                       {#data-original-title="Corriger votre numéro de téléphone">{{ proposition.etudiant.tel1 }}</a>#}
-                </div>
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Adresse de l'organisme</b> <span class="required" title="Ce champ est obligatoire">*</span> :
             </div>
+            <div class="col-sm-9">
+                <a class="myedit"
+                   data-field="adresseSecuriteSociale"
+                   href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   data-title="Corrigez l'adresse de votre organisme de sécurité social">
+                    {{ stageEtudiant.etudiant.adresseSecuriteSociale }}</a>
+            </div>
+        </div>
+
+        <div class="alert alert-danger">Merci de vérifier ou compléter vos coordonnées ci-dessous.</div>
+
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Votre adresse</b> <span class="required" title="Ce champ est obligatoire">*</span> :
+            </div>
+            <div class="col-sm-9">
+                {% if stageEtudiant.etudiant.adresse != null %}
+                    <a class="myedit"
+                       data-field="adresse1"
+                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       data-title="Corriger votre numéro de téléphone">
+                        {{ stageEtudiant.etudiant.adresse.adresse1 }}</a><br>
+                    <a class="myedit"
+                       data-field="adresse2"
+                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       data-title="Corriger votre numéro de téléphone">
+                        {{ stageEtudiant.etudiant.adresse.adresse2 }}</a><br>
+                    <a class="myedit"
+                       data-field="adresse3"
+                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       data-title="Corriger votre numéro de téléphone">
+                        {{ stageEtudiant.etudiant.adresse.adresse3 }}</a><br>
+                    <a class="myedit"
+                       data-field="codePostal"
+                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       data-title="Corriger votre numéro de téléphone">
+                        {{ stageEtudiant.etudiant.adresse.codePostal }}</a>
+                    <a class="myedit"
+                       data-field="ville"
+                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       data-title="Corriger votre numéro de téléphone">
+                        {{ stageEtudiant.etudiant.adresse.ville }}</a>
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Téléphone portable</b> <span class="required" title="Ce champ est obligatoire">*</span> :
+            </div>
+            <div class="col-sm-9">
+                <a class="myedit"
+                   data-field="tel1"
+                   href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   data-title="Corriger votre numéro de téléphone">
+                    {{ stageEtudiant.etudiant.tel1 }}</a>
+            </div>
+        </div>
 
 
-            <h3 class="titre_rub">L'entreprise d'accueil</h3>
-            {{ form_row(form.entreprise.raisonSociale) }}
-            {{ form_row(form.entreprise.libelle) }}
-            {{ form_row(form.entreprise.siret) }}
-            {{ form_row(form.entreprise.adresse) }}
+        <h3 class="titre_rub">L'entreprise d'accueil</h3>
+        {{ form_row(form.entreprise.raisonSociale) }}
+        {{ form_row(form.entreprise.libelle) }}
+        {{ form_row(form.entreprise.siret) }}
+        {{ form_row(form.entreprise.adresse) }}
 
 
-            <h3 class="titre_rub">Le responsable de l'entreprise (Signataire de la convention)</h3>
-            {{ form_row(form.entreprise.responsable) }}
+        <h3 class="titre_rub">Le responsable de l'entreprise (Signataire de la convention)</h3>
+        {{ form_row(form.entreprise.responsable) }}
 
-            <h3 class="titre_rub">Le tuteur entreprise</h3>
-            <p>Partie à compléter même si le signataire de la convention est le tuteur entreprise.</p>
-            {{ form_row(form.tuteur) }}
+        <h3 class="titre_rub">Le tuteur entreprise</h3>
+        <p>Partie à compléter même si le signataire de la convention est le tuteur entreprise.</p>
+        {{ form_row(form.tuteur) }}
 
-            <h3 class="titre_rub">L'adresse du stage (si différente)</h3>
-            {{ form_row(form.adresseStage) }}
+        <h3 class="titre_rub">L'adresse du stage (si différente)</h3>
+        {{ form_row(form.adresseStage) }}
 
-            <h3 class="titre_rub">Le stage</h3>
-            {% if stageEtudiant.stagePeriode.datesFlexibles == true %}
-                {{ form_row(form.dateRange) }}
-                {{ form_row(form.dureeJoursStage) }}
-            {% else %}
-                <div class="alert alert-info">Stage du
-                    <strong>{{ stageEtudiant.stagePeriode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}</strong> au
-                    <strong>{{ stageEtudiant.stagePeriode.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}</strong>, soit
-                    <strong>{{ stageEtudiant.stagePeriode.nbJours }}</strong> jour(s)
-                </div>
-            {% endif %}
+        <h3 class="titre_rub">Le stage</h3>
+        {% if stageEtudiant.stagePeriode.datesFlexibles == true %}
+            {{ form_row(form.dateRange) }}
+            {{ form_row(form.dureeJoursStage) }}
+        {% else %}
+            <div class="alert alert-info">Stage du
+                <strong>{{ stageEtudiant.stagePeriode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}</strong>
+                                          au
+                <strong>{{ stageEtudiant.stagePeriode.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}</strong>,
+                                          soit
+                <strong>{{ stageEtudiant.stagePeriode.nbJours }}</strong> jour(s)
+            </div>
+        {% endif %}
 
-            {{ form_row(form.serviceStageEntreprise) }}
-            {{ form_row(form.sujetStage) }}
-            {{ form_row(form.activites) }}
-            {{ form_row(form.periodesInterruptions) }}
-            {{ form_row(form.dureeHebdomadaire) }}
-            {{ form_row(form.commentaireDureeHebdomadaire) }}
-            {{ form_row(form.amenagementStage) }}
+        {{ form_row(form.serviceStageEntreprise) }}
+        {{ form_row(form.sujetStage) }}
+        {{ form_row(form.activites) }}
+        {{ form_row(form.periodesInterruptions) }}
+        {{ form_row(form.dureeHebdomadaire) }}
+        {{ form_row(form.commentaireDureeHebdomadaire) }}
+        {{ form_row(form.amenagementStage) }}
 
-            {{ form_row(form.gratification) }}
-            {{ form_row(form.gratificationPeriode) }}
-            {{ form_row(form.gratificationMontant) }}
-            {{ form_row(form.avantages) }}
+        {{ form_row(form.gratification) }}
+        {{ form_row(form.gratificationPeriode) }}
+        {{ form_row(form.gratificationMontant) }}
+        {{ form_row(form.avantages) }}
 
-            {{ form_rest(form) }}
+        {{ form_rest(form) }}
         <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
         {{ form_end(form) }}
     </div>
-{% endblock %}
+    {% endblock %}

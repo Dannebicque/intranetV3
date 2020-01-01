@@ -7,14 +7,18 @@
  * @lastUpdate 30/07/2019 08:39
  */
 
-$(document).on('change', '#tuteurUniversitaireStage', function () {
+$(document).on('change', '.changetuteur', function () {
   $.ajax({
-    url: Routing.generate('administration_stage_etudiant_change_tuteur', {stageEtudiant: $(this).data('stage'), tuteur: $(this).val()}),
+    url: Routing.generate('administration_stage_etudiant_change_tuteur', {
+      stageEtudiant: $(this).data('stage'),
+      tuteur: $(this).val()
+    }),
     success: function () {
       addCallout('Tuteur universitaire modifié !', 'success')
     }
   })
 })
+
 
 /*let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9;
 

@@ -13159,15 +13159,69 @@
     </unit>
     <unit id="A29Fp.E" name="ACCEPTE">
       <segment>
-        <source>ACCEPTE</source>
-        <target>ACCEPTE</target>
+          <source>ACCEPTE</source>
+          <target>ACCEPTE</target>
       </segment>
     </unit>
-    <unit id="TBo7ETa" name="emprunt.delete.success.flash">
-      <segment>
-        <source>emprunt.delete.success.flash</source>
-        <target>emprunt.delete.success.flash</target>
-      </segment>
-    </unit>
+      <unit id="TBo7ETa" name="emprunt.delete.success.flash">
+          <segment>
+              <source>emprunt.delete.success.flash</source>
+              <target>emprunt.delete.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="dkAqfT9" name="%diff% heure">
+          <segment>
+              <source>%diff% heure</source>
+              <target>1 heure</target>
+          </segment>
+      </unit>
+      <unit id="bXxUdLN" name="copie chgt.etat_stage.autorise">
+          <segment>
+              <source>copie chgt.etat_stage.autorise</source>
+              <target>copie chgt.etat_stage.autorise</target>
+          </segment>
+      </unit>
+      <unit id="jRHjW3T" name="copie chgt.etat_stage.depose">
+          <segment>
+              <source>copie chgt.etat_stage.depose</source>
+              <target>copie chgt.etat_stage.depose</target>
+          </segment>
+      </unit>
+      <unit id="vx2jpsS" name="%diff% seconde">
+          <segment>
+              <source>%diff% seconde</source>
+              <target>%diff% secondes</target>
+          </segment>
+      </unit>
+      <unit id="SU2E2OE" name="stage_etudiant.delete.success.flash">
+          <segment>
+              <source>stage_etudiant.delete.success.flash</source>
+              <target>stage_etudiant.delete.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="MRm43jJ" name="stage_periode.delete.error.flash">
+          <segment>
+              <source>stage_periode.delete.error.flash</source>
+              <target>stage_periode.delete.error.flash</target>
+          </segment>
+      </unit>
+      <unit id="gZDMQMO" name="stage_periode.delete.success.flash">
+          <segment>
+              <source>stage_periode.delete.success.flash</source>
+              <target>stage_periode.delete.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="irLYUfS" name="absence.justificatif.valide.success.flash">
+          <segment>
+              <source>absence.justificatif.valide.success.flash</source>
+              <target>absence.justificatif.valide.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="7SiyIHN" name="Justificatif d'absence accepté">
+          <segment>
+              <source>Justificatif d'absence accepté</source>
+              <target>Justificatif d'absence accepté</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

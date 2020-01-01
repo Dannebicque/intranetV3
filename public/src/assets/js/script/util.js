@@ -80,13 +80,17 @@ $(document).on('click', '.supprimer', function (e) {
           _token: csrf
         },
         success: function (id) {
-          $("#ligne_" + id).closest('tr').remove();
-          addCallout('Suppression effectuée avec succès', 'success')
-          swal(
-            'Supprimé!',
-            'L\'enregistrement a été supprimé.',
-            'success'
-          )
+          if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
+            document.location.href = id.url
+          } else {
+            $('#ligne_' + id).closest('tr').remove()
+            addCallout('Suppression effectuée avec succès', 'success')
+            swal(
+              'Supprimé!',
+              'L\'enregistrement a été supprimé.',
+              'success'
+            )
+          }
         },
         error: function (xhr, ajaxOptions, thrownError) {
           console.log(ajaxOptions)

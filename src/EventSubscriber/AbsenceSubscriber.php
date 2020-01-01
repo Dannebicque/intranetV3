@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Event\AbsenceEvent;
+use App\Event\JustificatifEvent;
 use App\Events;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
@@ -59,15 +60,14 @@ class AbsenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            Events::JUSTIFIE_ABSENCES => 'onJustifieAbsences',
-            AbsenceEvent::ADDED       => 'onVerificationJustificatif',
+            JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE => 'onJustifieAbsences',
+            AbsenceEvent::ADDED                               => 'onVerificationJustificatif',
         ];
     }
 
-    public function onJustifieAbsences(GenericEvent $event): void
+    public function onJustifieAbsences(JustificatifEvent $event): void
     {
-        /** @var AbsenceJustificatif $justificatif */
-        $justificatif = $event->getSubject();
+        $justificatif = $event->getAbsenceJustificatif();
         $absences = $this->absenceRepository->findAbsencesAJustifer($justificatif);
 
         /** @var Absence $absence */
