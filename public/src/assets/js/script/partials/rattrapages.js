@@ -58,9 +58,6 @@ $(document).on('change', '.dateChange', function () {
       data: $(this).val()
     },
     method: 'POST',
-    success: function () {
-      //todo:...
-    },
     error: function () {
       addCallout('Une erreur est survenue !', 'danger')
     }

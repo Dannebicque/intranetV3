@@ -202,10 +202,6 @@ class MyEvaluation
         return null;
     }
 
-    public function getSynthese(): void
-    {
-    }
-
     public function getNotesTableau(): array
     {
         $this->notes = $this->evaluation->getNotes();

@@ -143,7 +143,6 @@ class NoteController extends BaseController
      */
     public function enregistreNoteAction(MyEtudiant $myEtudiant, Request $request, Evaluation $evaluation)
     {
-        //vérifier $this->get('request')->request->get('notes)['notes']
         $tnote = $request->request->get('notes')['notes'];
 
         foreach ($tnote as $iValue) {

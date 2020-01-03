@@ -114,7 +114,7 @@ class Evaluation extends BaseEntity
 
         $this->matiere = $matiere;
         $this->personnelAuteur = $personnel;
-        $this->anneeuniversitaire = $matiere->getSemestre() !== null ? $matiere->getSemestre()->getAnneeUniversitaire() : date('Y');
+        $this->anneeUniversitaire = $matiere->getSemestre() !== null ? $matiere->getSemestre()->getAnneeUniversitaire() : null;
         if ($matiere->getUe() !== null && $matiere->getUe()->getSemestre() !== null) {
             $this->setModifiable($matiere->getUe()->getSemestre()->isOptEvaluationModifiable());
             $this->setVisible($matiere->getUe()->getSemestre()->isOptEvaluationVisible());
