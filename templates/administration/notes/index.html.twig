@@ -33,6 +33,10 @@
     <div class="card">
         <div class="card-body">
             <div class="pull-right">
+                <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
+                   class="btn btn-primary">
+                    {{ 'initialiser.les.evaluations'|trans }}
+                </a>
                 <a href="{{ path('administration_semestre_export_tous_les_releves_provisoires',{'semestre':semestre.id}) }}"
                    class="btn btn-primary"><i class="fa fa-print"></i> Imprimer tous les relevés provisoires</a>
                 <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'visible', 'semestre':semestre.id}) }}"
@@ -81,13 +85,14 @@
                                 {% if evaluations[matiere.id] is defined %}
                                     {% for evaluation in evaluations[matiere.id] %}
                                         <div class="btn-group mt-2 mr-2">
+
                                             <a class="btn btn-success"
                                                href="{{ path('administration_evaluation_show', {uuid:evaluation.uuidString}) }}"
                                                data-provide="tooltip"
                                                data-placement="bottom"
                                                title="{{ 'detail.evaluation'|trans }}">
-                                                {{ 'eval.du'|trans }} {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}
-                                                (#{{ evaluation.id }})
+                                                {{ 'eval.de'|trans }} : {{ evaluation.libelle }}
+                                                                      (#{{ evaluation.id }})
                                             </a>
 
                                             <button class="btn {% if evaluation.visible == false %}btn-danger{% else %}btn-outline btn-info{% endif %}  btn-square optAfficher"

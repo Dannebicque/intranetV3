@@ -44,16 +44,14 @@ class RattrapageRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findBySemestre(Semestre $semestre, int $anneeUniversitaire)
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
-            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'r.anneeUniversitaire = u.id')
-
             ->where('e.semestre = :semestre')
-            ->andWhere('u.annee = :anneeuniversitaire')
+            ->andWhere('r.anneeUniversitaire = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('anneeuniversitaire', $anneeUniversitaire)
+            ->setParameter('anneeuniversitaire', $anneeUniversitaire->getId())
             ->orderBy('e.nom', 'ASC')
             ->orderBy('e.prenom', 'ASC')
             ->getQuery()

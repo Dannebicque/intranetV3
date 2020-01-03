@@ -13153,16 +13153,16 @@
     </unit>
     <unit id="1p.NTqK" name="REFUS">
       <segment>
-        <source>REFUS</source>
-        <target>REFUS</target>
+          <source>REFUS</source>
+          <target>REFUS</target>
       </segment>
     </unit>
-    <unit id="A29Fp.E" name="ACCEPTE">
-      <segment>
-          <source>ACCEPTE</source>
-          <target>ACCEPTE</target>
-      </segment>
-    </unit>
+      <unit id="A29Fp.E" name="ACCEPTE">
+          <segment>
+              <source>ACCEPTE</source>
+              <target>ACCEPTE</target>
+          </segment>
+      </unit>
       <unit id="TBo7ETa" name="emprunt.delete.success.flash">
           <segment>
               <source>emprunt.delete.success.flash</source>
@@ -13221,6 +13221,24 @@
           <segment>
               <source>Justificatif d'absence accepté</source>
               <target>Justificatif d'absence accepté</target>
+          </segment>
+      </unit>
+      <unit id="8qnpagJ" name="initialisation.des.evaluations">
+          <segment>
+              <source>initialisation.des.evaluations</source>
+              <target>initialisation.des.evaluations</target>
+          </segment>
+      </unit>
+      <unit id="tnZvu.w" name="evaluation.initialisee.success">
+          <segment>
+              <source>evaluation.initialisee.success</source>
+              <target>evaluation.initialisee.success</target>
+          </segment>
+      </unit>
+      <unit id="nUS.wUK" name="eval.de">
+          <segment>
+              <source>eval.de</source>
+              <target>eval.de</target>
           </segment>
       </unit>
   </file>

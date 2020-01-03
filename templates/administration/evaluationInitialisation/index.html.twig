@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'initialisation.des.evaluations'|trans({'%libelle%':semestre.libelle})|raw }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestresActifs %}
+            <a href="{{ path('administration_notes_semestre_index', {semestre:sem.id}) }}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'atitle.changer.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ path('administration_evaluation_initialisation_index', {semestre:semestre.id}) }}"
+                  method="post">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Commentaire/nom</th>
+                        <th>Coefficient</th>
+                        <th>Type de saisie</th>
+                        <th>Intervenants</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for matiere in matieres %}
+                        {% if matiere.nbnotes>0 %}
+                            {% set nbeval=1 %}
+
+                            {% for eval in evaluations if eval.matiere.id==matiere.id %}
+                                <tr>
+                                    <td>{{ matiere.display }}</td>
+                                    <td colspan="4">Evaluation existante</td>
+                                </tr>
+                                {% set nbeval=nbeval+1 %}
+                            {% endfor %}
+
+                            {% if nbeval!=matiere.nbnotes+1 %}
+                                {% for i in nbeval..matiere.nbnotes %}
+                                    <tr>
+                                        <td>{{ matiere.display }}</td>
+                                        <td>
+                                            <input type="text" class="form-control" name="commentaire_{{ matiere.id }}_{{ i }}">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="coefficient_{{ matiere.id }}_{{ i }}">
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="typeGroupe_{{ matiere.id }}_{{ i }}">
+                                                {% for tg in semestre.typeGroupes %}
+                                                    <option value="{{ tg.id }}">{{ tg.libelle }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" multiple name="enseignant_{{ matiere.id }}_{{ i }}[]">
+                                                {% for enseignant in user_data.personnels %}
+                                                    <option value="{{ enseignant.id }}">{{ enseignant.display }}</option>
+                                                {% endfor %}
+                                            </select></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    <tr>
+                        <td colspan="5">
+                            <button type="submit" class="btn btn-primary">Initialiser les évaluations</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

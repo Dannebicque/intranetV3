@@ -13,7 +13,6 @@
  */
 
 $(document).on('click', '.semestretrombi', function(e) {
-  //todo: comment gérer la locale ?
   e.preventDefault();
 
 
@@ -24,7 +23,6 @@ $(document).on('click', '.semestretrombi', function(e) {
 });
 
 $(document).on('click', '.changeTypeGroupe', function (e) {
-  //todo: comment gérer la locale ?
   e.preventDefault();
 
   $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_etudiant_semestre', {
