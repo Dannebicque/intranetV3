@@ -282,4 +282,11 @@ abstract class Emprunt extends BaseEntity
 
         return $this;
     }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
 }

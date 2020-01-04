@@ -272,4 +272,16 @@ class Absence extends BaseEntity
 
         return $this;
     }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getJustifie(): ?bool
+    {
+        return $this->justifie;
+    }
 }

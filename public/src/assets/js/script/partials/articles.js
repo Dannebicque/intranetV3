@@ -1,10 +1,11 @@
 
 
 $(document).on('click', '#addCategorie', function () {
-
-  const table = $('#listeCategories').DataTable()
-  table.clear(); //effacer le datatable
-  table.destroy(); //supprimer le datatable
+  if ($('#listeCategories').hasDataAttr('data-checkbox')) {
+    const table = $('#listeCategories').DataTable()
+    table.clear() //effacer le datatable
+    table.destroy() //supprimer le datatable
+  }
 
 
   $.ajax({
@@ -30,7 +31,15 @@ $(document).on('click', '#addCategorie', function () {
         const html = '<tr>\n' +
           '                        <td>' + categorie.libelle + '</td>\n' +
           '                        <td>' + categorie.nbArticles + '</td>\n' +
-          '                        <td>' + categorie.id + '</td>\n' +
+          '                        <td><a href="\n' +
+          '                               data-csrf=""\n' +
+          '                               class="btn btn-danger btn-outline btn-square supprimer"\n' +
+          '                               data-provide="tooltip"\n' +
+          '                               data-placement="bottom"\n' +
+          '                               title="Supprimer la catégorie">\n' +
+          '                                <i class="' + iconDelete + '"></i>\n' +
+          '                                <span class="sr-only">Supprimer la catégorie</span>\n' +
+          '                            </a></td>\n' +
           '                    </tr>'
         table.append(html)
       })

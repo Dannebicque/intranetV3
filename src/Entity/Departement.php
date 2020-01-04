@@ -995,4 +995,46 @@ class Departement extends BaseEntity
 
         return $this;
     }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getOptUpdateCelcat(): ?bool
+    {
+        return $this->optUpdateCelcat;
+    }
+
+    public function getOptAgence(): ?bool
+    {
+        return $this->optAgence;
+    }
+
+    public function getOptMateriel(): ?bool
+    {
+        return $this->optMateriel;
+    }
+
+    public function getOptEdt(): ?bool
+    {
+        return $this->optEdt;
+    }
+
+    public function getOptStage(): ?bool
+    {
+        return $this->optStage;
+    }
+
+    public function getOptSynthese(): ?bool
+    {
+        return $this->optSynthese;
+    }
+
+    public function getOptMessagerie(): ?bool
+    {
+        return $this->optMessagerie;
+    }
 }

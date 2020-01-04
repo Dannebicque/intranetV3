@@ -12770,7 +12770,7 @@
     <unit id="aQ7ulKp" name="initialiser.les.evaluations">
       <segment>
         <source>initialiser.les.evaluations</source>
-        <target>initialiser.les.evaluations</target>
+        <target>Initialiser les évaluations</target>
       </segment>
     </unit>
     <unit id="h.ILNGv" name="enquete.semestre.heading">
@@ -13147,16 +13147,16 @@
     </unit>
     <unit id="UHIHkfB" name="chgt.emprunt.refus">
       <segment>
-        <source>chgt.emprunt.refus</source>
-        <target>chgt.emprunt.refus</target>
+          <source>chgt.emprunt.refus</source>
+          <target>chgt.emprunt.refus</target>
       </segment>
     </unit>
-    <unit id="1p.NTqK" name="REFUS">
-      <segment>
-          <source>REFUS</source>
-          <target>REFUS</target>
-      </segment>
-    </unit>
+      <unit id="1p.NTqK" name="REFUS">
+          <segment>
+              <source>REFUS</source>
+              <target>REFUS</target>
+          </segment>
+      </unit>
       <unit id="A29Fp.E" name="ACCEPTE">
           <segment>
               <source>ACCEPTE</source>
@@ -13239,6 +13239,24 @@
           <segment>
               <source>eval.de</source>
               <target>eval.de</target>
+          </segment>
+      </unit>
+      <unit id="9hVT7sB" name="affecter.enseignant.groupe">
+          <segment>
+              <source>affecter.enseignant.groupe</source>
+              <target>Affecter les enseignants aux groupes pour la saisie</target>
+          </segment>
+      </unit>
+      <unit id="o6tVTMz" name="article.duplicate.success.flash">
+          <segment>
+              <source>article.duplicate.success.flash</source>
+              <target>article.duplicate.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="AjYjkCk" name="article.edit.success.flash">
+          <segment>
+              <source>article.edit.success.flash</source>
+              <target>article.edit.success.flash</target>
           </segment>
       </unit>
   </file>

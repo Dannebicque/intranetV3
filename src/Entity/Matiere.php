@@ -975,4 +975,40 @@ class Matiere extends BaseEntity
 
         return $t;
     }
+
+    public function getPac(): ?bool
+    {
+        return $this->pac;
+    }
+
+    /**
+     * @return Collection|Matiere[]
+     */
+    public function getMatiereEnfants(): Collection
+    {
+        return $this->matiereEnfants;
+    }
+
+    public function addMatiereEnfant(Matiere $matiereEnfant): self
+    {
+        if (!$this->matiereEnfants->contains($matiereEnfant)) {
+            $this->matiereEnfants[] = $matiereEnfant;
+            $matiereEnfant->setMatiereParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatiereEnfant(Matiere $matiereEnfant): self
+    {
+        if ($this->matiereEnfants->contains($matiereEnfant)) {
+            $this->matiereEnfants->removeElement($matiereEnfant);
+            // set the owning side to null (unless already changed)
+            if ($matiereEnfant->getMatiereParent() === $this) {
+                $matiereEnfant->setMatiereParent(null);
+            }
+        }
+
+        return $this;
+    }
 }

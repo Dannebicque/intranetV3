@@ -15,6 +15,7 @@ use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
 use App\Repository\PersonnelDepartementRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,7 @@ class UserAjaxController extends BaseController
      *
      * @return Response
      * @throws NonUniqueResultException
+     * @throws Exception
      * @Route("/add-favori", name="user_add_favori", options={"expose":true})
      */
     public function addFavori(

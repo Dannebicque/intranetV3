@@ -132,6 +132,10 @@ class ArticleController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.edit.success.flash');
 
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_article_index');
+            }
+
             return $this->redirectToRoute('administration_article_edit', ['id' => $article->getId()]);
         }
 

@@ -236,6 +236,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $quizzQuestions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleLikePersonnel", mappedBy="personnel")
+     */
+    private $articlesLike;
+
     public function __construct()
     {
         parent::__construct();
@@ -260,6 +265,8 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->empruntPersonnels = new ArrayCollection();
         $this->departements = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
+        $this->emprunts = new ArrayCollection();
+        $this->articlesLike = new ArrayCollection();
     }
 
     /**
@@ -1303,6 +1310,68 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             // set the owning side to null (unless already changed)
             if ($quizzQuestion->getAuteur() === $this) {
                 $quizzQuestion->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmpruntPersonnel[]
+     */
+    public function getEmprunts(): Collection
+    {
+        return $this->emprunts;
+    }
+
+    public function addEmprunt(EmpruntPersonnel $emprunt): self
+    {
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts[] = $emprunt;
+            $emprunt->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmprunt(EmpruntPersonnel $emprunt): self
+    {
+        if ($this->emprunts->contains($emprunt)) {
+            $this->emprunts->removeElement($emprunt);
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getPersonnel() === $this) {
+                $emprunt->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleLikePersonnel[]
+     */
+    public function getArticlesLike(): Collection
+    {
+        return $this->articlesLike;
+    }
+
+    public function addArticlesLike(ArticleLikePersonnel $articlesLike): self
+    {
+        if (!$this->articlesLike->contains($articlesLike)) {
+            $this->articlesLike[] = $articlesLike;
+            $articlesLike->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticlesLike(ArticleLikePersonnel $articlesLike): self
+    {
+        if ($this->articlesLike->contains($articlesLike)) {
+            $this->articlesLike->removeElement($articlesLike);
+            // set the owning side to null (unless already changed)
+            if ($articlesLike->getPersonnel() === $this) {
+                $articlesLike->setPersonnel(null);
             }
         }
 

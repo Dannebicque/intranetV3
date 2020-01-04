@@ -379,4 +379,9 @@ class Annee extends BaseEntity
 
         return $this;
     }
+
+    public function getOptAlternance(): ?bool
+    {
+        return $this->optAlternance;
+    }
 }

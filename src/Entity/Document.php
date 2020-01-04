@@ -285,4 +285,11 @@ class Document extends BaseEntity
     {
         return (string)$this->getUuid();
     }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
 }

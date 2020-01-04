@@ -121,32 +121,29 @@
                                     <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'xlsx'}) }}"
                                        class="dropdown-item"><i class="ti-export"></i>{{ 'exporter.xlsx'|trans }}
                                     </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item"><i class="ti-settings"></i> Config. Notes</a>
                                 </div>
                             </li>
                         </ul>
                     </header>
-                    <div class="card-body">
-                        <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'afficher.les.notes'|trans }}
-                        </a>
-                        <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'initialiser.les.evaluations'|trans }}
-                        </a>
-                        {#                        <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"#}
-                        {#                           class="btn btn-block btn-primary">#}
-                        {#                            {{ 'afficher.les.notes'|trans }}#}
-                        {#                        </a>#}
-                        {# todo: affecter les enseignants aux groupes#}
-                        <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'demandes.rattrapages'|trans }}
-                            <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
-                        </a>
-                    </div>
+                  <div class="card-body">
+                    <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        {{ 'afficher.les.notes'|trans }}
+                    </a>
+                    <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        {{ 'initialiser.les.evaluations'|trans }}
+                    </a>
+                    <a href="{{ path('administration_affecter_enseignant_groupe_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        {{ 'affecter.enseignant.groupe'|trans }}
+                    </a>
+                    <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
+                       class="btn btn-block btn-primary">
+                        {{ 'demandes.rattrapages'|trans }}
+                      <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
+                    </a>
+                  </div>
                 </div>
             </div>
         {% endif %}
@@ -204,15 +201,6 @@
                 <div class="card">
                     <header class="card-header">
                         <h4 class="card-title">{{ 'gerer.fin.semestre'|trans|raw }}</h4>
-                        <ul class="card-controls">
-                            <li class="dropdown">
-                                <a data-toggle="dropdown" href="#" aria-expanded="false"><i
-                                            class="ti-more-alt rotate-90"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-
-                                </div>
-                            </li>
-                        </ul>
                     </header>
                     <div class="card-body">
                         <a href="{{ path('administration_sous_commission_live',{semestre:semestre.id}) }}"

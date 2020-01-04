@@ -628,4 +628,29 @@ class Diplome extends BaseEntity
 
         return $semestres;
     }
+
+    public function getOptDilpomeDecale(): ?bool
+    {
+        return $this->optDilpomeDecale;
+    }
+
+    public function getOptSupprAbsence(): ?bool
+    {
+        return $this->optSupprAbsence;
+    }
+
+    public function getOptAnonymat(): ?bool
+    {
+        return $this->optAnonymat;
+    }
+
+    public function getOptCommentairesReleve(): ?bool
+    {
+        return $this->optCommentairesReleve;
+    }
+
+    public function getOptEspacePersoVisible(): ?bool
+    {
+        return $this->optEspacePersoVisible;
+    }
 }

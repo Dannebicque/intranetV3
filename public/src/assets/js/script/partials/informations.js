@@ -22,11 +22,3 @@ $(document).on('click', '.changeinformation', function(e) {
   $('#mainContent').empty().load($(this).attr('href'));
 });
 
-$('.edit').editable('fichier.php', {
-  type: 'text',
-  cancel: 'Cancel',
-  cancelcssclass: 'btn btn-danger',
-  submitcssclass: 'btn btn-success',
-  submit: 'Save',
-  tooltip: 'Click to edit...'
-})

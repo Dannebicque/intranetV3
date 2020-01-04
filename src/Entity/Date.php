@@ -367,4 +367,9 @@ class Date extends BaseEntity
     {
         return self::COULEUR_BADGE[$this->type];
     }
+
+    public function getAllday(): ?bool
+    {
+        return $this->allday;
+    }
 }
