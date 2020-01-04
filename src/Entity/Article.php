@@ -11,6 +11,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
@@ -34,6 +35,7 @@ class Article extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"titre"})
      */
     private $slug;
 
@@ -52,15 +54,15 @@ class Article extends BaseEntity
     private $personnel;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", inversedBy="articleLikes")
-     */
-    private $likes;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ArticleCategorie", inversedBy="articles")
      * @Groups({"article_administration"})
      */
     private $categorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleLike", mappedBy="article")
+     */
+    private $articleLikes;
 
 
     /**
@@ -72,7 +74,7 @@ class Article extends BaseEntity
     {
         $this->personnel = $personnel;
         $this->semestres = new ArrayCollection();
-        $this->likes = new ArrayCollection();
+        $this->articleLikes = new ArrayCollection();
     }
 
     /**
@@ -124,11 +126,9 @@ class Article extends BaseEntity
     }
 
     /**
-     * @ORM\PrePersist()
      */
-    public function setSlug(): self
+    public function setSlug($slug): self
     {
-        $slug = str_replace(' ', '-', $this->titre);
         $this->slug = $slug;
 
         return $this;
@@ -219,42 +219,6 @@ class Article extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection|Etudiant[]
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    /**
-     * @param Etudiant $like
-     *
-     * @return Article
-     */
-    public function addLike(Etudiant $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes[] = $like;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Etudiant $like
-     *
-     * @return Article
-     */
-    public function removeLike(Etudiant $like): self
-    {
-        if ($this->likes->contains($like)) {
-            $this->likes->removeElement($like);
-        }
-
-        return $this;
-    }
-
     public function getCategorie(): ?ArticleCategorie
     {
         return $this->categorie;
@@ -263,6 +227,37 @@ class Article extends BaseEntity
     public function setCategorie(?ArticleCategorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleLike[]
+     */
+    public function getArticleLikes(): Collection
+    {
+        return $this->articleLikes;
+    }
+
+    public function addArticleLike(ArticleLike $articleLike): self
+    {
+        if (!$this->articleLikes->contains($articleLike)) {
+            $this->articleLikes[] = $articleLike;
+            $articleLike->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleLike(ArticleLike $articleLike): self
+    {
+        if ($this->articleLikes->contains($articleLike)) {
+            $this->articleLikes->removeElement($articleLike);
+            // set the owning side to null (unless already changed)
+            if ($articleLike->getArticle() === $this) {
+                $articleLike->setArticle(null);
+            }
+        }
 
         return $this;
     }

@@ -123,11 +123,6 @@ class Etudiant extends Utilisateur implements Serializable
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="likes")
-     */
-    private $articleLikes;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $boursier = false;
@@ -204,6 +199,11 @@ class Etudiant extends Utilisateur implements Serializable
     private $emprunts;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleLikeEtudiant", mappedBy="etudiant")
+     */
+    private $articlesLike;
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
@@ -218,13 +218,13 @@ class Etudiant extends Utilisateur implements Serializable
         $this->etudiantDemandeur = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->notifications = new ArrayCollection();
-        $this->articleLikes = new ArrayCollection();
         $this->groupes = new ArrayCollection();
         $this->messageDestinataireEtudiants = new ArrayCollection();
         $this->absenceJustificatifs = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
+        $this->articlesLike = new ArrayCollection();
 
         $this->promotion = date('Y');
         $this->anneeBac = date('Y');
@@ -1145,6 +1145,44 @@ class Etudiant extends Utilisateur implements Serializable
             // set the owning side to null (unless already changed)
             if ($empruntEtudiant->getEtudiant() === $this) {
                 $empruntEtudiant->setEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ArticleLikeEtudiant[]
+     */
+    public function getArticlesLike(): Collection
+    {
+        return $this->articlesLike;
+    }
+
+    public function addArticlesLike(ArticleLikeEtudiant $articlesLike): self
+    {
+        if (!$this->articlesLike->contains($articlesLike)) {
+            $this->articlesLike[] = $articlesLike;
+            $articlesLike->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticlesLike(ArticleLikeEtudiant $articlesLike): self
+    {
+        if ($this->articlesLike->contains($articlesLike)) {
+            $this->articlesLike->removeElement($articlesLike);
+            // set the owning side to null (unless already changed)
+            if ($articlesLike->getEtudiant() === $this) {
+                $articlesLike->setEtudiant(null);
             }
         }
 

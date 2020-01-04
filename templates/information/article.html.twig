@@ -32,24 +32,23 @@
                        href="{{ path('user_profil', {slug: article.personnel.slug, type:'permanent'}) }}">{{ article.personnel.displayPr }}</a>
                 {% endif %}
                 <ul class="flexbox">
-                    {#  todo: a remettre en place     #}
-                    {# <li class="px-16 br-1 border-light">#}
-                    {#                        <a class="text-muted" href="#">#}
-                    {#                            <i class="fa fa-share-alt"></i>#}
-                    {#                        </a>#}
-                    {#                    </li>#}
+                    <li class="px-16 br-1 border-light">
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-share-alt"></i>
+                        </a>
+                    </li>
 
-                    {#                    <li class="px-16 br-1 border-light">#}
-                    {#                        <a class="text-muted" href="#">#}
-                    {#                            <i class="fa fa-heart mr-1"></i> {{ article.likes|length }}#}
-                    {#                        </a>#}
-                    {#                    </li>#}
+                    <li class="px-16 br-1 border-light">
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-heart mr-1"></i> {{ article.likes|length }}
+                        </a>
+                    </li>
 
-                    {#                    <li class="px-16">#}
-                    {#                        <a class="text-muted" href="#">#}
-                    {#                            <i class="fa fa-comment mr-1"></i> 3#}
-                    {#                        </a>#}
-                    {#                    </li>#}
+                    <li class="px-16">
+                        <a class="text-muted" href="#">
+                            <i class="fa fa-comment mr-1"></i> 3
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

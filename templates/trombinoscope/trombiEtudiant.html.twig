@@ -24,8 +24,7 @@
                                 <a href="{{ path('trombinoscope_etudiant_export', {_format:'csv', typeGroupe: selectedTypeGroupe.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.csv'|trans }}
                                 </a>
-                                <a href="{{ path('trombinoscope_etudiant_image', {typeGroupe: selectedTypeGroupe.id})
-                                }}"
+                                <a href="{{ path('trombinoscope_etudiant_image', {typeGroupe: selectedTypeGroupe.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.trombi'|trans }}
                                 </a>
                             </div>
@@ -55,62 +54,58 @@
                             {% if groupe.etudiants|length >0 %}
                                 {% for etudiant in groupe.etudiants %}
                                     <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
-                                    <div class="text-white card-body bg-cyan py-20"
-                                         style="min-height: 230px">
-                                        <div class="flexbox">
-                                            <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
-                                                <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
-                                                    ('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
-                                            </a>
-                                            <div class="flex-grow pl-20">
-                                                <h4><a class="text-white" data-provide="tooltip"
-                                                       target="_blank"
-                                                       data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
-                                                        {{ etudiant.displayPr }}
-                                                    </a></h4>
-                                                <div><i class="fa fa-fw fa-map-marker w-20px"></i>
-                                                    {% for groupe in etudiant.groupes %}{{ groupe.libelle }} {% endfor %}
-                                                </div>
-                                                <div>
-                                                    <i class="fa fa-fw fa-envelope w-20px"></i>
-                                                    <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
-                                                       class="text-white"
-                                                       title="Contacter" data-provide="tooltip"
-                                                       data-placement="bottom">Contacter
-                                                    </a>
-                                                </div>
-                                                <div>
-
-                                                    <a href="{{ etudiant.siteUniv }}"
-                                                       {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
-                                                       class="text-white"
-                                                       target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                                       data-placement="bottom">
-                                                        <i class="fa fa-fw fa-globe w-20px"></i>
-                                                        {#                                                        {{ etudiant.siteUniv|slice(0,20) }}#}
-                                                    </a>
-                                                    {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
-
-                                                        <a href="{{ etudiant.sitePerso }}"
+                                        <div class="text-white card-body bg-cyan py-20"
+                                             style="min-height: 230px">
+                                            <div class="flexbox">
+                                                <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
+                                                    <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
+                                                        ('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
+                                                </a>
+                                                <div class="flex-grow pl-20">
+                                                    <h4><a class="text-white" data-provide="tooltip"
+                                                           target="_blank"
+                                                           data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                                            {{ etudiant.displayPr }}
+                                                        </a></h4>
+                                                    <div><i class="fa fa-fw fa-map-marker w-20px"></i>
+                                                        {% for groupe in etudiant.groupes %}{{ groupe.libelle }} {% endfor %}
+                                                    </div>
+                                                    <div>
+                                                        <i class="fa fa-fw fa-envelope w-20px"></i>
+                                                        <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
                                                            class="text-white"
-                                                           target="_blank" title="Site personnel" data-provide="tooltip"
-                                                           data-placement="bottom">
-                                                            <i class="fa fa-fw fa-link"></i>
-                                                            {#                                                            {{ etudiant.sitePerso|slice(0,20) }}#}
+                                                           title="Contacter" data-provide="tooltip"
+                                                           data-placement="bottom">Contacter
                                                         </a>
+                                                    </div>
+                                                    <div>
+                                                        <a href="{{ etudiant.siteUniv }}"
+                                                           {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
+                                                           class="text-white"
+                                                           target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                                           data-placement="bottom">
+                                                            <i class="fa fa-fw fa-globe w-20px"></i>
+                                                        </a>
+                                                        {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
+
+                                                            <a href="{{ etudiant.sitePerso }}"
+                                                               class="text-white"
+                                                               target="_blank" title="Site personnel" data-provide="tooltip"
+                                                               data-placement="bottom">
+                                                                <i class="fa fa-fw fa-link"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% if is_granted('ROLE_ETUDIANT') %}
+                                                        <label class="toggler toggler-danger fs-16">
+                                                            <input type="checkbox" checked class="addfavori"
+                                                                   value="{{ etudiant.slug }}">
+                                                            <i class="fa fa-heart"></i>
+                                                        </label>
                                                     {% endif %}
                                                 </div>
-
-
-                                                {#todo: a finaliser#}
-                                                {#                                                <label class="toggler toggler-danger fs-16">#}
-                                                {#                                                    <input type="checkbox" checked class="addfavori"#}
-                                                {#                                                           value="{{ etudiant.slug }}">#}
-                                                {#                                                    <i class="fa fa-heart"></i>#}
-                                                {#                                                </label>#}
                                             </div>
                                         </div>
-                                    </div>
                                     </div>
                                 {% endfor %}
                             {% else %}

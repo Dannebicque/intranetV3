@@ -14,6 +14,7 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\MatiereRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,7 +35,7 @@ class EvaluationInitialisationController extends BaseController
      * @param Semestre             $semestre
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function index(
         Request $request,

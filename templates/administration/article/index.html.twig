@@ -14,7 +14,11 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.article.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
+            <table class="table table-striped table-bordered"
+                    {% if articles|length >0 %}
+                data-provide="datatables"
+                data-checkbox="true"
+                    {% endif %}>
                 <thead>
                 <tr>
                     <th><label class="sr-only" for="select_all">Tout selectionner</label>

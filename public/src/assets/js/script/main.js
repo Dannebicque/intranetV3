@@ -41,6 +41,10 @@ const langueFr = {
 }
 
 const iconShow = 'fa fa-info'
+const iconEdit = 'fa fa-edit'
+const iconDelete = 'fa fa-trash'
+const iconPrint = 'fa fa-print'
+const iconDuplicate = 'fa fa-copy'
 /*
 |--------------------------------------------------------------------------
 | Application Is Ready

@@ -18,9 +18,14 @@ $(document).on('click', '.articleLike', function (e) {
   const elt = $(this)
 
   $.ajax({
-    url: Routing.generate('article_like', {slug: $(this).data('article')}),
+    url: Routing.generate('information_like', {slug: $(this).data('article')}),
     success: function (data) {
-      elt.html('<i class="ti-heart text-danger fs-11"></i> ' + data);
+      console.log(elt.first())
+      if (elt.children().hasClass('text-success')) {
+        elt.html('<i class="ti-heart text-danger fs-11"></i> ' + data)
+      } else {
+        elt.html('<i class="ti-heart text-success fs-11"></i> ' + data)
+      }
     }
   })
 })
