@@ -36,21 +36,20 @@
         </thead>
         <tbody>
         {% for celcat_calendrier in celcat_calendriers %}
-            <tr>
-                <td></td>
-                <td>{{ celcat_calendrier.id }}</td>
-                <td>{{ celcat_calendrier.semaineFormation }}</td>
-                <td>{{ celcat_calendrier.semaineReelle }}</td>
-                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|localizeddate('long', 'none', app
-                        .request.getLocale()) : '' }}</td>
-                <td>
-                    {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'celcat_calendrier', id: celcat_calendrier.id}) }}
-                </td>
-            </tr>
+          <tr>
+            <td></td>
+            <td>{{ celcat_calendrier.id }}</td>
+            <td>{{ celcat_calendrier.semaineFormation }}</td>
+            <td>{{ celcat_calendrier.semaineReelle }}</td>
+            <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|format_date('long') : '' }}</td>
+            <td>
+                {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'celcat_calendrier', id: celcat_calendrier.id}) }}
+            </td>
+          </tr>
         {% else %}
-            <tr>
-                <td colspan="7">{{ 'no.record.found'|trans }}</td>
-            </tr>
+          <tr>
+            <td colspan="7">{{ 'no.record.found'|trans }}</td>
+          </tr>
         {% endfor %}
         </tbody>
     </table>

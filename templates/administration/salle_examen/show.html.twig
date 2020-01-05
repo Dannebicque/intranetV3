@@ -35,11 +35,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ salle_examan.created ? salle_examan.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ salle_examan.created ? salle_examan.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ salle_examan.updated ? salle_examan.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ salle_examan.updated ? salle_examan.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>

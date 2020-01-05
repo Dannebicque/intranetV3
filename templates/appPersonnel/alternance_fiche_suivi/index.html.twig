@@ -55,9 +55,7 @@
                 {% for alternance_fiche_suivi in alternance_fiche_suivis %}
                     <tr>
                         <td>{{ alternance_fiche_suivi.methodeLong }}</td>
-                        <td>{{ alternance_fiche_suivi.date ? alternance_fiche_suivi.date|localizeddate('long', 'none',
-                                app
-                                .request.getLocale()) : '' }}</td>
+                        <td>{{ alternance_fiche_suivi.date ? alternance_fiche_suivi.date|format_date('long') : '' }}</td>
                         <td>
                             <a href="{{ path('application_personnel_alternance_fiche_suivi_show', {'id': alternance_fiche_suivi.id}) }}"
                                class="btn btn-info btn-outline btn-square"

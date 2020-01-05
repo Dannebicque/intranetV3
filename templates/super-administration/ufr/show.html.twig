@@ -44,21 +44,23 @@
                     <th>{{ 'table.sites'|trans }}</th>
                     <td>
                         {% for site in ufr.sites %}
-                                {% if loop.first %}<ul>{% endif %}
-                                <li><a href="{{ path('sa_site_show', {id:site.id}) }}" target="_blank">{{ site.libelle }}</a></li>
+                            {% if loop.first %}<ul>{% endif %}
+                            <li>
+                                <a href="{{ path('sa_site_show', {id:site.id}) }}" target="_blank">{{ site.libelle }}</a>
+                            </li>
                             {% if loop.last %}</ul>{% endif %}
-                            {% else %}
-                                -
-                            {% endfor %}
+                        {% else %}
+                            -
+                        {% endfor %}
                     </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ ufr.created ? ufr.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ ufr.created ? ufr.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ ufr.updated ? ufr.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ ufr.updated ? ufr.updated|format_datetime('long', 'short')) : '' }}</td>
                 </tr>
                 </tbody>
             </table>

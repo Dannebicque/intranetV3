@@ -16,9 +16,11 @@
             </tr>
         </table>
 
-        <h3>Rélévé de note pour le module {{ evaluation.matiere.display }} | Evaluation du {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}</h3>
+        <h3>Rélévé de note pour le module {{ evaluation.matiere.display }} | Evaluation
+            du {{ evaluation.dateEvaluation|format_date('long') }}</h3>
         <h4>{{ groupe.libelle }}</h4>
-        <h4>Saisi par : {{ evaluation.personnelAuteur.displayPr }}. Modification autorisées pour : {% for pers in evaluation.personnelAutorise %}{{ pers.displayPr }}
+        <h4>Saisi par : {{ evaluation.personnelAuteur.displayPr }}. Modification autorisées pour
+            : {% for pers in evaluation.personnelAutorise %}{{ pers.displayPr }}
                 {% if not loop.last %}
                     , {% endif %}
             {% else %}

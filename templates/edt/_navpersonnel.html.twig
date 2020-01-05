@@ -7,9 +7,8 @@
         >
             <option value="">Choisir</option>
             {% for sem in edt.semaines %}
-                <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle
-                }}">
-                    du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} | S{{ sem
+                <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
+                    du {{ sem.debut|format_date('short') }} au {{ sem.fin|format_date('short') }} | S{{ sem
                     .semaineIUT }}</option>
             {% endfor %}
 

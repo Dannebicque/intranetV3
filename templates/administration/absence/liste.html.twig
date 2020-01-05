@@ -63,7 +63,7 @@
                         <td>
                             <span class="{{ absences.statistiques[etudiant.id].nbCoursManques|badge }}">{{ absences.statistiques[etudiant.id].nbCoursManques }}</span>
                         </td>
-                        <td>{{ absences.statistiques[etudiant.id].totalDuree|localizeddate('none', 'short', app.request.getLocale()) }}</td>
+                        <td>{{ absences.statistiques[etudiant.id].totalDuree|format_time('short') }}</td>
                         <td>
                             <span class="{{ absences.statistiques[etudiant.id].nbDemiJournee|badge }}">{{ absences.statistiques[etudiant.id].nbDemiJournee }}</span>
                         </td>

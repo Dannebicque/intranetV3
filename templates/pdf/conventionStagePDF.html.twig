@@ -85,7 +85,7 @@
         Nom : {{ proposition.etudiant.nom|upper }}<br/>
         Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
         Sexe : {{ proposition.etudiant.civilite }}<br/>
-        Date de naissance : {{ proposition.etudiant.datenaissance|date('d/m/Y') }}<br/>
+        Date de naissance : {{ proposition.etudiant.datenaissance|format_date('short') }}<br/>
         N° d’étudiant : {{ proposition.etudiant.numetudiant }}<br/>
         Adresse postale
         : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
@@ -182,17 +182,18 @@
     <div class="blocconvention">
         Période du stage (*)
         <ul>
-            <li>Date de début :{{ proposition.dateDebutStage|date('d/m/Y') }}</li>
-            <li>Date de fin :{{ proposition.dateFinStage|date('d/m/Y') }}</li>
+            <li>Date de début :{{ proposition.dateDebutStage|format_date('long') }}</li>
+            <li>Date de fin :{{ proposition.dateFinStage|format_date('long') }}</li>
         </ul>
         Période d’interruption éventuelle (*)
         {% for interuption in proposition.stagePeriode.stagePeriodeInterruptions %}
-        <ul>
-            <li>Date de début : {{ interuption.dateDebut|date('d/m/Y') }}</li>
-            <li>Date de fin :{{ interuption.dateFin|date('d/m/Y') }}</li>
-        </ul>
+            <ul>
+                <li>Date de début : {{ interuption.dateDebut|format_date('long') }}</li>
+                <li>Date de fin :{{ interuption.dateFin|format_date('long') }}</li>
+            </ul>
         {% endfor %}
-        Durée de présence effective du stagiaire dans l’organisme d’accueil : {{ proposition.dureeJoursStage }} jours<br/>
+        Durée de présence effective du stagiaire dans l’organisme d’accueil : {{ proposition.dureeJoursStage }}
+        jours<br/>
         Nombre de jours de congés autorisés ou modalités des congés et autorisations d’absence (art. 9) : 0<br/>
         Présence dans l’organisme : Temps complet / <s>Temps partiel</s> (*) (rayer la mention inutile)<br/>
         Durée horaire hebdomadaire (art. 3) :{{ proposition.dureeHebdomadaire }} heures<br/>
@@ -639,7 +640,7 @@
     </div>
     <br/>
     <p><strong>FAIT À</strong> : {{ user_data.departement.ufr.sitePrincipal.adresse.ville }}</p>
-    <p><strong>LE</strong> : {{ 'now'|date('d/m/Y') }}</p>
+    <p><strong>LE</strong> : {{ 'now'|format_date('long') }}</p>
     <br/>
     <table style="width:100%">
         <tr>
@@ -718,7 +719,7 @@
         Nom : {{ proposition.etudiant.nom|upper }}<br/>
         Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
         Sexe : {{ proposition.etudiant.civilite }}<br/>
-        Date de naissance : {{ proposition.etudiant.datenaissance|date('d/m/Y') }}<br/>
+        Date de naissance : {{ proposition.etudiant.datenaissance|format_date('long') }}<br/>
         Adresse postale
         : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
         Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>

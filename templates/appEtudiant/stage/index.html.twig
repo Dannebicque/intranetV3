@@ -29,8 +29,8 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <p>Période de stage du
-                                        <strong>{{ stagePeriode.dateDebut ? stagePeriode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
-                                            au {{ stagePeriode.dateFin ? stagePeriode.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</strong>
+                                        <strong>{{ stagePeriode.dateDebut ? stagePeriode.dateDebut|format_date('long') : 'non.defini'|trans }}
+                                            au {{ stagePeriode.dateFin ? stagePeriode.dateFin|format_date('long') : 'non.defini'|trans }}</strong>
                                        soit {{ stagePeriode.nbJours }} jour(s) ou {{ stagePeriode.nbSemaines }}
                                        semaine(s)
                                     </p>
@@ -53,8 +53,8 @@
                                     <ul>
                                         {% for stagePeriodeInterruption in stagePeriode.stagePeriodeInterruptions %}
                                             <li>
-                                                Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
-                                                au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} </li>
+                                                Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption.dateDebut|format_date('long') : 'non.defini'|trans }}
+                                                au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption.dateFin|format_date('long') : 'non.defini'|trans }} </li>
                                         {% else %}
                                             {{ 'non.defini'|trans }}
                                         {% endfor %}
@@ -64,10 +64,10 @@
                                     <ul>
                                         {% for stagePeriodeSoutenance in stagePeriode.stagePeriodeSoutenances %}
                                             <li>
-                                                Du {{ stagePeriodeSoutenance.dateDebut?stagePeriodeSoutenance.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
-                                                au {{ stagePeriodeSoutenance.dateFin?stagePeriodeSoutenance.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                                Du {{ stagePeriodeSoutenance.dateDebut?stagePeriodeSoutenance.dateDebut|format_date('long') : 'non.defini'|trans }}
+                                                au {{ stagePeriodeSoutenance.dateFin?stagePeriodeSoutenance.dateFin|format_date('long') : 'non.defini'|trans }}
                                                 , rapport pour
-                                                le {{ stagePeriodeSoutenance.dateRenduRapport?stagePeriodeSoutenance.dateRenduRapport|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</li>
+                                                le {{ stagePeriodeSoutenance.dateRenduRapport?stagePeriodeSoutenance.dateRenduRapport|format_datetime('long', 'short') : 'non.defini'|trans }}</li>
                                         {% else %}
                                             {{ 'non.defini'|trans }}
                                         {% endfor %}
@@ -87,7 +87,7 @@
                         {% endif %}
                         {% if ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_AUTORISE', stageEtudiants[stagePeriode.id]) )) %}
                             <div class="alert alert-warning"><p>Votre proposition a été acceptée le
-                                    <strong>{{ stageEtudiants[stagePeriode.id].dateAutorise|localizeddate('long', 'none', app.request.getLocale()) }}</strong>.
+                                    <strong>{{ stageEtudiants[stagePeriode.id].dateAutorise|format_date('long') }}</strong>.
                                                                 Vous devez maintenant remplir le formulaire.</p></div>
                             <a href="{{ path('application_etudiant_stage_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"
                                class="btn btn-block btn-large btn-info">Compléter la proposition de stage</a>

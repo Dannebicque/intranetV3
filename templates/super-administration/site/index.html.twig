@@ -26,18 +26,18 @@
                 </thead>
                 <tbody>
                 {% for site in sites %}
-                    <tr id="ligne_{{ site.id }}">
-                        <td>{{ site.id }}</td>
-                        <td>{{ site.libelle }}</td>
-                        <td>{{ site.updated ? site.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-                        <td>
-                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'site', id:site.id}) }}
-                        </td>
-                    </tr>
+                  <tr id="ligne_{{ site.id }}">
+                    <td>{{ site.id }}</td>
+                    <td>{{ site.libelle }}</td>
+                    <td>{{ site.updated ? site.updated|format_datetime('long', 'short') : '' }}</td>
+                    <td>
+                        {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'site', id:site.id}) }}
+                    </td>
+                  </tr>
                 {% else %}
-                    <tr class="bg-pale-warning">
-                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
-                    </tr>
+                  <tr class="bg-pale-warning">
+                    <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                  </tr>
                 {% endfor %}
                 </tbody>
             </table>

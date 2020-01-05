@@ -59,7 +59,8 @@
                 <dt>Tuteur Universitaire :</dt>
                 <dd>{{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</dd>
                 <dt>Visite réalisée le :</dt>
-                <dd>{{ alternance_fiche_suivi.date|date('d/m/Y') }}, par {{ alternance_fiche_suivi.methodeLong }}</dd>
+                <dd>{{ alternance_fiche_suivi.date|format_date('short') }},
+                                                                          par {{ alternance_fiche_suivi.methodeLong }}</dd>
                 <dt>Personne rencontrée :</dt>
                 <dd>{{ alternance_fiche_suivi.alternance.tuteur.display }}</dd>
                 <dt>Missions :</dt>

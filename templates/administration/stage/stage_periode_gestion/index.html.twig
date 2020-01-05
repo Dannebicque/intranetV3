@@ -50,8 +50,8 @@
             <div class="card card-slided-up">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'periode'|trans }} : <strong>{{ stagePeriode.libelle }}</strong>
-                        (n° {{ stagePeriode.numeroPeriode }}
-                        | {{ stagePeriode.semestre.libelle }})</h4>
+                                                                 (n° {{ stagePeriode.numeroPeriode }}
+                                                                 | {{ stagePeriode.semestre.libelle }})</h4>
                     <ul class="card-controls">
                         <li><a class="card-btn-slide" href="#" title="plus de détails" data-provide="tooltip"></a></li>
                     </ul>
@@ -61,10 +61,9 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <p>{{ 'periode.de.stage.du'|trans }}
-                                    <strong>{{ stagePeriode.dateDebut ? stagePeriode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                    <strong>{{ stagePeriode.dateDebut ? stagePeriode.dateDebut|format_date('long') : 'non.defini'|trans }}
                                         {{ 'au'|trans }}   {{ stagePeriode.dateFin ? stagePeriode
-                                        .dateFin|localizeddate('long',
-                                            'none', app.request.getLocale()) : 'non.defini'|trans }}</strong>
+                                        .dateFin|format_date('long') : 'non.defini'|trans }}</strong>
                                     {{ 'soit'|trans }} {{ stagePeriode.nbJours }} {{ 'jour.s'|trans }} {{ 'or'|trans }} {{ stagePeriode
                                     .nbSemaines }} {{ 'semaine.s'|trans }}
                                 </p>
@@ -90,9 +89,9 @@
                                     {% for stagePeriodeInterruption in stagePeriode.stagePeriodeInterruptions %}
                                         <li>
                                             {{ 'du'|trans }} {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption
-                                            .dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                            .dateDebut|format_date('long') : 'non.defini'|trans }}
                                             {{ 'au'|trans }} {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption
-                                            .dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }} </li>
+                                            .dateFin|format_date('long') : 'non.defini'|trans }} </li>
                                     {% else %}
                                         {{ 'non.defini'|trans }}
                                     {% endfor %}
@@ -103,11 +102,12 @@
                                     {% for stagePeriodeSoutenance in stagePeriode.stagePeriodeSoutenances %}
                                         <li>
                                             {{ 'du'|trans }} {{ stagePeriodeSoutenance.dateDebut?stagePeriodeSoutenance
-                                            .dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                            .dateDebut|format_date('long') : 'non.defini'|trans }}
                                             {{ 'au'|trans }} {{ stagePeriodeSoutenance.dateFin?stagePeriodeSoutenance
-                                            .dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                                            .dateFin|format_date('long') : 'non.defini'|trans }}
                                             , {{ 'rapport.pour.le'|trans }}
-                                            {{ stagePeriodeSoutenance.dateRenduRapport?stagePeriodeSoutenance.dateRenduRapport|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</li>
+                                            {{ stagePeriodeSoutenance.dateRenduRapport?stagePeriodeSoutenance
+                                            .dateRenduRapport|format_datetime('long', 'short') : 'non.defini'|trans }}</li>
                                     {% else %}
                                         {{ 'non.defini'|trans }}
                                     {% endfor %}
@@ -377,26 +377,24 @@
                                     <td>{{ stageEtudiant.stage.entreprise.libelle }}</td>
                                     <td>{% if stageEtudiant.stage.entreprise.adresse != null %}
 
-                                                {{ stageEtudiant.stage.entreprise.adresse.ville|capitalize }} ({{
-                                            stageEtudiant.stage.entreprise.adresse.codePostal }})
-                                            {% else %}
-                                                -
-                                            {% endif %}
+                                            {{ stageEtudiant.stage.entreprise.adresse.ville|capitalize }} ({{ stageEtudiant.stage.entreprise.adresse.codePostal }})
+                                        {% else %}
+                                            -
+                                        {% endif %}
                                     </td>
                                     <td {% if stageEtudiant.stage.dateDebutStage != stagePeriode.dateDebut or
                                         stageEtudiant.stage.dateFinStage != stagePeriode.dateFin %} style="background-color: firebrick; color: whitesmoke"{% endif %}>
-                                        {{ stageEtudiant.stage.dateDebutStage|localizeddate('long', 'none', app.request.getLocale()) }}
-                                        <br/> {{ stageEtudiant.stage.dateFinStage|localizeddate('long', 'none', app.request.getLocale()) }}
+                                        {{ stageEtudiant.stage.dateDebutStage|format_date('long') }}
+                                        <br/> {{ stageEtudiant.stage.dateFinStage|format_date('long') }}
                                     </td>
                                     <td>
                                         <label for="tuteur_{{ stageEtudiant.etudiant.id }}" class="sr-only"></label>
-                                        <select name="tuteur_{{ stageEtudiant.etudiant.id }}" id="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{
-                                        stageEtudiant.stage.id }}"
+                                        <select name="tuteur_{{ stageEtudiant.etudiant.id }}" id="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{ stageEtudiant.stage.id }}"
                                                 class="changetuteur form-control">
                                             <option>{{ 'table.tuteur_universitaire'|trans }}</option>
                                             {% for personnel in user_data.personnelsEnseignant %}
-                                              <option value="{{ personnel.id }}" {% if stageEtudiant.stage
-                                                  .tuteurUniversitaire != null and personnel.id ==
+                                                <option value="{{ personnel.id }}" {% if stageEtudiant.stage
+                                                    .tuteurUniversitaire != null and personnel.id ==
                                                   stageEtudiant.stage.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
                                             {% endfor %}
                                         </select>

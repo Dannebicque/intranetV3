@@ -50,24 +50,23 @@
                 <tr>
                     <th>{{ 'table.qrcode'|trans }}</th>
                     <td>{{ borne.url }} {% if borne.url is defined %}<img src="{{ qr_code_data_uri(borne.url, {
-                            writer: 'svg', size: 150 }) }}" alt="QRcode de l'événement" />{%
-                            endif %}</td>
+                            writer: 'svg', size: 150 }) }}" alt="QRcode de l'événement" />{% endif %}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dateDebutPublication'|trans }}</th>
-                    <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dateFinPublication'|trans }}</th>
-                    <td>{{ borne.dateFinPublication ? borne.dateFinPublication|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ borne.dateFinPublication ? borne.dateFinPublication|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ borne.created ? borne.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ borne.created ? borne.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ borne.updated ? borne.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ borne.updated ? borne.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
 
                 </tbody>

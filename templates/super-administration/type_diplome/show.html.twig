@@ -34,20 +34,20 @@
                 <td>{{ type_diplome.nbSemestres }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.niveau_entree'|trans }}</th>
-                <td>{{ type_diplome.niveauEntree }}</td>
+              <th>{{ 'table.niveau_entree'|trans }}</th>
+              <td>{{ type_diplome.niveauEntree }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.niveau_sortie'|trans }}</th>
-                <td>{{ type_diplome.niveauSortie }}</td>
+              <th>{{ 'table.niveau_sortie'|trans }}</th>
+              <td>{{ type_diplome.niveauSortie }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ type_diplome.created ? type_diplome.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.created'|trans }}</th>
+              <td>{{ type_diplome.created ? type_diplome.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ type_diplome.updated ? type_diplome.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.updated'|trans }}</th>
+              <td>{{ type_diplome.updated ? type_diplome.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
         </tbody>
     </table>

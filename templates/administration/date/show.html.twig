@@ -38,27 +38,27 @@
                     <tr>
                         <th>{{ 'table.date_evenement'|trans }}</th>
                         <td>
-                            Le {{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}  </td>
+                            Le {{ date.dateDebut ? date.dateDebut|format_date('long') : '' }}  </td>
                     </tr>
                     <tr>
                         <th>{{ 'table.heure_event'|trans }}</th>
                         <td>
-                            de {{ date.heureDebut ? date.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}
-                            à {{ date.heureFin ? date.heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                            de {{ date.heureDebut ? date.heureDebut|format_datetime('none', 'short') : '' }}
+                            à {{ date.heureFin ? date.heureFin|format_datetime('none', 'short') : '' }}</td>
                     </tr>
                 {% else %}
                     <tr>
                         <th>{{ 'table.date_evenement'|trans }}</th>
                         <td>
-                            Du {{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : '' }}
+                            Du {{ date.dateDebut ? date.dateDebut|format_date('long') : '' }}
                             ,
-                            à {{ date.heureDebut ? date.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}  </td>
+                            à {{ date.heureDebut ? date.heureDebut|format_time('short') : '' }}  </td>
                     </tr>
                     <tr>
                         <th>{{ 'table.au'|trans }}</th>
-                        <td>{{ date.dateFin ? date.dateFin|localizeddate('long', 'none', app.request.getLocale()) : '' }}
+                        <td>{{ date.dateFin ? date.dateFin|format_date('long') : '' }}
                             ,
-                            à {{ date.heureFin ? date.heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                            à {{ date.heureFin ? date.heureFin|format_time('short') : '' }}</td>
                     </tr>
                 {% endif %}
                 <tr>
@@ -71,11 +71,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ date.created ? date.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ date.created ? date.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ date.updated ? date.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ date.updated ? date.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>

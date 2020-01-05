@@ -1,7 +1,7 @@
 Bonjour {{ emprunt.etudiant.prenom|capitalize }},
 
-Ta demande d'emprunt de matériel a été acceptée. Merci de venir chercher le matériel le {{ emprunt.datedebut|date
-('d/m/Y H:i') }} auprès du secrétariat.
+Ta demande d'emprunt de matériel a été acceptée. Merci de venir chercher le matériel le {{ emprunt
+.datedebut|format_datetime('long', 'short') }} auprès du secrétariat.
 
 Bien cordialement
 {% if emprunt.responsable != null %}

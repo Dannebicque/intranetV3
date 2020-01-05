@@ -39,10 +39,10 @@
                 {% for trello_tache in trello_taches %}
                     <tr>
                         <td>{{ trello_tache.libelle }}</td>
-                        <td>{{ trello_tache.deadline ? trello_tache.deadline|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ trello_tache.deadline ? trello_tache.deadline|format_datetime('long', 'short') : '' }}</td>
                         <td>{{ trello_tache.description }}</td>
                         <td>membre</td>
-                        <td>{{ trello_tache.updated ? trello_tache.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ trello_tache.updated ? trello_tache.updated|format_datetime('long', 'short') : '' }}</td>
 
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'trello_tache', id: trello_tache.id}) }}

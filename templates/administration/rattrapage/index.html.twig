@@ -53,8 +53,8 @@
                         <td>{{ rattrapage.etudiant.display }}</td>
                         <td>{{ rattrapage.matiere ? rattrapage.matiere.codeMatiere : 'non.defini'|trans }}</td>
                         <td>{{ rattrapage.personnel ? rattrapage.personnel.display : 'non.defini'|trans }}</td>
-                        <td>{{ rattrapage.dateEval ? rattrapage.dateEval|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
-                        <td>{{ rattrapage.created ? rattrapage.created|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                        <td>{{ rattrapage.dateEval ? rattrapage.dateEval|format_date('long') : 'non.defini'|trans }}</td>
+                        <td>{{ rattrapage.created ? rattrapage.created|format_date('long') : 'non.defini'|trans }}</td>
                         <td>{% if absences[rattrapage.etudiant.id] is defined and absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')] is defined and absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')][rattrapage.heureEval|date('Hi')] is defined %}{{ absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')][rattrapage.heureEval|date('Hi')] ? 'Yes'|trans : 'No'|trans }}{% else %}Pas d'absence saisie{% endif %}</td>
                         <td>
                             {% if rattrapage.etatDemande == 'f' %}

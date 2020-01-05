@@ -273,14 +273,13 @@
                     <span class="topbar-btn" data-toggle="dropdown"><i class="ti-flag-alt-2"></i><span
                                 class="sr-only">Changer de langue</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item active" href="{{ path('default_homepage',{'_locale':'en'}) }}"><span
+                    <a class="dropdown-item {% if app.request.locale == 'en' %}active{% endif %}" href="{{ path
+                        ('default_homepage',
+                        {'_locale':'en'}) }}"><span
                                 class="flag-icon flag-icon-gb"></span> English</a>
-                    <a class="dropdown-item" href="{{ path('default_homepage',{'_locale':'fr'}) }}"><span
+                    <a class="dropdown-item {% if app.request.locale == 'fr' %}active{% endif %}" href="{{ path
+                        ('default_homepage',{'_locale':'fr'}) }}"><span
                                 class="flag-icon flag-icon-fr"></span> Français</a>
-                    <a class="dropdown-item" href="{{ path('default_homepage',{'_locale':'de'}) }}"><span
-                                class="flag-icon flag-icon-de"></span> German</a>
-                    <a class="dropdown-item" href="{{ path('default_homepage',{'_locale':'es'}) }}"><span
-                                class="flag-icon flag-icon-es"></span> Espagnol</a>
                 </div>
             </li>
             <!-- END Change language -->
@@ -303,7 +302,8 @@
                                                 class="{{ notification.icone }}"></i></span>
                                 <div class="media-body">
                                     <p>{{ notification.type|trans }}</p>
-                                    <time datetime="{{ notification.created|date('d/m/y H:i') }}">{{ notification.created|time_ago }}</time>
+                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification
+                                        .created|time_ago }}</time>
                                 </div>
                             </a>
                         {% else %}
@@ -443,9 +443,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('faq_index') }}">{{ 'menu.faq'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>

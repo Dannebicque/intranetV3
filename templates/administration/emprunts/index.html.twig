@@ -77,34 +77,20 @@
                                         </a>
                                     </th>
                                     {% if key == constant('App\\Entity\\Emprunt::DEMANDE') %}
-                                        <th>{{ emprunt.created ? emprunt.created|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.dateDebut ? emprunt.dateDebut|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.datefin ? emprunt.datefin|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.motif }}</th>
+                                      <th>{{ emprunt.created ? emprunt.created|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.dateDebut ? emprunt.dateDebut|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.datefin ? emprunt.datefin|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.motif }}</th>
                                     {% endif %}
                                     {% if key == constant('App\\Entity\\Emprunt::ACCEPTE') %}
-                                        <th>{{ emprunt.dateDebut ? emprunt.dateDebut|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.datefin ? emprunt.datefin|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.motif }}</th>
+                                      <th>{{ emprunt.dateDebut ? emprunt.dateDebut|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.datefin ? emprunt.datefin|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.motif }}</th>
                                     {% endif %}
                                     {% if key == constant('App\\Entity\\Emprunt::SORTIE') %}
-                                        <th>{{ emprunt.dateDebut ? emprunt.dateDebut|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.datefin ? emprunt.datefin|localizeddate('long', 'short', app
-                                                .request
-                                                .getLocale()) : '' }}</th>
-                                        <th>{{ emprunt.telephone }}</th>
+                                      <th>{{ emprunt.dateDebut ? emprunt.dateDebut|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.datefin ? emprunt.datefin|format_datetime('long', 'short') : '' }}</th>
+                                      <th>{{ emprunt.telephone }}</th>
                                     {% endif %}
                                     <th>
                                         <a data-provide="modaler tooltip"

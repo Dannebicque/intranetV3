@@ -5,7 +5,7 @@ Une nouvelle demande de matériel a été faite sur l'intranet.
 Demande faite par {{ emprunt.etudiant.displayPr }} | {{ emprunt.etudiant.semestre.display }}
 Contact : {{ emprunt.etudiant.mailuniv }}
 
-Du {{ emprunt.dateDebut|date('d/m/Y H:i' ) }}, au {{ pret.dateRetour|date('d/m/Y H:i') }}.
+Du {{ emprunt.dateDebut|format_datetime('long', 'short') }}, au {{ pret.dateRetour|format_datetime('long', 'short') }}.
 
 Matériel souhaité :
 {% for mat in emprunt.empruntMateriels %}

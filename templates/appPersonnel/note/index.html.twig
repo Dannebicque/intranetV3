@@ -40,20 +40,20 @@
     {% if matiere.nbNotes > 0 %}
         <div class="tab-content">
             {% for eval in evaluations.evaluations %}
-                <div class="tab-pane {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active show{% endif %}"
-                     id="eval{{ eval.id }}" role="tabpanel">
-                    <div class="card">
-                        <h4 class="card-title">Evaluation N° {{ loop.index }} ({{ eval.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }},
-                                               #{{ eval.id }}
-                                               ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
-                        <div class="card-body">
-                            {% if eval.visible == false %}
-                            <div class="alert alert-warning">
-                                Cette évaluation n'est pas visible des étudiants.
-                            </div>
-                            {% endif %}
-                            <table class="table table-striped table-bordered">
-                                <tr>
+              <div class="tab-pane {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active show{% endif %}"
+                   id="eval{{ eval.id }}" role="tabpanel">
+                <div class="card">
+                  <h4 class="card-title">Evaluation N° {{ loop.index }} ({{ eval.dateEvaluation|format_date('long') }},
+                                         #{{ eval.id }}
+                                         ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
+                  <div class="card-body">
+                      {% if eval.visible == false %}
+                        <div class="alert alert-warning">
+                          Cette évaluation n'est pas visible des étudiants.
+                        </div>
+                      {% endif %}
+                    <table class="table table-striped table-bordered">
+                      <tr>
                                     <th>{{ 'table.groupe'|trans }}</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
                                         <th>{{ groupe.libelle }}</th>

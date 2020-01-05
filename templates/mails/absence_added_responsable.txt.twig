@@ -1,6 +1,8 @@
 Bonjour,
 
-L'étudiant {{ absence.etudiant.displayPr  }} a été marqué absent pour le cours de {{ absence.matiere.display }} en date du {{ absence.date|localizeddate('long', 'none', app.request.getLocale()) }}, {{ absence.heure|date('H:i') }}. L'intervenant qui a saisi l'absence est {{ absence.personnel.displayPr  }}.
+L'étudiant {{ absence.etudiant.displayPr  }} a été marqué absent pour le cours de {{ absence.matiere.display }} en
+date du {{ absence.date|format_date('long') }}, {{ absence.heure|format_time('short') }}. L'intervenant qui a saisi
+l'absence est {{ absence.personnel.displayPr  }}.
 
 Cordialement
 

@@ -30,7 +30,7 @@
             <tbody>
             {% for emprunt in emprunts %}
                 <tr>
-                    <td>{{ emprunt.created ? emprunt.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ emprunt.created ? emprunt.created|format_datetime('long', 'short') : '' }}</td>
                     <td>{{ emprunt.motif }}</td>
                     <td>{{ emprunt.etat|trans }}</td>
                     <td>

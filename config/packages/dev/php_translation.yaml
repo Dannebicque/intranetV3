@@ -1,7 +1,0 @@
-translation:
-    symfony_profiler:
-        enabled: true
-    webui:
-        enabled: true
-    auto_add_missing_translations:
-        config_name: 'default'

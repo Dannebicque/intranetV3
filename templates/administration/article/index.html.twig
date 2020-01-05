@@ -37,7 +37,7 @@
                         <td>{{ article.titre }}</td>
                         <td>{{ article.texte|truncate(50) }}</td>
                         <td>{{ article.categorie ? article.categorie.libelle : 'non.defini'|trans }}</td>
-                        <td>{{ article.updated ? article.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ article.updated ? article.updated|format_datetime('long', 'short') : '' }}</td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
                         </td>

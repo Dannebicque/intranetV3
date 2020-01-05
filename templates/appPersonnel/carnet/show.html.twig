@@ -45,7 +45,7 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.date_retour'|trans }}</th>
-                    <td>{{ cahierTexte.dateRetour ? cahierTexte.dateRetour|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ cahierTexte.dateRetour ? cahierTexte.dateRetour|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>

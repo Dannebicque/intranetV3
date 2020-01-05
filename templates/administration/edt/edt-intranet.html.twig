@@ -85,7 +85,7 @@
                     <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
                     {% for sem in edt.semaines %}
                         <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
-                            du {{ sem.debut|date('d/m/Y') }} au {{ sem.fin|date('d/m/Y') }} |
+                            du {{ sem.debut|format_date('short') }} au {{ sem.fin|format_date('short') }} |
                             S{{ sem.semaineIUT }}</option>
                     {% endfor %}
                 </select>
@@ -100,15 +100,15 @@
                     <tr>
                         <th>&nbsp;</th>
                         <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
+                            Lundi {{ edt.tabJour.lundi|format_date('short') }}</th>
                         <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
+                            Mardi {{ edt.tabJour.mardi|format_date('short') }}</th>
                         <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
+                            Mercredi {{ edt.tabJour.mercredi|format_date('short')) }}</th>
                         <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
+                            Jeudi {{ edt.tabJour.jeudi|format_date('short') }}</th>
                         <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
+                            Vendredi {{ edt.tabJour.vendredi|format_date('short') }}</th>
                     </tr>
                     <tr>
                         <th>&nbsp;</th>

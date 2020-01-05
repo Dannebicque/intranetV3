@@ -32,6 +32,8 @@ class Notification extends BaseEntity
         'chgt.emprunt.demande'               => 'ti-info',
         'chgt.emprunt.accepte'               => 'ti-success',
         'chgt.emprunt.refus'                 => 'ti-danger',
+        'decision.justificatif.acceptee'     => 'ti-success',
+        'decision.justificatif.refuse'       => 'ti-danger'
     ];
     public const TABCOLOR = [
         'carnet.added'                       => 'info',
@@ -46,7 +48,9 @@ class Notification extends BaseEntity
         'chgt.etat_stage.convention_recue'   => 'info',
         'chgt.emprunt.demande'               => 'info',
         'chgt.emprunt.accepte'               => 'success',
-        'chgt.emprunt.refus'                 => 'danger'
+        'chgt.emprunt.refus'                 => 'danger',
+        'decision.justificatif.acceptee'     => 'success',
+        'decision.justificatif.refuse'       => 'danger'
     ];
 
     /**

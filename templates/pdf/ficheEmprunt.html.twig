@@ -21,7 +21,8 @@
 
     <h3>Matériel emprunté par <strong>{{ emprunt.etudiant.displayPr }}</strong></h3>
 
-    <h4>Le {{ emprunt.dateDebut|date('d/m/Y H:i') }}, retour <strong>{{ emprunt.dateFin|date('d/m/Y H:i') }}</strong>
+    <h4>Le {{ emprunt.dateDebut|format_datetime('short', 'short') }}, retour <strong>{{ emprunt.dateFin|format_datetime
+                ('short', 'short') }}</strong>
     </h4>
     <p>Contact : {{ emprunt.telephone }}</p>
     <br/>

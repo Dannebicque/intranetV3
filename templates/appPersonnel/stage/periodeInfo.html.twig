@@ -1,22 +1,22 @@
 <h3>{{ stagePeriode.libelle }}</h3>
 <p>Responsables
-    : {% for responsable in stagePeriode.responsables %}{{ responsable.displayPr }}{% if not loop.last %}, {% endif %} {% endfor %}</p>
-<p>Période de stage du {{ stageEtudiant.dateDebutStage|localizeddate('long', 'none', app.request.getLocale()) }}
-    au {{ stageEtudiant.dateFinStage|localizeddate('long', 'none', app.request.getLocale()) }}</p>
+   : {% for responsable in stagePeriode.responsables %}{{ responsable.displayPr }}{% if not loop.last %}, {% endif %} {% endfor %}</p>
+<p>Période de stage du {{ stageEtudiant.dateDebutStage|format_date('long') }}
+   au {{ stageEtudiant.dateFinStage|format_date('long') }}</p>
 
 <p>Périodes d'interruption :</p>
 <ul>{% for interruption in stagePeriode.stagePeriodeInterruptions %}
-        <li>Du {{ interruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}
-            au {{ interruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}</li>
+        <li>Du {{ interruption.dateDebut|format_date('long') }}
+            au {{ interruption.dateFin|format_date('long') }}</li>
     {% else %}
         <li>Aucune</li>{% endfor %}
 </ul>
 
 <p>Périodes de soutenance :</p>
 <ul>{% for interruption in stagePeriode.stagePeriodeSoutenances %}
-        <li>Du {{ interruption.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}
-            au {{ interruption.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}. Retour du rapport
-            le {{ interruption.dateRenduRapport|localizeddate('long', 'short', app.request.getLocale()) }}</li>
+        <li>Du {{ interruption.dateDebut|format_date('long') }}
+            au {{ interruption.dateFin|format_date('long') }}. Retour du rapport
+            le {{ interruption.dateRenduRapport|format_datetime('long', 'short') }}</li>
     {% else %}
         <li>Aucune</li>{% endfor %}
 </ul>

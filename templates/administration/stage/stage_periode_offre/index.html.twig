@@ -35,22 +35,24 @@
                 </thead>
                 <tbody>
                 {% for stage_periode_offre in stage_periode_offres %}
-                    <tr>
-                        <td>{{ stage_periode_offre.libelle }}</td>
-                        <td>{{ stage_periode_offre.entreprise }}</td>
-                        <td>{{ stage_periode_offre.ville }}</td>
-                        <td><a href="{{ vich_uploader_asset(stage_periode_offre, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a></td>
-                        <td>{{ stage_periode_offre.updated ? stage_periode_offre.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
+                  <tr>
+                    <td>{{ stage_periode_offre.libelle }}</td>
+                    <td>{{ stage_periode_offre.entreprise }}</td>
+                    <td>{{ stage_periode_offre.ville }}</td>
+                    <td>
+                      <a href="{{ vich_uploader_asset(stage_periode_offre, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a>
+                    </td>
+                    <td>{{ stage_periode_offre.updated ? stage_periode_offre.updated|format_datetime('long', 'short') : 'non.defini'|trans }}
 
-                        <td>
+                    <td>
 
-                                <a href="{{ path('administration_stage_periode_offre_duplicate', {'id': stage_periode_offre.id}) }}"
-                                   class="btn btn-success btn-outline btn-square" data-provide="tooltip"
-                                   data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
+                      <a href="{{ path('administration_stage_periode_offre_duplicate', {'id': stage_periode_offre.id}) }}"
+                         class="btn btn-success btn-outline btn-square" data-provide="tooltip"
+                         data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
 
-                                <a href="{{ path('administration_stage_periode_offre_show', {'id': stage_periode_offre.id, stagePeriode:stagePeriode.uuidString}) }}"
-                                   class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                                   data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                      <a href="{{ path('administration_stage_periode_offre_show', {'id': stage_periode_offre.id, stagePeriode:stagePeriode.uuidString}) }}"
+                         class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                         data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
                             <a href="{{ path('administration_stage_periode_offre_edit', {'id': stage_periode_offre.id}) }}"
                                class="btn btn-warning btn-outline btn-square"

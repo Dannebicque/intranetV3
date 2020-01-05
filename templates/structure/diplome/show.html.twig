@@ -37,33 +37,33 @@
                 <td>{{ diplome.departement ? diplome.departement.libelle : 'non.defini'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.responsable_diplome'|trans }}</th>
-                <td>{{ diplome.responsableDiplome ? diplome.responsableDiplome.display : 'non.defini'|trans }}</td>
+              <th>{{ 'table.responsable_diplome'|trans }}</th>
+              <td>{{ diplome.responsableDiplome ? diplome.responsableDiplome.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.assistant_diplome'|trans }}</th>
-                <td>{{ diplome.assistantDiplome ? diplome.assistantDiplome.display : 'non.defini'|trans }}</td>
+              <th>{{ 'table.assistant_diplome'|trans }}</th>
+              <td>{{ diplome.assistantDiplome ? diplome.assistantDiplome.display : 'non.defini'|trans }}</td>
             </tr>
 
             <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ diplome.created ? diplome.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.created'|trans }}</th>
+              <td>{{ diplome.created ? diplome.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ diplome.updated ? diplome.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.updated'|trans }}</th>
+              <td>{{ diplome.updated ? diplome.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.code_apogee'|trans }}</th>
-                <td>{{ diplome.codeApogee }}</td>
+              <th>{{ 'table.code_apogee'|trans }}</th>
+              <td>{{ diplome.codeEtape }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.code_version'|trans }}</th>
-                <td>{{ diplome.codeVersion }}</td>
+              <th>{{ 'table.code_version'|trans }}</th>
+              <td>{{ diplome.codeVersion }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.code_departement'|trans }}</th>
-                <td>{{ diplome.codeDepartement }}</td>
+              <th>{{ 'table.code_departement'|trans }}</th>
+              <td>{{ diplome.codeDepartement }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_nb_jours_saisie'|trans }}</th>

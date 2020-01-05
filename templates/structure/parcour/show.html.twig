@@ -38,11 +38,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ parcour.created ? parcour.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ parcour.created ? parcour.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ parcour.updated ? parcour.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ parcour.updated ? parcour.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>

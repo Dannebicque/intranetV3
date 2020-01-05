@@ -1,6 +1,6 @@
 Bonjour {{ emprunt.etudiant.prenom|capitalize }},
 
-Ta demande d'emprunt de matériel du {{ emprunt.dateDebut|date('d/m/Y') }} a été refusée.
+Ta demande d'emprunt de matériel du {{ emprunt.dateDebut|format_date('long') }} a été refusée.
 
 Bien cordialement
 {% if emprunt.responsable != null %}

@@ -39,8 +39,8 @@
                 <tr class="alternance">
                     <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
                     <td>
-                        Du {{ alternance.dateDebut ? alternance.dateDebut|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
-                        au {{ alternance.dateFin ? alternance.dateFin|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                        Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
+                        au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                     <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
                                                                  data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': alternance.id}) }}"
                                                                  class="btn btn-info btn-outline btn-xs"
@@ -107,8 +107,8 @@
                     <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
                     <td>{{ alternance.anneeUniversitaire }}</td>
                     <td>
-                        Du {{ alternance.dateDebut ? alternance.dateDebut|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
-                        au {{ alternance.dateFin ? alternance.dateFin|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                        Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
+                        au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                     <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
                                                                  data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': alternance.id}) }}"
                                                                  class="btn btn-info btn-outline btn-xs"

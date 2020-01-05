@@ -1,6 +1,6 @@
 Bonjour {{ rattrapage.etudiant.displayPr }},
 
-Votre demande de rattrapage pour l'évaluation "{{ rattrapage.matiere.libelle }}" du {{ rattrapage.dateEval|localizeddate('long', 'none', app.request.getLocale()) }} a été acceptée.
+Votre demande de rattrapage pour l'évaluation "{{ rattrapage.matiere.libelle }}" du {{ rattrapage.dateEval|format_date('long') }} a été acceptée.
 Un planning des rattrapages sera communiqué dans les plus bref délais.
 
 Le directeur des études du diplôme

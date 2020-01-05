@@ -10,16 +10,15 @@
     </tr>
     <tr>
         <th>Groupes</th>
-        <td>{% for groupe in type_groupe.groupes %}{{ groupe.libelle }}{% if not loop.last %}, {% endif %}{% endfor
-            %}</td>
+        <td>{% for groupe in type_groupe.groupes %}{{ groupe.libelle }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
     </tr>
     <tr>
         <th>{{ 'table.created'|trans }}</th>
-        <td>{{ type_groupe.created ? type_groupe.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+        <td>{{ type_groupe.created ? type_groupe.created|format_datetime('long', 'short') : '' }}</td>
     </tr>
     <tr>
         <th>{{ 'table.updated'|trans }}</th>
-        <td>{{ type_groupe.updated ? type_groupe.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+        <td>{{ type_groupe.updated ? type_groupe.updated|format_datetime('long', 'short') : '' }}</td>
     </tr>
     </tbody>
 </table>

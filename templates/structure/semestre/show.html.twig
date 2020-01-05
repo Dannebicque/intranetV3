@@ -112,20 +112,20 @@
                 <td>{{ semestre.suivant ? semestre.suivant.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.semestre_precedent'|trans }}</th>
-                <td>{{ semestre.precedent ? semestre.precedent.display : 'non.defini'|trans }}</td>
+              <th>{{ 'table.semestre_precedent'|trans }}</th>
+              <td>{{ semestre.precedent ? semestre.precedent.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'semestre.semestre_decale'|trans }}</th>
-                <td>{{ semestre.decale ? semestre.decale.display : 'non.defini'|trans }}</td>
+              <th>{{ 'semestre.semestre_decale'|trans }}</th>
+              <td>{{ semestre.decale ? semestre.decale.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ semestre.created ? semestre.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.created'|trans }}</th>
+              <td>{{ semestre.created ? semestre.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ semestre.updated ? semestre.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.updated'|trans }}</th>
+              <td>{{ semestre.updated ? semestre.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
         </tbody>
     </table>

@@ -7,22 +7,22 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ creneau_cour.id }}</td>
-            </tr>
-            <tr>
-                <th>Jour</th>
-                <td>{{ creneau_cour.jour }}</td>
-            </tr>
-            <tr>
-                <th>Debut</th>
-                <td>{{ creneau_cour.debut ? creneau_cour.debut|date('H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Fin</th>
-                <td>{{ creneau_cour.fin ? creneau_cour.fin|date('H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ creneau_cour.id }}</td>
+        </tr>
+        <tr>
+            <th>Jour</th>
+            <td>{{ creneau_cour.jour }}</td>
+        </tr>
+        <tr>
+            <th>Debut</th>
+            <td>{{ creneau_cour.debut ? creneau_cour.debut|format_time('short') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Fin</th>
+            <td>{{ creneau_cour.fin ? creneau_cour.fin|format_time('short') : '' }}</td>
+        </tr>
         </tbody>
     </table>
 

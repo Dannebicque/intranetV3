@@ -19,26 +19,23 @@
     {% for offre in offres %}
         <div class="col-md-6 col-xl-4 code code-card code-fold">
             <div class="code-preview">
-                <div class="media align-items-center">
+              <div class="media align-items-center">
                 <span>
                     <i class="ti-file fs-30 text-info"></i>
                 </span>
-                    <div class="media-body">
-                        <h5>{{ offre.libelle }} / {{ offre.entreprise }}</h5>
-                        <p class="gap-items">
-                            <small>{{ 'ville'|trans }}: {{ offre.ville }}</small>
-                        </p>
-                        <p>
-                            <small>{{ 'created'|trans }}: {{ offre.updated|localizeddate('long', 'short', app.request
-                                    .getLocale()) }}</small>
-                        </p>
-                    </div>
-                    <a class="primary" href="{{ asset('upload/offre-stage/'~offre.documentName) }}" data-provide="tooltip"
-                       title="{{
-                    'telecharger'|trans
-                    }}"><i
-                                class="ti-save"></i></a>
+                <div class="media-body">
+                  <h5>{{ offre.libelle }} / {{ offre.entreprise }}</h5>
+                  <p class="gap-items">
+                    <small>{{ 'ville'|trans }}: {{ offre.ville }}</small>
+                  </p>
+                  <p>
+                    <small>{{ 'created'|trans }}: {{ offre.updated|format_datetime('long', 'short') }}</small>
+                  </p>
                 </div>
+                <a class="primary" href="{{ asset('upload/offre-stage/'~offre.documentName) }}" data-provide="tooltip"
+                   title="{{ 'telecharger'|trans }}"><i
+                          class="ti-save"></i></a>
+              </div>
             </div>
         </div>
     {% endfor %}

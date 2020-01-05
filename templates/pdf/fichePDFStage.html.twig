@@ -29,18 +29,19 @@
 
     <div>
         <h2>Informations sur l'étudiant</h2>
-        Nom : {{ stageEtudiant.etudiant.nom|upper }}<br />
-        Prénom : {{ stageEtudiant.etudiant.prenom|capitalize }}<br />
-        Sexe : {{ stageEtudiant.etudiant.civilite }}<br />
-        Date de naissance : {{ stageEtudiant.etudiant.datenaissance|date('d/m/Y') }}<br />
-        N° d’étudiant : {{ stageEtudiant.etudiant.numetudiant }}<br />
-        Adresse postale : {% if stageEtudiant.etudiant.adresse != null %}{{ stageEtudiant.etudiant.adresse.display }}{% endif %}<br />
-        Courriel(s) : {{ stageEtudiant.etudiant.mailuniv }} | {{ stageEtudiant.etudiant.mailperso }}<br />
+        Nom : {{ stageEtudiant.etudiant.nom|upper }}<br/>
+        Prénom : {{ stageEtudiant.etudiant.prenom|capitalize }}<br/>
+        Sexe : {{ stageEtudiant.etudiant.civilite }}<br/>
+        Date de naissance : {{ stageEtudiant.etudiant.datenaissance|format_date('short') }}<br/>
+        N° d’étudiant : {{ stageEtudiant.etudiant.numetudiant }}<br/>
+        Adresse postale
+        : {% if stageEtudiant.etudiant.adresse != null %}{{ stageEtudiant.etudiant.adresse.display }}{% endif %}<br/>
+        Courriel(s) : {{ stageEtudiant.etudiant.mailuniv }} | {{ stageEtudiant.etudiant.mailperso }}<br/>
         Téléphone : {{ stageEtudiant.etudiant.tel1|tel_format }}<br/>
         Téléphone portable : {{ stageEtudiant.etudiant.tel2|tel_format }}<br/>
-        Caisse Primaire d’Assurance Maladie (à contacter en cas d’accident) :<br />
-        Intitulé : {{ stageEtudiant.etudiant.intituleSecuriteSociale }}<br />
-        Adresse : {{ stageEtudiant.etudiant.adresseSecuriteSociale }}<br />
+        Caisse Primaire d’Assurance Maladie (à contacter en cas d’accident) :<br/>
+        Intitulé : {{ stageEtudiant.etudiant.intituleSecuriteSociale }}<br/>
+        Adresse : {{ stageEtudiant.etudiant.adresseSecuriteSociale }}<br/>
 
         <h2>Entreprise</h2>
         Raison sociale : {{ stageEtudiant.entreprise.raisonSociale }}<br />
@@ -88,12 +89,12 @@
         </ul>
 
         <h2>Le stage</h2>
-        Sujet du stage :{{ stageEtudiant.sujetstage }}<br />
-        Activités confiées au stagiaire (art. 2) : {{ stageEtudiant.activites }}<br />
-        Compétences à acquérir ou à développer (art. 2) :{{ stageEtudiant.stagePeriode.competencesVisees }}<br />
+        Sujet du stage :{{ stageEtudiant.sujetstage }}<br/>
+        Activités confiées au stagiaire (art. 2) : {{ stageEtudiant.activites }}<br/>
+        Compétences à acquérir ou à développer (art. 2) :{{ stageEtudiant.stagePeriode.competencesVisees }}<br/>
         <ul>
-            <li>Date de début :{{ stageEtudiant.dateDebutStage|date('d/m/Y') }}</li>
-            <li>Date de fin :{{ stageEtudiant.dateFinStage|date('d/m/Y') }}</li>
+            <li>Date de début :{{ stageEtudiant.dateDebutStage|format_date('short') }}</li>
+            <li>Date de fin :{{ stageEtudiant.dateFinStage|format_date('short') }}</li>
         </ul>
     </div>
 {% endblock %}

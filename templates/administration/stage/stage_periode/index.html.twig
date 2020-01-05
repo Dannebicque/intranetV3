@@ -36,13 +36,14 @@
                         <td>{{ stage_periode.libelle }}</td>
                         <td>{{ stage_periode.anneeUniversitaire ? stage_periode.anneeUniversitaire.annee : 'non.defini'|trans }}</td>
                         <td>{{ stage_periode.nbSemaines }} sem. soit
-                        {{ stage_periode.nbJours }} jours</td>
-                        <td>{{ stage_periode.dateDebut ? stage_periode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                            {{ stage_periode.nbJours }} jours
                         </td>
-                        <td>{{ stage_periode.dateFin ? stage_periode.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}
+                        <td>{{ stage_periode.dateDebut ? stage_periode.dateDebut|format_date('long') : 'non.defini'|trans }}
+                        </td>
+                        <td>{{ stage_periode.dateFin ? stage_periode.dateFin|format_date('long') : 'non.defini'|trans }}
                         </td>
                         <td>{{ stage_periode.nbEcts }}</td>
-                        <td>{{ stage_periode.updated ? stage_periode.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}
+                        <td>{{ stage_periode.updated ? stage_periode.updated|format_datetime('long', 'short') : 'non.defini'|trans }}
                         </td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'stage_periode', id: stage_periode.uuidString}) }}

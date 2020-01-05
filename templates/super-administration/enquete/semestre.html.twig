@@ -34,18 +34,18 @@
             </thead>
             <tbody>
             {% for questionnaire in  semestre.qualiteQuestionnaires %}
-            <tr>
-                <td>{{ questionnaire.libelle }}</td>
-                <td>du {{ questionnaire.dateOuverture|date('d/m/Y H:i') }} au {{ questionnaire.dateFermeture|date
-                        ('d/m/Y H:i') }}</td>
-                <td>NbReponse</td>
-                <td>
-                    <a href="{{ path('administratif_enquete_edit', {questionnaire:questionnaire.id}) }}">Edit</a>
-                    Edit
-                    Aperçu
-                    Voir réponse
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ questionnaire.libelle }}</td>
+                    <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
+                        .dateFermeture|format_datetime('long', 'short') }}</td>
+                    <td>NbReponse</td>
+                    <td>
+                        <a href="{{ path('administratif_enquete_edit', {questionnaire:questionnaire.id}) }}">Edit</a>
+                        Edit
+                        Aperçu
+                        Voir réponse
+                    </td>
+                </tr>
             {% else %}
                 <tr>
                     <td colspan="4">

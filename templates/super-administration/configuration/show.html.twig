@@ -34,7 +34,7 @@
                             {{ configuration.valeur }}
                         {% elseif configuration.type == 'F' %}
                             <a href="{{ asset('upload/logo/'~configuration.valeur) }}" target="_blank">Voir le
-                                                                                                      fichier</a>
+                                                                                                       fichier</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -44,11 +44,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ configuration.created ? configuration.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ configuration.created ? configuration.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ configuration.updated ? configuration.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ configuration.updated ? configuration.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>

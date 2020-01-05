@@ -6,7 +6,8 @@
              alt="photo Etudiant" class="img-responsive" width="150" height="190"/>
     </div>
     <div class="col-sm-8">
-        <p>{{ emprunt.dateDebut|date('d/m/Y H:i' ) }} | {{ emprunt.datefin|date('d/m/Y H:i') }}</p>
+        <p>{{ emprunt.dateDebut|format_datetime('long', 'short') }} | {{ emprunt.datefin|format_datetime('long',
+                'short') }}</p>
         <p>Motif : {{ emprunt.motif }}</p>
         <p>Description : {{ emprunt.description }}</p>
 

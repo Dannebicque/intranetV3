@@ -43,11 +43,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.created'|trans }}</th>
-                <td>{{ article.created ? article.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ article.created ? article.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ article.updated ? article.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ article.updated ? article.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
         </tbody>
     </table>
