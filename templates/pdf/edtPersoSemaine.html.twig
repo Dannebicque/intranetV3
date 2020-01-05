@@ -18,11 +18,11 @@
         <thead>
         <tr>
             <th>&nbsp;</th>
-            <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
-            <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
-            <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
-            <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
-            <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
+            <th class="center">Lundi {{ edt.tabJour.lundi|format_date('short') }}</th>
+            <th class="center">Mardi {{ edt.tabJour.mardi|format_date('short') }}</th>
+            <th class="center">Mercredi {{ edt.tabJour.mercredi|format_date('short') }}</th>
+            <th class="center">Jeudi {{ edt.tabJour.jeudi|format_date('short') }}</th>
+            <th class="center">Vendredi {{ edt.tabJour.vendredi|format_date('short') }}</th>
         </tr>
         </thead>
         <tbody>

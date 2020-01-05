@@ -124,13 +124,13 @@
             {{ form_row(form.dateRange) }}
             {{ form_row(form.dureeJoursStage) }}
         {% else %}
-            <div class="alert alert-info">Stage du
-                <strong>{{ stageEtudiant.stagePeriode.dateDebut|localizeddate('long', 'none', app.request.getLocale()) }}</strong>
-                                          au
-                <strong>{{ stageEtudiant.stagePeriode.dateFin|localizeddate('long', 'none', app.request.getLocale()) }}</strong>,
-                                          soit
-                <strong>{{ stageEtudiant.stagePeriode.nbJours }}</strong> jour(s)
-            </div>
+          <div class="alert alert-info">Stage du
+            <strong>{{ stageEtudiant.stagePeriode.dateDebut|format_date('long') }}</strong>
+                                        au
+            <strong>{{ stageEtudiant.stagePeriode.dateFin|format_time('none') }}</strong>,
+                                        soit
+            <strong>{{ stageEtudiant.stagePeriode.nbJours }}</strong> jour(s)
+          </div>
         {% endif %}
 
         {{ form_row(form.serviceStageEntreprise) }}

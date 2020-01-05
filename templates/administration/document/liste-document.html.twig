@@ -19,7 +19,7 @@
             <td>{{ document.libelle }}</td>
             <td>{{ document.typeFichier }}</td>
             <td>{{ document.typeDocument ? document.typeDocument.libelle : 'non.defini'|trans }}</td>
-            <td>{{ document.updated ? document.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+            <td>{{ document.updated ? document.updated|format_datetime('long', 'short') : '' }}</td>
             <td><a href="{{ asset('upload/documents/'~document.documentName) }}"
                    target="_blank">{{ 'voir.le.fichier'|trans }}</a></td>
             <td>

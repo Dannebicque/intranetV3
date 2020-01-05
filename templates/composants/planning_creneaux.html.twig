@@ -10,8 +10,8 @@
         <th>&nbsp;</th>
         {% for jour, creneau in creneaux %}
             {% for cr in creneau %}
-            <th style="border:1px solid black; collapse: 0px">{{ cr.debut|date('H:i') }}</th>
-                {% endfor %}
+                <th style="border:1px solid black; collapse: 0px">{{ cr.debut|format_time('short') }}</th>
+            {% endfor %}
         {% endfor %}
     </tr>
     </thead>

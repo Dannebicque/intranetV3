@@ -17,29 +17,26 @@
     <div class="card-body">
     <table class="table">
         <tbody>
-            <tr>
-                <th>{{ 'table.semaineFormation'|trans }}</th>
-                <td>{{ celcat_calendrier.semaineFormation }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.semaineReelle'|trans }}</th>
-                <td>{{ celcat_calendrier.semaineReelle }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.dateLundi'|trans }}</th>
-                <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|localizeddate('long', 'none', app
-                        .request.getLocale()) : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ celcat_calendrier.created ? celcat_calendrier.dateLundi|localizeddate('long', 'short', app
-                        .request.getLocale()) : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ celcat_calendrier.updated ? celcat_calendrier.dateLundi|localizeddate('long', 'short', app
-                        .request.getLocale()) : '' }}</td>
-            </tr>
+        <tr>
+          <th>{{ 'table.semaineFormation'|trans }}</th>
+          <td>{{ celcat_calendrier.semaineFormation }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'table.semaineReelle'|trans }}</th>
+          <td>{{ celcat_calendrier.semaineReelle }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'table.dateLundi'|trans }}</th>
+          <td>{{ celcat_calendrier.dateLundi ? celcat_calendrier.dateLundi|format_date('long') : '' }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'table.created'|trans }}</th>
+          <td>{{ celcat_calendrier.created ? celcat_calendrier.dateLundi|format_datetime('long', 'short') : '' }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'table.updated'|trans }}</th>
+          <td>{{ celcat_calendrier.updated ? celcat_calendrier.dateLundi|format_datetime('long', 'short') : '' }}</td>
+        </tr>
         </tbody>
     </table>
     </div>

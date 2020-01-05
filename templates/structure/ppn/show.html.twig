@@ -13,19 +13,20 @@
 
 {% block content %}
 <div class="card">
-    <h4 class="card-title">{{ 'adm.ppn.show.heading'|trans }}</h4>
-    <div class="card-body">
+  <h4 class="card-title">{{ 'adm.ppn.show.heading'|trans }}</h4>
+  <div class="card-body">
 
     <table class="table">
-        <tbody>
-        {{ table.line('table.id', ppn.id) }}
-        {{ table.line('table.libelle', ppn.libelle) }}
-        {{ table.line('table.annee_ppn', ppn.annee) }}
-        {{ table.line('table.diplome', ppn.diplome ? ppn.diplome.libelle : 'non.defini'|trans) }}
-        {{ table.line('table.created', ppn.created ? ppn.created|localizeddate('long', 'short', app.request.getLocale()) : '') }}
-        {{ table.line('table.updated', ppn.updated ? ppn.updated|localizeddate('long', 'short', app.request.getLocale()) : '') }}
-        </tbody>
+      <tbody>
+      {{ table.line('table.id', ppn.id) }}
+      {{ table.line('table.libelle', ppn.libelle) }}
+      {{ table.line('table.annee_ppn', ppn.annee) }}
+      {{ table.line('table.diplome', ppn.diplome ? ppn.diplome.libelle : 'non.defini'|trans) }}
+      {{ table.line('table.created', ppn.created ? ppn.created|format_datetime('long', 'short') : '') }}{# todo:
+        dans la macro ? commun à toutes les pages index #}
+      {{ table.line('table.updated', ppn.updated ? ppn.updated|format_datetime('long', 'short') : '') }}
+      </tbody>
     </table>
-    </div>
+  </div>
 </div>
 {% endblock %}

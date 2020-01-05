@@ -1,6 +1,7 @@
 Bonjour {{ absence.etudiant.displayPr  }},
 
-L'absence saisie par - {{ absence.personnel.displayPr  }} - dans le cours - {{ absence.matiere.display }} - du - {{ absence.date|localizeddate('long', 'none', app.request.getLocale()) }} -, {{ absence.heure|date('H:i') }} vient d'être supprimée.
+L'absence saisie par - {{ absence.personnel.displayPr  }} - dans le cours - {{ absence.matiere.display }} - du - {{
+absence.date|format_date('long') }} -, {{ absence.heure|format_time('short') }} vient d'être supprimée.
 
 Vous pouvez suivre l'état de vos absences et les justifier en vous connectant sur l'intranet.
 

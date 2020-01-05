@@ -50,15 +50,17 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.document'|trans }}</th>
-                    <td><a href="{{ vich_uploader_asset(stage_periode_offre, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a></td>
+                    <td>
+                        <a href="{{ vich_uploader_asset(stage_periode_offre, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a>
+                    </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ stage_periode_offre.created ? stage_periode_offre.created|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                    <td>{{ stage_periode_offre.created ? stage_periode_offre.created|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ stage_periode_offre.updated ? stage_periode_offre.updated|localizeddate('long', 'short', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                    <td>{{ stage_periode_offre.updated ? stage_periode_offre.updated|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                 </tr>
                 </tbody>
             </table>

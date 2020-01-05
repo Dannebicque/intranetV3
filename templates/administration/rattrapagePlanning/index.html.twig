@@ -87,7 +87,7 @@
                         <td>{{ rattrapage.etudiant.semestre.libelle }}</td>
                         <td>{{ rattrapage.matiere ? rattrapage.matiere.codeMatiere : 'non.defini'|trans }}</td>
                         <td>{{ rattrapage.personnel ? rattrapage.personnel.display : 'non.defini'|trans }}</td>
-                        <td>{{ rattrapage.dateEval ? rattrapage.dateEval|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                        <td>{{ rattrapage.dateEval ? rattrapage.dateEval|format_date('long') : 'non.defini'|trans }}</td>
                         <td><label for="salle_{{ rattrapage.uuidString }}" class="sr-only">Salle</label>
                             <input type="text"
                                    name="salle_{{ rattrapage.uuidString }}"

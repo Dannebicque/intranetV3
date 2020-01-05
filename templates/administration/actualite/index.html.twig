@@ -32,7 +32,7 @@
                         <td></td>
                         <td>{{ actualite.titre }}</td>
                         <td>{{ actualite.texte }}</td>
-                        <td>{{ actualite.updated ? actualite.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ actualite.updated ? actualite.updated|format_datetime('long', 'short') : '' }}</td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'actualite', id: actualite.id}) }}
                         </td>

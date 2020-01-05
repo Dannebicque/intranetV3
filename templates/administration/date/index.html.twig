@@ -34,13 +34,9 @@
                     <tr>
                         <td></td>
                         <td>{{ date.libelle }}</td>
-                        <td>{{ date.dateDebut ? date.dateDebut|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
-                        <td>{% if date.allday %}{{ 'toute.la.journee'|trans }}{% else %}{{ date.heureDebut ? date.heureDebut|localizeddate
-                                ('none',
-                                'short', app
-                                .request.getLocale
-                                    ()) : 'non.defini'|trans }} à {{ date.heureFin ? date.heureFin|localizeddate('none',
-                                'short', app.request.getLocale()) : 'non.defini'|trans }}{% endif %}</td>
+                        <td>{{ date.dateDebut ? date.dateDebut|format_date('long') : 'non.defini'|trans }}</td>
+                        <td>{% if date.allday %}{{ 'toute.la.journee'|trans }}{% else %}{{ date.heureDebut ? date.heureDebut|format_time
+                                ('short') : 'non.defini'|trans }} à {{ date.heureFin ? date.heureFin|format_time('short') : 'non.defini'|trans }}{% endif %}</td>
                         <td>{{ date.lieu }}</td>
                         <td>{% for semestre in date.semestres %}{{ semestre.libelle }} {% endfor %}</td>
                         <td>

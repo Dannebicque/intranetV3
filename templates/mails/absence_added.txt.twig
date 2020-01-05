@@ -1,6 +1,8 @@
 Bonjour {{ absence.etudiant.displayPr  }},
 
-Vous avez été comptabilisé(e) absent(e) par - {{ absence.personnel.displayPr  }} - dans le cours - {{ absence.matiere.display }} - du - {{ absence.date|localizeddate('long', 'none', app.request.getLocale()) }} -, {{ absence.heure|date('H:i') }}. Vous devez justifier de cette absence dans un délai de 5 jours après votre reprise des cours ! Passé ce délai cette absence sera considérée comme définitivement non justifiée.
+Vous avez été comptabilisé(e) absent(e) par - {{ absence.personnel.displayPr  }} - dans le cours - {{ absence.matiere
+.display }} - du - {{ absence.date|format_date('long') }} -, {{ absence.heure|format_time('short') }}. Vous devez
+justifier de cette absence dans un délai de 5 jours après votre reprise des cours ! Passé ce délai cette absence sera considérée comme définitivement non justifiée.
 
 {%  if absence.matiere.semestre.optPenaliteAbsence == true %}
 Dans l'immédiat, et sans justification de votre part dans les 5 jours, cette absence entraine une pénalité de {{ absence.matiere.semestre.optPointPenaliteAbsence }} point sur le module {{ absence.matiere.display }}. Cette pénalité s'ajoute aux éventuelles précédentes pénalités obtenues sur cette matière.

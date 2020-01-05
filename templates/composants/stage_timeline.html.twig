@@ -16,7 +16,7 @@
         <a class="nav-link" href="#"></a>
         {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
             ('ETAT_STAGE_AUTORISE', stageEtudiant) )) %}
-            <span>{{ stageEtudiant.dateAutorise|localizeddate('long', 'none', app.request.getLocale()) }}</span>
+            <span>{{ stageEtudiant.dateAutorise|format_date('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
@@ -40,8 +40,7 @@
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
             )) %}
-            <span>{{ stageEtudiant.dateDepotFormulaire|localizeddate('long', 'none', app.request.getLocale())
-                }}</span>
+            <span>{{ stageEtudiant.dateDepotFormulaire|format_datetime('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
@@ -62,8 +61,7 @@
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
             )) %}
-            <span>{{ stageEtudiant.dateValidation|localizeddate('long', 'none', app.request.getLocale())
-                }}</span>
+            <span>{{ stageEtudiant.dateValidation|format_date('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
@@ -82,7 +80,7 @@
             (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
             )) %}
-            <span>{{ stageEtudiant.dateImprime|localizeddate('long', 'none', app.request.getLocale()) }}</span>
+            <span>{{ stageEtudiant.dateImprime|format_date('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
@@ -100,8 +98,7 @@
         {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
             ('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
             ) %}
-            <span>{{ stageEtudiant.dateConventionEnvoyee|localizeddate('long', 'none', app.request.getLocale())
-                }}</span>
+            <span>{{ stageEtudiant.dateConventionEnvoyee|format_date('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
@@ -113,9 +110,7 @@
         <a class="nav-link" href="#"></a>
         {% if ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
             ('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant) )) %}
-            <span>{{ stageEtudiant.dateConventionRecu|localizeddate('long', 'none', app.request.getLocale
-                    ())
-                }}</span>
+            <span>{{ stageEtudiant.dateConventionRecu|format_date('long') }}</span>
         {% endif %}
     </li>
 </ul>

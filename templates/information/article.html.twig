@@ -19,7 +19,7 @@
         <div class="card-body">
             <h4><a class="hover-primary" href="#">{{ article.titre }}</a></h4>
             <p>
-                <time>{{ article.created ? article.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</time>
+                <time>{{ article.created ? article.created|format_datetime('long', 'short') : '' }}</time>
             </p>
 
             <p>{{ article.texte|raw }}</p>
@@ -40,7 +40,7 @@
 
                     <li class="px-16 br-1 border-light">
                         <a class="text-muted" href="#">
-                            <i class="fa fa-heart mr-1"></i> {{ article.likes|length }}
+                            <i class="fa fa-heart mr-1"></i> {{ article.articleLikes|length }}
                         </a>
                     </li>
 

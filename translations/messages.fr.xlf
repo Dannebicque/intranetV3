@@ -10614,9 +10614,9 @@
     <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
       <segment>
         <source>app.etudiant.justificatif.explication.index</source>
-        <target>Les justificats sont validés manuellement. Il peut y avoir un délai de
-                  traitement.
-              </target>
+        <target>Les justificatifs sont validés manuellement. Il peut y avoir un délai de
+            traitement.
+        </target>
       </segment>
     </unit>
     <unit id="Qoot1_a" name="fixes">
@@ -13141,16 +13141,16 @@
     </unit>
     <unit id="n8v7krd" name="DEMANDE">
       <segment>
-        <source>DEMANDE</source>
-        <target>DEMANDE</target>
+          <source>DEMANDE</source>
+          <target>DEMANDE</target>
       </segment>
     </unit>
-    <unit id="UHIHkfB" name="chgt.emprunt.refus">
-      <segment>
-          <source>chgt.emprunt.refus</source>
-          <target>chgt.emprunt.refus</target>
-      </segment>
-    </unit>
+      <unit id="UHIHkfB" name="chgt.emprunt.refus">
+          <segment>
+              <source>chgt.emprunt.refus</source>
+              <target>chgt.emprunt.refus</target>
+          </segment>
+      </unit>
       <unit id="1p.NTqK" name="REFUS">
           <segment>
               <source>REFUS</source>
@@ -13257,6 +13257,12 @@
           <segment>
               <source>article.edit.success.flash</source>
               <target>article.edit.success.flash</target>
+          </segment>
+      </unit>
+      <unit id="TNLhYQv" name="decision.justificatif.acceptee">
+          <segment>
+              <source>decision.justificatif.acceptee</source>
+              <target>decision.justificatif.acceptee</target>
           </segment>
       </unit>
   </file>

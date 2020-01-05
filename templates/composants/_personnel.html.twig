@@ -69,11 +69,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.created'|trans }}</th>
-                <td>{{ personnel.created ? personnel.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ personnel.created ? personnel.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ personnel.updated ? personnel.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                <td>{{ personnel.updated ? personnel.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.login'|trans }}</th>
@@ -87,7 +87,7 @@
 
             <tr>
                 <th>{{ 'table.datenaissance'|trans }}</th>
-                <td>{{ personnel.dateNaissance ? personnel.dateNaissance|localizeddate('long', 'none', app.request.getLocale()) : '' }}</td>
+                <td>{{ personnel.dateNaissance ? personnel.dateNaissance|format_date('long') : '' }}</td>
             </tr>
 
             <tr>

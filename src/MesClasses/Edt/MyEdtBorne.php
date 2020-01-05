@@ -84,8 +84,9 @@ class MyEdtBorne
         $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre1);
         $this->data['p2']['groupes'] = $this->groupeRepository->findAllGroupes($semestre2);
 
-        $this->data['jours'] = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi');
-        $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y', mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
+        $this->data['jours'] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+        $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y',
+                mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
     }
 
     public function getData(): array

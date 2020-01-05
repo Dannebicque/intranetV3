@@ -1,6 +1,6 @@
 Bonjour,
 
-Une évaluation a été saisie pour la matière {{ evaluation.matiere.display }} par {{ evaluation.personnel.displayPr  }} pour l'évaluation du {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}.
+Une évaluation a été saisie pour la matière {{ evaluation.matiere.display }} par {{ evaluation.personnel.displayPr  }} pour l'évaluation du {{ evaluation.dateEvaluation|format_date('long') }}.
 
 Cordialement,
 

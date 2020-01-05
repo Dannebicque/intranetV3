@@ -27,19 +27,19 @@
                 </thead>
                 <tbody>
                 {% for ufr in ufrs %}
-                    <tr id="ligne_{{ ufr.id }}">
-                        <td>{{ ufr.id }}</td>
-                        <td>{{ ufr.libelle }}</td>
-                        <td>{{ ufr.responsable ? ufr.responsable.displayPr : 'non.defini'|trans }}</td>
-                        <td>{{ ufr.updated ? ufr.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
-                        <td>
-                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'ufr', id:ufr.id}) }}
-                        </td>
-                    </tr>
+                  <tr id="ligne_{{ ufr.id }}">
+                    <td>{{ ufr.id }}</td>
+                    <td>{{ ufr.libelle }}</td>
+                    <td>{{ ufr.responsable ? ufr.responsable.displayPr : 'non.defini'|trans }}</td>
+                    <td>{{ ufr.updated ? ufr.updated|format_datetime('long', 'short') : '' }}</td>
+                    <td>
+                        {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'ufr', id:ufr.id}) }}
+                    </td>
+                  </tr>
                 {% else %}
-                    <tr class="bg-pale-warning">
-                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
-                    </tr>
+                  <tr class="bg-pale-warning">
+                    <td colspan="5">{{ 'no.record.found'|trans }}</td>
+                  </tr>
                 {% endfor %}
                 </tbody>
             </table>

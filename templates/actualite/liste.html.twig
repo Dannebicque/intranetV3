@@ -25,7 +25,8 @@
                             <span class="badge badge-ring badge-primary"></span>
                         </div>
                         <div class="timeline-content">
-                            <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|localizeddate('short', 'short', app.request.getLocale()) }}</time>
+                            <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|format_datetime
+                                    ('short', 'short') }}</time>
                             <h5>{{ actualite.titre }}</h5>
                             <p>{{ actualite.texte }}</p>
                         </div>

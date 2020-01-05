@@ -35,7 +35,7 @@
                 {% for i in 1..5 %}
                     <tr style="height: 160px">
                         {% for j in 1..6 %}
-                            <td data-date="{{ calendrier[ind] is defined ? calendrier[ind]|date('d/m/Y') : 'euh' }}"
+                            <td data-date="{{ calendrier[ind] is defined ? calendrier[ind]|format_date('short') : 'euh' }}"
                                 style="
                                 {% if calendrier[ind] is defined and calendrier[ind]|date('d/m/Y') == 'now'|date('d/m/Y') %}
                                         background-color: lightyellow;

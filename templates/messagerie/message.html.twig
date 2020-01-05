@@ -5,7 +5,7 @@
                  alt="{{ message.expediteur.displayPr }}">
             <div>
                 <h6 class="mb-0">{{ message.expediteur.displayPr }}</h6>
-                <small>{{ message.created ? message.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</small>
+                <small>{{ message.created ? message.created|format_datetime('long', 'short') : '' }}</small>
             </div>
         </div>
 

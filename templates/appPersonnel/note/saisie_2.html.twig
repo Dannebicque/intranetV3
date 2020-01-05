@@ -37,7 +37,7 @@
                             {#data-pk="{{ eval.id }}"#}
                             {#data-original-title="Corrigez la date">{{ evaluation.dateeval|date('d/m/Y') }}</a>#}
                             {#{% else %}#}
-                            {{ evaluation.dateEvaluation|localizeddate('long', 'none', app.request.getLocale()) }}
+                            {{ evaluation.dateEvaluation|format_date('long') }}
                             {#{% endif %}#}
                         </td>
                     </tr>

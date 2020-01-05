@@ -18,30 +18,30 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th>{{ 'table.id'|trans }}</th>
-                    <td>{{ type_document.id }}</td>
+                  <th>{{ 'table.id'|trans }}</th>
+                  <td>{{ type_document.id }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.libelle'|trans }}</th>
-                    <td>{{ type_document.libelle }}</td>
+                  <th>{{ 'table.libelle'|trans }}</th>
+                  <td>{{ type_document.libelle }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.created'|trans }}</th>
-                    <td>{{ type_document.created ? type_document.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                  <th>{{ 'table.created'|trans }}</th>
+                  <td>{{ type_document.created ? type_document.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.updated'|trans }}</th>
-                    <td>{{ type_document.updated ? type_document.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                  <th>{{ 'table.updated'|trans }}</th>
+                  <td>{{ type_document.updated ? type_document.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="card">
-        <h4 class="card-title">{{ 'adm.type_document.liste.documents'|trans }}</h4>
-        <div class="card-body">
-            {{ include('administration/document/liste-document.html.twig', {documents: type_document.documents}) }}
+  <div class="card">
+    <h4 class="card-title">{{ 'adm.type_document.liste.documents'|trans }}</h4>
+    <div class="card-body">
+        {{ include('administration/document/liste-document.html.twig', {documents: type_document.documents}) }}
         </div>
     </div>
 {% endblock %}

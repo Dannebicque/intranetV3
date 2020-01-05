@@ -94,20 +94,20 @@
                 <td>{{ departement.optMessagerie ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.respRi'|trans }}</th>
-                <td>{{ departement.respri ? departement.respri.display : 'non.defini'|trans }}</td>
+              <th>{{ 'table.respRi'|trans }}</th>
+              <td>{{ departement.respri ? departement.respri.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.opt_Infos'|trans }}</th>
-                <td>{{ departement.optInfos ? 'Yes'|trans : 'No'|trans }}</td>
+              <th>{{ 'table.opt_Infos'|trans }}</th>
+              <td>{{ departement.optInfos ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ departement.created ? departement.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.created'|trans }}</th>
+              <td>{{ departement.created ? departement.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ departement.updated ? departement.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.updated'|trans }}</th>
+              <td>{{ departement.updated ? departement.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
         </tbody>
     </table>

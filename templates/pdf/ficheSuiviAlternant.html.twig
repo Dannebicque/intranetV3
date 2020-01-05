@@ -25,7 +25,8 @@
     </table>
 
     <h1 class="cadre center">
-        VISITE ENTREPRISE - Formation {{ alternance_fiche_suivi.alternance.etudiant.semestre.annee.diplome.display }}<br/>
+        VISITE ENTREPRISE - Formation {{ alternance_fiche_suivi.alternance.etudiant.semestre.annee.diplome.display }}
+        <br/>
         Année universitaire {{ user_data.anneeUniversitaire }}
     </h1>
 
@@ -34,12 +35,14 @@
     <p><strong>Tuteur universitaire :</strong> {{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
 
     <div class="cadre">
-        <p><strong>Date de la visite :</strong> {{ alternance_fiche_suivi.date|date('d/m/Y') }}. {{
-            alternance_fiche_suivi.methodeLong }}</p>
+        <p><strong>Date de la visite :</strong> {{ alternance_fiche_suivi.date|format_date('short') }}
+            . {{ alternance_fiche_suivi.methodeLong }}</p>
     </div>
 
     <div class="cadre">
-        <p><strong>Personne rencontrée / contactée :</strong> {{ alternance_fiche_suivi.alternance.tuteur ? alternance_fiche_suivi.alternance.tuteur.display }}</p>
+        <p><strong>Personne rencontrée / contactée
+                   :</strong> {{ alternance_fiche_suivi.alternance.tuteur ? alternance_fiche_suivi.alternance.tuteur.display }}
+        </p>
     </div>
     <div class="cadre">
         <p><strong>Thème du stage :</strong> {{ alternance_fiche_suivi.missions }}</p>

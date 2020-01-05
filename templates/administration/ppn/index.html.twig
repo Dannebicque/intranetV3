@@ -32,7 +32,7 @@
                         <td>{{ ppn.libelle }}</td>
                         <td>{{ ppn.annee }}</td>
                         <td>{{ ppn.diplome ? ppn.diplome.display : 'non.defini'|trans }}</td>
-                        <td>{{ ppn.updated ? ppn.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ ppn.updated ? ppn.updated|format_datetime('long', 'short') : '' }}</td>
                         <td>
                             <a href="{{ path('administration_ppn_duplicate', {'id': ppn.id}) }}"
                                class="btn btn-success btn-outline btn-square"

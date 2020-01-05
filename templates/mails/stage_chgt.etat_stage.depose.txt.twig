@@ -10,8 +10,8 @@ Récapitulatif des infos du stage.
 * Tuteur entreprise : {{ stageEtudiant.entreprise.adresse.display }}
 * Adresse du stage : {{ stageEtudiant.adresseStage.display }}
 * Service d'accueil : {{ stageEtudiant.serviceStageEntreprise }}
-* Dte du début du stage : {{ stageEtudiant.dateDebutStage|date('d/m/Y') }}
-* Date de fin du stage : {{ stageEtudiant.dateFinStage|date('d/m/Y') }}
+* Dte du début du stage : {{ stageEtudiant.dateDebutStage||format_date('long') }}
+* Date de fin du stage : {{ stageEtudiant.dateFinStage||format_date('long') }}
 * Sujet du stage : {{ stageEtudiant.sujetStage }}
 * Activités : {{ stageEtudiant.activites }}
 * Amménagements : {{ stageEtudiant.amenagementStage }}

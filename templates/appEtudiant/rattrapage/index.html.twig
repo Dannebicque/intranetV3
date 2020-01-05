@@ -39,15 +39,15 @@
             {% for demande in rattrapages %}
                 <tr>
                     <td>{{ demande.matiere ? demande.matiere.libelle : 'non.defini'|trans }}</td>
-                    <td>{{ demande.dateEval ? demande.dateEval|localizeddate('long', 'none', app.request.getLocale()) : '' }}
-                        à {{ demande.heureEval ? demande.heureEval|localizeddate('none', 'short', app.request.getLocale()) : '' }}</td>
+                    <td>{{ demande.dateEval ? demande.dateEval|format_date('long') : '' }}
+                        à {{ demande.heureEval ? demande.heureEval|format_time('short') : '' }}</td>
                     <td>{{ demande.personnel ? demande.personnel.display : 'non.defini'|trans }}</td>
                     <td>
                         {% if demande.etatDemande =='f' or demande.dateRattrapage == null %}<a href="#"
                                                                                                class="btn btn-info btn-outline">
                             <i class="{{ iconShow }}"></i> {{ 'en.attente'|trans }}</a>{% else %}
-                            {{ demande.dateRattrapage ? demande.dateRattrapage|localizeddate('long', 'none', app.request.getLocale()) : '' }}
-                            à {{ demande.heureRattrapage ? demande.heureRattrapage|localizeddate('none', 'short', app.request.getLocale()) : '' }}
+                            {{ demande.dateRattrapage ? demande.dateRattrapage|format_date('long') : '' }}
+                            à {{ demande.heureRattrapage ? demande.heureRattrapage|format_time('short') : '' }}
                         {% endif %}</td>
                     <td>
                         {% if demande.etatDemande =='f' %}

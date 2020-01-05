@@ -75,13 +75,11 @@
 
                 <tr>
                     <th>{{ 'table.dateDebutStage'|trans }}</th>
-                    <td>{{ stageEtudiant.dateDebutStage ? stageEtudiant.dateDebutStage|localizeddate('long', 'none', app.request
-                            .getLocale()) : '' }}</td>
+                    <td>{{ stageEtudiant.dateDebutStage ? stageEtudiant.dateDebutStage|format_date('long') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dateFinStage'|trans }}</th>
-                    <td>{{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|localizeddate('long', 'none', app.request
-                            .getLocale()) : '' }}</td>
+                    <td>{{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|format_date('long') : '' }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dureeHebdomadaire'|trans }}</th>

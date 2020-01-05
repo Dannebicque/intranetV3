@@ -54,7 +54,7 @@
                         <td>{{ quizz_question.libelle }}</td>
                         <td>{{ quizz_question.help }}</td>
                         <td>{{ quizz_question.type }}</td>
-                        <td>{{ quizz_question.updated ? quizz_question.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+                        <td>{{ quizz_question.updated ? quizz_question.updated|format_datetime('long', 'short') : '' }}</td>
                         <td>
                             <a href="{{ path('quizz_question_duplicate', {'id': quizz_question.id}) }}"
                                class="btn btn-success btn-outline btn-square"

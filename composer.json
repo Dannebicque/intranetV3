@@ -35,14 +35,7 @@
     "symfony/validator": "^4.3",
     "symfony/web-profiler-bundle": "4.4",
     "symfony/yaml": "^4.3",
-    "twig/extensions": "^1.5",
-    "vich/uploader-bundle": "^1.8",
-    "ext-calendar": "*",
-    "ext-pdo": "*",
-    "ext-http": "*",
-    "ext-odbc": "*",
-    "ext-bcmath": "*",
-    "ext-ldap": "*"
+    "vich/uploader-bundle": "^1.8"
   },
   "config": {
     "preferred-install": {
@@ -92,7 +85,6 @@
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^3.1",
-    "php-translation/symfony-bundle": "^0.9",
     "symfony/maker-bundle": "^1.11",
     "symfony/test-pack": "^1.0"
   }

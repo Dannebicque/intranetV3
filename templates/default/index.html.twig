@@ -26,8 +26,9 @@
                                     <span class="badge badge-ring badge-primary"></span>
                                 </div>
                                 <div class="timeline-content">
-                                    <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|localizeddate('short', 'short', app.request.getLocale()) }}</time>
-                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|truncate(100) }}</p>
+                                    <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|format_datetime('short', 'short') }}</time>
+                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|u.truncate(100) }}
+                                    </p>
                                 </div>
                             </li>
                         {% else %}
@@ -59,7 +60,7 @@
                                     <span class="badge badge-ring {{ date.couleurBadge }}"></span>
                                 </div>
                                 <div class="timeline-content">
-                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|localizeddate('short', 'short', app.request.getLocale()) }}</time>
+                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|format_datetime('short', 'short') }}</time>
                                     <p>{{ date.libelle }} : {{ date.texte }}</p>
                                 </div>
                             </li>
@@ -126,7 +127,8 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="row">
-                                            {% for typeGroupe in semestre.typegroupes if typeGroupe.defaut == true %}
+                                            {% for typeGroupe in semestre.typegroupes|filter(typeGroupe => typeGroupe.defaut ==
+                                                true) %}
                                                 {% for groupe in typeGroupe.groupes %}
                                                     <div class="col-sm-12 col-md-3 mb-2">
                                                         <a href="{{ path('trombinoscope_etudiant_export_groupe',

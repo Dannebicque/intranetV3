@@ -41,21 +41,21 @@
                 <td>{{ ue.coefficient }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.nb_ects'|trans }}</th>
-                <td>{{ ue.nbEcts }}</td>
+              <th>{{ 'table.nb_ects'|trans }}</th>
+              <td>{{ ue.nbEcts }}</td>
             </tr>
 
             <tr>
-                <th>{{ 'table.code_element'|trans }}</th>
-                <td>{{ ue.codeElement }}</td>
+              <th>{{ 'table.code_element'|trans }}</th>
+              <td>{{ ue.codeElement }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ ue.created ? ue.created|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.created'|trans }}</th>
+              <td>{{ ue.created ? ue.created|format_datetime('long', 'short') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ ue.updated ? ue.updated|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>
+              <th>{{ 'table.updated'|trans }}</th>
+              <td>{{ ue.updated ? ue.updated|format_datetime('long', 'short') : '' }}</td>
             </tr>
         </tbody>
     </table>
