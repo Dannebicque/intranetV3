@@ -10,7 +10,7 @@
             {{ include('composants/sadm-buttons-show.html.twig', {elt: 'semestre', id: semestre.id, retour: {path:
                 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:semestre.annee.diplome.departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-show.html.twig', {elt: 'structure_semestre', id: semestre.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+            {{ include('composants/adm-buttons-show.html.twig', {elt: 'semestre', id: semestre.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}       </div>
 {% endblock %}
 

@@ -11,7 +11,7 @@
                 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:matiere.ue.diplome
                     .departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-edit.html.twig', {elt: 'structure_matiere', id:matiere.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+            {{ include('composants/adm-buttons-edit.html.twig', {elt: 'matiere', id:matiere.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}
     </div>
 {% endblock %}
