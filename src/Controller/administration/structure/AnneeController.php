@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnneeController extends BaseController
 {
     /**
-     * @Route("/nouveau/{diplome}", name="administration_structure_annee_new",
+     * @Route("/nouveau/{diplome}", name="administration_annee_new",
      *                                    methods="GET|POST")
      * @param Request $request
      *
@@ -65,7 +65,7 @@ class AnneeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_annee_show", methods="GET")
+     * @Route("/{id}", name="administration_annee_show", methods="GET")
      * @param Annee $annee
      *
      * @return Response
@@ -76,7 +76,7 @@ class AnneeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/modifier", name="administration_structure_annee_edit", methods="GET|POST")
+     * @Route("/{id}/modifier", name="administration_annee_edit", methods="GET|POST")
      * @param Request $request
      * @param Annee   $annee
      *
@@ -115,7 +115,7 @@ class AnneeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_structure_annee_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="administration_annee_duplicate", methods="GET|POST")
      * @param Annee $annee
      *
      * @return Response
@@ -128,11 +128,11 @@ class AnneeController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_structure_annee_edit', ['id' => $newAnnee->getId()]);
+        return $this->redirectToRoute('administration_annee_edit', ['id' => $newAnnee->getId()]);
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_annee_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_annee_delete", methods="DELETE")
      */
     public function delete(): void
     {

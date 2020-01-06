@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParcourController extends BaseController
 {
     /**
-     * @Route("/new/{semestre}", name="administration_structure_parcour_new", methods="GET|POST")
+     * @Route("/new/{semestre}", name="administration_parcour_new", methods="GET|POST")
      * @param Request  $request
      * @param Semestre $semestre
      *
@@ -60,7 +60,7 @@ class ParcourController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_parcour_show", methods="GET")
+     * @Route("/{id}", name="administration_parcour_show", methods="GET")
      * @param Parcour $parcour
      *
      * @return Response
@@ -71,7 +71,7 @@ class ParcourController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_structure_parcour_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="administration_parcour_edit", methods="GET|POST")
      * @param Request $request
      * @param Parcour $parcour
      *
@@ -104,7 +104,7 @@ class ParcourController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_structure_parcour_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="administration_parcour_duplicate", methods="GET|POST")
      * @param Parcour $parcour
      *
      * @return Response
@@ -117,11 +117,11 @@ class ParcourController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcour.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_structure_parcour_edit', ['id' => $newParcour->getId()]);
+        return $this->redirectToRoute('administration_parcour_edit', ['id' => $newParcour->getId()]);
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_parcour_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_parcour_delete", methods="DELETE")
      * @param Parcour $id
      */
     public function delete(Parcour $id): void

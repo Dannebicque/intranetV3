@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UeController extends BaseController
 {
     /**
-     * @Route("/new/{semestre}", name="administration_structure_ue_new", methods="GET|POST")
+     * @Route("/new/{semestre}", name="administration_ue_new", methods="GET|POST")
      * @param Request  $request
      *
      * @param Semestre $semestre
@@ -61,7 +61,7 @@ class UeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_ue_show", methods="GET")
+     * @Route("/{id}", name="administration_ue_show", methods="GET")
      * @param Ue $ue
      *
      * @return Response
@@ -72,7 +72,7 @@ class UeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_structure_ue_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="administration_ue_edit", methods="GET|POST")
      * @param Request $request
      * @param Ue      $ue
      *
@@ -108,7 +108,7 @@ class UeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_structure_ue_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="administration_ue_duplicate", methods="GET|POST")
      * @param Ue $ue
      *
      * @return Response
@@ -121,11 +121,11 @@ class UeController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_structure_ue_edit', ['id' => $newUe->getId()]);
+        return $this->redirectToRoute('administration_ue_edit', ['id' => $newUe->getId()]);
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_ue_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_ue_delete", methods="DELETE")
      */
     public function delete(): void
     {

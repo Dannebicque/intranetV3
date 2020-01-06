@@ -25,7 +25,7 @@ class SemestreController extends BaseController
 {
 
     /**
-     * @Route("/new/{annee}", name="administration_structure_semestre_new", methods="GET|POST")
+     * @Route("/new/{annee}", name="administration_semestre_new", methods="GET|POST")
      * @param Request $request
      * @param Annee   $annee
      *
@@ -62,7 +62,7 @@ class SemestreController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_semestre_show", methods="GET")
+     * @Route("/{id}", name="administration_semestre_show", methods="GET")
      * @param Semestre $semestre
      *
      * @return Response
@@ -73,7 +73,7 @@ class SemestreController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_structure_semestre_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="administration_semestre_edit", methods="GET|POST")
      * @param Request  $request
      * @param Semestre $semestre
      *
@@ -112,7 +112,7 @@ class SemestreController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_structure_semestre_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="administration_semestre_duplicate", methods="GET|POST")
      * @param Semestre $semestre
      *
      * @return Response
@@ -125,11 +125,11 @@ class SemestreController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_structure_semestre_edit', ['id' => $newSemestre->getId()]);
+        return $this->redirectToRoute('administration_semestre_edit', ['id' => $newSemestre->getId()]);
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_semestre_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_semestre_delete", methods="DELETE")
      */
     public function delete(): void
     {

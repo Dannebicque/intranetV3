@@ -12,6 +12,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
+use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\MesClasses\Configuration;
 use App\MesClasses\MyExport;
@@ -96,15 +97,16 @@ class MatiereController extends BaseController
 
 
     /**
-     * @Route("/new/{diplome}", name="administration_matiere_new", methods="GET|POST")
+     * @Route("/new/{diplome}/{ue}", name="administration_matiere_new", methods="GET|POST")
      * @param Request $request
      *
      * @param Diplome $diplome
      *
      * @return Response
      */
-    public function create(Request $request, Diplome $diplome): Response
+    public function create(Request $request, Diplome $diplome, Ue $ue = null): Response
     {
+        //todo: gérer
         if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
 
             $matiere = new Matiere();
