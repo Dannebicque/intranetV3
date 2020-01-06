@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiplomeController extends BaseController
 {
     /**
-     * @Route("/new/{departement}", name="administration_structure_diplome_new", methods="GET|POST")
+     * @Route("/new/{departement}", name="administration_diplome_new", methods="GET|POST")
      * @param Request     $request
      *
      * @param Departement $departement
@@ -57,7 +57,7 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_diplome_show", methods="GET")
+     * @Route("/{id}", name="administration_diplome_show", methods="GET")
      * @param Diplome $diplome
      *
      * @return Response
@@ -68,7 +68,7 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_structure_diplome_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="administration_diplome_edit", methods="GET|POST")
      * @param Request $request
      * @param Diplome $diplome
      *
@@ -98,7 +98,7 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_structure_diplome_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="administration_diplome_duplicate", methods="GET|POST")
      * @param Diplome $diplome
      *
      * @return Response
@@ -111,11 +111,11 @@ class DiplomeController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_structure_diplome_edit', ['id' => $newDiplome->getId()]);
+        return $this->redirectToRoute('administration_diplome_edit', ['id' => $newDiplome->getId()]);
     }
 
     /**
-     * @Route("/{id}", name="administration_structure_diplome_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_diplome_delete", methods="DELETE")
      * @param Diplome $id
      */
     public function delete(Diplome $id): void
