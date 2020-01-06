@@ -9,7 +9,7 @@
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             {{ include('composants/sadm-buttons-new.html.twig', {elt: 'departement', id: departement.id, retour: {path: 'super_admin_homepage', titre: 'atitle.retour_administration'|trans}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-new.html.twig', {elt: 'structure_departement', id: departement.id, retour: {path: 'administration_index', titre: 'atitle.retour_structure'|trans}}) }}
+            {{ include('composants/adm-buttons-new.html.twig', {elt: 'departement', id: departement.id, retour: {path: 'administration_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}
     </div>
 {% endblock %}

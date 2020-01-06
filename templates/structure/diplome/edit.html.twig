@@ -9,7 +9,7 @@
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             {{ include('composants/sadm-buttons-edit.html.twig', {elt: 'diplome', id:diplome.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:diplome.departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-edit.html.twig', {elt: 'structure_diplome', id:diplome.id, retour:
+            {{ include('composants/adm-buttons-edit.html.twig', {elt: 'diplome', id:diplome.id, retour:
                 {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}    </div>
 {% endblock %}
