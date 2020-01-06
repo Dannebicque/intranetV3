@@ -21,6 +21,7 @@ class BacType extends AbstractType
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleLong', TextType::class, ['label' => 'label.libelle_long'])
+            ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee'])
         ;
     }
 

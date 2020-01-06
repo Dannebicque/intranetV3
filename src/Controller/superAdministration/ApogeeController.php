@@ -15,6 +15,7 @@ use App\Entity\Etudiant;
 use App\MesClasses\Apogee\MyApogee;
 use App\MesClasses\LDAP\MyLdap;
 use App\MesClasses\Tools;
+use App\Repository\BacRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use Exception;
@@ -56,6 +57,7 @@ class ApogeeController extends BaseController
      * @param DiplomeRepository  $diplomeRepository
      *
      * @param EtudiantRepository $etudiantRepository
+     * @param BacRepository      $bacRepository
      * @param                    $type
      *
      * @return Response
@@ -65,6 +67,7 @@ class ApogeeController extends BaseController
         Request $request,
         DiplomeRepository $diplomeRepository,
         EtudiantRepository $etudiantRepository,
+        BacRepository $bacRepository,
         $type
     ): Response {
 
@@ -76,14 +79,13 @@ class ApogeeController extends BaseController
             $stid = MyApogee::getEtudiantsDiplome($diplome);
             while ($row = $stid->fetch()) {
                 if ((int) Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $diplome->getAnneeUniversitaire()->getAnnee()) {
-                    $dataApogee = MyApogee::transformeApogeeToArray($row);
+                    $dataApogee = MyApogee::transformeApogeeToArray($row, $bacRepository->getApogeeArray());
 
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                     $etuLdap = MyLdap::getInfoEtudiant($numEtudiant);
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if ($etudiant && $type === 'force') {
                         //todo: une classe ?
-                        //todo: Gérer le bac ? Ajouter le code apogée dans la table du bac pour faire la liaison ? Trouver la date d'obtention du bac?
                         //on met à jour
                         $etudiant->updateFromApogee($dataApogee['etudiant']);
                         $etudiant->updateFromLdap($etuLdap);
@@ -120,11 +122,16 @@ class ApogeeController extends BaseController
      *
      * @param EtudiantRepository $etudiantRepository
      *
+     * @param BacRepository      $bacRepository
+     *
      * @return Response
      * @throws Exception
      */
-    public function importEtudiant(Request $request, EtudiantRepository $etudiantRepository): Response
-    {
+    public function importEtudiant(
+        Request $request,
+        EtudiantRepository $etudiantRepository,
+        BacRepository $bacRepository
+    ): Response {
         $listeetudiants = explode(';', $request->request->get('listeetudiants'));
         $this->etudiants = [];
         foreach ($listeetudiants as $etudiant) {
@@ -132,7 +139,7 @@ class ApogeeController extends BaseController
 
             while ($row = $stid->fetch()) {
                 //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
-                $dataApogee = MyApogee::transformeApogeeToArray($row);
+                $dataApogee = MyApogee::transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
 
                 //Stocker réponse dans un tableau pour page confirmation
@@ -156,7 +163,7 @@ class ApogeeController extends BaseController
         ]);
     }
 
-    private function saveAdresse($dataApogee, Etudiant $etudiant)
+    private function saveAdresse($dataApogee, Etudiant $etudiant): void
     {
         $adresse = new Adresse();
         $adresse->updateFromApogee($dataApogee['adresse']);

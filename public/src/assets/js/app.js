@@ -2882,6 +2882,7 @@ jQuery.fn.scrollToEnd = function() {
 
     provider.provide('datatables', function(){
       $(this).DataTable({
+        retrieve: true,
         'language': {
           'decimal': '',
           'emptyTable': 'Aucune donn&eacute;e disponible dans le tableau',

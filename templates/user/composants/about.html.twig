@@ -2,22 +2,21 @@
     <h4 class="card-title">{{ 'vos.informations.identification'|trans }}</h4>
     <div class="card-body">
         {% if user.typeUser == 'etudiant' %}
-            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
-            <p><strong>{{ 'date.naissance'|trans }}
-                    :</strong> {{ user.dateNaissance|format_date('long') }}
-                ({{ user.dateNaissance|age }} ans)</p>
-            <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
-            <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
-            <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
-            <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
-            <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
-            <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
+          <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+          <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('long') }}
+            ({{ user.dateNaissance|age }} ans)</p>
+          <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
+          <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
+          <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
+          <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
+          <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
+          <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
 
         {% elseif user.typeUser == 'permanent' %}
-            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+          <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
             {% if not is_granted('ROLE_ETUDIANT') %}
-                <p><strong>{{ 'date.naissance'|trans }}
-                        :</strong> {{ user.dateNaissance|format_datetime('long')) }}</p>
+              <p><strong>{{ 'date.naissance'|trans }}
+                  :</strong> {{ user.dateNaissance|format_datetime('long') }}</p>
             {% endif %}
             <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
             <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }}

@@ -28,6 +28,11 @@ class Bac extends BaseEntity
      */
     private $libelleLong;
 
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $code_apogee;
+
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -48,6 +53,18 @@ class Bac extends BaseEntity
     public function setLibelleLong(string $libelleLong): self
     {
         $this->libelleLong = $libelleLong;
+
+        return $this;
+    }
+
+    public function getCodeApogee(): ?string
+    {
+        return $this->code_apogee;
+    }
+
+    public function setCodeApogee(?string $code_apogee): self
+    {
+        $this->code_apogee = $code_apogee;
 
         return $this;
     }

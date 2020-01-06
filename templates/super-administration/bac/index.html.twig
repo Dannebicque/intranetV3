@@ -15,11 +15,12 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.bac.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered" data-provide="datatables">
+            <table class="table table-striped table-bordered" {% if bacs|length>0 %}data-provide="datatables"{% endif %}>
                 <thead>
                 <tr>
                     <th>{{ 'table.libelle'|trans }}</th>
                     <th>{{ 'table.libelle_long'|trans }}</th>
+                    <th>{{ 'table.code_apogee'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -28,13 +29,14 @@
                     <tr id="ligne_{{ bac.id }}">
                         <td>{{ bac.libelle }}</td>
                         <td>{{ bac.libelleLong }}</td>
+                        <td>{{ bac.codeApogee }}</td>
                         <td>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'bac', id: bac.id}) }}
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

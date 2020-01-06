@@ -10,7 +10,7 @@ namespace App\Repository;
 
 use App\Entity\Bac;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Bac|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,5 +23,16 @@ class BacRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Bac::class);
+    }
+
+    public function getApogeeArray()
+    {
+        $data = $this->findAll();
+        $t = [];
+        foreach ($data as $d) {
+            $t[$d->getCodeApogee()] = $d;
+        }
+
+        return $t;
     }
 }

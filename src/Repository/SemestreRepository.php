@@ -1,24 +1,10 @@
-<?php /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/SemestreRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:13
- */ /**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/SemestreRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 08:15
- */ // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/SemestreRepository.php
 // @author     David Annebicque
 // @project intranetv3
 // @date 25/11/2019 10:21
 // @lastUpdate 24/11/2019 21:15
-/** @noinspection PhpUnused */
 
 namespace App\Repository;
 
@@ -27,7 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
 /**

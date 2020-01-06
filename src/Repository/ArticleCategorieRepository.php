@@ -1,31 +1,17 @@
-<?php /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ArticleCategorieRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:13
- */ /**
- * Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ArticleCategorieRepository.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 14/11/2019 14:57
- * @lastUpdate 14/11/2019 14:56
- */ // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ArticleCategorieRepository.php
 // @author     David Annebicque
 // @project intranetv3
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
-/** @noinspection PhpUnused */
 
 namespace App\Repository;
 
 use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
 /**

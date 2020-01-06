@@ -10,7 +10,7 @@ namespace App\Repository;
 
 use App\Entity\EmpruntMateriel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method EmpruntMateriel|null find($id, $lockMode = null, $lockVersion = null)

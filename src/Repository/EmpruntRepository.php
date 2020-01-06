@@ -11,7 +11,7 @@ namespace App\Repository;
 use App\Entity\Departement;
 use App\Entity\Emprunt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Emprunt|null find($id, $lockMode = null, $lockVersion = null)

@@ -6,9 +6,7 @@ use App\Entity\Article;
 use App\Entity\ArticleLikePersonnel;
 use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ArticleLikePersonnel|null find($id, $lockMode = null, $lockVersion = null)

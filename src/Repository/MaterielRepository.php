@@ -12,7 +12,7 @@ use App\Entity\Departement;
 use App\Entity\Materiel;
 use App\Entity\TypeMateriel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Materiel|null find($id, $lockMode = null, $lockVersion = null)

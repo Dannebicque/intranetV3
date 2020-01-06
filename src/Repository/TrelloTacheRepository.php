@@ -11,7 +11,7 @@ namespace App\Repository;
 use App\Entity\Departement;
 use App\Entity\TrelloTache;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method TrelloTache|null find($id, $lockMode = null, $lockVersion = null)
