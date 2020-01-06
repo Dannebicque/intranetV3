@@ -44,6 +44,7 @@ class Groupe extends BaseEntity
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
+     * @ORM\OrderBy({"nom"="asc", "prenom"="asc"})
      */
     private $etudiants;
 

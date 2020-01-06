@@ -29,8 +29,9 @@ abstract class MyApogee
     {
         self::connect();
         $stid = self::$conn->prepare(
-            'SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE COD_ETP=:codeetape');
-        $stid->execute(array(':codeetape' => $diplome->getCodeEtape()));
+            'SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND, DAA_ETB, IND_BAC.DAA_OBT_BAC_IBA, COD_BAC FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN IND_BAC ON INDIVIDU.COD_IND=IND_BAC.COD_IND WHERE COD_ETP=:codeetape');
+        $stid->execute([':codeetape' => $diplome->getCodeEtape()]);
+
         return $stid;
     }
 
@@ -85,7 +86,7 @@ abstract class MyApogee
         return $stid;
     }
 
-    public static function transformeApogeeToArray($data): array
+    public static function transformeApogeeToArray($data, $tBac): array
     {
         // COD_ETU, COD_NNE_IND, DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, COD_SEX_ETU
         return [
@@ -93,12 +94,15 @@ abstract class MyApogee
                 'setNumEtudiant'   => $data['COD_ETU'],
                 'setNumIne'        => $data['COD_NNE_IND'] . $data['COD_CLE_NNE_IND'],
                 'setDateNaissance' => Tools::convertDateToObject($data['DATE_NAI_IND']), //en fr?
-                'setPromotion'     => $data['DAA_ENT_ETB'],
+                'setPromotion'     => $data['DAA_ETB'],
                 'setNom'           => $data['LIB_NOM_PAT_IND'],
+                'setAnneeBac'      => $data['DAA_OBT_BAC_IBA'],
                 'setPrenom'        => $data['LIB_PR1_IND'],
                 'setTel1'          => $data['NUM_TEL'],
                 'setCivilite'      => $data['COD_SEX_ETU'] === 'M' ? 'M.' : 'Mme', //M ou F
                 'setTypeUser'      => 'etudiant',
+                'setBac'           => array_key_exists($data['COD_BAC'],
+                    $tBac) === true ? $tBac[$data['COD_BAC']] : null
             ],
             'adresse'  => [
                 'setAdresse1'   => $data['LIB_AD1'],

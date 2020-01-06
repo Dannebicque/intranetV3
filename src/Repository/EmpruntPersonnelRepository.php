@@ -10,7 +10,7 @@ namespace App\Repository;
 
 use App\Entity\EmpruntPersonnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method EmpruntPersonnel|null find($id, $lockMode = null, $lockVersion = null)

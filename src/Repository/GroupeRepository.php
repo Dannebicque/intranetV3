@@ -1,11 +1,11 @@
-<?php // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/GroupeRepository.php
 // @author     David Annebicque
 // @project intranetv3
 // @date 25/11/2019 10:21
 // @lastUpdate 23/11/2019 09:14
-/** @noinspection ALL */
-/** @noinspection PhpUnused */
+
 
 namespace App\Repository;
 
@@ -17,7 +17,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use DA\KernelBundle\Entity\Groupes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

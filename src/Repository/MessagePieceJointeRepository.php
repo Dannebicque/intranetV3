@@ -10,7 +10,7 @@ namespace App\Repository;
 
 use App\Entity\MessagePieceJointe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method MessagePieceJointe|null find($id, $lockMode = null, $lockVersion = null)

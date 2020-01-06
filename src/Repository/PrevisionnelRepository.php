@@ -17,7 +17,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Previsionnel|null find($id, $lockMode = null, $lockVersion = null)

@@ -14,7 +14,7 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\StagePeriodeOffre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method StagePeriodeOffre|null find($id, $lockMode = null, $lockVersion = null)
