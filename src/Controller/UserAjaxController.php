@@ -9,11 +9,15 @@
 namespace App\Controller;
 
 use App\Entity\Departement;
+use App\Entity\Etudiant;
 use App\Entity\Favori;
 use App\Entity\PersonnelDepartement;
+use App\Entity\Semestre;
+use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\FavoriRepository;
 use App\Repository\PersonnelDepartementRepository;
+use App\Repository\SemestreRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -100,5 +104,93 @@ class UserAjaxController extends BaseController
         }
 
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @Route("/change-semestre/{etudiant}/{semestre}", name="user_change_semestre", options={"expose":true})
+     *
+     * @param SemestreRepository $semestreRepository
+     * @param Etudiant           $etudiant
+     * @param Semestre           $semestre
+     *
+     * @return JsonResponse
+     */
+    public function changeSemestreEtudiant(
+        SemestreRepository $semestreRepository,
+        Etudiant $etudiant,
+        $semestre
+    ): ?JsonResponse {
+        $semestre = $semestreRepository->find($semestre);
+        if ($semestre !== null) {
+            $etudiant->setSemestre($semestre);
+        } else {
+            $etudiant->setSemestre(null);
+        }
+        //suppression des groupes
+        foreach ($etudiant->getGroupes() as $groupe) {
+            $etudiant->removeGroupe($groupe);
+            $groupe->removeEtudiant($etudiant);
+        }
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/change-departement/{etudiant}/{departement}", name="user_change_departement", options={"expose":true})
+     * @param DepartementRepository $departementRepository
+     * @param Etudiant              $etudiant
+     *
+     * @param                       $departement
+     *
+     * @return JsonResponse
+     */
+    public function changeDepartementEtudiant(
+        DepartementRepository $departementRepository,
+        Etudiant $etudiant,
+        $departement
+    ): ?JsonResponse {
+        $departement = $departementRepository->find($departement);
+        if ($departement !== null) {
+            $etudiant->setDepartement($departement);
+        } else {
+            $etudiant->setDepartement(null);
+        }
+
+        $etudiant->setSemestre(null);
+        //suppression des groupes
+        foreach ($etudiant->getGroupes() as $groupe) {
+            $etudiant->removeGroupe($groupe);
+            $groupe->removeEtudiant($etudiant);
+        }
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/change-annee-sortie/{etudiant}/{annee}", name="user_change_annee_sortie", options={"expose":true})
+     * @param Etudiant              $etudiant
+     *
+     * @param                       $annee
+     *
+     * @return JsonResponse
+     */
+    public function changeAnneeSortie(
+        Etudiant $etudiant,
+        $annee
+    ): ?JsonResponse {
+        $etudiant->setAnneeSortie($annee);
+        if ($annee !== 0) {
+            $etudiant->setSemestre(null);
+            //suppression des groupes
+            foreach ($etudiant->getGroupes() as $groupe) {
+                $etudiant->removeGroupe($groupe);
+                $groupe->removeEtudiant($etudiant);
+            }
+        }
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 }

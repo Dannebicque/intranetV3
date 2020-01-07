@@ -204,6 +204,11 @@ class Etudiant extends Utilisateur implements Serializable
     private $articlesLike;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="etudiants")
+     */
+    private $departement;
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
@@ -265,7 +270,7 @@ class Etudiant extends Utilisateur implements Serializable
     /**
      * @param Semestre $semestre
      */
-    public function setSemestre(Semestre $semestre): void
+    public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;
     }
@@ -677,44 +682,6 @@ class Etudiant extends Utilisateur implements Serializable
     }
 
     /**
-     * @return Collection|Article[]
-     */
-    public function getArticleLikes(): Collection
-    {
-        return $this->articleLikes;
-    }
-
-    /**
-     * @param Article $articleLike
-     *
-     * @return Etudiant
-     */
-    public function addArticleLike(Article $articleLike): self
-    {
-        if (!$this->articleLikes->contains($articleLike)) {
-            $this->articleLikes[] = $articleLike;
-            $articleLike->addLike($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Article $articleLike
-     *
-     * @return Etudiant
-     */
-    public function removeArticleLike(Article $articleLike): self
-    {
-        if ($this->articleLikes->contains($articleLike)) {
-            $this->articleLikes->removeElement($articleLike);
-            $articleLike->removeLike($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return bool|null
      */
     public function getBoursier(): ?bool
@@ -1057,11 +1024,6 @@ class Etudiant extends Utilisateur implements Serializable
         $this->photoName = $photoName;
     }
 
-    public function getDepartement()
-    {
-        return $this->getDiplome() !== null ? $this->getDiplome()->getDepartement() : null;
-    }
-
     public function getAnneeSortie(): ?int
     {
         return $this->anneeSortie;
@@ -1187,6 +1149,18 @@ class Etudiant extends Utilisateur implements Serializable
         }
 
         return $this;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
     }
 
 }
