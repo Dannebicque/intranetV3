@@ -10,7 +10,7 @@
                 <th>Actions</th>
             </tr>
             </thead>
-
+            <tbody id="liste_groupes">
             {% for gr in etudiant.groupes %}
                 <tr>
                     <td>#{{ gr.id }}</td>
@@ -22,90 +22,98 @@
                                     class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
                                     title="{{ 'atitle.supprimer'|trans }}"></i></a>
                 </tr>
-
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun groupe</td>
+                </tr>
             {% endfor %}
+            </tbody>
         </table>
 
 
         <h5>Semestre et parcours</h5>
-        <form class="form form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2" for="chgt_etudiant_semestre">Semestre actuel</label>
-                <div class="col-sm-10">
-                    uniquement les semestre de la formation ?
-                    <select class="form-control" name="semestre" id="chgt_etudiant_semestre"
-                            data-etudiant="{{ etudiant.id }}">
-                        {% for semestre in user_data.semestres %}
-                            <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id == etudiant.semestre.id %} selected {% endif %}>{{ semestre.libelle }}</option>
-                        {% endfor %}
-                        <option value="null" {% if etudiant.semestre == null %} selected {% endif %}>Aucun semestre
-                        </option>
-                    </select>
-                </div>
-            </div>
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <div class="form-group">
-                    <label class="col-sm-2" for="chgt_etudiant_departement">Département actuelle</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="departement" id="chgt_etudiant_departement"
-                                data-etudiant="{{ etudiant.id }}">
-                            {% for format in t.departements %}
-                                <option value="{{ format.id }}" {% if format.id == etudiant.semestre.annee.diplome.departement.id %} selected {% endif %}>{{ format.libelle }}</option>
-                            {% endfor %}
-                            <option value="null">Aucun département</option>
-                        </select>
-                    </div>
-                </div>
-            {% endif %}
-            <div class="form-group">
-                <label class="col-sm-2" for="chgt_etudiant_fin">Année sortie DUT/LP/IUT</label>
-                <div class="col-sm-10">
-                    <select class="form-control" name="fin" id="chgt_etudiant_fin" data-etudiant="{{ etudiant.id }}">
-                        Un simple YES/NO
-                    </select>
-                </div>
-            </div>
-        </form>
+        <div class="form-group">
+            <label for="chgt_etudiant_semestre">Modification du semestre de l'étudiant</label>
+            <select class="form-control" name="semestre" id="chgt_etudiant_semestre"
+                    data-etudiant="{{ etudiant.id }}">
+                {% for semestre in user_data.semestres %}
+                    <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id == etudiant.semestre.id %} selected {% endif %}>{{ semestre.libelle }}</option>
+                {% endfor %}
+                <option value="0" {% if etudiant.semestre == null %} selected {% endif %}>Aucun semestre
+                </option>
+            </select>
+        </div>
+
+        <div class="alert alert-info">
+            Vous pouvez transférer un étudiant vers un autre département. Cela le rendra accessible par le
+            département de destination qui pourra l'affecter à des groupes.
+        </div>
+        <div class="form-group">
+            <label for="chgt_etudiant_departement">Département actuel</label>
+            <select class="form-control" name="departement" id="chgt_etudiant_departement"
+                    data-etudiant="{{ etudiant.id }}">
+                {% for departement in departements %}
+                    <option value="{{ departement.id }}"
+                            {% if etudiant.departement != null and departement.id == etudiant.departement.id %} selected {% endif %}>{{ departement.libelle }}</option>
+                {% endfor %}
+                <option value="0" {% if etudiant.departement == null %}selected{% endif %}>Aucun
+                                                                                           département
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="chgt_etudiant_fin">Année sortie DUT/LP/IUT</label>
+            <select class="form-control" name="fin" id="chgt_etudiant_fin" data-etudiant="{{ etudiant.id }}">
+                {% for annee in 2017..'now'|date('Y')+2 %}
+                    <option value="{{ annee }}" {% if annee == etudiant.anneeSortie %}selected{% endif %}>{{ annee }}</option>
+                {% endfor %}
+                <option value="0" {% if 0 == etudiant.anneeSortie %}selected{% endif %}>Formation en
+                                                                                        cours
+                </option>
+            </select>
+        </div>
 
         <h5>Re/initialiation du compte</h5>
-        //en fonction du mode de connexion utilisé ?
-        <a href="#" class="btn btn-warning btnInit" data-element="{{ etudiant.id }}" rel="tooltip"
-           data-placement="bottom"
-           title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i></a>
-
+        {% if etudiant.password is defined %}
+            <a href="#" class="btn btn-warning btnInit" data-element="{{ etudiant.id }}" rel="tooltip"
+               data-placement="bottom"
+               title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i></a>
+        {% else %}
+            <div class="alert alert-info">
+                L'authentification se fait par le CAS de l'Université. La gestion du mot de passe doit être faite sur le
+                bureau virtuel de l'étudiant ou en prenant contact avec la scolarité.
+            </div>
+        {% endif %}
         <h3>Editions</h3>
         <table class="table table-border">
             <thead>
             <tr>
                 <th>{{ 'table.ordre'|trans }}</th>
                 <th>{{ 'table.semestre'|trans }}</th>
-
                 <th>{{ 'table.infos'|trans }}</th>
             </tr>
             </thead>
             <tbody>
-        {% for parcour in scolarite %}
-                         <tr>
-                        <td>{{ parcour.ordre }}</td>
-                        <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
+            {% for parcour in scolarite %}
+                <tr>
+                    <td>{{ parcour.ordre }}</td>
+                    <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
 
-                        <td>
-                            <a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
-                               class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                               data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
-                            <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
-                               class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
-                                        class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    <td>
+                        <a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
+                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                        <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
+                           class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
+                                    class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-
-        ???
         Changement de groupe / suppression
-        Changement de semestre / departement
         Export de releve de note des différents semestres
     </div>
 </div>

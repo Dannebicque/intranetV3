@@ -94,10 +94,7 @@ class EtudiantRepository extends ServiceEntityRepository
         $qb
             ->select('u')
             ->from(Etudiant::class, 'u')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('d.departement = :departement')
+            ->where('u.departement = :departement')
             // ->andWhere('u.visible = :visible')
             // ->andWhere('u.anneesortie = :anneesortie')
             ->setParameters(['departement' => $departement]);

@@ -13,6 +13,7 @@ use App\Entity\Etudiant;
 use App\MesClasses\Calendrier;
 use App\MesClasses\MyEtudiant;
 use App\Repository\AlternanceRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\ScolariteMoyenneUeRepository;
 use App\Repository\ScolariteRepository;
@@ -45,20 +46,24 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/actions", name="profil_etudiant_action")
-     * @param ScolariteRepository $scolariteRepository
-     * @param Etudiant            $etudiant
+     * @param DepartementRepository $departementRepository
+     * @param ScolariteRepository   $scolariteRepository
+     * @param Etudiant              $etudiant
      *
      * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     *
      */
-    public function actions(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
-    {
+    public function actions(
+        DepartementRepository $departementRepository,
+        ScolariteRepository $scolariteRepository,
+        Etudiant $etudiant
+    ): Response {
         $scolarite = $scolariteRepository->findBy(['etudiant' => $etudiant]);
 
         return $this->render('user/composants/actions_etudiant.html.twig', [
-            'etudiant'  => $etudiant,
-            'scolarite' => $scolarite
+            'etudiant'     => $etudiant,
+            'scolarite'    => $scolarite,
+            'departements' => $departementRepository->findActifs()
         ]);
     }
 

@@ -211,6 +211,11 @@ class Departement extends BaseEntity
     private $respMateriel;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="departement")
+     */
+    private $etudiants;
+
+    /**
      * Departement constructor.
      * @throws Exception
      */
@@ -230,6 +235,7 @@ class Departement extends BaseEntity
         $this->creneauCours = new ArrayCollection();
         $this->articleCategories = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
     }
 
     /**
@@ -1036,5 +1042,36 @@ class Departement extends BaseEntity
     public function getOptMessagerie(): ?bool
     {
         return $this->optMessagerie;
+    }
+
+    /**
+     * @return Collection|Etudiant[]
+     */
+    public function getEtudiants(): Collection
+    {
+        return $this->etudiants;
+    }
+
+    public function addEtudiant(Etudiant $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiant $etudiant): self
+    {
+        if ($this->etudiants->contains($etudiant)) {
+            $this->etudiants->removeElement($etudiant);
+            // set the owning side to null (unless already changed)
+            if ($etudiant->getDepartement() === $this) {
+                $etudiant->setDepartement(null);
+            }
+        }
+
+        return $this;
     }
 }
