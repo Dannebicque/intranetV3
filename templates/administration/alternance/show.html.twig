@@ -52,31 +52,32 @@
                 </tr>
 
                 <tr>
-                  <th>{{ 'table.dateDebut'|trans }}</th>
-                  <td>{{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
+                    <th>{{ 'table.dateDebut'|trans }}</th>
+                    <td>{{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.dateFin'|trans }}</th>
-                  <td>{{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
-                </tr>
-
-                <tr>
-                  <th>{{ 'table.tuteur_universitaire'|trans }}</th>
-                  <td>{{ alternance.tuteurUniversitaire ? alternance.tuteurUniversitaire.displayPr : 'non.defini'|trans }}</td>
+                    <th>{{ 'table.dateFin'|trans }}</th>
+                    <td>{{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.created'|trans }}</th>
-                  <td>{{ alternance.created ? alternance.created|format_datetime('long', 'short') : '' }}</td>
+                    <th>{{ 'table.sujetAlternance'|trans }}</th>
+                    <td>{{ alternance.sujet }}</td>
+                </tr>
+                {{ include('composants/adresse_array.html.twig', {adresse:alternance.adresseAlternance}) }}
+                <tr>
+                    <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                    <td>{{ alternance.tuteurUniversitaire ? alternance.tuteurUniversitaire.displayPr : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.updated'|trans }}</th>
-                  <td>{{ alternance.updated ? alternance.updated|format_datetime('long', 'short') : '' }}</td>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ alternance.created ? alternance.created|format_datetime('long', 'short') : '' }}</td>
                 </tr>
-
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ alternance.updated ? alternance.updated|format_datetime('long', 'short') : '' }}</td>
+                </tr>
                 </tbody>
             </table>
-
-
         </div>
     </div>
 {% endblock %}

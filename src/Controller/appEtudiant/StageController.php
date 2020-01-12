@@ -9,6 +9,7 @@
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
+use App\Entity\Alternance;
 use App\Entity\Constantes;
 use App\Entity\StageEtudiant;
 use App\Event\StageEvent;
@@ -27,7 +28,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * Class StageController
  * @package App\Controller
  * @Route("/application/etudiant/stage")
- * @IsGranted("ROLE_ETUDIANT")
  */
 class StageController extends BaseController
 {
@@ -130,7 +130,7 @@ class StageController extends BaseController
     }
 
     /**
-     * @Route("/entreprise/info/{id}", name="application_etudiant_stage_entreprise_info")
+     * @Route("/entreprise/stage/info/{id}", name="application_etudiant_stage_entreprise_info")
      * @param StageEtudiant $stageEtudiant
      *
      * @return Response
@@ -139,6 +139,19 @@ class StageController extends BaseController
     {
         return $this->render('appEtudiant/stage/entrepriseInfo.html.twig', [
             'stageEtudiant' => $stageEtudiant
+        ]);
+    }
+
+    /**
+     * @Route("/entreprise/alternance/info/{id}", name="application_etudiant_alternance_entreprise_info")
+     * @param Alternance $alternance
+     *
+     * @return Response
+     */
+    public function entrepriseAlternanceInfo(Alternance $alternance): Response
+    {
+        return $this->render('appEtudiant/stage/entrepriseAlternanceInfo.html.twig', [
+            'alternance' => $alternance
         ]);
     }
 }

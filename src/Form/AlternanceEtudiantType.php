@@ -15,6 +15,7 @@ use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -43,7 +44,7 @@ class AlternanceEtudiantType extends AbstractType
             ->add('tuteurUniversitaire', EntityType::class, [
                 'label'         => 'label.tuteur_universitaire',
                 'expanded'      => false,
-                'disabled' => true,
+                'disabled'      => true,
                 'multiple'      => false,
                 'class'         => Personnel::class,
                 'help'          => 'help.tuteur_universitaire',
@@ -53,6 +54,9 @@ class AlternanceEtudiantType extends AbstractType
                 },
                 'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
             ])
+            ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
+            ->add('adresseAlternance', AdresseType::class,
+                ['label' => 'label.adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $alternance = $event->getData();
                 $form = $event->getForm();

@@ -54,6 +54,11 @@ class Adresse extends BaseEntity
     private $pays = 'France';
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Alternance", mappedBy="adresseAlternance", cascade={"persist", "remove"})
+     */
+    private $alternance;
+
+    /**
      * Adresse constructor.
      *
      */
@@ -211,5 +216,23 @@ class Adresse extends BaseEntity
                 $this->$key($value);
             }
         }
+    }
+
+    public function getAlternance(): ?Alternance
+    {
+        return $this->alternance;
+    }
+
+    public function setAlternance(?Alternance $alternance): self
+    {
+        $this->alternance = $alternance;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newAdresseAlternance = null === $alternance ? null : $this;
+        if ($alternance->getAdresseAlternance() !== $newAdresseAlternance) {
+            $alternance->setAdresseAlternance($newAdresseAlternance);
+        }
+
+        return $this;
     }
 }

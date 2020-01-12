@@ -74,7 +74,7 @@ class EdtController extends BaseController
         $filtre
     ): Response {
         $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
-            $valeur);
+            $valeur, $this->dataUserSession->getAnneeUniversitaire());
         return $this->render('administration/edt/edt-intranet.html.twig', [
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles'     => $salleRepository->findAll(),
