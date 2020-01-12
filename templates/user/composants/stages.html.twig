@@ -42,7 +42,7 @@
                         Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
                         au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                     <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
-                                                                 data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': alternance.id}) }}"
+                                                                 data-url="{{ path('application_etudiant_alternance_entreprise_info', {'id': alternance.id}) }}"
                                                                  class="btn btn-info btn-outline btn-xs"
                                                                  data-placement="bottom"
                                                                  title="Informations sur l'entreprise"
@@ -110,7 +110,7 @@
                         Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
                         au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
                     <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
-                                                                 data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': alternance.id}) }}"
+                                                                 data-url="{{ path('application_etudiant_alternance_entreprise_info', {'id': alternance.id}) }}"
                                                                  class="btn btn-info btn-outline btn-xs"
                                                                  data-placement="bottom"
                                                                  title="Informations sur l'entreprise"

@@ -93,6 +93,16 @@ class Alternance extends BaseEntity
      */
     private $anneeUniversitaire;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", inversedBy="alternance", cascade={"persist", "remove"})
+     */
+    private $adresseAlternance;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $sujet;
+
     public function __construct()
     {
         $this->typeContrat = self::ALTERNANCE_PROFESSIONALISATION;
@@ -246,6 +256,30 @@ class Alternance extends BaseEntity
     public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
     {
         $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
+
+    public function getAdresseAlternance(): ?Adresse
+    {
+        return $this->adresseAlternance;
+    }
+
+    public function setAdresseAlternance(?Adresse $adresseAlternance): self
+    {
+        $this->adresseAlternance = $adresseAlternance;
+
+        return $this;
+    }
+
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet(?string $sujet): self
+    {
+        $this->sujet = $sujet;
 
         return $this;
     }

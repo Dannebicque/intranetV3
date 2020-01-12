@@ -48,7 +48,6 @@ $(document).on('click', '#btnabs', function (e) {
     method: 'POST',
     success: function (data) {
       //ajout de la ligne
-      //calcout
       let classe = ''
       let texte = ''
       let checked = ''

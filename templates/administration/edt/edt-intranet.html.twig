@@ -40,7 +40,6 @@
         </div>
 
         <div class="row gap-y">
-            {#<input type="hidden" name="semainereelle" id="semainereelle" value="{{ edt.semaine }}"/>#}
             <div class="col-sm-2">
                 <label for="affichejour" class="sr-only">Jour de la semaine</label>
                 <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichejour" name="affichejour">
@@ -94,27 +93,27 @@
         </div>
 
         <div class="row gap-y">
-            <div class="col-sm-12">
-                <table class="table-edt" id="selectable">
-                    <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Lundi {{ edt.tabJour.lundi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Mardi {{ edt.tabJour.mardi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Mercredi {{ edt.tabJour.mercredi|format_date('short')) }}</th>
-                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Jeudi {{ edt.tabJour.jeudi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
-                            Vendredi {{ edt.tabJour.vendredi|format_date('short') }}</th>
-                    </tr>
-                    <tr>
-                        <th>&nbsp;</th>
-                        {% for jour in 1..5 %}
-                            {% for group in 1..edt.semestre.nbgroupeTPEDT %}
-                                <th>{{ edt.groupes[group] }}</th>
+          <div class="col-sm-12">
+            <table class="table-edt" id="selectable">
+              <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                  Lundi {{ edt.tabJour.lundi|format_date('short') }}</th>
+                <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                  Mardi {{ edt.tabJour.mardi|format_date('short') }}</th>
+                <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                  Mercredi {{ edt.tabJour.mercredi|format_date('short') }}</th>
+                <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                  Jeudi {{ edt.tabJour.jeudi|format_date('short') }}</th>
+                <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+                  Vendredi {{ edt.tabJour.vendredi|format_date('short') }}</th>
+              </tr>
+              <tr>
+                <th>&nbsp;</th>
+                  {% for jour in 1..5 %}
+                      {% for group in 1..edt.semestre.nbgroupeTPEDT %}
+                        <th>{{ edt.groupes[group] }}</th>
                             {% endfor %}
                         {% endfor %}
                     </tr>

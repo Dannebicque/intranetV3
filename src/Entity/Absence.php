@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Serializable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
@@ -21,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Absence extends BaseEntity
+class Absence extends BaseEntity implements Serializable
 {
     /**
      * @var UuidInterface
@@ -283,5 +284,19 @@ class Absence extends BaseEntity
     public function getJustifie(): ?bool
     {
         return $this->justifie;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function serialize()
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized)
+    {
     }
 }

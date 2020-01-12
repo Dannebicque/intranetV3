@@ -157,7 +157,7 @@ class ProfilEtudiantController extends BaseController
         Etudiant $etudiant
     ): Response {
         return $this->render('user/composants/stages.html.twig', [
-
+            //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours'         => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
                 $etudiant->getAnneeUniversitaire()),
             'stagesHistorique'      => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
