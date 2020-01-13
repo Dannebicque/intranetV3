@@ -145,7 +145,7 @@ class EtudiantGroupeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_etudiant_groupe_delete", methods="DELETE")
+     * @Route("/{id}/{etudiant}", name="administration_etudiant_groupe_delete", methods="DELETE")
      * @param Request  $request
      * @param Groupe   $groupe
      *
@@ -157,12 +157,13 @@ class EtudiantGroupeController extends BaseController
     {
 
         if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
+            $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);
             $groupe->removeEtudiant($etudiant);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant_groupe.delete.success.flash');
 
-            return $this->json('ok', Response::HTTP_OK);
+            return $this->json($id, Response::HTTP_OK);
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'etudiant_groupe.delete.error.flash');
