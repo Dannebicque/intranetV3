@@ -14,7 +14,6 @@
     "phpoffice/phpspreadsheet": "^1.5",
     "ramsey/uuid-doctrine": "^1.5",
     "sensio/framework-extra-bundle": "^5.2",
-    "stof/doctrine-extensions-bundle": "@dev",
     "symfony/asset": "^4.3",
     "symfony/console": "^4.3",
     "symfony/dotenv": "^4.3",
