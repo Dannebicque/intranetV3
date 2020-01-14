@@ -389,4 +389,12 @@ class EdtPlanning
 
         return $this->getTexte() . ' ' . $this->getDisplayGroupe();
     }
+
+    public function getJson()
+    {
+        return [
+            'id'   => $this->getId(),
+            'jour' => $this->getJour(),
+        ];
+    }
 }

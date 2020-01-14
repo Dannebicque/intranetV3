@@ -31,25 +31,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h4 class="card-title">    {{ 'app.personnel.alternance_fiche_suivi.index.heading'|trans({'%etudiant%':alternance.etudiant
-                .displayPr }) }}
-        </h4>
-        <div class="card-body">
-            <div class="alert alert-info">Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans
-                                          l'entreprise
-                <strong>{{ alternance.entreprise.libelle }}</strong>.<br>
-                Contact Tuteur Entreprise : {{ alternance.tuteur.display }}, {{ alternance.tuteur.telephone }}, <a
-                        href="mailto:{{ alternance.tuteur.email }}" target="_blank">{{ alternance.tuteur.email }}</a>
-            </div>
-            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
+  <div class="card">
+    <h4 class="card-title">    {{ 'app.personnel.alternance_fiche_suivi.index.heading'|trans({'%etudiant%':alternance.etudiant
+            .displayPr }) }}
+    </h4>
+    <div class="card-body">
+      <div class="alert alert-info">Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans
+                                    l'entreprise
+        <strong>{{ alternance.entreprise.libelle }}</strong>.<br>
+                                    Contact Tuteur Entreprise : {{ alternance.tuteur.display }}
+                                    , {{ alternance.tuteur.telephone|tel_format }}, <a
+                href="mailto:{{ alternance.tuteur.email }}" target="_blank">{{ alternance.tuteur.email }}</a>
+      </div>
+      <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
 
-                <thead>
-                <tr>
-                    <th>Methode</th>
-                    <th>Date</th>
-                    <th>actions</th>
-                </tr>
+        <thead>
+        <tr>
+          <th>Methode</th>
+          <th>Date</th>
+          <th>actions</th>
+        </tr>
                 </thead>
                 <tbody>
                 {% for alternance_fiche_suivi in alternance_fiche_suivis %}

@@ -37,22 +37,22 @@
                 </thead>
                 <tbody id="datatableau">
                 {% for personnel in personnels %}
-                    <tr>
-                        <td></td>
-                        <td>{{ personnel.personnel.nom }}</td>
-                        <td>{{ personnel.personnel.prenom }}</td>
-                        <td>{{ personnel.personnel.posteInterne }}</td>
-                        <td>{{ personnel.personnel.telBureau }}</td>
-                        <td>{{ personnel.personnel.bureau1 }}</td>
-                        <td>{{ personnel.personnel.numeroHarpege }}</td>
-                        <td>{{ personnel.personnel.mailUniv }}</td>
-                        <td>
-                            {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
-                            <button data-provide="modaler tooltip"
-                                    data-url="{{ path('administration_personnel_droit', {'personnel': personnel.personnel.id}) }}"
-                                    data-size="lg"
-                                    data-confirm-text="{{ 'fermer'|trans }}"
-                                    class="btn btn-warning btn-outline btn-square "
+                  <tr>
+                    <td></td>
+                    <td>{{ personnel.personnel.nom }}</td>
+                    <td>{{ personnel.personnel.prenom }}</td>
+                    <td>{{ personnel.personnel.posteInterne }}</td>
+                    <td>{{ personnel.personnel.telBureau|tel_format }}</td>
+                    <td>{{ personnel.personnel.bureau1 }}</td>
+                    <td>{{ personnel.personnel.numeroHarpege }}</td>
+                    <td>{{ personnel.personnel.mailUniv }}</td>
+                    <td>
+                        {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
+                          <button data-provide="modaler tooltip"
+                                  data-url="{{ path('administration_personnel_droit', {'personnel': personnel.personnel.id}) }}"
+                                  data-size="lg"
+                                  data-confirm-text="{{ 'fermer'|trans }}"
+                                  class="btn btn-warning btn-outline btn-square "
                                     data-placement="bottom"
                                     title="{{ 'personnel.droit.access'|trans }}"
                                     data-title="{{ 'gestion.personnel.droit.access'|trans }}"

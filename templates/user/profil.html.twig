@@ -11,9 +11,9 @@
 {% block headeractions %}
     <div class="header-action bg-white">
         <nav class="nav">
-            {% if user.typeUser == 'permanent' or user.typeUser == 'vacataire' %}
+            {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                 {{ include('user/composants/_menu_personnel.html.twig') }}
-            {% elseif user.typeUser == 'etudiant' %}
+            {% elseif user.typeUser|lower == 'etudiant' %}
                 {{ include('user/composants/_menu_etudiant.html.twig') }}
             {% endif %}
         </nav>

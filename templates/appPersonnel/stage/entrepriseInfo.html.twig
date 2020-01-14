@@ -1,11 +1,18 @@
 <h3>{{ stageEtudiant.entreprise.libelle }}</h3>
 <p>Contacts :</p>
-<ul><li>Responsable : {{ stageEtudiant.entreprise.responsable.display }} | {{ stageEtudiant.entreprise.responsable.telephone }} | <a href="mailto:{{ stageEtudiant.entreprise.responsable.email }}" target="_blank">{{ stageEtudiant.entreprise.responsable.email }}</a></li>
-    <li>Tuteur : {{ stageEtudiant.tuteur.display }} | {{ stageEtudiant.tuteur.telephone }} | <a href="mailto:{{ stageEtudiant.tuteur.email }}" target="_blank">{{ stageEtudiant.tuteur.email }}</a></li>
+<ul>
+    <li>Responsable : {{ stageEtudiant.entreprise.responsable.display }}
+        | {{ stageEtudiant.entreprise.responsable.telephone }} |
+        <a href="mailto:{{ stageEtudiant.entreprise.responsable.email }}" target="_blank">{{ stageEtudiant.entreprise.responsable.email }}</a>
+    </li>
+    <li>Tuteur : {{ stageEtudiant.tuteur.display }} | {{ stageEtudiant.tuteur.telephone|tel_format }} |
+        <a href="mailto:{{ stageEtudiant.tuteur.email }}" target="_blank">{{ stageEtudiant.tuteur.email }}</a></li>
     <li>Lieu de stage (peut être différente du siège):
         <ul>
-            <li>Siège : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display }}{% else %} N.C.{% endif %}</li>
-            <li>Stage (si différent du siège) : {% if stageEtudiant.adresseStage != null %}{{ stageEtudiant.adresseStage.display|raw }}{% else %} N.C.{% endif %}</li>
+            <li>Siège
+                : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display }}{% else %} N.C.{% endif %}</li>
+            <li>Stage (si différent du siège)
+                : {% if stageEtudiant.adresseStage != null %}{{ stageEtudiant.adresseStage.display|raw }}{% else %} N.C.{% endif %}</li>
         </ul>
     </li>
 
