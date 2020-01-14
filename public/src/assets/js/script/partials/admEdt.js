@@ -21,9 +21,19 @@ let $rowClicked
 //select
 function updateBloc (id) {
   $.ajax({
-    url: Routing.generate('', {id: id}),
+    url: Routing.generate('administration_edt_get_event', {id: id}),
     success: function (data) {
-
+      $('#hdbt').selectpicker('val', data.heureDbtInt)
+      $('#hfin').selectpicker('val', data.heureFinInt)
+      $('#jourc' + data.jour).prop('checked', true)
+      $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
+      $('#salle').selectpicker('val', data.salle)
+      $('#texte').selectpicker('val', data.texte)
+      $('#selectmatiere').selectpicker('val', data.matiereId)
+      $('#selectenseignant').selectpicker('val', data.personnelId)
+      $('#idEdtUpdate').val(data.id)
+      $('#btnAddEDT').empty().append('Modifier le créneau')
+      $('#blocadd').show()
     }
   })
   console.log('modif' + id)
@@ -51,15 +61,15 @@ function selectfin () {
   else if (diff === 1)//donc sur 2 colonnes)
   {
     valeur = 'TD-' + tabdbt[3]
-  }
-  else {
+  } else {
     valeur = 'CM-1'
   }
 
-  $('#typecours').selectpicker('val', valeur);
-  $('#salle').selectpicker('val', '');
-  $('#texte').selectpicker('val', '');
-
+  $('#typecours').selectpicker('val', valeur)
+  $('#salle').selectpicker('val', '')
+  $('#texte').selectpicker('val', '')
+  $('#idEdtUpdate').val('')
+  $('#btnAddEDT').empty().append('Ajouter le créneau')
   $('#blocadd').show()
 }
 
