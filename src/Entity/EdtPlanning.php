@@ -393,8 +393,16 @@ class EdtPlanning
     public function getJson()
     {
         return [
-            'id'   => $this->getId(),
-            'jour' => $this->getJour(),
+            'id'          => $this->getId(),
+            'jour'        => $this->getJour(),
+            'heureDbtInt' => $this->getDebut(),
+            'heureFinInt' => $this->getFin(),
+            'salle'       => $this->getSalle(),
+            'typecours'   => $this->getType(),
+            'texte'       => $this->getTexte(),
+            'matiereId'   => $this->getMatiere()->getId(),
+            'personnelId' => $this->getIntervenant()->getId(),
+            'groupe'      => $this->getGroupe()
         ];
     }
 }

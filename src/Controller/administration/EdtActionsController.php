@@ -13,6 +13,7 @@ use App\Entity\EdtPlanning;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
+use App\Repository\EdtPlanningRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,9 +64,19 @@ class EdtActionsController extends BaseController
      * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
      * @return RedirectResponse
      */
-    public function addCours(Request $request, MyEdt $myEdt): RedirectResponse
-    {
-        $pl = $myEdt->addCours($request);
+    public function addCours(
+        Request $request,
+        EdtPlanningRepository $edtPlanningRepository,
+        MyEdt $myEdt
+    ): RedirectResponse {
+        if ($request->request->get('idEdtUpdate') !== '') {
+            $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));
+            if ($plann !== null) {
+                $pl = $myEdt->updateours($request, $plann);
+            }
+        } else {
+            $pl = $myEdt->addCours($request);
+        }
 
         return $this->redirectToRoute('administration_edt_index', [
             'semaine' => $request->request->get('semaine2'),

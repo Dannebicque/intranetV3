@@ -178,8 +178,13 @@ class MyEdt extends BaseEdt
     }
 
 
-    public function initAdministration($departement, $semaine, $filtre, $valeur, AnneeUniversitaire $anneeUniversitaire): MyEdt
-    {
+    public function initAdministration(
+        $departement,
+        $semaine,
+        $filtre,
+        $valeur,
+        AnneeUniversitaire $anneeUniversitaire
+    ): MyEdt {
         if ($valeur === '') {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
             if (count($semestres) > 0) {
@@ -674,42 +679,54 @@ class MyEdt extends BaseEdt
         $pl->setSemestre($semestre);
         $pl->setSemaine($request->request->get('semaine'));
 
+        return $this->updatePl($request, $pl);
+
+    }
+
+    public function updateours(Request $request, EdtPlanning $plann)
+    {
+
+        return $this->updatePl($request, $plann);
+    }
+
+    private function updatePl($request, EdtPlanning $plann)
+    {
         if ($request->request->get('texte') !== '') {
-            $pl->setTexte($request->request->get('texte'));
+            $plann->setTexte($request->request->get('texte'));
         } else {
             $module = $this->matiereRepository->find($request->request->get('selectmatiere'));
-            $pl->setMatiere($module);
+            $plann->setMatiere($module);
         }
 
-        $pl->setDebut($request->request->get('hdbt'));
-        $pl->setFin($request->request->get('hfin'));
+        $plann->setDebut($request->request->get('hdbt'));
+        $plann->setFin($request->request->get('hfin'));
         $pr = $this->personnelRepository->find($request->request->get('selectenseignant'));
-        $pl->setIntervenant($pr);
-        $pl->setSalle($request->request->get('salle'));
-        $pl->setJour($request->request->get('jourc'));
-        $pl->setEvaluation($request->request->get('evaluation'));
+        $plann->setIntervenant($pr);
+        $plann->setSalle($request->request->get('salle'));
+        $plann->setJour($request->request->get('jourc'));
+        $plann->setEvaluation($request->request->get('evaluation'));
 
         $tc = explode('-', $request->request->get('typecours'));
-        $pl->setType($tc[0]);
+        $plann->setType($tc[0]);
 
         switch ($tc[0]) {
             case 'cm':
             case 'CM':
-                $pl->setGroupe(1);
+                $plann->setGroupe(1);
                 break;
             case 'td':
             case 'TD':
             case 'tp':
             case 'TP':
-                $pl->setGroupe(trim($tc[1]));
+                $plann->setGroupe(trim($tc[1]));
                 break;
         }
 
 
-        $this->entityManager->persist($pl);
+        $this->entityManager->persist($plann);
         $this->entityManager->flush();
 
-        return $pl;
+        return $plann;
     }
 
 }
