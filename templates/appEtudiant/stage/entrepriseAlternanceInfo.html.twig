@@ -5,7 +5,7 @@
         | {{ alternance.entreprise.responsable.telephone }} |
         <a href="mailto:{{ alternance.entreprise.responsable.email }}" target="_blank">{{ alternance.entreprise.responsable.email }}</a>
     </li>
-    <li>Tuteur : {{ alternance.tuteur.display }} | {{ alternance.tuteur.telephone }} |
+    <li>Tuteur : {{ alternance.tuteur.display }} | {{ alternance.tuteur.telephone|tel_format }} |
         <a href="mailto:{{ alternance.tuteur.email }}" target="_blank">{{ alternance.tuteur.email }}</a></li>
     <li>Lieu de stage (peut être différente du siège):
         <ul>

@@ -9,11 +9,14 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\EdtPlanning;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -64,10 +67,22 @@ class EdtActionsController extends BaseController
     {
         $pl = $myEdt->addCours($request);
 
-        return $this->redirectToRoute('administration_edt_index', array(
+        return $this->redirectToRoute('administration_edt_index', [
             'semaine' => $request->request->get('semaine2'),
             'filtre'  => 'promo',
             'valeur'  => $pl->getSemestre()->getId()
-        ));
+        ]);
+    }
+
+    /**
+     *
+     * @Route("/get-event/{id}", name="administration_edt_get_event", options={"expose"=true})
+     * @param EdtPlanning $edtPlanning
+     *
+     * @return JsonResponse
+     */
+    public function getEvent(EdtPlanning $edtPlanning)
+    {
+        return $this->json($edtPlanning->getJson(), Response::HTTP_OK);
     }
 }

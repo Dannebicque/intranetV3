@@ -5,7 +5,7 @@ Cette demande sera étudiée dans les plus brefs délais.
 
 Pour rappel :
 Demande faite par {{ emprunt.etudiant.displayPr }} | {{ emprunt.etudiant.semestre.display }}
-Contact : {{ emprunt.telephone }}
+Contact : {{ emprunt.telephone|tel_format }}
 
 Du {{ emprunt.dateDebut|format_datetime('long', 'short') }}, au {{ pret.dateRetour|format_datetime('long', 'short') }}.
 

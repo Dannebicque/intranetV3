@@ -44,64 +44,64 @@
     <div class="blocconvention">
         <p style="font-size:10px">Adresse : Villa Douce – 9 boulevard de la paix – CS 60005 – 51724 REIMS Cedex<br/>
                                   Téléphone : 03.26.91.34.68</p>
-        Représenté par : {{ user_data.departement.ufr.responsable.display }}<br/>
-        Qualité du représentant : Directeur {{ settings('NOM_IUT') }}<br/>
-        Composante
-        <ul>
-            <li>Intitulé (UFR/IUT …) : {{ settings('NOM_IUT') }}
-                - {{ proposition.etudiant.semestre.annee.diplome.typeDiplome.sigle }} {{ proposition.etudiant
-                .semestre.annee.diplome.sigle }}</li>
-            <li>Adresse : {% if user_data.departement.ufr.sitePrincipal.adresse != null %}{{ user_data.departement.ufr
-                .sitePrincipal.adresse.display|raw}}{% endif %}</li>
-            <li>Téléphone : {{ user_data.departement.telcontact }}</li>
-            <li>Courriel : {{ proposition.etudiant.semestre.annee.diplome.assistantDiplome.mailUniv }}</li>
-        </ul>
+      Représenté par : {{ user_data.departement.ufr.responsable.display }}<br/>
+      Qualité du représentant : Directeur {{ settings('NOM_IUT') }}<br/>
+      Composante
+      <ul>
+        <li>Intitulé (UFR/IUT …) : {{ settings('NOM_IUT') }}
+            - {{ proposition.etudiant.semestre.annee.diplome.typeDiplome.sigle }} {{ proposition.etudiant
+            .semestre.annee.diplome.sigle }}</li>
+        <li>Adresse : {% if user_data.departement.ufr.sitePrincipal.adresse != null %}{{ user_data.departement.ufr
+            .sitePrincipal.adresse.display|raw }}{% endif %}</li>
+        <li>Téléphone : {{ user_data.departement.telcontact|tel_format }}</li>
+        <li>Courriel : {{ proposition.etudiant.semestre.annee.diplome.assistantDiplome.mailUniv }}</li>
+      </ul>
     </div>
-    <p class="titresuligne">ET L’ORGANISME D’ACCUEIL</p>
-    <div class="blocconvention">
-        Raison sociale : {{ proposition.entreprise.raisonSociale }}<br/>
-        Entreprise : {{ proposition.entreprise.libelle }}<br/>
-        N° de Siret : {{ proposition.entreprise.siret }}<br/>
-        Adresse postale
-        : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{%
-            endif %}<br/>
-        Représenté par (nom et prénom du signataire de la convention)
-        : {{ proposition.entreprise.responsable.display }}
-        <br/>
-        Qualité du représentant : {{ proposition.entreprise.responsable.fonction }}<br/>
-        Service dans lequel le stage sera effectué
-        <ul>
-            <li>Intitulé : {{ proposition.serviceStageEntreprise }}</li>
-            <li>Téléphone : {{ proposition.entreprise.responsable.telephone }}</li>
-            <li>Téléphone portable :</li>
-            <li>Courriel : {{ proposition.entreprise.responsable.email }}</li>
-        </ul>
-        Adresse du lieu du stage (si différente de celle de l’organisme): {% if proposition.adresseStage != null %}
-            {{ proposition.adresseStage.display }}
-        {% endif %}
-    </div>
-    <p class="titresuligne">ET L’ÉTUDIANT(E) STAGIAIRE</p>
-    <div class="blocconvention">
-        Nom : {{ proposition.etudiant.nom|upper }}<br/>
-        Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
-        Sexe : {{ proposition.etudiant.civilite }}<br/>
-        Date de naissance : {{ proposition.etudiant.datenaissance|format_date('short') }}<br/>
-        N° d’étudiant : {{ proposition.etudiant.numetudiant }}<br/>
-        Adresse postale
-        : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
-        Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
-        Téléphone : {{ proposition.etudiant.tel1 }}<br/>
-        Téléphone portable : {{ proposition.etudiant.tel2 }}<br/>
-        Formation suivie
-        <ul>
-            <li>Intitulé
-                : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition.etudiant
-                .semestre.annee.diplome.libelle }}</li>
-            <li>Volume horaire de la formation : {{ proposition.etudiant.semestre.annee.diplome.volumehoraire }}
-                heures.</li>
-        </ul>
-        Caisse Primaire d’Assurance Maladie à contacter en cas d’accident (lieu de domicile de l’étudiant sauf
-        exception) :
+  <p class="titresuligne">ET L’ORGANISME D’ACCUEIL</p>
+  <div class="blocconvention">
+    Raison sociale : {{ proposition.entreprise.raisonSociale }}<br/>
+    Entreprise : {{ proposition.entreprise.libelle }}<br/>
+    N° de Siret : {{ proposition.entreprise.siret }}<br/>
+    Adresse postale
+    : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}<br/>
+    Représenté par (nom et prénom du signataire de la convention)
+    : {{ proposition.entreprise.responsable.display }}
+    <br/>
+    Qualité du représentant : {{ proposition.entreprise.responsable.fonction }}<br/>
+    Service dans lequel le stage sera effectué
+    <ul>
+      <li>Intitulé : {{ proposition.serviceStageEntreprise }}</li>
+      <li>Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}</li>
+      <li>Téléphone portable :</li>
+      <li>Courriel : {{ proposition.entreprise.responsable.email }}</li>
+    </ul>
+    Adresse du lieu du stage (si différente de celle de l’organisme): {% if proposition.adresseStage != null %}
+          {{ proposition.adresseStage.display }}
+      {% endif %}
+  </div>
+  <p class="titresuligne">ET L’ÉTUDIANT(E) STAGIAIRE</p>
+  <div class="blocconvention">
+    Nom : {{ proposition.etudiant.nom|upper }}<br/>
+    Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
+    Sexe : {{ proposition.etudiant.civilite }}<br/>
+    Date de naissance : {{ proposition.etudiant.datenaissance|format_date('short') }}<br/>
+    N° d’étudiant : {{ proposition.etudiant.numetudiant }}<br/>
+    Adresse postale
+    : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
+    Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
+    Téléphone : {{ proposition.etudiant.tel1|tel_format }}<br/>
+    Téléphone portable : {{ proposition.etudiant.tel2|tel_format }}<br/>
+    Formation suivie
+    <ul>
+      <li>Intitulé
+          : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition.etudiant
+          .semestre.annee.diplome.libelle }}</li>
+      <li>Volume horaire de la formation : {{ proposition.etudiant.semestre.annee.diplome.volumehoraire }}
+          heures.
+      </li>
+    </ul>
+    Caisse Primaire d’Assurance Maladie à contacter en cas d’accident (lieu de domicile de l’étudiant sauf
+    exception) :
         <ul>
             <li>Intitulé : {{ proposition.etudiant.intituleSecuriteSociale }}</li>
             <li>Adresse : {{ proposition.etudiant.adresseSecuriteSociale }}</li>
@@ -119,27 +119,24 @@
         <ul>
             {% if proposition.tuteur != null %}
                 {# c'est le tueur #}
-                <li>Nom : {{ proposition.tuteur.nom }}</li>
-                <li>Prénom : {{ proposition.tuteur.prenom }}</li>
-                <li>Fonction : {{ proposition.tuteur.fonction }}</li>
-                <li>Adresse postale
-                    : {% if proposition.adresseStage == null or proposition.adresseStage.adresse1 == '' %} {% if
-                        proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display
-                    }}{% endif %}{% else %}{{ proposition.adresseStage.display }}{% endif %}</li>
-                <li>Courriel : {{ proposition.tuteur.email }}</li>
-                <li>Téléphone : {{ proposition.tuteur.telephone }}</li>
+              <li>Nom : {{ proposition.tuteur.nom }}</li>
+              <li>Prénom : {{ proposition.tuteur.prenom }}</li>
+              <li>Fonction : {{ proposition.tuteur.fonction }}</li>
+              <li>Adresse postale
+                  : {% if proposition.adresseStage == null or proposition.adresseStage.adresse1 == '' %} {% if
+                      proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}{% else %}{{ proposition.adresseStage.display }}{% endif %}</li>
+              <li>Courriel : {{ proposition.tuteur.email }}</li>
+              <li>Téléphone : {{ proposition.tuteur.telephone|tel_format }}</li>
             {% else %}
                 {# C'est le responsable #}
-                <li>Nom : {{ proposition.entreprise.responsable.nom }}</li>
-                <li>Prénom : {{ proposition.entreprise.responsable.prenom }}</li>
-                <li>Fonction : {{ proposition.entreprise.responsable.fonction }}</li>
-                <li>Adresse postale
-                    : {% if proposition.adresseStage == null  or proposition.adresseStage.adresse1 == '' %} {% if
-                        proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}{%
-                        else %}{{
-                    proposition.adresseStage.display }}{% endif %}</li>
-                <li>Courriel : {{ proposition.entreprise.responsable.email }}</li>
-                <li>Téléphone : {{ proposition.entreprise.responsable.telephone }}</li>
+              <li>Nom : {{ proposition.entreprise.responsable.nom }}</li>
+              <li>Prénom : {{ proposition.entreprise.responsable.prenom }}</li>
+              <li>Fonction : {{ proposition.entreprise.responsable.fonction }}</li>
+              <li>Adresse postale
+                  : {% if proposition.adresseStage == null  or proposition.adresseStage.adresse1 == '' %} {% if
+                      proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}{% else %}{{ proposition.adresseStage.display }}{% endif %}</li>
+              <li>Courriel : {{ proposition.entreprise.responsable.email }}</li>
+              <li>Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}</li>
             {% endif %}
         </ul>
 
@@ -155,7 +152,7 @@
                 {% endif %}
                 <li>Courriel :{{ proposition.tuteurUniversitaire.mailUniv }}</li>
                 {% if proposition.tuteurUniversitaire.telbureau != '' %}
-                    <li>Téléphone : {{ proposition.tuteurUniversitaire.telbureau }}</li>
+                  <li>Téléphone : {{ proposition.tuteurUniversitaire.telbureau|tel_format }}</li>
                 {% endif %}
             {% else %}
                 <li>Nom :</li>
@@ -700,40 +697,40 @@
     <div style="page-break-after: always"></div>
     <div style="text-align: right;">
         <strong><p style="font-size:18px">ATTESTATION DE STAGE </p><br/>
-            Année
-            Universitaire {{ proposition.stagePeriode.semestre.annee.diplome.anneeUniversitaire.displayAnneeUniversitaire }}
-            A remettre au stagiaire à l’issue du stage
+          Année
+          Universitaire {{ proposition.stagePeriode.semestre.annee.diplome.anneeUniversitaire.displayAnneeUniversitaire }}
+          A remettre au stagiaire à l’issue du stage
         </strong></div>
-    <div style="clear:both;"></div>
-    <p class="titresuligne">L’ORGANISME D’ACCUEIL</p>
-    <div class="blocconvention">
-        Raison sociale : {{ proposition.entreprise.raisonSociale }} {{ proposition.entreprise.libelle }}<br/>
-        N° de Siret : {{ proposition.entreprise.siret }}<br/>
-        Adresse postale
-        : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}<br/>
-        Téléphone : {{ proposition.entreprise.responsable.telephone }}
-    </div>
-    <strong>CERTIFIE QUE :</strong>
-    <p class="titresuligne">L’ÉTUDIANT(E) STAGIAIRE</p>
-    <div class="blocconvention">
-        Nom : {{ proposition.etudiant.nom|upper }}<br/>
-        Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
-        Sexe : {{ proposition.etudiant.civilite }}<br/>
-        Date de naissance : {{ proposition.etudiant.datenaissance|format_date('long') }}<br/>
-        Adresse postale
-        : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
-        Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
-        Téléphone : {{ proposition.etudiant.tel1 }}<br/>
-        Formation suivie
-        <ul>
-            <li>Intitulé
-                : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition.etudiant
-                .semestre.annee.diplome.libelle }}</li>
-            <li>Au sein de l’Université de Reims Champagne-Ardenne (9 boulevard de la paix – CS
-                60005 – 51724 REIMS Cedex)
-            </li>
-            <li>Composante (UFR/IUT …) : {{ user_data.departement.ufr.libelle }}
-                ({{ user_data.departement.ufr.sitePrincipal.adresse.display|raw }}) #}
+  <div style="clear:both;"></div>
+  <p class="titresuligne">L’ORGANISME D’ACCUEIL</p>
+  <div class="blocconvention">
+    Raison sociale : {{ proposition.entreprise.raisonSociale }} {{ proposition.entreprise.libelle }}<br/>
+    N° de Siret : {{ proposition.entreprise.siret }}<br/>
+    Adresse postale
+    : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}<br/>
+    Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}
+  </div>
+  <strong>CERTIFIE QUE :</strong>
+  <p class="titresuligne">L’ÉTUDIANT(E) STAGIAIRE</p>
+  <div class="blocconvention">
+    Nom : {{ proposition.etudiant.nom|upper }}<br/>
+    Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
+    Sexe : {{ proposition.etudiant.civilite }}<br/>
+    Date de naissance : {{ proposition.etudiant.datenaissance|format_date('long') }}<br/>
+    Adresse postale
+    : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
+    Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
+    Téléphone : {{ proposition.etudiant.tel1|tel_format }}<br/>
+    Formation suivie
+    <ul>
+      <li>Intitulé
+          : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition.etudiant
+          .semestre.annee.diplome.libelle }}</li>
+      <li>Au sein de l’Université de Reims Champagne-Ardenne (9 boulevard de la paix – CS
+          60005 – 51724 REIMS Cedex)
+      </li>
+      <li>Composante (UFR/IUT …) : {{ user_data.departement.ufr.libelle }}
+          ({{ user_data.departement.ufr.sitePrincipal.adresse.display|raw }}) #}
             </li>
         </ul>
     </div>

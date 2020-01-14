@@ -16,71 +16,22 @@
 let Cells = []
 let Ind = 0
 
-const $contextMenuEdt = $('#contextMenuEdt')
 let $rowClicked
 
-//menu contextuel
-$(document).on("contextmenu", ".edt_cours", function (e) {
-  $rowClicked = $(this);
-  $contextMenuEdt.css({
-    display: "block",
-    position: "absolute",
-    left: e.pageX,
-    top: e.pageY
-  });
+//select
+function updateBloc (id) {
+  $.ajax({
+    url: Routing.generate('', {id: id}),
+    success: function (data) {
 
-  return false;
-});
-
-$contextMenuEdt.on("click", "a", function () {
-  switch ($(this).data("priority")) {
-    case 'suppr':
-      $.ajax(
-        {
-          //url: "{{ path('da_kernel_administration_edt_suppr') }}",
-          type: 'DELETE',
-          data: 'id=' + $rowClicked[0].id,
-          //dataType: "json", //Return data type (what we expect).
-          success: function () {
-            $('#' + $rowClicked[0].id).empty();
-
-            addCallout('Element supprimé du planing.','success');
-          },
-          error: function () {
-            addCallout('Erreur lors de la suppression.','error');
-          }
-        });
-      break;
-    case 'modifier':
-      console.log('modification ' + $rowClicked[0].id);
-      $('#blocadd').hide();
-      const tabetu = $('#zoneaction')
-      tabetu.empty().hide();
-      /*tabetu.load("{{ path('da_kernel_administration_edt_modifier') }}", {
-        id: $rowClicked[0].id,
-        annee: $annee
-      });*/
-      tabetu.fadeIn(1000);
-      break;
-    case 'dupliquer':
-
-      break;
-    case 'deplacer':
-
-      break;
-  }
-
-  $contextMenuEdt.hide();
-  $('#load-page').hide();
-});
-
-$(document).click(function () {
-  $contextMenuEdt.hide();
-});
+    }
+  })
+  console.log('modif' + id)
+}
 
 //une fois la selection terminée
-function selectfin() {
-  let valeur;
+function selectfin () {
+  let valeur
 
   let tabdbt = Cells[0].split('_')
   $('#hdbt').selectpicker('val', tabdbt[1]);
@@ -121,47 +72,28 @@ function debut() {
 
   //mémoriser les celulles selectionnées
   $('#selectable').selectable({
-    filter: 'th,td:not(.modedt)',
+    filter: 'th,td:not(.edt_cours)',
     start: function (event, ui) {
-      debut()
+      if (!$(event.originalEvent.target).hasClass('edt_cours')) {
+        debut()
+      }
     },
     stop: function (event, ui) {
-      selectfin()
+      if ($(event.originalEvent.target).hasClass('edt_cours')) {
+        updateBloc($(event.originalEvent.target).data('edt'))
+      } else {
+        selectfin()
+      }
     },
     selected: function (event, ui) {
       let s = $(this).find('.ui-selected');
       Cells[Ind] = $(ui.selected).attr('id');
       Ind = Ind + 1;
-
     }
   });
 
 
-  //suppression d'une semaine
-  $('#supprimerSemaineModal').click(function () {
-    const $id = createModal('suppr')
-    const $valeur = $(this).data('element')
 
-    $('#textemodal_' + $idModal).html("Vous allez la semaine/promo suivante : \"" + $(this).attr('data-titre') + "\" .");
-
-    $('#validSuppr-' + $id).click(function () {
-      $.ajax(
-        {
-          url: Routing.generate('da_kernel_administraton_edt_semaine_suppr'),
-          type: 'DELETE',
-          data: 'id=' + $valeur,
-          success: function (data) {
-            closeModal();
-            autohidenotify('success', 'La suppression a été effectuée avec succés !');
-
-          },
-          error: function () {
-            closeModal();
-            autohidenotify('error', 'Erreur lors la suppression.');
-          }
-        });
-    });
-  });
 
   $('#foc').scroll();
 
@@ -342,33 +274,4 @@ $(document).on('click', '#btnafficheRealise', function (e) {
   }))
 })
 
-// $(document).ajaxComplete(function (event, xhr, settings) {
-//   // actions
-//
-//
-//   $('#selectmatiere').select2();
-//   $('#selectenseignant').select2();
-//   $('#typecours').select2();
-//
-//   //bouton journée entière
-//   $("#allday").on("ifChecked ifUnchecked", function (event) {
-//     if (event.type == 'ifChecked') {
-//       var hdbt = $("#hdbt");
-//       hdbt.prop('disabled', 'disabled');
-//       hdbt.val(1);
-//
-//       var hfin = $("#hfin");
-//       hfin.prop('disabled', 'disabled');
-//       hfin.val(26);
-//     }
-//     else {
-//       $("#hdbt").removeAttr('disabled');
-//       $("#hfin").removeAttr('disabled');
-//
-//     }
-//   });
-//
-//   $('.select2').select2();
-//
-// });
 

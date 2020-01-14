@@ -90,7 +90,7 @@
                                     {% if key == constant('App\\Entity\\Emprunt::SORTIE') %}
                                       <th>{{ emprunt.dateDebut ? emprunt.dateDebut|format_datetime('long', 'short') : '' }}</th>
                                       <th>{{ emprunt.datefin ? emprunt.datefin|format_datetime('long', 'short') : '' }}</th>
-                                      <th>{{ emprunt.telephone }}</th>
+                                      <th>{{ emprunt.telephone|tel_format }}</th>
                                     {% endif %}
                                     <th>
                                         <a data-provide="modaler tooltip"

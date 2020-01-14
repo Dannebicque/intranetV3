@@ -18,11 +18,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.tel_bureau'|trans }}</th>
-                <td>{{ personnel.telBureau }}</td>
+                <td>{{ personnel.telBureau|tel_format }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.telephones'|trans }}</th>
-                <td>{{ personnel.tel1 }} {{ personnel.tel2 }}</td>
+                <td>{{ personnel.tel1|tel_format }} {{ personnel.tel2|tel_format }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.bureaux'|trans }}</th>

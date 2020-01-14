@@ -19,22 +19,22 @@
         </tr>
     </table>
 
-    <h3>Matériel emprunté par <strong>{{ emprunt.etudiant.displayPr }}</strong></h3>
+  <h3>Matériel emprunté par <strong>{{ emprunt.etudiant.displayPr }}</strong></h3>
 
-    <h4>Le {{ emprunt.dateDebut|format_datetime('short', 'short') }}, retour <strong>{{ emprunt.dateFin|format_datetime
-                ('short', 'short') }}</strong>
-    </h4>
-    <p>Contact : {{ emprunt.telephone }}</p>
-    <br/>
-    <p><strong>Motif : </strong> {{ emprunt.motif }}</p>
-    <br/>
-    <p><strong>Projet : </strong> {{ emprunt.description }}</p>
-    <br>
-    <p>Matriel emprunté :</p>
-    <ul>
-        {% for mat in emprunt.empruntMateriels %}
-            <li>{{ mat.materiel.libelle }}</li>
-        {% endfor %}
+  <h4>Le {{ emprunt.dateDebut|format_datetime('short', 'short') }}, retour <strong>{{ emprunt.dateFin|format_datetime
+              ('short', 'short') }}</strong>
+  </h4>
+  <p>Contact : {{ emprunt.telephone|tel_format }}</p>
+  <br/>
+  <p><strong>Motif : </strong> {{ emprunt.motif }}</p>
+  <br/>
+  <p><strong>Projet : </strong> {{ emprunt.description }}</p>
+  <br>
+  <p>Matriel emprunté :</p>
+  <ul>
+      {% for mat in emprunt.empruntMateriels %}
+        <li>{{ mat.materiel.libelle }}</li>
+      {% endfor %}
     </ul>
 
     <table style="width: 100%; border:none;">
