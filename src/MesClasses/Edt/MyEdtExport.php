@@ -9,11 +9,14 @@
 namespace App\MesClasses\Edt;
 
 
+use App\Entity\Departement;
 use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\MesClasses\MyIcal;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class MyEdtExport
 {
@@ -32,19 +35,29 @@ class MyEdtExport
     private $calendrier;
 
     /**
+     * @var string
+     */
+    private $dir;
+
+    /**
      * MyEdtExport constructor.
      *
      * @param EdtPlanningRepository  $edtPlanningRepository
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param CalendrierRepository   $calendrierRepository
      * @param MyIcal                 $myIcal
+     * @param KernelInterface        $kernel
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
         CelcatEventsRepository $celcatEventsRepository,
         CalendrierRepository $calendrierRepository,
-        MyIcal $myIcal
+        MyIcal $myIcal,
+        KernelInterface $kernel
     ) {
+
+        $this->dir = $kernel->getProjectDir() . '/public/upload/';
+
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->celcatEventsRepository = $celcatEventsRepository;
         $this->calendrierRepository = $calendrierRepository;
@@ -68,8 +81,9 @@ class MyEdtExport
         } else {
             /** @var Etudiant $user */
             $nbSemaines = $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles();
-            $emaineActuelle = $this->calendrierRepository->findOneBy(['semaineReelle'      => date('W'),
-                                                                      'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId()
+            $emaineActuelle = $this->calendrierRepository->findOneBy([
+                'semaineReelle'      => date('W'),
+                'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId()
             ]);
             $max = $emaineActuelle + $nbSemaines;
 
@@ -112,5 +126,34 @@ class MyEdtExport
         fclose($handle);
 
         return $content;
+    }
+
+    /**
+     * @param Departement $departement
+     * @param Personnel[] $personnels
+     *
+     * @return array
+     */
+    public function getAllDocs(Departement $departement, $personnels)
+    {
+        //parcour fichiers
+        $folder = $this->dir . 'pdfedt/' . $departement->getId() . '/';
+        $dossier = opendir($folder);
+
+        $t = [];
+        $i = 0;
+        while ($fichier = readdir($dossier)) {
+
+            if ($fichier !== '.' && $fichier !== '..') {
+                $t[$i]['fichier'] = $fichier;
+                $id = explode('_', $fichier);
+                $t[$i]['pers'] = $personnels[$id[0]];
+                $i++;
+            }
+        }
+
+        closedir($dossier);
+
+        return $t;
     }
 }

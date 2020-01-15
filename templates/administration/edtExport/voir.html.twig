@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.export.voir.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="header-action">
+            <div class="buttons">
+                <a href="{{ path('administration_edt_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_edt'|trans }}"><i class="ti-arrow-left"></i></a>
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Liste des <strong>fichiers</strong></h4>
+        <div class="card-body">
+            <div class="row">
+                {% for f in docs %}
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <h5 class="card-title"><strong>#{{ loop.index }}</strong> | {{ f.pers.displayPr }}</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <a href="{{ asset('uploads/pdfedt/'~connect.formation.id~'/'~f.fichier) }}" target="_blank"><img src="{{ asset('uploads/img/icone/pdf.png') }}" alt="pdf">
+                                            Télécharger</a>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <a href="#" data-fichier="{{ f.fichier }}" data-pers="{{ f.pers.id }}" class="btn btn-success sendone" title="Envoyer par mail"><i class="fa fa-envelope"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+
+        <h4 class="card-title"><strong>Envoyer</strong> par mail les PDF</h4>
+        <div class="card-body">
+            <form class="form" method="post" action="">
+                <div class="form-group">
+                    <label for="titre" class="control-label required">Sujet *</label>
+                    <input type="text" id="titre" name="titre" required="required" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="control-label required">Message *</label><br>
+                    Bonjour XXX,
+                    <textarea id="message" rows="15" name="message" required="required" class="form-control"></textarea>
+                    Cordialement,<br/>
+                    <br/>
+                    {{ user_data.user.signature }}
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-block btn-primary" value="Envoyer les mails">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

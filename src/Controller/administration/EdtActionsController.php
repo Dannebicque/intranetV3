@@ -14,6 +14,7 @@ use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,7 @@ class EdtActionsController extends BaseController
      * @param MyEdtImport          $myEdtImport
      *
      * @return RedirectResponse
+     * @throws Exception
      */
     public function uploadSemaine(
         CalendrierRepository $calendrierRepository,
@@ -57,12 +59,13 @@ class EdtActionsController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param Request               $request
      *
-     * @param MyEDT   $myEdt
+     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param MyEDT                 $myEdt
      *
-     * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
      * @return RedirectResponse
+     * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
      */
     public function addCours(
         Request $request,
