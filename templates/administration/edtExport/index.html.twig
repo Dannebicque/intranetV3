@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.export.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+  <div class="header-action">
+    <div class="header-action">
+      <div class="buttons">
+        <a href="{{ path('administration_edt_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+           data-placement="bottom" title="{{ 'atitle.retour_edt'|trans }}"><i class="ti-arrow-left"></i></a>
+        <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+           data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
+    <div class="card-body">
+      <label for="pdfenseignant">Selectionnez un intervenant ou laisser vide pour tout exporter</label>
+      <select class="form-control" id="pdfenseignant" name="pdfenseignant" data-provide="selectpicker"
+              data-live-search="true">
+        <option value="0">Selectionnez un intervenant ou laisser vide pour tout exporter</option>
+          {% for personnel in user_data.personnels %}
+            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+          {% endfor %}
+      </select>
+      <div class="alert alert-info">Ne rien choisir pour tout exporter</div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <a href="{{ path('administration_edt_export_all', {source:source, _format: 'pdf'}) }}"
+             class="btn btn-info btn-block">
+            Export PDF
+          </a>
+        </div>
+        <div class="col-sm-4">
+          <a href="{{ path('administration_edt_export_all', {source:source, _format: 'xlsx'}) }}"
+             class="btn btn-info btn-block">
+            Export Xlsx
+          </a>
+        </div>
+        <div class="col-sm-4">
+          <a href="{{ path('administration_edt_export_all', {source:source, _format: 'csv'}) }}"
+             class="btn btn-info btn-block">
+            Export Csv (;)
+          </a>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="{{ path('administration_edt_export_voir', {source:source}) }}" class="btn btn-info btn-block">
+            Voir/Envoyer (mail) les PDF / Ical</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block fabactions %}
+
+{% endblock %}

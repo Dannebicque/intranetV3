@@ -50,8 +50,6 @@ use function in_array;
  */
 class DataUserSession
 {
-    //todo: séparer mes données communes quelque soit le type, des données issues des types d'user
-
     /**
      * @var Semestre[]
      */

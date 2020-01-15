@@ -13250,20 +13250,32 @@
       <unit id="o6tVTMz" name="article.duplicate.success.flash">
           <segment>
               <source>article.duplicate.success.flash</source>
-              <target>article.duplicate.success.flash</target>
+              <target>Article dupliqué avec succès</target>
           </segment>
       </unit>
-      <unit id="AjYjkCk" name="article.edit.success.flash">
-          <segment>
-              <source>article.edit.success.flash</source>
-              <target>article.edit.success.flash</target>
-          </segment>
-      </unit>
-      <unit id="TNLhYQv" name="decision.justificatif.acceptee">
-          <segment>
-              <source>decision.justificatif.acceptee</source>
-              <target>decision.justificatif.acceptee</target>
-          </segment>
-      </unit>
+    <unit id="AjYjkCk" name="article.edit.success.flash">
+      <segment>
+        <source>article.edit.success.flash</source>
+        <target>Article modifié avec succès</target>
+      </segment>
+    </unit>
+    <unit id="TNLhYQv" name="decision.justificatif.acceptee">
+      <segment>
+        <source>decision.justificatif.acceptee</source>
+        <target>Jutificatif d'absence accepté.</target>
+      </segment>
+    </unit>
+    <unit id="0">
+      <segment>
+        <source>voir.previsionnel.et.intervenants.matiere</source>
+        <target>Voir prévisionnel</target>
+      </segment>
+    </unit>
+    <unit id="1">
+      <segment>
+        <source>choisir.export</source>
+        <target>Exporter des documents</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

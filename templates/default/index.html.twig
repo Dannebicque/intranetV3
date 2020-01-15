@@ -223,14 +223,14 @@
                 <h4 class="card-title">{{ 'liens.utiles.heading'|trans }}</h4>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 text-center">
                             <a href="https://www.univ-reims.fr" target="_blank"><img
                                         src="{{ asset('upload/logo/urca.jpeg') }}"
                                         alt="URCA" class="img-rounded"
                                         width="90px"/><br/>
                                 URCA</a>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 text-center">
                             <a href="https://{{ settings('SITE_IUT') }}"
                                target="_blank"><img
                                         src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
@@ -238,14 +238,14 @@
                                         width="90px"/><br/>
                                 {{ settings('NOM_IUT') }}</a>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 text-center">
                             <a href="https://ebureau.univ-reims.fr/" target="_blank"><img
                                         src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
                                         alt="Bureau Virtuel" class="img-rounded" width="90px"/><br/>
                                 Bureau Virtuel
                             </a>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-3 col-sm-6 text-center">
                             <a href="{{ user_data.departement.siteWeb }}" target="_blank"><img
                                         src="{{ asset('upload/logo/'~user_data.departement.logoName) }}"
                                         alt="{{ user_data.departement.libelle }}" class="img-rounded" width="90px"/><br/>
