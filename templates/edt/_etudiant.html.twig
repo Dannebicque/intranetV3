@@ -53,20 +53,7 @@
     <div class="card-body">
         {# todo: ajouter une class sur le jour courant, et une sur les autres pour gérer le responsive #}
         <div class="wrapper-edt-etudiant">
-            <div class="edt-etudiant-col1 col-edt-header">&nbsp;</div>
-            <div class="edt-etudiant-col1 col-edt-header jour {% if 'now'|date('N') != 1 %}col-edt-hide{% endif %}">
-                Lundi {{ edt
-                .tabJour
-                .lundi|date
-                    ('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header jour {% if 'now'|date('N') != 2 %}col-edt-hide{% endif %}">
-                Mardi {{ edt.tabJour.mardi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header jour {% if 'now'|date('N') != 3 %}col-edt-hide{% endif %}">
-                Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header jour {% if 'now'|date('N') != 4 %}col-edt-hide{% endif %}">
-                Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</div>
-            <div class="edt-etudiant-col1 col-edt-header jour {% if 'now'|date('N') != 5 %}col-edt-hide{% endif %}">
-                Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</div>
+            {{ include('edt/_header_edt.html.twig') }}
             {% for ligne in 1..7 %}
                 <div class="edt-etudiant-col1 col-edt-heure col-edt-visible">{{ tabHeures[ligne][0] }}
                     <br>{{ tabHeures[ligne][1] }}</div>

@@ -213,6 +213,14 @@ thead {
   .hide {
     display: none;
   }
+
+  .col-notes-header {
+    display: none;
+  }
+
+  .wrapper-notes-absences {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 /* QuillJs */

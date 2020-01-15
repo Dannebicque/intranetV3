@@ -38,25 +38,21 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="wrapper-edt-etudiant">
-                        <div class="edt-etudiant-col1 col-edt-header">&nbsp;</div>
-                        <div class="edt-etudiant-col1 col-edt-header jour">Lundi {{ edt.tabJour.lundi|date('d/m') }}</div>
-                        <div class="edt-etudiant-col1 col-edt-header jour">Mardi {{ edt.tabJour.mardi|date('d/m') }}</div>
-                        <div class="edt-etudiant-col1 col-edt-header jour">Mercredi {{ edt.tabJour.mercredi|date('d/m') }}</div>
-                        <div class="edt-etudiant-col1 col-edt-header jour">Jeudi {{ edt.tabJour.jeudi|date('d/m') }}</div>
-                        <div class="edt-etudiant-col1 col-edt-header jour">Vendredi {{ edt.tabJour.vendredi|date('d/m') }}</div>
+                        {{ include('edt/_header_edt.html.twig') }}
                         {% for ligne in 1..7 %}
                             <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}<br>{{ tabHeures[ligne][1] }}</div>
                             {% for j in 1..5 %}
                                 {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
-                                    <div class="edt-etudiant-col1 edt-cours" style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                                    <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
+                                         style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
                                         <a href="{{ path('application_personnel_absence_from_planning',{'event':edt
-                                            .planning[j][ligne].pl }) }}" style="color:{{
-                                        edt.planning[j][ligne]
-                                        .couleurTexte
-                                        }};">{{ edt.planning[j][ligne].texte|raw }}</a>
+                                            .planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
+                                        .couleurTexte }};">{{ edt.planning[j][ligne].texte|raw }}</a>
                                     </div>
                                 {% else %}
-                                    <div class="edt-etudiant-col1 edt-cours">&nbsp;</div>
+                                    <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
+                                        &nbsp;
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
