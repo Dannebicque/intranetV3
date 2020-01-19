@@ -58,6 +58,10 @@
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\AlternanceController::index'
             )) }}
+        {% elseif user_data.user.diplome.optCertifieQualite == true and  onglet == 'qualite' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\QualiteController::index'
+            )) }}
         {% elseif onglet == 'stage' %}
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\StageController::index'
