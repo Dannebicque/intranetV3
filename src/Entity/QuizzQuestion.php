@@ -62,11 +62,40 @@ class QuizzQuestion extends BaseEntity
      */
     private $auteur;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QualiteSectionQuestion", mappedBy="question")
+     */
+    private $qualiteSectionQuestions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuizzQuestion", inversedBy="quizzQuestions")
+     */
+    private $questionParent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzQuestion", mappedBy="questionParent")
+     */
+    private $quizzQuestions;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $obligatoire = true;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="question")
+     */
+    private $quizzEtudiantReponses;
+
+
     public function __construct(Personnel $personnel)
     {
         $this->quizzReponses = new ArrayCollection();
         $this->quizzQuestionnaires = new ArrayCollection();
         $this->setAuteur($personnel);
+        $this->qualiteSectionQuestions = new ArrayCollection();
+        $this->quizzQuestions = new ArrayCollection();
+        $this->quizzEtudiantReponses = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -172,6 +201,120 @@ class QuizzQuestion extends BaseEntity
     public function setAuteur(?Personnel $auteur): self
     {
         $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QualiteSectionQuestion[]
+     */
+    public function getQualiteSectionQuestions(): Collection
+    {
+        return $this->qualiteSectionQuestions;
+    }
+
+    public function addQualiteSectionQuestion(QualiteSectionQuestion $qualiteSectionQuestion): self
+    {
+        if (!$this->qualiteSectionQuestions->contains($qualiteSectionQuestion)) {
+            $this->qualiteSectionQuestions[] = $qualiteSectionQuestion;
+            $qualiteSectionQuestion->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQualiteSectionQuestion(QualiteSectionQuestion $qualiteSectionQuestion): self
+    {
+        if ($this->qualiteSectionQuestions->contains($qualiteSectionQuestion)) {
+            $this->qualiteSectionQuestions->removeElement($qualiteSectionQuestion);
+            // set the owning side to null (unless already changed)
+            if ($qualiteSectionQuestion->getQuestion() === $this) {
+                $qualiteSectionQuestion->setQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getQuestionParent(): ?self
+    {
+        return $this->questionParent;
+    }
+
+    public function setQuestionParent(?self $questionParent): self
+    {
+        $this->questionParent = $questionParent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getQuizzQuestions(): Collection
+    {
+        return $this->quizzQuestions;
+    }
+
+    public function addQuizzQuestion(self $quizzQuestion): self
+    {
+        if (!$this->quizzQuestions->contains($quizzQuestion)) {
+            $this->quizzQuestions[] = $quizzQuestion;
+            $quizzQuestion->setQuestionParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzQuestion(self $quizzQuestion): self
+    {
+        if ($this->quizzQuestions->contains($quizzQuestion)) {
+            $this->quizzQuestions->removeElement($quizzQuestion);
+            // set the owning side to null (unless already changed)
+            if ($quizzQuestion->getQuestionParent() === $this) {
+                $quizzQuestion->setQuestionParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getObligatoire(): ?bool
+    {
+        return $this->obligatoire;
+    }
+
+    public function setObligatoire(bool $obligatoire): self
+    {
+        $this->obligatoire = $obligatoire;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuizzEtudiantReponse[]
+     */
+    public function getQuizzEtudiantReponses(): Collection
+    {
+        return $this->quizzEtudiantReponses;
+    }
+
+    public function addQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    {
+        if (!$this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
+            $this->quizzEtudiantReponses[] = $quizzEtudiantReponse;
+            $quizzEtudiantReponse->addQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    {
+        if ($this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
+            $this->quizzEtudiantReponses->removeElement($quizzEtudiantReponse);
+            $quizzEtudiantReponse->removeQuestion($this);
+        }
 
         return $this;
     }

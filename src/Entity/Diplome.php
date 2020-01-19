@@ -151,6 +151,16 @@ class Diplome extends BaseEntity
      */
     private $optSemainesVisibles = 2;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $optCertifieQualite = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
+     */
+    private $optResponsableQualite;
+
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -651,5 +661,29 @@ class Diplome extends BaseEntity
     public function getOptEspacePersoVisible(): ?bool
     {
         return $this->optEspacePersoVisible;
+    }
+
+    public function getOptCertifieQualite(): ?bool
+    {
+        return $this->optCertifieQualite;
+    }
+
+    public function setOptCertifieQualite(bool $certifieQualite): self
+    {
+        $this->optCertifieQualite = $certifieQualite;
+
+        return $this;
+    }
+
+    public function getOptResponsableQualite(): ?Personnel
+    {
+        return $this->optResponsableQualite;
+    }
+
+    public function setOptResponsableQualite(?Personnel $responsableQualite): self
+    {
+        $this->optResponsableQualite = $responsableQualite;
+
+        return $this;
     }
 }
