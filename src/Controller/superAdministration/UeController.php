@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/structure/unite-enseignement")
+ * @Route("/administratif/structure/unite-enseignement")
  */
 class UeController extends BaseController
 {

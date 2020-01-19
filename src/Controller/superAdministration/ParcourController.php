@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/structure/parcours")
+ * @Route("/administratif/structure/parcours")
  */
 class ParcourController extends BaseController
 {

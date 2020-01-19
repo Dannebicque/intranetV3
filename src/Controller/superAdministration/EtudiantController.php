@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ScolariteController
  * @package App\Controller\superAdministration
- * @Route("/super-administration/etudiants")
+ * @Route("/administratif/etudiants")
  */
 class EtudiantController extends BaseController
 {

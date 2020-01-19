@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PrevisionnelController
  * @package App\Controller\superAdministration
- * @Route("/super-administration")
+ * @Route("/administratif")
  */
 class PrevisionnelController extends BaseController
 {

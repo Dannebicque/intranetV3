@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/salle")
+ * @Route("/administratif/salle")
  */
 class SalleController extends BaseController
 {

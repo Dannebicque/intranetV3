@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class PersonnelDepartementController
  * @package App\Controller\superAdministration
- * @Route("/super-administration/departement/etudiant")
+ * @Route("/administratif/departement/etudiant")
  */
 class EtudiantDepartementController extends BaseController
 {

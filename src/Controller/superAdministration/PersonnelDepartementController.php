@@ -20,7 +20,7 @@ use function in_array;
 /**
  * Class PersonnelDepartementController
  * @package App\Controller\superAdministration
- * @Route("/super-administration/departement/personnel")
+ * @Route("/administratif/departement/personnel")
  */
 class PersonnelDepartementController extends BaseController
 {
