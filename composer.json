@@ -34,7 +34,8 @@
     "symfony/validator": "^4.3",
     "symfony/web-profiler-bundle": "4.4",
     "symfony/yaml": "^4.3",
-    "vich/uploader-bundle": "^1.8"
+    "vich/uploader-bundle": "^1.8",
+    "ext-json": "*"
   },
   "config": {
     "preferred-install": {

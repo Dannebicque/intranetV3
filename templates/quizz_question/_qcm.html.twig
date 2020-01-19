@@ -1,19 +1,34 @@
 <fieldset class="form-group">
-    <legend class="col-form-label required">{{ question.libelle }}</legend>
+    {{ include('quizz_question/_libelle.html.twig') }}
     <div aria-describedby="quizz_question_{{ question.id }}_help">
-        <div class="row">
-            {% for reponse in question.quizzReponses %}
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-check">
-                        <input type="checkbox" id="quizz_question_qcm_{{ question.id }}_{{ loop.first }}"
-                               name="quizz_question_reponses_{{ question.id }}"
-                               required="required"
-                               class="form-check-input" value="{{ reponse.valeur }}">
-                        <label class="form-check-label required" for="quizz_question_qcm_{{ question.id }}_{{ loop.first }}">{{ reponse.libelle }}</label>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
     </div>
-    <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
+    <div class="row">
+        {% for reponse in question.quizzReponses %}
+            <div class="col-sm-12 col-md-3">
+                <div class="form-check">
+                    <input type="checkbox" id="quizz_question_qcm_{{ name }}_{{ reponse.id }}"
+                           name="quizz_question_reponses_{{ name }}"
+                           {% if question.obligatoire %}required{% endif %}
+                            {% if reponses['quizz_question_reponses_'~name] is defined and
+                                reponses['quizz_question_reponses_'~name].valeur|has_reponse(reponse.valeur) %}
+                                checked
+                            {% endif %}
+                            {% if question.obligatoire %}required{% endif %}
+                           class="form-check-input questionQualite" value="{{ reponse.valeur }}">
+                    <label class="form-check-label required" for="quizz_question_qcm_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                    {% if reponse.valeur == "CHX:OTHER" %}
+                        <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
+                               name="quizz_question_reponses_{{ name }}_autre"
+                               class="form-control questionQualiteTextArea"
+                                {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %}
+                                    value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}"
+                                {% endif %}
+                        >
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-control-feedback"></div>
+        {% endfor %}
+    </div>
 </fieldset>

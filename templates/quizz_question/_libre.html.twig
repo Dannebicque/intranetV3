@@ -1,11 +1,16 @@
 <fieldset class="form-group">
-    <legend class="col-form-label required">{{ question.libelle }}</legend>
+    {{ include('quizz_question/_libelle.html.twig') }}
+
     <div aria-describedby="quizz_question_{{ question.id }}_help">
-        <div class="form-group">
-            <label class="form-check-label required" for="quizz_question_text_{{ question.id }}">Votre réponse</label>
-            <input type="text" id="quizz_question_text_{{ question.id }}"
-                   name="quizz_question_text_{{ question.id }}">
-        </div>
+        <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
     </div>
-    <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
+    <div class="form-group">
+        <label class="form-check-label {% if question.obligatoire %}required{% endif %}"
+               for="quizz_question_text_{{ name }}">Votre réponse</label>
+        <textarea id="quizz_question_text_{{ name }}"
+                  name="quizz_question_text_{{ name }}"
+                  {% if question.obligatoire %}required{% endif %}
+        class="form-control questionQualiteTextArea">{% if reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur }}{% endif %}</textarea>
+        <div class="form-control-feedback"></div>
+    </div>
 </fieldset>

@@ -13277,5 +13277,29 @@
         <target>Exporter des documents</target>
       </segment>
     </unit>
+    <unit id="2">
+      <segment>
+        <source>table.opt_responsable_qualite</source>
+        <target>Responsable qualité</target>
+      </segment>
+    </unit>
+    <unit id="3">
+      <segment>
+        <source>help.opt_responsable_qualite</source>
+        <target>Définir la personne en charge de la qualié au niveau de l'IUT pour le diplôme.</target>
+      </segment>
+    </unit>
+    <unit id="4">
+      <segment>
+        <source>table.opt_qualite</source>
+        <target>Formation certifiée qualité</target>
+      </segment>
+    </unit>
+    <unit id="5">
+      <segment>
+        <source>help.opt_qualite</source>
+        <target>Indiquer si la formation est certifiée par un organisme qualité.</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

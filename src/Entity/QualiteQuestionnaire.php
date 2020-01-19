@@ -17,6 +17,28 @@ use Doctrine\ORM\Mapping as ORM;
 class QualiteQuestionnaire extends BaseEntity
 {
 
+    /**
+     * @var UuidInterface
+     *
+     * @ORM\Column(type="uuid_binary", unique=true)
+     */
+    protected $uuid;
+
+    /**
+     * @return UuidInterface
+     */
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return UuidInterface
+     */
+    public function getUuidString(): string
+    {
+        return (string)$this->getUuid();
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,9 +70,32 @@ class QualiteQuestionnaire extends BaseEntity
      */
     private $texteExplication;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $texteDebut;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $textFin;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaireSection", mappedBy="questionnaire")
+     * @ORM\OrderBy({"ordre"="ASC"})
+     */
+    private $qualiteQuestionnaireSections;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="questionnaire")
+     */
+    private $quizzEtudiantReponses;
+
     public function __construct(Semestre $semestre)
     {
         $this->semestre = $semestre;
+        $this->qualiteQuestionnaireSections = new ArrayCollection();
+        $this->quizzEtudiantReponses = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -121,6 +166,99 @@ class QualiteQuestionnaire extends BaseEntity
     public function setTexteExplication(?string $texteExplication): self
     {
         $this->texteExplication = $texteExplication;
+
+        return $this;
+    }
+
+    public function getTexteDebut(): ?string
+    {
+        return $this->texteDebut;
+    }
+
+    public function setTexteDebut(?string $texteDebut): self
+    {
+        $this->texteDebut = $texteDebut;
+
+        return $this;
+    }
+
+    public function getTextFin(): ?string
+    {
+        return $this->textFin;
+    }
+
+    public function setTextFin(?string $textFin): self
+    {
+        $this->textFin = $textFin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QualiteQuestionnaireSection[]
+     */
+    public function getQualiteQuestionnaireSections(): Collection
+    {
+        return $this->qualiteQuestionnaireSections;
+    }
+
+    public function addQualiteQuestionnaireSection(QualiteQuestionnaireSection $qualiteQuestionnaireSection): self
+    {
+        if (!$this->qualiteQuestionnaireSections->contains($qualiteQuestionnaireSection)) {
+            $this->qualiteQuestionnaireSections[] = $qualiteQuestionnaireSection;
+            $qualiteQuestionnaireSection->setQuestionnaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQualiteQuestionnaireSection(QualiteQuestionnaireSection $qualiteQuestionnaireSection): self
+    {
+        if ($this->qualiteQuestionnaireSections->contains($qualiteQuestionnaireSection)) {
+            $this->qualiteQuestionnaireSections->removeElement($qualiteQuestionnaireSection);
+            // set the owning side to null (unless already changed)
+            if ($qualiteQuestionnaireSection->getQuestionnaire() === $this) {
+                $qualiteQuestionnaireSection->setQuestionnaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isOuvert()
+    {
+        $today = new DateTime('now');
+
+        return $today >= $this->getDateOuverture() && $today <= $this->getDateFermeture();
+    }
+
+    /**
+     * @return Collection|QuizzEtudiantReponse[]
+     */
+    public function getQuizzEtudiantReponses(): Collection
+    {
+        return $this->quizzEtudiantReponses;
+    }
+
+    public function addQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    {
+        if (!$this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
+            $this->quizzEtudiantReponses[] = $quizzEtudiantReponse;
+            $quizzEtudiantReponse->setQuestionnaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    {
+        if ($this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
+            $this->quizzEtudiantReponses->removeElement($quizzEtudiantReponse);
+            // set the owning side to null (unless already changed)
+            if ($quizzEtudiantReponse->getQuestionnaire() === $this) {
+                $quizzEtudiantReponse->setQuestionnaire(null);
+            }
+        }
 
         return $this;
     }

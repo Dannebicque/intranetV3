@@ -34,7 +34,9 @@ class QuizzExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('type_question', [$this, 'typeQuestion'])
+            new TwigFilter('type_question', [$this, 'typeQuestion']),
+            new TwigFilter('has_reponse', [$this, 'hasReponse']),
+            new TwigFilter('personnalise', [$this, 'personnalise'])
         ];
     }
 
@@ -53,5 +55,25 @@ class QuizzExtension extends AbstractExtension
             case QuizzQuestion::QUESTION_TYPE_QCM:
                 return 'checkbox';
         }
+    }
+
+    public function personnalise($texte, $config)
+    {
+        if (is_array($config)) {
+            foreach ($config as $key => $elt) {
+                $texte = str_replace('{{' . $key . '}}', $elt, $texte);
+            }
+        }
+
+        return $texte;
+    }
+
+    public function hasReponse($tab, $reponse)
+    {
+        if (in_array($reponse, json_decode($tab, false), true)) {
+            return true;
+        }
+
+        return false;
     }
 }

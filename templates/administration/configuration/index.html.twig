@@ -216,183 +216,224 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         {% for diplome in user_data.diplomes %}
-                        <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
-                             id="diplome{{ diplome.id }}">
+                            <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                                 id="diplome{{ diplome.id }}">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.annee_courante'|trans }}</strong></p>
-                                            <p>{{ 'help.annee_courante'|trans }}</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.annee_courante'|trans }}</strong></p>
+                                                <p>{{ 'help.annee_courante'|trans }}</p>
+                                            </div>
+                                            <label class="sr-only" for="anneeUniversitaire_{{ diplome.id }}">anneeUniversitaire_{{ diplome.id }}</label>
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="anneeUniversitaire_{{ diplome.id }}"
+                                                    id="anneeUniversitaire_{{ diplome.id }}"
+                                                    data-type="diplome"
+                                                    data-id="{{ diplome.id }}"
+                                            >
+                                                <option value="">{{ 'non.selectionee'|trans }}
+                                                    / {{ 'aucune'|trans }}</option>
+                                                {% for annee in anneeUniversitaire %}
+                                                    <option value="anneeuniv{{ annee.id }}"
+                                                            {% if diplome.anneeUniversitaire.id == annee.id %}selected{% endif %}>{{ annee.displayAnneeUniversitaire }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
-                                        <label class="sr-only" for="anneeUniversitaire_{{ diplome.id }}">anneeUniversitaire_{{ diplome.id }}</label>
-                                        <select class="form-control col-sm-6 changeOptionSelect"
-                                                name="anneeUniversitaire_{{ diplome.id }}"
-                                                id="anneeUniversitaire_{{ diplome.id }}"
-                                                data-type="diplome"
-                                                data-id="{{ diplome.id }}"
-                                        >
-                                            <option value="">{{ 'non.selectionee'|trans }} / {{ 'aucune'|trans }}</option>
-                                            {% for annee in anneeUniversitaire %}
-                                                <option value="anneeuniv{{ annee.id }}"
-                                                        {% if diplome.anneeUniversitaire.id == annee.id %}selected{% endif %}>{{ annee.displayAnneeUniversitaire }}</option>
-                                            {% endfor %}
-                                        </select>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_nb_jours_saisie'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_nb_jours_saisie'|trans }}</p>
+                                            </div>
+                                            <label class="sr-only" for="optNbJoursSaisie_{{ diplome.id }}">optNbJoursSaisie_{{ diplome.id }}</label>
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optNbJoursSaisie_{{ diplome.id }}"
+                                                    id="optNbJoursSaisie_{{ diplome.id }}"
+                                                    data-type="diplome"
+                                                    data-id="{{ diplome.id }}"
+                                            >
+                                                <option value="0" selected>{{ 'non.selectione'|trans }}
+                                                    / {{ 'illimite'|trans }}</option>
+                                                {% for i in 1 .. 30 %}
+                                                    <option value="{{ i }}"
+                                                            {% if diplome.optNbJoursSaisie == i %}selected{% endif %}>{{ i }}
+                                                        jour(s)
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_suppr_absence'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_suppr_absence'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optSupprAbsence_{{ diplome.id }}">
+                                                <input type="checkbox" {{ diplome.optSupprAbsence ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optSupprAbsence_{{ diplome.id }}"
+                                                       id="optSupprAbsence_{{ diplome.id }}"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_espace_perso_visible'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_espace_perso_visible'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optEspacePersoVisible_{{ diplome.id }}">
+                                                <input type="checkbox" {{ diplome.optEspacePersoVisible ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optEspacePersoVisible_{{ diplome.id }}"
+                                                       id="optEspacePersoVisible_{{ diplome.id }}"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_dilpome_decale'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_dilpome_decale'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optDilpomeDecale_{{ diplome.id }}">
+                                                <input type="checkbox" {{ diplome.optDilpomeDecale ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optDilpomeDecale_{{ diplome.id }}"
+                                                       id="optDilpomeDecale_{{ diplome.id }}"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_anonymat'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_anonymat'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optAnonymat_{{ diplome.id }}">
+                                                <input type="checkbox" {{ diplome.optAnonymat ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optAnonymat_{{ diplome.id }}"
+                                                       id="optAnonymat_{{ diplome.id }}"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
                                     </div>
-
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_nb_jours_saisie'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_nb_jours_saisie'|trans }}</p>
+                                    <div class="col-md-6">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_nb_semaines_visibles'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_nb_semaines_visibles'|trans }}</p>
+                                            </div>
+                                            <label class="sr-only" for="optSemainesVisibles_{{ diplome.id }}">optSemainesVisibles_{{ diplome.id }}</label>
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optSemainesVisibles_{{ diplome.id }}"
+                                                    id="optSemainesVisibles_{{ diplome.id }}"
+                                                    data-type="diplome"
+                                                    data-id="{{ diplome.id }}"
+                                            >
+                                                <option value="0" selected>{{ 'non.selectione'|trans }}
+                                                    / {{ 'afficher.toutes.les.semaines'|trans }}</option>
+                                                {% for i in 1 .. 30 %}
+                                                    <option value="{{ i }}"
+                                                            {% if diplome.optSemainesVisibles == i %}selected{% endif %}>{{ i }}
+                                                        jour(s)
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
-                                        <label class="sr-only" for="optNbJoursSaisie_{{ diplome.id }}">optNbJoursSaisie_{{ diplome.id }}</label>
-                                        <select class="form-control col-sm-6 changeOptionSelect"
-                                                name="optNbJoursSaisie_{{ diplome.id }}"
-                                                id="optNbJoursSaisie_{{ diplome.id }}"
-                                                data-type="diplome"
-                                                data-id="{{ diplome.id }}"
-                                        >
-                                            <option value="0" selected>{{ 'non.selectione'|trans }}
-                                                / {{ 'illimite'|trans }}</option>
-                                            {% for i in 1 .. 30 %}
-                                                <option value="{{ i }}"
-                                                        {% if diplome.optNbJoursSaisie == i %}selected{% endif %}>{{ i }}
-                                                    jour(s)
+
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_commentaires_releve'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_commentaires_releve'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optCommentairesReleve_{{ diplome.id }}">
+                                                <input type="checkbox" {{ diplome.optCommentairesReleve ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optCommentairesReleve_{{ diplome.id }}"
+                                                       id="optCommentairesReleve_{{ diplome.id }}"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_methode_calcul'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_methode_calcul'|trans }}</p>
+                                            </div>
+                                            <label class="sr-only" for="optMethodeCalcul_{{ diplome.id }}">optMethodeCalcul_{{ diplome.id }}</label>
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optMethodeCalcul_{{ diplome.id }}"
+                                                    id="optMethodeCalcul_{{ diplome.id }}"
+                                                    data-type="diplome"
+                                                    data-id="{{ diplome.id }}">
+                                                <option value="moymodules"
+                                                        {% if diplome.optMethodeCalcul == 'moymodules' %}selected{% endif %}>
+                                                    Moyenne des modules
                                                 </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_suppr_absence'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_suppr_absence'|trans }}</p>
-                                        </div>
-                                        <label class="switch" for="optSupprAbsence_{{ diplome.id }}">
-                                            <input type="checkbox" {{ diplome.optSupprAbsence ? 'checked': '' }}
-                                                   class="changeOption"
-                                                   name="optSupprAbsence_{{ diplome.id }}"
-                                                   id="optSupprAbsence_{{ diplome.id }}"
-                                                   data-type="diplome"
-                                                   data-id="{{ diplome.id }}">
-                                            <span class="switch-indicator"></span>
-                                        </label>
-                                    </div>
-
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_espace_perso_visible'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_espace_perso_visible'|trans }}</p>
-                                        </div>
-                                        <label class="switch" for="optEspacePersoVisible_{{ diplome.id }}">
-                                            <input type="checkbox" {{ diplome.optEspacePersoVisible ? 'checked': '' }}
-                                                   class="changeOption"
-                                                   name="optEspacePersoVisible_{{ diplome.id }}"
-                                                   id="optEspacePersoVisible_{{ diplome.id }}"
-                                                   data-type="diplome"
-                                                   data-id="{{ diplome.id }}">
-                                            <span class="switch-indicator"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_nb_semaines_visibles'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_nb_semaines_visibles'|trans }}</p>
-                                        </div>
-                                        <label class="sr-only" for="optSemainesVisibles_{{ diplome.id }}">optSemainesVisibles_{{ diplome.id }}</label>
-                                        <select class="form-control col-sm-6 changeOptionSelect"
-                                                name="optSemainesVisibles_{{ diplome.id }}"
-                                                id="optSemainesVisibles_{{ diplome.id }}"
-                                                data-type="diplome"
-                                                data-id="{{ diplome.id }}"
-                                        >
-                                            <option value="0" selected>{{ 'non.selectione'|trans }}
-                                                / {{ 'afficher.toutes.les.semaines'|trans }}</option>
-                                            {% for i in 1 .. 30 %}
-                                                <option value="{{ i }}"
-                                                        {% if diplome.optSemainesVisibles == i %}selected{% endif %}>{{ i }}
-                                                    jour(s)
+                                                <option value="moyues"
+                                                        {% if diplome.optMethodeCalcul == 'moyues' %}selected{% endif %}>
+                                                    Moyenne des UEs
                                                 </option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_dilpome_decale'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_dilpome_decale'|trans }}</p>
+                                            </select>
                                         </div>
-                                        <label class="switch" for="optDilpomeDecale_{{ diplome.id }}">
-                                            <input type="checkbox" {{ diplome.optDilpomeDecale ? 'checked': '' }}
-                                                   class="changeOption"
-                                                   name="optDilpomeDecale_{{ diplome.id }}"
-                                                   id="optDilpomeDecale_{{ diplome.id }}"
-                                                   data-type="diplome"
-                                                   data-id="{{ diplome.id }}">
-                                            <span class="switch-indicator"></span>
-                                        </label>
-                                    </div>
 
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_anonymat'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_anonymat'|trans }}</p>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_qualite'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_qualite'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optCertifieQualite_{{ diplome.id }}">
+                                                <input type="checkbox" {{ diplome.optCertifieQualite ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optCertifieQualite_{{ diplome.id }}"
+                                                       id="optCertifieQualite_{{ diplome.id }}"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
                                         </div>
-                                        <label class="switch" for="optAnonymat_{{ diplome.id }}">
-                                            <input type="checkbox" {{ diplome.optAnonymat ? 'checked': '' }}
-                                                   class="changeOption"
-                                                   name="optAnonymat_{{ diplome.id }}"
-                                                   id="optAnonymat_{{ diplome.id }}"
-                                                   data-type="diplome"
-                                                   data-id="{{ diplome.id }}">
-                                            <span class="switch-indicator"></span>
-                                        </label>
-                                    </div>
 
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_commentaires_releve'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_commentaires_releve'|trans }}</p>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p>
+                                                    <strong>{{ 'table.opt_responsable_qualite'|trans }}</strong>
+                                                </p>
+                                                <p>{{ 'help.opt_responsable_qualite'|trans }}</p>
+                                            </div>
+                                            <label class="sr-only" for="optResponsableQualite_{{ diplome.id }}">optResponsableQualite_{{ diplome.id }}</label>
+                                            <select class="form-control col-sm-6 changeOptionSelect"
+                                                    name="optResponsableQualite_{{ diplome.id }}"
+                                                    id="optResponsableQualite_{{ diplome.id }}"
+                                                    data-type="diplome"
+                                                    data-id="{{ diplome.id }}">
+                                                <option value="">{{ 'non.selectione'|trans }}
+                                                    / {{ 'aucun'|trans }}</option>
+                                                {% for personnel in user_data.personnels %}
+                                                    <option value="pers{{ personnel.id }}"
+                                                            {% if diplome.optResponsableQualite != null and diplome.optResponsableQualite.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
-                                        <label class="switch" for="optCommentairesReleve_{{ diplome.id }}">
-                                            <input type="checkbox" {{ diplome.optCommentairesReleve ? 'checked': '' }}
-                                                   class="changeOption"
-                                                   name="optCommentairesReleve_{{ diplome.id }}"
-                                                   id="optCommentairesReleve_{{ diplome.id }}"
-                                                   data-type="diplome"
-                                                   data-id="{{ diplome.id }}">
-                                            <span class="switch-indicator"></span>
-                                        </label>
-                                    </div>
-
-
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.opt_methode_calcul'|trans }}</strong></p>
-                                            <p>{{ 'help.opt_methode_calcul'|trans }}</p>
-                                        </div>
-                                        <label class="sr-only" for="optMethodeCalcul_{{ diplome.id }}">optMethodeCalcul_{{ diplome.id }}</label>
-                                        <select class="form-control col-sm-6 changeOptionSelect"
-                                                name="optMethodeCalcul_{{ diplome.id }}"
-                                                id="optMethodeCalcul_{{ diplome.id }}"
-                                                data-type="diplome"
-                                                data-id="{{ diplome.id }}">
-                                            <option value="moymodules"
-                                                    {% if diplome.optMethodeCalcul == 'moymodules' %}selected{% endif %}>
-                                                Moyenne des modules
-                                            </option>
-                                            <option value="moyues"
-                                                    {% if diplome.optMethodeCalcul == 'moyues' %}selected{% endif %}>
-                                                Moyenne des UEs
-                                            </option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endfor %}
                     </div>
 
@@ -688,8 +729,7 @@
                                                 <p><strong>{{ 'table.opt_nb_jours_saisie_absence'|trans }}</strong></p>
                                                 <p>{{ 'help.opt_nb_jours_saisie_absence'|trans }}</p>
                                             </div>
-                                            <label class="sr-only" for="optNbJoursSaisieAbsence_{{ semestre.id
-                                            }}">optNbJoursSaisieAbsence_{{ semestre.id }}</label>
+                                            <label class="sr-only" for="optNbJoursSaisieAbsence_{{ semestre.id }}">optNbJoursSaisieAbsence_{{ semestre.id }}</label>
                                             <select class="form-control col-sm-6 changeOptionSelect"
                                                     name="optNbJoursSaisieAbsence_{{ semestre.id }}"
                                                     id="optNbJoursSaisieAbsence_{{ semestre.id }}"
@@ -697,8 +737,7 @@
                                                     data-id="{{ semestre.id }}">
                                                 {% for i in 0 .. 30 %}
                                                     <option value="{{ i }}"
-                                                            {% if semestre.optNbJoursSaisieAbsence == i %}selected{%
-                                                        endif %}>{{ i }} {{ 'jour.s'|trans }}</option>
+                                                            {% if semestre.optNbJoursSaisieAbsence == i %}selected{% endif %}>{{ i }} {{ 'jour.s'|trans }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>

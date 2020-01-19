@@ -1,0 +1,16 @@
+{% if config is not defined %}
+    {% set config= null %}
+    {% set name = 'q'~question.id %}
+{% else %}
+    {% set name = 'q'~question.id~'_c'~config.id %}
+{% endif %}
+
+{% if question.type == 'qcu' or question.type == 'yesno' %}
+    {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name, config:config}) }}
+{% elseif question.type == 'qcm' %}
+    {{ include('quizz_question/_qcm.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+{% elseif question.type == 'libre' %}
+    {{ include('quizz_question/_libre.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+{% elseif question.type == 'echelle' %}
+    {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+{% endif %}

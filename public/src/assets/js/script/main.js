@@ -125,6 +125,7 @@ app.ready(function () {
   require('./partials/articles')
   require('./partials/stage')
   require('./partials/quizz')
+  require('./partials/quizzEtudiant')
   require('./partials/qualite')
   //require('./partials/sousCommission')
 

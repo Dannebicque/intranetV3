@@ -1,0 +1,34 @@
+<div class="card">
+    <h4 class="card-title">Questionnaire qualité du diplôme</h4>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Semestre</th>
+                <th>Libellé</th>
+                <th>Période ouverture</th>
+                <th>Etat</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for questionnaire in questionnaires %}
+                <tr>
+                    <td>{{ questionnaire.semestre != null ? questionnaire.semestre.libelle : '-' }}</td>
+                    <td>{{ questionnaire.libelle }}</td>
+                    <td>{{ questionnaire.dateOuverture|format_date('short') }} au {{ questionnaire
+                        .dateFermeture|format_date('short') }}</td>
+                    <td>
+                        {% if questionnaire.isOuvert %}
+                            <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaire:questionnaire.id}) }}">
+                                Compléter le questionnaire
+                            </a>
+                        {% else %}
+                            Complété ou hors délai
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

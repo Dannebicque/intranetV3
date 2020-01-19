@@ -156,7 +156,6 @@ class Diplome extends BaseEntity
         $this->departement = $departement;
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
-        $this->competences = new ArrayCollection();
         $this->annees = new ArrayCollection();
     }
 
