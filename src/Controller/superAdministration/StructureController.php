@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class StructureController
  * @package App\Controller\administration
- * @Route("/super-administration/structure")
+ * @Route("/administratif/structure")
  */
 class StructureController extends BaseController
 {

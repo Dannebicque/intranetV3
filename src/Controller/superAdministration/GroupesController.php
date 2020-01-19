@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/groupes")
+ * @Route("/administratif/groupes")
  */
 class GroupesController extends BaseController
 {

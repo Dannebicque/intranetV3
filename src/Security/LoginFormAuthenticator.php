@@ -97,7 +97,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $rolesTab = $token->getRoleNames();
-        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
+        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab,
+                true) || in_array('ROLE_SCOLARITE', $rolesTab, true) || in_array('ROLE_QUALITE', $rolesTab,
+                true) || in_array('ROLE_RH', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
             $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
         } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {

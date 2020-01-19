@@ -17,49 +17,57 @@
             <span class="title">{{ 'menu.dashboard'|trans }}</span>
         </a>
     </li>
-    <li class="menu-item active" id="menu-etudiants">
-        <a class="menu-link" href="{{ path('sa_etudiant_index') }}">
-            <span class="material-icons">perm_identity</span>
-            <span class="title">{{ 'menu.etudiants'|trans }}</span>
-        </a>
-    </li>
-    <li class="menu-item active" id="menu-scolarite">
-        <a class="menu-link" href="{{ path('sa_scolarite_index') }}">
-            <span class="material-icons">perm_identity</span>
-            <span class="title">{{ 'menu.scolarite'|trans }}</span>
-        </a>
-    </li>
-    <li class="menu-item active" id="menu-ressources-humaines">
-        <a class="menu-link" href="{{ path('sa_rh_index') }}">
-            <span class="material-icons">supervisor_account</span>
-            <span class="title">{{ 'menu.rh'|trans }}</span>
-        </a>
-    </li>
-    <li class="menu-item active" id="menu-previsionnel">
-        <a class="menu-link" href="{{ path('sa_previsionnel_index') }}">
-            <span class="material-icons">access_time</span>
-            <span class="title">{{ 'menu.previsionnel'|trans }}</span>
-        </a>
-    </li>
-    <li class="menu-item active" id="menu-celcat">
-        <a class="menu-link" href="{{ path('sa_celcat_index') }}">
-            <span class="material-icons">access_time</span>
-            <span class="title">{{ 'menu.celcat'|trans }}</span>
-        </a>
-    </li>
-    <li class="menu-item" id="menu-enquete">
-        <a class="menu-link" href="{{ path('sa_qualite_index') }}">
-            <span class="material-icons">access_time</span>
-            <span class="title">{{ 'menu.qualite'|trans }}</span>
-        </a>
-    </li>
+    {% if is_granted('ROLE_SCOLARITE') or is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="menu-item active" id="menu-etudiants">
+            <a class="menu-link" href="{{ path('sa_etudiant_index') }}">
+                <span class="material-icons">perm_identity</span>
+                <span class="title">{{ 'menu.etudiants'|trans }}</span>
+            </a>
+        </li>
+        <li class="menu-item active" id="menu-scolarite">
+            <a class="menu-link" href="{{ path('sa_scolarite_index') }}">
+                <span class="material-icons">perm_identity</span>
+                <span class="title">{{ 'menu.scolarite'|trans }}</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if is_granted('ROLE_RH') or is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="menu-item active" id="menu-ressources-humaines">
+            <a class="menu-link" href="{{ path('sa_rh_index') }}">
+                <span class="material-icons">supervisor_account</span>
+                <span class="title">{{ 'menu.rh'|trans }}</span>
+            </a>
+        </li>
+        <li class="menu-item active" id="menu-previsionnel">
+            <a class="menu-link" href="{{ path('sa_previsionnel_index') }}">
+                <span class="material-icons">access_time</span>
+                <span class="title">{{ 'menu.previsionnel'|trans }}</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="menu-item active" id="menu-celcat">
+            <a class="menu-link" href="{{ path('sa_celcat_index') }}">
+                <span class="material-icons">access_time</span>
+                <span class="title">{{ 'menu.celcat'|trans }}</span>
+            </a>
+        </li>
+        <li class="menu-item active" id="menu-apogee">
+            <a class="menu-link" href="{{ path('sa_apogee_index') }}">
+                <span class="material-icons">access_time</span>
+                <span class="title">{{ 'menu.apogee'|trans }}</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="menu-item" id="menu-enquete">
+            <a class="menu-link" href="{{ path('sa_qualite_index') }}">
+                <span class="material-icons">access_time</span>
+                <span class="title">{{ 'menu.qualite'|trans }}</span>
+            </a>
+        </li>
+    {% endif %}
 
-    <li class="menu-item active" id="menu-apogee">
-        <a class="menu-link" href="{{ path('sa_apogee_index') }}">
-            <span class="material-icons">access_time</span>
-            <span class="title">{{ 'menu.apogee'|trans }}</span>
-        </a>
-    </li>
 
 {% endblock %}
 

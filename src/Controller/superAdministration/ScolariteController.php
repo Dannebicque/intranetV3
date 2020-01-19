@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class ScolariteController
  * @package App\Controller\administratif\scolarite
- * @Route("/super-administration/scolarite")
+ * @Route("/administratif/scolarite")
  */
 class ScolariteController extends AbstractController
 {

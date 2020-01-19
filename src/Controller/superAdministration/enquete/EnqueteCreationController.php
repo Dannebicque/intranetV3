@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/enquete-creation")
+ * @Route("/administratif/enquete-creation")
  */
 class EnqueteCreationController extends BaseController
 {

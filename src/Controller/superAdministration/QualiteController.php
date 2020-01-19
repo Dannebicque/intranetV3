@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/qualite")
+ * @Route("/administratif/qualite")
  */
 class QualiteController extends BaseController
 {

@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/apogee")
+ * @Route("/administratif/apogee")
  */
 class ApogeeController extends BaseController
 {

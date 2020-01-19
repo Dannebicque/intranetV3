@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/super-administration/structure/diplome")
+ * @Route("/administratif/structure/diplome")
  */
 class DiplomeController extends BaseController
 {

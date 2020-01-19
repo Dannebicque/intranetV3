@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("super-administration/emploi-du-temps/calendrier")
+ * @Route("/administratif/emploi-du-temps/calendrier")
  */
 class CelcatCalendrierController extends BaseController
 {

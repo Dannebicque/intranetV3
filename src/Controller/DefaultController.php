@@ -41,7 +41,7 @@ class DefaultController extends BaseController
      *
      * @return Response
      *
-     * @Route("/super-administration/", name="super_admin_homepage")
+     * @Route("/administratif/", name="super_admin_homepage")
      */
     public function superAdminHomepage(DepartementRepository $departementRepository): Response
     {
