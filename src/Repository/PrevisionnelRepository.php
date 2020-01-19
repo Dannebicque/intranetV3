@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
@@ -181,10 +182,22 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->where('p.id = :user')
             ->andWhere('s.annee = :annee')
             ->andWhere('u.semestre = :semestre')
-            ->setParameters(array('user' => $user->getId(), 'annee' => $annePrevi, 'semestre' => $semestre->getId()))
+            ->setParameters(['user' => $user->getId(), 'annee' => $annePrevi, 'semestre' => $semestre->getId()])
             ->groupBy('m.id')
             ->orderBy('m.codeMatiere', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByDiplomeArray(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        $q = $this->findByDiplome($diplome, $anneeUniversitaire->getAnnee());
+        $tPrevisionnel = [];
+        /** @var Previsionnel $p */
+        foreach ($q as $p) {
+            $tPrevisionnel[$p->getId()] = $p;
+        }
+
+        return $tPrevisionnel;
     }
 }

@@ -1,19 +1,22 @@
 <fieldset class="form-group">
-    <legend class="col-form-label required">{{ question.libelle }}</legend>
+    {{ include('quizz_question/_libelle.html.twig') }}
     <div aria-describedby="quizz_question_{{ question.id }}_help">
-        <div class="row">
-            {% for reponse in question.quizzReponses %}
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-check">
-                        <input type="radio" id="quizz_question_qcu_{{ question.id }}_{{ loop.first }}"
-                               name="quizz_question_reponses_{{ question.id }}"
-                               required="required"
-                               class="form-check-input" value="{{ reponse.valeur }}">
-                        <label class="form-check-label required" for="quizz_question_qcu_{{ question.id }}_{{ loop.first }}">{{ reponse.libelle }}</label>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
     </div>
-    <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
+    <div class="row">
+        {% for reponse in question.quizzReponses %}
+            <div class="col-sm-12 col-md-3">
+                <div class="form-check">
+                    <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                           name="quizz_question_reponses_{{ name }}"
+                           {% if reponses['quizz_question_reponses_'~name] is defined and
+                               reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
+                            {% if question.obligatoire %}required{% endif %}
+                           class="form-check-input questionQualite" value="{{ reponse.valeur }}">
+                    <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                </div>
+                <div class="form-control-feedback"></div>
+            </div>
+        {% endfor %}
+    </div>
 </fieldset>

@@ -8,7 +8,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Annee;
+use App\Entity\Diplome;
+use App\Entity\Etudiant;
 use App\Entity\QualiteQuestionnaire;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,32 +29,15 @@ class QualiteQuestionnaireRepository extends ServiceEntityRepository
         parent::__construct($registry, QualiteQuestionnaire::class);
     }
 
-    // /**
-    //  * @return QualiteQuestionnaire[] Returns an array of QualiteQuestionnaire objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByDiplome(Diplome $diplome)
     {
         return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
+            ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')
+            ->innerJoin(Annee::class, 'a', 'with', 'a.id = s.annee')
+            ->where('a.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId())
+            ->orderBy('q.dateOuverture', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?QualiteQuestionnaire
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

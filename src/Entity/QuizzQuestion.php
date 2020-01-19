@@ -48,7 +48,7 @@ class QuizzQuestion extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QuizzReponse", mappedBy="question", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"valeur"="ASC"})
+     * @ORM\OrderBy({"ordre"="ASC"})
      */
     private $quizzReponses;
 

@@ -1,0 +1,7 @@
+<legend class="col-form-label {% if question.obligatoire %}required{% endif %}"><strong>{{ numero }}</strong>.
+    {% if config is null %}
+        {{ question.libelle }}
+    {% else %}
+        {{ question.libelle|personnalise(config) }}
+    {% endif %}
+</legend>

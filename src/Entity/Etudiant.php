@@ -209,6 +209,11 @@ class Etudiant extends Utilisateur implements Serializable
     private $departement;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="etudiant")
+     */
+    private $quizzEtudiantReponses;
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
@@ -236,6 +241,7 @@ class Etudiant extends Utilisateur implements Serializable
         $this->typeUser = 'ETU';
         $this->emprunts = new ArrayCollection();
         $this->empruntEtudiants = new ArrayCollection();
+        $this->quizzEtudiantReponses = new ArrayCollection();
     }
 
     /**
@@ -1161,6 +1167,37 @@ class Etudiant extends Utilisateur implements Serializable
     public function getDepartement(): ?Departement
     {
         return $this->departement;
+    }
+
+    /**
+     * @return Collection|QuizzEtudiantReponse[]
+     */
+    public function getQuizzEtudiantReponses(): Collection
+    {
+        return $this->quizzEtudiantReponses;
+    }
+
+    public function addQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    {
+        if (!$this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
+            $this->quizzEtudiantReponses[] = $quizzEtudiantReponse;
+            $quizzEtudiantReponse->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    {
+        if ($this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
+            $this->quizzEtudiantReponses->removeElement($quizzEtudiantReponse);
+            // set the owning side to null (unless already changed)
+            if ($quizzEtudiantReponse->getEtudiant() === $this) {
+                $quizzEtudiantReponse->setEtudiant(null);
+            }
+        }
+
+        return $this;
     }
 
 }
