@@ -82,11 +82,6 @@ class QuizzQuestion extends BaseEntity
      */
     private $obligatoire = true;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="question")
-     */
-    private $quizzEtudiantReponses;
-
 
     public function __construct(Personnel $personnel)
     {
@@ -95,7 +90,6 @@ class QuizzQuestion extends BaseEntity
         $this->setAuteur($personnel);
         $this->qualiteSectionQuestions = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
-        $this->quizzEtudiantReponses = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -287,34 +281,6 @@ class QuizzQuestion extends BaseEntity
     public function setObligatoire(bool $obligatoire): self
     {
         $this->obligatoire = $obligatoire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuizzEtudiantReponse[]
-     */
-    public function getQuizzEtudiantReponses(): Collection
-    {
-        return $this->quizzEtudiantReponses;
-    }
-
-    public function addQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
-    {
-        if (!$this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
-            $this->quizzEtudiantReponses[] = $quizzEtudiantReponse;
-            $quizzEtudiantReponse->addQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
-    {
-        if ($this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
-            $this->quizzEtudiantReponses->removeElement($quizzEtudiantReponse);
-            $quizzEtudiantReponse->removeQuestion($this);
-        }
 
         return $this;
     }

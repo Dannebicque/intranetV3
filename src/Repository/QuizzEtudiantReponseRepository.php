@@ -6,6 +6,7 @@ use App\Entity\Etudiant;
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiantReponse;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
@@ -62,5 +63,18 @@ class QuizzEtudiantReponseRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function compteReponse(Semestre $semestre)
+    {
+        $qb = $this->createQueryBuilder('prov');
+
+        return $this->createQueryBuilder('q')
+            ->select($qb->expr()->countDistinct('q.etudiant'))
+            ->innerJoin(QualiteQuestionnaire::class, 'qq', 'WITH', 'q.questionnaire = qq.id')
+            ->where('qq.semestre = :semestre')
+            ->setParameter('semestre', $semestre->getId())
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

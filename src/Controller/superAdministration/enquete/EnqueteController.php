@@ -9,8 +9,10 @@
 namespace App\Controller\superAdministration\enquete;
 
 use App\Entity\QualiteQuestionnaire;
+use App\Entity\QuizzEtudiantReponse;
 use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
+use App\Repository\QuizzEtudiantReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,10 +42,11 @@ class EnqueteController extends AbstractController
      *
      * @return Response
      */
-    public function semestre(Semestre $semestre): Response
+    public function semestre(QuizzEtudiantReponseRepository $etudiantReponseRepository, Semestre $semestre): Response
     {
         return $this->render('super-administration/enquete/semestre.html.twig', [
-            'semestre' => $semestre
+            'semestre'   => $semestre,
+            'nbReponses' => $etudiantReponseRepository->compteReponse($semestre)
         ]);
     }
 

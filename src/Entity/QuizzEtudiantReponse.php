@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,16 +25,6 @@ class QuizzEtudiantReponse extends BaseEntity
     private $valeur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\QuizzQuestion", inversedBy="quizzEtudiantReponses")
-     */
-    private $question;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\QuizzReponse", inversedBy="quizzEtudiantReponses")
-     */
-    private $reponse;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $cleReponse;
@@ -50,8 +38,6 @@ class QuizzEtudiantReponse extends BaseEntity
     public function __construct(QualiteQuestionnaire $qualiteQuestionnaire)
     {
         $this->setQuestionnaire($qualiteQuestionnaire);
-        $this->question = new ArrayCollection();
-        $this->reponse = new ArrayCollection();
     }
 
     public function getEtudiant(): ?Etudiant
@@ -74,58 +60,6 @@ class QuizzEtudiantReponse extends BaseEntity
     public function setQuestionnaire(?QualiteQuestionnaire $questionnaire): self
     {
         $this->questionnaire = $questionnaire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuizzQuestion[]
-     */
-    public function getQuestion(): Collection
-    {
-        return $this->question;
-    }
-
-    public function addQuestion(QuizzQuestion $question): self
-    {
-        if (!$this->question->contains($question)) {
-            $this->question[] = $question;
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(QuizzQuestion $question): self
-    {
-        if ($this->question->contains($question)) {
-            $this->question->removeElement($question);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuizzReponse[]
-     */
-    public function getReponse(): Collection
-    {
-        return $this->reponse;
-    }
-
-    public function addReponse(QuizzReponse $reponse): self
-    {
-        if (!$this->reponse->contains($reponse)) {
-            $this->reponse[] = $reponse;
-        }
-
-        return $this;
-    }
-
-    public function removeReponse(QuizzReponse $reponse): self
-    {
-        if ($this->reponse->contains($reponse)) {
-            $this->reponse->removeElement($reponse);
-        }
 
         return $this;
     }
@@ -165,4 +99,5 @@ class QuizzEtudiantReponse extends BaseEntity
 
         return $this;
     }
+
 }

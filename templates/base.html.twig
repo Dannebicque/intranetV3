@@ -58,12 +58,10 @@
 
 <!-- Sidebar -->
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
-    <header class="sidebar-header" style="background-color: {% if is_granted('ROLE_PERMANENT') or
-        is_granted('ROLE_ETUDIANT') %}{{ user_data.departement.couleur }}{% else %}{{ settings('COLOR_IUT') }}{% endif %}">
+    <header class="sidebar-header" style="background-color:white">
         <span class="logo text-center">
           <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}">
-              <img src="{{ asset('build/images/logo-icon-light.png') }}"
-                   alt="logo de l'intranet.">
+              <img src="{{ asset('build/images/logo_intranet.svg') }}" alt="logo de l'intranet.">
           </a>
         </span>
     </header>
@@ -71,7 +69,6 @@
     <nav class="sidebar-navigation ps-container ps-theme-default" data-ps-id="9edea121-7e34-6d68-3caa-50294dffdd48">
         <ul class="menu">
             {% block sidebar_menu %}
-
                 <li class="menu-item active" id="menu-tableau-de-bord">
                     <a class="menu-link" href="{{ path('default_homepage') }}">
                         <span class="material-icons">dashboard</span>
