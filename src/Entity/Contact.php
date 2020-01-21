@@ -17,19 +17,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Contact extends BaseEntity
 {
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $fonction;
@@ -56,7 +56,7 @@ class Contact extends BaseEntity
      * @ORM\Column(type="string", length=3)
      * @Groups({"alternance_administration"})
      */
-    private $civilite;
+    private $civilite = 'M.';
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
