@@ -68,14 +68,14 @@ class QuizzQuestion extends BaseEntity
     private $qualiteSectionQuestions;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuizzQuestion", inversedBy="quizzQuestions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuizzQuestion", inversedBy="questionsEnfants")
      */
     private $questionParent;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QuizzQuestion", mappedBy="questionParent")
      */
-    private $quizzQuestions;
+    private $questionsEnfants;
 
     /**
      * @ORM\Column(type="boolean")
@@ -89,7 +89,7 @@ class QuizzQuestion extends BaseEntity
         $this->quizzQuestionnaires = new ArrayCollection();
         $this->setAuteur($personnel);
         $this->qualiteSectionQuestions = new ArrayCollection();
-        $this->quizzQuestions = new ArrayCollection();
+        $this->questionsEnfants = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -245,25 +245,25 @@ class QuizzQuestion extends BaseEntity
     /**
      * @return Collection|self[]
      */
-    public function getQuizzQuestions(): Collection
+    public function getQuestionsEnfants(): Collection
     {
-        return $this->quizzQuestions;
+        return $this->questionsEnfants;
     }
 
-    public function addQuizzQuestion(self $quizzQuestion): self
+    public function addQuestionEnfant(self $quizzQuestion): self
     {
-        if (!$this->quizzQuestions->contains($quizzQuestion)) {
-            $this->quizzQuestions[] = $quizzQuestion;
+        if (!$this->questionsEnfants->contains($quizzQuestion)) {
+            $this->questionsEnfants[] = $quizzQuestion;
             $quizzQuestion->setQuestionParent($this);
         }
 
         return $this;
     }
 
-    public function removeQuizzQuestion(self $quizzQuestion): self
+    public function removeQuestionEnfant(self $quizzQuestion): self
     {
-        if ($this->quizzQuestions->contains($quizzQuestion)) {
-            $this->quizzQuestions->removeElement($quizzQuestion);
+        if ($this->questionsEnfants->contains($quizzQuestion)) {
+            $this->questionsEnfants->removeElement($quizzQuestion);
             // set the owning side to null (unless already changed)
             if ($quizzQuestion->getQuestionParent() === $this) {
                 $quizzQuestion->setQuestionParent(null);

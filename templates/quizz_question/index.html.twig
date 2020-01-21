@@ -1,4 +1,5 @@
-{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-administratif.html.twig' : 'base.html.twig' %}
+{% extends (is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_QUALITE')) ? 'base-super_admin.html.twig' : 'base
+.html.twig' %}
 
 {% block header %}
     {{ 'quizz.question.index.heading'|trans }}
@@ -15,14 +16,14 @@
                 <i class="ti-plus"></i>
                 <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
             </a>
-            {% if is_granted('ROLE_ADMINISTRATIF') %}
-                <a href="{{ path('administratif_homepage') }}"
+            {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_QUALITE') %}
+                <a href="{{ path('sa_qualite_index') }}"
                    class="btn btn-primary btn-float"
                    data-provide="tooltip"
                    data-placement="bottom"
                    title="{{ 'retour.administratif'|trans }}">
                     <i class="ti-home"></i>
-                    <span class="sr-only">{{ 'retour.administratif'|trans }}</span>
+                    <span class="sr-only">{{ 'retour.qualite'|trans }}</span>
                 </a>
             {% elseif is_granted('ROLE_PERMANENT') %}
                 <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
@@ -35,7 +36,7 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'quizz.question.index.index.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'quizz.question.index.heading'|trans }}</h4>
         <div class="card-body">
             <table class="table table-bordered">
 
@@ -69,6 +70,7 @@
                                     data-url="{{ path('quizz_question_show', {'id': quizz_question.id}) }}"
                                     class="btn btn-info btn-outline btn-square"
                                     data-placement="bottom"
+                                    data-size="lg"
                                     title="{{ 'atitle.details'|trans }}"
                                     data-title="{{ 'quizz_question.show.heading'|trans }}"
                             >
