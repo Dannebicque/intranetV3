@@ -13,7 +13,6 @@ use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
-use App\MesClasses\Configuration;
 use App\MesClasses\Mail\MyMailer;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QualiteQuestionnaireRepository;
@@ -45,11 +44,15 @@ class QualiteController extends BaseController
      */
     public function index(QualiteQuestionnaireRepository $qualiteQuestionnaireRepository): Response
     {
-        $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
+        if ($this->dataUserSession->getUser() !== null) {
+            $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
 
-        return $this->render('appEtudiant/qualite/index.html.twig', [
-            'questionnaires' => $questionnaires
-        ]);
+            return $this->render('appEtudiant/qualite/index.html.twig', [
+                'questionnaires' => $questionnaires
+            ]);
+        }
+
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -63,15 +66,19 @@ class QualiteController extends BaseController
      */
     public function complet(MyMailer $myMailer, QualiteQuestionnaire $qualiteQuestionnaire): Response
     {
-        $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
-            ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
-        $myMailer->sendMessage($this->getConnectedUser()->getMails(),
-            'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+        if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getDiplome() !== null && $this->getConnectedUser()->getDiplome()->getOptResponsableQualite() !== null) {
+            $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
+                ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
+            $myMailer->sendMessage($this->getConnectedUser()->getMails(),
+                'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
 
-        $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
-            ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
-        $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),
-            'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+            $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
+                ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
+            $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),
+                'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+        }
+
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -92,7 +99,7 @@ class QualiteController extends BaseController
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'         => $qualiteQuestionnaireSection->getOrdre(),
             'section'       => $qualiteQuestionnaireSection->getSection(),
-            'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($this->dataUserSession->getUser()->getDiplome(),
+            'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($this->getConnectedUser()->getDiplome(),
                 $this->dataUserSession->getAnneeUniversitaire()),
             'reponses'      => $reponses
         ]);
@@ -135,8 +142,6 @@ class QualiteController extends BaseController
                 $qr = new QuizzEtudiantReponse($questionnaire);
                 $qr->setEtudiant($this->getConnectedUser());
                 $qr->setCleQuestion($cleQuestion);
-                $qr->addQuestion($question);
-                $qr->addReponse($reponse);
 
                 if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
                     $qr->setCleReponse(json_encode([$cleReponse]));
@@ -149,10 +154,6 @@ class QualiteController extends BaseController
                 $this->entityManager->persist($qr);
             } else {
                 if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCU || $question->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE || $question->getType() === QuizzQuestion::QUESTION_TYPE_YESNO) {
-                    foreach ($exist->getReponse() as $rep) {
-                        $this->entityManager->remove($rep);
-                    }
-                    $exist->addReponse($reponse);
                     $exist->setCleReponse($cleReponse);
                     $exist->setValeur($reponse->getValeur());
                 } elseif ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
@@ -169,7 +170,6 @@ class QualiteController extends BaseController
                     } else {
                         $cleReponses[] = $cleReponse;
                         $valeurs[] = $reponse->getValeur();
-                        $exist->removeReponse($reponse);
                     }
 
                     $exist->setCleReponse(json_encode($cleReponses));
@@ -212,7 +212,6 @@ class QualiteController extends BaseController
                 $qr = new QuizzEtudiantReponse($questionnaire);
                 $qr->setEtudiant($this->getConnectedUser());
                 $qr->setCleQuestion($cleQuestion);
-                $qr->addQuestion($question);
                 $qr->setCleReponse(null);
                 $qr->setValeur($request->request->get('value'));
                 $this->entityManager->persist($qr);

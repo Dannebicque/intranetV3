@@ -8,8 +8,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,16 +36,6 @@ class QuizzReponse extends BaseEntity
      * @ORM\Column(type="integer")
      */
     private $ordre;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="reponse")
-     */
-    private $quizzEtudiantReponses;
-
-    public function __construct()
-    {
-        $this->quizzEtudiantReponses = new ArrayCollection();
-    }
 
     public function getQuestion(): ?QuizzQuestion
     {
@@ -93,34 +81,6 @@ class QuizzReponse extends BaseEntity
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuizzEtudiantReponse[]
-     */
-    public function getQuizzEtudiantReponses(): Collection
-    {
-        return $this->quizzEtudiantReponses;
-    }
-
-    public function addQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
-    {
-        if (!$this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
-            $this->quizzEtudiantReponses[] = $quizzEtudiantReponse;
-            $quizzEtudiantReponse->addReponse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
-    {
-        if ($this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
-            $this->quizzEtudiantReponses->removeElement($quizzEtudiantReponse);
-            $quizzEtudiantReponse->removeReponse($this);
-        }
 
         return $this;
     }
