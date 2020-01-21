@@ -31,7 +31,7 @@ class QuizzQuestionController extends BaseController
     public function index(QuizzQuestionRepository $quizzQuestionRepository): Response
     {
         return $this->render('quizz_question/index.html.twig', [
-            'quizz_questions' => $quizzQuestionRepository->findAll(),
+            'quizz_questions' => $quizzQuestionRepository->findByUser($this->getConnectedUser()),
         ]);
     }
 
@@ -131,8 +131,9 @@ class QuizzQuestionController extends BaseController
      */
     public function show(QuizzQuestion $quizzQuestion): Response
     {
-        return $this->render('quizz_question/show.html.twig', [
-            'quizz_question' => $quizzQuestion,
+        return $this->render('quizz_question/_question.html.twig', [
+            'numero'   => 1,
+            'question' => $quizzQuestion,
         ]);
     }
 
@@ -188,7 +189,7 @@ class QuizzQuestionController extends BaseController
     public function duplicate(QuizzQuestion $quizzQuestion): Response
     {
         $newQuizzQuestion = clone $quizzQuestion;
-
+        //dupliquer les reponses
         $this->entityManager->persist($newQuizzQuestion);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'quizz_question.duplicate.success.flash');

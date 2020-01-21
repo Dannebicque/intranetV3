@@ -14,6 +14,7 @@ use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
 use App\Repository\QuizzEtudiantReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -82,8 +83,77 @@ class EnqueteController extends AbstractController
     {
         return $this->render('super-administration/enquete/edit.html.twig', [
             'questionnaire' => $questionnaire,
-            'semestre' => $questionnaire->getSemestre(),
-            'step' => $step
+            'semestre'      => $questionnaire->getSemestre(),
+            'step'          => $step
         ]);
+    }
+
+    /**
+     * @Route("/questionnaire/duplicate/{questionnaire}", name="administratif_enquete_duplicate")
+     *
+     * @param QualiteQuestionnaire $questionnaire
+     *
+     * @return Response
+     */
+    public function duplicate(QualiteQuestionnaire $questionnaire): Response
+    {
+        return $this->render('super-administration/enquete/edit.html.twig', [
+            'questionnaire' => $questionnaire,
+            'semestre'      => $questionnaire->getSemestre()
+        ]);
+    }
+
+    /**
+     * @Route("/questionnaire/apercu/{questionnaire}", name="administratif_enquete_show")
+     *
+     * @param QualiteQuestionnaire $questionnaire
+     *
+     * @return Response
+     */
+    public function show(QualiteQuestionnaire $questionnaire): Response
+    {
+        return $this->render('super-administration/enquete/edit.html.twig', [
+            'questionnaire' => $questionnaire,
+            'semestre'      => $questionnaire->getSemestre()
+        ]);
+    }
+
+    /**
+     * @Route("/questionnaire/reponses/{questionnaire}", name="administratif_enquete_reponses")
+     *
+     * @param QualiteQuestionnaire $questionnaire
+     *
+     * @return Response
+     */
+    public function reponses(QualiteQuestionnaire $questionnaire): Response
+    {
+        return $this->render('super-administration/enquete/edit.html.twig', [
+            'questionnaire' => $questionnaire,
+            'semestre'      => $questionnaire->getSemestre()
+        ]);
+    }
+
+    /**
+     * @Route("/questionnaire/export/{questionnaire}", name="administratif_enquete_export")
+     *
+     * @param QualiteQuestionnaire $questionnaire
+     *
+     * @return Response
+     */
+    public function export(QualiteQuestionnaire $questionnaire): Response
+    {
+
+    }
+
+    /**
+     * @Route("/questionnaire/{questionnaire}", name="administratif_enquete_delete", methods={"DELETE"})
+     *
+     * @param QualiteQuestionnaire $questionnaire
+     *
+     * @return Response
+     */
+    public function delete(Request $request, QualiteQuestionnaire $questionnaire): Response
+    {
+
     }
 }

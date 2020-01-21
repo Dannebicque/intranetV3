@@ -55,14 +55,14 @@
 </style>
 	<pattern id="Pattern" x="0" y="0" width="400" height="50" patternUnits="userSpaceOnUse">
    <rect x="0" y="0" width="0" height="50" fill="#146F88">
-   	<animate attributeName="width" from="0" to="400" dur="2s" fill="freeze"
-			 repeatCount="indefinite"/>
+   	<animate id="op" attributeName="width" from="0" to="400" dur="2s" fill="freeze"
+			 repeatCount="indefinite" begin="0s;op1.end+20s"/>
    </rect>
  </pattern>
 	<pattern id="Pattern2" x="0" y="0" width="800" height="50" patternUnits="userSpaceOnUse">
    <rect x="0" y="0" width="0" height="50" fill="#46ABBC">
-   	<animate attributeName="width" from="0" to="800" dur="4s" fill="freeze"
-			 repeatCount="indefinite"/>
+   	<animate id="op1" attributeName="width" from="0" to="800" dur="4s" fill="freeze"
+			 repeatCount="indefinite" begin="0s;op1.end+6s"/>
    </rect>
  </pattern>
 	<pattern id="Pattern3" x="0" y="0" width="400" height="50" patternUnits="userSpaceOnUse">

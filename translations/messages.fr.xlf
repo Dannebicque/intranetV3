@@ -12614,19 +12614,13 @@
     <unit id="XuCvAGp" name="quizz.question.index.heading">
       <segment>
         <source>quizz.question.index.heading</source>
-        <target>quizz.question.index.heading</target>
+        <target>Question disponible pour un Quizz</target>
       </segment>
     </unit>
     <unit id="lCzVw3d" name="retour.administratif">
       <segment>
         <source>retour.administratif</source>
         <target>retour.administratif</target>
-      </segment>
-    </unit>
-    <unit id="LE4.Mad" name="quizz.question.index.index.heading">
-      <segment>
-        <source>quizz.question.index.index.heading</source>
-        <target>quizz.question.index.index.heading</target>
       </segment>
     </unit>
     <unit id="pmlAXKa" name="quizz.question.new.heading">
