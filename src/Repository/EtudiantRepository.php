@@ -296,4 +296,33 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function statistiquesEtudiants()
+    {
+        //SELECT count(etudiant.id) FROM `etudiant`
+        //INNER JOIN semestre ON semestre.id=etudiant.semestre_id
+        //INNER JOIN annee ON semestre.annee_id=annee.id
+        //INNER JOIN diplome ON annee.diplome_id=diplome.id
+        //WHERE diplome.actif=1 AND etudiant.annee_sortie=0
+        //GROUP BY diplome.id
+        $query = $this->createQueryBuilder('e')
+            ->select('d.id, count(e.id)')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
+            ->where('d.actif = :actif')
+            ->andWhere('e.anneeSortie = :sortie')
+            ->setParameter('actif', true)
+            ->setParameter('sortie', 0)
+            ->groupBy('d.id')
+            ->getQuery()
+            ->getResult();
+        $t = [];
+        foreach ($query as $q) {
+            $t[$q['id']] = $q[1];
+        }
+
+        return $t;
+
+    }
 }

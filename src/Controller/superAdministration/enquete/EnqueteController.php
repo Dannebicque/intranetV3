@@ -13,6 +13,7 @@ use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
+use App\Repository\EtudiantRepository;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QuizzEtudiantReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,10 +32,13 @@ class EnqueteController extends AbstractController
      *
      * @return Response
      */
-    public function index(DiplomeRepository $diplomeRepository): Response
+    public function index(EtudiantRepository $etudiantRepository, DiplomeRepository $diplomeRepository): Response
     {
+        $effectifs = $etudiantRepository->statistiquesEtudiants();
+
         return $this->render('super-administration/enquete/index.html.twig', [
-            'diplomes' => $diplomeRepository->findActifs()
+            'diplomes'  => $diplomeRepository->findActifs(),
+            'effectifs' => $effectifs
         ]);
     }
 

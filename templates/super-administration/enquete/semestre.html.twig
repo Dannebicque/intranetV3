@@ -38,7 +38,7 @@
                     <td>{{ questionnaire.libelle }}</td>
                     <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
                         .dateFermeture|format_datetime('long', 'short') }}</td>
-                    <td>{{ nbReponses }}</td>
+                    <td>{{ nbReponses }} / {{ semestre.etudiants|length }}</td>
                     <td>
 
                         <a href="{{ path('administratif_enquete_duplicate', {questionnaire: questionnaire.id}) }}"
