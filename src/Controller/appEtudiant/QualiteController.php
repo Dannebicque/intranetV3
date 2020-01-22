@@ -32,7 +32,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class QualiteController
  * @package App\Controller
  * @Route("/application/etudiant/qualite")
- * @IsGranted("ROLE_ETUDIANT")
  */
 class QualiteController extends BaseController
 {

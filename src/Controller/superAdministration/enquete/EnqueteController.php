@@ -9,9 +9,11 @@
 namespace App\Controller\superAdministration\enquete;
 
 use App\Entity\QualiteQuestionnaire;
+use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
+use App\Repository\PrevisionnelRepository;
 use App\Repository\QuizzEtudiantReponseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,6 +106,32 @@ class EnqueteController extends AbstractController
     }
 
     /**
+     * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
+     * @param PrevisionnelRepository         $previsionnelRepository
+     * @param QualiteQuestionnaireSection    $qualiteQuestionnaireSection
+     *
+     * @param Semestre                       $semestre
+     *
+     * @return Response
+     */
+    public function section(
+        QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
+        PrevisionnelRepository $previsionnelRepository,
+        QualiteQuestionnaireSection $qualiteQuestionnaireSection,
+        Semestre $semestre
+    ): Response {
+        $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($qualiteQuestionnaireSection->getQuestionnaire());
+
+        return $this->render('appEtudiant/qualite/section.html.twig', [
+            'ordre'         => $qualiteQuestionnaireSection->getOrdre(),
+            'section'       => $qualiteQuestionnaireSection->getSection(),
+            'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($semestre->getDiplome(),
+                $semestre->getAnneeUniversitaire()),
+            'reponses'      => $reponses
+        ]);
+    }
+
+    /**
      * @Route("/questionnaire/apercu/{questionnaire}", name="administratif_enquete_show")
      *
      * @param QualiteQuestionnaire $questionnaire
@@ -112,7 +140,7 @@ class EnqueteController extends AbstractController
      */
     public function show(QualiteQuestionnaire $questionnaire): Response
     {
-        return $this->render('super-administration/enquete/edit.html.twig', [
+        return $this->render('super-administration/enquete/show.html.twig', [
             'questionnaire' => $questionnaire,
             'semestre'      => $questionnaire->getSemestre()
         ]);
@@ -127,9 +155,11 @@ class EnqueteController extends AbstractController
      */
     public function reponses(QualiteQuestionnaire $questionnaire): Response
     {
-        return $this->render('super-administration/enquete/edit.html.twig', [
+        $reponses = $questionnaire->getQuizzEtudiantReponses();
+
+        return $this->render('super-administration/enquete/reponses.html.twig', [
             'questionnaire' => $questionnaire,
-            'semestre'      => $questionnaire->getSemestre()
+            'reponses'      => $reponses
         ]);
     }
 

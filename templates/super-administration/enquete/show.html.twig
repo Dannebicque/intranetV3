@@ -1,0 +1,31 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+  {{ 'administratif.qualite.questionnaire.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+  <div class="header-action">
+    <div class="buttons">
+      <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}"
+         class="btn btn-primary btn-float"
+         title="{{ 'atitle.retour_enquete'|trans }}"
+         data-provide="tooltip"
+         data-placement="bottom">
+        <i class="ti-arrow-left"></i>
+        <span class="sr-only">{{ 'atitle.retour_enquete'|trans }}</span>
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <h4 class="card-title">{{ 'administratif.qualite.questionnaire.show.heading'|trans }}</h4>
+    <div class="card-body">
+      {{ include('composants/_questionnaire.html.twig') }}
+    </div>
+  </div>
+{% endblock %}
+
+
