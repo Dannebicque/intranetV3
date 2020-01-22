@@ -177,7 +177,7 @@ class AbsenceController extends BaseController
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'date.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'absence.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
