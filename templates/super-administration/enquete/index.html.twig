@@ -30,7 +30,7 @@
                 {% for diplome in diplomes %}
                     <tr>
                         <td>{{ diplome.libelleLong }}</td>
-                        <td>Nb Etudiant</td>
+                        <td>{{ effectifs[diplome.id] }}</td>
                         <td>
                             {% for semestre in diplome.semestres %}
                                 <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}" class="btn
