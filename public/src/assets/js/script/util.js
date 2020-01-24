@@ -114,11 +114,15 @@ $(document).on('click', '.supprimer', function (e) {
 });
 
 function addCallout (message, label) {
+  var translate = new Array()
+  translate['success'] = 'Succès'
+  translate['error'] = 'Erreur'
+
   const html = '<div class="callout callout-' + label + '" role="alert">\n' +
     '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
     '                        <span>&times;</span>\n' +
     '                    </button>\n' +
-    '                    <h5>' + label + '</h5>\n' +
+    '                    <h5>' + translate[label] + '</h5>\n' +
     '                    <p>' + message + '</p>\n' +
     '                </div>'
 
