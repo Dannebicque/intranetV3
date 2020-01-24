@@ -425,7 +425,7 @@
                                                     data-id="{{ diplome.id }}">
                                                 <option value="">{{ 'non.selectione'|trans }}
                                                     / {{ 'aucun'|trans }}</option>
-                                                {% for personnel in user_data.personnels %}
+                                                {% for personnel in user_data.allPersonnels %}
                                                     <option value="pers{{ personnel.id }}"
                                                             {% if diplome.optResponsableQualite != null and diplome.optResponsableQualite.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                                 {% endfor %}

@@ -218,28 +218,27 @@ class DataUserSession
     /**
      * @param $diplome
      *
-     * @return mixed
+     * @return Semestre[]
      */
-    public function semestresByDiplome($diplome)
+    public function semestresByDiplome($diplome): array
     {
         return $this->semestreRepository->findByDiplome($diplome);
     }
 
     /**
-     * @return mixed
+     * @return Personnel[]
      */
-    public function getPersonnels()
+    public function getPersonnels(): array
     {
         return $this->personnelRepository->findByDepartement($this->departement->getId());
     }
 
     /**
-     * @return mixed
+     * @return Personnel[]
      */
-    public function getPersonnelsEnseignant()
+    public function getAllPersonnels(): array
     {
-        //todo: les administrations sont aussi des permanents ?
-        return $this->personnelRepository->findByType('permanent', $this->departement);
+        return $this->personnelRepository->findBy(['deleted' => false], ['nom' => 'ASC', 'prenom' => 'ASC']);
     }
 
     /**

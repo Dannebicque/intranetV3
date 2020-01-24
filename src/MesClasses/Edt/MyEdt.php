@@ -693,6 +693,7 @@ class MyEdt extends BaseEdt
     {
         if ($request->request->get('texte') !== '') {
             $plann->setTexte($request->request->get('texte'));
+            $plann->setMatiere(null);
         } else {
             $module = $this->matiereRepository->find($request->request->get('selectmatiere'));
             $plann->setMatiere($module);

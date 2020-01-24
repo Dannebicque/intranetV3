@@ -221,10 +221,14 @@ class AppExtension extends AbstractExtension
     public function telFormat($number): ?string
     {
         str_replace(['.', '-', ' '], '', $number);
+        if (strlen($number) === 9) {
+            $number = '0' . $number;
+        }
+
         if (strlen($number) === 10) {
             $str = chunk_split($number, 2, ' ');
         } else {
-            $str = $number;
+            $str = str_replace('.', ' ', $number);
         }
 
         return $str;

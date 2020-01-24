@@ -165,7 +165,7 @@ class MyConfiguration
             return $this->anneeUniversitaireRepository->find(substr($value, 9, strlen($value)));
         }
 
-        if (empty($value)) {
+        if (empty($value) && $value !== '0') {
             return null;
         }
 
