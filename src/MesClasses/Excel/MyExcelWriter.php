@@ -114,28 +114,49 @@ class MyExcelWriter
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
         //traiter les options
         //style n'est pas un tableau
-        if (is_array($options) && array_key_exists('style', $options) && $this->sheet->getCellByColumnAndRow($col,
+        if (is_array($options) && $this->sheet->getCellByColumnAndRow($col,
                 $row)) {
-                    switch ($options['style']) {
-                        case 'HORIZONTAL_RIGHT':
-                            $this->sheet->getCellByColumnAndRow($col,
-                                $row)->getStyle()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-                            break;
-                        case 'HORIZONTAL_CENTER':
-                            $this->sheet->getCellByColumnAndRow($col,
-                                $row)->getStyle()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                            break;
-                        case 'numerique':
-                            $this->sheet->getCellByColumnAndRow($col,
-                                $row)->getStyle()->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-                            break;
-                        case 'numerique3':
-                            $this->sheet->getCellByColumnAndRow($col,
-                                $row)->getStyle()->getNumberFormat()->setFormatCode('#,##0.000');
-                            break;
+            foreach ($options as $key => $valeur) {
+                switch ($key) {
+                    case 'style':
+                        switch ($valeur) {
+                            case 'HORIZONTAL_RIGHT':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                                break;
+                            case 'HORIZONTAL_CENTER':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                                break;
+                            case 'numerique':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                                break;
 
-                    }
+                            case 'numerique3':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getNumberFormat()->setFormatCode('#,##0.000');
+                                break;
+                        }
+                        break;
+                    case 'number_format':
+                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getNumberFormat()->setFormatCode($valeur);
+                        break;
+                    case 'color':
+                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->getColor()->setARGB('FF'.$valeur);
+                        break;
+                    case 'font-size':
+                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->setSize($valeur);
+                        break;
+                    case 'font-weight':
+                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->setBold(true);
+                        break;
+                    case 'wrap':
+                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getAlignment()->setWrapText(true);
+                        break;
                 }
+            }
+        }
     }
 
     /**
@@ -273,6 +294,13 @@ class MyExcelWriter
     public function mergeCells($cells): void
     {
         $this->sheet->mergeCells($cells);
+    }
+
+    public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
+    {
+        $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
+        $cell2 = Coordinate::stringFromColumnIndex($col2) . $lig2;
+        $this->sheet->getStyle($cell1 . ':' . $cell2)->getBorders()->getBottom()->setBorderStyle($array['size'])->getColor()->setARGB('FF'.$array['color']);
     }
 
     /**
