@@ -683,7 +683,7 @@ class MyEdt extends BaseEdt
 
     }
 
-    public function updateours(Request $request, EdtPlanning $plann)
+    public function updateCours(Request $request, EdtPlanning $plann)
     {
 
         return $this->updatePl($request, $plann);
@@ -698,9 +698,14 @@ class MyEdt extends BaseEdt
             $plann->setMatiere($module);
         }
 
+        if ($request->request->get('selectenseignant') !== '' && $request->request->get('selectenseignant') !== null) {
+            $pr = $this->personnelRepository->find($request->request->get('selectenseignant'));
+        } else {
+            $pr = null;
+        }
+
         $plann->setDebut($request->request->get('hdbt'));
         $plann->setFin($request->request->get('hfin'));
-        $pr = $this->personnelRepository->find($request->request->get('selectenseignant'));
         $plann->setIntervenant($pr);
         $plann->setSalle($request->request->get('salle'));
         $plann->setJour($request->request->get('jourc'));

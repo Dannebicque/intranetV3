@@ -75,7 +75,7 @@ class EdtActionsController extends BaseController
         if ($request->request->get('idEdtUpdate') !== '') {
             $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));
             if ($plann !== null) {
-                $pl = $myEdt->updateours($request, $plann);
+                $pl = $myEdt->updateCours($request, $plann);
             }
         } else {
             $pl = $myEdt->addCours($request);
