@@ -84,6 +84,10 @@ class HrsController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.edit.success.flash');
 
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_hrs_index');
+            }
+
             return $this->redirectToRoute('administration_hrs_index');
         }
 

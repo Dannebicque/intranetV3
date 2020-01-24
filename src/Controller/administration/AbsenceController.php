@@ -47,7 +47,7 @@ class AbsenceController extends BaseController
             $t['date'] = $abs->getDate() !== null ? $abs->getDate()->format('d/m/Y') : '';
             $t['id'] = $abs->getId();
             $t['heure'] = $abs->getHeure() !== null ? $abs->getHeure()->format('H:i') : '';
-            $t['matiere'] = $abs->getMatiere() !== null ? $abs->getMatiere()->getLibelle() : '';
+            $t['matiere'] = $abs->getMatiere() !== null ? $abs->getMatiere()->getDisplay() : '';
             $t['justifie'] = $abs->isJustifie();
             $tAbs[] = $t;
         }

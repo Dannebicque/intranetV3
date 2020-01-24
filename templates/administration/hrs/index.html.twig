@@ -66,22 +66,39 @@
                         <td colspan="11">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
-
-                {% form_theme form 'form/my-form.html.twig' %}
-                {{ form_start(form) }}
-                <tr>
-                    <td>{{ form_row(form.libelle, {'label_attr': {'class': 'sr-only'}}) }}</td>
-                    <td>{{ form_row(form.typeHrs, {'label_attr': {'class': 'sr-only'}}) }}</td>
-                    <td>{{ form_row(form.personnel, {'label_attr': {'class': 'sr-only'}}) }}</td>
-                    <td>{{ form_row(form.semestre, {'label_attr': {'class': 'sr-only'}}) }} ou {{ form_row(form.diplome, {'label_attr': {'class': 'sr-only'}}) }}</td>
-                    <td>{{ form_row(form.nbHeuresTd, {'label_attr': {'class': 'sr-only'}}) }}</td>
-                    <td>
-                        <input type="submit" value="Ajouter">
-                    </td>
-                </tr>
-                {{ form_end(form) }}
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.hrs.add.heading'|trans }}</h4>
+        <div class="card-body">
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.personnel) }}
+                    {{ form_row(form.libelle) }}
+                    {{ form_row(form.semestre) }}
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    {{ form_row(form.typeHrs) }}
+                    {{ form_row(form.nbHeuresTd) }}
+                    {{ form_row(form.diplome) }}
+                </div>
+
+            </div>
+            <div class="col-sm-12">
+                <div class="alert alert-info">
+                    Les HRS/Primes s'appliquent par semestre OU par diplôme.
+                </div>
+                {{ form_widget(form) }}
+                <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+                {{ form_end(form) }}
+            </div>
+
+
         </div>
     </div>
 
