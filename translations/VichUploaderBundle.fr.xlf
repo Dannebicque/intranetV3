@@ -1,80 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
-  <file id="VichUploaderBundle.fr">
-    <unit id="MVIu471" name="label.fichier">
-      <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>label.fichier</source>
-        <target>Fichier</target>
-      </segment>
-    </unit>
-    <unit id="DdW5EV0" name="label.logoFile">
-      <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>label.logoFile</source>
-        <target>label.logoFile</target>
-      </segment>
-    </unit>
-    <unit id="x7vVhiW" name="label.cv">
-      <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>label.cv</source>
-        <target>CV</target>
-      </segment>
-    </unit>
-    <unit id="F_My2fP" name="label.photo">
-      <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>label.photo</source>
-        <target>label.photo</target>
-      </segment>
-    </unit>
-    <unit id="U9dHZqv" name="label.apercu">
-      <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>label.apercu</source>
-        <target>Aperçu</target>
-      </segment>
-    </unit>
-    <unit id="lgWCmBh" name="help.ficheRenseignement">
-      <segment>
-        <source>help.ficheRenseignement</source>
-        <target>Fiche de renseignement à pré-remplir par l'entreprise afin de valider le stage de l'étudiant</target>
-      </segment>
-    </unit>
-    <unit id="B861HTo" name="Fichier">
-      <segment>
-        <source>Fichier</source>
-        <target>Fichier</target>
-      </segment>
-    </unit>
-    <unit id="2E7rrak" name="Photo">
-      <segment>
-        <source>Photo</source>
-        <target>Photo</target>
-      </segment>
-    </unit>
-    <unit id="5IbBWql" name="Votre CV">
-      <segment>
-        <source>Votre CV</source>
-        <target>Votre CV</target>
-      </segment>
-    </unit>
-    <unit id="Kz21ZMp" name="Logo du département">
-      <segment>
-        <source>Logo du département</source>
-        <target>Logo du département</target>
-      </segment>
-    </unit>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony"/>
+        </header>
+        <body>
+            <trans-unit id="MVIu471" resname="label.fichier">
+                <source>label.fichier</source>
+                <target>Fichier</target>
+                <note priority="1">obsolete</note>
+            </trans-unit>
+            <trans-unit id="DdW5EV0" resname="label.logoFile">
+                <source>label.logoFile</source>
+                <target>label.logoFile</target>
+                <note priority="1">obsolete</note>
+            </trans-unit>
+            <trans-unit id="x7vVhiW" resname="label.cv">
+                <source>label.cv</source>
+                <target>CV</target>
+                <note priority="1">obsolete</note>
+            </trans-unit>
+            <trans-unit id="F_My2fP" resname="label.photo">
+                <source>label.photo</source>
+                <target>label.photo</target>
+                <note priority="1">obsolete</note>
+            </trans-unit>
+            <trans-unit id="U9dHZqv" resname="label.apercu">
+                <source>label.apercu</source>
+                <target>Aperçu</target>
+                <note priority="1">obsolete</note>
+            </trans-unit>
+            <trans-unit id="lgWCmBh" resname="help.ficheRenseignement">
+                <source>help.ficheRenseignement</source>
+                <target>Fiche de renseignement à pré-remplir par l'entreprise afin de valider le stage de l'étudiant
+                </target>
+            </trans-unit>
+            <trans-unit id="B861HTo" resname="Fichier">
+                <source>Fichier</source>
+                <target>Fichier</target>
+            </trans-unit>
+            <trans-unit id="2E7rrak" resname="Photo">
+                <source>Photo</source>
+                <target>Photo</target>
+            </trans-unit>
+            <trans-unit id="5IbBWql" resname="Votre CV">
+                <source>Votre CV</source>
+                <target>Votre CV</target>
+            </trans-unit>
+            <trans-unit id="Kz21ZMp" resname="Logo du département">
+                <source>Logo du département</source>
+                <target>Logo du département</target>
+            </trans-unit>
+        </body>
   </file>
 </xliff>

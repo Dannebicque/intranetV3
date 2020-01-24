@@ -55,7 +55,7 @@
                                         data-alternance="{{ alternance.id }}"
                                         data-provide="selectpicker" data-live-search="true">
                                     <option value="" selected>Veuillez choisir</option>
-                                    {% for personnel in user_data.personnelsEnseignant %}
+                                    {% for personnel in user_data.personnels %}
                                         <option value="{{ personnel.id }}" {% if alternance.tuteurUniversitaire != null and personnel.id == alternance.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.display }}</option>
                                     {% endfor %}
                                 </select>

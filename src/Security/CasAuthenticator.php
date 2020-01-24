@@ -63,8 +63,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('cas_return', [],
             UrlGeneratorInterface::ABSOLUTE_URL));
-//        phpCAS::setFixedServiceURL($this->urlGenerator->generate('default_homepage', [],
-//            UrlGeneratorInterface::ABSOLUTE_URL));
 
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
@@ -112,7 +110,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $rolesTab = $token->getRoleNames();
-        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab, true)) {
+        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab,
+                true) || in_array('ROLE_SCOLARITE', $rolesTab, true) || in_array('ROLE_QUALITE', $rolesTab,
+                true) || in_array('ROLE_RH', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
             $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
         } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {

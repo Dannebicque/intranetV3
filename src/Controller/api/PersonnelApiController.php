@@ -59,18 +59,20 @@ class PersonnelApiController extends BaseController
         );
         $pers = [];
 
-        /** @var PersonnelDepartement $p */
+        /** @var Personnel $p */
         foreach ($personnels as $p) {
-            $t = [];
-            $t['nom'] = $p->getPersonnel() ? $p->getPersonnel()->getNom() : '';
-            $t['prenom'] = $p->getPersonnel() ? $p->getPersonnel()->getPrenom() : '';
-            $t['posteInterne'] = $p->getPersonnel() ? $p->getPersonnel()->getPosteInterne() : '';
-            $t['telBureau'] = $p->getPersonnel() ? $p->getPersonnel()->getTelBureau() : '';
-            $t['bureau1'] = $p->getPersonnel() ? $p->getPersonnel()->getBureau1() : '';
-            $t['numeroHarpege'] = $p->getPersonnel() ? $p->getPersonnel()->getNumeroHarpege() : '';
-            $t['mailUniv'] = $p->getPersonnel() ? $p->getPersonnel()->getMailUniv() : '';
-            $t['id'] = $p->getPersonnel() ? $p->getPersonnel()->getId() : '';
-            $pers[] = $t;
+            if ($p !== null) {
+                $t = [];
+                $t['nom'] = $p->getNom();
+                $t['prenom'] = $p->getPrenom();
+                $t['posteInterne'] = $p->getPosteInterne();
+                $t['telBureau'] = $p->getTelBureau();
+                $t['bureau1'] = $p->getBureau1();
+                $t['numeroHarpege'] = $p->getNumeroHarpege();
+                $t['mailUniv'] = $p->getMailUniv();
+                $t['id'] = $p->getId();
+                $pers[] = $t;
+            }
         }
 
         return new JsonResponse($pers);
