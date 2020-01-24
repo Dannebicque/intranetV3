@@ -20,65 +20,131 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">{{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Libelle</th>
-                <th>Période</th>
-                <th>Nb Réponse</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for questionnaire in  semestre.qualiteQuestionnaires %}
+    <div class="card">
+        <h4 class="card-title">{{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>{{ questionnaire.libelle }}</td>
-                    <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
-                        .dateFermeture|format_datetime('long', 'short') }}</td>
-                    <td>{{ nbReponses }} / {{ semestre.etudiants|length }}</td>
-                    <td>
-
-                        <a href="{{ path('administratif_enquete_duplicate', {questionnaire: questionnaire.id}) }}"
-                           class="btn btn-success btn-outline btn-square" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
-                        <a href="{{ path('administratif_enquete_show', {questionnaire: questionnaire.id}) }}"
-                           class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="ti-eye"></i></a>
-                        <a href="{{ path('administratif_enquete_edit', {questionnaire: questionnaire.id}) }}"
-                           class="btn btn-warning btn-outline btn-square"><i class="{{ iconEdit }}"
-                                                                             data-provide="tooltip"
-                                                                             data-placement="bottom"
-                                                                             title="{{ 'atitle.modifier'|trans }}"></i></a>
-                        <a href="{{ path('administratif_enquete_delete', {questionnaire: questionnaire.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire.id) }}"
-                           class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i
-                                    class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
-                                    title="{{ 'atitle.supprimer'|trans }}"></i></a>
-
-                        <a href="{{ path('administratif_enquete_reponses', {questionnaire: questionnaire.id}) }}"
-                           class="btn btn-success btn-outline btn-square"><i class="fa fa-bar-chart"
-                                                                             data-provide="tooltip"
-                                                                             data-placement="bottom"
-                                                                             title="{{ 'atitle.reponses'|trans }}"></i></a>
-                        <a href="{{ path('administratif_enquete_export', {questionnaire: questionnaire.id}) }}"
-                           class="btn btn-info btn-outline btn-square"><i class="fa fa-download"
-                                                                          data-provide="tooltip"
-                                                                          data-placement="bottom"
-                                                                          title="{{ 'atitle.export'|trans }}"></i></a>
-                    </td>
+                    <th>Libelle</th>
+                    <th>Période</th>
+                    <th>Nb Réponse</th>
+                    <th>Actions</th>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">
-                        Aucun questionnaire... En créer un ... <a href="{{ path('administratif_enquete_semestre_new',
-                            {semestre:semestre.id}) }}" class="btn btn-primary">Créer un questionnaire</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for questionnaire in  semestre.qualiteQuestionnaires %}
+                    <tr>
+                        <td>{{ questionnaire.libelle }}</td>
+                        <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
+                            .dateFermeture|format_datetime('long', 'short') }}</td>
+                        <td>{{ nbReponses }} / {{ semestre.etudiants|length }}</td>
+                        <td>
+
+                            <a href="{{ path('administratif_enquete_duplicate', {questionnaire: questionnaire.id}) }}"
+                               class="btn btn-success btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
+                            <a href="{{ path('administratif_enquete_show', {questionnaire: questionnaire.id}) }}"
+                               class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="ti-eye"></i></a>
+                            <a href="{{ path('administratif_enquete_edit', {questionnaire: questionnaire.id}) }}"
+                               class="btn btn-warning btn-outline btn-square"><i class="{{ iconEdit }}"
+                                                                                 data-provide="tooltip"
+                                                                                 data-placement="bottom"
+                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
+                            <a href="{{ path('administratif_enquete_delete', {questionnaire: questionnaire.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire.id) }}"
+                               class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i
+                                        class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                        title="{{ 'atitle.supprimer'|trans }}"></i></a>
+
+                            <a href="{{ path('administratif_enquete_reponses', {questionnaire: questionnaire.id}) }}"
+                               class="btn btn-success btn-outline btn-square"><i class="fa fa-bar-chart"
+                                                                                 data-provide="tooltip"
+                                                                                 data-placement="bottom"
+                                                                                 title="{{ 'atitle.reponses'|trans }}"></i></a>
+                            <a href="{{ path('administratif_enquete_export', {questionnaire: questionnaire.id}) }}"
+                               class="btn btn-info btn-outline btn-square"><i class="fa fa-download"
+                                                                              data-provide="tooltip"
+                                                                              data-placement="bottom"
+                                                                              title="{{ 'atitle.export'|trans }}"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">
+                            Aucun questionnaire... En créer un ...
+                            <a href="{{ path('administratif_enquete_semestre_new',
+                                {semestre:semestre.id}) }}" class="btn btn-primary">Créer un questionnaire</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'detail.enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
+        <div class="card-body">
+            <ul class="nav nav-tabs">
+                {% for questionnaire in  semestre.qualiteQuestionnaires %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                           href="#questionnaire{{ questionnaire.id }}">{{ questionnaire.libelle }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for questionnaire in  semestre.qualiteQuestionnaires %}
+                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                         id="questionnaire{{ questionnaire.id }}">
+                        Bouton pour relancer, pour exporter.
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Etudiant</th>
+                                <th>Répndu</th>
+                                <th>Le</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for etudiant in  semestre.etudiants %}
+                                <tr>
+                                    <td>{{ etudiant.display }}</td>
+                                    {% if quizzEtudiant[questionnaire.id] is defined and quizzEtudiant[questionnaire.id][etudiant.id] is defined %}
+                                        {% if quizzEtudiant[questionnaire.id][etudiant.id].termine == true %}
+                                            <td>Terminé</td>
+                                            <td>Validé
+                                                le {{ quizzEtudiant[questionnaire.id][etudiant.id]
+                                                .dateTermine|format_datetime('short', 'short') }}</td>
+                                        {% else %}
+                                            <td>En cours</td>
+                                            <td>Modifié le {{ quizzEtudiant[questionnaire.id][etudiant.id].updated|format_datetime('short','short') }}</td>
+                                        {% endif %}
+                                    {% else %}
+                                        <td>Non</td>
+                                        <td>-</td>
+                                    {% endif %}
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">
+                                        Aucun questionnaire... En créer un ...
+                                        <a href="{{ path('administratif_enquete_semestre_new',
+                                            {semestre:semestre.id}) }}" class="btn btn-primary">Créer un
+                                                                                                questionnaire</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

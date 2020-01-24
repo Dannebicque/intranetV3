@@ -209,9 +209,9 @@ class Etudiant extends Utilisateur implements Serializable
     private $departement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="etudiant")
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiant", mappedBy="etudiant")
      */
-    private $quizzEtudiantReponses;
+    private $quizzEtudiants;
 
     /**
      * Etudiant constructor.
@@ -241,7 +241,7 @@ class Etudiant extends Utilisateur implements Serializable
         $this->typeUser = 'ETU';
         $this->emprunts = new ArrayCollection();
         $this->empruntEtudiants = new ArrayCollection();
-        $this->quizzEtudiantReponses = new ArrayCollection();
+        $this->quizzEtudiants = new ArrayCollection();
     }
 
     /**
@@ -1170,30 +1170,30 @@ class Etudiant extends Utilisateur implements Serializable
     }
 
     /**
-     * @return Collection|QuizzEtudiantReponse[]
+     * @return Collection|QuizzEtudiant[]
      */
-    public function getQuizzEtudiantReponses(): Collection
+    public function getQuizzEtudiants(): Collection
     {
-        return $this->quizzEtudiantReponses;
+        return $this->quizzEtudiants;
     }
 
-    public function addQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    public function addQuizzEtudiant(QuizzEtudiant $quizzEtudiant): self
     {
-        if (!$this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
-            $this->quizzEtudiantReponses[] = $quizzEtudiantReponse;
-            $quizzEtudiantReponse->setEtudiant($this);
+        if (!$this->quizzEtudiants->contains($quizzEtudiant)) {
+            $this->quizzEtudiants[] = $quizzEtudiant;
+            $quizzEtudiant->setEtudiant($this);
         }
 
         return $this;
     }
 
-    public function removeQuizzEtudiantReponse(QuizzEtudiantReponse $quizzEtudiantReponse): self
+    public function removeQuizzEtudiant(QuizzEtudiant $quizzEtudiant): self
     {
-        if ($this->quizzEtudiantReponses->contains($quizzEtudiantReponse)) {
-            $this->quizzEtudiantReponses->removeElement($quizzEtudiantReponse);
+        if ($this->quizzEtudiants->contains($quizzEtudiant)) {
+            $this->quizzEtudiants->removeElement($quizzEtudiant);
             // set the owning side to null (unless already changed)
-            if ($quizzEtudiantReponse->getEtudiant() === $this) {
-                $quizzEtudiantReponse->setEtudiant(null);
+            if ($quizzEtudiant->getEtudiant() === $this) {
+                $quizzEtudiant->setEtudiant(null);
             }
         }
 

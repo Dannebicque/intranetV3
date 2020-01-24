@@ -10,16 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class QuizzEtudiantReponse extends BaseEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="quizzEtudiantReponses")
-     */
-    private $etudiant;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QualiteQuestionnaire", inversedBy="quizzEtudiantReponses")
-     */
-    private $questionnaire;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $valeur;
@@ -34,34 +24,15 @@ class QuizzEtudiantReponse extends BaseEntity
      */
     private $cleQuestion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuizzEtudiant", inversedBy="quizzEtudiantReponses")
+     */
+    private $quizzEtudiant;
 
-    public function __construct(QualiteQuestionnaire $qualiteQuestionnaire)
+
+    public function __construct(QuizzEtudiant $quizzEtudiant)
     {
-        $this->setQuestionnaire($qualiteQuestionnaire);
-    }
-
-    public function getEtudiant(): ?Etudiant
-    {
-        return $this->etudiant;
-    }
-
-    public function setEtudiant(?Etudiant $etudiant): self
-    {
-        $this->etudiant = $etudiant;
-
-        return $this;
-    }
-
-    public function getQuestionnaire(): ?QualiteQuestionnaire
-    {
-        return $this->questionnaire;
-    }
-
-    public function setQuestionnaire(?QualiteQuestionnaire $questionnaire): self
-    {
-        $this->questionnaire = $questionnaire;
-
-        return $this;
+        $this->setQuizzEtudiant($quizzEtudiant);
     }
 
     public function getValeur(): ?string
@@ -96,6 +67,18 @@ class QuizzEtudiantReponse extends BaseEntity
     public function setCleQuestion(string $cleQuestion): self
     {
         $this->cleQuestion = $cleQuestion;
+
+        return $this;
+    }
+
+    public function getQuizzEtudiant(): ?QuizzEtudiant
+    {
+        return $this->quizzEtudiant;
+    }
+
+    public function setQuizzEtudiant(?QuizzEtudiant $quizzEtudiant): self
+    {
+        $this->quizzEtudiant = $quizzEtudiant;
 
         return $this;
     }

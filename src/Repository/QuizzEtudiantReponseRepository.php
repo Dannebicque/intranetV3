@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Etudiant;
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteQuestionnaireSection;
+use App\Entity\QuizzEtudiant;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -26,33 +27,29 @@ class QuizzEtudiantReponseRepository extends ServiceEntityRepository
 
     /**
      * @param                      $cle
-     * @param QualiteQuestionnaire $questionnaire
-     * @param Etudiant             $etudiant
+     * @param QuizzEtudiant        $quizzEtudiant
      *
      * @return mixed
      * @throws NonUniqueResultException
      */
     public function findExistQuestion(
         $cle,
-        QualiteQuestionnaire $questionnaire,
-        Etudiant $etudiant
+        QuizzEtudiant $quizzEtudiant
     ) {
         return $this->createQueryBuilder('q')
             ->where('q.cleQuestion = :cle')
-            ->andWhere('q.etudiant = :etudiant')
-            ->andWhere('q.questionnaire = :questionnaire')
+            ->andWhere('q.quizzEtudiant = :quizzEtudiant')
             ->setParameter('cle', $cle)
-            ->setParameter('etudiant', $etudiant->getId())
-            ->setParameter('questionnaire', $questionnaire->getId())
+            ->setParameter('quizzEtudiant', $quizzEtudiant->getId())
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function findByQuestionnaire(QualiteQuestionnaire $questionnaire): array
+    public function findByQuestionnaire(QuizzEtudiant $quizzEtudiant): array
     {
         $reponses = $this->createQueryBuilder('q')
-            ->where('q.questionnaire = :questionnaire')
-            ->setParameter('questionnaire', $questionnaire->getId())
+            ->where('q.quizzEtudiant = :quizzEtudiant')
+            ->setParameter('quizzEtudiant', $quizzEtudiant->getId())
             ->getQuery()
             ->getResult();
 
@@ -63,18 +60,5 @@ class QuizzEtudiantReponseRepository extends ServiceEntityRepository
         }
 
         return $t;
-    }
-
-    public function compteReponse(Semestre $semestre)
-    {
-        $qb = $this->createQueryBuilder('prov');
-
-        return $this->createQueryBuilder('q')
-            ->select($qb->expr()->countDistinct('q.etudiant'))
-            ->innerJoin(QualiteQuestionnaire::class, 'qq', 'WITH', 'q.questionnaire = qq.id')
-            ->where('qq.semestre = :semestre')
-            ->setParameter('semestre', $semestre->getId())
-            ->getQuery()
-            ->getSingleScalarResult();
     }
 }

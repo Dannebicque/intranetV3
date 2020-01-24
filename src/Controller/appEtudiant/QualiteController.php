@@ -11,14 +11,17 @@ namespace App\Controller\appEtudiant;
 use App\Controller\BaseController;
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteQuestionnaireSection;
+use App\Entity\QuizzEtudiant;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
 use App\MesClasses\Mail\MyMailer;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QualiteQuestionnaireRepository;
 use App\Repository\QuizzEtudiantReponseRepository;
+use App\Repository\QuizzEtudiantRepository;
 use App\Repository\QuizzQuestionRepository;
 use App\Repository\QuizzReponseRepository;
+use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -57,26 +60,34 @@ class QualiteController extends BaseController
     /**
      * @Route("/complet/{uuid}", name="app_etudiant_qualite_questionnaire_complete")
      * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
-     * @param MyMailer             $myMailer
-     * @param QualiteQuestionnaire $qualiteQuestionnaire
+     * @param QuizzEtudiantRepository $quizzEtudiantRepository
+     * @param MyMailer                $myMailer
+     * @param QualiteQuestionnaire    $qualiteQuestionnaire
      *
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function complet(MyMailer $myMailer, QualiteQuestionnaire $qualiteQuestionnaire): Response
+    public function complet(QuizzEtudiantRepository $quizzEtudiantRepository, MyMailer $myMailer, QualiteQuestionnaire $qualiteQuestionnaire): Response
     {
-        if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getDiplome() !== null && $this->getConnectedUser()->getDiplome()->getOptResponsableQualite() !== null) {
-            $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
-                ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
-            $myMailer->sendMessage($this->getConnectedUser()->getMails(),
-                'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $qualiteQuestionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+        if ($quizzEtudiant !== null) {
+            $quizzEtudiant->setDateTermine(new DateTime('now'));
+            $quizzEtudiant->setTermine(false);
+            $this->entityManager->flush();
 
-            $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
-                ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
-            $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),
-                'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+            if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getDiplome() !== null && $this->getConnectedUser()->getDiplome()->getOptResponsableQualite() !== null) {
+                $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
+                    ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
+                $myMailer->sendMessage($this->getConnectedUser()->getMails(),
+                    'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+
+                $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
+                    ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
+                $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),
+                    'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+                return $this->redirectToRoute('application_index',['onglet' => 'qualite']);
+            }
         }
-
         return $this->redirectToRoute('erreur_666');
     }
 
@@ -89,11 +100,18 @@ class QualiteController extends BaseController
      * @return Response
      */
     public function section(
+        QuizzEtudiantRepository $quizzEtudiantRepository,
         QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
         PrevisionnelRepository $previsionnelRepository,
         QualiteQuestionnaireSection $qualiteQuestionnaireSection
     ): Response {
-        $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($qualiteQuestionnaireSection->getQuestionnaire());
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $qualiteQuestionnaireSection->getQuestionnaire()->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+        if ($quizzEtudiant !== null) {
+            $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($quizzEtudiant);
+        } else {
+            $reponses = [];
+        }
+
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'         => $qualiteQuestionnaireSection->getOrdre(),
@@ -119,15 +137,23 @@ class QualiteController extends BaseController
     public function sauvegardeReponse(
         QuizzQuestionRepository $quizzQuestionRepository,
         QuizzReponseRepository $quizzReponseRepository,
+        QuizzEtudiantRepository $quizzEtudiantRepository,
         QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
         Request $request,
         QualiteQuestionnaire $questionnaire
     ): JsonResponse {
         $cleReponse = $request->request->get('cleReponse');
         $cleQuestion = $request->request->get('cleQuestion');
+
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $questionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+        if ($quizzEtudiant === null) {
+            $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
+            $this->entityManager->persist($quizzEtudiant);
+
+        }
         /** @var QuizzEtudiantReponse $exist */
-        $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $questionnaire,
-            $this->getConnectedUser());
+        $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
+
         $t = explode('_', $cleReponse);
         $question = $quizzQuestionRepository->find(substr($t[3], 1, strlen($t[0])));
         if (strpos($t[4], 'c') === 0) {
@@ -138,8 +164,7 @@ class QualiteController extends BaseController
 
         if ($question !== null && $reponse !== null) {
             if ($exist === null) {
-                $qr = new QuizzEtudiantReponse($questionnaire);
-                $qr->setEtudiant($this->getConnectedUser());
+                $qr = new QuizzEtudiantReponse($quizzEtudiant);
                 $qr->setCleQuestion($cleQuestion);
 
                 if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
@@ -198,18 +223,25 @@ class QualiteController extends BaseController
     public function sauvegardeReponseTxt(
         QuizzQuestionRepository $quizzQuestionRepository,
         QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
+        QuizzEtudiantRepository $quizzEtudiantRepository,
         Request $request,
         QualiteQuestionnaire $questionnaire
     ): JsonResponse {
         $cleQuestion = $request->request->get('cleQuestion');
-        $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $questionnaire,
-            $this->getConnectedUser());
+
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $questionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+        if ($quizzEtudiant === null) {
+            $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
+            $this->entityManager->persist($quizzEtudiant);
+        }
+        /** @var QuizzEtudiantReponse $exist */
+        $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
+
         $t = explode('_', $cleQuestion);
         $question = $quizzQuestionRepository->find(substr($t[3], 1, strlen($t[0])));
         if ($question !== null) {
             if ($exist === null) {
-                $qr = new QuizzEtudiantReponse($questionnaire);
-                $qr->setEtudiant($this->getConnectedUser());
+                $qr = new QuizzEtudiantReponse($quizzEtudiant);
                 $qr->setCleQuestion($cleQuestion);
                 $qr->setCleReponse(null);
                 $qr->setValeur($request->request->get('value'));
