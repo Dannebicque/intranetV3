@@ -47,8 +47,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->andWhere('f.departement = :departement')
             ->setParameter('type', $type)
             ->setParameter('departement', $departement)
-            ->orderBy('p.nom', 'DESC')
-            ->orderBy('p.prenom', 'DESC')
+            ->orderBy('p.nom', 'asc')
+            ->orderBy('p.prenom', 'asc')
             ->getQuery()
             ->getResult();
     }
