@@ -6047,6 +6047,26 @@
         <source>type_hrs.add.success.flash</source>
         <target>Type de HRS/Prime créé avec succès</target>
       </trans-unit>
+      <trans-unit id="KnF45unU" resname="hrs.add.success.flash">
+        <source>hrs.edit.success.flash</source>
+        <target>HRS/Prime modifiée avec succès</target>
+      </trans-unit>
+      <trans-unit id="KnF46unU" resname="hrs.add.success.flash">
+        <source>hrs.duplicate.success.flash</source>
+        <target>HRS/Prime dupliquée avec succès</target>
+      </trans-unit>
+      <trans-unit id="KnF47unU" resname="hrs.add.success.flash">
+        <source>hrs.delete.success.flash</source>
+        <target>HRS/Prime supprimée avec succès</target>
+      </trans-unit>
+      <trans-unit id="KnF48unU" resname="hrs.add.success.flash">
+        <source>hrs.delete.error.flash</source>
+        <target>Errur lors de la suppression de HRS/Prime</target>
+      </trans-unit>
+      <trans-unit id="KnF98unU" resname="adm.hrs.add.heading">
+        <source>adm.hrs.add.heading</source>
+        <target>Création d'une HRS/Prime</target>
+      </trans-unit>
       <trans-unit id="5wc.rwT" resname="type_hrs.edit.success.flash">
         <source>type_hrs.edit.success.flash</source>
         <target>Type de HRS/Prime modifié avec succès</target>
