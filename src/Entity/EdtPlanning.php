@@ -1,11 +1,5 @@
-<?php /**
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/EdtPlanning.php
- * @author     David Annebicque
- * @project intranetv3
- * @date 26/08/2019 13:45
- * @lastUpdate 26/08/2019 13:13
- */ // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
+<?php
+// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/EdtPlanning.php
 // @author     David Annebicque
 // @project intranetv3
@@ -400,8 +394,8 @@ class EdtPlanning
             'salle'       => $this->getSalle(),
             'typecours'   => $this->getType(),
             'texte'       => $this->getTexte(),
-            'matiereId'   => $this->getMatiere()->getId(),
-            'personnelId' => $this->getIntervenant()->getId(),
+            'matiereId'   => $this->getMatiere() !== null ? $this->getMatiere()->getId() : null,
+            'personnelId' => $this->getIntervenant()!== null ?$this->getIntervenant()->getId(): null,
             'groupe'      => $this->getGroupe()
         ];
     }

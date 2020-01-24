@@ -28,7 +28,7 @@ function updateBloc (id) {
       $('#jourc' + data.jour).prop('checked', true)
       $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
       $('#salle').selectpicker('val', data.salle)
-      $('#texte').selectpicker('val', data.texte)
+      $('#texte').val(data.texte)
       $('#selectmatiere').selectpicker('val', data.matiereId)
       $('#selectenseignant').selectpicker('val', data.personnelId)
       $('#idEdtUpdate').val(data.id)
