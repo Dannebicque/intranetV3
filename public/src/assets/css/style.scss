@@ -89,7 +89,7 @@ fieldset legend {
 }
 
 .table-edt {
-  border: 1px solid gray;
+  border: 1px solid #3f4a59;
   width: 100%;
 }
 
@@ -98,7 +98,7 @@ fieldset legend {
 }
 
 .table-edt td {
-  border: 1px solid gray;
+  border: 1px solid #3f4a59;
   max-width: 15px;
   margin: 0;
   padding: 0;
@@ -107,7 +107,7 @@ fieldset legend {
 }
 
 .table-edt th {
-  border: 1px solid gray;
+  border: 1px solid #3f4a59;
   font-style: italic;
   font-size: 10px;
   padding: 0;
@@ -128,10 +128,12 @@ fieldset legend {
 }
 
 .col-notes-header {
-  background-color: lightgrey;
+  background-color: #77808D;
   padding: 1em;
   margin: 0;
   grid-column-gap: 0px;
+  color: white;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
 }
 
 /* Grid EDT Etudiant */
@@ -153,38 +155,36 @@ fieldset legend {
 }
 
 .col-edt-header {
-  border: 2px solid #302929;
-  border-radius: 5px;
-  background-color: #998E8E;
+  background-color: #77808D;
   padding: 1em;
-  color: #EBEAEA;
+  color: white;
   text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
 }
 
 .col-edt-heure {
-  border: 2px solid #302929;
-  border-radius: 5px;
-  background-color: #998E8E;
+  background-color: #77808D;
   padding: 1em;
-  color: #EBEAEA;
+  color: white;
   text-align: center;
   grid-column: 1/2;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
 
 }
 
 .edt-cours {
-  border: 2px solid #302929;
-  border-radius: 5px;
   background-color: #EBEAEA;
   text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
 }
 
 table {
-  border: 1px solid lightgrey;
+  border: 1px solid #77808D;
 }
 
 thead {
-  background-color: lightgrey;
+  background-color: #77808D;
+  color: white;
 }
 
 /** Responsive */
@@ -306,9 +306,9 @@ thead {
 }
 
 .myedit {
-  color: #4d5259;
+  color: #77808D;
   text-decoration: none;
-  border-bottom: dotted 1px #4d5259;
+  border-bottom: dotted 1px #77808D;
 }
 
 .myedit:after {
@@ -319,7 +319,7 @@ thead {
   text-decoration: inherit;
 
   margin-left: 5px;
-  color: lightgrey;
+  color: #77808D;
 }
 
 .ui-selected {
@@ -331,7 +331,7 @@ thead {
 }
 
 #lottie {
-  background-color: #fff;
+  background-color: #77808D;
   width: 100%;
   height: 100%;
   display: block;
