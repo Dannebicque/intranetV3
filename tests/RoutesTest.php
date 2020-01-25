@@ -9,7 +9,7 @@ class RoutesTest extends WebTestCase
 {
     private $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = static::createClient();
     }
@@ -18,7 +18,7 @@ class RoutesTest extends WebTestCase
     /**
      * @dataProvider providePermanentUrls
      */
-    public function testPermanentUrl($url)
+    public function testPermanentUrl($url): void
     {
         $this->client->request('GET', $url);
         $this->assertEquals(

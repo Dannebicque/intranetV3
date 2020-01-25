@@ -127,21 +127,20 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/edit", name="administration_previsionnel_edit", options={"expose":true})
+     * @Route("/ajax/edit/{id}", name="administration_previsionnel_ajax_edit", options={"expose":true})
      * @param MyPrevisionnel $myPrevisionnel
-     * @param Request        $request
      *
      * @return JsonResponse
      */
-    public function edit(MyPrevisionnel $myPrevisionnel, Request $request): JsonResponse
+    public function edit(MyPrevisionnel $myPrevisionnel, Request $request, Previsionnel $previsionnel): JsonResponse
     {
-        $id = $request->request->get('pk');
-        $name = $request->request->get('name');
-        $value = Tools::convertToFloat($request->request->get('value'));
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
 
-        $update = $myPrevisionnel->update($id, $name, $value);
+        $update = $myPrevisionnel->update($previsionnel, $name, $value);
 
-        return $update ? new JsonResponse('', 200) : new JsonResponse('erreur', 500);
+        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+            Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
