@@ -122,6 +122,10 @@ class ActualiteController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.edit.success.flash');
 
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_actualite_index');
+            }
+
             return $this->redirectToRoute('administration_actualite_edit', ['id' => $actualite->getId()]);
         }
 

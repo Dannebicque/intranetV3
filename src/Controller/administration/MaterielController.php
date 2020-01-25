@@ -121,6 +121,9 @@ class MaterielController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'materiel.edit.success.flash');
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_materiel_index');
+            }
 
             return $this->redirectToRoute('administration_materiel_edit', ['id' => $materiel->getId()]);
         }
