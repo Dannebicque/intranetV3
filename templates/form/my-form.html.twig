@@ -1,14 +1,5 @@
 {% use "bootstrap_4_layout.html.twig" %}
 
-{#{% block _stage_periode_stagePeriodeInterruptions_entry_widget %}#}
-    {#<h5>Période d'interruption</h5>#}
-    {#<div class="row">#}
-        {#<div class="col-md-6">{{ form_row(form.dateDebut) }}</div>#}
-        {#<div class="col-md-6">{{ form_row(form.dateFin) }}</div>#}
-        {#<div class="col-md-12">{{ form_row(form.motif) }}</div>#}
-    {#</div>#}
-{#{% endblock %}#}
-
 {% block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
         <div class="row">
@@ -85,14 +76,21 @@
 {% endblock %}
 
 {% block collection_widget %}
-        {% if prototype is defined %}
-            {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
-            {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
-        {% endif %}
-        {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
-        {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
-        {% set attr = attr|merge({'data-name-prefix': full_name}) %}
-        {{ block('form_widget') }}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
+        {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
+    {% endif %}
+    {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
+    {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
+    {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+    {{ block('form_widget') }}
 {% endblock collection_widget %}
+
+{% block quill_js_row %}
+    {{ form_label(form) }}
+    <div id="{{ id }}" name="{{ name }}" data-provide="quill">
+        {{ value }}
+    </div>
+{% endblock %}
 
 

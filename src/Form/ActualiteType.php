@@ -9,6 +9,7 @@
 namespace App\Form;
 
 use App\Entity\Actualite;
+use App\Form\Type\QuillJsType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,8 +33,9 @@ class ActualiteType extends AbstractType
                 'label' => 'label.titre',
             ])
             ->add('texte', TextareaType::class, [
-                'label' => 'label.texte',
-                'attr'  => ['data-provide' => 'quill', 'rows' => 10]
+                'label'    => 'label.texte',
+                'required' => true,
+                'attr'     => ['data-provide' => 'quill', 'rows' => 10]
             ]);
     }
 
