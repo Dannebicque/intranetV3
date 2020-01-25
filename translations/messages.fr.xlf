@@ -4678,6 +4678,10 @@
         <target>Evénement dupliqué avec succès</target>
         <note priority="1">obsolete</note>
       </trans-unit>
+      <trans-unit id="qLtuuCdG" resname="ue.duplicate.success.flash">
+        <source>ue.duplicate.success.flash</source>
+        <target>UE dupliquée avec succès</target>
+      </trans-unit>
       <trans-unit id="wqu21Dr" resname="date.edit.success.flash">
         <source>date.edit.success.flash</source>
         <target>Evénement modifié avec succès</target>

@@ -30,11 +30,8 @@ class ParcourType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('codeApogee', TextType::class, ['label' => 'label.code_apogee'])
-            ->add('codeVersion', TextType::class, ['label' => 'label.code_version'])
-            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_apogee'])
             ->add('semestre', EntityType::class, [
                 'class'         => Semestre::class,
                 'required'      => true,
