@@ -180,7 +180,7 @@ function updateData() {
 }
 
 function genereInput ($obj) {
-  let $html = '<div id="myEdit-zone"><input type="text" value="' + $obj.html() + '" id="myedit-input" />'
+  let $html = '<div id="myEdit-zone"><input type="text" value="' + $obj.html().trim() + '" id="myedit-input" />'
   $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="ti-check"></i></button>'
   $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="ti-close"></i></button></div>'
   return $html

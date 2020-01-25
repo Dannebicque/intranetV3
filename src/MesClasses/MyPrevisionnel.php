@@ -433,13 +433,12 @@ class MyPrevisionnel
         }
     }
 
-    public function update($id, $name, $value): bool
+    public function update(Previsionnel $previ, $name, $value): bool
     {
-        $previ = $this->previsionnelRepository->find($id);
         if ($previ) {
             $method = 'set' . $name;
             if (method_exists($previ, $method)) {
-                $previ->$method($value);
+                $previ->$method(Tools::convertToFloat($value));
                 $this->entityManager->persist($previ);
                 $this->entityManager->flush();
 
@@ -506,7 +505,7 @@ class MyPrevisionnel
                 if ($previ->getMatiere()->getSemestre() !== null && $previ->getMatiere()->getSemestre()->getAnnee() !== null) {
                     //CODE VET
                     $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                        $previ->getMatiere()->getSemestre()->getAnnee()->getCodeApogee());
+                        $previ->getMatiere()->getSemestre()->getAnnee()->getCodeEtape());
                     $colonne++;
                     //LIBELLE VET
                     $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
@@ -521,7 +520,7 @@ class MyPrevisionnel
                 }
                 $colonne++;
                 //CODE ELEMENT*
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getMatiere()->getCodeApogee());
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getMatiere()->getCodeElement());
                 $colonne++;
                 //LIBELLE ELEMENT
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getMatiere()->getLibelle());
@@ -589,11 +588,18 @@ class MyPrevisionnel
             //CODE VET
             if ($previ->getSemestre() !== null && $previ->getSemestre()->getAnnee() !== null) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    $previ->getSemestre()->getAnnee()->getCodeApogee());
+                    $previ->getSemestre()->getAnnee()->getCodeEtape());
                 $colonne++;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getSemestre()->getAnnee()->getLibelleLong());
-            } else {
+            } elseif ($previ->getDiplome() !== null) {
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                    $previ->getDiplome()->getCodeEtape());
+                $colonne++;
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                    $previ->getDiplome()->getLibelle());
+            }
+            {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
                 $colonne++;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');

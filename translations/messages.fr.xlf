@@ -6113,15 +6113,15 @@
       </trans-unit>
       <trans-unit id="qG124ae" resname="super-admin.personnel-formation.heading">
         <source>super-admin.personnel-formation.heading</source>
-        <target>Gestion des personnels pour la formation %formation%</target>
+        <target>Gestion des personnels pour le département %formation%</target>
       </trans-unit>
       <trans-unit id="Kz2DD8M" resname="sa.ajouter.personnel">
         <source>sa.ajouter.personnel</source>
-        <target>Associer le personnel à la formation</target>
+          <target>Associer le personnel au département</target>
       </trans-unit>
       <trans-unit id="v4vSj51" resname="super-admin.add.personnel-formation.heading">
         <source>super-admin.add.personnel-formation.heading</source>
-        <target>Ajouter un personnel à la formation %formation%</target>
+          <target>Ajouter un personnel au département %formation%</target>
       </trans-unit>
       <trans-unit id="area7Ni" resname="sa.creer.personnel">
         <source>sa.creer.personnel</source>
@@ -6137,7 +6137,7 @@
       </trans-unit>
       <trans-unit id="Byj02Tr" resname="formation.par.defaut.sauvegarde">
         <source>formation.par.defaut.sauvegarde</source>
-        <target>Formation par défaut sauvegardée</target>
+          <target>Département par défaut sauvegardée</target>
       </trans-unit>
       <trans-unit id="2cOTHPo" resname="diplome.create.success.flash">
         <source>diplome.create.success.flash</source>
@@ -6798,7 +6798,7 @@
       </trans-unit>
       <trans-unit id="XXU7PEA" resname="label.semaineFormation">
         <source>label.semaineFormation</source>
-        <target>Numéro Semaine Formation</target>
+          <target>Numéro Semaine Département</target>
       </trans-unit>
       <trans-unit id="WvfdrV3" resname="label.semaineReelle">
         <source>label.semaineReelle</source>
@@ -8168,7 +8168,7 @@
       </trans-unit>
       <trans-unit id="rPQVquO" resname="formation.par.defaut.erreur">
         <source>formation.par.defaut.erreur</source>
-        <target>messages</target>
+          <target>Erreur lors de la sauvegarde du département par défaut</target>
       </trans-unit>
       <trans-unit id="YpBxDdK" resname="menu.etudiants">
         <source>menu.etudiants</source>
@@ -8424,7 +8424,7 @@
       </trans-unit>
       <trans-unit id="FcbbpYc" resname="help.opt_qualite">
         <source>help.opt_qualite</source>
-        <target>Indiquer si la formation est certifiée par un organisme qualité.</target>
+          <target>Indiquer si le diplôme est certifié par un organisme qualité.</target>
       </trans-unit>
       <trans-unit id="5vuiQml" resname="retour.qualite">
         <source>retour.qualite</source>
