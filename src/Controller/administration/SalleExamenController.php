@@ -111,7 +111,9 @@ class SalleExamenController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle_examen.edit.success.flash');
-
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_salle_examen_index');
+            }
 
             return $this->redirectToRoute('administration_salle_examen_edit', ['id' => $salleExaman->getId()]);
         }

@@ -132,6 +132,9 @@ class PersonnelController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.edit.success.flash');
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_personnel_index');
+            }
 
             return $this->redirectToRoute('administration_personnel_edit', ['id' => $personnel->getId()]);
         }

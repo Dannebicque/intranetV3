@@ -4,12 +4,11 @@
         <div class="card-header-actions" style="">
             {% if settings('MODIFICATION_PPN') == 1 %}
                 <span>
-                                <a href="{{ path('administration_matiere_new',{diplome:diplome.id}) }}"
-                                   class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"><i class="ti-plus"></i></a>
-
-                            </span>
+                    <a href="{{ path('administration_matiere_new',{diplome:diplome.id}) }}"
+                       class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
+                       data-provide="tooltip"
+                       data-placement="bottom"><i class="ti-plus"></i></a>
+                </span>
             {% endif %}
             <ul class="card-controls">
                 <li class="dropdown">

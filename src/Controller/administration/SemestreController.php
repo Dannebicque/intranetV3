@@ -13,6 +13,7 @@ use App\Entity\Semestre;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\RattrapageRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,6 +52,7 @@ class SemestreController extends BaseController
      *
      * @return Response
      * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     public function index(
         AbsenceJustificatifRepository $absenceJustificatifRepository,

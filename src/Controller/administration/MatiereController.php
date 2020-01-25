@@ -106,7 +106,6 @@ class MatiereController extends BaseController
      */
     public function create(Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        //todo: gérer
         if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
 
             $matiere = new Matiere();
@@ -122,6 +121,9 @@ class MatiereController extends BaseController
                 $this->entityManager->persist($matiere);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
+                if ($request->request->get('btn_update') !== null) {
+                    return $this->redirectToRoute('administration_matiere_index');
+                }
 
                 return $this->redirectToRoute('administration_matiere_index');
             }
