@@ -128,7 +128,7 @@ fieldset legend {
 }
 
 .col-notes-header {
-  background-color: #77808D;
+  background-color: #3f4a59;
   padding: 1em;
   margin: 0;
   grid-column-gap: 0px;
@@ -155,7 +155,7 @@ fieldset legend {
 }
 
 .col-edt-header {
-  background-color: #77808D;
+  background-color: #3f4a59;
   padding: 1em;
   color: white;
   text-align: center;
@@ -163,7 +163,7 @@ fieldset legend {
 }
 
 .col-edt-heure {
-  background-color: #77808D;
+  background-color: #3f4a59;
   padding: 1em;
   color: white;
   text-align: center;
@@ -179,11 +179,11 @@ fieldset legend {
 }
 
 table {
-  border: 1px solid #77808D;
+  border: 1px solid #3f4a59;
 }
 
 thead {
-  background-color: #77808D;
+  background-color: #3f4a59;
   color: white;
 }
 
@@ -228,6 +228,7 @@ thead {
 .ql-snow .ql-picker.ql-customsfields .ql-picker-item::before {
   content: attr(data-value);
 }
+
 
 /*
 .ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[prenom]"]::before,

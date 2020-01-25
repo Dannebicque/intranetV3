@@ -132,10 +132,10 @@ app.ready(function () {
   require('./plugins/myQuill')
 
   const preloader = $('.preloader')
-  if (preloader.length) {
-    const speed = preloader.dataAttr('hide-spped', 600)
-    preloader.fadeOut(speed)
-  }
+  // if (preloader.length) {
+  //   const speed = preloader.dataAttr('hide-spped', 600)
+  //   preloader.fadeOut(speed)
+  // }
 
   $(document).on({
     ajaxStart: function () {
