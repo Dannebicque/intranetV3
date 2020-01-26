@@ -60,6 +60,11 @@ class MyMessagerie
     private $typeGroupeRepository;
 
     /**
+     * @var Departement
+     */
+    private $departement;
+
+    /**
      * MyMessagerie constructor.
      *
      * @param MailerInterface        $mailer
@@ -97,7 +102,7 @@ class MyMessagerie
         $message = (new TemplatedEmail())
             ->subject($this->sujet)
             ->from($this->expediteur->getMailuniv())
-            ->textTemplate('mails:message.txt.twig')
+            ->textTemplate('mails/message.txt.twig')
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
@@ -131,7 +136,7 @@ class MyMessagerie
         $message = (new TemplatedEmail())
             ->subject($this->sujet)
             ->from($this->expediteur->getMailuniv())
-            ->textTemplate('mails:message.txt.twig')
+            ->textTemplate('mails/message.txt.twig')
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
@@ -157,7 +162,7 @@ class MyMessagerie
             $this->saveDestinataireEtudiantDatabase($mess, $etu);
             $this->nbEtudiants++;
             $this->myMailer->send($message);
-            $this->nbMessagesEnvoyes ++;
+            $this->nbMessagesEnvoyes++;
             //todo: envoyer notification ?
         }
 
@@ -177,7 +182,7 @@ class MyMessagerie
 
     public function setCopie(array $copie): void
     {
-        //envoi d'une copie du message à des destinataires
+        $this->sendToPersonnels($copie);
 
     }
 
@@ -189,9 +194,9 @@ class MyMessagerie
         //envoi de la synthèse à l'auteur
         $email = (new TemplatedEmail())
             ->subject('Votre message : ' . $this->sujet)
-            ->from()
+            ->from(Configuration::get('MAIL_FROM'))
             ->to($this->expediteur->getMailuniv())
-            ->textTemplate('mails:messageSynthese.txt.twig')
+            ->textTemplate('mails/messageSynthese.txt.twig')
             ->context([
                 'message'    => $this->message,
                 'expediteur' => $this->expediteur,
@@ -213,18 +218,21 @@ class MyMessagerie
     public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement): void
     {
         $this->departement = $departement;
-
         switch ($typeDestinataire) {
             case 'p':
                 $this->sendToPersonnels($destinataires);
                 break;
             case 's':
-                $this->getEtudiantsSemestre($destinataires);
-                $this->sendToEtudiants();
+                foreach ($destinataires as $destinataire) {
+                    $this->getEtudiantsSemestre($destinataire);
+                    $this->sendToEtudiants();
+                }
                 break;
             case 'g':
-                $this->getEtudiantsGroupe($destinataires);
-                $this->sendToEtudiants();
+                foreach ($destinataires as $destinataire) {
+                    $this->getEtudiantsGroupe($destinataire);
+                    $this->sendToEtudiants();
+                }
                 break;
             case 'e':
                 $this->prepareEtudiants($destinataires);
@@ -269,26 +277,15 @@ class MyMessagerie
     private function getEtudiantsSemestre($codeSemestre): void
     {
         //récupére tous les étudiants d'un semestre
-        $this->etudiants = $this->etudiantRepository->findBySemestreCodeApogee($codeSemestre);
-    }
-
-    private function getEtudiantsTypeGroupe($codeTypeGroupe): void
-    {
-        //récupère tous les étudiants d'un ensemble de groupe
-        $typeGroupes = $this->typeGroupeRepository->findOneBy(['libelle' => $codeTypeGroupe]);
-        if ($typeGroupes !== null) {
-            foreach ($typeGroupes->getGroupes() as $groupe) {
-                $this->etudiants[] = $groupe->getEtudiants();
-            }
-        }
+        $this->etudiants = $this->etudiantRepository->findBySemestre($codeSemestre);
     }
 
     private function getEtudiantsGroupe($codeGroupe): void
     {
         //récupère tous les étudiants d'un ensemble de groupe
-        $groupe = $this->groupeRepository->findOneBy(['codeApogee' => $codeGroupe]);
+        $groupe = $this->groupeRepository->find($codeGroupe);
         if ($groupe !== null) {
-            $this->etudiants[] = $groupe->getEtudiants();
+            $this->etudiants = $groupe->getEtudiants();
         }
     }
 

@@ -15,22 +15,6 @@
         </div>
 
         <span class="divider-line mx-1"></span>
-
-{#        <div class="dropdown">#}
-{#            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="Labels"#}
-{#               data-provide="tooltip"><i class="fa fa-tag pr-1"></i></a>#}
-{#            <div class="dropdown-menu">#}
-{#                <a class="dropdown-item" href="#"><span#}
-{#                            class="badge badge-ring badge-danger mr-2"></span> Family</a>#}
-{#                <a class="dropdown-item" href="#"><span#}
-{#                            class="badge badge-ring badge-warning mr-2"></span> Friends</a>#}
-{#                <a class="dropdown-item" href="#"><span class="badge badge-ring badge-info mr-2"></span>#}
-{#                    Work</a>#}
-{#                <a class="dropdown-item" href="#"><span#}
-{#                            class="badge badge-ring badge-purple mr-2"></span> Bills</a>#}
-{#            </div>#}
-{#        </div>#}
-
         <span class="divider-line mx-1 d-none d-md-block"></span>
 
         <div class="dropdown d-none d-md-block">
@@ -143,7 +127,7 @@
 
 
 <footer class="flexbox align-items-center py-20">
-    <span class="flex-grow text-right text-lighter pr-2">1-20 of {{ messages|length }}</span>
+    <span class="flex-grow text-right text-lighter pr-2">{{ pagination.depart }}-{{ pagination.fin }} sur {{ messages|length }}</span>
     <nav>
         <a class="btn btn-sm btn-square disabled" href="#"><i class="ti-angle-left"></i></a>
         <a class="btn btn-sm btn-square" href="#"><i class="ti-angle-right"></i></a>

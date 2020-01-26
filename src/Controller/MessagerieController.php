@@ -157,8 +157,9 @@ class MessagerieController extends BaseController
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
-            'filtre'   => $filtre,
-            'messages' => $messages
+            'filtre'     => $filtre,
+            'messages'   => $messages,
+            'pagination' => ['depart' => 1, 'fin' => count($messages)]
         ]);
     }
 
@@ -191,7 +192,7 @@ class MessagerieController extends BaseController
         }
 
         $sujet = $request->request->get('sujet');
-        $copie = explode(',', $request->request->get('copie'));
+        $copie = $request->request->get('copie');
         $message = $request->request->get('message');
 
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());

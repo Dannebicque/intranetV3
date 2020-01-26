@@ -75,4 +75,16 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getNbUnread(Personnel $user)
+    {
+        return $this->createQueryBuilder('m')
+            ->select('count(m.id)')
+            ->where('m.personnel = :personnel')
+            ->setParameter('personnel', $user->getId())
+            ->andWhere('m.etat = :unread')
+            ->setParameter('unread', 'U')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

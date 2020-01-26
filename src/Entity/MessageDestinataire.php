@@ -46,7 +46,7 @@ abstract class MessageDestinataire extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $starred;
+    private $starred = false;
 
 
     public function getDateLu(): ?DateTimeInterface

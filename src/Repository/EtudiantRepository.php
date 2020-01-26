@@ -251,16 +251,6 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreCodeApogee($codeSemestre)
-    {
-        return $this->createQueryBuilder('e')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
-            ->where('s.codeApogee = :code')
-            ->setParameter('code', $codeSemestre)
-            ->getQuery()
-            ->getResult();
-    }
-
     /**
      * @param $code
      *
