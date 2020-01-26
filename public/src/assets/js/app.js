@@ -336,17 +336,11 @@ jQuery.fn.scrollToEnd = function() {
 
   };
 
-
-
-
   // Load a JS file
   //
   app.loadScript = function (url, callback) {
     $.getScript(url, callback);
   };
-
-
-
 
   // Load a CSS file and insert ot after core.css.min
   //
@@ -368,9 +362,6 @@ jQuery.fn.scrollToEnd = function() {
       $('head link:first').after( $('<link href="'+ base + url +'" rel="stylesheet">') );
     }
   };
-
-
-
 
   app.key = function(key, fn) {
     app.unkey(key);
@@ -416,10 +407,6 @@ jQuery.fn.scrollToEnd = function() {
 
     return target;
   };
-
-
-
-
 
   // Get URL of an action from element.
   //
@@ -471,30 +458,6 @@ jQuery.fn.scrollToEnd = function() {
     if ( app.defaults.smoothscroll ) {
       app.provide('smoothscroll');
     }
-
-
-
-    // Google map
-    //
-    if ( $('[data-provide~="map"]').length && window["google.maps.Map"] === undefined ) {
-      if ( app.defaults.googleApiKey != null ) {
-        $.getScript("https://maps.googleapis.com/maps/api/js?key="+ app.defaults.googleApiKey +"&callback=app.map");
-      }
-    }
-
-
-    // Google Analytics
-    //
-    if ( app.defaults.googleAnalyticsId ) {
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', app.defaults.googleAnalyticsId, 'auto');
-      ga('send', 'pageview');
-    }
-
 
     // Recover saved states
     //
@@ -613,14 +576,11 @@ jQuery.fn.scrollToEnd = function() {
     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, len);
   }
 
-
-
   // Convert fooBarBaz to foo-bar-baz
   //
   app.optionToData = function(name) {
     return name.replace(/([A-Z])/g, "-$1").toLowerCase();
   }
-
 
   // Convert foo-bar-baz to fooBarBaz
   //
@@ -740,9 +700,6 @@ jQuery.fn.scrollToEnd = function() {
     msobservers.push(new MsObserver(selector, callbackOnce));
   };
 
-
-
-
   provider.inject = function(pluginName) {
 
     if ( ! app.defaults.autoload ) {
@@ -795,8 +752,6 @@ jQuery.fn.scrollToEnd = function() {
 
       // Add to loaded list
       loaded.push(pluginName);
-
-      //$LAB.runQueue();
 
       return;
     }
@@ -904,32 +859,6 @@ jQuery.fn.scrollToEnd = function() {
       var js = 'bootstrap-datepicker/locales/bootstrap-datepicker.'+ $(this).data('language') +'.min.js';
       provider.queueScript(js);
     });
-
-    // Load Summernote language file
-    //
-    $('[data-provide="summernote"][data-lang]').each(function(){
-      var js = 'summernote/lang/summernote-'+ $(this).data('lang') +'.js';
-      provider.queueScript(js);
-    });
-
-    // Load jsGrid language file
-    //
-    $('[data-provide="jsgrid"][data-lang]').each(function(){
-      var js = 'jsgrid/i18n/jsgrid-'+ $(this).data('lang') +'.js';
-      provider.queueScript(js);
-    });
-
-    // Fullcalendar
-    //
-    $('[data-provide="fullcalendar"][data-locale]').each(function(){
-      var locale = $(this).data('locale');
-      var js = 'fullcalendar/locale/'+ locale +'.js';
-      if ( locale == 'all' ) {
-        js = 'fullcalendar/locale-all.js';
-      }
-      provider.queueScript(js);
-    });
-
   }
 
 
@@ -1129,26 +1058,14 @@ jQuery.fn.scrollToEnd = function() {
     // ======================================================================
     // Editor
     //
-    summernote: {
-      selector: 'summernote',
-      callback: 'initSummernote',
-      css:      'summernote/summernote.css',
-      js:       'summernote/summernote.min.js',
-    },
-
-
-
-
     quill: {
       selector: 'quill',
       callback: 'initQuill',
       css:      [
-                  //'highlight/styles/monokai-sublime.css',
                   'quill/quill.bubble.css',
                   'quill/quill.snow.css',
                 ],
       js:       [
-                  //'highlight/highlight.pack.js',
                   'quill/quill.min.js',
                 ]
     },
@@ -1334,25 +1251,6 @@ jQuery.fn.scrollToEnd = function() {
       js:       'i8-icon/jquery-i8-icon.min.js',
     },
 
-
-
-
-
-    // ======================================================================
-    // Map
-    //
-
-    // This cause duplication in loading map script
-    /*
-    map: {
-      selector: 'map',
-      callback: 'initMap',
-      css:      '',
-      js:       'https://maps.googleapis.com/maps/api/js?key='+ app.defaults.googleApiKey +'&callback=app.map',
-    },
-    */
-
-
     mapael: {
       selector: 'mapael',
       callback: 'initMapael',
@@ -1386,20 +1284,6 @@ jQuery.fn.scrollToEnd = function() {
                   'bootstrap-table/extensions/multiple-sort/bootstrap-table-multiple-sort.min.js'
                 ]
     },
-
-
-
-    jsgrid: {
-      selector: 'jsgrid',
-      callback: 'initJsGrid',
-      css:      [
-                  'jsgrid/jsgrid.min.css',
-                  'jsgrid/jsgrid-theme.min.css'
-                ],
-      js:       'jsgrid/jsgrid.min.js'
-    },
-
-
 
     datatables: {
       selector: 'datatables',
@@ -1492,7 +1376,6 @@ jQuery.fn.scrollToEnd = function() {
 
     jqueryui: {
       selector: 'jqueryui',
-      //callback: 'initFullscreen',
       js:       'jqueryui/jquery-ui.min.js',
     },
 
@@ -1522,18 +1405,6 @@ jQuery.fn.scrollToEnd = function() {
     // ======================================================================
     // Misc
     //
-    fullcalendar: {
-      selector: 'fullcalendar',
-      callback: 'initFullcalendar',
-      css:      'fullcalendar/fullcalendar.min.css',
-      js:       [
-                  'moment/moment.min.js',
-                  'fullcalendar/fullcalendar.min.js',
-                ]
-    },
-
-
-
     justified: {
       selector: 'justified-gallery',
       callback: 'initJustifiedGallery',
@@ -1578,31 +1449,6 @@ jQuery.fn.scrollToEnd = function() {
       callback: 'initTyped',
       js:       'typed.js/typed.min.js',
     },
-
-
-
-
-
-    // ======================================================================
-    // Misc
-    //
-
-
-    vuejs: {
-      selector: 'vuejs',
-      js:       'vuejs/vue.min.js',
-    },
-
-
-    reactjs: {
-      selector: 'reactjs',
-      js:       [
-                  'reactjs/react.min.js',
-                  'reactjs/react-dom.min.js',
-                ],
-    },
-
-
   }
 
 
@@ -2014,83 +1860,9 @@ jQuery.fn.scrollToEnd = function() {
 +function($){
 
 
-  provider.initEditors = function() {
+  provider.initEditors = function () {
 
-    provider.initSummernote();
-
-  };
-
-
-
-
-
-  provider.initSummernote = function() {
-    if ( ! $.fn.summernote ) {
-      return;
-    }
-
-
-    provider.provide('summernote', function(){
-      var options = {
-        dialogsInBody: true,
-        dialogsFade: true
-      };
-      options = $.extend(options, app.getDataOptions( $(this) ));
-
-      if ( options.toolbar ) {
-        switch( options.toolbar.toLowerCase() ) {
-          case 'slim':
-            options.toolbar = [
-              // [groupName, [list of button]]
-              ['style', ['bold', 'underline', 'clear']],
-              ['color', ['color']],
-              ['para', ['ul', 'ol']],
-              ['insert', ['link', 'picture']]
-            ];
-            break;
-
-          case 'full':
-            options.toolbar = [
-              // [groupName, [list of button]]
-              ['para_style', ['style']],
-              ['style', ['bold', 'italic', 'underline', 'clear']],
-              ['font', ['strikethrough', 'superscript', 'subscript']],
-              ['fontsize', ['fontname', 'fontsize', 'height']],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph', 'hr']],
-              ['table', ['table']],
-              ['insert', ['link', 'picture', 'video']],
-              ['do', ['undo', 'redo']],
-              ['misc', ['fullscreen', 'codeview', 'help']]
-            ];
-            break;
-        }
-      }
-
-      $(this).summernote(options);
-    });
-
-
-
-    $(document).on('click', '[data-summernote-edit]', function(){
-      var target = $(this).data('summernote-edit');
-      $(target).summernote({focus: true});
-    });
-
-
-    $(document).on('click', '[data-summernote-save]', function(){
-      var target = $(this).data('summernote-save');
-      var callback = $(this).data('callback');
-      var markup = $(target).summernote('code');
-      $(target).summernote('destroy');
-      app.call(callback, markup);
-    });
-
-  };
-
-
-
-
+  }
 
 
   provider.initQuill = function() {
@@ -2198,7 +1970,6 @@ jQuery.fn.scrollToEnd = function() {
     provider.initMinicolor();
     provider.initClockpicker();
     provider.initMaxlength();
-    provider.initStrength();
     provider.initTagsinput();
     provider.initKnob();
     provider.initNouislider();
@@ -2797,33 +2568,6 @@ jQuery.fn.scrollToEnd = function() {
 }(jQuery);
 
 
-
-// =====================
-// Map plugins
-// =====================
-//
-+function($){
-
-  provider.initMaps = function() {
-
-  };
-
-
-  provider.initMap = function() {
-
-  };
-
-
-
-  provider.initMapael = function() {
-
-  };
-
-
-}(jQuery);
-
-
-
 // =====================
 // Table plugins
 // =====================
@@ -3299,19 +3043,6 @@ jQuery.fn.scrollToEnd = function() {
 
   };
 
-
-  provider.initFullcalendar = function() {
-    if ( ! $.fn.fullCalendar ) {
-
-    }
-
-  };
-
-
-
-
-
-
   provider.initJustifiedGallery = function() {
     if ( ! $.fn.justifiedGallery ) {
       return;
@@ -3350,10 +3081,6 @@ jQuery.fn.scrollToEnd = function() {
     });
 
   };
-
-
-
-
 
   provider.initTyped = function() {
 
