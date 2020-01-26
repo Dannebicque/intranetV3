@@ -80,8 +80,8 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->select('count(m.id)')
-            ->where('m.personnel = :personnel')
-            ->setParameter('personnel', $user->getId())
+            ->where('m.etudiant = :etudiant')
+            ->setParameter('etudiant', $user->getId())
             ->andWhere('m.etat = :unread')
             ->setParameter('unread', 'U')
             ->getQuery()

@@ -63,10 +63,6 @@ module.exports = function(grunt) {
 
     },
 
-
-
-
-
     // Watch on SCSS and JS files
     //
     watch: {
@@ -87,10 +83,6 @@ module.exports = function(grunt) {
         tasks: ['neuter:js']
       },
     },
-
-
-
-
 
     // Browser Sync
     //
@@ -120,14 +112,14 @@ module.exports = function(grunt) {
       dist: ['dist'],
 
       dist_copied: [
-        'dist/assets/css/*',
-        'dist/assets/css/scss/',
-        'dist/assets/css/sass/',
-        'dist/assets/scss/',
-        'dist/assets/sass/',
-        'dist/assets/js/*',
-        '!dist/assets/css/*.min.css',
-        '!dist/assets/js/*.min.js',
+        'public/dist/assets/css/*',
+        'public/dist/assets/css/scss/',
+        'public/dist/assets/css/sass/',
+        'public/dist/assets/scss/',
+        'public/dist/assets/sass/',
+        'public/dist/assets/js/*',
+        '!public/dist/assets/css/*.min.css',
+        '!public/dist/assets/js/*.min.js'
       ]
     },
 
@@ -138,19 +130,13 @@ module.exports = function(grunt) {
     // Copy files
     //
     copy: {
-
       dist: {
         files: [
-          {expand: true, cwd: 'src/', src: ['**'], dest: 'dist'}
+          {expand: true, cwd: 'public/src/', src: ['**'], dest: 'public/dist'}
         ],
       },
 
     },
-
-
-
-
-
 
     // Import file for script.js
     //
@@ -234,7 +220,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['serve']);
   grunt.registerTask('dist', ['build']);
   grunt.registerTask('serve', ['browserSync', 'watch']);
-
 
   // Run "grunt build" to publish the template in a ./dist folder
   grunt.registerTask('build',
