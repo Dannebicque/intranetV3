@@ -35,7 +35,7 @@ $(document).on('keyup', '#search', function (e) {
                 slug: etudiant.slug
               }) + '" target="_blank">\n' +
               '                <span class="avatar status-dark">\n' +
-              '                  <img src="/upload/etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
+              '                  <img src="' + data.basepath + 'etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
               '                </span>\n' +
               '\n' +
               '                        <div class="media-body">\n' +
@@ -58,8 +58,8 @@ $(document).on('keyup', '#search', function (e) {
                 type: 'personnel',
                 slug: personnel.slug
               }) + '" target="_blank">\n' +
-              '                        <img class="avatar avatar-sm" src="upload/personnels/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
-              '                        <p>' + personnel.displayPr + '</p>\n' +
+              '                        <img class="avatar avatar-sm" src="' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
+              '                        <p>' + data.basepath + 'personnels/' + personnel.displayPr + '</p>\n' +
               '                    </a>'
           })
         } else {

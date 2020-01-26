@@ -16,6 +16,7 @@
 namespace App\MesClasses;
 
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
 use ZipArchive;
@@ -25,9 +26,9 @@ class MyUpload
 {
     private $dir;
 
-    public function __construct(KernelInterface $kernel)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->dir = $kernel->getProjectDir() . '/public/upload/';
+        $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/';
     }
 
     /**

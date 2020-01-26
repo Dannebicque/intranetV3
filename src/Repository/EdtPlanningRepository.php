@@ -517,8 +517,30 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function getByEtudiantArray($user, $nbSemaines): void
+    public function getByEtudiantArray($user, $semaine)
     {
+        $query = $this->findEdtEtu($user, $semaine);
+
+        return $this->transformeArray($query);
+    }
+
+    private function transformeArray($data): array
+    {
+        $t = [];
+        /** @var EdtPlanning $event */
+        foreach ($data as $event) {
+            $pl = [];
+            $pl['semaine'] = $event->getSemaine();
+            $pl['jour'] = $event->getJour();
+            $pl['debut'] = $event->getDebut();
+            $pl['fin'] = $event->getFin();
+            $pl['commentaire'] = '';
+            $pl['ical'] = $event->getDisplayIcal();
+            $pl['salle'] = $event->getSalle();
+            $t[] = $pl;
+        }
+
+        return $t;
     }
 
 }

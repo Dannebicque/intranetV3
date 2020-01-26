@@ -26,7 +26,9 @@
             {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                 {{ include('user/composants/content_personnel.html.twig') }}
             {% elseif user.typeUser|lower == 'etudiant' %}
-                {{ include('user/composants/content_etudiant.html.twig') }}
+                {% if is_granted('ROLE_PERMANENT') or user.id == user_data.user.id %}
+                    {{ include('user/composants/content_etudiant.html.twig') }}
+                {% endif %}
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -35,18 +37,18 @@
                 <div class="text-white card-body bg-img text-center py-50"
                      style="background-image: url({{ asset('assets/bg/2.jpg') }});">
                     <a href="#">
-                        {% if user.typeUser == 'permanent' or user.typeUser == 'vacataire' %}
+                        {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                             <img class="avatar avatar-xxl avatar-bordered"
                                  src="{{ asset('upload/personnels/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}"
                             >
-                        {% elseif user.typeUser == 'etudiant' %}
+                        {% elseif user.typeUser|lower == 'etudiant' %}
                             <img class="avatar avatar-xxl avatar-bordered"
                                  src="{{ asset('upload/etudiants/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}">
                         {% endif %}
                     </a>
                     <h5 class="mt-2 mb-0 overlay"><a class="hover-primary
                     text-white" href="#">{{ user.displayPr}}</a></h5>
-                    {% if user.typeUser == 'etudiant' %}
+                    {% if user.typeUser|lower == 'etudiant' %}
                         <span>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %}
 {% endfor %}</span>
                     {% else %}
@@ -75,7 +77,7 @@
                 </ul>
             </div>
 
-            {% if user.typeUser == 'etudiant' %}
+            {% if user.typeUser|lower == 'etudiant' %}
                 <div class="card">
                     <div class="card-body">
                         <div class="flexbox align-items-baseline mb-20">
