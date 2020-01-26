@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Entity\Semestre;
 use App\MesClasses\Edt\MyEdt;
 use App\MesClasses\Edt\MyEdtCelcat;
+use App\MesClasses\Edt\MyEdtExport;
 use App\MesClasses\Pdf\MyPDF;
 use App\Repository\EdtPlanningRepository;
 use Exception;
@@ -63,7 +64,8 @@ class EdtController extends BaseController
         if ($this->getConnectedUser() !== null) {
 
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-                $this->myEdtCelcat->initPersonnel($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+                $this->myEdtCelcat->initPersonnel($this->getConnectedUser(),
+                    $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
                 return $this->render('edt/_intervenant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
@@ -73,7 +75,8 @@ class EdtController extends BaseController
                 ]);
             }
 
-            $this->myEdt->initPersonnel($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+            $this->myEdt->initPersonnel($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),
+                $semaine);
 
             return $this->render('edt/_intervenant.html.twig', [
                 'edt'       => $this->myEdt,
@@ -122,7 +125,8 @@ class EdtController extends BaseController
         if ($this->getConnectedUser() !== null) {
 
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-                $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+                $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
+                    $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
                 return $this->render('edt/_etudiant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
@@ -130,7 +134,8 @@ class EdtController extends BaseController
                 ]);
             }
 
-            $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+            $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),
+                $semaine);
 
             return $this->render('edt/_etudiant.html.twig', [
                 'edt'       => $this->myEdt,
@@ -159,10 +164,18 @@ class EdtController extends BaseController
 
     /**
      * @Route("/intervenant/export/ical", name="edt_intervenant_export_ical")
+     * @param MyEdtExport $myEdtExport
+     *
+     * @return Response
      */
-    public function exportIntervenantIcal(): void
+    public function exportIntervenantIcal(MyEdtExport $myEdtExport): Response
     {
-        //todo: a proposer aux étudiants également ? visibilité réduite?
+        $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'personnel');
+
+        return new Response($ical, 200, [
+            'Content-Type'        => 'application/force-download',
+            'Content-Disposition' => 'attachment; filename="export.ics"'
+        ]);
     }
 
     /**
@@ -214,9 +227,11 @@ class EdtController extends BaseController
         }
 
         if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
-            $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+            $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         } else {
-            $edt = $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),$semaine);
+            $edt = $this->myEdt->initEtudiant($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         }
 
         $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt, 'tabHeures' => self::$tabHeures],
@@ -226,9 +241,15 @@ class EdtController extends BaseController
     /**
      * @Route("/etudiant/export/ical", name="edt_etudiant_export_ical")
      */
-    public function exportEtudiantIcal(): void
+    public function exportEtudiantIcal(MyEdtExport $myEdtExport): Response
     {
-        //todo: a proposer aux étudiants également ? visibilité réduite?
+        //Le nombre de semaine selon la configuraiton
+        $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'etudiant');
+
+        return new Response($ical, 200, [
+            'Content-Type'        => 'application/force-download',
+            'Content-Disposition' => 'attachment; filename="export.ics"'
+        ]);
     }
 
     /**

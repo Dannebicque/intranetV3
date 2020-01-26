@@ -85,16 +85,20 @@ class MyEdtExport
                 'semaineReelle'      => date('W'),
                 'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId()
             ]);
-            $max = $emaineActuelle + $nbSemaines;
-
+            $max = $emaineActuelle->getSemaineReelle() + $nbSemaines;
             if ($user->getDepartement()->isOptUpdateCelcat()) {
                 for ($i = date('W'); $i < $max; $i++) {
-                    $edt = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
+                    $temp = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
+                    foreach ($temp as $row) {
+                        $edt[] = $row;
+                    }
                 }
             } else {
                 for ($i = date('W'); $i < $max; $i++) {
-                    $edt = $this->edtPlanningRepository->getByEtudiantArray($user, $nbSemaines);
-
+                    $temp = $this->edtPlanningRepository->getByEtudiantArray($user, $i);
+                    foreach ($temp as $row) {
+                        $edt[] = $row;
+                    }
                 }
             }
         }

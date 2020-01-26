@@ -8,7 +8,8 @@
 
             <div class="btn-toolbar pull-right">
                 <div class="btn-group mr-2">
-                    <a class="btn btn-primary" href="" data-provide="tooltip" title="Cette semaine"><i class="fa
+                    <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
+                       data-provide="tooltip" title="Cette semaine"><i class="fa
 	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
                 </div>
 

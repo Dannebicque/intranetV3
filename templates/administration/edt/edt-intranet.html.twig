@@ -113,8 +113,9 @@
                 <th>&nbsp;</th>
                   {% for jour in 1..5 %}
                       {% for group in 1..edt.semestre.nbgroupeTPEDT %}
-                        <th>{{ edt.groupes[group] }}</th>
-                            {% endfor %}
+                          <th>
+                              {{ edt.groupes[group] }}</th>
+                      {% endfor %}
                         {% endfor %}
                     </tr>
                     </thead>

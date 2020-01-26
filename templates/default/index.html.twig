@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="timeline-content">
                                     <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|format_datetime('short', 'short') }}</time>
-                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|u.truncate(100) }}
+                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte }}
                                     </p>
                                 </div>
                             </li>

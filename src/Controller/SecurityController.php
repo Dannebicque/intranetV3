@@ -43,25 +43,6 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connexion/{message}", name="security_login")
-     * @param AuthenticationUtils $authenticationUtils
-     * @param string              $message
-     *
-     * @return Response
-     */
-    public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
-    {
-            // get the login error if there is one
-            $error = $authenticationUtils->getLastAuthenticationError();
-            // last username entered by the user
-            $lastUsername = $authenticationUtils->getLastUsername();
-
-
-        return $this->render('security/login.html.twig',
-            ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
-    }
-
-    /**
      * @Route("/deconnexion", name="security_logout")
      */
     public function logout(): RedirectResponse
@@ -70,7 +51,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/mot-de-passe-perdu", name="security_password_lost")
+     * @Route("/connexion/mot-de-passe-perdu", name="security_password_lost")
      * @param Request                 $request
      *
      * @param TokenGeneratorInterface $tokenGenerator
@@ -132,7 +113,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/reset-password/{token}", name="security_reset_password")
+     * @Route("/connexion/reset-password/{token}", name="security_reset_password")
      * @param Request                      $request
      *
      * @param string                       $token
@@ -271,5 +252,24 @@ class SecurityController extends AbstractController
 
         return $this->render('security/choix-departement.html.twig',
             ['departements' => $departements, 'user' => $user]);
+    }
+
+    /**
+     * @Route("/connexion/{message}", name="security_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @param string              $message
+     *
+     * @return Response
+     */
+    public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+
+        return $this->render('security/login.html.twig',
+            ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
     }
 }
