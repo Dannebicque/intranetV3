@@ -58,9 +58,9 @@ $(document).on('keyup', '#search', function (e) {
                 type: 'personnel',
                 slug: personnel.slug
               }) + '" target="_blank">\n' +
-              '                        <img class="avatar avatar-sm" src="' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
-              '                        <p>' + data.basepath + 'personnels/' + personnel.displayPr + '</p>\n' +
-              '                    </a>'
+              '                        <img class="avatar avatar-sm" src="' + data.basepath + 'personnels/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
+              '                        <p>' + personnel.displayPr + '</p>\n' +
+              '</a>'
           })
         } else {
           html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
