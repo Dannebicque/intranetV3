@@ -1,0 +1,9 @@
+{{ message }}
+
+{% if expediteur.signature=="" %}
+    {{ expediteur.displayPr  }}
+{% else %}
+{{ expediteur.signature }}
+{% endif %}
+
+Ce message est envoyé depuis l'intranet

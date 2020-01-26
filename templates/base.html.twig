@@ -20,7 +20,8 @@
             background-color: {{ settings('COLOR_IUT') }};
             border-color: {{ settings('COLOR_IUT') }};
         }
-        .sidebar .menu:not(.menu-bordery)>.menu-item.active>.menu-link {
+
+        .sidebar .menu:not(.menu-bordery) > .menu-item.active > .menu-link {
             background-color: {{ settings('COLOR_IUT') }};
         }
     </style>
@@ -34,7 +35,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('apple-icon-144x144.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('apple-icon-152x152.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('android-icon-192x192.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
@@ -52,11 +53,11 @@
 <!-- Preloader -->
 <div class="preloader">
     {{ include('loader.html.twig') }}
-{#    <div class="spinner-dots">#}
-{#        <span class="dot1"></span>#}
-{#        <span class="dot2"></span>#}
-{#        <span class="dot3"></span>#}
-{#    </div>#}
+    {#    <div class="spinner-dots">#}
+    {#        <span class="dot1"></span>#}
+    {#        <span class="dot2"></span>#}
+    {#        <span class="dot3"></span>#}
+    {#    </div>#}
 </div>
 
 
@@ -193,30 +194,14 @@
                     <span data-i8-icon="stack_of_photos"></span>
                     <span class="title">Trombinoscope</span>
                 </a>
-                {#                <a class="dropdown-item" href="#">#}
-                {#                    <span data-i8-icon="search"></span>#}
-                {#                    <span class="title">Search</span>#}
-                {#                </a>#}
                 <a class="dropdown-item" href="{{ path('agenda_index') }}">
                     <span data-i8-icon="calendar"></span>
                     <span class="title">Agenda</span>
                 </a>
-                {#                <a class="dropdown-item" href="#">#}
-                {#                    <span data-i8-icon="sms"></span>#}
-                {#                    <span class="title">Chat</span>#}
-                {#                </a>#}
                 <a class="dropdown-item" href="{{ path('messagerie_index') }}">
                     <span data-i8-icon="invite"></span>
                     <span class="title">Messagerie</span>
                 </a>
-                {#                <a class="dropdown-item" href="#">#}
-                {#                    <span data-i8-icon="contacts"></span>#}
-                {#                    <span class="title">Contacts</span>#}
-                {#                </a>#}
-                {#                <a class="dropdown-item" href="">#}
-                {#                    <span data-i8-icon="bar_chart"></span>#}
-                {#                    <span class="title">Charts</span>#}
-                {#                </a>#}
                 <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
                     <span data-i8-icon="businessman"></span>
                     <span class="title">Profil</span>
@@ -229,10 +214,8 @@
                 <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
                 <div class="dropdown-menu dropdown-grid">
                     {% for departement in user_data.user.getPersonnelDepartements %}
-                        <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}" href="{{ path
-                            ('security_change_departement',
-                            {departement:
-                            departement.departement.uuidString}) }}">
+                        <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
+                           href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
                             <span data-i8-icon="home"></span>
                             <span class="title">{{ departement.departement.libelle }}</span>
                         </a>
@@ -287,7 +270,8 @@
 
             <!-- Notifications -->
             {% set newNotification = false %}
-            {% for notification in user_data.notifications|filter(notification => notification.lu == false) %}
+            {% for notification in user_data.notifications|filter(notification => (notification.lu == false and
+                notification.typeUser == user_data.typeUser)) %}
                 {% set newNotification = true %}
             {% endfor %}
             <li class="dropdown d-none d-md-block">
@@ -296,7 +280,7 @@
                             class="sr-only">Notifications</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="media-list media-list-hover media-list-divided media-list-xs">
-                        {% for notification in user_data.notifications %}
+                        {% for notification in user_data.notifications|filter(notification => (notification.typeUser == user_data.typeUser)) %}
                             <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
                                href="{{ notification.url }}">
                                     <span class="avatar bg-{{ notification.color }}"><i
@@ -340,10 +324,10 @@
                             {% for message in user_data.messages %}
                                 <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
                                    href="{{ path('application_index',{onglet: 'message', message:message.message.id}) }}">
-                  <span class="avatar status-success">
-                    <img src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
-                         alt="{{ message.message.expediteur.displayPr }}">
-                  </span>
+                          <span class="avatar status-success">
+                            <img src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
+                                 alt="{{ message.message.expediteur.displayPr }}">
+                          </span>
 
                                     <div class="media-body">
                                         <p><strong>{{ message.message.expediteur.displayPr }}</strong>
@@ -467,12 +451,11 @@
     <div class="lookup-form">
         <label for="search"><span
                     class="sr-only">Rechercher</span></label>
-        <input type="text" placeholder="Search anything" id="search">
+        <input type="text" placeholder="Recherche quelque chose" id="search">
     </div>
 
     <div class="lookup-results scrollable">
         <div class="row">
-
             <div class="col-sm-12 col-md-4 col-lg-4">
                 <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }}</h5>
 
@@ -519,7 +502,7 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-{#    {{ encore_entry_script_tags('app') }}#}
+    {#    {{ encore_entry_script_tags('app') }}#}
     <script src="{{ asset('src/assets/js/core.min.js') }}"></script>
     <script src="{{ asset('src/assets/js/app.js') }}"></script>
     <script src="{{ asset('src/assets/vendor/jquery-jeditable/dist/jquery.jeditable.min.js') }}"></script>

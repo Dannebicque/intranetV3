@@ -103,6 +103,28 @@ class DataUserSession
      * @var QueryBuilder
      */
     private $semestresActifs;
+    private $nbUnread;
+
+    /**
+     * @var string
+     */
+    private $type_user;
+
+    /**
+     * @return string
+     */
+    public function getTypeUser(): string
+    {
+        return $this->type_user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbUnread()
+    {
+        return $this->nbUnread;
+    }
 
     /**
      * DataUserSession constructor.
@@ -152,9 +174,11 @@ class DataUserSession
         $this->security = $security;
 
         if ($this->getUser() instanceof Etudiant) {
+            $this->type_user = 'e';
             $this->messagesRepository = $messageDestinataireEtudiantRepository;
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
         } elseif ($this->getUser() instanceof Personnel) {
+            $this->type_user = 'p';
             $this->messagesRepository = $messageDestinatairePersonnelRepository;
             if ($session->get('departement') !== null) {
                 $this->departement = $this->departementRepository->findOneBy(['uuid' => $session->get('departement')]);
@@ -283,7 +307,7 @@ class DataUserSession
             /** @var PersonnelDepartement $rf */
             foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
                 if ($rf->getDepartement() !== null &&
-                    in_array($role, $rf->getRoles()) !== false &&
+                    in_array($role, $rf->getRoles(), true) !== false &&
                     $rf->getDepartement()->getId() === $this->departement->getId()) {
                     return true;
                 }
@@ -299,8 +323,10 @@ class DataUserSession
     {
         if ($this->getUser() instanceof Etudiant) {
             $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+            $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
         } else {
             $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+            $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
         }
 
         return $this->messages;
@@ -328,7 +354,6 @@ class DataUserSession
         }
 
         return $this->anneeUniversitaireRepository->findActive();
-
     }
 
     /**
@@ -339,12 +364,10 @@ class DataUserSession
         $fin = $this->getAnneeUniversitaire()->getAnnee() + 1;
 
         return $this->getAnneeUniversitaire()->getAnnee() . ' | ' . $fin;
-
     }
 
     public function getArticlesCategories()
     {
-
         return $this->getDepartement() !== null ? $this->getDepartement()->getArticleCategories() : [];
     }
 
@@ -355,6 +378,4 @@ class DataUserSession
     {
         return $this->semestresActifs;
     }
-
-
 }
