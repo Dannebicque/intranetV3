@@ -11,10 +11,12 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
+use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Form\EvaluationType;
 use App\MesClasses\MyEvaluation;
 use App\Repository\EvaluationRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -67,6 +69,71 @@ class EvaluationController extends BaseController
             'evaluation' => $evaluation,
             'form'       => $form->createView(),
             'notes'      => $notes
+        ]);
+    }
+
+    /**
+     * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
+     * @param Request      $request
+     * @param MyEvaluation $myEvaluation
+     *
+     * @param Matiere      $matiere
+     *
+     * @return RedirectResponse|Response
+     * @throws Exception
+     */
+    public function create(Request $request, MyEvaluation $myEvaluation, Matiere $matiere)
+    {
+        $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
+        $form = $this->createForm(
+            EvaluationType::class,
+            $evaluation,
+            [
+                'departement'     => $this->dataUserSession->getDepartement(),
+                'semestre'        => $matiere->getSemestre(),
+                'matiereDisabled' => true,
+                'locale'          => $request->getLocale(),
+                'attr'            => [
+                    'data-provide' => 'validation'
+                ]
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
+            $this->entityManager->persist($evaluation);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');
+
+            return $this->redirectToRoute(
+                'administration_note_saisie_2',
+                ['uuid' => $evaluation->getUuidString()]
+            );
+        }
+
+        return $this->render('administration/evaluation/create.html.twig', [
+            'form'    => $form->createView(),
+            'matiere' => $matiere
+        ]);
+    }
+
+    /**
+     * @Route("/saisie/etape-2/{uuid}", name="administration_note_saisie_2")
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     *
+     * @return Response
+     */
+    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    {
+        $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
+
+        return $this->render('administration/evaluation/saisie_2.html.twig', [
+            'evaluation' => $evaluation,
+            'notes'      => $notes,
+            'autorise'   => true
         ]);
     }
 

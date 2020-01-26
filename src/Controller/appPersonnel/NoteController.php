@@ -9,6 +9,7 @@
 namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Form\EvaluationType;
@@ -76,7 +77,7 @@ class NoteController extends BaseController
                 $evaluation,
                 [
                     'departement'     => $this->dataUserSession->getDepartement(),
-                    'semestre'        => $matiere->getUe()->getSemestre(),
+                    'semestre'        => $matiere->getSemestre(),
                     'matiereDisabled' => false,
                     'locale'          => $request->getLocale(),
                     'attr'            => [
@@ -91,6 +92,7 @@ class NoteController extends BaseController
                 $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
                 $this->entityManager->persist($evaluation);
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');
 
                 return $this->redirectToRoute(
                     'application_personnel_note_saisie_2',

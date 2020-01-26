@@ -1,0 +1,133 @@
+<form action="{{ path('application_personnel_note_import',{evaluation:evaluation.id}) }}" method="post"
+      enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="required" for="fichier_import">Fichier à importer</label>
+        <input type="file" id="fichier_import" name="fichier_import" class="form-control" required="required">
+    </div>
+    <div class="alert alert-info">L'import doit se faire au format xlsx ou csv (séparateur ; ou ,). Le
+                                  fichier doit contenir les <strong>colonnes suivantes</strong> : Numéro
+                                  étudiant (<i>num_etudiant</i>)
+                                  , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les
+                                  colonnes doivent être nommées (première ligne) ou
+                                  respecter l'odre précédent.
+        <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id}) }}">
+            Vous pouvez récupérer le fichier type pour le semestre ici
+        </a>
+    </div>
+    <button class="btn btn-success">{{ button_label|default('label.importer.les.notes'|trans) }}</button>
+</form>
+<br>
+<div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
+                              suivis cette option sont affichés.
+</div>
+<br/>
+<ul class="nav nav-tabs">
+    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
+
+
+        <li class="nav-item"><a href="#gr{{ groupe.id }}"
+                                class="nav-link {% if loop.index == 1 %} active show{% endif %}"
+                                data-toggle="tab" role="tab">{{ groupe.libelle }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class="tab-content">
+    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option#}
+        <div class="tab-pane {% if loop.index == 1 %} active {% endif %}" id="gr{{ groupe.id }}">
+            {% if import is defined %}
+                <div class="alert alert-danger">
+                    Cette page affiche la synthèse de l'import de vos notes. Merci de les vérifier.
+                    Aucune note déjà existante n'a été modifée par l'import.
+                    <strong>L'évaluation est pour le moment invisible des étudiants. <a
+                                href="{{ path('application_personnel_evaluation_visible', {uuid:
+                                    evaluation.uuidString, etat: 'visible'}) }}">Cliquez
+                                                                                 ici pour la diffuser aux
+                                                                                 étudiants après
+                                                                                 vérification de
+                                                                                 l'import.</a></strong>
+                </div>
+            {% elseif import is not defined and evaluation.visible == false %}
+                <div class="alert alert-warning">
+                    <strong>L'évaluation est pour le moment invisible des étudiants. <a
+                                href="{{ path('application_personnel_evaluation_visible', {uuid:
+                                    evaluation.uuidString, etat: 'visible'}) }}">Cliquez ici pour la
+                                                                                 diffuser aux étudiants
+                                                                                 après
+                                                                                 vérification de
+                                                                                 l'import.</a></strong>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    Naviguez dans les onglets. <strong>N'oubliez pas de sauvegarder chaque groupe.</strong>
+                    Les
+                    groupes non saisis pourront être complétés plus tard.
+                </div>
+            {% endif %}
+            <br>
+            <div class="alert alert-info">
+                * Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera
+                pas
+                pénalisé par un 0. Laisser non coché si vous n'avez pas encore l'information.
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{ 'table.etudiant'|trans }}</th>
+                    <th>{{ 'table.note'|trans }}</th>
+                    <th>{{ 'table.absence'|trans }}*</th>
+                    <th>{{ 'table.commentaire_optionnel'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set tab=1 %}
+                {% for etudiant in groupe.etudiants %}
+                    <tr {% if not(notes[etudiant.id] is defined) or notes[etudiant.id].note == '-0.01' %}class="bg-pale-warning"{% endif %}>
+                        <td>{{ etudiant.nom|capitalize }} {{ etudiant.prenom|capitalize }}  </td>
+                        <td>
+                            <label class="sr-only" for="no_{{ etudiant.id }}">Note
+                                                                              pour {{ etudiant.display }}</label>
+                            <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
+                                   id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+                                   class="form-control noteetudiant groupe_{{ groupe.id }}"
+                                   value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
+                        </td>
+                        <td>
+                            <div class="form-check">
+                                <input type="checkbox" name="abs_{{ etudiant.id }}"
+                                       id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+                                       class="form-check-input absenceetudiant"
+                                       {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                           .absenceJustifie ==
+                                           true %}checked{% endif %}/>
+                                <label for="abs_{{ etudiant.id }}" class="form-check-label">
+
+                                    Absence justfiée
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
+                                .display }}</label>
+                            <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
+                                   class="form-control groupe_{{ groupe.id }}"
+                                   value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
+                        </td>
+                    </tr>
+                    {% set tab=tab+1 %}
+                {% else %}
+                    <tr class="bg-warning">
+                        <td colspan="4">{{ 'pas.etudiant.groupe'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br/>
+            <button class="btn btn-success btn-large btn-block savegroupe"
+                    id="groupe_{{ groupe.id }}" data-evaluation="{{ evaluation.uuidString }}">Enregistrer
+                                                                                              les notes
+                                                                                              de ce groupe
+            </button>
+        </div>
+    {% endfor %}
+</div>

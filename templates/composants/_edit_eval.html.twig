@@ -1,0 +1,114 @@
+<table class="table">
+    <tr>
+        <td>{{ 'date.de.levaluation'|trans }} :</td>
+        <td>
+            {#{% if (autorise) or connect.goodFormation('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') or connect.goodFormation('ROLE_CDD') or connect.goodFormation('ROLE_DDE') or connect.goodFormation('ROLE_ASS') %}#}
+            {#<a href="#" class="xeval" data-type="text" data-name="dateeval"#}
+            {#data-pk="{{ eval.id }}"#}
+            {#data-original-title="Corrigez la date">{{ evaluation.dateeval|date('d/m/Y') }}</a>#}
+            {#{% else %}#}
+            {{ evaluation.dateEvaluation|format_date('long') }}
+            {#{% endif %}#}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'libelle.evaluation'|trans }} :</td>
+        <td>
+            {% if autorise or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement
+                ('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                <a class="myedit"
+                   data-field="libelle"
+                   href="{{ path('application_personnel_evaluation_update', {uuid:evaluation.uuidString}) }}"
+                   data-title="Modifier le libellé">{{ evaluation.libelle }}</a>
+            {% else %}
+                {{ evaluation.libelle }}
+            {% endif %}
+
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'commentaire'|trans }} :</td>
+        <td>
+            {% if autorise or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                <a class="myedit"
+                   data-field="commentaire"
+                   href="{{ path('application_personnel_evaluation_update', {uuid:evaluation.uuidString}) }}"
+                   data-title="Modifier le commentaire">{{ evaluation.commentaire }}</a>
+            {% else %}
+                {{ evaluation.commentaire }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>{{ 'coefficient.de.levaluation'|trans }} :</td>
+        <td>
+            {% if autorise or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                <a class="myedit"
+                   data-field="coefficient"
+                   href="{{ path('application_personnel_evaluation_update', {uuid:evaluation.uuidString}) }}"
+                   data-title="Modifier le coefficient">{{ evaluation.coefficient }}</a>
+            {% else %}
+                {{ evaluation.coefficient }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td>Type de groupe pour la saisie :</td>
+        <td>
+            {#{% if (autorise) or connect.goodFormation('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') or connect.goodFormation('ROLE_CDD') or connect.goodFormation('ROLE_DDE') or connect.goodFormation('ROLE_ASS') %}#}
+            {#<a href="#" class="xeval" data-type="text" data-name="dateeval"#}
+            {#data-pk="{{ eval.id }}"#}
+            {#data-original-title="Corrigez la date">{{ evaluation.dateeval|date('d/m/Y') }}</a>#}
+            {#{% else %}#}
+            {{ evaluation.typeGroupe.libelle }}
+            {#{% endif %}#}
+        </td>
+    </tr>
+    <tr>
+        <td>Evaluation créée et modifiable par :</td>
+        <td>
+            {#{% if connect.goodFormation('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') or connect.goodFormation('ROLE_CDD') or connect.goodFormation('ROLE_DDE') or connect.goodFormation('ROLE_ASS') %}#}
+            {#<a href="#" data-value="{{ eval.personnel.id }}" data-type="select"#}
+            {#data-pk="{{ eval.id }}" data-name="personnel"#}
+            {#class="editable editable-click XEintervenant"#}
+            {#data-original-title="Corrigez l'enseignant en charge de l'évaluation">{{ display(eval.personnel.nom, eval.personnel.prenom) }}</a>#}
+            {#{% else %}#}
+
+            {{ evaluation.personnelAuteur.displayPr }}
+            {#{% endif %}#}
+        </td>
+    </tr>
+    <tr>
+        <td>Modification autorisée pour :</td>
+        <td>
+											<span id="listePersonne">
+											{% for pers in evaluation.personnelAutorise %}
+                                                {{ pers.displayPr }}
+                                                {% if not loop.last %}
+                                                    , {% endif %}
+                                            {% else %}
+                                                -
+                                            {% endfor %}
+												</span>
+            {% if user_data.isGoodDepartement('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') or
+                user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or
+                user_data.isGoodDepartement('ROLE_ASS') or evaluation.personnelAuteur.id == user_data
+                .user.id %}
+                <button data-provide="modaler tooltip"
+                        data-url="{{ path('application_personnel_evaluation_ajax_autorise', {'uuid': evaluation.uuidString}) }}"
+                        class="btn btn-success"
+                        data-placement="bottom"
+                        data-confirm-visible="false"
+                        data-cancel-visible="true"
+                        data-cancel-text="Annulerr"
+                        title="{{ 'atitle.gerer_autorise_evaluation'|trans }}"
+                        data-title="{{ 'gerer_autorise_evaluation.heading'|trans }}"
+                >
+                    Gérer
+                </button>
+            {% endif %}
+
+
+        </td>
+    </tr>
+</table>

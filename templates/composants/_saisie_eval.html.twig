@@ -1,0 +1,42 @@
+{% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_row(form.libelle) }}
+            {{ form_row(form.matiere) }}
+
+            {{ form_row(form.dateEvaluation) }}
+            {{ form_row(form.coefficient) }}
+            {{ form_row(form.commentaire) }}
+            {{ form_row(form.coefficient) }}
+
+            {{ form_label(form.typeGroupe) }}
+<div class="row">
+    {% for child in form.typeGroupe %}
+        <div class="col-sm-2">
+            {{ form_widget(child) }}
+            {{ form_label(child) }}
+        </div>
+    {% endfor %}
+</div>
+{{ form_help(form.typeGroupe) }}
+
+            {{ form_errors(form.typeGroupe) }}
+
+            {{ form_label(form.personnelAutorise) }}
+<div class="row">
+    {% for child in form.personnelAutorise %}
+        <div class="col-sm-2">
+            {% if child.vars.value != user_data.user.id %}
+                {{ form_widget(child) }}
+            {% else %}
+                {{ form_widget(child, { 'attr': {'checked': 'checked', 'disabled': true} }) }}
+            {% endif %}
+            {{ form_label(child) }}
+        </div>
+    {% endfor %}
+</div>
+{{ form_help(form.personnelAutorise) }}
+
+            {{ form_errors(form.personnelAutorise) }}
+
+<button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+{{ form_end(form) }}
