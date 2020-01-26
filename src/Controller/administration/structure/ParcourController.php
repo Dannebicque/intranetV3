@@ -90,8 +90,9 @@ class ParcourController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcour.edit.success.flash');
 
-                return $this->redirectToRoute('administration_structure_parcour_edit', ['id' => $parcour->getId()]);
+                return $this->redirectToRoute('administration_structure_index');
             }
 
             return $this->render('structure/parcour/edit.html.twig', [
