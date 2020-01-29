@@ -109,7 +109,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
     public function findPrevisionnelSemestre(Semestre $semestre, $annee)
     {
         return $this->createQueryBuilder('p')
-            ->innerJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
+            ->leftJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->where('p.annee = :annee')

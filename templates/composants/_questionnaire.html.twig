@@ -40,7 +40,7 @@
                         'App\\Controller\\appEtudiant\\QualiteController::section',
                         {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id}
                     )) }}
-                {% elseif is_granted('ROLE_QUALITE') %}
+                {% elseif is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
                     {{ render(controller(
                         'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
                         {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id}
