@@ -151,6 +151,7 @@ class Departement extends BaseEntity
      * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="departement")
      */
     private $personnelDepartements;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
      */

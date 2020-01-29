@@ -657,7 +657,7 @@ class MyPrevisionnel
 
     public function importCsv($data): bool
     {
-
+        dump($data);
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
         if ($data['diplome'] !== null) {
@@ -710,6 +710,7 @@ class MyPrevisionnel
         $pr = $this->previsionnelRepository->findByDiplome($diplome, $annee);
         /** @var Previsionnel $p */
         foreach ($pr as $p) {
+            dump('remove');
             $this->entityManager->remove($p);
         }
 

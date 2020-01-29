@@ -25,6 +25,7 @@ class PersonnelDepartement
     /**
      * @var Personnel
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelDepartements")
+     * @ORM\OrderBy({"nom" = "asc", "prenom" = "asc"})
      */
     private $personnel;
 

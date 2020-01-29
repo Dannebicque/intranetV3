@@ -49,4 +49,13 @@ class DefaultController extends BaseController
             'departements' => $departementRepository->findAll()
         ]);
     }
+
+    /**
+     *
+     * @Route("/aide/{sujet}", name="help_article")
+     */
+    public function help($sujet)
+    {
+
+    }
 }
