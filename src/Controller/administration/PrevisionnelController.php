@@ -168,7 +168,7 @@ class PrevisionnelController extends BaseController
                 for ($i = 1; $i <= $nbLignes; $i++) {
                     $personnel = $personnelRepository->find($request->request->get('intervenant_' . $i));
                     if ($personnel !== null) {
-                        $previsionnel = new Previsionnel($matiere, $personnel, $annee);
+                        $previsionnel = new Previsionnel($matiere, $annee, $personnel);
                         $previsionnel->setNbHCm($request->request->get('cm_' . $i));
                         $previsionnel->setNbHTd($request->request->get('td_' . $i));
                         $previsionnel->setNbHTp($request->request->get('tp_' . $i));

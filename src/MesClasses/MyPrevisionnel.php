@@ -657,7 +657,6 @@ class MyPrevisionnel
 
     public function importCsv($data): bool
     {
-        dump($data);
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
         if ($data['diplome'] !== null) {
@@ -679,8 +678,14 @@ class MyPrevisionnel
                     /*On lit la ligne courante*/
                     $ligne = fgetcsv($handle, 1024, ';');
 
-                    if (array_key_exists($ligne[4], $personnels) && array_key_exists($ligne[2], $matieres)) {
-                        $pr = new Previsionnel($matieres[$ligne[2]], $personnels[$ligne[4]], $annee);
+                    if (array_key_exists($ligne[2], $matieres)) {
+                        if (!array_key_exists($ligne[4], $personnels)) {
+                            $personnel = null;
+                        } else {
+                            $personnel = $personnels[$ligne[4]];
+                        }
+
+                        $pr = new Previsionnel($matieres[$ligne[2]], $annee, $personnel);
                         $pr->setNbHCm(str_replace(',', '.', $ligne[6]));
                         $pr->setNbGrCm(trim($ligne[7]));
                         $pr->setNbHTd(str_replace(',', '.', $ligne[8]));
@@ -710,7 +715,6 @@ class MyPrevisionnel
         $pr = $this->previsionnelRepository->findByDiplome($diplome, $annee);
         /** @var Previsionnel $p */
         foreach ($pr as $p) {
-            dump('remove');
             $this->entityManager->remove($p);
         }
 
