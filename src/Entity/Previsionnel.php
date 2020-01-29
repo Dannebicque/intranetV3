@@ -75,7 +75,7 @@ class Previsionnel extends BaseEntity
      * @param $personnel
      * @param $annee
      */
-    public function __construct(Matiere $matiere, Personnel $personnel, $annee)
+    public function __construct(Matiere $matiere, $annee, ?Personnel $personnel = null)
     {
         $this->matiere = $matiere;
         $this->personnel = $personnel;
