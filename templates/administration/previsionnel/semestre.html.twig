@@ -53,17 +53,17 @@
                         <tr>
                             <td colspan="5">
                                 {{ previ.matiere.codeMatiere }} | {{ previ.matiere.libelle }}
-                                | {{ previ.personnel.display }}
+                                                                | {{ previ.personnel != null ? previ.personnel.display : 'non.defini'|trans }}
                             </td>
                             <td colspan="4">
                                 <button data-provide="modaler"
                                         data-url="{{ path('administration_previsionnel_matiere', {matiere: previ.matiere.id, annee:
-                                    annee}) }}"
+                                            annee}) }}"
                                         class="btn btn-primary btn-sm"
                                         data-size="lg"
-                                        data-title="Service de la matière {{ previ.matiere.codeMatiere}}"
+                                        data-title="Service de la matière {{ previ.matiere.codeMatiere }}"
                                 >
-                                    Service de la matière {{ previ.matiere.codeMatiere}}
+                                    Service de la matière {{ previ.matiere.codeMatiere }}
                                 </button>
                             </td>
                             <td colspan="4">

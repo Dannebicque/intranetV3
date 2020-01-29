@@ -122,7 +122,6 @@ class EnqueteController extends AbstractController
     }
 
     /**
-     * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param PrevisionnelRepository         $previsionnelRepository
      * @param QualiteQuestionnaireSection    $qualiteQuestionnaireSection
      *
@@ -131,19 +130,17 @@ class EnqueteController extends AbstractController
      * @return Response
      */
     public function section(
-        QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
         PrevisionnelRepository $previsionnelRepository,
         QualiteQuestionnaireSection $qualiteQuestionnaireSection,
         Semestre $semestre
     ): Response {
-        $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($qualiteQuestionnaireSection->getQuestionnaire());
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'         => $qualiteQuestionnaireSection->getOrdre(),
             'section'       => $qualiteQuestionnaireSection->getSection(),
             'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($semestre->getDiplome(),
                 $semestre->getAnneeUniversitaire()),
-            'reponses'      => $reponses
+            'reponses' => []
         ]);
     }
 

@@ -51,7 +51,7 @@
                     {% for previsionnel in previsionnel.previsionnels %}
                         <tr>
                             <td colspan="11">
-                                {{ previsionnel.personnel.display }}
+                                {{ previsionnel.personnel != null ? previsionnel.personnel.display : 'non.defini'|trans }}
                             </td>
                             <td colspan="2">
                                 <a href="">Voir son service complet</a>
