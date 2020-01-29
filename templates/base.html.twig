@@ -53,20 +53,16 @@
 <!-- Preloader -->
 <div class="preloader">
     {{ include('loader.html.twig') }}
-    {#    <div class="spinner-dots">#}
-    {#        <span class="dot1"></span>#}
-    {#        <span class="dot2"></span>#}
-    {#        <span class="dot3"></span>#}
-    {#    </div>#}
 </div>
 
 
 <!-- Sidebar -->
 <aside class="sidebar sidebar-expand-lg sidebar-iconic">
-    <header class="sidebar-header" style="background-color:white">
+    <header class="sidebar-header div_logo">
         <span class="logo text-center">
           <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}">
-              <img src="{{ asset('build/images/logo_intranet.svg') }}" alt="logo de l'intranet.">
+              <img src="{{ asset('upload/logo/'~settings('LOGO_INTRANET_IUT')) }}"
+                   alt="logo de l'intranet.">
           </a>
         </span>
     </header>
@@ -502,11 +498,9 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    {#    {{ encore_entry_script_tags('app') }}#}
     <script src="{{ asset('src/assets/js/core.min.js') }}"></script>
-    <script src="{{ asset('src/assets/js/app.js') }}"></script>
-    <script src="{{ asset('src/assets/vendor/jquery-jeditable/dist/jquery.jeditable.min.js') }}"></script>
-    <script src="{{ asset('src/assets/vendor/jquery.collection.js') }}"></script>
+    <script src="{{ asset('src/assets/js/app.min.js') }}"></script>
+    <script src="{{ asset('src/assets/vendor/jquery.collection.min.js') }}"></script>
     <script src="{{ asset('src/assets/js/script.min.js') }}"></script>
     <script data-provide="sweetalert"></script>
 {% endblock %}

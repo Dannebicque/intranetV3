@@ -12,6 +12,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\PersonnelDepartement;
+use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,10 +31,12 @@ class PersonnelDepartementController extends BaseController
      *
      * @return Response
      */
-    public function index(Departement $departement): Response
-    {
+    public function index(
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        Departement $departement
+    ): Response {
         return $this->render('super-administration/personnel_formation/index.html.twig', [
-            'personnels'  => $departement->getPersonnelDepartements(),
+            'personnels' => $personnelDepartementRepository->getPersonnelByDepartements($departement),
             'departement' => $departement
         ]);
     }

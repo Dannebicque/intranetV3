@@ -1,18 +1,4 @@
 
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/app.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 5/1/19 8:38 AM
- *  * @lastUpdate 5/1/19 8:38 AM
- *  *
- *
- */
-
 // Check if an element has a specific data attribute
 //
 jQuery.fn.hasDataAttr = function(name) {
@@ -160,24 +146,6 @@ jQuery.fn.scrollToEnd = function() {
       // Private options
       modalId: null,
     },
-
-
-
-
-    // Google map
-    //
-    googleMap: {
-      lat: '',
-      lng: '',
-      zoom: 13,
-      markerLat: '',
-      markerLng: '',
-      markerIcon: '',
-      style: ''
-    }
-
-
-
   };
 
 

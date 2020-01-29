@@ -105,4 +105,16 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getPersonnelByDepartements(Departement $departement)
+    {
+        return $this->createQueryBuilder('f')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
+            ->where('f.departement = :departement')
+            ->setParameter('departement', $departement)
+            ->orderBy('p.nom', 'asc')
+            ->orderBy('p.prenom', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
 }

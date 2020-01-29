@@ -341,3 +341,100 @@ thead {
   text-align: center;
   opacity: 1;
 }
+
+/** LOGO **/
+.st0 {
+  fill: #46ABBC;
+}
+
+/* couleur claire - mmi Troyes */
+.st1 {
+  fill: #146F88;
+}
+
+/* couleur foncée - mmi Troyes */
+
+.st2 {
+  fill: #F9B000;
+}
+
+/* couleur claire - iut Troyes */
+.st3 {
+  fill: #646363;
+}
+
+/* couleur foncée - iut Troyes */
+
+.st4 {
+  fill: #41C0F0;
+}
+
+/* couleur claire - iut Reims */
+.st5 {
+  fill: #083153;
+}
+
+/* couleur foncée - iut Reims */
+
+.div_logo {
+  background-color: white
+}
+
+.div_logo:hover {
+  cursor: pointer;
+}
+
+.div_logo:hover .bounce {
+  -webkit-animation: bounce 2s;
+  animation: bounce 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%,
+  25%,
+  50%,
+  75%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+.div_logo:hover .drop {
+  -webkit-animation: drop 2s;
+  animation: drop 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@keyframes drop {
+  0%,
+  25%,
+  50%,
+  75%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+  60% {
+    -webkit-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+
+/** FIN LOGO **/
+

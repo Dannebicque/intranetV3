@@ -109,7 +109,7 @@ class MatiereRepository extends ServiceEntityRepository
 
         /** @var  $q Matiere */
         foreach ($query as $q) {
-            $t[$q->getCodeApogee()] = $q;
+            $t[$q->getCodeElement()] = $q;
         }
 
         return $t;
