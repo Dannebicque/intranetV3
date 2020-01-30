@@ -51,7 +51,13 @@
                     {% for previsionnel in previsionnel.previsionnels %}
                         <tr>
                             <td colspan="11">
-                                {{ previsionnel.personnel != null ? previsionnel.personnel.display : 'non.defini'|trans }}
+                                <a class="myedit"
+                                   data-type="select"
+                                   data-field="personnel"
+                                   href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                                   data-title="Modifier l'intervenant">
+                                    {{ previsionnel.personnel != null ? previsionnel.personnel.display : 'non.defini'|trans }}</a>
+
                             </td>
                             <td colspan="2">
                                 <a href="">Voir son service complet</a>
@@ -70,7 +76,7 @@
                                             class="{{ iconDelete }}"></i></a>
                             </td>
                         </tr>
-                        <tr id="ligne_{{ previ.id }}">
+                        <tr id="ligne_{{ previsionnel.id }}">
                             <td>
                                 <a class="myedit"
                                    data-field="NbHCm"
