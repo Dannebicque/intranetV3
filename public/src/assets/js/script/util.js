@@ -135,10 +135,13 @@ let myEditInitialContent = ''
 
 
 $(document).on('click', '.myedit', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   myEditInitialContent = $(this)
-  let html = genereInput($(this))
+  if ($(this).data('type') === 'select') {
 
+  } else {
+    let html = genereInput($(this))
+  }
   $(this).replaceWith(html)
   $('#myedit-input').focus()
 })
