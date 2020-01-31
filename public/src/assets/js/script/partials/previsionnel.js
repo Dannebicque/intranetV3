@@ -9,6 +9,25 @@
 
 let nbLignePrevisionnel = 1
 
+$(document).on('change', '.changeIntervenantPrevi', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
+  $.ajax({
+    url: Routing.generate('administration_previsionnel_ajax_edit', {id: $(this).data('previ')}),
+    method: 'POST',
+    data: {
+      value: $(this).val(),
+      field: 'personnel'
+    },
+    success: function () {
+      addCallout('Modification de prévisionnel enregistrée !', 'success')
+    },
+    error: function () {
+      addCallout('Erreur lors de la modification du prévisionnel !', 'error')
+    }
+  })
+})
+
 $(document).on('change', '#previSemestre', function (e) {
   e.preventDefault()
   e.stopPropagation()

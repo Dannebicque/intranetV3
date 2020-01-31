@@ -24,6 +24,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\Repository\HrsRepository;
+use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -90,6 +91,10 @@ class MyPrevisionnel
      */
     private $myUpload;
     private $anneePrevi;
+    /**
+     * @var PersonnelRepository
+     */
+    private $personnelRepository;
 
     /**
      * @return mixed
@@ -125,11 +130,13 @@ class MyPrevisionnel
     public function __construct(
         EntityManagerInterface $entityManager,
         PrevisionnelRepository $previsionnelRepository,
+        PersonnelRepository $personnelRepository,
         HrsRepository $hrsRepository,
         MyExcelWriter $myExcelWriter,
         MyUpload $myUpload
     ) {
         $this->previsionnelRepository = $previsionnelRepository;
+        $this->personnelRepository = $personnelRepository;
         $this->hrsRepository = $hrsRepository;
         $this->entityManager = $entityManager;
         $this->myExcelWriter = $myExcelWriter;
@@ -436,16 +443,33 @@ class MyPrevisionnel
     public function update(Previsionnel $previ, $name, $value): bool
     {
         if ($previ) {
-            $method = 'set' . $name;
-            if (method_exists($previ, $method)) {
-                $previ->$method(Tools::convertToFloat($value));
-                $this->entityManager->persist($previ);
-                $this->entityManager->flush();
+            if ($name === 'personnel') {
+                if ($value === 'null') {
+                    $previ->setPersonnel(null);
+                    $this->entityManager->flush();
 
-                return true;
+                    return true;
+                }
+                $personnel = $this->personnelRepository->find($value);
+                if ($personnel !== null) {
+                    $previ->setPersonnel($personnel);
+                    $this->entityManager->flush();
+
+                    return true;
+                }
+
+                return false;
+
+
+            } else {
+                $method = 'set' . $name;
+                if (method_exists($previ, $method)) {
+                    $previ->$method(Tools::convertToFloat($value));
+                    $this->entityManager->flush();
+
+                    return true;
+                }
             }
-
-            return false;
         }
 
         return false;
@@ -458,8 +482,11 @@ class MyPrevisionnel
      * @return StreamedResponse
      * @throws Exception
      */
-    public function exportOmegaDepartement(Departement $departement, int $anneePrevisionnel): StreamedResponse
-    {
+    public
+    function exportOmegaDepartement(
+        Departement $departement,
+        int $anneePrevisionnel
+    ): StreamedResponse {
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $anneePrevisionnel);
         $hrs = $this->hrsRepository->findByDepartement($departement, $anneePrevisionnel);
 
@@ -496,8 +523,10 @@ class MyPrevisionnel
         );
     }
 
-    private function ecritPrevisionnel($previsionnels): void
-    {
+    private
+    function ecritPrevisionnel(
+        $previsionnels
+    ): void {
         /** @var Previsionnel $previ */
         foreach ($previsionnels as $previ) {
             $colonne = 1;
@@ -543,7 +572,8 @@ class MyPrevisionnel
 
             if ($previ->getPersonnel() !== null) {
                 //CODE HARPEGE*
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getPersonnel()->getNumeroHarpege());
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                    $previ->getPersonnel()->getNumeroHarpege());
                 $colonne++;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
@@ -579,8 +609,10 @@ class MyPrevisionnel
     /**
      * @param $hrs
      */
-    private function ecritHRS($hrs): void
-    {
+    private
+    function ecritHRS(
+        $hrs
+    ): void {
 
         /** @var Hrs $previ */
         foreach ($hrs as $previ) {
@@ -622,7 +654,8 @@ class MyPrevisionnel
 
             if ($previ->getPersonnel() !== null) {
                 //CODE HARPEGE*
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getPersonnel()->getNumeroHarpege());
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                    $previ->getPersonnel()->getNumeroHarpege());
                 $colonne++;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
@@ -655,8 +688,10 @@ class MyPrevisionnel
         }
     }
 
-    public function importCsv($data): bool
-    {
+    public
+    function importCsv(
+        $data
+    ): bool {
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
         if ($data['diplome'] !== null) {
@@ -710,8 +745,11 @@ class MyPrevisionnel
         return false;
     }
 
-    private function supprPrevisionnel(Diplome $diplome, $annee): void
-    {
+    private
+    function supprPrevisionnel(
+        Diplome $diplome,
+        $annee
+    ): void {
         $pr = $this->previsionnelRepository->findByDiplome($diplome, $annee);
         /** @var Previsionnel $p */
         foreach ($pr as $p) {
@@ -721,8 +759,11 @@ class MyPrevisionnel
         $this->entityManager->flush();
     }
 
-    public function compareEdtPreviPersonnels(Departement $departement, $annee): array
-    {
+    public
+    function compareEdtPreviPersonnels(
+        Departement $departement,
+        $annee
+    ): array {
         $this->recupPlanning($departement);
         $this->recupPersonnels($departement);
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
@@ -798,8 +839,11 @@ class MyPrevisionnel
      *
      * @return array
      */
-    public function compareEdtPreviMatiere(Departement $departement, $annee): array
-    {
+    public
+    function compareEdtPreviMatiere(
+        Departement $departement,
+        $annee
+    ): array {
         $this->recupPlanning($departement, $annee);
         $this->recupMatieres($departement, $annee);
 
@@ -866,8 +910,14 @@ class MyPrevisionnel
         return $t;
     }
 
-    public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
-    {
+    public
+    function export(
+        ?Departement $getDepartement,
+        $annee,
+        $type,
+        $data,
+        $_format
+    ): void {
         //todo: a faire.
     }
 }
