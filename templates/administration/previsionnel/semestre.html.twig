@@ -51,14 +51,29 @@
                     <tbody>
                     {% for previ in previsionnel.previsionnels %}
                         <tr>
-                            <td colspan="5">
-                                {{ previ.matiere.codeMatiere }} | {{ previ.matiere.libelle }}
-                                                                | {{ previ.personnel != null ? previ.personnel.display : 'non.defini'|trans }}
-                            </td>
                             <td colspan="4">
+                                {{ previ.matiere.codeMatiere }} | {{ previ.matiere.libelle }}
+                            </td>
+                            <td colspan="3">
+                                <select
+                                        class="form-control changeIntervenantPrevi"
+                                        data-previ="{{ previ.id }}"
+                                        data-provide="selectpicker"
+                                        data-live-search="true">
+                                    <option value="" {% if previ.personnel == null %}selected{% endif %}>
+                                        Intervenant non défini
+                                    </option>
+                                    {% for personnel in user_data.personnels %}
+                                        <option value="{{ personnel.id }}"
+                                                {% if previ.personnel != null and previ.personnel.id == personnel.id %}selected{% endif %}
+                                        >{{ personnel.displayPr }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td colspan="3">
                                 <button data-provide="modaler"
-                                        data-url="{{ path('administration_previsionnel_matiere', {matiere: previ.matiere.id, annee:
-                                            annee}) }}"
+                                        data-url="{{ path('administration_previsionnel_matiere', {matiere: previ
+                                            .matiere.id, annee: annee}) }}"
                                         class="btn btn-primary btn-sm"
                                         data-size="lg"
                                         data-title="Service de la matière {{ previ.matiere.codeMatiere }}"
@@ -66,20 +81,22 @@
                                     Service de la matière {{ previ.matiere.codeMatiere }}
                                 </button>
                             </td>
-                            <td colspan="4">
-                                <button data-provide="modaler"
-                                        data-url="{{ path('administration_previsionnel_personnel', {personnel: previ
-                                            .personnel.id, annee:
-                                            annee}) }}"
-                                        class="btn btn-primary btn-sm"
-                                        data-size="lg"
-                                        data-title="Service complet de {{ previ.personnel.displayPr }}"
-                                >
-                                    Service complet de {{ previ.personnel.displayPr }}
-                                </button>
+                            <td colspan="3">
+                                {% if previ.personnel != null %}
+                                    <button data-provide="modaler"
+                                            data-url="{{ path('administration_previsionnel_personnel', {personnel: previ.personnel.id, annee:annee}) }}"
+                                            class="btn btn-primary btn-sm"
+                                            data-size="lg"
+                                            data-title="Service complet de {{ previ.personnel.displayPr }}"
+                                    >
+                                        Service complet de {{ previ.personnel.displayPr }}
+                                    </button>
+                                {% else %}
+                                    {{ 'intervenant.non.defini'|trans }}
+                                {% endif %}
                             </td>
 
-                            <td colspan="1">
+                            <td>
                                 <a href="{{ path('administration_previsionnel_duplicate', {id: previ.id}) }}"
                                    class="btn btn-success btn-outline btn-sm btn-square" data-provide="tooltip"
                                    data-placement="bottom"

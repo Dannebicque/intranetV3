@@ -51,12 +51,20 @@
                     {% for previsionnel in previsionnel.previsionnels %}
                         <tr>
                             <td colspan="11">
-                                <a class="myedit"
-                                   data-type="select"
-                                   data-field="personnel"
-                                   href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   data-title="Modifier l'intervenant">
-                                    {{ previsionnel.personnel != null ? previsionnel.personnel.display : 'non.defini'|trans }}</a>
+                                <select
+                                        class="form-control changeIntervenantPrevi"
+                                        data-previ="{{ previsionnel.id }}"
+                                        data-provide="selectpicker"
+                                        data-live-search="true">
+                                    <option value="" {% if previsionnel.personnel == null %}selected{% endif %}>
+                                        Intervenant non défini
+                                    </option>
+                                    {% for personnel in user_data.personnels %}
+                                        <option value="{{ personnel.id }}"
+                                                {% if previsionnel.personnel != null and previsionnel.personnel.id == personnel.id %}selected{% endif %}
+                                        >{{ personnel.displayPr }}</option>
+                                    {% endfor %}
+                                </select>
 
                             </td>
                             <td colspan="2">
