@@ -56,6 +56,10 @@ class MyEdt extends BaseEdt
      * @var EntityManagerInterface
      */
     private $entityManager;
+    /**
+     * @var array
+     */
+    private $tab = [];
 
 
     /**
@@ -134,7 +138,6 @@ class MyEdt extends BaseEdt
                     $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
                     $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
                     $this->planning = $this->transformePromo($pl);
-
                     break;
                 case 'prof':
                     $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->semaineFormationIUT);
@@ -208,29 +211,31 @@ class MyEdt extends BaseEdt
      */
     private function transformeProf($pl): array
     {
-        $tab = [];
+        $this->tab = [];
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
             $dbtEdt = $this->convertEdt($p->getDebut());
             $finEdt = $this->convertEdt($p->getFin());
 
-            $tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $p->getDebut();
+            $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $p->getDebut();
 
             for ($i = $dbtEdt; $i < $finEdt; $i++) {
-                $tab[$p->getJour()][$i]['texte'] = 'xx';
+                $this->tab[$p->getJour()][$i]['texte'] = 'xx';
             }
 
-            $tab[$p->getJour()][$dbtEdt]['texte'] = $p->getSalle() . '<br />' . $this->isEvaluation($p) . '<br />' . $p->getSemestre()->getLibelle() . ' |  ' . $p->getDisplayGroupe();
+            $this->tab[$p->getJour()][$dbtEdt]['texte'] = $p->getSalle() . '<br />' . $this->isEvaluation($p) . '<br />' . $p->getSemestre()->getLibelle() . ' |  ' . $p->getDisplayGroupe();
 
-            $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
-            $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-            $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
+            $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
+            $this->tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
+            $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
+            $this->tab[$p->getJour()][$dbtEdt]['format'] = 'ok';
+            $this->valideFormat($p);
             $this->calculTotal($p);
 
         }
 
-        return $tab;
+        return $this->tab;
     }
 
     /**
@@ -240,7 +245,7 @@ class MyEdt extends BaseEdt
      */
     private function transformeEtudiant($pl): array
     {
-        $tab = [];
+        $this->tab = [];
         $this->groupes();
 
         /** @var EdtPlanning $p */
@@ -249,24 +254,24 @@ class MyEdt extends BaseEdt
                 $dbtEdt = $this->convertEdt($p->getDebut());
                 $finEdt = $this->convertEdt($p->getFin());
                 $debut = $p->getDebut();
-                $tab[$p->getJour()][$dbtEdt] = [];
-                $tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $debut;
+                $this->tab[$p->getJour()][$dbtEdt] = [];
+                $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $debut;
 
                 for ($i = $dbtEdt; $i < $finEdt; $i++) {
-                    $tab[$p->getJour()][$i]['texte'] = 'xx';
+                    $this->tab[$p->getJour()][$i]['texte'] = 'xx';
                 }
 
-                $tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
+                $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
 
-                $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
-                $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-                $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
-                $tab[$p->getJour()][$dbtEdt]['commentaire'] = $this->hasCommentaire($p);
-
+                $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
+                $this->tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
+                $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
+                $this->tab[$p->getJour()][$dbtEdt]['commentaire'] = $this->hasCommentaire($p);
+                $this->valideFormat($p);
             }
         }
 
-        return $tab;
+        return $this->tab;
     }
 
     /**
@@ -733,6 +738,43 @@ class MyEdt extends BaseEdt
         $this->entityManager->flush();
 
         return $plann;
+    }
+
+    private function valideFormat(EdtPlanning $p)
+    {
+        $casedebut = $p->getDebut();
+        $idDebut = $this->convertEdt($casedebut);
+        $casefin = $p->getFin();
+        $duree = $casefin - $casedebut;
+        $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $casedebut;
+
+        //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
+        if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
+            $this->tab[$p->getJour()][$idDebut]['format'] = 'ok';
+
+            if ($duree % 3 === 0) {
+                for ($i = 1; $i < $duree / 3; $i++) {
+                    $this->tab[$p->getJour()][$this->convertEdt($casedebut + ($i * 3))] = $this->tab[$p->getJour()][$idDebut];
+                }
+            }
+        } else {
+            //pas sur un créneau classique pour le début
+            if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+                $casedebut -= ($duree % 3);
+            }
+
+            if ($casedebut === 11 || $casedebut === 12) {
+                $casedebut = 10;
+            }
+
+            if ($casedebut === 2 || $casedebut === 3) {
+                $casedebut = 1;
+            }
+
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $casedebut;
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'nok';
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['fin'] = $casefin;
+        }
     }
 
 }

@@ -32,41 +32,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $formation
-     *
-     * @return array
-     */
-//    public function findEvalFormation($formation)
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->innerJoin('DAKernelBundle:Semestre', 's', 'WITH', 's.id = p.semestre')
-//            ->innerJoin('DAKernelBundle:Annee', 'a', 'WITH', 'a.id = s.annee')
-//            ->innerJoin('DAKernelBundle:Diplome', 'd', 'WITH', 'd.id = a.diplome')
-//            ->where('d.formation = :formation')
-//            ->andWhere('p.evaluation = :eval')
-//            ->setParameters(array('formation' => $formation, 'eval' => 'O'))
-//            ->orderBy('p.semaine', 'ASC')
-//            ->getQuery()
-//            ->getResult();
-//    }
-//
-//    /**
-//     * @param $personnel
-//     *
-//     * @return array
-//     */
-//    public function findEvalPersonnel($personnel)
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->where('p.intervenant = :personnel')
-//            ->andWhere('p.evaluation = :eval')
-//            ->setParameters(array('personnel' => $personnel, 'eval' => 'O'))
-//            ->orderBy('p.semaine', 'ASC')
-//            ->getQuery()
-//            ->getResult();
-//    }
-
-    /**
      * @param integer $prof
      * @param integer $semaine
      *
@@ -82,38 +47,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-//    /**
-//     * @param integer $prof
-//     *
-//     * @return array
-//     */
-//    public function findAllEDTProf($prof)
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->innerJoin('DAKernelBundle:Calendrier', 'c', 'WITH', 'p.semaine = c.semaineIUT')
-//            ->where('p.intervenant = :idprof')
-//            ->setParameter('idprof', $prof)
-//            ->orderBy('p.semaine, p.jour, p.debut, p.groupe')
-//            ->getQuery()
-//            ->getResult();
-//    }
-
-//    /**
-//     * @param integer $module
-//     *
-//     * @return array
-//     */
-//    public function findAllEdtModule($module)
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->innerJoin('DAKernelBundle:Calendrier', 'c', 'WITH', 'p.semaine = c.semaineIUT')
-//            ->where('p.matiere = :idmodule')
-//            ->setParameter('idmodule', $module)
-//            ->orderBy('p.semaine, p.jour, p.debut, p.groupe')
-//            ->getQuery()
-//            ->getResult();
-//    }
 
     /**
      * @param         $semestre
@@ -183,34 +116,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-//    /**
-//     * @param         $user
-//     * @param integer $semaine
-//     * @param integer $jour
-//     *
-//     * @return array
-//     */
-//    public function findEdtJour(Etudiants $user, $semaine, $jour)
-//    {
-//        $this->groupes($user);
-//
-//        return $this->createQueryBuilder('p')
-//            ->where('p.semaine = :semaine')
-//            ->andWhere('p.semestre = :promo')
-//            ->andWhere('p.groupe = 1 OR p.groupe = :groupetd OR p.groupe = :groupetp')
-//            ->andWhere('p.jour = :jour')
-//            ->setParameters(array(
-//                'semaine'  => $semaine,
-//                'promo'    => $user->getSemestre()->getId(),
-//                'jour'     => $jour,
-//                'groupetd' => $this->groupetd,
-//                'groupetp' => $this->groupetp
-//            ))
-//            ->orderBy('p.jour, p.debut, p.groupe')
-//            ->getQuery()
-//            ->getResult();
-//    }
-
     /**
      * @param $user
      */
@@ -244,56 +149,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-//    /**
-//     * @param integer $semaine
-//     * @param integer $jour
-//     * @param integer $promo
-//     *
-//     * @return array
-//     */
-//    public function findEdtVenir($semaine, $jour, $promo)
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->where('p.semaine = :semaine')
-//            ->andWhere('p.annee = :promo')
-//            ->andWhere('p.jour = :jour')
-//            ->setParameters(array(
-//                'semaine' => $semaine,
-//                'promo'   => $promo,
-//                'jour'    => $jour,
-//            ))
-//            ->orderBy('p.jour, p.debut, p.groupe')
-//            ->getQuery()
-//            ->getResult();
-//    }
-
-//    /**
-//     * @param Etudiant $user
-//     * @param integer   $semaine
-//     *
-//     * @return array
-//     */
-//    public function findEdtEtudiant(Etudiant $user, $semaine)
-//    {
-//        $this->groupes($user);
-//
-//        return $this->createQueryBuilder('p')
-//            ->where('p.semaine = :semaine')
-//            ->orWhere('p.semaine = :semaine2 ')
-//            ->andWhere('p.semestre = :promo')
-//            ->andWhere('p.groupe = 1 OR p.groupe = :groupetd OR p.groupe = :groupetp')
-//            ->setParameters(array(
-//                'semaine'  => $semaine,
-//                'promo'    => $user->getSemestre()->getId(),
-//                'semaine2' => $semaine + 1,
-//                'groupetd' => $this->groupetd,
-//                'groupetp' => $this->groupetp,
-//            ))
-//            ->orderBy('p.jour, p.debut, p.groupe')
-//            ->getQuery()
-//            ->getResult();
-//    }
 
     /**
      * @param Etudiant $user
@@ -368,9 +223,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
         /** @var  EdtPlanning $row */
         foreach ($query as $row) {
             $casedebut = $row->getDebut();
-
-
-
             $casefin = $row->getFin();
             $duree = $casefin - $casedebut;
             $groupe = $row->getGroupe();
