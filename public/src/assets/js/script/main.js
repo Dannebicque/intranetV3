@@ -9,8 +9,8 @@
 
 require('./config')
 require('./util')
-require('../../vendor/jquery.collection')
-require('../../vendor/jqueryui')
+// require('../../vendor/jquery.collection')
+// require('../../vendor/jqueryui')
 
 /** CSS **/
 require('../../css/style.scss')
@@ -84,7 +84,6 @@ app.ready(function () {
   |
   */
 
-  require('./plugins/myModal.js')
   require('./plugins/pagination')
 
 
@@ -131,11 +130,12 @@ app.ready(function () {
 
   require('./plugins/myQuill')
 
+
   const preloader = $('.preloader')
-  // if (preloader.length) {
-  //   const speed = preloader.dataAttr('hide-spped', 600)
-  //   preloader.fadeOut(speed)
-  // }
+  if (preloader.length) {
+    const speed = preloader.dataAttr('hide-spped', 600)
+    preloader.fadeOut(speed)
+  }
 
   $(document).on({
     ajaxStart: function () {
