@@ -1378,4 +1378,5 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
+
 }

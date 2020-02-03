@@ -600,4 +600,9 @@ abstract class Utilisateur implements UserInterface
 
         return $this;
     }
+
+    public function getAvatarInitiales()
+    {
+        return strtoupper(substr(trim($this->getPrenom()), 0, 1) . '' . substr(trim($this->getNom()), 0, 1));
+    }
 }

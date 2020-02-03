@@ -26,14 +26,20 @@
         <div class="row">
             {% if personnels|length >0 %}
                 {% for personnel in personnels %}
-                    <div class="col-sm-6 col-md-4 col-lg-3 mb-30" >
+                    <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
                         <div class="text-dark card-body bg-secondary py-20 {{ personnel.statut|border }}"
                              style="min-height: 230px">
                             <div class="flexbox">
                                 <a href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">
-                                    <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
-                                        ('upload/personnels/'~personnel.photoName)|imagine_filter('thumb') }}"
-                                         alt="photo de {{ personnel.displayPr }}">
+                                    {% if personnel.photoName != null and personnel.photoName !=
+                                        'noimage.png' %}
+                                        <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset
+                                            ('upload/personnels/'~personnel.photoName)|imagine_filter('thumb') }}"
+                                             alt="photo de {{ personnel.displayPr }}">
+                                    {% else %}
+                                        {{ include('composants/_avatar.html.twig', {user:personnel}) }}
+                                    {% endif %}
+
                                 </a>
                                 <div class="flex-grow pl-20">
                                     <h4><a class="text-dark" data-provide="tooltip"
