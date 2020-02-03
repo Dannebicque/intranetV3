@@ -762,15 +762,15 @@ class MyPrevisionnel
     public
     function compareEdtPreviPersonnels(
         Departement $departement,
+        $planning,
         $annee
     ): array {
-        $this->recupPlanning($departement);
-        $this->recupPersonnels($departement);
+        $personnels = $this->personnelRepository->findByDepartement($departement);
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
         $t = [];
 
         /** @var Personnel $ens */
-        foreach ($this->personnels as $ens) {
+        foreach ($personnels as $ens) {
             $t[$ens->getId()] = [];
         }
 
@@ -799,7 +799,7 @@ class MyPrevisionnel
             }
         }
 
-        foreach ($this->planning as $pl) {
+        foreach ($planning as $pl) {
             if ($pl->getMatiere() !== null &&
                 $pl->getIntervenant() !== null &&
                 array_key_exists($pl->getIntervenant()->getId(), $t)) {

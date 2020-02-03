@@ -32,6 +32,11 @@
     {% endif %}
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('src/assets/vendor/jqueryui/jquery-ui.min.js') }}"></script>
+    {{ parent() }}
+{% endblock %}
+
 {% block fabactions %}
 
 {% endblock %}
