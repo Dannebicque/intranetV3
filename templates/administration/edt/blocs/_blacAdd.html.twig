@@ -2,11 +2,20 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h2>Action | <strong>Ajout</strong> d'un créneau</h2>
+                <h2><strong>Ajout/Modification</strong> d'un créneau</h2>
+                <a href="#"
+                   id="btnDelete"
+                   class="btn btn-danger btn-outline btn-square supprimer"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   title="{{ 'atitle.supprimer'|trans }}">
+                    <i class="{{ iconDelete }}"></i>
+                    <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+                </a>
             </div>
             <div class="card-body">
                 <form action="{{ path('administration_edt_add_cours') }}" method="post">
-                    <input type="hidden" name="promo" value="{{ edt.semestre.id }}" />
+                    <input type="hidden" name="promo" value="{{ edt.semestre.id }}"/>
                     <input type="hidden" name="semaine" value="{{ edt.semaineFormation }}"/>
                     <input type="hidden" name="semaine2" value="{{ edt.semaine }}"/>
 
@@ -154,8 +163,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <input type="hidden" name="idEdtUpdate" id="idEdtUpdate" value="">
-                            <button type="submit" class="btn btn-block btn-primary" id="btnAddEDT">Ajouter le
-                                                                                                   créneau
+                            <button type="submit" class="btn btn-block btn-primary" id="btnAddEDT">
+                                Ajouter le créneau
                             </button>
                         </div>
                     </div>

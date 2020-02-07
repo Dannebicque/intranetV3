@@ -99,4 +99,22 @@ class EdtActionsController extends BaseController
     {
         return $this->json($edtPlanning->getJson(), Response::HTTP_OK);
     }
+
+    /**
+     *
+     * @Route("/delete/{id}", name="administration_edt_delete", options={"expose"=true})
+     * @param EdtPlanning $edtPlanning
+     *
+     * @return JsonResponse
+     */
+    public function delete(Request $request, EdtPlanning $edtPlanning)
+    {
+        $this->entityManager->remove($edtPlanning);
+        $this->entityManager->flush();
+
+        return $this->json([
+            'redirect' => true,
+            'url'      => $request->server->get('HTTP_REFERER')
+        ]);
+    }
 }

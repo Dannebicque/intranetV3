@@ -33,10 +33,12 @@ function updateBloc (id) {
       $('#selectenseignant').selectpicker('val', data.personnelId)
       $('#idEdtUpdate').val(data.id)
       $('#btnAddEDT').empty().append('Modifier le créneau')
+      console.log('-' + Routing.generate('administration_edt_delete', {'id': data.id}))
+      $('#btnDelete').prop('href', Routing.generate('administration_edt_delete', {'id': data.id}))
+
       $('#blocadd').show()
     }
   })
-  console.log('modif' + id)
 }
 
 //une fois la selection terminée
@@ -107,138 +109,138 @@ function debut() {
 
   $('#foc').scroll();
 
-  //importer semaine
-  $(document).on('click', '#idimportsemaine', function () {
-    console.log('ok')
-    const za = $('#zoneaction')
-    za.empty()
-    za.load(Routing.generate('administration_edt_za_importsemaine'))
-    za.fadeIn(1000);
-  });
-
-  //zones
-  $('#idcreerzone').click(function () {
-    const za = $('#zoneaction')
-    za.empty();
-    //za.load("{{ path('da_kernel_administration_edt_creerzone') }}");
-    za.fadeIn(1000);
-  });
-
-  //export
-  $('#idexport').click(function () {
-    const za = $('#zoneaction')
-    za.empty();
-    //za.load("{{ path('da_kernel_administration_edt_za_export') }}");
-    za.fadeIn(1000);
-    $('#load-page').hide();
-
-  });
-
-  //suppr semestre
-  $('#ideffacer').click(function () {
-    const za = $('#zoneaction')
-    za.empty();
-    //za.load("{{ path('da_kernel_administration_edt_za_effacer') }}");
-    za.fadeIn(1000);
-    $('#load-page').hide();
-
-  });
-
-
-$(document).on('click', '.closeza', function (e) {
-  e.preventDefault();
+//importer semaine
+$(document).on('click', '#idimportsemaine', function () {
+  console.log('ok')
   const za = $('#zoneaction')
-  za.fadeOut(1000);
-  za.empty();
-  za.hide();
-});
+  za.empty()
+  za.load(Routing.generate('administration_edt_za_importsemaine'))
+  za.fadeIn(1000)
+})
+
+// //zones
+// $('#idcreerzone').click(function () {
+//   const za = $('#zoneaction')
+//   za.empty();
+//   //za.load("{{ path('da_kernel_administration_edt_creerzone') }}");
+//   za.fadeIn(1000);
+// });
+
+// //export
+// $('#idexport').click(function () {
+//   const za = $('#zoneaction')
+//   za.empty();
+//   //za.load("{{ path('da_kernel_administration_edt_za_export') }}");
+//   za.fadeIn(1000);
+//   $('#load-page').hide();
+//
+// });
+
+// //suppr semestre
+// $('#ideffacer').click(function () {
+//   const za = $('#zoneaction')
+//   za.empty();
+//   //za.load("{{ path('da_kernel_administration_edt_za_effacer') }}");
+//   za.fadeIn(1000);
+//   $('#load-page').hide();
+//
+// });
+
+
+// $(document).on('click', '.closeza', function (e) {
+//   e.preventDefault();
+//   const za = $('#zoneaction')
+//   za.fadeOut(1000);
+//   za.empty();
+//   za.hide();
+// });
 
 //changement d'heure de début
-$(document).on('change', "#hdbt", function () {
+$(document).on('change', '#hdbt', function () {
   const t = parseInt($(this).val()) + 3
-  $('#hfin').val(t);
-});
+  $('#hfin').val(t)
+})
 
-//affiche par prof
-$(document).on('change', '#afficheenseignant', function () {
-  const tabetu = $('#zone_edt')
-  const $sem = $('#semainereelle').val()
+// //affiche par prof
+// $(document).on('change', '#afficheenseignant', function () {
+//   const tabetu = $('#zone_edt')
+//   const $sem = $('#semainereelle').val()
+//
+//   tabetu.empty();
+//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
+//     filtre: 'prof',
+//     valeur: $(this).val(),
+//     semainer: $sem
+//   });*/
+//   tabetu.fadeIn(2000);
+//   $('#load-page').hide();
+//
+// });
 
-  tabetu.empty();
-  /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-    filtre: 'prof',
-    valeur: $(this).val(),
-    semainer: $sem
-  });*/
-  tabetu.fadeIn(2000);
-  $('#load-page').hide();
-
-});
-
-//affiche par prof
-$(document).on('change', '#affichesalle', function () {
-  const tabetu = $('#zone_edt')
-  const $sem = $('#semainereelle').val()
-  tabetu.empty().hide();
-  /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-    filtre: 'salle',
-    valeur: $(this).val(),
-    semainer: $sem
-  });*/
-  tabetu.fadeIn(2000);
-  $('#load-page').hide();
-});
+// //affiche par prof
+// $(document).on('change', '#affichesalle', function () {
+//   const tabetu = $('#zone_edt')
+//   const $sem = $('#semainereelle').val()
+//   tabetu.empty().hide();
+//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
+//     filtre: 'salle',
+//     valeur: $(this).val(),
+//     semainer: $sem
+//   });*/
+//   tabetu.fadeIn(2000);
+//   $('#load-page').hide();
+// });
 
 
-//affiche de tous les groupes de toutes les promos
-$(document).on('change', '#affichejour', function () {
-  const tabetu = $('#zone_edt')
-  const $sem = $('#semainereelle').val()
-  tabetu.empty();
-  /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-    filtre: 'jour',
-    valeur: $(this).val(),
-    semainer: $sem
-  });*/
-  tabetu.fadeIn(2000);
-  $('#load-page').hide();
+// //affiche de tous les groupes de toutes les promos
+// $(document).on('change', '#affichejour', function () {
+//   const tabetu = $('#zone_edt')
+//   const $sem = $('#semainereelle').val()
+//   tabetu.empty();
+//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
+//     filtre: 'jour',
+//     valeur: $(this).val(),
+//     semainer: $sem
+//   });*/
+//   tabetu.fadeIn(2000);
+//   $('#load-page').hide();
+//
+// });
 
-});
+// //affichage d'une promo sur une semaine précise
+// $(document).on('change', '#affichesemaine', function () {
+//   const tabetu = $('#zone_edt')
+//
+//   tabetu.empty();
+//   let $t = $(this).val().split('_');
+//   //tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {filtre: $t[0], valeur: $t[1], semainer: $t[2]});
+//   $('#load-page').hide();
+// });
 
-//affichage d'une promo sur une semaine précise
-$(document).on('change', '#affichesemaine', function () {
-  const tabetu = $('#zone_edt')
-
-  tabetu.empty();
-  let $t = $(this).val().split('_');
-  //tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {filtre: $t[0], valeur: $t[1], semainer: $t[2]});
-  $('#load-page').hide();
-});
-
-//affichage par matière
-$(document).on('change', '#affichemodule', function () {
-  const tabetu = $('#zone_edt')
-  const $sem = $('#semainereelle').val()
-
-  tabetu.empty();
-  /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-    filtre: 'module',
-    valeur: $(this).val(),
-    semainer: $sem
-  });*/
-  tabetu.fadeIn(2000);
-  $('#load-page').hide();
-
-});
+// //affichage par matière
+// $(document).on('change', '#affichemodule', function () {
+//   const tabetu = $('#zone_edt')
+//   const $sem = $('#semainereelle').val()
+//
+//   tabetu.empty();
+//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
+//     filtre: 'module',
+//     valeur: $(this).val(),
+//     semainer: $sem
+//   });*/
+//   tabetu.fadeIn(2000);
+//   $('#load-page').hide();
+//
+// });
 
 /***************/
 /* EDT REALISE */
 /***************/
 
 
-$(document).on('change','#selectpersonnel', function () {
-  const selectSemestre = $('#selectsemestre');
-  const selectMatiere = $('#selectmatiere');
+$(document).on('change', '#selectpersonnel', function () {
+  const selectSemestre = $('#selectsemestre')
+  const selectMatiere = $('#selectmatiere')
 
   selectSemestre.val('0');
   selectMatiere.selectpicker('destroy')
