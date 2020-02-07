@@ -128,6 +128,7 @@ class AnneeController extends BaseController
     public function duplicate(Annee $annee): Response
     {
         $newAnnee = clone $annee;
+        $newAnnee->setLibelle($newAnnee->getLibelle() . ' copie');
 
         $this->entityManager->persist($newAnnee);
         $this->entityManager->flush();

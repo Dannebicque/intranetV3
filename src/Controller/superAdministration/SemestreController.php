@@ -1,4 +1,5 @@
 <?php
+
 // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/superAdministration/SemestreController.php
 // @author     David Annebicque
@@ -125,7 +126,7 @@ class SemestreController extends BaseController
     public function duplicate(Semestre $semestre): Response
     {
         $newSemestre = clone $semestre;
-
+        $newSemestre->setLibelle($newSemestre->getLibelle() . ' copie');
         $this->entityManager->persist($newSemestre);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.duplicate.success.flash');

@@ -283,21 +283,19 @@
                 </div>
             </div>
 
-            {% set i = 0 %}
             {% for message in messages %}
-                {% for m in message if m.visible == true %}
-                    {% set i = i + 1 %}
-                    <div class="carousel-item" style="background-color:{{ m.couleur }}" href="#sli_{{ i }}">
+                {% for m in message|filter(m => (m.visible == true)) %}
+                    <div class="carousel-item" style="background-color:{{ m.couleur }}" href="#sli_{{ loop.index }}">
                         <div class="align">
                             <img src="{{ asset('assets/bornes/img/' ~ m.icone~'.png') }}" alt="m.icone">
                             <p class="white-text">
                                 {{ m.message }}
                             </p>
                             {% if m.url != '' or m.url != null %}
-                            <div class="qrcode">
-                            <img src="{{ qr_code_data_uri(m.url) }}" />
-                            <p>Flashez moi pour plus d'informations.</p>
-                            </div>
+                                <div class="qrcode">
+                                    <img src="{{ qr_code_data_uri(m.url) }}"/>
+                                    <p>Flashez moi pour plus d'informations.</p>
+                                </div>
                             {% endif %}
                         </div>
                     </div>
