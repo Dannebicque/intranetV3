@@ -90,7 +90,9 @@ class MyPrevisionnel
      * @var MyUpload
      */
     private $myUpload;
+
     private $anneePrevi;
+
     /**
      * @var PersonnelRepository
      */
@@ -688,10 +690,8 @@ class MyPrevisionnel
         }
     }
 
-    public
-    function importCsv(
-        $data
-    ): bool {
+    public function importCsv($data): bool
+    {
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
         if ($data['diplome'] !== null) {

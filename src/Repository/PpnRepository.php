@@ -8,6 +8,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -42,6 +43,15 @@ class PpnRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
+            ->orderBy('p.annee', 'ASC');
+    }
+
+    public function findByDepartementBuilder(Departement $departement)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = p.diplome')
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
             ->orderBy('p.annee', 'ASC');
     }
 }
