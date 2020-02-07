@@ -112,6 +112,7 @@ class ParcourController extends BaseController
     public function duplicate(Parcour $parcour): Response
     {
         $newParcour = clone $parcour;
+        $newParcour->setLibelle($newParcour->getLibelle() . ' copie');
 
         $this->entityManager->persist($newParcour);
         $this->entityManager->flush();

@@ -334,7 +334,7 @@ class Semestre extends BaseEntity
     /**
      * @param int $ordreAnnee
      */
-    public function setOrdreAnnee(int $ordreAnnee): void
+    public function setOrdreAnnee(int $ordreAnnee = 1): void
     {
         $this->ordreAnnee = $ordreAnnee;
     }
@@ -382,7 +382,7 @@ class Semestre extends BaseEntity
     /**
      * @param Semestre $precedent
      */
-    public function setPrecedent(Semestre $precedent): void
+    public function setPrecedent(?Semestre $precedent): void
     {
         $this->precedent = $precedent;
     }
@@ -398,7 +398,7 @@ class Semestre extends BaseEntity
     /**
      * @param Semestre $suivant
      */
-    public function setSuivant(Semestre $suivant): void
+    public function setSuivant(?Semestre $suivant): void
     {
         $this->suivant = $suivant;
     }
@@ -414,7 +414,7 @@ class Semestre extends BaseEntity
     /**
      * @param Semestre $decale
      */
-    public function setDecale(Semestre $decale): void
+    public function setDecale(?Semestre $decale): void
     {
         $this->decale = $decale;
     }

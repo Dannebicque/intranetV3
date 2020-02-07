@@ -92,7 +92,7 @@ class SemestreType extends AbstractType
             ])
             ->add('ordreLmd', ChoiceType::class, [
                 'label'   => 'label.ordre_lmd',
-                'choices' => range(1, 16)
+                'choices' => range(0, 16)
             ])
             ->add(
                 'actif',
@@ -101,13 +101,17 @@ class SemestreType extends AbstractType
                     'label' => 'label.actif'
                 ]
             )
+            ->add('nbGroupesCm', ChoiceType::class, [
+                'label'   => 'label.nbGroupesCm',
+                'choices' => range(0, 10)
+            ])
             ->add('nbGroupesTd', ChoiceType::class, [
                 'label'   => 'label.nbGroupesTd',
-                'choices' => range(1, 10)
+                'choices' => range(0, 10)
             ])
             ->add('nbGroupesTP', ChoiceType::class, [
                 'label'   => 'label.nbGroupesTP',
-                'choices' => range(1, 20)
+                'choices' => range(0, 20)
             ])
             ->add(
                 'optMailReleve',
@@ -221,6 +225,7 @@ class SemestreType extends AbstractType
                 'label'         => 'label.ppn_actif'
             ])
             ->add('precedent', EntityType::class, [
+                'placeholder'   => 'Choisir le semestre',
                 'class'         => Semestre::class,
                 'required'      => false,
                 'choice_label'  => 'display',
@@ -230,6 +235,7 @@ class SemestreType extends AbstractType
                 'label'         => 'label.semestre_precedent'
             ])
             ->add('suivant', EntityType::class, [
+                'placeholder'   => 'Choisir le semestre',
                 'class'         => Semestre::class,
                 'required'      => false,
                 'choice_label'  => 'display',
@@ -240,6 +246,7 @@ class SemestreType extends AbstractType
             ]);
         if ($this->diplome->isOptDilpomeDecale()) {
             $builder->add('decale', EntityType::class, [
+                'placeholder'   => 'Choisir le semestre',
                 'class'         => Semestre::class,
                 'required'      => false,
                 'choice_label'  => 'display',

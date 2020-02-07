@@ -114,6 +114,7 @@ class DiplomeController extends BaseController
     public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
+        $newDiplome->setLibelle($newDiplome->getLibelle() . ' copie');
 
         $this->entityManager->persist($newDiplome);
         $this->entityManager->flush();

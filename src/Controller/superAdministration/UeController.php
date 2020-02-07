@@ -122,6 +122,7 @@ class UeController extends BaseController
     public function duplicate(Ue $ue): Response
     {
         $newUe = clone $ue;
+        $newUe->setLibelle($newUe->getLibelle() . ' copie');
 
         $this->entityManager->persist($newUe);
         $this->entityManager->flush();
