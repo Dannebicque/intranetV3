@@ -28,7 +28,7 @@
                 <div class="btn-toolbar">
                     <div class="btn-group">
                         {% for semestre in user_data.semestres %}
-                            <a class="btn {% if edt.semestre.id == semestre.id %}btn-primary{% endif %}"
+                            <a class="btn {% if semestre == null and edt.semestre.id == semestre.id %}btn-primary{% endif %}"
                                href="{{ path('administration_edt_index',{valeur:semestre.id, filtre:'promo',
                                    semaine:edt.semaine}) }}">{{ semestre
                                 .libelle }}</a>
@@ -39,66 +39,15 @@
             </div>
         </div>
 
-        <div class="row gap-y">
-            <div class="col-sm-2">
-                <label for="affichejour" class="sr-only">Jour de la semaine</label>
-                <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichejour" name="affichejour">
-                    <option value="">{{ 'edt.filtrer.jour'|trans }}</option>
-                    <option value="1">Lundi</option>
-                    <option value="2">Mardi</option>
-                    <option value="3">Mercredi</option>
-                    <option value="4">Jeudi</option>
-                    <option value="5">Vendredi</option>
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <label for="affichesalle" class="sr-only">Salle</label>
-                <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichesalle" name="affichesalle">
-                    <option value="">{{ 'edt.filtrer.salle'|trans }}</option>
-                    {% for salle in salles %}
-                        <option value="{{ salle.id }}">{{ salle.libelle }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <label for="affichepersonnel" class="sr-only">Personnel</label>
-                <select class="form-control" data-provide="selectpicker" data-live-search="true" id="affichepersonnel" name="affichepersonnel">
-                    <option value="">{{ 'edt.filtrer.personnel'|trans }}</option>
-                    {% for personnel in personnels %}
-                        <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-sm-3">
-                <label for="affichematiere" class="sr-only">Matière</label>
-                <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichematiere" id="affichematiere">
-                    <option value="">{{ 'edt.filtrer.matiere'|trans }}</option>
-                    {% for matiere in matieres %}
-                        <option value="{{ matiere.id }}">{{ matiere.display }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-sm-3">
-                <label for="affichesemaine" class="sr-only">Semaine</label>
-                <select class="form-control" data-provide="selectpicker" data-live-search="true" name="affichesemaine" id="affichesemaine">
-                    <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
-                    {% for sem in edt.semaines %}
-                        <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
-                            du {{ sem.debut|format_date('short') }} au {{ sem.fin|format_date('short') }} |
-                            S{{ sem.semaineIUT }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-        </div>
+        {{ include('administration/edt/blocs/_edt_nav.html.twig') }}
 
         <div class="row gap-y">
-          <div class="col-sm-12">
-            <table class="table-edt" id="selectable">
-              <thead>
-              <tr>
-                <th>&nbsp;</th>
-                <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
+            <div class="col-sm-12" id="zone_edt">
+                <table class="table-edt" id="selectable">
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
                   Lundi {{ edt.tabJour.lundi|format_date('short') }}</th>
                 <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}">
                   Mardi {{ edt.tabJour.mardi|format_date('short') }}</th>
@@ -153,8 +102,9 @@
     </div>
 </div>
 
-
+{% if filtre == 'promo' %}
 {{ include('administration/edt/blocs/_blacAdd.html.twig') }}
+{% endif %}
 {{ include('composants/edt.html.twig', {source: 'intranet'}) }}
 
 

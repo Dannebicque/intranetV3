@@ -62,6 +62,7 @@ class EdtController extends BaseController
      * @param                     $filtre
      *
      * @return Response
+     * @Route("/ajax-update/{filtre}/{valeur}/{semaine}", name="administration_edt_ajax_update", options={"expose"=true})
      */
     public function edtIntranet(
         PersonnelRepository $personnelRepository,
@@ -72,17 +73,49 @@ class EdtController extends BaseController
         $semaine,
         $valeur,
         $filtre
-    ): Response {
+    ): Response
+    {
         $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
             $valeur, $this->dataUserSession->getAnneeUniversitaire());
-        return $this->render('administration/edt/edt-intranet.html.twig', [
-            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'salles'     => $salleRepository->findAll(),
-            'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'edt'        => $edt,
-            'groupes'   => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
 
-        ]);
+        switch ($filtre) {
+
+            case 'prof':
+                return $this->render('administration/edt/edt-prof.html.twig', [
+                    'prof'       => $personnelRepository->find($valeur),
+                    'filtre'     => $filtre,
+                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'salles'     => $salleRepository->findAll(),
+                    'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'edt'        => $edt,
+                ]);
+
+//            case 'module':
+//                return $this->render('DAKernelBundle:AdministrationEdt:edtModule.html.twig', $array);
+//            case 'jour':
+//                return $this->render('DAKernelBundle:AdministrationEdt:edtJour.html.twig', $array);
+            case 'salle':
+                return $this->render('administration/edt/edt-salle.html.twig', [
+                    'salle'      => $valeur,
+                    'filtre'     => $filtre,
+                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'salles'     => $salleRepository->findAll(),
+                    'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'edt'        => $edt,
+                ]);
+            default:
+                return $this->render('administration/edt/edt-intranet.html.twig', [
+                    'filtre'     => $filtre,
+                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'salles'     => $salleRepository->findAll(),
+                    'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'edt'        => $edt,
+                    'groupes'    => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
+
+                ]);
+        }
+
+
     }
 
     /**

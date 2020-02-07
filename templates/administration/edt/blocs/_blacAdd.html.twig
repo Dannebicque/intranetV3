@@ -17,7 +17,7 @@
                 <form action="{{ path('administration_edt_add_cours') }}" method="post">
                     <input type="hidden" name="promo" value="{{ edt.semestre.id }}"/>
                     <input type="hidden" name="semaine" value="{{ edt.semaineFormation }}"/>
-                    <input type="hidden" name="semaine2" value="{{ edt.semaine }}"/>
+                    <input type="hidden" name="semaine2" id="semaine2" value="{{ edt.semaine }}"/>
 
                     <div class="row">
                         <div class="col-sm-4">

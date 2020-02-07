@@ -1,4 +1,3 @@
-
 /*
  * *
  *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
@@ -46,21 +45,20 @@ function selectfin () {
   let valeur
 
   let tabdbt = Cells[0].split('_')
-  $('#hdbt').selectpicker('val', tabdbt[1]);
+  $('#hdbt').selectpicker('val', tabdbt[1])
 
   let tabfin = Cells[Cells.length - 1].split('_')
 
   let fin = parseInt(tabfin[1]) + 1
-  $('#hfin').selectpicker('val', fin);
+  $('#hfin').selectpicker('val', fin)
 
-  $('#jourc' + tabdbt[2]).prop("checked", true);
+  $('#jourc' + tabdbt[2]).prop('checked', true)
 
   let diff = parseInt(tabfin[3]) - parseInt(tabdbt[3])
   if (diff === 0)//donc sur la même colonne
   {
     valeur = 'TP-' + tabdbt[3]
-  }
-  else if (diff === 1)//donc sur 2 colonnes)
+  } else if (diff === 1)//donc sur 2 colonnes)
   {
     valeur = 'TD-' + tabdbt[3]
   } else {
@@ -76,38 +74,36 @@ function selectfin () {
 }
 
 //au debut de la selection
-function debut() {
-  Cells = [];
-  Ind = 0;
+function debut () {
+  Cells = []
+  Ind = 0
 }
 
 
-  //mémoriser les celulles selectionnées
-  $('#selectable').selectable({
-    filter: 'th,td:not(.edt_cours)',
-    start: function (event, ui) {
-      if (!$(event.originalEvent.target).hasClass('edt_cours')) {
-        debut()
-      }
-    },
-    stop: function (event, ui) {
-      if ($(event.originalEvent.target).hasClass('edt_cours')) {
-        updateBloc($(event.originalEvent.target).data('edt'))
-      } else {
-        selectfin()
-      }
-    },
-    selected: function (event, ui) {
-      let s = $(this).find('.ui-selected');
-      Cells[Ind] = $(ui.selected).attr('id');
-      Ind = Ind + 1;
+//mémoriser les celulles selectionnées
+$('#selectable').selectable({
+  filter: 'th,td:not(.edt_cours)',
+  start: function (event, ui) {
+    if (!$(event.originalEvent.target).hasClass('edt_cours')) {
+      debut()
     }
-  });
+  },
+  stop: function (event, ui) {
+    if ($(event.originalEvent.target).hasClass('edt_cours')) {
+      updateBloc($(event.originalEvent.target).data('edt'))
+    } else {
+      selectfin()
+    }
+  },
+  selected: function (event, ui) {
+    let s = $(this).find('.ui-selected')
+    Cells[Ind] = $(ui.selected).attr('id')
+    Ind = Ind + 1
+  }
+})
 
 
-
-
-  $('#foc').scroll();
+$('#foc').scroll()
 
 //importer semaine
 $(document).on('click', '#idimportsemaine', function () {
@@ -162,34 +158,32 @@ $(document).on('change', '#hdbt', function () {
 })
 
 // //affiche par prof
-// $(document).on('change', '#afficheenseignant', function () {
-//   const tabetu = $('#zone_edt')
-//   const $sem = $('#semainereelle').val()
-//
-//   tabetu.empty();
-//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-//     filtre: 'prof',
-//     valeur: $(this).val(),
-//     semainer: $sem
-//   });*/
-//   tabetu.fadeIn(2000);
-//   $('#load-page').hide();
-//
-// });
+$(document).on('change', '#affichepersonnel', function () {
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semaine2').val()
 
-// //affiche par prof
-// $(document).on('change', '#affichesalle', function () {
-//   const tabetu = $('#zone_edt')
-//   const $sem = $('#semainereelle').val()
-//   tabetu.empty().hide();
-//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-//     filtre: 'salle',
-//     valeur: $(this).val(),
-//     semainer: $sem
-//   });*/
-//   tabetu.fadeIn(2000);
-//   $('#load-page').hide();
-// });
+  tabetu.empty()
+  tabetu.load(Routing.generate('administration_edt_ajax_update', {
+    filtre: 'prof',
+    valeur: $(this).val(),
+    semaine: $sem
+  }))
+  tabetu.fadeIn(2000)
+
+})
+
+//affiche par prof
+$(document).on('change', '#affichesalle', function () {
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semaine2').val()
+  tabetu.empty().hide()
+  tabetu.load(Routing.generate('administration_edt_ajax_update', {
+    filtre: 'salle',
+    valeur: $(this).val(),
+    semaine: $sem
+  }))
+  tabetu.fadeIn(2000)
+})
 
 
 // //affiche de tous les groupes de toutes les promos
@@ -217,21 +211,20 @@ $(document).on('change', '#hdbt', function () {
 //   $('#load-page').hide();
 // });
 
-// //affichage par matière
-// $(document).on('change', '#affichemodule', function () {
-//   const tabetu = $('#zone_edt')
-//   const $sem = $('#semainereelle').val()
-//
-//   tabetu.empty();
-//   /*tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {
-//     filtre: 'module',
-//     valeur: $(this).val(),
-//     semainer: $sem
-//   });*/
-//   tabetu.fadeIn(2000);
-//   $('#load-page').hide();
-//
-// });
+//affichage par matière
+$(document).on('change', '#affichematiere', function () {
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semaine2').val()
+
+  tabetu.empty()
+  tabetu.load(Routing.generate('administration_edt_ajax_update', {
+    filtre: 'module',
+    valeur: $(this).val(),
+    semaine: $sem
+  }))
+  tabetu.fadeIn(2000)
+})
+
 
 /***************/
 /* EDT REALISE */
@@ -242,43 +235,46 @@ $(document).on('change', '#selectpersonnel', function () {
   const selectSemestre = $('#selectsemestre')
   const selectMatiere = $('#selectmatiere')
 
-  selectSemestre.val('0');
+  selectSemestre.val('0')
   selectMatiere.selectpicker('destroy')
   selectMatiere.empty()
-  selectMatiere.append(new Option("Choisissez un semestre !", "0"));
+  selectMatiere.append(new Option('Choisissez un semestre !', '0'))
   selectMatiere.selectpicker('val', '0')
 
 })
 
-$(document).on('change','#edtSelectSemestre', function () {
+$(document).on('change', '#edtSelectSemestre', function () {
   $.ajax(
     {
-      url: Routing.generate('api_matieres_semestre_personnel', {semestre: $(this).val(), personnel: $('#selectpersonnel').val()}),
+      url: Routing.generate('api_matieres_semestre_personnel', {
+        semestre: $(this).val(),
+        personnel: $('#selectpersonnel').val()
+      }),
       type: 'POST',
-      dataType: "json", //Return data type (what we expect).
+      dataType: 'json', //Return data type (what we expect).
       success: function (data) {
-        const selectMatiere = $("#selectmatiere");
+        const selectMatiere = $('#selectmatiere')
         selectMatiere.selectpicker('destroy')
         selectMatiere.empty()
-        selectMatiere.append(new Option("Choisissez une matière !", ""))
+        selectMatiere.append(new Option('Choisissez une matière !', ''))
         for (let key in data) {
-          let value = data[key];
+          let value = data[key]
           console.log(key)
           console.log(value)
-          selectMatiere.append(new Option(value.libelle + " (UE: " + value.ue + ")", value.id));
+          selectMatiere.append(new Option(value.libelle + ' (UE: ' + value.ue + ')', value.id))
         }
         selectMatiere.selectpicker()
       },
       error: function () {
 
       }
-    });
+    })
 })
 
 $(document).on('click', '#btnafficheRealise', function (e) {
-  e.preventDefault();
-  const $bloc = $('#blocchrono');
-  $bloc.empty();
+  e.preventDefault()
+  const $bloc = $('#blocchrono')
+  $bloc.empty()
   $bloc.load(Routing.generate('administration_edt_service_realise_affiche', {
     semestre: $('#edtSelectSemestre').val(),
     personnel: $('#selectpersonnel').val(),
