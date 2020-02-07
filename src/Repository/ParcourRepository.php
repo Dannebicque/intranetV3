@@ -9,8 +9,12 @@
 namespace App\Repository;
 
 
+use App\Entity\Annee;
+use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
+use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
@@ -52,5 +56,26 @@ class ParcourRepository extends ServiceEntityRepository
     {
 
         return $this->findBySemestreBuilder($semestre)->getQuery()->getResult();
+    }
+
+    public function tableauParcourApogee(Departement $departement): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Semestre::class, 's', 'with', 's.id=u.semestre')
+            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
+            ->innerJoin(Diplome::class, 'd', 'with', 'd.id=a.diplome')
+            ->where('d.departement= :departement')
+            ->setParameter('departement', $departement->getId())
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+
+        /** @var  $q Parcour */
+        foreach ($query as $q) {
+            $t[$q->getCodeElement()] = $q;
+        }
+
+        return $t;
     }
 }

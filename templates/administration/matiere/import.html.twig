@@ -1,0 +1,46 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'import.d_un.ppn.heading'|trans() }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sa_structure_index', {departement:departement.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_structure'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="ti-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_structure'|trans }}</span>
+            </a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'import.d_un.ppn.heading'|trans({ '%departement%': departement.libelle}) }}</h4>
+        <div class="card-body">
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
+            <br>
+            <div class="alert alert-warning">
+                Le fichier doit être au format CSV (séparateur ;) et doit correspondre au formatage défini dans le
+                modèle joint. (<a href="{{ asset('exemples/matieres.xlsx') }}">télécharger un exemple</a>).
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+
+{% endblock %}

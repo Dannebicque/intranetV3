@@ -10,10 +10,14 @@ namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Ue;
+use App\Form\ImportPrevisionnelType;
 use App\Form\MatiereType;
+use App\Form\PpnImportType;
+use App\MesClasses\MyPpn;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +39,37 @@ class MatiereController extends BaseController
         return $this->render('administration/matiere/index.html.twig');
     }
 
+    /**
+     * @Route("/import/{departement}", name="sa_matiere_import")
+     */
+    public function import(MyPpn $myPpn, Request $request, Departement $departement)
+    {
+        $form = $this->createForm(
+            PpnImportType::class,
+            null,
+            [
+                'departement' => $departement,
+                'attr'        => [
+                    'data-provide' => 'validation'
+                ]
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $myPpn->importCsv($request->request->get('fichier'), $departement, $request->request->get('ppn'));
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.import.success.flash');
+            $this->redirectToRoute('sa_structure_index', ['departement' => $departement->getId()]);
+        }
+
+        return $this->render('administration/matiere/import.html.twig',
+            [
+                'departement' => $departement,
+                'form'        => $form->createView()
+            ]
+        );
+    }
 
     /**
      * @Route("/new/{ue}", name="sa_matiere_new", methods="GET|POST")
