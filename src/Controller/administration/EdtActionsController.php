@@ -95,7 +95,7 @@ class EdtActionsController extends BaseController
      *
      * @return JsonResponse
      */
-    public function getEvent(EdtPlanning $edtPlanning)
+    public function getEvent(EdtPlanning $edtPlanning): JsonResponse
     {
         return $this->json($edtPlanning->getJson(), Response::HTTP_OK);
     }
@@ -103,11 +103,12 @@ class EdtActionsController extends BaseController
     /**
      *
      * @Route("/delete/{id}", name="administration_edt_delete", options={"expose"=true})
+     * @param Request     $request
      * @param EdtPlanning $edtPlanning
      *
      * @return JsonResponse
      */
-    public function delete(Request $request, EdtPlanning $edtPlanning)
+    public function delete(Request $request, EdtPlanning $edtPlanning): JsonResponse
     {
         $this->entityManager->remove($edtPlanning);
         $this->entityManager->flush();

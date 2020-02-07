@@ -544,7 +544,7 @@ class MyEdt extends BaseEdt
             $tab[$p->getJour()][$debut]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSemestre()->getAnnee()->getLibelle() . ' <br /> ' . $p->getDisplayGroupe();
 
             if ($p->getIntervenant() !== null) {
-                $tab[$p->getJour()][$debut]['texte'] .= ' <br /> ' . $p->getIntervenant()->getInitiales();
+                $tab[$p->getJour()][$debut]['texte'] .= ' <br /> ' . $p->getIntervenant()->getNom();
             }
 
             $tab[$p->getJour()][$debut]['couleur'] = $this->getCouleur($p);

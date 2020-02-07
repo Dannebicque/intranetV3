@@ -151,14 +151,14 @@ class GroupeRepository extends ServiceEntityRepository
         $groupes[0]['id'] = 'CM-1';
         $groupes[0]['display'] = 'CM | CM';
 
-        /** @var  Groupes $g */
+        /** @var  Groupe $g */
         foreach ($gtp as $g) {
             $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
             $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
             $i++;
         }
 
-        /** @var  Groupes $g */
+        /** @var  Groupe $g */
         foreach ($gtd as $g) {
             $or = $g->getOrdre();
             $groupes[$i]['id'] = 'TD-' . $or;
