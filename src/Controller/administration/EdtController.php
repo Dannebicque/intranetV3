@@ -90,8 +90,15 @@ class EdtController extends BaseController
                     'edt'        => $edt,
                 ]);
 
-//            case 'module':
-//                return $this->render('DAKernelBundle:AdministrationEdt:edtModule.html.twig', $array);
+            case 'module':
+                return $this->render('administration/edt/edt-matiere.html.twig', [
+                    'matiere'    => $matiereRepository->find($valeur),
+                    'filtre'     => $filtre,
+                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'salles'     => $salleRepository->findAll(),
+                    'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'edt'        => $edt,
+                ]);
 //            case 'jour':
 //                return $this->render('DAKernelBundle:AdministrationEdt:edtJour.html.twig', $array);
             case 'salle':
