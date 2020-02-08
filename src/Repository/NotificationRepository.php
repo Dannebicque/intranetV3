@@ -9,6 +9,7 @@
 namespace App\Repository;
 
 use App\Entity\Notification;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,6 +21,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class NotificationRepository extends ServiceEntityRepository
 {
+
+    private const DAYS_BEFORE_REMOVE = 30;
+
     /**
      * NotificationRepository constructor.
      *
@@ -28,5 +32,17 @@ class NotificationRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Notification::class);
+    }
+
+    public function deleteOldNotification()
+    {
+        return $this->getDeleteOldNotification()->delete()->getQuery()->execute();
+    }
+
+    public function getDeleteOldNotification()
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.created < :date')
+            ->setParameter('date', new DateTime(-self::DAYS_BEFORE_REMOVE . 'days'));
     }
 }
