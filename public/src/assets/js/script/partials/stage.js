@@ -19,23 +19,6 @@ $(document).on('change', '.changetuteur', function () {
   })
 })
 
-
-/*let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9;
-
-if (typeof $('.editCourrier') != 'undefined') {
-
-  const champs = ['[CiviliteEtudiant]','[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]','[Tuteur]'];
-  //let ed1 = loadQuill('#editCourrier', champs)
-  ed2 = loadQuill('ETAT_STAGE_AUTORISE')
-  ed3 = loadQuill('ETAT_STAGE_DEPOSE')
-  ed4 = loadQuill('ETAT_STAGE_VALIDE')
-  ed5 = loadQuill('ETAT_STAGE_REFUS')
-  ed6 = loadQuill('ETAT_STAGE_INCOMPLET')
-  ed7 = loadQuill('ETAT_STAGE_IMPRIME')
-  ed8 = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
-  ed9 = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
-}*/
-
 $(document).on('click', '.enregistreModeleMail', function () {
   const etat = $(this).data('type')
   console.log(etat)

@@ -8,23 +8,6 @@
  */
 
 function loadQuill ($id) {
-  /*const toolbarFullOptions = [
-    [
-      // {'font': []},
-      {'header': [1, 2, 3, 4, 5, 6, false]}
-      //  {'size': ['small', false, 'large', 'huge']}
-    ],
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    //  [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-    // [{'script': 'sub'}, {'script': 'super'}],
-    [{'header': 1}, {'header': 2}, 'blockquote', 'code-block'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-    [{'direction': 'rtl'}, {'align': []}],        // text direction
-    ['link', 'image', 'video'],
-    ['clean'],
-    [{'placeholder': $options}]// remove formatting button
-  ]*/
-
   const options = {
     debug: 'info',
     modules: {
@@ -44,7 +27,7 @@ function loadQuill ($id) {
       },
 
     },
-    placeholder: 'Compose an epic...',
+    placeholder: 'Composez le corps du message...',
     theme: 'snow'
   }
   let quill = new Quill('#text_' + $id, options)

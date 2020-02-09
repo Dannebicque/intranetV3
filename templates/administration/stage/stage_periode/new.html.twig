@@ -24,9 +24,10 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script>
-    $('.selector-stagePeriodeSoutenances').collection();
-    $('.selector-stagePeriodeInterruptions').collection();
-</script>
+    {{ parent() }}
+    <script src="{{ asset('src/assets/vendor/jquery.collection.min.js') }}"></script>
+    <script>
+      $('.selector-stagePeriodeSoutenances').collection()
+      $('.selector-stagePeriodeInterruptions').collection()
+    </script>
 {% endblock %}

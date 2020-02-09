@@ -36,7 +36,7 @@ class StagePeriodeCourrierController extends BaseController
     public function apercuDefaut($mail): Response
     {
         return $this->render('administration/stage/stage_periode_courrier/apercuDefaut.html.twig', [
-            'mail' => Events::getConstante('MAIL_CHGT_' . $mail)
+            'mail' => $mail
         ]);
     }
 

@@ -7,9 +7,6 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            {#<a href="{{ path('administration_stage_courrier_new') }}" class="btn btn-info btn-sm btn-float"#}
-            {#title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i#}
-            {#class="ti-plus"></i></a>#}
             <a href="{{ path('administration_stage_periode_gestion', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i
@@ -138,4 +135,29 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('src/assets/vendor/quill/quill.core.css') }}" rel="stylesheet">
+    <link href="{{ asset('src/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('src/assets/vendor/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('src/assets/js/script/plugins/myQuill.js') }}"></script>
+    <script>
+      let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9
+
+      const champs = ['[CiviliteEtudiant]', '[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]', '[Tuteur]']
+      ed2 = loadQuill('ETAT_STAGE_AUTORISE')
+      ed3 = loadQuill('ETAT_STAGE_DEPOSE')
+      ed4 = loadQuill('ETAT_STAGE_VALIDE')
+      ed5 = loadQuill('ETAT_STAGE_REFUS')
+      ed6 = loadQuill('ETAT_STAGE_INCOMPLET')
+      ed7 = loadQuill('ETAT_STAGE_IMPRIME')
+      ed8 = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
+      ed9 = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
+
+    </script>
 {% endblock %}

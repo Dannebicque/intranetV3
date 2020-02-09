@@ -47,7 +47,6 @@ class StageEtudiant extends BaseEntity
         self::ETAT_STAGE_CONVENTION_RECUE
     ];
 
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stageEtudiants")
      */
