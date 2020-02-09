@@ -46,7 +46,6 @@ $('.savegroupe').click(function () {
 
 $(document).on('keyup', '.noteetudiant', function (e) {
   const val = $(this).val()
-  console.log(val)
   if (val === '-0.01') {
     $(this).removeClass('is-invalid').removeClass('is-valid')
   } else if (parseFloat(val) >= 0 && parseFloat(val) <= 20) {

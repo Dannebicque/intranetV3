@@ -5,17 +5,19 @@
     {% set name = 'q'~question.id~'_c'~config.id %}
 {% endif %}
 
-{% if question.questionsEnfants|length == 0 %}
-    {% if question.type == 'qcu' or question.type == 'yesno' %}
-        {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name, config:config}) }}
-    {% elseif question.type == 'qcm' %}
-        {{ include('quizz_question/_qcm.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
-    {% elseif question.type == 'libre' %}
-        {{ include('quizz_question/_libre.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
-    {% elseif question.type == 'echelle' %}
-        {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+{% if question.questionParent == null %}
+    {% if question.questionsEnfants|length == 0 %}
+        {% if question.type == 'qcu' or question.type == 'yesno' %}
+            {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name, config:config}) }}
+        {% elseif question.type == 'qcm' %}
+            {{ include('quizz_question/_qcm.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+        {% elseif question.type == 'libre' %}
+            {{ include('quizz_question/_libre.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+        {% elseif question.type == 'echelle' %}
+            {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+        {% endif %}
+    {% else %}
+        {{ include('quizz_question/_question_chainee.html.twig', {question:question, numeror:numero, name: name,
+            config:config}) }}
     {% endif %}
-{% else %}
-    {{ include('quizz_question/_question_chainee.html.twig', {question:question, numeror:numero, name: name,
-        config:config}) }}
 {% endif %}

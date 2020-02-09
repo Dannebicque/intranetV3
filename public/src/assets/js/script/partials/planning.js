@@ -91,6 +91,5 @@ $(document).on('change', '#semaine', function(e){
   e.preventDefault()
   //{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle}}
   let tab = $(this).val().split('_')
-  console.log(tab)
   location.href = Routing.generate('agenda_index', {semaine: tab[2] ,valeur: tab[1],  filtre: tab[0]});
 })

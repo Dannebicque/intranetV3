@@ -15,6 +15,15 @@
                            class="form-check-input {% if is_granted('ROLE_ETUDIANT') %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
                     <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                    {% if reponse.valeur == "CHX:OTHER" %}
+                        <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
+                               name="quizz_question_reponses_{{ name }}_autre"
+                               class="form-control {% if is_granted('ROLE_ETUDIANT') %}questionQualiteTextArea{% endif %}"
+                                {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %}
+                                    value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}"
+                                {% endif %}
+                        >
+                    {% endif %}
                 </div>
                 <div class="form-control-feedback"></div>
             </div>

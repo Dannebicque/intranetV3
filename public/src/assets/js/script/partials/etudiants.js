@@ -43,7 +43,6 @@ $(document).on( 'click', '.changegroupe', function() {
     const newgroupe = $(this).val()
     const oldgroupe = '#' + $(this).attr('name') + '_old'
 
-    console.log(oldgroupe);
     $.ajax(
       {
         url: Routing.generate('administration_etudiant_groupe_change'),

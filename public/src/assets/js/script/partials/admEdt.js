@@ -32,7 +32,6 @@ function updateBloc (id) {
       $('#selectenseignant').selectpicker('val', data.personnelId)
       $('#idEdtUpdate').val(data.id)
       $('#btnAddEDT').empty().append('Modifier le créneau')
-      console.log('-' + Routing.generate('administration_edt_delete', {'id': data.id}))
       $('#btnDelete').prop('href', Routing.generate('administration_edt_delete', {'id': data.id}))
 
       $('#blocadd').show()
@@ -107,7 +106,6 @@ $('#foc').scroll()
 
 //importer semaine
 $(document).on('click', '#idimportsemaine', function () {
-  console.log('ok')
   const za = $('#zoneaction')
   za.empty()
   za.load(Routing.generate('administration_edt_za_importsemaine'))
@@ -259,8 +257,6 @@ $(document).on('change', '#edtSelectSemestre', function () {
         selectMatiere.append(new Option('Choisissez une matière !', ''))
         for (let key in data) {
           let value = data[key]
-          console.log(key)
-          console.log(value)
           selectMatiere.append(new Option(value.libelle + ' (UE: ' + value.ue + ')', value.id))
         }
         selectMatiere.selectpicker()

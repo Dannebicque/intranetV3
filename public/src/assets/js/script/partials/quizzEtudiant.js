@@ -1,5 +1,4 @@
 $(document).on('change', '.questionQualite', function () {
-  console.log($(this))
   $.ajax({
     url: Routing.generate('app_etudiant_qualite_ajax_reponse', {uuid: $('#questionnaire').val()}),
     method: 'POST',
@@ -14,7 +13,6 @@ $(document).on('change', '.questionQualite', function () {
 })
 
 $(document).on('blur', '.questionQualiteTextArea', function () {
-  console.log($(this))
   $.ajax({
     url: Routing.generate('app_etudiant_qualite_ajax_reponse_txt', {uuid: $('#questionnaire').val()}),
     method: 'POST',

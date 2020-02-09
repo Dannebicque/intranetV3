@@ -1,5 +1,4 @@
 $(document).on('change', '.updateProgression', function () {
-  console.log('update')
   updateProgression($(this).data('semaine'), $(this).data('type'), $(this).data('matiere'), $(this).val())
   calculProgression($(this).data('semaine'), $(this).data('type'), $(this).data('matiere'))
 })
@@ -68,7 +67,6 @@ function calculProgression (semaine, typecours, matiere) {
     }
     $totCm += t
   })
-  console.log($totCm)
   $('#' + $ztotSCm).text($totCm)
   $('#' + $ztotCm).text($totCm * $nbGrCm)
   $('#' + $ztotCmH).text($totCm * 1.5 * $nbGrCm)

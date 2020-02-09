@@ -15,7 +15,7 @@ class QualiteSectionQuestion extends BaseEntity
     private $section;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuizzQuestion", inversedBy="qualiteSectionQuestions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuizzQuestion", inversedBy="qualiteSectionQuestions", fetch="EAGER")
      */
     private $question;
 

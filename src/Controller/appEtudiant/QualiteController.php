@@ -72,7 +72,7 @@ class QualiteController extends BaseController
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $qualiteQuestionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
         if ($quizzEtudiant !== null) {
             $quizzEtudiant->setDateTermine(new DateTime('now'));
-            $quizzEtudiant->setTermine(false);
+            $quizzEtudiant->setTermine(true);
             $this->entityManager->flush();
 
             if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getDiplome() !== null && $this->getConnectedUser()->getDiplome()->getOptResponsableQualite() !== null) {

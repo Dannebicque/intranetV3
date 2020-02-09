@@ -101,7 +101,6 @@ $(document).on('click', '.checkAbsence', function (e) {
     etat = 0
   }
 
-  console.log(etat)
   $.ajax({
     url: Routing.generate('administration_absences_justifie', {'absence': absence, 'etat': etat}),
     type: 'GET',

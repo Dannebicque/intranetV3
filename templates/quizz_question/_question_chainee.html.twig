@@ -4,29 +4,33 @@
         <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
     </div>
     {% for subQuestion in question.questionsEnfants %}
-        {% if config == null %}
-            {% set name = 'q'~subQuestion.id %}
-        {% else %}
-            {% set name = 'q'~subQuestion.id~'_c'~config.id %}
-        {% endif %}
+        <div class="sub-question {% if loop.index is odd %}row-striped{% endif %}">
+            {% if config == null %}
+                {% set name = 'q'~subQuestion.id %}
+            {% else %}
+                {% set name = 'q'~subQuestion.id~'_c'~config.id %}
+            {% endif %}
 
-        {{ subQuestion.libelle }}
-        <div class="row">
-            {% for reponse in question.quizzReponses %}
-                <div class="col-sm-12 col-md-3">
-                    <div class="form-check">
-                        <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
-                               name="quizz_question_reponses_{{ name }}"
-                               {% if reponses['quizz_question_reponses_'~name] is defined and
-                                   reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
-                                {% if question.obligatoire %}required{% endif %}
-                               class="form-check-input {% if is_granted('ROLE_ETUDIANT') %}questionQualite{% endif %}"
-                               value="{{ reponse.valeur }}">
-                        <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
-                    </div>
-                    <div class="form-control-feedback"></div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 sub-question-titre">
+                    # {{ subQuestion.libelle }}
                 </div>
-            {% endfor %}
+                {% for reponse in question.quizzReponses %}
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-check">
+                            <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                                   name="quizz_question_reponses_{{ name }}"
+                                   {% if reponses['quizz_question_reponses_'~name] is defined and
+                                       reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
+                                    {% if question.obligatoire %}required{% endif %}
+                                   class="form-check-input {% if is_granted('ROLE_ETUDIANT') %}questionQualite{% endif %}"
+                                   value="{{ reponse.valeur }}">
+                            <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                        </div>
+                        <div class="form-control-feedback"></div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     {% endfor %}
 </fieldset>

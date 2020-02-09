@@ -35,7 +35,6 @@ $(document).on('click', '#btn_creneau_add', function(){
 
 $(document).on('click', '.bloquercreneau', function(){
   const $cr = $(this)
-  console.log('click')
   if ($cr.hasClass('bloquercreneau_eviter')) {
     updateCreneau('dispo', $cr.data('creneau'), $cr.data('semaine'));
     $cr.removeClass('bloquercreneau_eviter')
