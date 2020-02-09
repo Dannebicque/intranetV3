@@ -6,13 +6,6 @@
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 18/04/2018
- * Time: 08:15
- */
-
 namespace App\MesClasses;
 
 use App\Entity\Departement;
@@ -461,8 +454,6 @@ class MyPrevisionnel
                 }
 
                 return false;
-
-
             } else {
                 $method = 'set' . $name;
                 if (method_exists($previ, $method)) {
@@ -484,11 +475,8 @@ class MyPrevisionnel
      * @return StreamedResponse
      * @throws Exception
      */
-    public
-    function exportOmegaDepartement(
-        Departement $departement,
-        int $anneePrevisionnel
-    ): StreamedResponse {
+    public function exportOmegaDepartement(Departement $departement, int $anneePrevisionnel): StreamedResponse
+    {
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $anneePrevisionnel);
         $hrs = $this->hrsRepository->findByDepartement($departement, $anneePrevisionnel);
 
@@ -611,10 +599,8 @@ class MyPrevisionnel
     /**
      * @param $hrs
      */
-    private
-    function ecritHRS(
-        $hrs
-    ): void {
+    private function ecritHRS($hrs): void
+    {
 
         /** @var Hrs $previ */
         foreach ($hrs as $previ) {
@@ -724,7 +710,7 @@ class MyPrevisionnel
                         $pr->setNbHCm(str_replace(',', '.', $ligne[6]));
                         $pr->setNbGrCm(trim($ligne[7]));
                         $pr->setNbHTd(str_replace(',', '.', $ligne[8]));
-                        $pr->setNbGrTp(trim($ligne[9]));
+                        $pr->setNbGrTd(trim($ligne[9]));
                         $pr->setNbHTp(str_replace(',', '.', $ligne[10]));
                         $pr->setNbGrTp(trim($ligne[11]));
                         $this->entityManager->persist($pr);
@@ -745,11 +731,8 @@ class MyPrevisionnel
         return false;
     }
 
-    private
-    function supprPrevisionnel(
-        Diplome $diplome,
-        $annee
-    ): void {
+    private function supprPrevisionnel(Diplome $diplome, $annee): void
+    {
         $pr = $this->previsionnelRepository->findByDiplome($diplome, $annee);
         /** @var Previsionnel $p */
         foreach ($pr as $p) {
@@ -759,12 +742,8 @@ class MyPrevisionnel
         $this->entityManager->flush();
     }
 
-    public
-    function compareEdtPreviPersonnels(
-        Departement $departement,
-        $planning,
-        $annee
-    ): array {
+    public function compareEdtPreviPersonnels(Departement $departement, $planning, $annee): array
+    {
         $personnels = $this->personnelRepository->findByDepartement($departement);
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
         $t = [];
@@ -839,11 +818,8 @@ class MyPrevisionnel
      *
      * @return array
      */
-    public
-    function compareEdtPreviMatiere(
-        Departement $departement,
-        $annee
-    ): array {
+    public function compareEdtPreviMatiere(Departement $departement, $annee): array
+    {
         $this->recupPlanning($departement, $annee);
         $this->recupMatieres($departement, $annee);
 
@@ -910,14 +886,8 @@ class MyPrevisionnel
         return $t;
     }
 
-    public
-    function export(
-        ?Departement $getDepartement,
-        $annee,
-        $type,
-        $data,
-        $_format
-    ): void {
+    public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
+    {
         //todo: a faire.
     }
 }
