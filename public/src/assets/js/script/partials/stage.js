@@ -21,8 +21,6 @@ $(document).on('change', '.changetuteur', function () {
 
 $(document).on('click', '.enregistreModeleMail', function () {
   const etat = $(this).data('type')
-  console.log(etat)
-  console.log(ed2.getContents())
   $.ajax({
     url: Routing.generate('administration_stage_periode_courrier_sauvegarde_modele', {
       uuid: $(this).data('periode'),

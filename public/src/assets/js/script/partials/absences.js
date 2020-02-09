@@ -36,7 +36,6 @@ $(document).on('change', '#justifier_etudiant', function () {
         '<tbody>')
 
       jQuery.each(data, function (index, etudiant) {
-        //console.log(etudiant)
         let html = '<tr>\n' +
           '                        <td>' + etudiant.date + '</td>\n' +
           '                        <td>' + etudiant.heure + '</td>\n' +
@@ -63,7 +62,6 @@ $(document).on('change', '#justifier_etudiant', function () {
 })
 
 $(document).on('click', '.justifieAbsence', function() {
-  console.log($(this).val());
   $.ajax({
     type: 'GET',
     url: Routing.generate('administration_absences_justifie', {absence: $(this).data('absence'), etat:$(this).val()}),
@@ -171,9 +169,6 @@ $(document).on('click', '.etudiant', function () {
         }
       },
       success: function (data) {
-        tabsences = data
-        console.log('ajout')
-        console.log(tabsences)
         addCallout('Absence enregistrée avec succés !', 'success')
 
       }

@@ -28,7 +28,7 @@ class QuizzEtudiant extends BaseEntity
     private $termine = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="quizzEtudiant")
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiantReponse", mappedBy="quizzEtudiant", fetch="EAGER")
      */
     private $quizzEtudiantReponses;
 

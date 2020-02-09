@@ -15,7 +15,6 @@
 $(document).on('keyup', '#search', function (e) {
 
   const keyword = $(this).val()
-  console.log(keyword)
   const search_reponse_etudiant = $('#search_reponse_etudiant')
   const search_reponse_personnel = $('#search_reponse_personnel')
   const search_reponse_autre = $('#search_reponse_autre')

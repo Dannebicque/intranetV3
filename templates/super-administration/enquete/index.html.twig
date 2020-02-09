@@ -28,18 +28,18 @@
                 </thead>
                 <tbody>
                 {% for diplome in diplomes %}
-                    <tr>
-                        <td>{{ diplome.libelleLong }}</td>
-                        <td>{{ effectifs[diplome.id] }}</td>
-                        <td>
-                            {% for semestre in diplome.semestres %}
-                                <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}" class="btn
+                  <tr>
+                    <td>{{ diplome.libelleLong }}</td>
+                    <td>{% if effectifs[diplome.id] is defined %}{{ effectifs[diplome.id] }}{% else %}-{% endif %}</td>
+                    <td>
+                        {% for semestre in diplome.semestres %}
+                          <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}" class="btn
                         btn-primary">{{ semestre.libelle }}</a>
-                            {% endfor %}
-                        </td>
-                        <td colspan="2">Formateurs</td>
-                        <td colspan="2">Entreprises</td>
-                    </tr>
+                        {% endfor %}
+                    </td>
+                    <td colspan="2">Formateurs</td>
+                    <td colspan="2">Entreprises</td>
+                  </tr>
                 {% endfor %}
                 </tbody>
             </table>

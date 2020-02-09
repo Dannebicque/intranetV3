@@ -27,7 +27,6 @@ $(document).on('click', '#addCategorie', function () {
         '<tbody>')
 
       jQuery.each(data, function (index, categorie) {
-        //console.log(etudiant)
         const html = '<tr>\n' +
           '                        <td>' + categorie.libelle + '</td>\n' +
           '                        <td>' + categorie.nbArticles + '</td>\n' +

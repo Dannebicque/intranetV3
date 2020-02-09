@@ -7,7 +7,6 @@
 
 $(document).on('keyup', '#login_urca', function () {
   const $val = $(this).val()
-  console.log($val)
   if ($val.length > 2) {
     $.ajax({
       url: Routing.generate('api_personnel_recherche', {needle: $val}),
@@ -42,7 +41,6 @@ $(document).on('click', '.addpersonnel', function () {
 $(document).on('keyup', '#sa_login_urca', function () {
   const departement = $(this).data('departement')
   const $val = $(this).val()
-  console.log($val)
   if ($val.length > 2) {
     $.ajax({
       url: Routing.generate('api_personnel_recherche', {needle: $val}),

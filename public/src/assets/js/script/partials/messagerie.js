@@ -75,7 +75,6 @@ $(document).on('click', '.starred', function () {
 })
 
 $(document).on('click', '#deleteMessage', function () {
-  console.log($(this).data('message'))
   $.ajax({
     url: Routing.generate('messagerie_change_etat'),
     method: 'POST',

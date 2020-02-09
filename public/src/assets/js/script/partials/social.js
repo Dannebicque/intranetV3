@@ -20,7 +20,6 @@ $(document).on('click', '.articleLike', function (e) {
   $.ajax({
     url: Routing.generate('information_like', {slug: $(this).data('article')}),
     success: function (data) {
-      console.log(elt.first())
       if (elt.children().hasClass('text-success')) {
         elt.html('<i class="ti-heart text-danger fs-11"></i> ' + data)
       } else {
