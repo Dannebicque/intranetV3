@@ -10,6 +10,7 @@ use App\Entity\Parcour;
 use App\Entity\Ppn;
 use App\Entity\Ue;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class MyPpn
 {
@@ -32,18 +33,17 @@ class MyPpn
     }
 
     /**
-     * @param             $fichier
+     * @param             $data
      * @param Departement $departement
-     * @param             $ppn
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
-    public function importCsv($fichier, Departement $departement, $ppn): bool
+    public function importCsv($data, Departement $departement): bool
     {
-        $ppn = $this->entityManager->getRepository(Ppn::class)->find($ppn);
+        $ppn = $this->entityManager->getRepository(Ppn::class)->find($data['ppn']);
         if ($ppn !== null) {
-            $file = $this->myUpload->upload($fichier, 'temp');
+            $file = $this->myUpload->upload($data['fichier'], 'temp');
 
             $ues = $this->entityManager->getRepository(Ue::class)->tableauUeApogee($departement);
             $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
@@ -63,7 +63,7 @@ class MyPpn
                         $matiere = new Matiere();
                         if ($ligne[1] !== '' || $ligne[1] !== null) {
                             if (array_key_exists($ligne[1], $parcours)) {
-                                $matiere->setParcours($ligne[1]);
+                                $matiere->setParcours($parcours[$ligne[1]]);
                             }
                         }
                         $matiere->setPpn($ppn);

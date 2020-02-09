@@ -11,10 +11,8 @@ namespace App\Controller\superAdministration;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
-use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Ue;
-use App\Form\ImportPrevisionnelType;
 use App\Form\MatiereType;
 use App\Form\PpnImportType;
 use App\MesClasses\MyPpn;
@@ -41,8 +39,14 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/import/{departement}", name="sa_matiere_import")
+     * @param MyPpn       $myPpn
+     * @param Request     $request
+     * @param Departement $departement
+     *
+     * @return Response
+     * @throws \Exception
      */
-    public function import(MyPpn $myPpn, Request $request, Departement $departement)
+    public function import(MyPpn $myPpn, Request $request, Departement $departement): Response
     {
         $form = $this->createForm(
             PpnImportType::class,
@@ -58,7 +62,7 @@ class MatiereController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $myPpn->importCsv($request->request->get('fichier'), $departement, $request->request->get('ppn'));
+            $myPpn->importCsv($form->getData(), $departement);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.import.success.flash');
             $this->redirectToRoute('sa_structure_index', ['departement' => $departement->getId()]);
         }
