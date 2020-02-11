@@ -1,7 +1,7 @@
 <div class="card">
     <h4 class="card-title">{{ 'vos.informations.identification'|trans }}</h4>
     <div class="card-body">
-        {% if user.typeUser == 'etudiant' %}
+        {% if user.typeUser|lower == 'etudiant' %}
           <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
           <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('long') }}
             ({{ user.dateNaissance|age }} ans)</p>
@@ -12,7 +12,7 @@
           <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
           <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
 
-        {% elseif user.typeUser == 'permanent' %}
+        {% elseif user.typeUser|lower == 'permanent' %}
           <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
             {% if not is_granted('ROLE_ETUDIANT') %}
               <p><strong>{{ 'date.naissance'|trans }}
@@ -62,7 +62,7 @@
             {% if user.typeUser == 'etudiant' %}
                 <p><strong>{{ 'site.personnel'|trans }} :</strong> {{ user.sitePerso|link }}</p>
             {% endif %}
-            {% if user.typeUser == 'etudiant' %}
+            {% if user.typeUser|lower == 'etudiant' %}
                 <h5>{{ 'telephone.de.letudiant'|trans }}</h5>
                 <p><strong>{{ 'tel1'|trans }} :</strong> {{ user.tel1|tel_format }}</p>
                 <p><strong>{{ 'tel2'|trans }} :</strong> {{ user.tel2|tel_format }}</p>

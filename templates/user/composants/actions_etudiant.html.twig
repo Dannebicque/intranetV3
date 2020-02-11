@@ -12,7 +12,7 @@
             </thead>
             <tbody id="liste_groupes">
             {% for gr in etudiant.groupes %}
-                <tr id="ligne_{{ groupe.id }}">
+                <tr id="ligne_{{ gr.id }}">
                     <td>#{{ gr.id }}</td>
                     <td>{{ gr.typegroupe.libelle }} | {{ gr.libelle }} | {{ gr.typegroupe.semestre.libelle }}</td>
                     <td>
