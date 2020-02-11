@@ -34,9 +34,9 @@
                         {% else %}
                             <li class="alert alert-info">{{ 'pas.encore.actualite'|trans }}</li>
                         {% endfor %}
-                        <a href="{{ path('actualite_liste') }}"
-                           class="pull-right">{{ 'voir.anciennes.actualites'|trans }}</a>
                     </ol>
+                    <a href="{{ path('actualite_liste') }}"
+                       class="pull-right">{{ 'voir.anciennes.actualites'|trans }}</a>
                 </div>
             </div>
         </div>
@@ -67,9 +67,9 @@
                         {% else %}
                             <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
                         {% endfor %}
-                        <a href="{{ path('planning_index', {annee: user_data.anneeUniversitaire}) }}"
-                           class="pull-right">{{ 'voir.planning'|trans }}</a>
                     </ol>
+                    <a href="{{ path('planning_index', {annee: user_data.anneeUniversitaire}) }}"
+                       class="pull-right">{{ 'voir.planning'|trans }}</a>
                 </div>
             </div>
         </div>
