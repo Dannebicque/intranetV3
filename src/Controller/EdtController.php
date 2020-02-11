@@ -123,7 +123,6 @@ class EdtController extends BaseController
     public function dashboardEtudiant($semaine = 0): Response
     {
         if ($this->getConnectedUser() !== null) {
-
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine);
@@ -133,7 +132,6 @@ class EdtController extends BaseController
                     'tabHeures' => self::$tabHeures
                 ]);
             }
-
             $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),
                 $semaine);
 
