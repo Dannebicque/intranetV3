@@ -91,6 +91,7 @@ class PersonnelRepository extends ServiceEntityRepository
             $tt['slug'] = $personnel->getSlug();
             $tt['photo'] = $personnel->getPhotoName();
             $tt['nom'] = $personnel->getNom();
+            $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
             $tt['prenom'] = $personnel->getPrenom();
             $tt['username'] = $personnel->getUsername();
             $tt['mail_univ'] = $personnel->getMailUniv();

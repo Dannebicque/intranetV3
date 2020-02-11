@@ -19,10 +19,12 @@
         .btn-primary {
             background-color: {{ settings('COLOR_IUT') }};
             border-color: {{ settings('COLOR_IUT') }};
+            color: #3f4a59;
         }
 
         .sidebar .menu:not(.menu-bordery) > .menu-item.active > .menu-link {
             background-color: {{ settings('COLOR_IUT') }};
+            color: #3f4a59;
         }
     </style>
     <!-- Favicons -->
@@ -236,11 +238,15 @@
         <ul class="topbar-btns">
             <li class="dropdown">
                     <span class="topbar-btn" data-toggle="dropdown">
-                        <img class="avatar" src="{% if user_data.user.typeUser == 'permanent' %}
+                        {% if user_data.user.photoName != null and user_data.user.photoName != 'noimage.png' %}
+                            <img class="avatar" src="{% if user_data.user.typeUser == 'permanent' %}
 {{ asset('upload/personnels/'~user_data.user.photoName)|imagine_filter('avatar') }}{% else %}
 {{ asset('upload/etudiants/'~user_data.user.photoName)|imagine_filter('avatar') }}
-                                {% endif %}
-                             " alt="Votre avatar"></span>
+                                {% endif %}" alt="Votre avatar">
+                        {% else %}
+                            {{ include('composants/_avatar.html.twig', {user:etudiant}) }}
+                        {% endif %}
+                    </span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
                     <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>

@@ -12,11 +12,13 @@ $(document).on('keyup', '#login_urca', function () {
       url: Routing.generate('api_personnel_recherche', {needle: $val}),
       dataType: 'json',
       success: function (data) {
+
         $('#result').empty()
         jQuery.each(data, function (index, pers) {
           const html = '<tr>' +
             '<td>' + pers.nom + '</td>' +
             '<td>' + pers.prenom + '</td>' +
+            '<td>' + pers.numeroHarpege + '</td>' +
             '<td>' + pers.username + '</td>' +
             '<td>' + pers.mail_univ + '</td>' +
             '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '"><i class="ti-plus"></i></a></td>' +
@@ -33,6 +35,7 @@ $(document).on('click', '.addpersonnel', function () {
     url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug')}),
     dataType: 'json',
     success: function (data) {
+      console.log(data)
       addCallout('Personnel ajouté au département !', 'success')
     }
   })
@@ -51,6 +54,7 @@ $(document).on('keyup', '#sa_login_urca', function () {
           const html = '<tr>' +
             '<td>' + pers.nom + '</td>' +
             '<td>' + pers.prenom + '</td>' +
+            '<td>' + pers.numeroHarpege + '</td>' +
             '<td>' + pers.username + '</td>' +
             '<td>' + pers.mail_univ + '</td>' +
             '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '" data-departement="' + departement + '"><i class="ti-plus"></i></a></td>' +

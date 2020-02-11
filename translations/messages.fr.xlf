@@ -4590,29 +4590,33 @@
         <note priority="1">templates/super-administration/help/show.html.twig:4</note>
         <note priority="1">templates/super-administration/help/show.html.twig:15</note>
       </trans-unit>
-      <trans-unit id="47DEQpj" resname="">
-        <source></source>
-        <target></target>
-      </trans-unit>
-      <trans-unit id="QppWdJM" resname="synthese.des.parcours">
-        <source>synthese.des.parcours</source>
-        <target>Synthèse des parcours</target>
-        <note priority="1">templates/administration/semestre/index.html.twig:144</note>
-      </trans-unit>
-      <trans-unit id="tij_04g" resname="absence.delete.success.flash">
-        <source>absence.delete.success.flash</source>
-        <target>Absence supprimée avec succès</target>
-        <note priority="1">obsolete</note>
-      </trans-unit>
-      <trans-unit id="95ijfK1" resname="absence.removed">
-        <source>absence.removed</source>
-        <target>Absence supprimée</target>
-        <note priority="1">obsolete</note>
-      </trans-unit>
-      <trans-unit id="ruQIhH0" resname="success">
-        <source>success</source>
-        <target>Succès</target>
-        <note priority="1">obsolete</note>
+        <trans-unit id="QppWdJM" resname="synthese.des.parcours">
+            <source>synthese.des.parcours</source>
+            <target>Synthèse des parcours</target>
+            <note priority="1">templates/administration/semestre/index.html.twig:144</note>
+        </trans-unit>
+        <trans-unit id="tij_04g" resname="absence.delete.success.flash">
+            <source>absence.delete.success.flash</source>
+            <target>Absence supprimée avec succès</target>
+            <note priority="1">obsolete</note>
+        </trans-unit>
+        <trans-unit id="tij_04z" resname="ppn.import.success.flash">
+            <source>ppn.import.success.flash</source>
+            <target>PPN importé avec succès</target>
+        </trans-unit>
+        <trans-unit id="tij_04i" resname="import.d_un.ppn.heading">
+            <source>import.d_un.ppn.heading</source>
+            <target>Import d'un PPN</target>
+        </trans-unit>
+        <trans-unit id="95ijfK1" resname="absence.removed">
+            <source>absence.removed</source>
+            <target>Absence supprimée</target>
+            <note priority="1">obsolete</note>
+        </trans-unit>
+        <trans-unit id="ruQIhH0" resname="success">
+            <source>success</source>
+            <target>Succès</target>
+            <note priority="1">obsolete</note>
       </trans-unit>
       <trans-unit id="ie_S1Z5" resname="table.ue">
         <source>table.ue</source>

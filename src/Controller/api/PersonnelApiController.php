@@ -154,7 +154,7 @@ class PersonnelApiController extends BaseController
                 $this->entityManager->persist($pf);
                 $this->entityManager->flush();
 
-                return new Response('', Response::HTTP_OK);
+                return new Response(true, Response::HTTP_OK);
             }
 
             return new Response('Déjà dans la base', Response::HTTP_OK);
