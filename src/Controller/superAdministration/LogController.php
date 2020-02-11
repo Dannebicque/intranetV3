@@ -33,7 +33,6 @@ class LogController extends BaseController
         $file = fopen($directory . $scanned_directory[2], 'r+');
         while (!feof($file)) {
             $ligne = fgets($file);
-            dump($ligne);
             //on fait quelque chose avec ligne
         }
 

@@ -51,7 +51,7 @@
                         <td>{{ etudiant.numEtudiant }}</td>
                         <td>{{ etudiant.nom }}</td>
                         <td>{{ etudiant.prenom }}</td>
-                        <td>{{ etudiant.bac ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
+                        <td>{{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
                         <td>{% for groupe in etudiant.groupes %}{{ groupe.libelle }}, {% else %}-{% endfor %}</td>
                         <td>
 
