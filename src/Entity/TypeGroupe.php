@@ -163,17 +163,17 @@ class TypeGroupe extends BaseEntity
 
     public function isTD(): bool
     {
-        return $this->getType() === self::TYPE_GROUPE_TD;
+        return strtolower($this->getType()) === self::TYPE_GROUPE_TD;
     }
 
     public function isTP(): bool
     {
-        return $this->getType() === self::TYPE_GROUPE_TP;
+        return strtolower($this->getType()) === self::TYPE_GROUPE_TP;
     }
 
     public function isCM(): bool
     {
-        return $this->getType() === self::TYPE_GROUPE_CM;
+        return strtolower($this->getType()) === self::TYPE_GROUPE_CM;
     }
 
     public function getType(): ?string

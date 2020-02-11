@@ -144,8 +144,8 @@ class MyEdt extends BaseEdt
                     $this->planning = $this->transformeProf($pl);
                     break;
                 case 'etudiant':
+                    $this->groupes();
                     $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
-
                     if ($pl !== null) {
                         $this->planning = $this->transformeEtudiant($pl);
                         $this->semestre = $this->user->getSemestre();
@@ -270,7 +270,6 @@ class MyEdt extends BaseEdt
                 $this->valideFormat($p);
             }
         }
-
         return $this->tab;
     }
 
@@ -427,19 +426,19 @@ class MyEdt extends BaseEdt
     private function convertEdt($nb): ?int
     {
         switch ($nb) {
-            case '1':
+            case 1:
                 return 1;
-            case '4':
+            case 4:
                 return 2;
-            case '7':
+            case 7:
                 return 3;
-            case '10':
+            case 10:
                 return 4;
-            case '13':
+            case 13:
                 return 5;
-            case '16':
+            case 16:
                 return 6;
-            case '19':
+            case 19:
                 return 7;
             default:
                 return null;
@@ -770,7 +769,10 @@ class MyEdt extends BaseEdt
             if ($casedebut === 2 || $casedebut === 3) {
                 $casedebut = 1;
             }
-
+            if ($idDebut === null) {
+                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
+                unset($this->tab[$p->getJour()][$idDebut]);
+            }
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $casedebut;
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'nok';
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['fin'] = $casefin;
