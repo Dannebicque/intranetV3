@@ -264,7 +264,7 @@
 {{ asset('upload/etudiants/'~user_data.user.photoName)|imagine_filter('avatar') }}
                                 {% endif %}" alt="Votre avatar">
                         {% else %}
-                            {{ include('composants/_avatar.html.twig', {user:etudiant}) }}
+                            {{ include('composants/_avatar.html.twig', {user:user_data.user, size:'sm'}) }}
                         {% endif %}
                     </span>
                 <div class="dropdown-menu dropdown-menu-right">

@@ -478,14 +478,13 @@ thead {
 }
 
 .avatar-circle-sm {
-  @include avatar(50px);
+  @include avatar(45px);
 }
 
 .avatar-circle-lg {
   @include avatar(250px);
 }
 
-//**
 .datepicker-days .datepicker-switch {
   color: white;
 }
