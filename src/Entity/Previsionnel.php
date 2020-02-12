@@ -19,12 +19,12 @@ class Previsionnel extends BaseEntity
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="previsionnels")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="previsionnels", fetch="EAGER")
      */
     private $matiere;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="previsionnels")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="previsionnels", fetch="EAGER")
      */
     private $personnel;
 
