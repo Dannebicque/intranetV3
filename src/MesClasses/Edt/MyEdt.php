@@ -773,7 +773,7 @@ class MyEdt extends BaseEdt
                 $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
                 unset($this->tab[$p->getJour()][$idDebut]);
             }
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $casedebut;
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $p->getDebut();
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'nok';
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['fin'] = $casefin;
         }

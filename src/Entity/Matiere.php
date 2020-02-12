@@ -171,7 +171,7 @@ class Matiere extends BaseEntity
     private $motsCles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ue", inversedBy="matieres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ue", inversedBy="matieres", fetch="EAGER")
      */
     private $ue;
 
