@@ -9,7 +9,6 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class                  => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class                        => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
-    Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class    => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class                    => ['all' => true],
     Endroid\QrCodeBundle\EndroidQrCodeBundle::class                      => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class                        => ['dev' => true],
@@ -17,4 +16,5 @@ return [
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class         => ['dev' => true, 'test' => true],
     Liip\ImagineBundle\LiipImagineBundle::class                          => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class                    => ['all' => true],
+    Translation\Bundle\TranslationBundle::class                          => ['all' => true],
 ];
