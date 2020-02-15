@@ -26,15 +26,14 @@ class EtudiantDepartementController extends BaseController
 {
     /**
      * @Route("/{departement}", name="sa_etudiant_departement_index")
-     * @param EtudiantRepository $etudiantRepository
      * @param Departement        $departement
      *
      * @return Response
      */
-    public function index(EtudiantRepository $etudiantRepository, Departement $departement): Response
+    public function index(Departement $departement): Response
     {
         return $this->render('super-administration/etudiant_departement/index.html.twig', [
-            'etudiants'   => $etudiantRepository->getByDepartement($departement, null),
+            'etudiants'   => $departement->getEtudiants(),
             'departement' => $departement
         ]);
     }

@@ -435,40 +435,22 @@ thead {
 /** FIN LOGO **/
 
 /** AVATAR **/
-.avatar-circle {
-  width: 100px;
-  height: 100px;
-  background-color: #EEDDCC;
+@mixin avatar($sizeda) {
+  width: $sizeda;
+  height: $sizeda;
   text-align: center;
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-}
-
-.initials {
-  position: relative;
-  top: 25px; /* 25% of parent */
-  font-size: 50px; /* 50% of parent */
-  line-height: 50px; /* 50% of parent */
-  color: #fff;
-  font-weight: bold;
-}
-
-@mixin avatar($size) {
-  width: $size;
-  height: $size;
-  background-color: #EEDDCC;
-  text-align: center;
+  background-color: #FAB001;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
 
   .initials {
     position: relative;
-    top: $size*0.25;
-    font-size: $size*0.5;
-    line-height: $size*0.5;
+    top: $sizeda*0.25;
+    font-size: $sizeda*0.5;
+    line-height: $sizeda*0.5;
     color: #fff;
+    font-family: "Courier New", monospace;
     font-weight: bold;
   }
 }
@@ -478,7 +460,7 @@ thead {
 }
 
 .avatar-circle-sm {
-  @include avatar(45px);
+  @include avatar(50px);
 }
 
 .avatar-circle-lg {

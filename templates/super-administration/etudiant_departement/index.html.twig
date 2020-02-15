@@ -55,7 +55,7 @@
                    {% for etudiant in etudiants %}
                        <tr>
                            <td>{{ etudiant.display }}</td>
-                           <td>{{ etudiant.semestre.display }}</td>
+                           <td>{{ etudiant.semestre != null ? etudiant.semestre.display : 'non.defini'|trans }}</td>
                            <td>{{ etudiant.username }}</td>
 
                            <td>

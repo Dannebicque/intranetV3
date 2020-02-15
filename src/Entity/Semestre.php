@@ -99,7 +99,7 @@ class Semestre extends BaseEntity
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre")
+     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre",fetch="EAGER")
      * @ORM\OrderBy({"nom" = "ASC", "prenom" = "ASC"})
      */
     private $etudiants;
@@ -234,7 +234,7 @@ class Semestre extends BaseEntity
     private $moisDebut;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres", fetch="EAGER")
      * @Groups({"semestre"})
      */
     private $annee;
