@@ -88,15 +88,12 @@ class EtudiantRepository extends ServiceEntityRepository
     public function getByDepartement($departement, $data, $page = 0, $max = null, $getResult = true)
     {
 
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->createQueryBuilder('u');
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
         $qb
-            ->select('u')
-            ->from(Etudiant::class, 'u')
+            ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
             ->where('u.departement = :departement')
-            // ->andWhere('u.visible = :visible')
-            // ->andWhere('u.anneesortie = :anneesortie')
             ->setParameters(['departement' => $departement]);
 
         switch ($order[0]['column']) {

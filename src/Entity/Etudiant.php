@@ -58,7 +58,7 @@ class Etudiant extends Utilisateur implements Serializable
     /**
      * @var Semestre
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="etudiants")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="etudiants", fetch="EAGER")
      */
     private $semestre;
 
@@ -212,6 +212,16 @@ class Etudiant extends Utilisateur implements Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiant", mappedBy="etudiant")
      */
     private $quizzEtudiants;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $loginSpecifique;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $formationContinue = false;
 
     /**
      * Etudiant constructor.
@@ -1196,6 +1206,30 @@ class Etudiant extends Utilisateur implements Serializable
                 $quizzEtudiant->setEtudiant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLoginSpecifique(): ?string
+    {
+        return $this->loginSpecifique;
+    }
+
+    public function setLoginSpecifique(?string $loginSpecifique): self
+    {
+        $this->loginSpecifique = $loginSpecifique;
+
+        return $this;
+    }
+
+    public function getFormationContinue(): ?bool
+    {
+        return $this->formationContinue;
+    }
+
+    public function setFormationContinue(bool $formationContinue = false): self
+    {
+        $this->formationContinue = $formationContinue;
 
         return $this;
     }

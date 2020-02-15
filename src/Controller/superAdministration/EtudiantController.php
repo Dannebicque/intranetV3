@@ -9,8 +9,12 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\MesClasses\MyEtudiants;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
+use App\Repository\SemestreRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,19 +30,33 @@ class EtudiantController extends BaseController
      */
     public function index(): Response
     {
-        return $this->render('super-administration/etudiant/index.html.twig', [
-
-        ]);
+        return $this->render('super-administration/etudiant/index.html.twig', []);
     }
 
     /**
      * @Route("/importer", name="sa_etudiant_importer")
+     * @param SemestreRepository $semestreRepository
+     * @param MyEtudiants        $myEtudiants
+     * @param Request            $request
+     *
+     * @return RedirectResponse
      */
-    public function importerListeEtudiant(): void
-    {
-        //déjà dans administration ?
-        //todo: gérer l'import. En commun avec Administration/EtudiantController
+    public function importerListeEtudiant(
+        SemestreRepository $semestreRepository,
+        MyEtudiants $myEtudiants,
+        Request $request
+    ) {
+        $semestre = $semestreRepository->find($request->request->get('importer_etudiant_semestre'));
+        if ($semestre !== null) {
+            $myEtudiants->importListeCsv($request->files->get('fichier_import'), $semestre);
+            $this->addFlashBag('error', 'import.fichier.csv.success');
 
+            return $this->redirectToRoute('sa_etudiant_index');
+        }
+
+        $this->addFlashBag('error', 'import.fichier.csv.error');
+
+        return $this->redirectToRoute('sa_etudiant_index');
     }
 
     /**
