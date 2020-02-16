@@ -34,8 +34,8 @@ $(document).on('click', '.add_groupe', function () {
       parcours: $('#groupe_parcours_' + $parent).val(),
       parent: $parent
     },
-    success: function () {
-      $('#groupe_bloc').empty().load(Routing.generate('administration_groupe_refresh', {parent: $parent}))
+    success: function (data) {
+      $('#groupe_bloc_' + data.semestre).empty().load(Routing.generate('administration_groupe_refresh', {parent: data.semestre}))
       addCallout('Groupe ajouté', 'success')
     }, error: function () {
       addCallout('Erreur lors de l\'ajout du groupe', 'danger')
