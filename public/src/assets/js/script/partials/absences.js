@@ -23,6 +23,7 @@ $(document).on('change', '#justifier_etudiant', function () {
   $.ajax({
     url: Routing.generate('administration_absences_liste_absence_etudiant', {etudiant: $(this).val()}),
     success: function (data) {
+      $('#titre_justifie').html('Liste des absences de ' + $('#justifier_etudiant option:selected').text())
       let table = $('#tableJustifier').empty();
       table.append('<thead>\n' +
         '                <tr>\n' +

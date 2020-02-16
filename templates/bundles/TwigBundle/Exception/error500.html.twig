@@ -8,26 +8,29 @@
         <div class="col-12">
             <div class="card card-transparent mx-auto text-center">
                 <h1 class="text-secondary lh-1" style="font-size: 200px">500</h1>
-                <hr class="w-30px">
-                <h3 class="text-uppercase">{{ 'titre.500'|trans }}</h3>
+              <hr class="w-30px">
+              <h3 class="text-uppercase">{{ 'titre.500'|trans }}</h3>
                 {{ status_text }}
-                <p class="lead">{{ 'message.500'|trans }}</p>
-                <br>
-                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center fs-14">
-                    <li class="nav-item">
-                        <a class="nav-link" href="mailto:david.annebicque@univ-reims.fr" target="_blank">{{ 'report.problem'|trans }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('default_homepage') }}">{{ 'return.home'|trans }}</a>
-                    </li>
-                </ul>
+              <p class="lead">{{ 'message.500'|trans }}</p>
+              <br>
+              <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center fs-14">
+                <li class="nav-item">
+                  <a class="nav-link" href="mailto:david.annebicque@univ-reims.fr" target="_blank">{{ 'report.problem'|trans }}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path(app.request.server.get('http-referer')|default('default_homepage')) }}">{{ 'return.page.precedente'|trans }}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('default_homepage') }}">{{ 'return.home'|trans }}</a>
+                </li>
+              </ul>
             </div>
         </div>
 
-        <footer class="col-12 align-self-end text-center fs-13">
-            <p>Copyright © 2018 <a href="http://thetheme.io/theadmin" target="_blank">Template : TheAdmin</a> |
-                <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>.
-               All rights reserved.
+      <footer class="col-12 align-self-end text-center fs-13">
+        <p>Copyright © 2018 <a href="http://thetheme.io/theadmin" target="_blank">Template : TheAdmin</a> |
+          <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>.
+           All rights reserved.
                 <a class="nav-dotted" href="https://dannebicque.gitbook.io/intranet/" target="_blank">{{ 'menu.documentation'|trans }}</a>
                |
                 <a class="" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>

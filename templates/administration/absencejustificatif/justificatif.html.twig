@@ -48,7 +48,7 @@
                     <tr>
                         <td>{{ justificatif.etudiant ? justificatif.etudiant.display : 'non.defini'|trans }}</td>
                         <td>{{ justificatif.dateDebut ? justificatif.dateDebut|format_date('long') : 'non.defini'|trans }}
-                            au {{ justificatif.dateFin ? justificatif.dateFin|localizeddate('long', 'none', app.request.getLocale()) : 'non.defini'|trans }}</td>
+                            au {{ justificatif.dateFin ? justificatif.dateFin|format_time('short') : 'non.defini'|trans }}</td>
                         <td>{{ justificatif.created ? justificatif.created|format_date('long') : 'non.defini'|trans }} </td>
                         <td>{{ justificatif.motif }}</td>
                         <td>{{ justificatif.etat }}</td>
