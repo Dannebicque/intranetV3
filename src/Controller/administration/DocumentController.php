@@ -163,15 +163,17 @@ class DocumentController extends BaseController
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      *
      * @return Response
+     * @throws Exception
      */
     public function duplicate(Document $document): Response
     {
-        $newDocument = clone $document;
+        $newDocument = new Document();
+        $newDocument->duplicate($document);
 
         $this->entityManager->persist($newDocument);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_document_edit', ['id' => $newDocument->getId()]);
+        return $this->redirectToRoute('administration_document_edit', ['id' => $newDocument->getUuidString()]);
     }
 }

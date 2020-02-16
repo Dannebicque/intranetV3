@@ -292,4 +292,19 @@ class Document extends BaseEntity
 
         return $this;
     }
+
+    public function duplicate(Document $document)
+    {
+        $this->setLibelle($document->getLibelle());
+        $this->setDescription($document->getDescription());
+        $this->setTypeDocument($document->getTypeDocument());
+        $this->setDocumentName($document->getDocumentName());
+        $this->setTaille($document->getTaille());
+        $this->setTypeFichier($document->getTypeFichier());
+        foreach ($document->getSemestres() as $semestre) {
+            $this->addSemestre($semestre);
+        }
+
+        return $this;
+    }
 }
