@@ -7,8 +7,8 @@
                 <input class="form-check-input typegroupe_defaut" type="radio"
                        name="type_groupe_defaut_{{ typeGroupe.semestre.id }}"
                        {% if typeGroupe.defaut %}checked{% endif %}
-                       id="type_groupe_defaut_{{ typeGroupe.id }}" value="{{ typeGroupe.id }}">
-                <label class="form-check-label" for="type_groupe_defaut_{{ typeGroupe.id }}">
+                       id="type_groupe_defaut_{{ typeGroupe.id }}_{{ semestre.id }}" value="{{ typeGroupe.id }}">
+                <label class="form-check-label" for="type_groupe_defaut_{{ typeGroupe.id }}_{{ semestre.id }}">
                     Par défaut
                 </label>
             </div>

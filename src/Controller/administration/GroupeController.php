@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupeController extends BaseController
 {
     /**
-     * @Route("/{semestre}", name="administration_groupe_index")
+     * @Route("/{semestre}", name="administration_groupe_index", requirements={"semestre":"\d+"})
      * @param GroupeRepository $groupeRepository
      *
      * @return Response
@@ -89,7 +89,8 @@ class GroupeController extends BaseController
         $typeGroupe = $typeGroupeRepository->find($request->request->get('type'));
         if ($typeGroupe) {
             $groupe = new Groupe($typeGroupe);
-            if (!empty($request->request->get('parent'))) {
+            $parent = $request->request->get('parent');
+            if (strpos($parent, 's') !== 0) {
                 $parent = $groupeRepository->find($request->request->get('parent'));
                 if ($parent) {
                     $groupe->setParent($parent);
@@ -108,7 +109,7 @@ class GroupeController extends BaseController
             $this->entityManager->persist($groupe);
             $this->entityManager->flush();
 
-            return $this->json(true, Response::HTTP_OK);
+            return $this->json(['semestre' => $typeGroupe->getSemestre()->getId()], Response::HTTP_OK);
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
