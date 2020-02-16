@@ -125,7 +125,7 @@ class DocumentController extends BaseController
                 return $this->redirectToRoute('administration_document_index');
             }
 
-            return $this->redirectToRoute('administration_document_edit', ['id' => $document->getId()]);
+            return $this->redirectToRoute('administration_document_edit', ['id' => $document->getUuidString()]);
         }
 
         return $this->render('administration/document/edit.html.twig', [
