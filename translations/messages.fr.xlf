@@ -7416,6 +7416,12 @@
                 <target>Absence supprimée avec succès</target>
             </segment>
         </unit>
+        <unit id="tij_04s" name="document.edit.success.flash">
+            <segment>
+                <source>document.edit.success.flash</source>
+                <target>Document modifié avec succès</target>
+            </segment>
+        </unit>
         <unit id=".ZCeqfZ" name="ppn.import.success.flash">
             <segment>
                 <source>ppn.import.success.flash</source>
