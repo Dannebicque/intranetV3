@@ -1585,19 +1585,19 @@
                 <note priority="1">templates/administration/competence/show.html.twig:34</note>
                 <note priority="1">templates/administration/competence/show.html.twig:38</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:61</note>
-        <note priority="1">templates/administration/rattrapage/index.html.twig:62</note>
-        <note priority="1">templates/administration/rattrapage/index.html.twig:63</note>
-        <note priority="1">templates/administration/rattrapage/index.html.twig:64</note>
-        <note priority="1">templates/administration/matiere/show.html.twig:29</note>
-        <note priority="1">templates/administration/matiere/show.html.twig:30</note>
-        <note priority="1">templates/administration/matiere/show.html.twig:31</note>
-        <note priority="1">templates/administration/document/liste-document.html.twig:19</note>
-        <note priority="1">templates/administration/type_groupe/show.html.twig:34</note>
-        <note priority="1">templates/administration/article/show.html.twig:42</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:34</note>
-        <note priority="1">templates/administration/ppn/show.html.twig:24</note>
-        <note priority="1">templates/administration/groupe/show.html.twig:34</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:33</note>
+                <note priority="1">templates/administration/rattrapage/index.html.twig:62</note>
+                <note priority="1">templates/administration/rattrapage/index.html.twig:63</note>
+                <note priority="1">templates/administration/rattrapage/index.html.twig:64</note>
+                <note priority="1">templates/administration/matiere/show.html.twig:29</note>
+                <note priority="1">templates/administration/matiere/show.html.twig:30</note>
+                <note priority="1">templates/administration/matiere/show.html.twig:31</note>
+                <note priority="1">templates/administration/document/liste-document.html.twig:19</note>
+                <note priority="1">templates/administration/type_groupe/show.html.twig:34</note>
+                <note priority="1">templates/administration/article/show.html.twig:42</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:34</note>
+                <note priority="1">templates/administration/ppn/show.html.twig:24</note>
+                <note priority="1">templates/administration/groupe/show.html.twig:34</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:33</note>
                 <note priority="1">templates/super-administration/ufr/show.html.twig:30</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:34</note>
                 <note priority="1">templates/super-administration/salle/show.html.twig:39</note>
@@ -13463,6 +13463,12 @@
             <segment>
                 <source>entreprise</source>
                 <target>Entreprise</target>
+            </segment>
+        </unit>
+        <unit id="Sk65xfH" name="return.page.precedente">
+            <segment>
+                <source>return.page.precedente</source>
+                <target>Revenir à la page précédente</target>
             </segment>
         </unit>
     </file>

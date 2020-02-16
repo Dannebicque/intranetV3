@@ -13,6 +13,7 @@ use App\MesClasses\MyEtudiants;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,7 @@ class EtudiantController extends BaseController
      * @param Request            $request
      *
      * @return RedirectResponse
+     * @throws Exception
      */
     public function importerListeEtudiant(
         SemestreRepository $semestreRepository,

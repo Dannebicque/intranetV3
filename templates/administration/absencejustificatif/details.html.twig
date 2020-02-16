@@ -1,8 +1,8 @@
 <dl class="row">
     <dt class="col-md-5 col-sm-12">{{ 'abs.justificiatif.date_debut'|trans }} :</dt>
-    <dd class="col-md-7 col-sm-12"> {{ justificatif.dateDebut ? justificatif.dateDebut|format_date('long') : '' }} {{ justificatif.heureDebut ? justificatif.heureDebut|localizeddate('none', 'short', app.request.getLocale()) : '' }}</dd>
+    <dd class="col-md-7 col-sm-12"> {{ justificatif.dateDebut ? justificatif.dateDebut|format_date('long') : '' }} {{ justificatif.heureDebut ? justificatif.heureDebut|format_time('short') : '' }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'abs.justificiatif.date_fin'|trans }} :</dt>
-    <dd class="col-md-7 col-sm-12"> {{ justificatif.dateFin ? justificatif.dateFin|format_date('long') : '' }} {{ justificatif.heureFin ? justificatif.heureFin|localizeddate('none', 'short', app.request.getLocale()) : '' }}</dd>
+    <dd class="col-md-7 col-sm-12"> {{ justificatif.dateFin ? justificatif.dateFin|format_date('long') : '' }} {{ justificatif.heureFin ? justificatif.heureFin|format_time('short') : '' }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'abs.justificiatif.motif'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12"> {{ justificatif.motif }} </dd>
     <dt class="col-md-5 col-sm-12">{{ 'abs.justificiatif.etat'|trans }} :</dt>

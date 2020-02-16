@@ -98,7 +98,7 @@ class MyEtudiants
                         $etudiant->setRemarque($ligne[18]);
                         $etudiant->setSignature($ligne[19]);
                         $etudiant->setAnneeBac($ligne[20]);
-                        $etudiant->setTypeUser($ligne[22]);
+                        $etudiant->setTypeUser('etudiant');
                         $etudiant->setIntituleSecuriteSociale($ligne[23]);
                         $etudiant->setAdresseSecuriteSociale($ligne[24]);
                         $etudiant->setLoginSpecifique($ligne[25]);
