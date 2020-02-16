@@ -60,7 +60,7 @@
                                     <span class="badge badge-ring {{ date.couleurBadge }}"></span>
                                 </div>
                                 <div class="timeline-content">
-                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|format_datetime('short', 'short') }}</time>
+                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|format_date('short') }} {{ date.heureDebut|format_time('short') }}</time>
                                     <p>{{ date.libelle }} : {{ date.texte }}</p>
                                 </div>
                             </li>

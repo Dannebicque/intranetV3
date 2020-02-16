@@ -2,25 +2,31 @@
     <h4 class="card-title">{{ 'vos.informations.identification'|trans }}</h4>
     <div class="card-body">
         {% if user.typeUser|lower == 'etudiant' %}
-          <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
-          <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('long') }}
-            ({{ user.dateNaissance|age }} ans)</p>
-          <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
-          <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
-          <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
-          <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
-          <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
-          <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
+            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+            <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('short') }}
+                ({{ user.dateNaissance|age }} ans)</p>
+            <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
+            <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
+            <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
+            <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
+            <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
+            <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
 
-        {% elseif user.typeUser|lower == 'permanent' %}
-          <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+        {% elseif user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
+            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
             {% if not is_granted('ROLE_ETUDIANT') %}
-              <p><strong>{{ 'date.naissance'|trans }}
-                  :</strong> {{ user.dateNaissance|format_datetime('long') }}</p>
+                <p><strong>{{ 'date.naissance'|trans }}
+                        : </strong> {{ user.dateNaissance != null ? user.dateNaissance|format_datetime('short') : 'non.defini'|trans }}
+                </p>
             {% endif %}
-            <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
-            <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }}
-                                                        | {{ user.telBureau|tel_format }}</p>
+            {% if user.typeUser|lower == 'permanent' %}
+                <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
+                <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }}
+                                                            | {{ user.telBureau|tel_format }}</p>
+            {% elseif user.typeUser|lower == 'vacataire' %}
+                <p><strong>{{ 'entreprise'|trans }} :</strong> {{ user.entreprise }} </p>
+                <p><strong>{{ 'tel.pro'|trans }} :</strong>{{ user.telBureau|tel_format }}</p>
+            {% endif %}
             {% if not is_granted('ROLE_ETUDIANT') %}
                 <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
             {% endif %}
@@ -54,12 +60,13 @@
         </header>
         <div class="card-body">
             <div class="alert alert-info">Ces informations ne sont visibles que de vous et de la direction du
-                                          département. Merci de maintenir ces informations à jour, elles seront
-                                          utilisées pour vous faire parvenir vos relevés de notes.
+                                          département. {% if user.typeUser|lower == 'etudiant' %}Merci de maintenir ces
+                    informations à jour, elles seront utilisées pour vous faire parvenir vos
+                    relevés de notes.{% endif %}
             </div>
 
             <p><strong>{{ 'mail.personnel'|trans }} :</strong> {{ user.mailPerso|mailto }}</p>
-            {% if user.typeUser == 'etudiant' %}
+            {% if user.typeUser|lower == 'etudiant' %}
                 <p><strong>{{ 'site.personnel'|trans }} :</strong> {{ user.sitePerso|link }}</p>
             {% endif %}
             {% if user.typeUser|lower == 'etudiant' %}
@@ -77,7 +84,7 @@
     </div>
 {% endif %}
 
-{% if user.typeUser == 'etudiant' %}
+{% if user.typeUser|lower == 'etudiant' %}
     <div class="card">
         <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
         <div class="card-body">

@@ -54,12 +54,15 @@
                                         {{ personnel.bureau1 }} {{ personnel.bureau2 }}
                                             {% endif %}
                                     </div>
-                                    <div>
-                                        <i class="fa fa-fw fa-globe w-20px"></i>
-                                        <a href="{{ personnel.siteUniv }}"
-                                           class="text-dark"
-                                           target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                           data-placement="bottom">Site Web</a></div>
+                                    {% if personnel.siteUniv != '' or personnel.siteUniv != null %}
+                                        <div>
+                                            <i class="fa fa-fw fa-globe w-20px"></i>
+                                            <a href="{{ personnel.siteUniv }}"
+                                               class="text-dark"
+                                               target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                               data-placement="bottom">Site Web</a>
+                                        </div>
+                                    {% endif %}
                                     <div>
                                         <i class="fa fa-fw fa-envelope w-20px"></i>
                                         <a href="mailto:{{ personnel.mailUniv }}" target="_blank"

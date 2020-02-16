@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="text-white card-body bg-img text-center py-50"
                      style="background-image: url({{ asset('assets/bg/2.jpg') }});">
-                    <a href="#">
+
                         {% if user.photoName != null and user.photoName != 'noimage.png' %}
                             {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                                 <img class="avatar avatar-xxl avatar-bordered"
@@ -47,9 +47,11 @@
                                      src="{{ asset('upload/etudiants/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}">
                             {% endif %}
                         {% else %}
-                            {{ include('composants/_avatar.html.twig', {user:etudiant}) }}
+                            <div>
+                                {{ include('composants/_avatar.html.twig', {user:user}) }}
+                            </div>
                         {% endif %}
-                    </a>
+
                     <h5 class="mt-2 mb-0 profil-nom">{{ user.displayPr }}</h5>
                     {% if user.typeUser|lower == 'etudiant' %}
                         <h6 class="overlay" style="background-color: #FAB001;">
@@ -57,7 +59,7 @@
                             <br>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %}
                             {% endfor %}</h6>
                     {% else %}
-                        <span>{{ user.typeUser|trans }}</span>
+                        <h6 class="overlay" style="background-color: #FAB001;">{{ user.typeUser|trans }}</h6>
                     {% endif %}
                 </div>
                 <ul class="flexbox flex-justified text-center p-20">
