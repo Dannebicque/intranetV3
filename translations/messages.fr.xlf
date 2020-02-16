@@ -502,7 +502,7 @@
                 <note priority="1">templates/appPersonnel/carnet/edit.html.twig:12</note>
                 <note priority="1">templates/appPersonnel/carnet/index.html.twig:33</note>
                 <note priority="1">templates/appPersonnel/carnet/show.html.twig:12</note>
-        <note priority="1">templates/bloc_previsionnel/previ_semestre.html.twig:45</note>
+                <note priority="1">templates/bloc_previsionnel/previ_semestre.html.twig:45</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:94</note>
                 <note priority="1">templates/administration/previsionnel/semestre.html.twig:56</note>
                 <note priority="1">templates/administration/previsionnel/matiere.html.twig:51</note>
@@ -591,9 +591,9 @@
                 <note priority="1">templates/administration/configuration/index.html.twig:30</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:37</note>
                 <note priority="1">templates/administration/commission_absence/index.html.twig:26</note>
-        <note priority="1">templates/administration/etudiant/index.html.twig:17</note>
-        <note priority="1">templates/administration/etudiant/semestre.html.twig:36</note>
-        <note priority="1">templates/administration/previsionnel/index.html.twig:17</note>
+                <note priority="1">templates/administration/etudiant/index.html.twig:17</note>
+                <note priority="1">templates/administration/etudiant/semestre.html.twig:36</note>
+                <note priority="1">templates/administration/previsionnel/index.html.twig:17</note>
                 <note priority="1">templates/administration/statistique/index.html.twig:11</note>
                 <note priority="1">templates/administration/sous_commission/index.html.twig:26</note>
                 <note priority="1">templates/administration/etudiant_groupe/index.html.twig:27</note>
@@ -942,20 +942,20 @@
                 <note priority="1">templates/administration/absence/liste.html.twig:105</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:127</note>
                 <note priority="1">templates/administration/etudiant/index.html.twig:68</note>
-        <note priority="1">templates/administration/etudiant/semestre.html.twig:95</note>
-        <note priority="1">templates/administration/matiere/index.html.twig:127</note>
-        <note priority="1">templates/administration/previsionnel/index.html.twig:105</note>
-        <note priority="1">templates/administration/actualite/index.html.twig:75</note>
-        <note priority="1">templates/administration/trello_tache/index.html.twig:80</note>
-        <note priority="1">templates/administration/date/index.html.twig:83</note>
-        <note priority="1">templates/administration/document/index.html.twig:49</note>
-        <note priority="1">templates/administration/borne/index.html.twig:88</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:75</note>
-        <note priority="1">templates/administration/article/index.html.twig:76</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:78</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:108</note>
-        <note priority="1">templates/administration/groupe/index.html.twig:155</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:77</note>
+                <note priority="1">templates/administration/etudiant/semestre.html.twig:95</note>
+                <note priority="1">templates/administration/matiere/index.html.twig:127</note>
+                <note priority="1">templates/administration/previsionnel/index.html.twig:105</note>
+                <note priority="1">templates/administration/actualite/index.html.twig:75</note>
+                <note priority="1">templates/administration/trello_tache/index.html.twig:80</note>
+                <note priority="1">templates/administration/date/index.html.twig:83</note>
+                <note priority="1">templates/administration/document/index.html.twig:49</note>
+                <note priority="1">templates/administration/borne/index.html.twig:88</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:75</note>
+                <note priority="1">templates/administration/article/index.html.twig:76</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:78</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:108</note>
+                <note priority="1">templates/administration/groupe/index.html.twig:155</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:77</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:78</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:78</note>
                 <note priority="1">templates/super-administration/site/index.html.twig:75</note>
@@ -1075,10 +1075,10 @@
                 <note priority="1">templates/administration/date/index.html.twig:47</note>
                 <note priority="1">templates/administration/borne/index.html.twig:51</note>
                 <note priority="1">templates/administration/type_document/index.html.twig:39</note>
-        <note priority="1">templates/administration/article/index.html.twig:40</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:42</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:70</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:41</note>
+                <note priority="1">templates/administration/article/index.html.twig:40</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:42</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:70</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:41</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:42</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:42</note>
                 <note priority="1">templates/super-administration/site/index.html.twig:39</note>
@@ -1107,11 +1107,11 @@
                 <note priority="1">templates/administration/trello_tache/index.html.twig:74</note>
                 <note priority="1">templates/administration/date/index.html.twig:77</note>
                 <note priority="1">templates/administration/document/index.html.twig:43</note>
-        <note priority="1">templates/administration/borne/index.html.twig:82</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:69</note>
-        <note priority="1">templates/administration/article/index.html.twig:70</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:72</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:102</note>
+                <note priority="1">templates/administration/borne/index.html.twig:82</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:69</note>
+                <note priority="1">templates/administration/article/index.html.twig:70</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:72</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:102</note>
                 <note priority="1">templates/super-administration/ufr/index.html.twig:71</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:72</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:72</note>
@@ -1361,13 +1361,13 @@
                 <note priority="1">templates/administration/date/edit.html.twig:18</note>
                 <note priority="1">templates/administration/document/edit.html.twig:18</note>
                 <note priority="1">templates/administration/borne/edit.html.twig:17</note>
-        <note priority="1">templates/administration/type_document/edit.html.twig:17</note>
-        <note priority="1">templates/administration/type_groupe/edit.html.twig:17</note>
-        <note priority="1">templates/administration/article/edit.html.twig:17</note>
-        <note priority="1">templates/administration/ppn/edit.html.twig:18</note>
-        <note priority="1">templates/administration/personnel/edit.html.twig:18</note>
-        <note priority="1">templates/administration/groupe/edit.html.twig:17</note>
-        <note priority="1">templates/super-administration/ufr/edit.html.twig:18</note>
+                <note priority="1">templates/administration/type_document/edit.html.twig:17</note>
+                <note priority="1">templates/administration/type_groupe/edit.html.twig:17</note>
+                <note priority="1">templates/administration/article/edit.html.twig:17</note>
+                <note priority="1">templates/administration/ppn/edit.html.twig:18</note>
+                <note priority="1">templates/administration/personnel/edit.html.twig:18</note>
+                <note priority="1">templates/administration/groupe/edit.html.twig:17</note>
+                <note priority="1">templates/super-administration/ufr/edit.html.twig:18</note>
                 <note priority="1">templates/super-administration/type_hrs/edit.html.twig:20</note>
                 <note priority="1">templates/super-administration/salle/edit.html.twig:17</note>
                 <note priority="1">templates/super-administration/site/edit.html.twig:17</note>
@@ -1425,21 +1425,21 @@
                 <note priority="1">templates/administration/trello_tache/show.html.twig:26</note>
                 <note priority="1">templates/administration/document/show.html.twig:26</note>
                 <note priority="1">templates/administration/document/liste-document.html.twig:5</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:22</note>
-        <note priority="1">templates/administration/type_document/show.html.twig:25</note>
-        <note priority="1">templates/administration/type_groupe/show.html.twig:29</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:21</note>
-        <note priority="1">templates/administration/groupe/show.html.twig:29</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:22</note>
-        <note priority="1">templates/super-administration/ufr/show.html.twig:25</note>
-        <note priority="1">templates/super-administration/type_hrs/index.html.twig:21</note>
-        <note priority="1">templates/super-administration/type_hrs/show.html.twig:25</note>
-        <note priority="1">templates/super-administration/salle/index.html.twig:22</note>
-        <note priority="1">templates/super-administration/salle/show.html.twig:26</note>
-        <note priority="1">templates/super-administration/site/index.html.twig:22</note>
-        <note priority="1">templates/super-administration/site/show.html.twig:26</note>
-        <note priority="1">templates/super-administration/type_diplome/index.html.twig:22</note>
-        <note priority="1">templates/super-administration/type_diplome/show.html.twig:25</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:22</note>
+                <note priority="1">templates/administration/type_document/show.html.twig:25</note>
+                <note priority="1">templates/administration/type_groupe/show.html.twig:29</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:21</note>
+                <note priority="1">templates/administration/groupe/show.html.twig:29</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:22</note>
+                <note priority="1">templates/super-administration/ufr/show.html.twig:25</note>
+                <note priority="1">templates/super-administration/type_hrs/index.html.twig:21</note>
+                <note priority="1">templates/super-administration/type_hrs/show.html.twig:25</note>
+                <note priority="1">templates/super-administration/salle/index.html.twig:22</note>
+                <note priority="1">templates/super-administration/salle/show.html.twig:26</note>
+                <note priority="1">templates/super-administration/site/index.html.twig:22</note>
+                <note priority="1">templates/super-administration/site/show.html.twig:26</note>
+                <note priority="1">templates/super-administration/type_diplome/index.html.twig:22</note>
+                <note priority="1">templates/super-administration/type_diplome/show.html.twig:25</note>
                 <note priority="1">templates/structure/diplome/index.html.twig:21</note>
                 <note priority="1">templates/structure/diplome/show.html.twig:29</note>
                 <note priority="1">templates/structure/formation/index.html.twig:21</note>
@@ -1517,17 +1517,17 @@
                 <note priority="1">templates/administration/etudiant/semestre.html.twig:54</note>
                 <note priority="1">templates/administration/matiere/index.html.twig:58</note>
                 <note priority="1">templates/administration/actualite/index.html.twig:23</note>
-        <note priority="1">templates/administration/trello_tache/index.html.twig:25</note>
-        <note priority="1">templates/administration/date/index.html.twig:26</note>
-        <note priority="1">templates/administration/document/liste-document.html.twig:10</note>
-        <note priority="1">templates/administration/borne/index.html.twig:27</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:24</note>
-        <note priority="1">templates/administration/article/index.html.twig:24</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:25</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:51</note>
-        <note priority="1">templates/administration/personnel/add.html.twig:37</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:25</note>
-        <note priority="1">templates/super-administration/rh/index.html.twig:29</note>
+                <note priority="1">templates/administration/trello_tache/index.html.twig:25</note>
+                <note priority="1">templates/administration/date/index.html.twig:26</note>
+                <note priority="1">templates/administration/document/liste-document.html.twig:10</note>
+                <note priority="1">templates/administration/borne/index.html.twig:27</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:24</note>
+                <note priority="1">templates/administration/article/index.html.twig:24</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:25</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:51</note>
+                <note priority="1">templates/administration/personnel/add.html.twig:37</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:25</note>
+                <note priority="1">templates/super-administration/rh/index.html.twig:29</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:25</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:26</note>
                 <note priority="1">templates/super-administration/site/index.html.twig:24</note>
@@ -1575,16 +1575,16 @@
                 <note priority="1">templates/appPersonnel/carnet/show.html.twig:44</note>
                 <note priority="1">templates/api/previsionnel/matiere.html.twig:22</note>
                 <note priority="1">templates/bloc_previsionnel/hrs.html.twig:22</note>
-        <note priority="1">templates/bloc_previsionnel/hrs.html.twig:23</note>
-        <note priority="1">templates/administration/hrs/index.html.twig:37</note>
-        <note priority="1">templates/administration/hrs/index.html.twig:38</note>
-        <note priority="1">templates/administration/hrs/index.html.twig:39</note>
-        <note priority="1">templates/administration/hrs/show.html.twig:7</note>
-        <note priority="1">templates/administration/hrs/show.html.twig:8</note>
-        <note priority="1">templates/administration/hrs/show.html.twig:10</note>
-        <note priority="1">templates/administration/competence/show.html.twig:34</note>
-        <note priority="1">templates/administration/competence/show.html.twig:38</note>
-        <note priority="1">templates/administration/rattrapage/index.html.twig:61</note>
+                <note priority="1">templates/bloc_previsionnel/hrs.html.twig:23</note>
+                <note priority="1">templates/administration/hrs/index.html.twig:37</note>
+                <note priority="1">templates/administration/hrs/index.html.twig:38</note>
+                <note priority="1">templates/administration/hrs/index.html.twig:39</note>
+                <note priority="1">templates/administration/hrs/show.html.twig:7</note>
+                <note priority="1">templates/administration/hrs/show.html.twig:8</note>
+                <note priority="1">templates/administration/hrs/show.html.twig:10</note>
+                <note priority="1">templates/administration/competence/show.html.twig:34</note>
+                <note priority="1">templates/administration/competence/show.html.twig:38</note>
+                <note priority="1">templates/administration/rattrapage/index.html.twig:61</note>
         <note priority="1">templates/administration/rattrapage/index.html.twig:62</note>
         <note priority="1">templates/administration/rattrapage/index.html.twig:63</note>
         <note priority="1">templates/administration/rattrapage/index.html.twig:64</note>
@@ -1598,16 +1598,16 @@
         <note priority="1">templates/administration/ppn/show.html.twig:24</note>
         <note priority="1">templates/administration/groupe/show.html.twig:34</note>
         <note priority="1">templates/super-administration/ufr/index.html.twig:33</note>
-        <note priority="1">templates/super-administration/ufr/show.html.twig:30</note>
-        <note priority="1">templates/super-administration/salle/index.html.twig:34</note>
-        <note priority="1">templates/super-administration/salle/show.html.twig:39</note>
-        <note priority="1">templates/super-administration/site/show.html.twig:31</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:26</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:34</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:38</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:42</note>
-        <note priority="1">templates/structure/formation/show.html.twig:30</note>
-        <note priority="1">templates/structure/formation/show.html.twig:102</note>
+                <note priority="1">templates/super-administration/ufr/show.html.twig:30</note>
+                <note priority="1">templates/super-administration/salle/index.html.twig:34</note>
+                <note priority="1">templates/super-administration/salle/show.html.twig:39</note>
+                <note priority="1">templates/super-administration/site/show.html.twig:31</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:26</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:34</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:38</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:42</note>
+                <note priority="1">templates/structure/formation/show.html.twig:30</note>
+                <note priority="1">templates/structure/formation/show.html.twig:102</note>
                 <note priority="1">templates/structure/annee/index.html.twig:46</note>
                 <note priority="1">templates/structure/annee/show.html.twig:34</note>
                 <note priority="1">templates/structure/ue/show.html.twig:30</note>
@@ -1636,21 +1636,21 @@
                 <note priority="1">templates/administration/borne/show.html.twig:66</note>
                 <note priority="1">templates/administration/personnel/show.html.twig:147</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:33</note>
-        <note priority="1">templates/super-administration/type_hrs/show.html.twig:34</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:71</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:75</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:83</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:87</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:91</note>
-        <note priority="1">templates/structure/formation/show.html.twig:74</note>
-        <note priority="1">templates/structure/formation/show.html.twig:78</note>
-        <note priority="1">templates/structure/formation/show.html.twig:82</note>
-        <note priority="1">templates/structure/formation/show.html.twig:86</note>
-        <note priority="1">templates/structure/formation/show.html.twig:90</note>
-        <note priority="1">templates/structure/formation/show.html.twig:94</note>
-        <note priority="1">templates/structure/formation/show.html.twig:98</note>
-        <note priority="1">templates/structure/formation/show.html.twig:106</note>
-        <note priority="1">templates/structure/annee/index.html.twig:51</note>
+                <note priority="1">templates/super-administration/type_hrs/show.html.twig:34</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:71</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:75</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:83</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:87</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:91</note>
+                <note priority="1">templates/structure/formation/show.html.twig:74</note>
+                <note priority="1">templates/structure/formation/show.html.twig:78</note>
+                <note priority="1">templates/structure/formation/show.html.twig:82</note>
+                <note priority="1">templates/structure/formation/show.html.twig:86</note>
+                <note priority="1">templates/structure/formation/show.html.twig:90</note>
+                <note priority="1">templates/structure/formation/show.html.twig:94</note>
+                <note priority="1">templates/structure/formation/show.html.twig:98</note>
+                <note priority="1">templates/structure/formation/show.html.twig:106</note>
+                <note priority="1">templates/structure/annee/index.html.twig:51</note>
                 <note priority="1">templates/structure/annee/show.html.twig:62</note>
                 <note priority="1">templates/structure/semestre/index.html.twig:39</note>
                 <note priority="1">templates/structure/semestre/show.html.twig:58</note>
@@ -1679,21 +1679,21 @@
                 <note priority="1">templates/administration/borne/show.html.twig:66</note>
                 <note priority="1">templates/administration/personnel/show.html.twig:147</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:33</note>
-        <note priority="1">templates/super-administration/type_hrs/show.html.twig:34</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:71</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:75</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:83</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:87</note>
-        <note priority="1">templates/structure/diplome/show.html.twig:91</note>
-        <note priority="1">templates/structure/formation/show.html.twig:74</note>
-        <note priority="1">templates/structure/formation/show.html.twig:78</note>
-        <note priority="1">templates/structure/formation/show.html.twig:82</note>
-        <note priority="1">templates/structure/formation/show.html.twig:86</note>
-        <note priority="1">templates/structure/formation/show.html.twig:90</note>
-        <note priority="1">templates/structure/formation/show.html.twig:94</note>
-        <note priority="1">templates/structure/formation/show.html.twig:98</note>
-        <note priority="1">templates/structure/formation/show.html.twig:106</note>
-        <note priority="1">templates/structure/annee/index.html.twig:51</note>
+                <note priority="1">templates/super-administration/type_hrs/show.html.twig:34</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:71</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:75</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:83</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:87</note>
+                <note priority="1">templates/structure/diplome/show.html.twig:91</note>
+                <note priority="1">templates/structure/formation/show.html.twig:74</note>
+                <note priority="1">templates/structure/formation/show.html.twig:78</note>
+                <note priority="1">templates/structure/formation/show.html.twig:82</note>
+                <note priority="1">templates/structure/formation/show.html.twig:86</note>
+                <note priority="1">templates/structure/formation/show.html.twig:90</note>
+                <note priority="1">templates/structure/formation/show.html.twig:94</note>
+                <note priority="1">templates/structure/formation/show.html.twig:98</note>
+                <note priority="1">templates/structure/formation/show.html.twig:106</note>
+                <note priority="1">templates/structure/annee/index.html.twig:51</note>
                 <note priority="1">templates/structure/annee/show.html.twig:62</note>
                 <note priority="1">templates/structure/semestre/index.html.twig:39</note>
                 <note priority="1">templates/structure/semestre/show.html.twig:58</note>
@@ -1761,24 +1761,24 @@
                 <note priority="1">templates/administration/borne/show.html.twig:21</note>
                 <note priority="1">templates/administration/borne/show.html.twig:49</note>
                 <note priority="1">templates/administration/borne/show.html.twig:53</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:21</note>
-        <note priority="1">templates/administration/type_document/show.html.twig:21</note>
-        <note priority="1">templates/administration/type_groupe/show.html.twig:21</note>
-        <note priority="1">templates/administration/article/index.html.twig:20</note>
-        <note priority="1">templates/administration/article/show.html.twig:21</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:20</note>
-        <note priority="1">templates/administration/groupe/show.html.twig:21</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:21</note>
-        <note priority="1">templates/super-administration/ufr/show.html.twig:21</note>
-        <note priority="1">templates/super-administration/type_hrs/index.html.twig:20</note>
-        <note priority="1">templates/super-administration/type_hrs/show.html.twig:21</note>
-        <note priority="1">templates/super-administration/salle/show.html.twig:22</note>
-        <note priority="1">templates/super-administration/site/index.html.twig:21</note>
-        <note priority="1">templates/super-administration/site/show.html.twig:22</note>
-        <note priority="1">templates/super-administration/type_diplome/index.html.twig:21</note>
-        <note priority="1">templates/super-administration/type_diplome/show.html.twig:21</note>
-        <note priority="1">templates/super-administration/help/index.html.twig:20</note>
-        <note priority="1">templates/super-administration/help/show.html.twig:21</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:21</note>
+                <note priority="1">templates/administration/type_document/show.html.twig:21</note>
+                <note priority="1">templates/administration/type_groupe/show.html.twig:21</note>
+                <note priority="1">templates/administration/article/index.html.twig:20</note>
+                <note priority="1">templates/administration/article/show.html.twig:21</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:20</note>
+                <note priority="1">templates/administration/groupe/show.html.twig:21</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:21</note>
+                <note priority="1">templates/super-administration/ufr/show.html.twig:21</note>
+                <note priority="1">templates/super-administration/type_hrs/index.html.twig:20</note>
+                <note priority="1">templates/super-administration/type_hrs/show.html.twig:21</note>
+                <note priority="1">templates/super-administration/salle/show.html.twig:22</note>
+                <note priority="1">templates/super-administration/site/index.html.twig:21</note>
+                <note priority="1">templates/super-administration/site/show.html.twig:22</note>
+                <note priority="1">templates/super-administration/type_diplome/index.html.twig:21</note>
+                <note priority="1">templates/super-administration/type_diplome/show.html.twig:21</note>
+                <note priority="1">templates/super-administration/help/index.html.twig:20</note>
+                <note priority="1">templates/super-administration/help/show.html.twig:21</note>
                 <note priority="1">templates/structure/diplome/index.html.twig:20</note>
                 <note priority="1">templates/structure/diplome/show.html.twig:21</note>
                 <note priority="1">templates/structure/formation/index.html.twig:20</note>
@@ -1926,20 +1926,20 @@
                 <note priority="1">templates/administration/document/show.html.twig:38</note>
                 <note priority="1">templates/administration/document/liste-document.html.twig:8</note>
                 <note priority="1">templates/administration/borne/show.html.twig:61</note>
-        <note priority="1">templates/administration/type_document/show.html.twig:33</note>
-        <note priority="1">templates/administration/type_groupe/show.html.twig:41</note>
-        <note priority="1">templates/administration/article/index.html.twig:23</note>
-        <note priority="1">templates/administration/article/show.html.twig:49</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:24</note>
-        <note priority="1">templates/administration/groupe/show.html.twig:41</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:24</note>
-        <note priority="1">templates/super-administration/ufr/show.html.twig:46</note>
-        <note priority="1">templates/super-administration/salle/show.html.twig:46</note>
-        <note priority="1">templates/super-administration/site/index.html.twig:23</note>
-        <note priority="1">templates/super-administration/site/show.html.twig:47</note>
-        <note priority="1">templates/super-administration/type_diplome/show.html.twig:49</note>
-        <note priority="1">templates/super-administration/help/index.html.twig:23</note>
-        <note priority="1">templates/super-administration/help/show.html.twig:37</note>
+                <note priority="1">templates/administration/type_document/show.html.twig:33</note>
+                <note priority="1">templates/administration/type_groupe/show.html.twig:41</note>
+                <note priority="1">templates/administration/article/index.html.twig:23</note>
+                <note priority="1">templates/administration/article/show.html.twig:49</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:24</note>
+                <note priority="1">templates/administration/groupe/show.html.twig:41</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:24</note>
+                <note priority="1">templates/super-administration/ufr/show.html.twig:46</note>
+                <note priority="1">templates/super-administration/salle/show.html.twig:46</note>
+                <note priority="1">templates/super-administration/site/index.html.twig:23</note>
+                <note priority="1">templates/super-administration/site/show.html.twig:47</note>
+                <note priority="1">templates/super-administration/type_diplome/show.html.twig:49</note>
+                <note priority="1">templates/super-administration/help/index.html.twig:23</note>
+                <note priority="1">templates/super-administration/help/show.html.twig:37</note>
                 <note priority="1">templates/structure/diplome/index.html.twig:22</note>
                 <note priority="1">templates/structure/diplome/show.html.twig:50</note>
                 <note priority="1">templates/structure/formation/index.html.twig:22</note>
@@ -2146,7 +2146,7 @@
                 <note priority="1">templates/structure/formation/show.html.twig:9</note>
                 <note priority="1">templates/structure/annee/edit.html.twig:9</note>
                 <note priority="1">templates/structure/annee/new.html.twig:9</note>
-        <note priority="1">templates/structure/annee/index.html.twig:12</note>
+                <note priority="1">templates/structure/annee/index.html.twig:12</note>
                 <note priority="1">templates/structure/annee/index.html.twig:14</note>
                 <note priority="1">templates/structure/annee/show.html.twig:9</note>
                 <note priority="1">templates/structure/ue/edit.html.twig:9</note>
@@ -5580,25 +5580,25 @@
                 <note priority="1">templates/administration/hrs/index.html.twig:74</note>
                 <note priority="1">templates/administration/absence/liste.html.twig:99</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:121</note>
-        <note priority="1">templates/administration/etudiant/index.html.twig:56</note>
-        <note priority="1">templates/administration/etudiant/semestre.html.twig:89</note>
-        <note priority="1">templates/administration/matiere/index.html.twig:115</note>
-        <note priority="1">templates/administration/previsionnel/index.html.twig:93</note>
-        <note priority="1">templates/administration/actualite/index.html.twig:63</note>
-        <note priority="1">templates/administration/trello_tache/index.html.twig:68</note>
-        <note priority="1">templates/administration/date/index.html.twig:71</note>
-        <note priority="1">templates/administration/document/index.html.twig:37</note>
-        <note priority="1">templates/administration/borne/index.html.twig:76</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:63</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:57</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:133</note>
-        <note priority="1">templates/administration/article/index.html.twig:64</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:66</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:32</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:96</note>
-        <note priority="1">templates/administration/groupe/index.html.twig:149</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:65</note>
-        <note priority="1">templates/super-administration/type_hrs/index.html.twig:66</note>
+                <note priority="1">templates/administration/etudiant/index.html.twig:56</note>
+                <note priority="1">templates/administration/etudiant/semestre.html.twig:89</note>
+                <note priority="1">templates/administration/matiere/index.html.twig:115</note>
+                <note priority="1">templates/administration/previsionnel/index.html.twig:93</note>
+                <note priority="1">templates/administration/actualite/index.html.twig:63</note>
+                <note priority="1">templates/administration/trello_tache/index.html.twig:68</note>
+                <note priority="1">templates/administration/date/index.html.twig:71</note>
+                <note priority="1">templates/administration/document/index.html.twig:37</note>
+                <note priority="1">templates/administration/borne/index.html.twig:76</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:63</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:57</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:133</note>
+                <note priority="1">templates/administration/article/index.html.twig:64</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:66</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:32</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:96</note>
+                <note priority="1">templates/administration/groupe/index.html.twig:149</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:65</note>
+                <note priority="1">templates/super-administration/type_hrs/index.html.twig:66</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:66</note>
                 <note priority="1">templates/super-administration/site/index.html.twig:63</note>
                 <note priority="1">templates/super-administration/type_diplome/index.html.twig:69</note>
@@ -5627,26 +5627,26 @@
                 <note priority="1">templates/administration/hrs/index.html.twig:63</note>
                 <note priority="1">templates/administration/absence/liste.html.twig:88</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:110</note>
-        <note priority="1">templates/administration/etudiant/index.html.twig:45</note>
-        <note priority="1">templates/administration/etudiant/semestre.html.twig:78</note>
-        <note priority="1">templates/administration/matiere/index.html.twig:104</note>
-        <note priority="1">templates/administration/previsionnel/index.html.twig:82</note>
-        <note priority="1">templates/administration/actualite/index.html.twig:52</note>
-        <note priority="1">templates/administration/trello_tache/index.html.twig:57</note>
-        <note priority="1">templates/administration/date/index.html.twig:60</note>
-        <note priority="1">templates/administration/document/index.html.twig:26</note>
-        <note priority="1">templates/administration/borne/index.html.twig:65</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:52</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:51</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:85</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:127</note>
-        <note priority="1">templates/administration/article/index.html.twig:53</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:55</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:28</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:85</note>
-        <note priority="1">templates/administration/groupe/index.html.twig:138</note>
-        <note priority="1">templates/super-administration/ufr/index.html.twig:54</note>
-        <note priority="1">templates/super-administration/type_hrs/index.html.twig:55</note>
+                <note priority="1">templates/administration/etudiant/index.html.twig:45</note>
+                <note priority="1">templates/administration/etudiant/semestre.html.twig:78</note>
+                <note priority="1">templates/administration/matiere/index.html.twig:104</note>
+                <note priority="1">templates/administration/previsionnel/index.html.twig:82</note>
+                <note priority="1">templates/administration/actualite/index.html.twig:52</note>
+                <note priority="1">templates/administration/trello_tache/index.html.twig:57</note>
+                <note priority="1">templates/administration/date/index.html.twig:60</note>
+                <note priority="1">templates/administration/document/index.html.twig:26</note>
+                <note priority="1">templates/administration/borne/index.html.twig:65</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:52</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:51</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:85</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:127</note>
+                <note priority="1">templates/administration/article/index.html.twig:53</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:55</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:28</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:85</note>
+                <note priority="1">templates/administration/groupe/index.html.twig:138</note>
+                <note priority="1">templates/super-administration/ufr/index.html.twig:54</note>
+                <note priority="1">templates/super-administration/type_hrs/index.html.twig:55</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:55</note>
                 <note priority="1">templates/super-administration/site/index.html.twig:52</note>
                 <note priority="1">templates/super-administration/type_diplome/index.html.twig:58</note>
@@ -6419,24 +6419,24 @@
                 <note priority="1">templates/administration/hrs/index.html.twig:68</note>
                 <note priority="1">templates/administration/absence/liste.html.twig:93</note>
                 <note priority="1">templates/administration/rattrapage/index.html.twig:115</note>
-        <note priority="1">templates/administration/etudiant/index.html.twig:50</note>
-        <note priority="1">templates/administration/etudiant/semestre.html.twig:83</note>
-        <note priority="1">templates/administration/matiere/index.html.twig:109</note>
-        <note priority="1">templates/administration/previsionnel/index.html.twig:87</note>
-        <note priority="1">templates/administration/actualite/index.html.twig:57</note>
-        <note priority="1">templates/administration/trello_tache/index.html.twig:62</note>
-        <note priority="1">templates/administration/date/index.html.twig:65</note>
-        <note priority="1">templates/administration/document/index.html.twig:31</note>
-        <note priority="1">templates/administration/borne/index.html.twig:70</note>
-        <note priority="1">templates/administration/type_document/index.html.twig:57</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:54</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:88</note>
-        <note priority="1">templates/administration/semestre/index.html.twig:130</note>
-        <note priority="1">templates/administration/article/index.html.twig:58</note>
-        <note priority="1">templates/administration/ppn/index.html.twig:60</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:30</note>
-        <note priority="1">templates/administration/personnel/index.html.twig:90</note>
-        <note priority="1">templates/administration/groupe/index.html.twig:143</note>
+                <note priority="1">templates/administration/etudiant/index.html.twig:50</note>
+                <note priority="1">templates/administration/etudiant/semestre.html.twig:83</note>
+                <note priority="1">templates/administration/matiere/index.html.twig:109</note>
+                <note priority="1">templates/administration/previsionnel/index.html.twig:87</note>
+                <note priority="1">templates/administration/actualite/index.html.twig:57</note>
+                <note priority="1">templates/administration/trello_tache/index.html.twig:62</note>
+                <note priority="1">templates/administration/date/index.html.twig:65</note>
+                <note priority="1">templates/administration/document/index.html.twig:31</note>
+                <note priority="1">templates/administration/borne/index.html.twig:70</note>
+                <note priority="1">templates/administration/type_document/index.html.twig:57</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:54</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:88</note>
+                <note priority="1">templates/administration/semestre/index.html.twig:130</note>
+                <note priority="1">templates/administration/article/index.html.twig:58</note>
+                <note priority="1">templates/administration/ppn/index.html.twig:60</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:30</note>
+                <note priority="1">templates/administration/personnel/index.html.twig:90</note>
+                <note priority="1">templates/administration/groupe/index.html.twig:143</note>
                 <note priority="1">templates/super-administration/ufr/index.html.twig:59</note>
                 <note priority="1">templates/super-administration/type_hrs/index.html.twig:60</note>
                 <note priority="1">templates/super-administration/salle/index.html.twig:60</note>
@@ -7543,7 +7543,7 @@
             </notes>
             <segment>
                 <source>tel.pro</source>
-                <target>tel.pro</target>
+                <target>Tél. professionnel</target>
             </segment>
         </unit>
         <unit id="aeg0hIF" name="mail.personnel">
@@ -7552,7 +7552,7 @@
             </notes>
             <segment>
                 <source>mail.personnel</source>
-                <target>mail.personnel</target>
+                <target>Mail personnel</target>
             </segment>
         </unit>
         <unit id="L_BX65B" name="rechercher">
@@ -12597,7 +12597,7 @@
         <unit id="WAXNMbj" name="pas.d.espace.travail">
             <segment>
                 <source>pas.d.espace.travail</source>
-                <target>pas.d.espace.travail</target>
+                <target>Pas d'espace de travail</target>
             </segment>
         </unit>
         <unit id="nMN3bAV" name="table.code_element">
@@ -13317,7 +13317,7 @@
                 <target>Retour qualité</target>
             </segment>
         </unit>
-        <unit id="Lw5.adT" name="non&#10;                    .defini">
+        <unit id="mKdXwL2" name="non&#10;                    .defini&#10;                ">
             <segment>
                 <source>non
                     .defini
@@ -13447,7 +13447,7 @@
                 <target>Détails de la structure du département</target>
             </segment>
         </unit>
-        <unit id="lXJX1w0" name="%diff% ">
+        <unit id="yUtlpQl" name="%diff%">
             <segment>
                 <source>%diff%</source>
                 <target>__%diff%</target>
@@ -13457,6 +13457,12 @@
             <segment>
                 <source>atitle.import_ppn</source>
                 <target>Importer PPN</target>
+            </segment>
+        </unit>
+        <unit id="5dHoUso" name="entreprise">
+            <segment>
+                <source>entreprise</source>
+                <target>Entreprise</target>
             </segment>
         </unit>
     </file>

@@ -443,6 +443,7 @@ thead {
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
+  margin: auto;
 
   .initials {
     position: relative;
@@ -450,7 +451,6 @@ thead {
     font-size: $sizeda*0.5;
     line-height: $sizeda*0.5;
     color: #fff;
-    font-family: "Courier New", monospace;
     font-weight: bold;
   }
 }
