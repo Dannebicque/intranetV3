@@ -37,9 +37,9 @@
                    data-provide="datatables">
                 <thead>
                 <tr>
-                    <th>{{ 'table.numetudiant'|trans }}</th>
                     <th>{{ 'table.nom'|trans }}</th>
                     <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.numetudiant'|trans }}</th>
                     <th>{{ 'table.bac'|trans }}</th>
                     <th>{{ 'table.groupes'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
@@ -48,9 +48,10 @@
                 <tbody>
                 {% for etudiant in semestre.etudiants %}
                     <tr>
-                        <td>{{ etudiant.numEtudiant }}</td>
+
                         <td>{{ etudiant.nom }}</td>
                         <td>{{ etudiant.prenom }}</td>
+                        <td>{{ etudiant.numEtudiant }}</td>
                         <td>{{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
                         <td>{% for groupe in etudiant.groupes %}{{ groupe.libelle }}, {% else %}-{% endfor %}</td>
                         <td>

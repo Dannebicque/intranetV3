@@ -133,7 +133,7 @@ class Etudiant extends Utilisateur implements Serializable
     private $demandeurEmploi = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", inversedBy="etudiants")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", inversedBy="etudiants", fetch="LAZY")
      */
     private $groupes;
 
@@ -173,7 +173,7 @@ class Etudiant extends Utilisateur implements Serializable
     private $promotion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bac")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bac", fetch="EAGER")
      */
     private $bac;
 

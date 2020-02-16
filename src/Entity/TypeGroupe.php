@@ -35,7 +35,7 @@ class TypeGroupe extends BaseEntity
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe")
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER")
      * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $groupes;
