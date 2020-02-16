@@ -37,11 +37,16 @@ class TypeDocumentRepository extends ServiceEntityRepository
      */
     public function findByDepartement($departement)
     {
+        return $this->findByDepartementBuilder($departement)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDepartementBuilder($departement)
+    {
         return $this->createQueryBuilder('t')
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('t.libelle', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('t.libelle', 'ASC');
     }
 }

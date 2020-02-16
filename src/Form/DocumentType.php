@@ -12,6 +12,7 @@ use App\Entity\Document;
 use App\Entity\Semestre;
 use App\Entity\TypeDocument;
 use App\Repository\SemestreRepository;
+use App\Repository\TypeDocumentRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -49,7 +50,14 @@ class DocumentType extends AbstractType
             ->add(
                 'type_document',
                 EntityType::class,
-                ['class' => TypeDocument::class, 'choice_label' => 'libelle', 'label' => 'label.type_document']
+                [
+                    'class'         => TypeDocument::class,
+                    'choice_label'  => 'libelle',
+                    'label'         => 'label.type_document',
+                    'query_builder' => function(TypeDocumentRepository $typeDocumentRepository) {
+                        return $typeDocumentRepository->findByDepartementBuilder($this->departement);
+                    },
+                ]
             )
             ->add('semestres', EntityType::class, array(
                 'class'         => Semestre::class,
