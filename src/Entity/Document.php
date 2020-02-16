@@ -85,7 +85,8 @@ class Document extends BaseEntity
     /**
      * @var UploadedFile
      *
-     * @Vich\UploadableField(mapping="document", fileNameProperty="documentName", size="taille", mimeType="typeFichier")
+     * @Vich\UploadableField(mapping="documentFile", fileNameProperty="documentName", size="taille",
+     *                                               mimeType="typeFichier")
      */
     private $documentFile;
 
@@ -117,7 +118,7 @@ class Document extends BaseEntity
      *
      * @return Document
      */
-    public function setTaille(float $taille): self
+    public function setTaille(?float $taille = 0.0): self
     {
         $this->taille = $taille;
 
@@ -137,7 +138,7 @@ class Document extends BaseEntity
      *
      * @return Document
      */
-    public function setTypeFichier(string $typeFichier): self
+    public function setTypeFichier(?string $typeFichier): self
     {
         $this->typeFichier = $typeFichier;
 
@@ -206,15 +207,15 @@ class Document extends BaseEntity
 
 
     /**
-     * @param File|null $document
+     * @param File|null $documentFile
      *
      * @throws Exception
      */
-    public function setDocumentFile(?File $document = null): void
+    public function setDocumentFile(?File $documentFile = null): void
     {
-        $this->documentFile = $document;
+        $this->documentFile = $documentFile;
 
-        if (null !== $document) {
+        if (null !== $documentFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new DateTime());
@@ -240,7 +241,7 @@ class Document extends BaseEntity
     /**
      * @param string $documentName
      */
-    public function setDocumentName(string $documentName): void
+    public function setDocumentName(?string $documentName): void
     {
         $this->documentName = $documentName;
     }
