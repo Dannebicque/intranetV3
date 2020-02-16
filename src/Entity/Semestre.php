@@ -99,7 +99,7 @@ class Semestre extends BaseEntity
 
     /**
      * @var
-     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre",fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre", fetch="EAGER")
      * @ORM\OrderBy({"nom" = "ASC", "prenom" = "ASC"})
      */
     private $etudiants;
