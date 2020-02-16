@@ -52,7 +52,7 @@ class TypeGroupeController extends BaseController
         $this->entityManager->persist($typeGroupe);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('administration_groupe_index');
+        return $this->redirectToRoute('administration_groupe_index', ['semestre' => $semestre->getId()]);
     }
 
     /**

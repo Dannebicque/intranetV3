@@ -29,17 +29,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupeController extends BaseController
 {
     /**
-     * @Route("/", name="administration_groupe_index")
+     * @Route("/{semestre}", name="administration_groupe_index")
      * @param GroupeRepository $groupeRepository
      *
      * @return Response
      */
-    public function index(GroupeRepository $groupeRepository): Response
+    public function index(GroupeRepository $groupeRepository, ?Semestre $semestre = null): Response
     {
         $groupes = $groupeRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $this->render('administration/groupe/index.html.twig', [
-            'groupes' => $groupes
+            'groupes'         => $groupes,
+            'afficheSemestre' => $semestre !== null ? $semestre->getId() : null
         ]);
     }
 
