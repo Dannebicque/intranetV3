@@ -10,7 +10,6 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -36,7 +35,6 @@ abstract class Utilisateur implements UserInterface
     protected $password = '';
 
     /**
-     * @Gedmo\Slug(fields={"prenom", "nom"})
      * @ORM\Column(type="string", length=255, unique=true)
      */
     protected $slug;
