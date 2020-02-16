@@ -313,8 +313,7 @@
                                                 class="{{ notification.icone }}"></i></span>
                                 <div class="media-body">
                                     <p>{{ notification.type|trans }}</p>
-                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification
-                                        .created|time_ago }}</time>
+                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago }}</time>
                                 </div>
                             </a>
                         {% else %}
