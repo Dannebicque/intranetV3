@@ -10,6 +10,7 @@ namespace App\Twig;
 
 use App\Entity\Constantes;
 use App\MesClasses\Configuration;
+use App\MesClasses\Tools;
 use DateTime;
 use Exception;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -220,18 +221,7 @@ class AppExtension extends AbstractExtension
      */
     public function telFormat($number): ?string
     {
-        str_replace(['.', '-', ' '], '', $number);
-        if (strlen($number) === 9) {
-            $number = '0' . $number;
-        }
-
-        if (strlen($number) === 10) {
-            $str = chunk_split($number, 2, ' ');
-        } else {
-            $str = str_replace('.', ' ', $number);
-        }
-
-        return $str;
+        return Tools::telFormat($number);
     }
 
     /**

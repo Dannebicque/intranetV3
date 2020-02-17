@@ -44,4 +44,20 @@ abstract class Tools
     {
         return $texte === 'true';
     }
+
+    public static function telFormat($number)
+    {
+        str_replace(['.', '-', ' '], '', $number);
+        if (strlen($number) === 9) {
+            $number = '0' . $number;
+        }
+
+        if (strlen($number) === 10) {
+            $str = chunk_split($number, 2, ' ');
+        } else {
+            $str = str_replace('.', ' ', $number);
+        }
+
+        return $str;
+    }
 }
