@@ -35,15 +35,4 @@ class BacRepository extends ServiceEntityRepository
 
         return $t;
     }
-
-    public function getCodeObjet()
-    {
-        $data = $this->findAll();
-        $t = [];
-        foreach ($data as $d) {
-            $t[$d->getLibelle()] = $d;
-        }
-
-        return $t;
-    }
 }

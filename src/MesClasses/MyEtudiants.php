@@ -55,7 +55,7 @@ class MyEtudiants
      */
     public function importListeCsv($fichier, ?Semestre $semestre)
     {
-        $bacs = $this->entityManager->getRepository(Bac::class)->getCodeObjet();
+        $bacs = $this->entityManager->getRepository(Bac::class)->getApogeeArray();
         if ($semestre !== null) {
             $file = $this->myUpload->upload($fichier, 'temp');
             $handle = fopen($file, 'rb');
