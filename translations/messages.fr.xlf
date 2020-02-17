@@ -7416,7 +7416,7 @@
                 <target>Absence supprimée avec succès</target>
             </segment>
         </unit>
-        <unit id="tij_04s" name="document.edit.success.flash">
+        <unit id="aiVr8XS" name="document.edit.success.flash">
             <segment>
                 <source>document.edit.success.flash</source>
                 <target>Document modifié avec succès</target>
@@ -13475,6 +13475,18 @@
             <segment>
                 <source>return.page.precedente</source>
                 <target>Revenir à la page précédente</target>
+            </segment>
+        </unit>
+        <unit id="hNdGPMK" name="adm.alternance.fiche_suivi.show.heading">
+            <segment>
+                <source>adm.alternance.fiche_suivi.show.heading</source>
+                <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
+            </segment>
+        </unit>
+        <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
+            <segment>
+                <source>atitle.retour.alternance.etudiant</source>
+                <target>Retour à l'alternance de l'étudiant</target>
             </segment>
         </unit>
     </file>

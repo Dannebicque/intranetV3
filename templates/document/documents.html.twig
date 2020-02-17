@@ -5,24 +5,23 @@
                 <span>
                     <i class="ti-file fs-30 text-info"></i>
                 </span>
-              <div class="media-body">
-                <h5>{{ document.libelle }}</h5>
-                <p class="gap-items">
-                  <small>{{ 'taille'|trans }}: {{ document.taille }} ko</small>
-                  <small>{{ 'type_fichier'|trans }}: {{ document.typeFichier }}</small>
-                </p>
-                <p>
-                  <small>{{ 'created'|trans }}: {{ document.updated|format_datetime('long', 'short') }}</small>
-                </p>
-              </div>
-              <a class="primary" href="{{ asset('upload/documents/'~document.typedocument.departement.id~'/'
-                  ~document.documentName) }}"
-                 data-provide="tooltip"
-                 title="{{ 'telecharger'|trans }}"><i
-                        class="ti-save"></i></a>
-              <label class="toggler toggler-danger fs-16" data-provide="tooltip" title="{{ 'favori'|trans }}">
-                <input type="checkbox">
-                <i class="fa fa-heart"></i>
+                <div class="media-body">
+                    <h5>{{ document.libelle }}</h5>
+                    <p class="gap-items">
+                        <small>{{ 'taille'|trans }}: {{ document.taille }} ko</small>
+                        <small>{{ 'type_fichier'|trans }}: {{ document.typeFichier }}</small>
+                    </p>
+                    <p>
+                        <small>{{ 'created'|trans }}: {{ document.updated|format_datetime('long', 'short') }}</small>
+                    </p>
+                </div>
+                <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
+                   data-provide="tooltip"
+                   title="{{ 'telecharger'|trans }}"><i
+                            class="ti-save"></i></a>
+                <label class="toggler toggler-danger fs-16" data-provide="tooltip" title="{{ 'favori'|trans }}">
+                    <input type="checkbox">
+                    <i class="fa fa-heart"></i>
                 </label>
             </div>
         </div>

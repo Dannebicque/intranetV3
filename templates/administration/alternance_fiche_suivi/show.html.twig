@@ -1,58 +1,103 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AlternanceFicheSuivi{% endblock %}
+{% block header %}
+    {{ 'adm.alternance.fiche_suivi.show.heading'|trans({'%etudiant%':alternance_fiche_suivi.alternance.etudiant.displayPr}) }}
+{% endblock %}
 
-{% block body %}
-    <h1>AlternanceFicheSuivi</h1>
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_alternance_fiche_suivi_export', {id: alternance_fiche_suivi.id}) }}"
+               class="btn btn-primary btn-sm btn-float"
+               title="{{ 'atitle.imprimer_pdf'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="{{ iconPrint }}"></i>
+                <span class="sr-only">{{ 'atitle.imprimer_pdf'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_alternance_fiche_suivi_delete', {id: alternance_fiche_suivi.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ alternance_fiche_suivi.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="{{ iconDelete }}"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_alternance_fiche_suivi_edit', {id: alternance_fiche_suivi.id}) }}"
+               class="btn btn-warning btn-sm btn-float"
+               title="{{ 'atitle.modifier'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="{{ iconEdit }}"></i>
+                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+            </a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ alternance_fiche_suivi.id }}</td>
-            </tr>
-            <tr>
-                <th>Methode</th>
-                <td>{{ alternance_fiche_suivi.methode }}</td>
-            </tr>
-            <tr>
-                <th>Commentaire</th>
-                <td>{{ alternance_fiche_suivi.commentaire }}</td>
-            </tr>
-            <tr>
-                <th>Missions</th>
-                <td>{{ alternance_fiche_suivi.missions }}</td>
-            </tr>
-            <tr>
-                <th>Integration</th>
-                <td>{{ alternance_fiche_suivi.integration }}</td>
-            </tr>
-            <tr>
-                <th>Initiative</th>
-                <td>{{ alternance_fiche_suivi.initiative }}</td>
-            </tr>
-            <tr>
-                <th>Adaptation</th>
-                <td>{{ alternance_fiche_suivi.adaptation }}</td>
-            </tr>
-            <tr>
-                <th>Performance</th>
-                <td>{{ alternance_fiche_suivi.performance }}</td>
-            </tr>
-            <tr>
-                <th>Delais</th>
-                <td>{{ alternance_fiche_suivi.delais }}</td>
-            </tr>
-            <tr>
-                <th>Comportement</th>
-                <td>{{ alternance_fiche_suivi.comportement }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <a href="{{ path('administration_alternance_show',{id:alternance_fiche_suivi.alternance.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour.alternance.etudiant'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="ti-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour.alternance.etudiant'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('alternance_fiche_suivi_index') }}">back to list</a>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.alternance.fiche_suivi.show.heading'|trans({'%etudiant%':alternance_fiche_suivi.alternance.etudiant.displayPr}) }}</h4>
+        <div class="card-body">
 
-    <a href="{{ path('alternance_fiche_suivi_edit', {'id': alternance_fiche_suivi.id}) }}">edit</a>
-
-    {{ include('alternance_fiche_suivi/_delete_form.html.twig') }}
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Methode</th>
+                    <td>{{ alternance_fiche_suivi.methodeLong }}</td>
+                </tr>
+                <tr>
+                    <th>Commentaire</th>
+                    <td>{{ alternance_fiche_suivi.commentaire }}</td>
+                </tr>
+                <tr>
+                    <th>Missions</th>
+                    <td>{{ alternance_fiche_suivi.missions }}</td>
+                </tr>
+                <tr>
+                    <th>Integration</th>
+                    <td>{{ alternance_fiche_suivi.integrationLong }}</td>
+                </tr>
+                <tr>
+                    <th>Initiative</th>
+                    <td>{{ alternance_fiche_suivi.initiativeLong }}</td>
+                </tr>
+                <tr>
+                    <th>Adaptation</th>
+                    <td>{{ alternance_fiche_suivi.adaptationLong }}</td>
+                </tr>
+                <tr>
+                    <th>Performance</th>
+                    <td>{{ alternance_fiche_suivi.performanceLong }}</td>
+                </tr>
+                <tr>
+                    <th>Delais</th>
+                    <td>{{ alternance_fiche_suivi.delaisLong }}</td>
+                </tr>
+                <tr>
+                    <th>Comportement</th>
+                    <td>{{ alternance_fiche_suivi.comportementLong }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ alternance_fiche_suivi.created|format_datetime('medium', 'short') }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ alternance_fiche_suivi.updated|format_datetime('medium', 'short') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
