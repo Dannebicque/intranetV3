@@ -10,7 +10,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Configuration;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ConfigurationFixtures extends Fixture
 {

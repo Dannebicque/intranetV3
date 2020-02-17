@@ -5,18 +5,24 @@
 {% endblock %}
 
 {% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('administration_article_index') }}"
-               class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour.articles'|trans }}"><i
-                        class="material-icons">arrow_back</i></a>
-            <a href="{{ path('administration_index') }}"
-               class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
-               title="{{ 'atitle.retour_administration'|trans }}">
-                <span class="material-icons">build</span></a>
+  <div class="header-action">
+    <div class="buttons">
+      <a href="{{ path('administration_article_new') }}"
+         class="btn btn-success btn-sm btn-float" data-provide="tooltip"
+         data-placement="bottom" title="{{ 'atitle.ajouter_article'|trans }}">
+        <i class="ti-plus"></i>
+        <i class="ti-file"></i>
+      </a>
+      <a href="{{ path('administration_article_index') }}"
+         class="btn btn-primary btn-float" data-provide="tooltip"
+         data-placement="bottom" title="{{ 'atitle.retour.articles'|trans }}"><i
+                class="material-icons">arrow_back</i></a>
+      <a href="{{ path('administration_index') }}"
+         class="btn btn-primary btn-float"
+         data-provide="tooltip"
+         data-placement="bottom"
+         title="{{ 'atitle.retour_administration'|trans }}">
+        <span class="material-icons">build</span></a>
         </div>
     </div>
 {% endblock %}

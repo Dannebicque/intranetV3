@@ -32,20 +32,20 @@
                 </thead>
                 <tbody>
                 {% for article in articles %}
-                    <tr id="ligne_{{ article.id }}">
-                        <td></td>
-                        <td>{{ article.titre }}</td>
-                        <td>{{ article.texte|truncate(50) }}</td>
-                        <td>{{ article.categorie ? article.categorie.libelle : 'non.defini'|trans }}</td>
-                        <td>{{ article.updated ? article.updated|format_datetime('long', 'short') : '' }}</td>
-                        <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
-                        </td>
-                    </tr>
+                  <tr id="ligne_{{ article.id }}">
+                    <td></td>
+                    <td>{{ article.titre }}</td>
+                    <td>{{ article.texte|u.truncate(50, '...') }}</td>
+                    <td>{{ article.categorie ? article.categorie.libelle : 'non.defini'|trans }}</td>
+                    <td>{{ article.updated ? article.updated|format_datetime('long', 'short') : '' }}</td>
+                    <td>
+                        {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
+                    </td>
+                  </tr>
                 {% else %}
-                    <tr>
-                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
-                    </tr>
+                  <tr>
+                    <td colspan="5">{{ 'no.record.found'|trans }}</td>
+                  </tr>
                 {% endfor %}
                 </tbody>
             </table>

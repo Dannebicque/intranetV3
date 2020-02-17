@@ -33,7 +33,8 @@
                     <td>
                         <ul>
                         {% for fiche in alternance.alternanceFicheSuivis %}
-                          <li><a href="{{ path('alternance_fiche_suivi_show', {id:fiche.id}) }}">Fiche du {{ fiche
+                          <li><a href="{{ path('administration_alternance_fiche_suivi_show', {id:fiche.id}) }}">Fiche du
+                                  {{ fiche
                                   .created|format_datetime('long', 'short') }}</a></li>
                         {% endfor %}
                         </ul>
