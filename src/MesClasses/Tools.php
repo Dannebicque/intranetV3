@@ -64,85 +64,23 @@ abstract class Tools
 
     public static function slug(string $texte)
     {
-        $table = [
-            'Š' => 'S',
-            'š' => 's',
-            'Đ' => 'Dj',
-            'đ' => 'dj',
-            'Ž' => 'Z',
-            'ž' => 'z',
-            'Č' => 'C',
-            'č' => 'c',
-            'Ć' => 'C',
-            'ć' => 'c',
-            'À' => 'A',
-            'Á' => 'A',
-            'Â' => 'A',
-            'Ã' => 'A',
-            'Ä' => 'A',
-            'Å' => 'A',
-            'Æ' => 'A',
-            'Ç' => 'C',
-            'È' => 'E',
-            'É' => 'E',
-            'Ê' => 'E',
-            'Ë' => 'E',
-            'Ì' => 'I',
-            'Í' => 'I',
-            'Î' => 'I',
-            'Ï' => 'I',
-            'Ñ' => 'N',
-            'Ò' => 'O',
-            'Ó' => 'O',
-            'Ô' => 'O',
-            'Õ' => 'O',
-            'Ö' => 'O',
-            'Ø' => 'O',
-            'Ù' => 'U',
-            'Ú' => 'U',
-            'Û' => 'U',
-            'Ü' => 'U',
-            'Ý' => 'Y',
-            'Þ' => 'B',
-            'ß' => 'Ss',
-            'à' => 'a',
-            'á' => 'a',
-            'â' => 'a',
-            'ã' => 'a',
-            'ä' => 'a',
-            'å' => 'a',
-            'æ' => 'a',
-            'ç' => 'c',
-            'è' => 'e',
-            'é' => 'e',
-            'ê' => 'e',
-            'ë' => 'e',
-            'ì' => 'i',
-            'í' => 'i',
-            'î' => 'i',
-            'ï' => 'i',
-            'ð' => 'o',
-            'ñ' => 'n',
-            'ò' => 'o',
-            'ó' => 'o',
-            'ô' => 'o',
-            'õ' => 'o',
-            'ö' => 'o',
-            'ø' => 'o',
-            'ù' => 'u',
-            'ú' => 'u',
-            'û' => 'u',
-            'ý' => 'y',
-            'þ' => 'b',
-            'ÿ' => 'y',
-            'Ŕ' => 'R',
-            'ŕ' => 'r',
-            '/' => '-',
-            ' ' => '-'
-        ];
+        /* Get rid of accented characters */
+        $search = explode(',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u');
+        $replace = explode(',', 'c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u');
+        $texte = str_replace($search, $replace, $texte);
 
-        // -- Remove duplicated spaces
-        $stripped = preg_replace(['/\s{2,}/', '/[\t\n]/'], ' ', $texte);
+        /* Lowercase all the characters */
+        $texte = strtolower($texte);
+
+        /* Avoid whitespace at the beginning and the ending */
+        $texte = trim($texte);
+
+        /* Replace all the characters that are not in a-z or 0-9 by a hyphen */
+        $texte = preg_replace('/[^a-z0-9]/', '-', $texte);
+        /* Remove hyphen anywhere it's more than one */
+        $texte = preg_replace("/[\-]+/", '-', $texte);
+
+        return $texte;
 
         return strtolower(strtr($stripped, $table));
     }
