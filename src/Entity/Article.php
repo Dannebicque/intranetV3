@@ -124,6 +124,7 @@ class Article extends BaseEntity
     }
 
     /**
+     *
      */
     public function setSlug($slug): self
     {

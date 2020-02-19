@@ -29,6 +29,11 @@ services:
 
     App\Twig\AppExtension:
         calls:
-        - method: setConfig
-          arguments:
-          - '@App\MesClasses\Configuration'
+            - method: setConfig
+              arguments:
+                  - '@App\MesClasses\Configuration'
+
+    App\Event\SlugGenerator:
+        tags:
+            - { name: 'doctrine.event_subscriber' }
+
