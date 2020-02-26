@@ -86,7 +86,8 @@
                                 {{ edt.planning[j][ligne].texte|raw }}
                                 {% if edt.planning[j][ligne].format == 'nok' %}
                                     <br>
-                                    <span style="background-color: #E65100; display: block">{{ convertHeureEdt(edt.planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt.planning[j][ligne].fin) }}</span>
+                                    <span class="edt-extra-time">{{ convertHeureEdt(edt.planning[j][ligne].debut) }} à
+                                        {{ convertHeureEdt(edt.planning[j][ligne].fin) }}</span>
                                 {% endif %}
                             </a>
                         </div>
