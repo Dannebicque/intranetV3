@@ -54,7 +54,7 @@ class RattrapageController extends BaseController
         );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $this->entityManager->persist($rattrapage);
             $this->entityManager->flush();
 
