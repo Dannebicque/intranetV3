@@ -3,12 +3,16 @@
     <div class="card-body">
         {% if user.typeUser|lower == 'etudiant' %}
             <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
-            <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('short') }}
-                ({{ user.dateNaissance|age }} ans)</p>
+            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+                <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('short') }}
+                    ({{ user.dateNaissance|age }} ans)</p>
+            {% endif %}
             <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
-            <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
-            <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
-            <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
+            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+                <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
+                <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
+                <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
+            {% endif %}
             <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
             <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
 
