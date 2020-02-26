@@ -14,17 +14,32 @@
                 </div>
 
                 <div class="btn-group mr-2">
-                    {# todo: a gerer selon la configuration du diplome #}
-                    <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente}) }}"
-                       data-provide="tooltip"
-                       title="Semaine précédente"
-                       id="semainePrecedente"><i
-                                class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                    <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante}) }}"
-                       data-provide="tooltip"
-                       title="Semaie suivante"
-                       id="semaineSuivante"><i
-                                class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                    {% if user_data.user.diplome.optSemainesVisibles > 2 %}
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente}) }}"
+                           data-provide="tooltip"
+                           title="Semaine précédente"
+                           id="semainePrecedente"><i
+                                    class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante}) }}"
+                           data-provide="tooltip"
+                           title="Semaie suivante"
+                           id="semaineSuivante"><i
+                                    class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                    {% else %}
+                        {% if edt.semaine=='now'|date('W') %}
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante}) }}"
+                               data-provide="tooltip"
+                               title="Semaie suivante"
+                               id="semaineSuivante"><i
+                                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente}) }}"
+                               data-provide="tooltip"
+                               title="Semaine précédente"
+                               id="semainePrecedente"><i
+                                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
             <ul class="card-controls">
@@ -52,7 +67,6 @@
         </div>
     </header>
     <div class="card-body">
-        {# todo: ajouter une class sur le jour courant, et une sur les autres pour gérer le responsive #}
         <div class="wrapper-edt-etudiant">
             {{ include('edt/_header_edt.html.twig') }}
             {% for ligne in 1..7 %}
