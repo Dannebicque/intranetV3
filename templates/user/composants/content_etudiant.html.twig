@@ -1,14 +1,15 @@
-{% if onglet == 'absences' %}
-    {{ render(controller(
-        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
-    )) }}
-{% elseif onglet == 'notes' %}
-    {{ render(controller(
-        'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
-    )) }}
-{% elseif onglet == 'stages' %}
-    {{ render(controller(
-        'App\\Controller\\ProfilEtudiantController::stage', {slug: user.slug}
+{% if is_granted('ROLE_PERMANENT') or user.id == user_data.user.id %}
+    {% if onglet == 'absences' %}
+        {{ render(controller(
+            'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
+        )) }}
+    {% elseif onglet == 'notes' %}
+        {{ render(controller(
+            'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
+        )) }}
+    {% elseif onglet == 'stages' %}
+        {{ render(controller(
+            'App\\Controller\\ProfilEtudiantController::stage', {slug: user.slug}
     )) }}
 {% elseif onglet == 'scolarite' %}
     {{ render(controller(
@@ -22,4 +23,9 @@
     {#    {{ render(controller(#}
     {#        'App\\Controller\\ProfilEtudiantController::timeline', {slug: user.slug}#}
     {#    )) }}#}
+    {% endif %}
+{% else %}
+    {{ render(controller(
+        'App\\Controller\\ProfilEtudiantController::about', {slug: user.slug}
+    )) }}
 {% endif %}

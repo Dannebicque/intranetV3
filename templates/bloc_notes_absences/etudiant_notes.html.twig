@@ -53,12 +53,18 @@
                                     data-placement="bottom"
                                     title="{{ 'atitle.details'|trans }}"
                                     data-title="{{ 'detail.note'|trans }}"
-                        >
-                            <i class="ti-info"></i>
-                        </button>
+                            >
+                                <i class="ti-info"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7">
+                        <div class="alert alert-info">Aucune note n'a été saisie</div>
                     </td>
                 </tr>
-                    {% endfor %}
             {% endfor %}
             </tbody>
         </table>

@@ -26,9 +26,8 @@
             {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                 {{ include('user/composants/content_personnel.html.twig') }}
             {% elseif user.typeUser|lower == 'etudiant' %}
-                {% if is_granted('ROLE_PERMANENT') or user.id == user_data.user.id %}
+
                     {{ include('user/composants/content_etudiant.html.twig') }}
-                {% endif %}
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -93,13 +92,18 @@
                         </div>
 
                         <div class="gap-items-2 gap-y">
-                            {% for favori in user.etudiantDemande|slice(0, 8) %}
+                            {% for favori in user.etudiantDemande|slice(0, 8)|filter(favori => favori
+                                .etudiantDemande.id != user.id) %}
                                 <a class="avatar"
                                    href="{{ path('user_profil', {type: 'etudiant', slug: favori.etudiantDemande.slug}) }}"
                                    title="{{ favori.etudiantDemande.display }}"
                                    target="_blank"
-                                ><img src="{{ asset('upload/photo/'~favori.etudiantDemande.photoName) }}"
+                                ><img src="{{ asset('upload/etudiants/'~favori.etudiantDemande.photoName)|imagine_filter('avatar') }}"
                                       alt="{{ favori.etudiantDemande.display }}"></a>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    Fonctionnalité à venir
+                                </div>
                             {% endfor %}
                             {% if user.etudiantDemande|length > 8 %}
                                 {% set nb = user.etudiantDemande - 8 %}

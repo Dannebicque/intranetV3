@@ -55,6 +55,12 @@
                         </td>
                     {% endif %}
                 </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">
+                        <div class="alert alert-info">Aucune absence n'a été saisie</div>
+                    </td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
