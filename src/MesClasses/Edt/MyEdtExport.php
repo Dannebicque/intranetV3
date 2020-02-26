@@ -80,7 +80,7 @@ class MyEdtExport
             }
         } else {
             /** @var Etudiant $user */
-            $nbSemaines = $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles();
+            $nbSemaines = $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() !== 0 ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
             $emaineActuelle = $this->calendrierRepository->findOneBy([
                 'semaineReelle'      => date('W'),
                 'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId()
