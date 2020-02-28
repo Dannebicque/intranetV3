@@ -69,9 +69,11 @@ abstract class MyApogee
     public static function getHierarchieGroupesSemestre(Semestre $semestre)
     {
         self::connect();
+        dump('SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON (GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE OR GPE_INCLUS_GPE.COD_GPE_2=GPE_OBJ.COD_GPE) WHERE GPE_OBJ.COD_ELP=' . $semestre->getCodeElement());
+
         $stid = self::$conn->prepare(
             'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON (GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE OR GPE_INCLUS_GPE.COD_GPE_2=GPE_OBJ.COD_GPE) WHERE GPE_OBJ.COD_ELP=:semestre');
-        $stid->execute([':semestre'=> $semestre->getCodeElement()]);
+        $stid->execute([':semestre' => $semestre->getCodeElement()]);
 
         return $stid;
     }
