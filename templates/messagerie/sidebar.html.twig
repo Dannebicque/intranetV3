@@ -10,28 +10,28 @@
             </button>
         {% endif %}
         <ul class="nav nav-lg nav-pills flex-column">
-            <li class="nav-item active">
+            <li class="nav-item {% if filtre=='all' %}active{% endif %}">
                 <i class="fa fa-inbox"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="all">{{ 'messagerie.boite.reception'|trans }}</a>
                 <span class="badge badge-pill badge-info">{{ user_data.nbUnread }}</span>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {% if filtre=='sent' %}active{% endif %}">
                 <i class="fa fa-envelope"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="sent">{{ 'messagerie.boite.envoyes'|trans }}</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {% if filtre=='draft' %}active{% endif %}">
                 <i class="fa fa-file"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="draft">{{ 'messagerie.boite.brouillons'|trans }}</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {% if filtre=='trash' %}active{% endif %}">
                 <i class="{{ iconDelete }}"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="trash">{{ 'messagerie.boite.corbeille'|trans }}</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {% if filtre=='starred' %}active{% endif %}">
                 <i class="fa fa-star"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="starred">{{ 'messagerie.boite.epingles'|trans }}</a>
             </li>

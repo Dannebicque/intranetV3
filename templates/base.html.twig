@@ -341,7 +341,11 @@
             {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.departement.optMessagerie == true) %}
                 <!-- Messages -->
                 <li class="dropdown d-none d-md-block">
-                    <span class="topbar-btn" data-toggle="dropdown"><i class="ti-email"></i></span>
+                    {% set newNotification = false %}
+                    {% for message in user_data.messages|filter(message => (message.etat == 'U')) %}
+                        {% set newNotification = true %}
+                    {% endfor %}
+                    <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i class="ti-email"></i></span>
                     <div class="dropdown-menu dropdown-menu-right">
 
                         <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
@@ -350,8 +354,12 @@
                                 <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
                                    href="{{ path('application_index',{onglet: 'message', message:message.message.id}) }}">
                           <span class="avatar status-success">
-                            <img src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
-                                 alt="{{ message.message.expediteur.displayPr }}">
+                              {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
+                                  <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
+                                  |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
+                              {% else %}
+                                  {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm'}) }}
+                              {% endif %}
                           </span>
 
                                     <div class="media-body">

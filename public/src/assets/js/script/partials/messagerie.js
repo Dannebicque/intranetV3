@@ -6,20 +6,42 @@
 // @lastUpdate 19/10/2019 17:49
 
 $(document).on('click', '.messagerie-filtre', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': $(this).data('filtre')}));
-});
+  e.preventDefault()
+  e.stopPropagation()
+  $('.messagerie-filtre').parent().removeClass('active')
+  $(this).parent().addClass('active')
+  $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': $(this).data('filtre')}))
+})
+
+$(document).on('click', '#saveDraft', function (e) {
+  $.ajax({
+    url: Routing.generate('messagerie_draft'),
+    data: {
+      messageToSemestre: $('#messageToSemestre').val(),
+      messageToGroupe: $('#messageToGroupe').val(),
+      messageToLibreEtudiant: $('#messageToLibreEtudiant').val(),
+      messageToLibrePersonnel: $('#messageToLibrePersonnel').val(),
+      typeDestinataire: $('input[type=radio][name=messageDestinataireType]:checked').val(),
+      copie: $('#messageCopy').val(),
+      message: $('.ql-editor').html(),
+      sujet: $('#messageSubject').val()
+    },
+    method: 'POST',
+    success: function (data) {
+      $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': 'draft'}))
+    }
+  })
+})
 
 $(document).on('click', '.message-read', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault()
+  e.stopPropagation()
 
-  $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: $(this).data('message')}));
+  $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: $(this).data('message')}))
 })
 
 $(document).on('click', '#new-message', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   e.stopPropagation();
 
   $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'));
@@ -55,7 +77,7 @@ $(document).on('click', '#messageSent', function (e) {
     },
     method: 'POST',
     success: function (data) {
-      //baculer vers l'affichage du message + statistiques d'envois
+      $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: data.message}))
     }
   })
 })
@@ -83,7 +105,7 @@ $(document).on('click', '#deleteMessage', function () {
       message: $(this).data('message')
     },
     success: function () {
-      //todo: retourner à la page avant
+      $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': 'all'}))
     }
   })
 })

@@ -51,7 +51,7 @@ class EtudiantController extends BaseController
         $semestre = $semestreRepository->find($request->request->get('importer_etudiant_semestre'));
         if ($semestre !== null) {
             $myEtudiants->importListeCsv($request->files->get('fichier_import'), $semestre);
-            $this->addFlashBag('error', 'import.fichier.csv.success');
+            $this->addFlashBag('success', 'import.fichier.csv.success');
 
             return $this->redirectToRoute('sa_etudiant_index');
         }

@@ -9,7 +9,6 @@
 namespace App\MesClasses;
 
 
-use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
@@ -18,9 +17,7 @@ use App\Entity\Personnel;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
-use App\Repository\TypeGroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Swift_Mailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -56,13 +53,9 @@ class MyMessagerie
     /** @var PersonnelRepository */
     private $personnelRepository;
 
-    /** @var TypeGroupeRepository */
-    private $typeGroupeRepository;
-
-    /**
-     * @var Departement
-     */
-    private $departement;
+    private $typeDestinataires = '';
+    private $type;
+    private $id;
 
     /**
      * MyMessagerie constructor.
@@ -72,21 +65,18 @@ class MyMessagerie
      * @param GroupeRepository       $groupeRepository
      * @param EtudiantRepository     $etudiantRepository
      * @param PersonnelRepository    $personnelRepository
-     * @param TypeGroupeRepository   $typeGroupeRepository
      */
     public function __construct(
         MailerInterface $mailer,
         EntityManagerInterface $entityManager,
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
-        PersonnelRepository $personnelRepository,
-        TypeGroupeRepository $typeGroupeRepository
+        PersonnelRepository $personnelRepository
     ) {
         $this->myMailer = $mailer;
         $this->entityManager = $entityManager;
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
-        $this->typeGroupeRepository = $typeGroupeRepository;
         $this->personnelRepository = $personnelRepository;
     }
 
@@ -106,11 +96,12 @@ class MyMessagerie
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase();
+        $mess = $this->saveMessageDatabase('E');
 
         foreach ($destinataires as $destinataire) {
             $personnel = $this->personnelRepository->find($destinataire);
             if ($personnel !== null) {
+                $this->typeDestinataires .= $personnel->getDisplayPr() . ', ';
                 foreach ($personnel->getMails() as $mail) {
                     $message->addTo($mail);
                 }
@@ -122,6 +113,7 @@ class MyMessagerie
                 //todo: envoyer notification ?
             }
         }
+        $mess->setTypeDestinataires($this->typeDestinataires);
         $this->entityManager->flush();
     }
 
@@ -140,7 +132,7 @@ class MyMessagerie
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase();
+        $mess = $this->saveMessageDatabase('E');
 
         //récupération des fichiers uploadés
 //        $files = $this->getDoctrine()->getRepository('DAKernelBundle:MessagePJ')->findBy(['cle' => $this->get('session')->get('clemessage')]);
@@ -183,7 +175,6 @@ class MyMessagerie
     public function setCopie(array $copie): void
     {
         $this->sendToPersonnels($copie);
-
     }
 
     /**
@@ -211,25 +202,26 @@ class MyMessagerie
     /**
      * @param             $destinataires
      * @param             $typeDestinataire
-     * @param Departement $departement
      *
      * @throws TransportExceptionInterface
      */
-    public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement): void
+    public function sendToDestinataires($destinataires, $typeDestinataire): void
     {
-        $this->departement = $departement;
+        $this->type = $typeDestinataire;
         switch ($typeDestinataire) {
             case 'p':
                 $this->sendToPersonnels($destinataires);
                 break;
             case 's':
                 foreach ($destinataires as $destinataire) {
+                    $this->typeDestinataires .= $destinataire . ', ';
                     $this->getEtudiantsSemestre($destinataire);
                     $this->sendToEtudiants();
                 }
                 break;
             case 'g':
                 foreach ($destinataires as $destinataire) {
+                    $this->typeDestinataires .= $destinataire . ', ';
                     $this->getEtudiantsGroupe($destinataire);
                     $this->sendToEtudiants();
                 }
@@ -243,17 +235,20 @@ class MyMessagerie
 
     }
 
-    private function saveMessageDatabase(): Message
+    private function saveMessageDatabase($etat = 'D'): Message
     {
-
         $mess = new Message();
         $mess->setMessage($this->message);
         $mess->setSujet($this->sujet);
         $mess->setExpediteur($this->expediteur);
         $mess->setImportant(false); //todo: a gérer
+        $mess->setTypeDestinataires($this->typeDestinataires);
+        $mess->setType($this->type);
+        $mess->setEtat($etat);
 
         $this->entityManager->persist($mess);
         $this->entityManager->flush();
+        $this->id = $mess->getId();
 
         return $mess;
     }
@@ -301,8 +296,24 @@ class MyMessagerie
                 $this->etudiants[] = $etudiant;
             }
         }
-
     }
 
+    public function saveDraft($sujet, $message, Personnel $expediteur, $copie, $destinataires, $typeDestinataire)
+    {
+        $this->sujet = $sujet;
+        $this->message = $message;
+        $this->expediteur = $expediteur;
+        $this->type = $typeDestinataire;
+
+        $this->saveMessageDatabase('D');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 }
