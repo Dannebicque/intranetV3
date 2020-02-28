@@ -52,6 +52,16 @@ class Message extends BaseEntity
      */
     private $etat = 'D';
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $typeDestinataires;
+
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->messageDestinataires = new ArrayCollection();
@@ -176,6 +186,30 @@ class Message extends BaseEntity
     public function setEtat(string $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getTypeDestinataires(): ?string
+    {
+        return $this->typeDestinataires;
+    }
+
+    public function setTypeDestinataires(string $typeDestinataires): self
+    {
+        $this->typeDestinataires = $typeDestinataires;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

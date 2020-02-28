@@ -38,6 +38,7 @@ class MessagerieController extends BaseController
     public function index(): Response
     {
         return $this->render('messagerie/index.html.twig', [
+            'filtre' => 'all'
         ]);
     }
 
@@ -110,9 +111,10 @@ class MessagerieController extends BaseController
     ): Response {
 
         if ($filtre === 'sent') {
-            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
+            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser()], ['updated' => 'DESC']);
         } elseif ($filtre === 'draft') {
-            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
+            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D'],
+                ['updated' => 'DESC']);
         } else if ($this->getConnectedUser() instanceof Etudiant) {
             $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
@@ -122,8 +124,9 @@ class MessagerieController extends BaseController
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
-            'filtre'   => $filtre,
-            'messages' => $messages
+            'filtre'     => $filtre,
+            'messages'   => $messages,
+            'pagination' => ['depart' => 1, 'fin' => count($messages)]
         ]);
     }
 
@@ -174,29 +177,15 @@ class MessagerieController extends BaseController
     public function messageSend(Request $request, MyMessagerie $messagerie): JsonResponse
     {
         $typeDestinataire = $request->request->get('typeDestinataire');
-        $destinataires = '';
-        switch ($typeDestinataire) {
-            case 's':
-                $destinataires = $request->request->get('messageToSemestre');
-                break;
-            case 'g':
-                $destinataires = $request->request->get('messageToGroupe');
-                break;
-            case 'e':
-                $destinataires = $request->request->get('messageToLibreEtudiant');
-                break;
-            case 'p':
-                $destinataires = $request->request->get('messageToLibrePersonnel');
-                break;
+        $destinataires = $this->getDestinataires($typeDestinataire, $request);
 
-        }
 
         $sujet = $request->request->get('sujet');
         $copie = $request->request->get('copie');
         $message = $request->request->get('message');
 
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
-        $messagerie->sendToDestinataires($destinataires, $typeDestinataire, $this->dataUserSession->getDepartement());
+        $messagerie->sendToDestinataires($destinataires, $typeDestinataire);
 
 
         if ($copie !== null) {
@@ -205,8 +194,50 @@ class MessagerieController extends BaseController
 
         $messagerie->sendSynthese();
 
+        return $this->json(['message' => $messagerie->getId()]);
+    }
+
+    /**
+     * @Route("/sauvegarder", name="messagerie_draft", methods={"POST"}, options={"expose":true})
+     * @param Request      $request
+     * @param MyMessagerie $messagerie
+     *
+     * @return JsonResponse
+     */
+    public function messageSave(Request $request, MyMessagerie $messagerie): JsonResponse
+    {
+        $typeDestinataire = $request->request->get('typeDestinataire');
+        $destinataires = $this->getDestinataires($typeDestinataire, $request);
+
+
+        $sujet = $request->request->get('sujet');
+        $copie = $request->request->get('copie');
+        $message = $request->request->get('message');
+
+        $messagerie->saveDraft($sujet, $message, $this->getConnectedUser(), $copie, $destinataires, $typeDestinataire);
+
         return $this->json('ok');
     }
+
+    private function getDestinataires($typeDestinataire, Request $request)
+    {
+        switch ($typeDestinataire) {
+            case 's':
+                return $request->request->get('messageToSemestre');
+                break;
+            case 'g':
+                return $request->request->get('messageToGroupe');
+                break;
+            case 'e':
+                return $request->request->get('messageToLibreEtudiant');
+                break;
+            case 'p':
+                return $request->request->get('messageToLibrePersonnel');
+                break;
+
+        }
+    }
+
 
     /**
      * @Route("/{message}", name="messagerie_message", options={"expose":true})

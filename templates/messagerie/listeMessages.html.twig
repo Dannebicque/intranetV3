@@ -49,18 +49,23 @@
                 </div>
 
 {#                <label class="toggler ml-20 fs-16">#}
-{#                    <input type="checkbox">#}
-{#                    <i class="fa fa-star"></i>#}
-{#                </label>#}
+                {#                    <input type="checkbox">#}
+                {#                    <i class="fa fa-star"></i>#}
+                {#                </label>#}
 
                 {% if message.important == true %}
                     <span class="badge badge-dot badge-danger"></span>
                 {% else %}
                     <span class="badge badge-dot opacity-0"></span>
                 {% endif %}
-
+                <a href="">
+                    <div class="avatar-circle-sm">
+                        <span class="initials">{{ message.type|upper }}</span>
+                    </div>
+                </a>
                 <a class="media-body text-truncate" href="#" data-message="{{ message.id }}">
-                    <h6>To: {{ message.expediteur.displayPr }}</h6>
+
+                    <h6>{% if filtre=='sent' %}Envoyé à :{% endif %} {{ message.typeDestinataires }}</h6>
                     <small>
                         <strong>{{ message.sujet }}</strong>
                         <span class="fw-300 opacity-80">{{ message.message }}</span>
@@ -89,9 +94,8 @@
                 </div>
 
                 <label class="toggler ml-20 fs-16">
-                    <input type="checkbox" class="starred" data-message="{{ message.id }}" {% if message.starred == true
-                    %}checked{% endif %}>
-                    <i class="fa fa-star" ></i>
+                    <input type="checkbox" class="starred" data-message="{{ message.id }}" {% if message.starred == true %}checked{% endif %}>
+                    <i class="fa fa-star"></i>
                 </label>
 
                 {% if message.message.important == true %}
@@ -100,10 +104,14 @@
                     <span class="badge badge-dot opacity-0"></span>
                 {% endif %}
 
-                <a href="#" ><img class="avatar"
-                                                                                                      src="{{ asset('upload/photo/'~message.message.expediteur.photoName) }}"
-                                                                                                      alt="..."></a>
-
+                <a href="#">
+                    {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
+                        <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
+                        |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
+                    {% else %}
+                        {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm'}) }}
+                    {% endif %}
+                </a>
                 <a class="media-body text-truncate" href="#">
                     <h6>{{ message.message.expediteur.displayPr }}</h6>
                     <small>

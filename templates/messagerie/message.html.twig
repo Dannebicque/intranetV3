@@ -1,8 +1,12 @@
 <div class="card">
     <header class="card-header">
         <div class="card-title flexbox">
-            <img class="avatar" src="{{ asset('upload/photo/'~message.expediteur.photoName) }}"
-                 alt="{{ message.expediteur.displayPr }}">
+            {% if message.expediteur.photoName != null and message.expediteur.photoName != 'noimage.png' %}
+                <img class="avatar" src="{{ asset('upload/personnels/'~message.expediteur.photoName)
+                |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
+            {% else %}
+                {{ include('composants/_avatar.html.twig', {user:message.expediteur, size:'sm'}) }}
+            {% endif %}
             <div>
                 <h6 class="mb-0">{{ message.expediteur.displayPr }}</h6>
                 <small>{{ message.created ? message.created|format_datetime('long', 'short') : '' }}</small>
@@ -12,10 +16,10 @@
         <div class="dropdown">
             <a class="text-lighter" data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#"><i class="fa fa-print"></i> Print</a>
+                <a class="dropdown-item" href="#"><i class="fa fa-print"></i> {{ 'imprimer'|trans }}</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" id="deleteMessage" data-message="{{ message.id }}"><i class="{{ iconDelete }}"></i>
-                    Delete</a>
+                    {{ 'supprimer'|trans }}</a>
             </div>
         </div>
     </header>
