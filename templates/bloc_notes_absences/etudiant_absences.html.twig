@@ -1,14 +1,16 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title">{{ 'bloc.absence.etu.heading'|trans }}</h4>
-        <div class="card-header-actions">
-            <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary"
-               title="{{ 'absence_justificatif_deposer'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
-                <i class="ti ti-plus"></i>
-            </a>
-        </div>
+        {% if is_granted('ROLE_ETUDIANT') %}
+            <div class="card-header-actions">
+                <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary"
+                   title="{{ 'absence_justificatif_deposer'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom">
+                    <i class="ti ti-plus"></i>
+                </a>
+            </div>
+        {% endif %}
     </header>
 
     <div class="card-body">
