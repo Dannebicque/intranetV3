@@ -1980,7 +1980,8 @@ jQuery.fn.scrollToEnd = function() {
 
     provider.provide('datepicker', function(){
       var options = {
-        multidateSeparator: ', '
+        multidateSeparator: ', ',
+        language: 'fr'
       }
 
       options = $.extend( options, app.getDataOptions( $(this) ));

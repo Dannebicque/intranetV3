@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -22,8 +23,18 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceJustificatifRepository")
  * @Vich\Uploadable
  */
-class AbsenceJustificatif extends BaseEntity
+class AbsenceJustificatif extends BaseEntity implements Serializable
 {
+    public const ACCEPTE = 'A';
+    public const REFUSE = 'R';
+    public const DEPOSE = 'D';
+
+    Public const ETATLONG = [
+        'A' => 'Accepté',
+        'R' => 'Refusé',
+        'D' => 'Déposé'
+    ];
+
     /**
      * @var UuidInterface
      *
@@ -269,5 +280,21 @@ class AbsenceJustificatif extends BaseEntity
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    public function etatLong()
+    {
+        return self::ETATLONG[$this->etat];
+    }
+
+    public function serialize()
+    {
+        return serialize($this->getId());
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->uuid = unserialize($serialized, ['allowed_classes' => false]);
+
     }
 }
