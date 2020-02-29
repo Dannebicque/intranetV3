@@ -93,8 +93,6 @@ $(document).on('click', '.supprimer', function (e) {
           }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          console.log(ajaxOptions)
-          console.log(thrownError)
           swal("Erreur lors de la suppression!", "Merci de renouveler l\'opération", "error");
           addCallout('Erreur lors de la tentative de suppression', 'danger')
         }

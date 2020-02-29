@@ -10,15 +10,18 @@
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\MesClasses\Apogee\MyApogee;
+use App\MesClasses\MyGroupes;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -160,5 +163,28 @@ class GroupesController extends BaseController
         return $this->redirectToRoute('sa_groupes_departement_index',
             ['departement' => $semestre->getAnnee()->getDiplome()->getDepartement()->getId()]);
 
+    }
+
+    /**
+     * @Route("/import/{departement}", name="sa_groupes_import")
+     * @param MyGroupes   $myGroupes
+     * @param Request     $request
+     * @param Departement $departement
+     *
+     * @return Response
+     */
+    public function import(MyGroupes $myGroupes, Request $request, Departement $departement): Response
+    {
+        if ($request->isMethod('POST')) {
+            $myGroupes->importCsv($request->files->get('fichier'), $departement);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.import.success.flash');
+            $this->redirectToRoute('sa_groupes_departement_index', ['departement' => $departement->getId()]);
+        }
+
+        return $this->render('administration/groupe/import.html.twig',
+            [
+                'departement' => $departement,
+            ]
+        );
     }
 }
