@@ -19,6 +19,7 @@ $(document).on('click', '.changeprofil', function (e) {
   $('.changeprofil').removeClass('active show')
   $(this).addClass('active show')
   $('#profilContent').empty().load($(this).attr('href'))
+
 })
 
 $(document).on('change', '.addfavori', function (e) {

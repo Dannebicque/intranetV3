@@ -51,7 +51,7 @@
                             au {{ justificatif.dateFin ? justificatif.dateFin|format_time('short') : 'non.defini'|trans }}</td>
                         <td>{{ justificatif.created ? justificatif.created|format_date('long') : 'non.defini'|trans }} </td>
                         <td>{{ justificatif.motif }}</td>
-                        <td>{{ justificatif.etat }}</td>
+                        <td>{{ justificatif.etatLong }}</td>
                         <td>
                             <button
                                     class="btn btn-info btn-outline btn-square"
