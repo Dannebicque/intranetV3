@@ -184,6 +184,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['diplomeId'] = $etudiant->getSemestre() !== null ? $etudiant->getDiplome()->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();
+            $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
                 $gr .= $groupe->getLibelle().', ';
