@@ -9,8 +9,10 @@
 namespace App\MesClasses;
 
 
+use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Groupe;
+use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\MesClasses\Celcat\MyCelcat;
@@ -41,6 +43,7 @@ class MyGroupes
 
     /** @var EtudiantRepository */
     protected $etudiantRepository;
+    private $myUpload;
 
     /**
      * MyGroupes constructor.
@@ -54,6 +57,7 @@ class MyGroupes
         EntityManagerInterface $entityManager,
         TypeGroupeRepository $typeGroupeRepository,
         GroupeRepository $groupeRepository,
+        MyUpload $myUpload,
         EtudiantRepository $etudiantRepository
     ) {
         $this->groupedefaut = null;
@@ -61,6 +65,7 @@ class MyGroupes
         $this->typeGroupeRepository = $typeGroupeRepository;
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
+        $this->myUpload = $myUpload;
     }
 
     /**
@@ -178,4 +183,63 @@ class MyGroupes
         $this->entityManager->flush();
     }
 
+    public function importCsv($fichier, Departement $departement)
+    {
+
+
+        $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
+        $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
+        $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
+
+        $file = $this->myUpload->upload($fichier, 'temp');
+
+        $handle = fopen($file, 'rb');
+
+        /*Si on a réussi à ouvrir le fichier*/
+        if ($handle) {
+            /* supprime la première ligne */
+            fgetcsv($handle, 1024, ',');
+            /*Tant que l'on est pas à la fin du fichier*/
+            while (!feof($handle)) {
+                /*On lit la ligne courante*/
+                $ligne = fgetcsv($handle, 1024, ',');
+                if (is_array($ligne) && count($ligne) > 5) {
+                    //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
+                    if (array_key_exists($ligne[4], $semestres)) {
+                        if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
+                                $typeGroupes[$ligne[4]])) {
+                            //le type de groupe n'existe pas encore, donc on ajoute.
+                            $tg = new TypeGroupe($semestres[$ligne[4]]);
+                            $tg->setLibelle($ligne[5]);
+                            $tg->setType($ligne[6]);
+                            $this->entityManager->persist($tg);
+                            $this->entityManager->flush();
+                            $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
+                        }
+
+                        $groupe = new Groupe($typeGroupes[$ligne[4]][$ligne[5]]);
+                        $groupe->setLibelle($ligne[0]);
+                        $groupe->setOrdre($ligne[1]);
+                        $groupe->setCodeApogee($ligne[2]);
+                        if ($ligne[3] !== '' || $ligne[3] !== null) {
+                            if (array_key_exists($ligne[3], $parcours)) {
+                                $groupe->setParcours($parcours[$ligne[3]]);
+                            }
+                        }
+
+                        $this->entityManager->persist($groupe);
+                    }
+                }
+            }
+            $this->entityManager->flush();
+
+            /*On ferme le fichier*/
+            fclose($handle);
+            unlink($file); //suppression du fichier
+
+            return true;
+        }
+
+        return false;
+    }
 }

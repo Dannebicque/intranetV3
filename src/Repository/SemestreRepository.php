@@ -122,4 +122,18 @@ class SemestreRepository extends ServiceEntityRepository
 
         return $tabsemestre;
     }
+
+    public function tableauSemestresApogee(Departement $departement): array
+    {
+        $semestres = $this->findByDepartement($departement);
+
+        $tabsemestre = [];
+
+        /** @var Semestre $semestre */
+        foreach ($semestres as $semestre) {
+            $tabsemestre[$semestre->getCodeElement()] = $semestre;
+        }
+
+        return $tabsemestre;
+    }
 }

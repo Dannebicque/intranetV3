@@ -1,17 +1,17 @@
-<tr>
+<tr id="ligne_{{ groupe.id }}">
     <th>{{ groupe.ordre }}</th>
     <th>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ groupe.libelle }}</th>
     <td>{{ groupe.codeapogee }}</td>
     <td>{{ groupe.typegroupe.libelle }}</td>
     <td>
         {% if semestre.parcours|length > 0 %}
-        <label class="sr-only" for="parcours_{{ group.id }}"></label>
-        <select id="parcours_{{ group.id }}" name="parcours_{{ group.id }}">
-            <option value="">Indiquer l'option</option>
-            {% for option in semestre.parcours %}
-            <option value="{{ option.id }}">{{ option.libelle }}</option>
-            {% endfor %}
-        </select>
+            <label class="sr-only" for="parcours_{{ groupe.id }}"></label>
+            <select id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}">
+                <option value="">Indiquer l'option</option>
+                {% for option in semestre.parcours %}
+                    <option value="{{ option.id }}">{{ option.libelle }}</option>
+                {% endfor %}
+            </select>
         {% else %}
             Pas d'option
         {% endif %}

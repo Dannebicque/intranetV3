@@ -11,6 +11,7 @@ namespace App\Repository;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
+use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -62,5 +63,22 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
+    }
+
+    public function tableauDepartementSemestre(Departement $departement)
+    {
+        $req = $this->findByDepartement($departement);
+        $t = [];
+        /** @var TypeGroupe $tg */
+        foreach ($req as $tg) {
+            if ($tg->getSemestre() !== null) {
+                if (!array_key_exists($tg->getSemestre()->getCodeElement(), $t)) {
+                    $t[$tg->getSemestre()->getCodeElement()] = [];
+                }
+                $t[$tg->getSemestre()->getCodeElement()][$tg->getLibelle()] = $tg;
+            }
+        }
+
+        return $t;
     }
 }
