@@ -30,16 +30,19 @@ $(document).on('keyup', '#search', function (e) {
         if (data.etudiants.length > 0) {
           jQuery.each(data.etudiants, function (index, etudiant) {
             html = html + '<a class="media" href="' + Routing.generate('user_profil', {
-                type: 'etudiant',
-                slug: etudiant.slug
-              }) + '" target="_blank">\n' +
-              '                <span class="avatar status-dark">\n' +
-              '                  <img src="' + data.basepath + 'etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n' +
-              '                </span>\n' +
-              '\n' +
-              '                        <div class="media-body">\n' +
+              type: 'etudiant',
+              slug: etudiant.slug
+            }) + '" target="_blank">\n'
+            if (etudiant.photo === 'noimage.png' || etudiant.photo == null) {
+              html = html + '<div class="avatar-circle-sm">\n' +
+                '    <span class="initials">' + etudiant.avatarInitiales + '</span>\n' +
+                '</div>'
+            } else {
+              html = html + '<img class="avatar avatar-sm" src="' + data.basepath + 'etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n'
+            }
+            html = html + '                        <div class="media-body">\n' +
               '                            <p><strong>' + etudiant.displayPr + '</strong>\n' +
-              '                                <time class="float-right">' + etudiant.groupes +'</time>\n' +
+              '                                <time class="float-right">' + etudiant.groupes + '</time>\n' +
               '                            </p>\n' +
               '                        </div>\n' +
               '                    </a>'
@@ -54,11 +57,17 @@ $(document).on('keyup', '#search', function (e) {
         if (data.personnels.length > 0) {
           jQuery.each(data.personnels, function (index, personnel) {
             html = html + '<a class="media items-center" href="' + Routing.generate('user_profil', {
-                type: 'personnel',
-                slug: personnel.slug
-              }) + '" target="_blank">\n' +
-              '                        <img class="avatar avatar-sm" src="' + data.basepath + 'personnels/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n' +
-              '                        <p>' + personnel.displayPr + '</p>\n' +
+              type: 'personnel',
+              slug: personnel.slug
+            }) + '" target="_blank">\n'
+            if (personnel.photo === 'noimage.png' || personnel.photo == null) {
+              html = html + '<div class="avatar-circle-sm">\n' +
+                '    <span class="initials">' + personnel.avatarInitiales + '</span>\n' +
+                '</div>'
+            } else {
+              html = html + '<img class="avatar avatar-sm" src="' + data.basepath + 'personnels/' + personnel.photo + '" alt="Photo de profil de ' + personnel.displayPr + '">\n'
+            }
+            html = html + '                        <p>' + personnel.displayPr + '</p>\n' +
               '</a>'
           })
         } else {

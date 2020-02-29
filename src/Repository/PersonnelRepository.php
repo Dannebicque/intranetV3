@@ -96,7 +96,9 @@ class PersonnelRepository extends ServiceEntityRepository
             $tt['username'] = $personnel->getUsername();
             $tt['mail_univ'] = $personnel->getMailUniv();
             $tt['mail_perso'] = $personnel->getMailPerso();
-            $tt['profil'] = '<a href="'.$this->router->generate('user_profil', ['type' => 'personnel', 'slug' => $personnel->getSlug()]).'"
+            $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
+            $tt['profil'] = '<a href="' . $this->router->generate('user_profil',
+                    ['type' => 'personnel', 'slug' => $personnel->getSlug()]) . '"
        class="btn btn-info btn-outline btn-square"
        data-provide="tooltip"
        target="_blank"
