@@ -1,9 +1,7 @@
 Bonjour {{ justificatif.etudiant.displayPr  }},
 
 Le justificatif que vous avez déposé le {{ justificatif.created||format_datetime('long', 'short') }} pour la période du
- {{ justificatif
-.dateDebut||format_date('long') }} à partir de {{ justificatif.heureDebut|format_time('short') }} au {{ justificatif
-.dateFin||format_date('long') }} jusqu'à {{ justificatif.heureFin|format_time('short') }} a été refusé.
+ {{ justificatif.dateDebut||format_date('long') }} à partir de {{ justificatif.heureDebut|format_time('short') }} au {{ justificatif.dateFin||format_date('long') }} jusqu'à {{ justificatif.heureFin|format_time('short') }} a été refusé.
 
 Les motifs de refus peuvent être :
 - Motif non recevable (convocation officielle ou certificat médical)
