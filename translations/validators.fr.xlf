@@ -31,24 +31,24 @@
         <target>Cette valeur doit être l'un des choix proposés.</target>
       </segment>
     </unit>
-    <unit id="84_SVIl" name="52d86f5">
-      <segment>
-        <source>You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.
-        </source>
-        <target>Vous devez sélectionner au moins {{ limit }} choix.|Vous devez sélectionner au moins {{ limit }}
-          choix.
-        </target>
-      </segment>
+    <unit id="Yp4GJu9" name="347b9d4">
+        <segment>
+            <source>You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.
+            </source>
+            <target>Vous devez sélectionner au moins {{ limit }} choix.|Vous devez sélectionner au moins {{ limit }}
+                choix.
+            </target>
+        </segment>
     </unit>
-    <unit id="46oPeSc" name="e110451">
-      <segment>
-        <source>You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.
-        </source>
-        <target>Vous devez sélectionner au maximum {{ limit }} choix.|Vous devez sélectionner au maximum {{
-          limit }} choix.
-        </target>
-      </segment>
-    </unit>
+      <unit id="tZ3oYje" name="d057e8b">
+          <segment>
+              <source>You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.
+              </source>
+              <target>Vous devez sélectionner au maximum {{ limit }} choix.|Vous devez sélectionner au maximum {{
+                  limit }} choix.
+              </target>
+          </segment>
+      </unit>
     <unit id="87zjiHi" name="One or more of the given values is invalid.">
       <segment>
         <source>One or more of the given values is invalid.</source>
@@ -97,16 +97,16 @@
         <target>Le fichier n'est pas lisible.</target>
       </segment>
     </unit>
-    <unit id="p9LL7z6" name="3570c58">
-      <segment>
-        <source>The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix
-          }}.
-        </source>
-        <target>Le fichier est trop volumineux ({{ size }} {{ suffix }}). Sa taille ne doit pas dépasser {{
-          limit }} {{ suffix }}.
-        </target>
-      </segment>
-    </unit>
+      <unit id="01_DOqg" name="c9d0098">
+          <segment>
+              <source>The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix
+                  }}.
+              </source>
+              <target>Le fichier est trop volumineux ({{ size }} {{ suffix }}). Sa taille ne doit pas dépasser {{
+                  limit }} {{ suffix }}.
+              </target>
+          </segment>
+      </unit>
     <unit id="YW21SPH" name="30a318d">
       <segment>
         <source>The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.</source>
@@ -119,32 +119,32 @@
         <target>Cette valeur doit être inférieure ou égale à {{ limit }}.</target>
       </segment>
     </unit>
-    <unit id="nTVG2DQ" name="a504c58">
-      <segment>
-        <source>This value is too long. It should have {{ limit }} character or less.|This value is too long. It
-          should have {{ limit }} characters or less.
-        </source>
-        <target>Cette chaîne est trop longue. Elle doit avoir au maximum {{ limit }} caractère.|Cette chaîne est
-          trop longue. Elle doit avoir au maximum {{ limit }} caractères.
-        </target>
-      </segment>
-    </unit>
+      <unit id="1AMO6lI" name="4cb08d2">
+          <segment>
+              <source>This value is too long. It should have {{ limit }} character or less.|This value is too long. It
+                  should have {{ limit }} characters or less.
+              </source>
+              <target>Cette chaîne est trop longue. Elle doit avoir au maximum {{ limit }} caractère.|Cette chaîne est
+                  trop longue. Elle doit avoir au maximum {{ limit }} caractères.
+              </target>
+          </segment>
+      </unit>
     <unit id="qgR8M_U" name="This value should be {{ limit }} or more.">
       <segment>
         <source>This value should be {{ limit }} or more.</source>
         <target>Cette valeur doit être supérieure ou égale à {{ limit }}.</target>
       </segment>
     </unit>
-    <unit id="3zIWSyz" name="5e659a1">
-      <segment>
-        <source>This value is too short. It should have {{ limit }} character or more.|This value is too short.
-          It should have {{ limit }} characters or more.
-        </source>
-        <target>Cette chaîne est trop courte. Elle doit avoir au minimum {{ limit }} caractère.|Cette chaîne est
-          trop courte. Elle doit avoir au minimum {{ limit }} caractères.
-        </target>
-      </segment>
-    </unit>
+      <unit id="OIlq5zg" name="d7370a6">
+          <segment>
+              <source>This value is too short. It should have {{ limit }} character or more.|This value is too short.
+                  It should have {{ limit }} characters or more.
+              </source>
+              <target>Cette chaîne est trop courte. Elle doit avoir au minimum {{ limit }} caractère.|Cette chaîne est
+                  trop courte. Elle doit avoir au minimum {{ limit }} caractères.
+              </target>
+          </segment>
+      </unit>
     <unit id="1KV4L.t" name="This value should not be blank.">
       <segment>
         <source>This value should not be blank.</source>
@@ -262,49 +262,49 @@
         </target>
       </segment>
     </unit>
-    <unit id="zt8lADc" name="54dcf07">
-      <segment>
-        <source>The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.
-        </source>
-        <target>La largeur de l'image est trop petite ({{ width }}px). La largeur minimale attendue est de {{
-          min_width }}px.
-        </target>
-      </segment>
-    </unit>
-    <unit id="MLMo7t1" name="b851bd8">
-      <segment>
-        <source>The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.
-        </source>
-        <target>La hauteur de l'image est trop grande ({{ height }}px). La hauteur maximale autorisée est de {{
-          max_height }}px.
-        </target>
-      </segment>
-    </unit>
-    <unit id="QaLwbFt" name="32f160f">
-      <segment>
-        <source>The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.
-        </source>
-        <target>La hauteur de l'image est trop petite ({{ height }}px). La hauteur minimale attendue est de {{
-          min_height }}px.
-        </target>
-      </segment>
-    </unit>
+      <unit id="Lfwbn_C" name="accdbe1">
+          <segment>
+              <source>The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.
+              </source>
+              <target>La largeur de l'image est trop petite ({{ width }}px). La largeur minimale attendue est de {{
+                  min_width }}px.
+              </target>
+          </segment>
+      </unit>
+      <unit id="0OcA4YD" name="aef356c">
+          <segment>
+              <source>The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.
+              </source>
+              <target>La hauteur de l'image est trop grande ({{ height }}px). La hauteur maximale autorisée est de {{
+                  max_height }}px.
+              </target>
+          </segment>
+      </unit>
+      <unit id="7A8.IcW" name="739b4b2">
+          <segment>
+              <source>The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.
+              </source>
+              <target>La hauteur de l'image est trop petite ({{ height }}px). La hauteur minimale attendue est de {{
+                  min_height }}px.
+              </target>
+          </segment>
+      </unit>
     <unit id="PSdMNab" name="This value should be the user's current password.">
       <segment>
         <source>This value should be the user's current password.</source>
         <target>Cette valeur doit être le mot de passe actuel de l'utilisateur.</target>
       </segment>
     </unit>
-    <unit id="Iqy9XTd" name="7419501">
-      <segment>
-        <source>This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }}
-          characters.
-        </source>
-        <target>Cette chaîne doit avoir exactement {{ limit }} caractère.|Cette chaîne doit avoir exactement {{
-          limit }} caractères.
-        </target>
-      </segment>
-    </unit>
+      <unit id="94wSMs9" name="cb31059">
+          <segment>
+              <source>This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }}
+                  characters.
+              </source>
+              <target>Cette chaîne doit avoir exactement {{ limit }} caractère.|Cette chaîne doit avoir exactement {{
+                  limit }} caractères.
+              </target>
+          </segment>
+      </unit>
     <unit id="xJ2Bcr_" name="The file was only partially uploaded.">
       <segment>
         <source>The file was only partially uploaded.</source>
@@ -335,36 +335,36 @@
         <target>Une extension PHP a empêché le transfert du fichier.</target>
       </segment>
     </unit>
-    <unit id="pk7frWV" name="7a4e58d">
-      <segment>
-        <source>This collection should contain {{ limit }} element or more.|This collection should contain {{
-          limit }} elements or more.
-        </source>
-        <target>Cette collection doit contenir {{ limit }} élément ou plus.|Cette collection doit contenir {{
-          limit }} éléments ou plus.
-        </target>
-      </segment>
-    </unit>
-    <unit id="xc2WCGf" name="357b9fe">
-      <segment>
-        <source>This collection should contain {{ limit }} element or less.|This collection should contain {{
-          limit }} elements or less.
-        </source>
-        <target>Cette collection doit contenir {{ limit }} élément ou moins.|Cette collection doit contenir {{
-          limit }} éléments ou moins.
-        </target>
-      </segment>
-    </unit>
-    <unit id="8HImVO." name="396def1">
-      <segment>
-        <source>This collection should contain exactly {{ limit }} element.|This collection should contain
-          exactly {{ limit }} elements.
-        </source>
-        <target>Cette collection doit contenir exactement {{ limit }} élément.|Cette collection doit contenir
-          exactement {{ limit }} éléments.
-        </target>
-      </segment>
-    </unit>
+      <unit id="9Yi8Qzf" name="2064584">
+          <segment>
+              <source>This collection should contain {{ limit }} element or more.|This collection should contain {{
+                  limit }} elements or more.
+              </source>
+              <target>Cette collection doit contenir {{ limit }} élément ou plus.|Cette collection doit contenir {{
+                  limit }} éléments ou plus.
+              </target>
+          </segment>
+      </unit>
+      <unit id="awXMkgl" name="5e7a772">
+          <segment>
+              <source>This collection should contain {{ limit }} element or less.|This collection should contain {{
+                  limit }} elements or less.
+              </source>
+              <target>Cette collection doit contenir {{ limit }} élément ou moins.|Cette collection doit contenir {{
+                  limit }} éléments ou moins.
+              </target>
+          </segment>
+      </unit>
+      <unit id="ddeziQk" name="3d49231">
+          <segment>
+              <source>This collection should contain exactly {{ limit }} element.|This collection should contain
+                  exactly {{ limit }} elements.
+              </source>
+              <target>Cette collection doit contenir exactement {{ limit }} élément.|Cette collection doit contenir
+                  exactement {{ limit }} éléments.
+              </target>
+          </segment>
+      </unit>
     <unit id="MAzmID7" name="Invalid card number.">
       <segment>
         <source>Invalid card number.</source>
@@ -485,26 +485,26 @@
         </target>
       </segment>
     </unit>
-    <unit id="smbfLXo" name="5cd520c">
-      <segment>
-        <source>The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not
-          allowed.
-        </source>
-        <target>L'image est au format paysage ({{ width }}x{{ height }}px). Les images au format paysage ne sont
-          pas autorisées.
-        </target>
-      </segment>
-    </unit>
-    <unit id="LEfadcc" name="3176f41">
-      <segment>
-        <source>The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not
-          allowed.
-        </source>
-        <target>L'image est au format portrait ({{ width }}x{{ height }}px). Les images au format portrait ne
-          sont pas autorisées.
-        </target>
-      </segment>
-    </unit>
+      <unit id="HT6k4.O" name="53702b7">
+          <segment>
+              <source>The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not
+                  allowed.
+              </source>
+              <target>L'image est au format paysage ({{ width }}x{{ height }}px). Les images au format paysage ne sont
+                  pas autorisées.
+              </target>
+          </segment>
+      </unit>
+      <unit id="ycw0w62" name="76fbcee">
+          <segment>
+              <source>The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not
+                  allowed.
+              </source>
+              <target>L'image est au format portrait ({{ width }}x{{ height }}px). Les images au format portrait ne
+                  sont pas autorisées.
+              </target>
+          </segment>
+      </unit>
     <unit id="jZgqcpL" name="An empty file is not allowed.">
       <segment>
         <source>An empty file is not allowed.</source>
@@ -598,16 +598,16 @@
         <target>Cette valeur n'est pas un fuseau horaire valide.</target>
       </segment>
     </unit>
-    <unit id="63_g1ev" name="fdb6fe3">
-      <segment>
-        <source>This password has been leaked in a data breach, it must not be used. Please use another
-          password.
-        </source>
-        <target>Ce mot de passe a été divulgué lors d'une fuite de données, il ne doit plus être utilisé.
-          Veuillez utiliser un autre mot de passe.
-        </target>
-      </segment>
-    </unit>
+      <unit id="KKXan2o" name="0ac8877">
+          <segment>
+              <source>This password has been leaked in a data breach, it must not be used. Please use another
+                  password.
+              </source>
+              <target>Ce mot de passe a été divulgué lors d'une fuite de données, il ne doit plus être utilisé.
+                  Veuillez utiliser un autre mot de passe.
+              </target>
+          </segment>
+      </unit>
     <unit id="VvxxWas" name="This value should be between {{ min }} and {{ max }}.">
       <segment>
         <source>This value should be between {{ min }} and {{ max }}.</source>
