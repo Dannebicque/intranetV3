@@ -11,6 +11,7 @@ namespace App\MesClasses;
 
 use App\Entity\Departement;
 use App\Entity\EdtPlanning;
+use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
@@ -185,8 +186,6 @@ class MyGroupes
 
     public function importCsv($fichier, Departement $departement)
     {
-
-
         $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
         $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
         $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
@@ -228,6 +227,47 @@ class MyGroupes
                         }
 
                         $this->entityManager->persist($groupe);
+                    }
+                }
+            }
+            $this->entityManager->flush();
+
+            /*On ferme le fichier*/
+            fclose($handle);
+            unlink($file); //suppression du fichier
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function importGroupeEtudiantCsv($fichier, Semestre $semestre)
+    {
+        $groupes = $this->entityManager->getRepository(Groupe::class)->findBySemestreArray($semestre);
+        $etudiants = $this->entityManager->getRepository(Etudiant::class)->findBySemestreArray($semestre);
+        foreach ($etudiants as $etudiant) {
+            foreach ($etudiant->getGroupes() as $groupe) {
+                $etudiant->removeGroupe($groupe);
+            }
+        }
+        $this->entityManager->flush();
+
+        $file = $this->myUpload->upload($fichier, 'temp');
+
+        $handle = fopen($file, 'rb');
+
+        /*Si on a réussi à ouvrir le fichier*/
+        if ($handle) {
+            /* supprime la première ligne */
+            fgetcsv($handle, 1024, ',');
+            /*Tant que l'on est pas à la fin du fichier*/
+            while (!feof($handle)) {
+                /*On lit la ligne courante*/
+                $ligne = fgetcsv($handle, 1024, ',');
+                if (is_array($ligne) && count($ligne) === 2) {
+                    if (array_key_exists($ligne[0], $groupes) && array_key_exists($ligne[1], $etudiants)) {
+                        $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
                     }
                 }
             }

@@ -13323,7 +13323,7 @@
         <target>Retour qualité</target>
       </segment>
     </unit>
-    <unit id="mKdXwL2" name="non&#10;                    .defini&#10;                ">
+    <unit id="R4k7WF6" name="non&#10;          .defini&#10;        ">
       <segment>
         <source>non
           .defini
@@ -13487,6 +13487,24 @@
       <segment>
         <source>atitle.retour.alternance.etudiant</source>
         <target>Retour à l'alternance de l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="HL9909K" name="atitle.import">
+      <segment>
+        <source>atitle.import</source>
+        <target>Importer</target>
+      </segment>
+    </unit>
+    <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
+      <segment>
+        <source>import.etudiants.groupes.heading</source>
+        <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
+      </segment>
+    </unit>
+    <unit id="ctb8KK5" name="atitle.retour_groupes">
+      <segment>
+        <source>atitle.retour_groupes</source>
+        <target>Retour aux groupes</target>
       </segment>
     </unit>
   </file>

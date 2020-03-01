@@ -187,4 +187,29 @@ class GroupesController extends BaseController
             ]
         );
     }
+
+    /**
+     * @Route("/import-etudiant/{semestre}", name="sa_groupes_etudiant_import_semestre")
+     * @param MyGroupes $myGroupes
+     * @param Request   $request
+     * @param Semestre  $semestre
+     *
+     * @return Response
+     */
+    public function importEtudiant(MyGroupes $myGroupes, Request $request, Semestre $semestre): Response
+    {
+        if ($request->isMethod('POST')) {
+            $myGroupes->importGroupeEtudiantCsv($request->files->get('fichier'), $semestre);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.etudiants.import.success.flash');
+            $this->redirectToRoute('sa_groupes_departement_index',
+                ['departement' => $semestre->getDiplome()->getDepartement()->getId()]);
+        }
+
+        return $this->render('administration/groupe/import-etudiant.html.twig',
+            [
+                'semestre'    => $semestre,
+                'departement' => $semestre->getDiplome()->getDepartement()
+            ]
+        );
+    }
 }
