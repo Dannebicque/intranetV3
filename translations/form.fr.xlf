@@ -2145,25 +2145,34 @@
         <target>Nb. Groupes de TP</target>
       </segment>
     </unit>
-    <unit id="5tg4tOt" name="choice.mcf">
-      <notes>
-        <note priority="1">src/Form/PersonnelType.php:47</note>
-      </notes>
-      <segment>
-        <source>choice.mcf</source>
-        <target>Maître de Conférences</target>
-      </segment>
-    </unit>
-    <unit id="f.dmV00" name="choice.pr">
-      <notes>
-        <note priority="1">src/Form/PersonnelType.php:47</note>
-      </notes>
-      <segment>
-        <source>choice.pr</source>
-        <target>Professeur des universités</target>
-      </segment>
-    </unit>
-    <unit id="E_m7NU2" name="choice.prag">
+      <unit id="5tg4tOt" name="choice.mcf">
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:47</note>
+          </notes>
+          <segment>
+              <source>choice.mcf</source>
+              <target>Maître de Conférences</target>
+          </segment>
+      </unit>
+      <unit id="5tg4t9t" name="choice.contractuel">
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:47</note>
+          </notes>
+          <segment>
+              <source>choice.contractuel</source>
+              <target>Contractuel (CDD/CDI)</target>
+          </segment>
+      </unit>
+      <unit id="f.dmV00" name="choice.pr">
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:47</note>
+          </notes>
+          <segment>
+              <source>choice.pr</source>
+              <target>Professeur des universités</target>
+          </segment>
+      </unit>
+      <unit id="E_m7NU2" name="choice.prag">
       <notes>
         <note priority="1">src/Form/PersonnelType.php:47</note>
       </notes>

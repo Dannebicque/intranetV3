@@ -111,7 +111,7 @@ class Etudiant extends Utilisateur implements Serializable
     private $etudiantDemandeur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant")
      * @ORM\OrderBy({"ordre":"ASC"})
      */
     private $scolarites;
@@ -173,7 +173,7 @@ class Etudiant extends Utilisateur implements Serializable
     private $promotion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bac", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bac")
      */
     private $bac;
 

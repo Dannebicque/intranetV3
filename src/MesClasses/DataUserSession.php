@@ -66,7 +66,7 @@ class DataUserSession
     protected $annees;
 
     /** @var MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[] */
-    protected $messages;
+    protected $messages = null;
 
     /**
      * @var Departement
@@ -109,6 +109,7 @@ class DataUserSession
      * @var string
      */
     private $type_user;
+    private $anneeUniversitaire = null;
 
     /**
      * @return string
@@ -192,7 +193,12 @@ class DataUserSession
         if ($this->departement !== null) {
             //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
             $this->semestres = $semestreRepository->findByDepartement($this->departement);
-            $this->semestresActifs = $semestreRepository->findByDepartementActif($this->departement);
+            $this->semestresActifs = [];
+            foreach ($this->semestres as $semestre) {
+                if ($semestre->getActif()) {
+                    $this->semestresActifs[] = $semestre;
+                }
+            }
             $this->diplomes = $diplomeRepository->findByDepartement($this->departement);
             $this->annees = $anneeRepository->findByDepartement($this->departement);
         }
@@ -321,12 +327,14 @@ class DataUserSession
 
     public function getMessages()
     {
-        if ($this->getUser() instanceof Etudiant) {
-            $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
-            $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
-        } else {
-            $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
-            $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
+        if ($this->messages === null) {
+            if ($this->getUser() instanceof Etudiant) {
+                $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+                $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
+            } else {
+                $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+                $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
+            }
         }
 
         return $this->messages;
@@ -349,11 +357,15 @@ class DataUserSession
      */
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
-        if ($this->getUser() instanceof Etudiant) {
-            return $this->getUser()->getAnneeUniversitaire();
+        if ($this->anneeUniversitaire === null) {
+            if ($this->getUser() instanceof Etudiant) {
+                $this->anneeUniversitaire = $this->getUser()->getAnneeUniversitaire();
+            } else {
+                $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findActive();
+            }
         }
 
-        return $this->anneeUniversitaireRepository->findActive();
+        return $this->anneeUniversitaire;
     }
 
     /**

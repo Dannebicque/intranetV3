@@ -133,7 +133,7 @@ class Departement extends BaseEntity
 
     /**
      * @var Personnel
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
     private $respri;
     /**

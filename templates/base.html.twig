@@ -238,8 +238,9 @@
                     {% for departement in user_data.user.getPersonnelDepartements %}
                         <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
                            href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
-                            <span data-i8-icon="home"></span>
-                            <span class="title">{{ departement.departement.libelle }}</span>
+                            <div class="avatar-circle-sm" style="background-color: {{ departement.departement.couleur }}">
+                                <span class="initials">{{ departement.departement.libelle }}</span>
+                            </div>
                         </a>
                     {% endfor %}
                 </div>

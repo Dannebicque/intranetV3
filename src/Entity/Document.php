@@ -57,7 +57,7 @@ class Document extends BaseEntity
     /**
      * @var TypeDocument
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", fetch="EAGER", inversedBy="documents")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", inversedBy="documents")
      */
     private $typeDocument;
 
