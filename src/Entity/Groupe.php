@@ -43,7 +43,7 @@ class Groupe extends BaseEntity
     private $parent;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
      * @ORM\OrderBy({"nom"="asc", "prenom"="asc"})
      */
     private $etudiants;

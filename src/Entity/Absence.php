@@ -80,7 +80,7 @@ class Absence extends BaseEntity implements Serializable
     private $justifie = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
      */

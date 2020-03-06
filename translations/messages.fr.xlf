@@ -10772,7 +10772,7 @@
     <unit id="c_a8Ms0" name="super-admin.personnel-departement.heading">
       <segment>
         <source>super-admin.personnel-departement.heading</source>
-        <target>Gestion des personnels par département</target>
+        <target>Gestion des personnels du département %departement%</target>
       </segment>
     </unit>
     <unit id="MSKqMCs" name="atitle.retirer_departement">
@@ -10784,7 +10784,7 @@
     <unit id="mGr5eBs" name="super-admin.add.personnel-departement.heading">
       <segment>
         <source>super-admin.add.personnel-departement.heading</source>
-        <target>Ajouter un personnel à un département</target>
+          <target>Ajouter un personnel au département %departement%</target>
       </segment>
     </unit>
     <unit id="DV1gmkP" name="table.departements">

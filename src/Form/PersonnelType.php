@@ -47,11 +47,12 @@ class PersonnelType extends AbstractType
             ->add('statut', ChoiceType::class, [
                 'label'                     => 'label.statut',
                 'choices'                   => [
-                    'choice.mcf'       => 'MCF',
-                    'choice.pr'        => 'PU',
-                    'choice.prag'      => 'PRAG',
-                    'choice.prce'      => 'PRCE',
-                    'choice.vacataire' => 'PRO'
+                    'choice.contractuel' => 'CONTRAC',
+                    'choice.mcf'         => 'MCF',
+                    'choice.pr'          => 'PU',
+                    'choice.prag'        => 'PRAG',
+                    'choice.prce'        => 'PRCE',
+                    'choice.vacataire'   => 'PRO'
                 ],
                 'choice_translation_domain' => 'form',
                 'expanded'                  => true

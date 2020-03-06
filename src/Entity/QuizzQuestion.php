@@ -47,8 +47,7 @@ class QuizzQuestion extends BaseEntity
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizzReponse", mappedBy="question", cascade={"persist", "remove"},
-     *                                                        fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\QuizzReponse", mappedBy="question", cascade={"persist", "remove"})
      * @ORM\OrderBy({"ordre"="ASC"})
      */
     private $quizzReponses;

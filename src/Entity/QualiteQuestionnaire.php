@@ -85,7 +85,7 @@ class QualiteQuestionnaire extends BaseEntity
     private $textFin;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaireSection", mappedBy="questionnaire", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaireSection", mappedBy="questionnaire")
      * @ORM\OrderBy({"ordre"="ASC"})
      */
     private $qualiteQuestionnaireSections;

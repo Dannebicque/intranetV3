@@ -33,7 +33,7 @@ class Scolarite extends BaseEntity
     private $ordre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
     private $semestre;
 
@@ -53,7 +53,7 @@ class Scolarite extends BaseEntity
     private $moyenne = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites")
      */
     private $etudiant;
 

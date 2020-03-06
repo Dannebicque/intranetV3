@@ -31,7 +31,7 @@ class PersonnelDepartement
 
     /**
      * @var Departement
-     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="personnelDepartements")
+     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="personnelDepartements", fetch="EAGER")
      */
     private $departement;
 
