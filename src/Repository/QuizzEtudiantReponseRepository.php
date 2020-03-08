@@ -45,7 +45,7 @@ class QuizzEtudiantReponseRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByQuestionnaire(QuizzEtudiant $quizzEtudiant): array
+    public function findByQuizzEtudiant(QuizzEtudiant $quizzEtudiant): array
     {
         $reponses = $this->createQueryBuilder('q')
             ->where('q.quizzEtudiant = :quizzEtudiant')
@@ -60,5 +60,18 @@ class QuizzEtudiantReponseRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findByQuestionnaire(QualiteQuestionnaire $questionnaire): array
+    {
+        return $this->createQueryBuilder('q')
+            ->innerJoin(QuizzEtudiant::class, 'e', 'WITH', 'q.quizzEtudiant=e.id')
+            ->where('e.questionnaire = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire->getId())
+            ->orderBy('q.cleQuestion', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+
     }
 }

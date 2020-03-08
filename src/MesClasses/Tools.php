@@ -84,4 +84,15 @@ abstract class Tools
 
         return strtolower(strtr($stripped, $table));
     }
+
+    public static function personnaliseTexte($texte, $config)
+    {
+        if (is_array($config)) {
+            foreach ($config as $key => $elt) {
+                $texte = str_replace('{{' . $key . '}}', $elt, $texte);
+            }
+        }
+
+        return $texte;
+    }
 }

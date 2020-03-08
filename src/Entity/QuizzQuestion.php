@@ -284,4 +284,13 @@ class QuizzQuestion extends BaseEntity
 
         return $this;
     }
+
+    public function getCle($config = '')
+    {
+        if ($config !== '' && $config !== null) {
+
+        } else {
+            return 'quizz_question_reponses_q' . $this->getId();
+        }
+    }
 }

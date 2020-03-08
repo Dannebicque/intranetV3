@@ -9,6 +9,7 @@
 namespace App\Twig;
 
 use App\Entity\QuizzQuestion;
+use App\MesClasses\Tools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -59,13 +60,7 @@ class QuizzExtension extends AbstractExtension
 
     public function personnalise($texte, $config)
     {
-        if (is_array($config)) {
-            foreach ($config as $key => $elt) {
-                $texte = str_replace('{{' . $key . '}}', $elt, $texte);
-            }
-        }
-
-        return $texte;
+        return Tools::personnaliseTexte($texte, $config);
     }
 
     public function hasReponse($tab, $reponse)
