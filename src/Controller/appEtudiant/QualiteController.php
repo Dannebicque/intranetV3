@@ -107,7 +107,7 @@ class QualiteController extends BaseController
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $qualiteQuestionnaireSection->getQuestionnaire()->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
         if ($quizzEtudiant !== null) {
-            $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($quizzEtudiant);
+            $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
         } else {
             $reponses = [];
         }

@@ -13,6 +13,7 @@ use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
 use App\Entity\Semestre;
+use App\MesClasses\Enquetes\MyEnquete;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
@@ -166,107 +167,33 @@ class EnqueteController extends AbstractController
      *
      * @return Response
      */
-    public function reponses(QualiteQuestionnaire $questionnaire): Response
+    public function reponses(MyEnquete $myEnquete, QualiteQuestionnaire $questionnaire): Response
     {
-        $reponses = $questionnaire->getQuizzEtudiantReponses();
+        $reponses = $myEnquete->getReponseFromQuestionnaire($questionnaire);
 
         return $this->render('super-administration/enquete/reponses.html.twig', [
             'questionnaire' => $questionnaire,
-            'reponses'      => $reponses
+            'reponses'      => $reponses = null
         ]);
     }
 
     /**
      * @Route("/questionnaire/export/{questionnaire}", name="administratif_enquete_export")
      *
-     * @param MyExcelWriter        $myExcelWriter
      * @param QualiteQuestionnaire $questionnaire
      *
      * @return Response
      * @throws Exception
      */
-    public function export(MyExcelWriter $myExcelWriter, QualiteQuestionnaire $questionnaire): Response
-    {
-        //data
-        $nbEtudiants = count($questionnaire->getSemestre()->getEtudiants());
-        $nbReponses = count($questionnaire->getQuizzEtudiants());
-        $pourcentageReponses = $nbReponses / $nbEtudiants;
-        //export
-        $myExcelWriter->createSheet('Export enquete '.$questionnaire->getLibelle());
-        $myExcelWriter->getColumnDimension('A', 60);
-        $myExcelWriter->getColumnDimension('B', 15);
-        $myExcelWriter->getColumnDimension('C', 20);
-        $myExcelWriter->mergeCellsCaR(1,1,3,1);
-        $myExcelWriter->mergeCellsCaR(1,2,3,2);
-        $myExcelWriter->writeCellXY(1,1, $questionnaire->getTitre(), ['color' => 'B8007F', 'font-size' => 16, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-        $myExcelWriter->writeCellXY(1,2, $questionnaire->getSemestre()->getDiplome()->getDisplay(). ' - '.$questionnaire->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire(), ['color' => 'B8007F', 'font-size' => 16, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
+    public function export(
+        MyEnquete $myEnquete,
+        PrevisionnelRepository $previsionnelRepository,
+        QualiteQuestionnaire $questionnaire
+    ): Response {
+        $previsionnel = $previsionnelRepository->findByDiplomeArray($questionnaire->getSemestre()->getDiplome(),
+            $questionnaire->getSemestre()->getDiplome()->getAnneeUniversitaire());
 
-        $myExcelWriter->borderBottomCellsRange(1,3,3,3, ['color' => 'B8007F', 'size' => Border::BORDER_MEDIUM]);
-
-        $myExcelWriter->writeCellXY(1,5, 'Nombre de questionnaires envoyés :');
-        $myExcelWriter->writeCellXY(2,5, $nbEtudiants, ['style' => 'HORIZONTAL_CENTER']);
-        $myExcelWriter->writeCellXY(1,6, 'Nombre de questionnaires retournés :');
-        $myExcelWriter->writeCellXY(2,6, $nbReponses, ['style' => 'HORIZONTAL_CENTER']);
-        $myExcelWriter->writeCellXY(1,7, 'Pourcentage de retours :');
-        $myExcelWriter->writeCellXY(2,7, $pourcentageReponses, ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE_00]);
-        $myExcelWriter->borderBottomCellsRange(1,8,3,8, ['color' => 'B8007F', 'size' => Border::BORDER_MEDIUM]);
-
-        $ligne = 11;
-        foreach($questionnaire->getQualiteQuestionnaireSections() as $qualiteQuestionnaireSection) {
-            $myExcelWriter->writeCellXY(1,$ligne, $qualiteQuestionnaireSection->getOrdre().'. '.$qualiteQuestionnaireSection->getSection()->getTitre(), ['color' => 'B8007F', 'font-size' => 10, 'font-weight' => 'bold']);
-            $ligne +=2;
-            foreach ($qualiteQuestionnaireSection->getSection()->getQualiteSectionQuestions() as $qualiteSectionQuestion)
-            {
-                $myExcelWriter->mergeCellsCaR(1,$ligne,3,$ligne);
-                $myExcelWriter->writeCellXY(1,$ligne, $qualiteSectionQuestion->getQuestion()->getLibelle(), ['wrap' => true,'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                $ligne++;
-                if ($qualiteSectionQuestion->getQuestion()->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE || $qualiteSectionQuestion->getQuestion()->getType() === QuizzQuestion::QUESTION_TYPE_QCM || $qualiteSectionQuestion->getQuestion()->getType() === QuizzQuestion::QUESTION_TYPE_QCU || $qualiteSectionQuestion->getQuestion()->getType() === QuizzQuestion::QUESTION_TYPE_YESNO) {
-                    //si QCU/QCM
-                    $myExcelWriter->writeCellXY(1, $ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
-                    $myExcelWriter->writeCellXY(2, $ligne, 'Décompte', ['style' => 'HORIZONTAL_CENTER']);
-                    $myExcelWriter->writeCellXY(3, $ligne, 'Pourcentage', ['style' => 'HORIZONTAL_CENTER']);
-                    $ligne++;
-                    foreach ($qualiteSectionQuestion->getQuestion()->getQuizzReponses() as $reponse) {
-                        $myExcelWriter->writeCellXY(1, $ligne, $reponse->getLibelle());
-                        $myExcelWriter->writeCellXY(2, $ligne, '0000', ['style' => 'HORIZONTAL_CENTER']);
-                        $myExcelWriter->writeCellXY(3, $ligne, 0, ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE_00]);
-                        $ligne++;
-                        //si autre, énumérer les réponses autres
-                    }
-                    $ligne++;
-                    if ($qualiteSectionQuestion->getQuestion()->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE) {
-                        //si échelle ... tôt de satisfaction
-                        $ligne++;
-                        $myExcelWriter->writeCellXY(1, $ligne, 'soit');
-                        $myExcelWriter->writeCellXY(1, $ligne, 0, ['align' => 'center','number_format' => NumberFormat::FORMAT_PERCENTAGE_00]);
-                        $myExcelWriter->writeCellXY(1, $ligne, 'de satisfaction', ['align' => 'center']);
-                        $ligne++;
-                    }
-                } elseif ($qualiteSectionQuestion->getQuestion()->getType() === QuizzQuestion::QUESTION_TYPE_LIBRE) {
-                    $myExcelWriter->writeCellXY(1, $ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
-                    $myExcelWriter->writeCellXY(2, $ligne, '0000', ['style' => 'HORIZONTAL_CENTER']); //nb réponses
-                    $myExcelWriter->writeCellXY(3, $ligne, '000%', ['style' => 'HORIZONTAL_CENTER']); //pourcentage sur nb total
-                    $ligne++;
-                    //liste les réponses
-                }
-            }
-            $ligne++;
-            $myExcelWriter->borderBottomCellsRange(1,$ligne,3,$ligne, ['color' => '000000', 'size' => Border::BORDER_THIN]);
-            $ligne+=2;
-        }
-
-        $writer = new Xlsx($myExcelWriter->getSpreadsheet());
-
-        return new StreamedResponse(
-            static function() use ($writer) {
-                $writer->save('php://output');
-            },
-            200,
-            [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $questionnaire->getLibelle() . '.xlsx"'
-            ]
-        );
+        return $myEnquete->ExportExcel($questionnaire, $previsionnel);
     }
 
     /**
