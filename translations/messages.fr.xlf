@@ -161,7 +161,7 @@
     <unit id="VuQvnpd" name="menu.documentation">
       <segment>
         <source>menu.documentation</source>
-        <target>Documentation</target>
+        <target>Aide</target>
       </segment>
     </unit>
     <unit id="eKE4cDT" name="menu.faq">
@@ -270,7 +270,7 @@
       </notes>
       <segment>
         <source>security.login.sign-with</source>
-        <target>Extérieur ou compte invité</target>
+        <target>Compte invité</target>
       </segment>
     </unit>
     <unit id="fdkV0aN" name="service.previsionnel.heading">
