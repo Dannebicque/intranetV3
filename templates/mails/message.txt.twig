@@ -1,4 +1,4 @@
-{{ message }}
+{{ message|raw }}
 
 {% if expediteur.signature=="" %}
     {{ expediteur.displayPr  }}
@@ -6,4 +6,4 @@
 {{ expediteur.signature }}
 {% endif %}
 
-Ce message est envoyé depuis l'intranet
+Ce message est envoyé depuis la messagerie de l'intranet de l'{{ settings('NOM_IUT') }}.

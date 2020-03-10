@@ -37,3 +37,8 @@ services:
         tags:
             - { name: 'doctrine.event_subscriber' }
 
+    App\Security\AbstractAuthenticator:
+        class: App\Security\AbstractAuthenticator
+        arguments:
+            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
+            - '@Symfony\Component\HttpFoundation\Session\SessionInterface'

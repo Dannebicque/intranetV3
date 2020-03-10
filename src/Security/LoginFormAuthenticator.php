@@ -10,6 +10,7 @@ namespace App\Security;
 
 use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -26,10 +27,25 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
+    /**
+     * @var UrlGeneratorInterface
+     */
     private $urlGenerator;
+    /**
+     * @var CsrfTokenManagerInterface
+     */
     private $csrfTokenManager;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $passwordEncoder;
+    /**
+     * @var
+     */
     private $session;
+    /**
+     * @var
+     */
     private $user;
 
     /** @var DepartementRepository */
@@ -38,11 +54,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        SessionInterface $session,
+        DepartementRepository $departementRepository
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->departementRepository = $departementRepository;
+        $this->session = $session;
     }
 
     public function supports(Request $request): bool
@@ -87,6 +107,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return AbstractAuthenticator::onAuthenticationSuccess(
+            $this->urlGenerator,
+            $this->session,
             $token->getRoleNames(),
             $this->departementRepository,
             $this->user, $this->getTargetPath($request->getSession(), $providerKey));

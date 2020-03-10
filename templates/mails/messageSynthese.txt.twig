@@ -1,7 +1,8 @@
-Copie du message envoyé a {{ nbetudiant }} personnes. Au total {{ nb }} messages ont été envoyés (mail université et mail perso lorsque disponible).
+Copie du message envoyé à {{ nbetudiant }} personne(s). Au total {{ nb }} message(s) ont été envoyé(s) (mail université
+et mail personnel lorsque disponible).
 ====
 
-{{ message }}
+{{ message|raw }}
 
 
 {% if expediteur.signature=="" %}
@@ -10,4 +11,4 @@ Copie du message envoyé a {{ nbetudiant }} personnes. Au total {{ nb }} message
     {{ expediteur.signature }}
 {% endif %}
 
-Ce message est envoyé depuis l'intranet.
+Ce message est envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}.
