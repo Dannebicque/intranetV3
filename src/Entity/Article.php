@@ -124,7 +124,9 @@ class Article extends BaseEntity
     }
 
     /**
+     * @param $slug
      *
+     * @return Article
      */
     public function setSlug($slug): self
     {

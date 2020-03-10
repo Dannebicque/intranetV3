@@ -2,14 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Etudiant;
 use App\Entity\QualiteQuestionnaire;
-use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiant;
 use App\Entity\QuizzEtudiantReponse;
-use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 
 /**

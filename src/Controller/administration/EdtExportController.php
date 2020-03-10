@@ -9,13 +9,7 @@
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\MesClasses\Edt\MyEdt;
-use App\MesClasses\Edt\MyEdtCelcat;
 use App\MesClasses\Edt\MyEdtExport;
-use App\Repository\GroupeRepository;
-use App\Repository\MatiereRepository;
-use App\Repository\PersonnelRepository;
-use App\Repository\SalleRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,6 +23,9 @@ class EdtExportController extends BaseController
     /**
      * @Route("/voir/{source}", name="administration_edt_export_voir")
      *
+     *
+     * @param MyEdtExport $myEdtExport
+     * @param             $source
      *
      * @return Response
      */
@@ -44,6 +41,8 @@ class EdtExportController extends BaseController
      * @Route("/{source}", name="administration_edt_export_index")
      *
      *
+     * @param $source
+     *
      * @return Response
      */
     public function index($source): Response
@@ -56,6 +55,8 @@ class EdtExportController extends BaseController
     /**
      * @Route("/{source}.{_format}", name="administration_edt_export_all")
      *
+     *
+     * @param $source
      *
      * @return Response
      */

@@ -10,24 +10,18 @@ namespace App\Controller\superAdministration\enquete;
 
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteQuestionnaireSection;
-use App\Entity\QuizzEtudiantReponse;
-use App\Entity\QuizzQuestion;
 use App\Entity\Semestre;
 use App\MesClasses\Enquetes\MyEnquete;
-use App\MesClasses\Excel\MyExcelWriter;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PrevisionnelRepository;
-use App\Repository\QuizzEtudiantReponseRepository;
 use App\Repository\QuizzEtudiantRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,7 +31,8 @@ class EnqueteController extends AbstractController
 {
     /**
      * @Route("/", name="administratif_enquete_index")
-     * @param DiplomeRepository $diplomeRepository
+     * @param EtudiantRepository $etudiantRepository
+     * @param DiplomeRepository  $diplomeRepository
      *
      * @return Response
      */
@@ -58,6 +53,8 @@ class EnqueteController extends AbstractController
      * @param Semestre                $semestre
      *
      * @return Response
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function semestre(QuizzEtudiantRepository $quizzEtudiantRepository, Semestre $semestre): Response
     {
@@ -163,6 +160,7 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/reponses/{questionnaire}", name="administratif_enquete_reponses")
      *
+     * @param MyEnquete            $myEnquete
      * @param QualiteQuestionnaire $questionnaire
      *
      * @return Response
@@ -180,7 +178,9 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/export/{questionnaire}", name="administratif_enquete_export")
      *
-     * @param QualiteQuestionnaire $questionnaire
+     * @param MyEnquete              $myEnquete
+     * @param PrevisionnelRepository $previsionnelRepository
+     * @param QualiteQuestionnaire   $questionnaire
      *
      * @return Response
      * @throws Exception
@@ -199,6 +199,7 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/{questionnaire}", name="administratif_enquete_delete", methods={"DELETE"})
      *
+     * @param Request              $request
      * @param QualiteQuestionnaire $questionnaire
      *
      * @return Response

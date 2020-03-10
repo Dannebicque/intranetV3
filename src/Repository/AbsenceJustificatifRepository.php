@@ -1,7 +1,7 @@
 <?php
 // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AbsenceJustificatifRepository.php
-// @author     David Annebicque
+// @author David Annebicque
 // @project intranetv3
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
@@ -52,7 +52,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
 
     /**
      * @param Semestre $semestre
-     * @param int      $annee
+     * @param int|null      $annee
      *
      * @return mixed
      * @throws NonUniqueResultException

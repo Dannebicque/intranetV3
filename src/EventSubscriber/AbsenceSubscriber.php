@@ -1,7 +1,7 @@
 <?php
 // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/AbsenceSubscriber.php
-// @author     David Annebicque
+// @author David Annebicque
 // @project intranetv3
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
@@ -10,16 +10,13 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Absence;
-use App\Entity\AbsenceJustificatif;
 use App\Event\AbsenceEvent;
 use App\Event\JustificatifEvent;
-use App\Events;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur

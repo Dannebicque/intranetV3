@@ -16,7 +16,6 @@ use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Error\LoaderError;
@@ -71,6 +70,15 @@ class StageSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
     public function onChgtEtatStageAutorise(StageEvent $event): void
     {
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_AUTORISE);
@@ -94,6 +102,15 @@ class StageSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
     public function onChgtEtatStageConventionEnvoyee(StageEvent $event): void
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
@@ -101,6 +118,15 @@ class StageSubscriber implements EventSubscriberInterface
 
     }
 
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
     public function onChgtEtatStageConventionRecue(StageEvent $event): void
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_CONVENTION_RECUE);
@@ -108,6 +134,15 @@ class StageSubscriber implements EventSubscriberInterface
 
     }
 
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
     public function onChgtEtatStageDepose(StageEvent $event): void
     {
         $stageEtudiant = $event->getStageEtudiant();
@@ -129,12 +164,30 @@ class StageSubscriber implements EventSubscriberInterface
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_DEPOSE);
     }
 
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
     public function onChgtEtatStageValide(StageEvent $event): void
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
     }
 
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
     public function onChgtEtatStageImprime(StageEvent $event): void
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_IMPRIME);

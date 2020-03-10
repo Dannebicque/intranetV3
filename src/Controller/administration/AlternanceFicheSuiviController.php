@@ -11,7 +11,6 @@ namespace App\Controller\administration;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
 use App\Form\AlternanceFicheSuiviType;
-use App\Repository\AlternanceFicheSuiviRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Exception;
@@ -27,7 +26,9 @@ class AlternanceFicheSuiviController extends AbstractController
 {
     /**
      * @Route("/new/{alternance}", name="administration_alternance_fiche_suivi_new", methods={"GET","POST"})
-     * @param Request $request
+     * @param Request    $request
+     *
+     * @param Alternance $alternance
      *
      * @return Response
      * @throws Exception

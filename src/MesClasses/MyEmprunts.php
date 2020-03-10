@@ -59,6 +59,7 @@ class MyEmprunts
      * @param EmpruntRepository        $empruntRepository
      * @param EntityManagerInterface   $entityManager
      * @param EventDispatcherInterface $eventDispatcher
+     * @param MyPDF                    $myPDF
      */
     public function __construct(
         EmpruntRepository $empruntRepository,

@@ -11,7 +11,6 @@ namespace App\Repository;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
-use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

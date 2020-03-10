@@ -49,6 +49,9 @@ abstract class MyCelcat
         return self::$conn;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function getCalendar(): void
     {
         self::connect();

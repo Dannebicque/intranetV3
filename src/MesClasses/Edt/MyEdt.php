@@ -452,11 +452,13 @@ class MyEdt extends BaseEdt
     {
         /** @var Groupe $groupe */
         foreach ($this->user->getGroupes() as $groupe) {
-            if ($groupe->getTypegroupe()->isTd()) {
-                $this->groupetd = $groupe->getOrdre();
-            } else if ($groupe->getTypegroupe()->isTp()) {
-                $this->groupetp = $groupe->getOrdre();
+            if ($groupe->getTypegroupe() !== null) {
+                if ($groupe->getTypegroupe()->isTd()) {
+                    $this->groupetd = $groupe->getOrdre();
+                } else if ($groupe->getTypegroupe()->isTp()) {
+                    $this->groupetp = $groupe->getOrdre();
 
+                }
             }
         }
     }

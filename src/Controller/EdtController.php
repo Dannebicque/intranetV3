@@ -238,6 +238,9 @@ class EdtController extends BaseController
 
     /**
      * @Route("/etudiant/export/ical", name="edt_etudiant_export_ical")
+     * @param MyEdtExport $myEdtExport
+     *
+     * @return Response
      */
     public function exportEtudiantIcal(MyEdtExport $myEdtExport): Response
     {

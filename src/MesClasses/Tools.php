@@ -16,10 +16,17 @@
 namespace App\MesClasses;
 
 use DateTime;
+use Exception;
 use function count;
 
 abstract class Tools
 {
+    /**
+     * @param $date
+     *
+     * @return DateTime
+     * @throws Exception
+     */
     public static function convertDateToObject($date): DateTime
     {
         $t = explode('/', $date);
@@ -30,6 +37,12 @@ abstract class Tools
         return new DateTime($date);
     }
 
+    /**
+     * @param $heure
+     *
+     * @return DateTime
+     * @throws Exception
+     */
     public static function convertTimeToObject($heure): DateTime
     {
         return new DateTime($heure);
@@ -81,8 +94,6 @@ abstract class Tools
         $texte = preg_replace("/[\-]+/", '-', $texte);
 
         return $texte;
-
-        return strtolower(strtr($stripped, $table));
     }
 
     public static function personnaliseTexte($texte, $config)

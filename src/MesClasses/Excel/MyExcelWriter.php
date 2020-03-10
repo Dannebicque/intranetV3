@@ -296,6 +296,15 @@ class MyExcelWriter
         $this->sheet->mergeCells($cells);
     }
 
+    /**
+     * @param       $col1
+     * @param       $lig1
+     * @param       $col2
+     * @param       $lig2
+     * @param array $array
+     *
+     * @throws Exception
+     */
     public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
     {
         $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;

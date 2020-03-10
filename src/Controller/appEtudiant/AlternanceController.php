@@ -13,6 +13,7 @@ use App\Entity\Alternance;
 use App\Entity\Constantes;
 use App\Form\AlternanceEtudiantType;
 use App\Repository\AlternanceRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,7 @@ class AlternanceController extends BaseController
      * @param AlternanceRepository $alternanceRepository
      *
      * @return Response
+     * @throws NonUniqueResultException
      */
     public function index(AlternanceRepository $alternanceRepository): Response
     {
