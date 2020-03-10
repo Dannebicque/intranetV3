@@ -9,7 +9,6 @@
 namespace App\Form;
 
 use App\Entity\Actualite;
-use App\Form\Type\QuillJsType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

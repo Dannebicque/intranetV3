@@ -16,7 +16,6 @@ use App\Event\NoteEvent;
 use App\Event\RattrapageEvent;
 use App\MesClasses\Mail\MyMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 /**

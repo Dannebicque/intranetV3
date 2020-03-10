@@ -13,7 +13,6 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Form\TypeGroupeType;
-use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -12,7 +12,6 @@ use App\Controller\BaseController;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\CreneauCours;
-use App\Form\CreneauCoursType;
 use App\MesClasses\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CreneauCoursRepository;
