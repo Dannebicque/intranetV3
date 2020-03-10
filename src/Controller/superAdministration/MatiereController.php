@@ -16,6 +16,7 @@ use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\Form\PpnImportType;
 use App\MesClasses\MyPpn;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +45,7 @@ class MatiereController extends BaseController
      * @param Departement $departement
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function import(MyPpn $myPpn, Request $request, Departement $departement): Response
     {

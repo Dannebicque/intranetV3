@@ -4,14 +4,13 @@ namespace App\Repository;
 
 use App\Entity\QualiteQuestionnaireSection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method QualiteQuestionnaireSection|null find($id, $lockMode = null, $lockVersion = null)
  * @method QualiteQuestionnaireSection|null findOneBy(array $criteria, array $orderBy = null)
  * @method QualiteQuestionnaireSection[]    findAll()
- * @method QualiteQuestionnaireSection[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset =
- *         null)
+ * @method QualiteQuestionnaireSection[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class QualiteQuestionnaireSectionRepository extends ServiceEntityRepository
 {

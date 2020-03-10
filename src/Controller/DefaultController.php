@@ -53,6 +53,7 @@ class DefaultController extends BaseController
     /**
      *
      * @Route("/aide/{sujet}", name="help_article")
+     * @param $sujet
      */
     public function help($sujet)
     {

@@ -7,7 +7,9 @@ use App\Entity\QualiteQuestionnaire;
 use App\Entity\QuizzEtudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * @method QuizzEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,6 +24,13 @@ class QuizzEtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizzEtudiant::class);
     }
 
+    /**
+     * @param Semestre $semestre
+     *
+     * @return mixed
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
     public function compteReponse(Semestre $semestre)
     {
         $qb = $this->createQueryBuilder('prov');
@@ -35,7 +44,12 @@ class QuizzEtudiantRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function findBySemestreArray(Semestre $semestre)
+    /**
+     * @param Semestre $semestre
+     *
+     * @return array
+     */
+    public function findBySemestreArray(Semestre $semestre): array
     {
         $q = $this->createQueryBuilder('q')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'e.id = q.etudiant')

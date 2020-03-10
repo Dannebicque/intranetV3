@@ -274,14 +274,15 @@ class MyEdtCelcat extends BaseEdt
     {
         /** @var Groupe $groupe */
         foreach ($this->user->getGroupes() as $groupe) {
-            if ($groupe->getTypegroupe()->isTd()) {
-                $this->groupetd = $groupe->getCodeApogee();
-            } else if ($groupe->getTypegroupe()->isTp()) {
-                $this->groupetp = $groupe->getCodeApogee();
+            if ($groupe->getTypeGroupe() !== null) {
+                if ($groupe->getTypegroupe()->isTd()) {
+                    $this->groupetd = $groupe->getCodeApogee();
+                } else if ($groupe->getTypegroupe()->isTp()) {
+                    $this->groupetp = $groupe->getCodeApogee();
 
-            } else {
-                $this->groupecm = $groupe->getCodeApogee();
-
+                } else {
+                    $this->groupecm = $groupe->getCodeApogee();
+                }
             }
         }
     }

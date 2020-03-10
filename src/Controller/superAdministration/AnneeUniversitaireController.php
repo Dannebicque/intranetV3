@@ -174,7 +174,10 @@ class AnneeUniversitaireController extends BaseController
     {
         $id = $annee_universitaire->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($annee_universitaire->getDepartements()) === 0) {
+            if (count($annee_universitaire->getDepartements()) === 0 &&
+                count($annee_universitaire->getDiplomes()) === 0 &&
+                count($annee_universitaire->getScolarites()) === 0 &&
+                count($annee_universitaire->getEvaluations()) === 0) {
                 $this->entityManager->remove($annee_universitaire);
                 $this->entityManager->flush();
 

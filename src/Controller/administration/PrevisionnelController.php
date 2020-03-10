@@ -16,7 +16,6 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Form\ImportPrevisionnelType;
 use App\MesClasses\MyPrevisionnel;
-use App\MesClasses\Tools;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
@@ -129,6 +128,9 @@ class PrevisionnelController extends BaseController
     /**
      * @Route("/ajax/edit/{id}", name="administration_previsionnel_ajax_edit", options={"expose":true})
      * @param MyPrevisionnel $myPrevisionnel
+     *
+     * @param Request        $request
+     * @param Previsionnel   $previsionnel
      *
      * @return JsonResponse
      */

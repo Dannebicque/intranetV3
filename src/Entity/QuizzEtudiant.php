@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -111,12 +112,12 @@ class QuizzEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateTermine(): ?\DateTimeInterface
+    public function getDateTermine(): ?DateTimeInterface
     {
         return $this->dateTermine;
     }
 
-    public function setDateTermine(\DateTimeInterface $dateTermine): self
+    public function setDateTermine(DateTimeInterface $dateTermine): self
     {
         $this->dateTermine = $dateTermine;
 

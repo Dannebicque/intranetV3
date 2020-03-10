@@ -118,6 +118,7 @@ class MyPrevisionnel
      *
      * @param EntityManagerInterface $entityManager
      * @param PrevisionnelRepository $previsionnelRepository
+     * @param PersonnelRepository    $personnelRepository
      * @param HrsRepository          $hrsRepository
      * @param MyExcelWriter          $myExcelWriter
      * @param MyUpload               $myUpload
@@ -676,6 +677,12 @@ class MyPrevisionnel
         }
     }
 
+    /**
+     * @param $data
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function importCsv($data): bool
     {
         $file = $this->myUpload->upload($data['fichier'], 'temp');

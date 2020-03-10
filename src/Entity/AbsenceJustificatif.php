@@ -1,7 +1,7 @@
 <?php
 // Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/AbsenceJustificatif.php
-// @author     David Annebicque
+// @author David Annebicque
 // @project intranetv3
 // @date 25/11/2019 10:20
 // @lastUpdate 23/11/2019 09:14
@@ -206,8 +206,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->fichierFile = $document;
 
         if (null !== $document) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
             $this->setUpdated(new DateTime());
         }
     }

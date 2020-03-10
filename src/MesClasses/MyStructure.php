@@ -19,6 +19,9 @@ namespace App\MesClasses;
 use App\Entity\Departement;
 use App\MesClasses\Excel\MyExcelWriter;
 use App\MesClasses\Pdf\MyPDF;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyStructure
 {
@@ -43,7 +46,14 @@ class MyStructure
         $this->myExcel = $myExcel;
     }
 
-
+    /**
+     * @param Departement $departement
+     * @param             $_format
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function export(Departement $departement, $_format): void
     {
         $this->departement = $departement;

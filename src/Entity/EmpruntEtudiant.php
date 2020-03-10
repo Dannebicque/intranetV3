@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -27,7 +28,7 @@ class EmpruntEtudiant extends Emprunt
      *
      * @param $etudiant
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($etudiant)
     {

@@ -172,6 +172,11 @@ class MyMessagerie
         $this->pjs = $pjs;
     }
 
+    /**
+     * @param array $copie
+     *
+     * @throws TransportExceptionInterface
+     */
     public function setCopie(array $copie): void
     {
         $this->sendToPersonnels($copie);

@@ -18,7 +18,6 @@ use App\Entity\TypeGroupe;
 use DA\KernelBundle\Entity\Groupes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Groupe|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,7 +30,7 @@ class GroupeRepository extends ServiceEntityRepository
     /**
      * GroupeRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {

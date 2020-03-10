@@ -97,7 +97,12 @@ class MyExport
         return false;
     }
 
-
+    /**
+     * @param Evaluation $evaluation
+     *
+     * @return Response|null
+     * @throws Exception
+     */
     public function genereModeleImportNote(Evaluation $evaluation): ?Response
     {
         $semestre = $evaluation->getSemestre();

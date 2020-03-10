@@ -11,7 +11,9 @@ namespace App\Repository;
 use App\Entity\Notification;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @method Notification|null find($id, $lockMode = null, $lockVersion = null)
@@ -34,12 +36,20 @@ class NotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Notification::class);
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     */
     public function deleteOldNotification()
     {
         return $this->getDeleteOldNotification()->delete()->getQuery()->execute();
     }
 
-    public function getDeleteOldNotification()
+    /**
+     * @return QueryBuilder
+     * @throws Exception
+     */
+    public function getDeleteOldNotification(): QueryBuilder
     {
         return $this->createQueryBuilder('n')
             ->where('n.created < :date')

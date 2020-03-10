@@ -18,7 +18,6 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use function chr;
-use function strlen;
 
 /**
  * Class AppExtension
@@ -233,8 +232,8 @@ class AppExtension extends AbstractExtension
     {
         $timestamp = $date->getTimestamp();
 
-        $strTime = ["seconde", "minute", "heure", "jour", "mois", "année"];
-        $length = ["60", "60", "24", "30", "12", "10"];
+        $strTime = ['seconde', 'minute', 'heure', 'jour', 'mois', 'année'];
+        $length = ['60', '60', '24', '30', '12', '10'];
 
         $currentTime = time();
         if ($currentTime >= $timestamp) {

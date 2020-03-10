@@ -55,6 +55,7 @@ class MyEnquete
      *
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
+     * @param MyExcelWriter                  $myExcelWriter
      */
     public function __construct(
         QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,

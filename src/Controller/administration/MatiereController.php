@@ -102,6 +102,8 @@ class MatiereController extends BaseController
      *
      * @param Diplome $diplome
      *
+     * @param Ue|null $ue
+     *
      * @return Response
      */
     public function create(Request $request, Diplome $diplome, Ue $ue = null): Response

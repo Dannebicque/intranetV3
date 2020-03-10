@@ -372,6 +372,9 @@ class MyExportListing
         $this->colonne++;
     }
 
+    /**
+     *
+     */
     private function setMiseEnPage(): void
     {
         $this->myExcelWriter->getSheet()->getHeaderFooter()->setOddHeader('&C&H' . $this->titre);

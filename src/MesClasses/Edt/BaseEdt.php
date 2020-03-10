@@ -16,6 +16,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
+use DateTime;
 use RuntimeException;
 
 Abstract class BaseEdt
@@ -37,6 +38,7 @@ Abstract class BaseEdt
      * @var int|null
      */
     protected $semaineFormationIUT;
+    /** @var DateTime */
     protected $semaineFormationLundi;
     protected $filtre;
     protected $valeur;
@@ -293,6 +295,7 @@ Abstract class BaseEdt
 
         $t = [];
         $i = 0;
+        /** @var Calendrier $s */
         foreach ($allsemaine as $s) {
             $t[$i]['semaineReelle'] = $s->getSemaineReelle();
             $t[$i]['semaineIUT'] = $s->getSemaineFormation();

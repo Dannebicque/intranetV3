@@ -32,6 +32,8 @@ class GroupeController extends BaseController
      * @Route("/{semestre}", name="administration_groupe_index", requirements={"semestre":"\d+"}, methods={"GET"})
      * @param GroupeRepository $groupeRepository
      *
+     * @param Semestre|null    $semestre
+     *
      * @return Response
      */
     public function index(GroupeRepository $groupeRepository, ?Semestre $semestre = null): Response

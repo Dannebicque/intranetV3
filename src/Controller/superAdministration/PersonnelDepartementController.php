@@ -27,7 +27,8 @@ class PersonnelDepartementController extends BaseController
 {
     /**
      * @Route("/{departement}", name="sa_personnel_departement_index")
-     * @param Departement $departement
+     * @param PersonnelDepartementRepository $personnelDepartementRepository
+     * @param Departement                    $departement
      *
      * @return Response
      */

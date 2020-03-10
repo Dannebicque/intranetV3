@@ -12,6 +12,7 @@ use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -76,6 +77,13 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param Etudiant $user
+     *
+     * @return mixed
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function getNbUnread(Etudiant $user)
     {
         return $this->createQueryBuilder('m')

@@ -11,7 +11,6 @@ namespace App\Controller\administration\stage;
 use App\Controller\BaseController;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
-use App\Events;
 use App\MesClasses\MyStageMailTemplate;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -58,7 +57,7 @@ class StagePeriodeCourrierController extends BaseController
         StagePeriode $stagePeriode,
         $mail
     ): Response {
-        $myStageMailTemplate->updateTemplate($mail, $request->request > get('sujet'), $request->request->get('message'),
+        $myStageMailTemplate->updateTemplate($mail, $request->request->get('sujet'), $request->request->get('message'),
             $stagePeriode);
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [

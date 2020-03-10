@@ -21,6 +21,7 @@ use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class MyGroupes
 {
@@ -52,6 +53,7 @@ class MyGroupes
      * @param EntityManagerInterface $entityManager
      * @param TypeGroupeRepository   $typeGroupeRepository
      * @param GroupeRepository       $groupeRepository
+     * @param MyUpload               $myUpload
      * @param EtudiantRepository     $etudiantRepository
      */
     public function __construct(
@@ -184,7 +186,14 @@ class MyGroupes
         $this->entityManager->flush();
     }
 
-    public function importCsv($fichier, Departement $departement)
+    /**
+     * @param             $fichier
+     * @param Departement $departement
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function importCsv($fichier, Departement $departement): bool
     {
         $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
         $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
@@ -202,32 +211,30 @@ class MyGroupes
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ',');
-                if (is_array($ligne) && count($ligne) > 5) {
-                    //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
-                    if (array_key_exists($ligne[4], $semestres)) {
-                        if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
-                                $typeGroupes[$ligne[4]])) {
-                            //le type de groupe n'existe pas encore, donc on ajoute.
-                            $tg = new TypeGroupe($semestres[$ligne[4]]);
-                            $tg->setLibelle($ligne[5]);
-                            $tg->setType($ligne[6]);
-                            $this->entityManager->persist($tg);
-                            $this->entityManager->flush();
-                            $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
-                        }
-
-                        $groupe = new Groupe($typeGroupes[$ligne[4]][$ligne[5]]);
-                        $groupe->setLibelle($ligne[0]);
-                        $groupe->setOrdre($ligne[1]);
-                        $groupe->setCodeApogee($ligne[2]);
-                        if ($ligne[3] !== '' || $ligne[3] !== null) {
-                            if (array_key_exists($ligne[3], $parcours)) {
-                                $groupe->setParcours($parcours[$ligne[3]]);
-                            }
-                        }
-
-                        $this->entityManager->persist($groupe);
+                //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
+                if (is_array($ligne) && count($ligne) > 5 && array_key_exists($ligne[4], $semestres)) {
+                    if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
+                            $typeGroupes[$ligne[4]])) {
+                        //le type de groupe n'existe pas encore, donc on ajoute.
+                        $tg = new TypeGroupe($semestres[$ligne[4]]);
+                        $tg->setLibelle($ligne[5]);
+                        $tg->setType($ligne[6]);
+                        $this->entityManager->persist($tg);
+                        $this->entityManager->flush();
+                        $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
                     }
+
+                    $groupe = new Groupe($typeGroupes[$ligne[4]][$ligne[5]]);
+                    $groupe->setLibelle($ligne[0]);
+                    $groupe->setOrdre($ligne[1]);
+                    $groupe->setCodeApogee($ligne[2]);
+                    if ($ligne[3] !== '' || $ligne[3] !== null) {
+                        if (array_key_exists($ligne[3], $parcours)) {
+                            $groupe->setParcours($parcours[$ligne[3]]);
+                        }
+                    }
+
+                    $this->entityManager->persist($groupe);
                 }
             }
             $this->entityManager->flush();
@@ -242,7 +249,14 @@ class MyGroupes
         return false;
     }
 
-    public function importGroupeEtudiantCsv($fichier, Semestre $semestre)
+    /**
+     * @param          $fichier
+     * @param Semestre $semestre
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function importGroupeEtudiantCsv($fichier, Semestre $semestre): bool
     {
         $groupes = $this->entityManager->getRepository(Groupe::class)->findBySemestreArray($semestre);
         $etudiants = $this->entityManager->getRepository(Etudiant::class)->findBySemestreArray($semestre);
@@ -265,11 +279,10 @@ class MyGroupes
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ',');
-                if (is_array($ligne) && count($ligne) === 2) {
-                    if (array_key_exists($ligne[0], $groupes) && array_key_exists($ligne[1], $etudiants)) {
-                        $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
-                    }
-                }
+                if (is_array($ligne) && count($ligne) === 2 && array_key_exists($ligne[0],
+                        $groupes) && array_key_exists($ligne[1], $etudiants)) {
+                            $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
+                        }
             }
             $this->entityManager->flush();
 

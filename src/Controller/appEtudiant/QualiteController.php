@@ -23,7 +23,6 @@ use App\Repository\QuizzQuestionRepository;
 use App\Repository\QuizzReponseRepository;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,6 +92,7 @@ class QualiteController extends BaseController
 
     /**
      * @Route("/section/{qualiteQuestionnaireSection}", name="app_etudiant_qualite_section")
+     * @param QuizzEtudiantRepository        $quizzEtudiantRepository
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param PrevisionnelRepository         $previsionnelRepository
      * @param QualiteQuestionnaireSection    $qualiteQuestionnaireSection
@@ -127,6 +127,7 @@ class QualiteController extends BaseController
      * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzReponseRepository         $quizzReponseRepository
+     * @param QuizzEtudiantRepository        $quizzEtudiantRepository
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param Request                        $request
      * @param QualiteQuestionnaire           $questionnaire
@@ -176,30 +177,27 @@ class QualiteController extends BaseController
                 }
 
                 $this->entityManager->persist($qr);
-            } else {
-                if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCU || $question->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE || $question->getType() === QuizzQuestion::QUESTION_TYPE_YESNO) {
-                    $exist->setCleReponse($cleReponse);
-                    $exist->setValeur($reponse->getValeur());
-                } elseif ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
-                    //si c'est un QCM, on fait un tableau de réponse.
-                    $cleReponses = json_decode($exist->getCleReponse(), false);
-                    $valeurs = json_decode($exist->getValeur(), false);
-                    $idCle = array_search($cleReponse, $cleReponses, true);
-                    $idValeur = array_search($reponse->getValeur(), $valeurs, true);
-                    if ($idCle !== false && $idValeur !== false) {
-                        //réponse déjà présente on supprime
-                        unset($cleReponses[$idCle], $valeurs[$idValeur]);
-                        $cleReponses = array_values($cleReponses);
-                        $valeurs = array_values($valeurs);
-                    } else {
-                        $cleReponses[] = $cleReponse;
-                        $valeurs[] = $reponse->getValeur();
-                    }
-
-                    $exist->setCleReponse(json_encode($cleReponses));
-                    $exist->setValeur(json_encode($valeurs));
+            } else if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCU || $question->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE || $question->getType() === QuizzQuestion::QUESTION_TYPE_YESNO) {
+                $exist->setCleReponse($cleReponse);
+                $exist->setValeur($reponse->getValeur());
+            } elseif ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
+                //si c'est un QCM, on fait un tableau de réponse.
+                $cleReponses = json_decode($exist->getCleReponse(), false);
+                $valeurs = json_decode($exist->getValeur(), false);
+                $idCle = array_search($cleReponse, $cleReponses, true);
+                $idValeur = array_search($reponse->getValeur(), $valeurs, true);
+                if ($idCle !== false && $idValeur !== false) {
+                    //réponse déjà présente on supprime
+                    unset($cleReponses[$idCle], $valeurs[$idValeur]);
+                    $cleReponses = array_values($cleReponses);
+                    $valeurs = array_values($valeurs);
+                } else {
+                    $cleReponses[] = $cleReponse;
+                    $valeurs[] = $reponse->getValeur();
                 }
 
+                $exist->setCleReponse(json_encode($cleReponses));
+                $exist->setValeur(json_encode($valeurs));
             }
             $this->entityManager->flush();
 
@@ -214,6 +212,7 @@ class QualiteController extends BaseController
      * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
+     * @param QuizzEtudiantRepository        $quizzEtudiantRepository
      * @param Request                        $request
      * @param QualiteQuestionnaire           $questionnaire
      *

@@ -8,12 +8,8 @@
 
 namespace App\Security;
 
-use App\Entity\Departement;
-use App\Events;
 use App\Repository\DepartementRepository;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -25,7 +21,6 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-use function in_array;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -43,16 +38,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder,
-        DepartementRepository $departementRepository,
-        SessionInterface $session
-
+        UserPasswordEncoderInterface $passwordEncoder
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
-        $this->departementRepository = $departementRepository;
-        $this->session = $session;
     }
 
     public function supports(Request $request): bool
@@ -64,8 +54,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'username' => $request->request->get('username'),
-            'password' => $request->request->get('password'),
+            'username'   => $request->request->get('username'),
+            'password'   => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -80,7 +70,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
+            throw new InvalidCsrfTokenException('Token CSRF invalid');
         }
 
         $this->user = $userProvider->loadUserByUsername($credentials['username']);
@@ -96,51 +86,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $rolesTab = $token->getRoleNames();
-        if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab,
-                true) || in_array('ROLE_SCOLARITE', $rolesTab, true) || in_array('ROLE_QUALITE', $rolesTab,
-                true) || in_array('ROLE_RH', $rolesTab, true)) {
-            // c'est un super administrateur : on le rediriger vers l'espace super-admin
-            $redirection = new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
-        } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {
-            // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
-
-            if (in_array('ROLE_PERMANENT', $rolesTab, true)) {
-                //init de la session departement
-                $departements = $this->departementRepository->findDepartementPersonnelDefaut($this->user);
-                if (count($departements) > 1) {
-                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
-                }
-
-                if (count($departements) === 1) {
-                    /** @var Departement $departement */
-                    $departement = $departements[0];
-                    $this->session->set('departement', $departement->getUuidString()); //on sauvegarde
-                } else {
-                    echo 'pas de departement par defaut';
-                    //pas de departement par défaut, ou pas de departement du tout.
-                    $departements = $this->departementRepository->findDepartementPersonnel($this->user);
-                    if (count($departements) === 0) {
-                        return new RedirectResponse($this->urlGenerator->generate('security_login',
-                            ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
-                    }
-                    //donc il y a une departement, mais pas une par défaut.
-                    return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
-                }
-            }
-
-            if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-                return new RedirectResponse($targetPath);
-            }
-
-            $redirection = new RedirectResponse($this->urlGenerator->generate('default_homepage'));
-        } else {
-            //c'est aucun des rôles...
-            $redirection = new RedirectResponse($this->urlGenerator->generate('security_login',
-                ['message' => 'erreur_role']));
-        }
-
-        return $redirection;
+        return AbstractAuthenticator::onAuthenticationSuccess(
+            $token->getRoleNames(),
+            $this->departementRepository,
+            $this->user, $this->getTargetPath($request->getSession(), $providerKey));
     }
 
     protected function getLoginUrl(): string
