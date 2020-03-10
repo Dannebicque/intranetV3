@@ -110,6 +110,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return AbstractAuthenticator::onAuthenticationSuccess(
+            $this->urlGenerator,
+            $this->session,
             $token->getRoleNames(),
             $this->departementRepository,
             $this->user, '');

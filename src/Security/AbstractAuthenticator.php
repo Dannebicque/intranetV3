@@ -13,23 +13,19 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AbstractAuthenticator
 {
-    private static $urlGenerator;
-    private static $session;
-
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, SessionInterface $session)
-    {
-        self::$urlGenerator = $urlGenerator;
-        self::$session = $session;
-    }
-
-    public static function onAuthenticationSuccess($rolesTab, DepartementRepository $departementRepository, $user, $target = '')
-    {
+    public static function onAuthenticationSuccess(
+        UrlGeneratorInterface $urlGenerator,
+        SessionInterface $session,
+        $rolesTab,
+        DepartementRepository $departementRepository,
+        $user,
+        $target = ''
+    ) {
         if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab,
                 true) || in_array('ROLE_SCOLARITE', $rolesTab, true) || in_array('ROLE_QUALITE', $rolesTab,
                 true) || in_array('ROLE_RH', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
-            $redirection = new RedirectResponse(self::$urlGenerator->generate('super_admin_homepage'));
+            $redirection = new RedirectResponse($urlGenerator->generate('super_admin_homepage'));
         } elseif (in_array('ROLE_PERMANENT', $rolesTab, true) || in_array('ROLE_ETUDIANT', $rolesTab, true)) {
             // c'est un utilisaeur étudiant ou prof : on le rediriger vers l'accueil
 
@@ -37,24 +33,24 @@ class AbstractAuthenticator
                 //init de la session departement
                 $departements = $departementRepository->findDepartementPersonnelDefaut($user);
                 if (count($departements) > 1) {
-                    return new RedirectResponse(self::$urlGenerator->generate('security_choix_departement'));
+                    return new RedirectResponse($urlGenerator->generate('security_choix_departement'));
                 }
 
                 if (count($departements) === 1) {
                     /** @var Departement $departement */
                     $departement = $departements[0];
-                    self::$session->set('departement', $departement->getUuidString()); //on sauvegarde
+                    $session->set('departement', $departement->getUuidString()); //on sauvegarde
                 } else {
                     echo 'pas de departement par defaut';
                     //pas de departement par défaut, ou pas de departement du tout.
                     $departements = $departementRepository->findDepartementPersonnel($user);
                     if (count($departements) === 0) {
-                        return new RedirectResponse(self::$urlGenerator->generate('security_login',
+                        return new RedirectResponse($urlGenerator->generate('security_login',
                             ['events' => Events::REDIRECT_TO_LOGIN, 'message' => 'pas-departement']));
                     }
 
                     //donc il y a une departement, mais pas une par défaut.
-                    return new RedirectResponse(self::$urlGenerator->generate('security_choix_departement'));
+                    return new RedirectResponse($urlGenerator->generate('security_choix_departement'));
                 }
             }
 
@@ -62,10 +58,10 @@ class AbstractAuthenticator
                 return new RedirectResponse($targetPath);
             }
 
-            $redirection = new RedirectResponse(self::$urlGenerator->generate('default_homepage'));
+            $redirection = new RedirectResponse($urlGenerator->generate('default_homepage'));
         } else {
             //c'est aucun des rôles...
-            $redirection = new RedirectResponse(self::$urlGenerator->generate('security_login',
+            $redirection = new RedirectResponse($urlGenerator->generate('security_login',
                 ['message' => 'erreur_role']));
         }
 
