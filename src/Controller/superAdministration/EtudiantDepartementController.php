@@ -12,7 +12,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
-use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
