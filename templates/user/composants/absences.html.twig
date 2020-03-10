@@ -1,16 +1,17 @@
 {{ include('bloc_notes_absences/etudiant_absences.html.twig') }}
 
- {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+ {% if  user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data
+     .isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
      <div class="card">
          <h4 class="card-title">Ajouter une absence</h4>
          <div class="card-body">
              <table class="table">
                  <thead>
                  <tr>
-                   <th width="20%"><label for="jourabs">Date</label></th>
-                   <th width="20%"><label for="heureabs">Heure</label></th>
-                   <th width="30%"><label for="moduleabs">Matière</label></th>
-                   <th width="15%"><label for="justifabs">Justifié ?</label></th>
+                     <th width="20%"><label for="jourabs">Date</label></th>
+                     <th width="20%"><label for="heureabs">Heure</label></th>
+                     <th width="30%"><label for="moduleabs">Matière</label></th>
+                     <th width="15%"><label for="justifabs">Justifié ?</label></th>
                    <th width="15%">&nbsp;</th>
                  </tr>
                  </thead>
