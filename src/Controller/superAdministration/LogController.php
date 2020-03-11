@@ -41,5 +41,17 @@ class LogController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/phpinfo", name="sa_log_phpinfo", methods="GET")
+     *
+     * @param ParameterBagInterface $parameterBag
+     *
+     * @return Response
+     */
+    public function phpinfo(): Response
+    {
+        phpinfo();
+    }
+
 
 }
