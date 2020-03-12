@@ -227,7 +227,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeElement')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.UE')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->where('p.semaineFormation = :semaine')
             ->andWhere('u.semestre = :semestre')
             ->setParameters(array('semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()))
