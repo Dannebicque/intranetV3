@@ -43,10 +43,10 @@ class CelcatController extends BaseController
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      */
-    public function extraction(): Response
+    public function extraction(MyCelcat $myCelcat): Response
     {
         return $this->render('super-administration/celcat/extraction.html.twig', [
-            'diplomes' => MyCelcat::getDiplomes()
+            'diplomes' => $myCelcat->getDiplomes()
         ]);
     }
 
@@ -59,14 +59,17 @@ class CelcatController extends BaseController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function update(CelcatEventsRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
-    {
+    public function update(
+        MyCelcat $myCelcat,
+        CelcatEventsRepository $celcatEventsRepository,
+        Diplome $diplome
+    ): RedirectResponse {
         //suppression des events existants pour le département
         $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(),
             $diplome->getAnneeUniversitaire());
 
         //récupération et ajouts des events.
-        MyCelcat::getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
+        $myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
 
         return $this->redirectToRoute('sa_celcat_index');
     }
