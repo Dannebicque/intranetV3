@@ -101,7 +101,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->delete(CelcatEvent::class, 'c')
             ->where('c.anneeUniversitaire = :annee')
             ->andWhere('c.departementId = :departement')
-            ->setParameter('annee', $anneeUniversitaire->getAnnee())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('departement', $codeCelcatDepartement)
             ->getQuery()
             ->getResult();
