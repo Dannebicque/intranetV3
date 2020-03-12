@@ -27,7 +27,7 @@
                 {{ include('user/composants/content_personnel.html.twig') }}
             {% elseif user.typeUser|lower == 'etudiant' %}
 
-                    {{ include('user/composants/content_etudiant.html.twig') }}
+                {{ include('user/composants/content_etudiant.html.twig') }}
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -36,20 +36,20 @@
                 <div class="text-white card-body bg-img text-center py-50"
                      style="background-image: url({{ asset('assets/bg/2.jpg') }});">
 
-                        {% if user.photoName != null and user.photoName != 'noimage.png' %}
-                            {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
-                                <img class="avatar avatar-xxl avatar-bordered"
-                                     src="{{ asset('upload/personnels/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}"
-                                >
-                            {% elseif user.typeUser|lower == 'etudiant' %}
-                                <img class="avatar avatar-xxxl avatar-bordered"
-                                     src="{{ asset('upload/etudiants/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}">
-                            {% endif %}
-                        {% else %}
-                            <div>
-                                {{ include('composants/_avatar.html.twig', {user:user}) }}
-                            </div>
+                    {% if user.photoName != null and user.photoName != 'noimage.png' %}
+                        {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
+                            <img class="avatar avatar-xxl avatar-bordered"
+                                 src="{{ asset('upload/personnels/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}"
+                            >
+                        {% elseif user.typeUser|lower == 'etudiant' %}
+                            <img class="avatar avatar-xxxl avatar-bordered"
+                                 src="{{ asset('upload/etudiants/'~user.photoName)|imagine_filter('profil') }}" alt="avatar de {{ user.display }}">
                         {% endif %}
+                    {% else %}
+                        <div>
+                            {{ include('composants/_avatar.html.twig', {user:user}) }}
+                        </div>
+                    {% endif %}
 
                     <h5 class="mt-2 mb-0 profil-nom">{{ user.displayPr }}</h5>
                     {% if user.typeUser|lower == 'etudiant' %}
@@ -69,12 +69,22 @@
                                                data-placement="bottom"><i class="fa fa-envelope"></i></a></span>
                     </li>
                     <li class="br-1 border-light">
+
                         <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
-                        <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" {% if user.siteUniv == ''
-                                or user.siteUniv == null %}class="isDisabled" title="{{ 'pas.d.espace.travail'|trans }}"
-                                    {% else %} title="{{ 'consulter.espace.travail'|trans }}" {% endif %}
-                                                data-provide="tooltip"
-                                               data-placement="bottom"><i class="fa fa-globe"></i></a></span>
+                        {% if user.siteUniv != ''or user.siteUniv != null %}
+
+                            <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" title="{{ 'consulter.espace.travail'|trans }}" data-provide="tooltip" data-placement="bottom"><i class="fa fa-globe"></i></a></span>
+                        {% else %}
+                            <span class="fs-22"><a href="#" target="_blank" title="{{ 'pas.d.espace.travail'|trans }}" data-provide="tooltip" class="isDisabled" data-placement="bottom"><i class="fa fa-globe"></i></a></span>
+                        {% endif %}
+
+                        {% if user.sitePerso != '' and user.sitePerso != null %}
+
+                            <span class="fs-22"><a href="{{ user.sitePerso }}" target="_blank" title="{{ 'consulter
+                            .son.site.personnel'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                                            class="fa fa-link"></i></a></span>
+                        {% endif %}
+
                     </li>
                     {#                    <li>#}
                     {#                        <span class="text-muted">Tweets</span><br>#}
