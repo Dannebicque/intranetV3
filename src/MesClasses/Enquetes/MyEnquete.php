@@ -49,6 +49,10 @@ class MyEnquete
 
     /** @var Previsionnel[] */
     private $previsionnel;
+    /**
+     * @var float|int
+     */
+    private $nbReponses = 0;
 
     /**
      * MyEnquete constructor.
@@ -80,8 +84,8 @@ class MyEnquete
         //data
         $this->getReponseFromQuestionnaire($questionnaire);
         $nbEtudiants = count($questionnaire->getSemestre()->getEtudiants());
-        $nbReponses = count($questionnaire->getQuizzEtudiants());
-        $pourcentageReponses = $nbReponses / $nbEtudiants;
+        $this->nbReponses = count($questionnaire->getQuizzEtudiants());
+        $pourcentageReponses = $this->nbReponses / $nbEtudiants;
         //export
         $this->myExcelWriter->createSheet(substr('Exp ' . $questionnaire->getLibelle(), 0, 31));
         $this->myExcelWriter->getColumnDimension('A', 60);
@@ -101,7 +105,7 @@ class MyEnquete
         $this->myExcelWriter->writeCellXY(1, 5, 'Nombre de questionnaires envoyés :');
         $this->myExcelWriter->writeCellXY(2, 5, $nbEtudiants, ['style' => 'HORIZONTAL_CENTER']);
         $this->myExcelWriter->writeCellXY(1, 6, 'Nombre de questionnaires retournés :');
-        $this->myExcelWriter->writeCellXY(2, 6, $nbReponses, ['style' => 'HORIZONTAL_CENTER']);
+        $this->myExcelWriter->writeCellXY(2, 6, $this->nbReponses, ['style' => 'HORIZONTAL_CENTER']);
         $this->myExcelWriter->writeCellXY(1, 7, 'Pourcentage de retours :');
         $this->myExcelWriter->writeCellXY(2, 7, $pourcentageReponses,
             ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE_00]);
@@ -236,11 +240,13 @@ class MyEnquete
         QuizzQuestion $question,
         $config = '',
         QuizzQuestion $questionParent = null
-    ): void {
+    ): void
+    {
         if ($questionParent === null) {
             $questionParent = $question;
         }
-
+        $satisfaction = 0;
+        $nbProps = 0;
         if (in_array($question->getType(), [
             QuizzQuestion::QUESTION_TYPE_ECHELLE,
             QuizzQuestion::QUESTION_TYPE_QCM,
@@ -250,6 +256,7 @@ class MyEnquete
             $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
             $this->myExcelWriter->writeCellXY(2, $this->ligne, 'Décompte', ['style' => 'HORIZONTAL_CENTER']);
             $this->myExcelWriter->writeCellXY(3, $this->ligne, 'Pourcentage', ['style' => 'HORIZONTAL_CENTER']);
+
             $this->ligne++;
             $cleQ = $question->getCle() . $config;
             foreach ($questionParent->getQuizzReponses() as $reponse) {
@@ -260,6 +267,8 @@ class MyEnquete
                     //echo $reponses[$cleQ]['totalReponse'][$cleR].'- '.$reponses[$cleQ]['totalReponse'].'<br>';
                     if (is_int($this->resultatQuestion[$cleQ]['totalReponse'][$cleR])) {
                         $pourcentage = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR] / $this->resultatQuestion[$cleQ]['nbreponse'];
+                        $satisfaction += $nbReponses * $reponse->getLibelle();
+                        $nbProps++;
                     } else {
                         $pourcentage = 0;
                     }
@@ -280,11 +289,12 @@ class MyEnquete
             $this->ligne++;
             if ($question->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE) {
                 //si échelle ... tôt de satisfaction
+                $total = $satisfaction / $nbProps * $this->nbReponses;
                 $this->ligne++;
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit');
-                $this->myExcelWriter->writeCellXY(1, $this->ligne, 0,
+                $this->myExcelWriter->writeCellXY(2, $this->ligne, $total,
                     ['align' => 'center', 'number_format' => NumberFormat::FORMAT_PERCENTAGE_00]);
-                $this->myExcelWriter->writeCellXY(1, $this->ligne, 'de satisfaction', ['align' => 'center']);
+                $this->myExcelWriter->writeCellXY(3, $this->ligne, 'de satisfaction', ['align' => 'center']);
                 $this->ligne++;
             }
         } elseif ($question->getType() === QuizzQuestion::QUESTION_TYPE_LIBRE) {
