@@ -262,14 +262,18 @@ class MyEnquete
             foreach ($questionParent->getQuizzReponses() as $reponse) {
                 $cleR = $reponse->getValeur();
                 $nbProps++;
+                $totRep = 0;
                 if (array_key_exists($cleQ, $this->resultatQuestion) && array_key_exists($cleR,
                         $this->resultatQuestion[$cleQ]['totalReponse'])) {
                     $nbReponses = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR];
 
                     if (is_int($this->resultatQuestion[$cleQ]['totalReponse'][$cleR])) {
                         $pourcentage = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR] / $this->resultatQuestion[$cleQ]['nbreponse'];
-                        $totRep = $nbReponses * $reponse->getLibelle();
-                        $satisfaction += $totRep;
+
+                        if (is_int((int)$reponse->getLibelle())) {
+                            $totRep = $nbReponses * (int)$reponse->getLibelle();
+                            $satisfaction += $totRep;
+                        }
 
                     } else {
                         $pourcentage = 0;
@@ -314,12 +318,16 @@ class MyEnquete
             }
         } elseif ($question->getType() === QuizzQuestion::QUESTION_TYPE_LIBRE) {
             $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
-            $this->myExcelWriter->writeCellXY(2, $this->ligne, '0000',
-                ['style' => 'HORIZONTAL_CENTER']); //nb réponses
-            $this->myExcelWriter->writeCellXY(3, $this->ligne, '000%',
-                ['style' => 'HORIZONTAL_CENTER']); //pourcentage sur nb total
-            $this->ligne++;
-            //liste les réponses
+            $cleQ = 'quizz_question_text_q' . $question->getId();
+            if (array_key_exists($cleQ, $this->resultatQuestion)) {
+                //liste les réponses
+                foreach ($this->resultatQuestion[$cleQ]['totalReponse'] as $key => $rep) {
+                    $this->myExcelWriter->writeCellXY(1, $this->ligne, $key, ['style' => 'HORIZONTAL_LEFT']);
+                    $this->ligne++;
+                }
+            }
+
+
         }
     }
 }
