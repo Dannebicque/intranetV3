@@ -303,7 +303,7 @@ class MyEnquete
                 //si échelle ... tôt de satisfaction
                 $total = $satisfaction / ($nbProps * ($this->nbReponses - $retire));
                 $this->ligne++;
-                $this->myExcelWriter->writeCellXY(5, $this->ligne, ($nbProps * $this->nbReponses),
+                $this->myExcelWriter->writeCellXY(5, $this->ligne, ($nbProps * ($this->nbReponses - $retire)),
                     ['align' => 'center']);
                 $this->myExcelWriter->writeCellXY(6, $this->ligne, $satisfaction, ['align' => 'center']);
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit');
