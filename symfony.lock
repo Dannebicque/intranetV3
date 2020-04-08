@@ -2,8 +2,8 @@
     "bacon/bacon-qr-code": {
         "version": "2.0.0"
     },
-    "behat/transliterator": {
-        "version": "v1.2.0"
+    "brick/math": {
+        "version": "0.8.14"
     },
     "dasprid/enum": {
         "version": "1.0.0"
@@ -107,9 +107,6 @@
             "ref": "370bcf99b04c0dfd0b545745aad622d757af5e1b"
         }
     },
-    "gedmo/doctrine-extensions": {
-        "version": "v2.4.36"
-    },
     "imagine/imagine": {
         "version": "1.2.2"
     },
@@ -124,6 +121,9 @@
     },
     "khanamiryan/qrcode-detector-decoder": {
         "version": "1.0.2"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.3"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -211,6 +211,9 @@
         "version": "1.1.0"
     },
     "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "ramsey/collection": {
         "version": "1.0.1"
     },
     "ramsey/uuid": {
@@ -520,9 +523,6 @@
     "twig/intl-extra": {
         "version": "v3.0.1"
     },
-    "twig/string-extra": {
-        "version": "v3.0.1"
-    },
     "twig/twig": {
         "version": "v2.6.0"
     },
@@ -534,6 +534,9 @@
             "version": "1.5",
             "ref": "c4f5755b37fb65b9c6a3cbdae91205c15a137ed4"
         }
+    },
+    "webimpress/safe-writer": {
+        "version": "2.0.1"
     },
     "webmozart/assert": {
         "version": "1.7.0"

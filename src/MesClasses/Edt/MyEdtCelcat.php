@@ -162,40 +162,41 @@ class MyEdtCelcat extends BaseEdt
         $tab = array();
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            $groupe = $gr[$p->getCodeGroupe()];
-            $jour = $p->getJour() + 1;
-            $dbtEdt = $p->getDebut();
+            if (array_key_exists($p->getCodeGroupe(), $gr)) {
+                $groupe = $gr[$p->getCodeGroupe()];
+                $jour = $p->getJour() + 1;
+                $dbtEdt = $p->getDebut();
 
-            $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin() - $p->getDebut();
+                $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin() - $p->getDebut();
 
-            $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
-            $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte();
+                $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
+                $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte();
 
-            switch ($p->getType()) {
-                case 'CM':
-                case 'cm':
-                    $tab[$jour][$dbtEdt][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
-                    break;
-                case 'TP':
-                case 'tp':
-                    $tab[$jour][$dbtEdt][$groupe]['largeur'] = 1;
-                    break;
-                case 'TD':
-                case 'td':
-                    $tab[$jour][$dbtEdt][$groupe]['largeur'] = 2;
-                    break;
-            }
-
-            $groupefin = $groupe + $tab[$jour][$dbtEdt][$groupe]['largeur'];
-            $fin= $p->getFin();
-            for ($i = $dbtEdt; $i < $fin; $i++) {
-                for ($j = $groupe; $j < $groupefin; $j++) {
-                    $tab[$jour][$i][$j]['texte'] = 'xx';
+                switch ($p->getType()) {
+                    case 'CM':
+                    case 'cm':
+                        $tab[$jour][$dbtEdt][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
+                        break;
+                    case 'TP':
+                    case 'tp':
+                        $tab[$jour][$dbtEdt][$groupe]['largeur'] = 1;
+                        break;
+                    case 'TD':
+                    case 'td':
+                        $tab[$jour][$dbtEdt][$groupe]['largeur'] = 2;
+                        break;
                 }
+
+                $groupefin = $groupe + $tab[$jour][$dbtEdt][$groupe]['largeur'];
+                $fin = $p->getFin();
+                for ($i = $dbtEdt; $i < $fin; $i++) {
+                    for ($j = $groupe; $j < $groupefin; $j++) {
+                        $tab[$jour][$i][$j]['texte'] = 'xx';
+                    }
+                }
+
+                $tab[$jour][$dbtEdt][$groupe]['texte'] = $p->getLibModule() . '<br />' . $p->getLibSalle() . '<br />' . $p->getLibPersonnel() . ' |  ' . $p->getType() . ' |  ' . $p->getLibGroupe();
             }
-
-            $tab[$jour][$dbtEdt][$groupe]['texte'] = $p->getLibModule() . '<br />' . $p->getLibSalle() . '<br />' . $p->getLibPersonnel() . ' |  ' . $p->getType() . ' |  ' . $p->getLibGroupe();
-
         }
 
         return $tab;
