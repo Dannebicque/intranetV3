@@ -266,7 +266,6 @@ class MyEnquete
                         $this->resultatQuestion[$cleQ]['totalReponse'])) {
                     $nbReponses = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR];
 
-                    //echo $reponses[$cleQ]['totalReponse'][$cleR].'- '.$reponses[$cleQ]['totalReponse'].'<br>';
                     if (is_int($this->resultatQuestion[$cleQ]['totalReponse'][$cleR])) {
                         $pourcentage = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR] / $this->resultatQuestion[$cleQ]['nbreponse'];
                         $totRep = $nbReponses * $reponse->getLibelle();
@@ -278,6 +277,13 @@ class MyEnquete
                 } else {
                     $nbReponses = 0;
                     $pourcentage = 0;
+                }
+
+                if ($reponse->getLibelle() == 'Je n\'ai pas suivi ce cours') {
+                    $nbProps--;
+                    $retire = $nbReponses;
+                } else {
+                    $retire = 0;
                 }
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, $reponse->getLibelle());
                 $this->myExcelWriter->writeCellXY(2, $this->ligne, $nbReponses,
@@ -295,7 +301,7 @@ class MyEnquete
             $this->ligne++;
             if ($question->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE) {
                 //si échelle ... tôt de satisfaction
-                $total = $satisfaction / ($nbProps * $this->nbReponses);
+                $total = $satisfaction / ($nbProps * ($this->nbReponses - $retire));
                 $this->ligne++;
                 $this->myExcelWriter->writeCellXY(5, $this->ligne, ($nbProps * $this->nbReponses),
                     ['align' => 'center']);
