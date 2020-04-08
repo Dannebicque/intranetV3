@@ -261,15 +261,17 @@ class MyEnquete
             $cleQ = $question->getCle() . $config;
             foreach ($questionParent->getQuizzReponses() as $reponse) {
                 $cleR = $reponse->getValeur();
+                $nbProps++;
                 if (array_key_exists($cleQ, $this->resultatQuestion) && array_key_exists($cleR,
                         $this->resultatQuestion[$cleQ]['totalReponse'])) {
                     $nbReponses = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR];
+
                     //echo $reponses[$cleQ]['totalReponse'][$cleR].'- '.$reponses[$cleQ]['totalReponse'].'<br>';
                     if (is_int($this->resultatQuestion[$cleQ]['totalReponse'][$cleR])) {
                         $pourcentage = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR] / $this->resultatQuestion[$cleQ]['nbreponse'];
                         $totRep = $nbReponses * $reponse->getLibelle();
                         $satisfaction += $totRep;
-                        $nbProps++;
+
                     } else {
                         $pourcentage = 0;
                     }
