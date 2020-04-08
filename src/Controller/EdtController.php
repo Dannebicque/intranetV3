@@ -98,6 +98,7 @@ class EdtController extends BaseController
             return $this->render('edt/_semestre.html.twig', [
                 'edt'       => $this->myEdtCelcat,
                 'semestre'  => $semestre,
+                'filtre' => 'promo',
                 'valeur'    => $semestre->getId(),
                 'tabHeures' => self::$tabHeures
             ]);
