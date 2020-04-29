@@ -82,6 +82,10 @@ class QuizzQuestion extends BaseEntity
      */
     private $obligatoire = true;
 
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $alignement = 'HORIZONTAL_CENTER';
 
     public function __construct(Personnel $personnel)
     {
@@ -292,5 +296,17 @@ class QuizzQuestion extends BaseEntity
         } else {
             return 'quizz_question_reponses_q' . $this->getId();
         }
+    }
+
+    public function getAlignement(): ?string
+    {
+        return $this->alignement === '' ? 'HORIZONTAL_CENTER' : $this->alignement;
+    }
+
+    public function setAlignement(string $alignement): self
+    {
+        $this->alignement = $alignement;
+
+        return $this;
     }
 }
