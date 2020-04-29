@@ -360,7 +360,8 @@ class MyEnquete
                     $this->ligne++;
                 }
                 //si autre, énumérer les réponses autres
-                if ($reponse->getValeur() === 'CHX:OTHER') {
+                if ($reponse->getValeur() === 'CHX:OTHER' && array_key_exists($cleQ . '_autre',
+                        $this->resultatQuestion)) {
                     foreach ($this->resultatQuestion[$cleQ . '_autre']['totalReponse'] as $key => $value) {
                         $this->myExcelWriter->writeCellXY(1, $this->ligne, $key,
                             ['wrap' => true, 'style' => 'HORIZONTAL_LEFT', 'valign' => 'VERTICAL_TOP']);
