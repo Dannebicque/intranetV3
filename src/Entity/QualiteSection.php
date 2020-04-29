@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QualiteSection extends BaseEntity
 {
-
+    public const DETAIL = 'DETAIL';
+    public const GROUPE = 'GROUPE';
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,8 +40,14 @@ class QualiteSection extends BaseEntity
      */
     private $config;
 
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $typeCalcul;
+
     public function __construct()
     {
+        $this->typeCalcul = self::DETAIL;
         $this->qualiteSectionQuestions = new ArrayCollection();
         $this->qualiteQuestionnaireSections = new ArrayCollection();
     }
@@ -150,6 +157,18 @@ class QualiteSection extends BaseEntity
     public function setConfig(?string $config): self
     {
         $this->config = $config;
+
+        return $this;
+    }
+
+    public function getTypeCalcul(): ?string
+    {
+        return $this->typeCalcul;
+    }
+
+    public function setTypeCalcul(?string $typeCalcul): self
+    {
+        $this->typeCalcul = $typeCalcul;
 
         return $this;
     }

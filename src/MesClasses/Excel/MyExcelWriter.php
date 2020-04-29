@@ -139,17 +139,39 @@ class MyExcelWriter
                                 break;
                         }
                         break;
+                    case 'valign':
+                        switch ($valeur) {
+                            case 'VERTICAL_TOP':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getAlignment()->setVertical(Alignment::VERTICAL_TOP);
+                                break;
+                            case 'VERTICAL_CENTER':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+                                break;
+                            case 'VERTICAL_BOTTOM':
+                                $this->sheet->getCellByColumnAndRow($col,
+                                    $row)->getStyle()->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM);
+                                break;
+
+                        }
+                        break;
                     case 'number_format':
-                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getNumberFormat()->setFormatCode($valeur);
+                        $this->sheet->getCellByColumnAndRow($col,
+                            $row)->getStyle()->getNumberFormat()->setFormatCode($valeur);
                         break;
                     case 'color':
-                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->getColor()->setARGB('FF'.$valeur);
+                        $this->sheet->getCellByColumnAndRow($col,
+                            $row)->getStyle()->getFont()->getColor()->setARGB('FF' . $valeur);
                         break;
                     case 'font-size':
                         $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->setSize($valeur);
                         break;
                     case 'font-weight':
                         $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->setBold(true);
+                        break;
+                    case 'font-italic':
+                        $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->setItalic(true);
                         break;
                     case 'wrap':
                         $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getAlignment()->setWrapText(true);

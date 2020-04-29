@@ -37,6 +37,11 @@ class QuizzReponse extends BaseEntity
      */
     private $ordre;
 
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $alignement = 'HORIZONTAL_CENTER';
+
     public function getQuestion(): ?QuizzQuestion
     {
         return $this->question;
@@ -81,6 +86,18 @@ class QuizzReponse extends BaseEntity
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function getAlignement(): ?string
+    {
+        return $this->alignement === '' ? 'HORIZONTAL_CENTER' : $this->alignement;
+    }
+
+    public function setAlignement(string $alignement): self
+    {
+        $this->alignement = $alignement;
 
         return $this;
     }
