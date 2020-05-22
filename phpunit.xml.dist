@@ -7,6 +7,7 @@
          colors="true"
          bootstrap="config/bootstrap.php"
 >
+    <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:8889/testing"/>
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" />
