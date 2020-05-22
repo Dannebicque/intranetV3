@@ -41,7 +41,7 @@ install:
   #- ./vendor/bin/simple-phpunit install
 
 script:
-  - phpunit --configuration phpunit.xml
+  - phpunit #--configuration phpunit.xml #a confirmer ? prendrait le .env.test
   #- ./vendor/bin/simple-phpunit
 
 notifications:
