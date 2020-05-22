@@ -1,21 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-speciale.html.twig' %}
 
 {% block header %}
     {{ 'about.heading'|trans }}
 {% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
-                        class="material-icons">dashboard</i></a>
-        </div>
-    </div>
+{% block body %}
+    class="min-h-fullscreen bg-img center-vh p-20" style="background-image: url({{ asset('assets/bg/2.jpg') }});" data-overlay="7"
 {% endblock %}
 
 {% block content %}
-    <div class="card">
+    <div class="card card-round card-shadowed px-50 py-30 w-800px mb-0" style="max-width: 100%">
         <h3 class="card-title">{{ 'about.heading'|trans }}</h3>
         <div class="card-body">
             <div class="divider">English Version Below</div>

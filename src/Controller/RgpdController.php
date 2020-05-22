@@ -15,16 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class RgpdController
  * @package App\Controller
- * @Route("/mentions-legales/rgpd")
+ * @Route("/mentions-legales")
  */
 class RgpdController extends AbstractController
 {
     /**
-     * @Route("/", name="rgpd_index")
+     * @Route("/rgpd", name="rgpd_index")
      */
     public function index(): Response
     {
-        return $this->render('rgpd/index.html.twig', [
-        ]);
+        return $this->render('rgpd/index.html.twig');
     }
 }
