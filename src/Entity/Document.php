@@ -8,13 +8,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -25,20 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Document extends BaseEntity
 {
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
+    use UuidTrait;
 
     /**
      * @var float
@@ -101,7 +88,7 @@ class Document extends BaseEntity
      */
     public function __construct()
     {
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->semestres = new ArrayCollection();
     }
 

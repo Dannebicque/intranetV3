@@ -8,12 +8,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QualiteQuestionnaireRepository")
@@ -21,28 +22,7 @@ use Ramsey\Uuid\UuidInterface;
 class QualiteQuestionnaire extends BaseEntity
 {
 
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
-    }
+    use UuidTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -97,6 +77,7 @@ class QualiteQuestionnaire extends BaseEntity
 
     public function __construct(Semestre $semestre)
     {
+        $this->setUuid(Uuid::v4());
         $this->semestre = $semestre;
         $this->qualiteQuestionnaireSections = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();

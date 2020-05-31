@@ -8,11 +8,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -24,12 +24,7 @@ class Rattrapage extends BaseEntity
     public const DEMANDE_ACCEPTEE = 'a';
     public const DEMANDE_REFUSEE = 'r';
 
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
+    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="rattrapages")
@@ -97,7 +92,6 @@ class Rattrapage extends BaseEntity
     private $anneeUniversitaire;
 
 
-
     /**
      * Rattrapage constructor.
      *
@@ -107,18 +101,10 @@ class Rattrapage extends BaseEntity
      */
     public function __construct(Etudiant $etudiant)
     {
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
         $this->anneeuniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
     }
 
 

@@ -8,15 +8,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
 use Serializable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\UuidV4;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
@@ -24,28 +25,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Absence extends BaseEntity implements Serializable
 {
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
-    }
+    use UuidTrait;
 
     /**
      * @var DateTime
@@ -118,7 +98,7 @@ class Absence extends BaseEntity implements Serializable
      */
     public function __construct()
     {
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->anneeUniversitaire = $this->etudiant !== null ? $this->etudiant->getAnneeUniversitaire() : null;
     }
 

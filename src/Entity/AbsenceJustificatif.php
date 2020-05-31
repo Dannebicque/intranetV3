@@ -8,12 +8,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -35,12 +35,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         'D' => 'Déposé'
     ];
 
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
+    use UuidTrait;
 
     /**
      * @ORM\Column(type="date")
@@ -107,7 +102,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     public function __construct(Etudiant $etudiant)
     {
         $this->etat = 'D';
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->anneeUniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
         $this->setEtudiant($etudiant);
     }
@@ -234,21 +229,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->fichierName = $fichierName;
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
-    }
 
     public function getEtatLong()
     {

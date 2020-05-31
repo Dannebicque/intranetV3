@@ -8,12 +8,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -26,12 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Etudiant extends Utilisateur implements Serializable
 {
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
+    use UuidTrait;
 
     /**
      * @ORM\Id()
@@ -230,7 +225,7 @@ class Etudiant extends Utilisateur implements Serializable
     public function __construct()
     {
         parent::__construct();
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->notes = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->rattrapages = new ArrayCollection();
@@ -252,19 +247,6 @@ class Etudiant extends Utilisateur implements Serializable
         $this->emprunts = new ArrayCollection();
         $this->empruntEtudiants = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    public function getUuidString(): string
-    {
-        return $this->getUuid()->toString();
     }
 
     /**
