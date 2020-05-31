@@ -15,25 +15,25 @@
     "phpoffice/phpspreadsheet": "^1.5",
     "ramsey/uuid-doctrine": "^1.5",
     "sensio/framework-extra-bundle": "^5.2",
-    "symfony/asset": "^4.3",
-    "symfony/console": "^4.3",
-    "symfony/dotenv": "^4.3",
-    "symfony/event-dispatcher": "^4.3",
+    "symfony/asset": "^5.1",
+    "symfony/console": "^5.1",
+    "symfony/dotenv": "^5.1",
+    "symfony/event-dispatcher": "^5.1",
     "symfony/flex": "^1.1",
-    "symfony/form": "^4.3",
-    "symfony/framework-bundle": "^4.3",
-    "symfony/ldap": "^4.3",
-    "symfony/mailer": "^4.3",
-    "symfony/mime": "^4.3",
+    "symfony/form": "^5.1",
+    "symfony/framework-bundle": "^5.1",
+    "symfony/ldap": "^5.1",
+    "symfony/mailer": "^5.1",
+    "symfony/mime": "^5.1",
     "symfony/monolog-bundle": "^3.3",
     "symfony/orm-pack": "^1.0",
-    "symfony/routing": "^4.3",
-    "symfony/security-bundle": "^4.3",
-    "symfony/translation": "^4.3",
-    "symfony/twig-bridge": "^4.3",
-    "symfony/twig-bundle": "^4.4",
-    "symfony/validator": "^4.3",
-    "symfony/yaml": "^4.3",
+    "symfony/routing": "^5.1",
+    "symfony/security-bundle": "^5.1",
+    "symfony/translation": "^5.1",
+    "symfony/twig-bridge": "^5.1",
+    "symfony/twig-bundle": "^5.1",
+    "symfony/validator": "^5.1",
+    "symfony/yaml": "^5.1",
     "twig/extra-bundle": "^3.0",
     "twig/intl-extra": "^3.0",
     "vich/uploader-bundle": "^1.8"
@@ -82,14 +82,14 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "^4.4"
+      "require": "^5.1"
     }
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^3.1",
     "symfony/maker-bundle": "^1.11",
     "symfony/test-pack": "^1.0",
-    "symfony/web-profiler-bundle": "4.4",
+    "symfony/web-profiler-bundle": "5.1",
     "php-translation/symfony-bundle": "^0.11.3"
   }
 }
