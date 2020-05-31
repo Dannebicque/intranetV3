@@ -8,26 +8,21 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")
  */
 class Evaluation extends BaseEntity
 {
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
+    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="evaluations")
@@ -110,7 +105,7 @@ class Evaluation extends BaseEntity
      */
     public function __construct(Personnel $personnel, Matiere $matiere, Departement $departement)
     {
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
 
         $this->matiere = $matiere;
         $this->personnelAuteur = $personnel;
@@ -165,14 +160,6 @@ class Evaluation extends BaseEntity
         $this->personnelAuteur = $personnelAuteur;
 
         return $this;
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
     }
 
     /**

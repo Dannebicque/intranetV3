@@ -8,11 +8,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -20,6 +20,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class StageEtudiant extends BaseEntity
 {
+    use UuidTrait;
+
     public const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
     public const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';
     public const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
@@ -169,13 +171,6 @@ class StageEtudiant extends BaseEntity
     private $dateAutorise;
 
     /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateImprime;
@@ -201,23 +196,7 @@ class StageEtudiant extends BaseEntity
      */
     public function __construct()
     {
-        $this->uuid = Uuid::uuid4();
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
+        $this->setUuid(Uuid::v4());
     }
 
     /**

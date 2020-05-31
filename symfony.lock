@@ -14,7 +14,13 @@
     "symfony/polyfill-php80": {
         "version": "v1.17.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.17.0"
+    },
     "symfony/property-info": {
+        "version": "v5.1.0"
+    },
+    "symfony/uid": {
         "version": "v5.1.0"
     }
 }

@@ -8,14 +8,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -28,12 +28,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class StagePeriode extends BaseEntity
 {
 
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
+    use UuidTrait;
+
     /**
      * @var string
      *
@@ -164,26 +160,10 @@ class StagePeriode extends BaseEntity
         $this->stagePeriodeInterruptions = new ArrayCollection();
         $this->stagePeriodeSoutenances = new ArrayCollection();
         $this->responsables = new ArrayCollection();
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->stagePeriodeOffres = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->stageMailTemplates = new ArrayCollection();
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
     }
 
     public function getNumeroPeriode(): ?int

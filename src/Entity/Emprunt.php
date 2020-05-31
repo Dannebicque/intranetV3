@@ -8,13 +8,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -38,12 +38,8 @@ abstract class Emprunt extends BaseEntity
         Emprunt::SORTIE  => 'Matériel sorti',
     ];
 
-    /**
-     * @var UuidInterface
-     *
-     * @ORM\Column(type="uuid_binary", unique=true)
-     */
-    protected $uuid;
+    use UuidTrait;
+
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"emprunts_administration"})
@@ -102,26 +98,11 @@ abstract class Emprunt extends BaseEntity
      */
     public function __construct()
     {
-        $this->uuid = Uuid::uuid4();
+        $this->setUuid(Uuid::v4());
         $this->empruntMateriels = new ArrayCollection();
         $this->setEtat(self::DEMANDE);
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
-    }
-
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
 
     public function getDateDebut(): ?DateTimeInterface
     {
