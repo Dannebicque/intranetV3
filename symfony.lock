@@ -1,0 +1,20 @@
+{
+    "doctrine/sql-formatter": {
+        "version": "1.1.0"
+    },
+    "php": {
+        "version": "7.4"
+    },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.1.2"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
+    },
+    "symfony/property-info": {
+        "version": "v5.1.0"
+    }
+}
