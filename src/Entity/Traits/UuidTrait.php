@@ -5,6 +5,7 @@ namespace App\Entity\Traits;
 
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
+use Doctrine\ORM\Mapping as ORM;
 
 trait UuidTrait
 {
