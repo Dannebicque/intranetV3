@@ -62,8 +62,7 @@ class UuidBinaryType extends Type
         try {
             $uuid = UuidV4::fromString($value);
         } catch (InvalidArgumentException $e) {
-            //throw ConversionException::conversionFailed($value, static::NAME);
-            $uuid = $value;
+            throw ConversionException::conversionFailed($value, static::NAME);
         }
 
         return $uuid;
