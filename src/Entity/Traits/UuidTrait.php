@@ -27,9 +27,9 @@ trait UuidTrait
     /**
      * @return UuidV4
      */
-    public function getUuid(): UuidV4
+    public function getUuid(): ?UuidV4
     {
-        return UuidV4::fromString($this->uuid);
+        return $this->uuid !== null ? UuidV4::fromString($this->uuid) : null;
     }
 
     public function setUuid(UuidV4 $uuidV4)
