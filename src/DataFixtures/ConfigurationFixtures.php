@@ -27,6 +27,11 @@ class ConfigurationFixtures extends Fixture
         $manager->persist($conf);
 
         $conf = new Configuration();
+        $conf->setCle('GRATIFICATION_HEURE_STAGE');
+        $conf->setValeur('3.90');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
         $conf->setCle('NOM_UNIVERSITE');
         $conf->setValeur('Université de Reims Champagne-Ardenne');
         $manager->persist($conf);

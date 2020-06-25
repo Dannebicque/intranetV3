@@ -156,7 +156,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtEtu(Etudiant $user, $semaine): array
+    public function findEdtEtu(Etudiant $user, $semaine): ?array
     {
         if ($user->getSemestre() !== null) {
             $this->groupes($user);
