@@ -87,6 +87,11 @@ class QuizzQuestion extends BaseEntity
      */
     private $alignement = 'HORIZONTAL_CENTER';
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $parametre;
+
     public function __construct(Personnel $personnel)
     {
         $this->quizzReponses = new ArrayCollection();
@@ -306,6 +311,22 @@ class QuizzQuestion extends BaseEntity
     public function setAlignement(string $alignement): self
     {
         $this->alignement = $alignement;
+
+        return $this;
+    }
+
+    public function getParametre(): ?array
+    {
+        if ($this->parametre !== null || $this->parametre !== '') {
+            return json_decode($this->parametre, true);
+        }
+
+        return [];
+    }
+
+    public function setParametre(?array $parametre): self
+    {
+        $this->parametre = json_encode($parametre);
 
         return $this;
     }
