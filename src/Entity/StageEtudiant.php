@@ -132,7 +132,7 @@ class StageEtudiant extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private $gratificationMontant = 3.33;
+    private $gratificationMontant;
 
     /**
      * @ORM\Column(type="string", length=1)
@@ -197,6 +197,7 @@ class StageEtudiant extends BaseEntity
     public function __construct()
     {
         $this->setUuid(Uuid::v4());
+        $this->setGratificationMontant(\App\MesClasses\Configuration::get('GRATIFICATION_HEURE_STAGE'));
     }
 
     /**

@@ -60,7 +60,8 @@ class EvaluationInitialisationController extends BaseController
 
             /** @var Matiere $matiere */
             foreach ($matieres as $matiere) {
-                for ($i = 1; $i <= $matiere->getNbnotes(); $i++) {
+                $nbNotes = $matiere->getNbnotes();
+                for ($i = 1; $i <= $nbNotes; $i++) {
                     if (!empty($request->request->get('commentaire_' . $matiere->getId() . '_' . $i))) {
                         $nbEnseignant = count($request->request->get('enseignant_' . $matiere->getId() . '_' . $i));
                         if ($nbEnseignant > 0) {
