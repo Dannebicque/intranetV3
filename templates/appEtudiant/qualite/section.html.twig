@@ -22,6 +22,8 @@
     {% set compteur = 0 %}
     {% set onglet = 0 %}
     <div class="tab-content">
+        {{ section.previs|length }}
+        {{ nbOnglet }}
         {% for previ in section.previs %}
             {% if compteur == 0 and  onglet < nbOnglet %}
                 <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
