@@ -1,4 +1,4 @@
-<fieldset class="form-group">
+<fieldset class="form-group" {% if question.parametre.type is defined and question.parametre.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
     {{ include('quizz_question/_libelle.html.twig') }}
     <div aria-describedby="quizz_question_{{ question.id }}_help">
         <small id="quizz_question_{{ question.id }}_help" class="form-text text-muted">{{ question.help }}</small>
@@ -33,3 +33,23 @@
         {% endfor %}
     </div>
 </fieldset>
+
+{% if question.parametre.type is defined and question.parametre.type=='condition' %}
+    <script>
+      function changeHandler (event) {
+        if (event.target.name === 'quizz_question_q{{ question.parametre.declenchement }}') {
+          console.log(event.target.value)
+          var valeurs = [{% for critere in question.parametre.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+          console.log(valeurs)
+          document.getElementById('field_{{ question.id }}').style.display = 'none'
+          for (var i = 0; i < valeurs.length; i++) {
+            if (event.target.value == valeurs[i]) {
+              document.getElementById('field_{{ question.id }}').style.display = 'block'
+            }
+          }
+        }
+      }
+
+      document.addEventListener('change', changeHandler, false)
+    </script>
+{% endif %}
