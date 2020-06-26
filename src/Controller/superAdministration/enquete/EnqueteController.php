@@ -58,11 +58,15 @@ class EnqueteController extends AbstractController
      */
     public function semestre(QuizzEtudiantRepository $quizzEtudiantRepository, Semestre $semestre): Response
     {
+        $stats = [];
         $quizzEtudiants = $quizzEtudiantRepository->findBySemestreArray($semestre);
+        foreach ($semestre->getQualiteQuestionnaires() as $questionnaire) {
+            $stats[$questionnaire->getId()]['nbReponses'] = $quizzEtudiantRepository->compteReponse($questionnaire);
+        }
 
         return $this->render('super-administration/enquete/semestre.html.twig', [
-            'semestre'   => $semestre,
-            'nbReponses' => $quizzEtudiantRepository->compteReponse($semestre),
+            'semestre'      => $semestre,
+            'nbReponses'    => $stats,
             'quizzEtudiant' => $quizzEtudiants
         ]);
     }

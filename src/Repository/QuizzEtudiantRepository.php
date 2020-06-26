@@ -25,21 +25,21 @@ class QuizzEtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Semestre $semestre
+     * @param QualiteQuestionnaire $qualiteQuestionnaire
      *
      * @return mixed
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function compteReponse(Semestre $semestre)
+    public function compteReponse(QualiteQuestionnaire $qualiteQuestionnaire)
     {
         $qb = $this->createQueryBuilder('prov');
 
         return $this->createQueryBuilder('q')
             ->select($qb->expr()->countDistinct('q.etudiant'))
             ->innerJoin(QualiteQuestionnaire::class, 'qq', 'WITH', 'q.questionnaire = qq.id')
-            ->where('qq.semestre = :semestre')
-            ->setParameter('semestre', $semestre->getId())
+            ->where('qq.id = :questionnaire')
+            ->setParameter('questionnaire', $qualiteQuestionnaire->getId())
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -62,10 +62,12 @@ class QuizzEtudiantRepository extends ServiceEntityRepository
 
         /** @var QuizzEtudiant $r */
         foreach ($q as $r) {
-            if (!array_key_exists($r->getQuestionnaire()->getId(), $t)) {
-                $t[$r->getQuestionnaire()->getId()] = [];
+            if ($r->getQuestionnaire() !== null && $r->getEtudiant() !== null) {
+                if (!array_key_exists($r->getQuestionnaire()->getId(), $t)) {
+                    $t[$r->getQuestionnaire()->getId()] = [];
+                }
+                $t[$r->getQuestionnaire()->getId()][$r->getEtudiant()->getId()] = $r;
             }
-            $t[$r->getQuestionnaire()->getId()][$r->getEtudiant()->getId()] = $r;
         }
 
         return $t;
