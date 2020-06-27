@@ -27,6 +27,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,6 +38,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QualiteController extends BaseController
 {
+    /**
+     * @var SessionInterface
+     */
+    private SessionInterface $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
     /**
      * @Route("/", name="application_etudiant_qualite_index")
      * @param QualiteQuestionnaireRepository $qualiteQuestionnaireRepository
@@ -140,16 +151,25 @@ class QualiteController extends BaseController
         QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
         Request $request,
         QualiteQuestionnaire $questionnaire
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $cleReponse = $request->request->get('cleReponse');
         $cleQuestion = $request->request->get('cleQuestion');
 
-        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $questionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
-        if ($quizzEtudiant === null) {
-            $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
-            $this->entityManager->persist($quizzEtudiant);
-
+        if (!$this->session->has('qualitequestionnaire')) {
+            $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+                'questionnaire' => $questionnaire->getId(),
+                'etudiant'      => $this->getConnectedUser()->getId()
+            ]);
+            if ($quizzEtudiant === null) {
+                $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
+                $this->entityManager->persist($quizzEtudiant);
+                $this->session->set('qualitequestionnaire', $quizzEtudiant->getId());
+            }
         }
+
+        $quizzEtudiant = $this->session->get('qualitequestionnaire');
+
         /** @var QuizzEtudiantReponse $exist */
         $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
 

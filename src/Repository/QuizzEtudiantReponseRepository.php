@@ -31,13 +31,13 @@ class QuizzEtudiantReponseRepository extends ServiceEntityRepository
      */
     public function findExistQuestion(
         $cle,
-        QuizzEtudiant $quizzEtudiant
+        $quizzEtudiant
     ) {
         return $this->createQueryBuilder('q')
             ->where('q.cleQuestion = :cle')
             ->andWhere('q.quizzEtudiant = :quizzEtudiant')
             ->setParameter('cle', $cle)
-            ->setParameter('quizzEtudiant', $quizzEtudiant->getId())
+            ->setParameter('quizzEtudiant', $quizzEtudiant)
             ->getQuery()
             ->getOneOrNullResult();
     }
