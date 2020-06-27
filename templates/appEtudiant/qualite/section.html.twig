@@ -37,10 +37,14 @@
             {% set compteur = compteur +1 %}
             <hr>
             {% if compteur == 3 or loop.last %}
+                <div class="alert alert-warning">
+                    Merci de compléter tous les onglets avant de cliquer sur "suivant".
+                </div>
                 </div>
                 {% set compteur = 0 %}
                 {% set onglet = onglet +1 %}
             {% endif %}
         {% endfor %}
+
     </div>
 {% endif %}
