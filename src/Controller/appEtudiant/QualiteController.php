@@ -122,9 +122,9 @@ class QualiteController extends BaseController
         ]);
     }
 
-    //* @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
     /**
      * @Route("/ajax/reponse/{uuid}", name="app_etudiant_qualite_ajax_reponse", options={"expose"=true})
+     * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzReponseRepository         $quizzReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
@@ -207,9 +207,9 @@ class QualiteController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    //* @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
     /**
      * @Route("/ajax/reponse-txt/{uuid}", name="app_etudiant_qualite_ajax_reponse_txt", options={"expose"=true})
+     * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
