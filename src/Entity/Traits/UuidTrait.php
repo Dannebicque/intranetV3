@@ -11,7 +11,7 @@ trait UuidTrait
 {
     /**
      *
-     * @ORM\Column(type="varchar", unique=true, length=36)
+     * @ORM\Column(type="string", unique=true, length=36)
      */
     protected $uuid;
 
