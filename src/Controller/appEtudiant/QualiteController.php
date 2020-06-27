@@ -58,7 +58,6 @@ class QualiteController extends BaseController
 
     /**
      * @Route("/complet/{uuid}", name="app_etudiant_qualite_questionnaire_complete")
-     * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzEtudiantRepository $quizzEtudiantRepository
      * @param MyMailer                $myMailer
      * @param QualiteQuestionnaire    $qualiteQuestionnaire
@@ -124,7 +123,6 @@ class QualiteController extends BaseController
 
     /**
      * @Route("/ajax/reponse/{uuid}", name="app_etudiant_qualite_ajax_reponse", options={"expose"=true})
-     * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzReponseRepository         $quizzReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
@@ -209,7 +207,6 @@ class QualiteController extends BaseController
 
     /**
      * @Route("/ajax/reponse-txt/{uuid}", name="app_etudiant_qualite_ajax_reponse_txt", options={"expose"=true})
-     * @ParamConverter("questionnaire", options={"mapping": {"uuid": "uuid"}})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
