@@ -137,14 +137,14 @@ app.ready(function () {
     preloader.fadeOut(speed)
   }
 
-  $(document).on({
-    ajaxStart: function () {
-      preloader.show()
-    },
-    ajaxStop: function () {
-      preloader.hide()
-    }
-  })
+  // $(document).on({
+  //   ajaxStart: function () {
+  //     preloader.show()
+  //   },
+  //   ajaxStop: function () {
+  //     preloader.hide()
+  //   }
+  // })
 
   $('.callout').delay(5000).slideUp('slow')
 
