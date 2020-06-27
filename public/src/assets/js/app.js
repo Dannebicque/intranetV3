@@ -1202,32 +1202,32 @@ jQuery.fn.scrollToEnd = function() {
       css:      [
                   'pe-icon-7-stroke/css/pe-icon-7-stroke.min.css',
                   'pe-icon-7-stroke/css/helper.min.css'
-                ]
+      ]
     },
 
 
     iconIon: {
       selector: '$ [class*="ion-"]',
-      css:      'ionicons/css/ionicons.min.css',
+      css: 'ionicons/css/ionicons.min.css'
     },
 
 
-    iconI8: {
-      selector: '$ [data-i8-icon]',
-      callback: 'initI8icons',
-      css:      '',
-      js:       'i8-icon/jquery-i8-icon.min.js',
-    },
+    // iconI8: {
+    //   selector: '$ [data-i8-icon]',
+    //   callback: 'initI8icons',
+    //   css:      '',
+    //   js:       'i8-icon/jquery-i8-icon.min.js',
+    // },
 
     mapael: {
       selector: 'mapael',
       callback: 'initMapael',
-      css:      '',
-      js:       [
-                  'jquery.mousewheel/jquery.mousewheel.min.js',
-                  'raphael/raphael.min.js',
-                  'mapael/jquery.mapael.min.js'
-                ],
+      css: '',
+      js: [
+        'jquery.mousewheel/jquery.mousewheel.min.js',
+        'raphael/raphael.min.js',
+        'mapael/jquery.mapael.min.js'
+      ]
     },
 
 
@@ -2496,60 +2496,53 @@ jQuery.fn.scrollToEnd = function() {
   provider.initTypeahead = function() {
 
 
-
   };
 
 
-
-
-
-
 }(jQuery);
-
 
 
 // =====================
 // Icon plugins
 // =====================
 //
-+function($){
-
-
-  provider.initIcons = function() {
-
-    provider.initI8icons();
-
-  };
-
-
-  provider.initI8icons = function() {
-
-    provider.provide('iconI8', function(){
-      $(document).i8icons(function(icons) {
-        icons.defaultIconSetUrl(app.dir.vendor +'i8-icon/i8-color-icons.svg');
-      });
-    });
-
-  };
-
-
-
-}(jQuery);
+// +function($){
+//
+//
+//   // provider.initIcons = function() {
+//   //
+//   //   provider.initI8icons();
+//   //
+//   // };
+//
+//
+//   // provider.initI8icons = function() {
+//   //
+//   //   provider.provide('iconI8', function(){
+//   //     $(document).i8icons(function(icons) {
+//   //       icons.defaultIconSetUrl(app.dir.vendor +'i8-icon/i8-color-icons.svg');
+//   //     });
+//   //   });
+//   //
+//   // };
+//
+//
+//
+// }(jQuery);
 
 
 // =====================
 // Table plugins
 // =====================
 //
-+function($){
++function ($) {
 
 
+  provider.initTables = function () {
 
-  provider.initTables = function() {
+    provider.initBootstrapTable()
 
-    provider.initBootstrapTable();
-
-  };
+  }
 
 
 

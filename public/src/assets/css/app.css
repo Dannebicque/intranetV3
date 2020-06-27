@@ -9166,13 +9166,13 @@ progress {
     margin: 6px -12px 0;
 }
 
-.dropdown-grid .i8-icon {
-    margin: 0 12px -4px;
-}
+/*.dropdown-grid .i8-icon {*/
+/*    margin: 0 12px -4px;*/
+/*}*/
 
-.dropdown-grid .i8-icon + .title {
-    margin-top: 0;
-}
+/*.dropdown-grid .i8-icon + .title {*/
+/*    margin-top: 0;*/
+/*}*/
 
 .dropdown-grid.cols-2 {
     min-width: 200px;
