@@ -171,6 +171,7 @@ class QualiteController extends BaseController
             if ($quizzEtudiant === null) {
                 $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
                 $this->entityManager->persist($quizzEtudiant);
+                $this->entityManager->flush();
                 $this->session->set('qualitequestionnaire', $quizzEtudiant->getId());
             }
         }
