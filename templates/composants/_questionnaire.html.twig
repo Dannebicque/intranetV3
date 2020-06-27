@@ -33,7 +33,7 @@
 
 
         {% for qualiteQuestionnaireSection in questionnaire.qualiteQuestionnaireSections %}
-            <div class="tab-pane fade" {% if is_granted('ROLE_ETUDIANT') %}data-provide="validation"{% endif %}
+            <div class="tab-pane fade"
                  id="wizard-section-{{ qualiteQuestionnaireSection.id }}">
                 {% if is_granted('ROLE_ETUDIANT') %}
                     {{ render(controller(

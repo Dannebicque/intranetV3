@@ -31,8 +31,8 @@
             {% for question in section.qualiteSectionQuestions %}
                 {% set numero = num_titre2~"."~ loop.index %}
                 {{ include('quizz_question/_question.html.twig', {question:question.question, numero: numero,
-                    config: {id: previ, matiere:tPrevisionnel[previ].matiere.libelle,
-                        personnel:tPrevisionnel[previ].personnel.displayPr}}) }}
+                    config: {id: previ, matiere:tPrevisionnel[previ].matiere,
+                        personnel:tPrevisionnel[previ].personnel}}) }}
             {% endfor %}
             {% set compteur = compteur +1 %}
             <hr>

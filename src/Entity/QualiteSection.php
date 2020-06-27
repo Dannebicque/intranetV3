@@ -25,7 +25,7 @@ class QualiteSection extends BaseEntity
     private $textExplicatif;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QualiteSectionQuestion", mappedBy="section")
+     * @ORM\OneToMany(targetEntity="App\Entity\QualiteSectionQuestion", mappedBy="section", fetch="EAGER")
      * @ORM\OrderBy({"ordre"="ASC"})
      */
     private $qualiteSectionQuestions;
