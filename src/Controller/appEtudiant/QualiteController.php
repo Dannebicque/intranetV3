@@ -175,10 +175,10 @@ class QualiteController extends BaseController
             }
         }
 
-        $quizzEtudiant = $this->session->get('qualitequestionnaire');
+        $quizzEtudiant = $quizzEtudiantRepository->find($this->session->get('qualitequestionnaire'));
 
         /** @var QuizzEtudiantReponse $exist */
-        $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
+        $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant->getId());
 
         $t = explode('_', $cleReponse);
         $question = $quizzQuestionRepository->find(substr($t[3], 1, strlen($t[0])));
