@@ -1,12 +1,13 @@
-Bonjour {{ etudiant.displayPr }},
+<p>Bonjour {{ etudiant.displayPr }},</p>
 
-Merci d'avoir pris le temps de compléter le questionnaire qualité {{ questionnaire.titre }}.
-Vos réponses seront étudiées avec attention afin d'améliorer la qualité de la formation.
+<p>Merci d'avoir pris le temps de compléter le questionnaire qualité {{ questionnaire.titre }}.
+   Vos réponses seront étudiées avec attention afin d'améliorer la qualité de la formation.</p>
 
-Le responsable du diplôme
-{{ etudiant.diplome.responsableDiplome.displayPr }}
+<p>Le responsable du diplôme<br>
+    {{ etudiant.diplome.responsableDiplome.displayPr }}</p>
 
-Le responsable qualité
-{{ etudiant.diplome.optResponsableQualite.displayPr }}
+<p>Le responsable qualité<br>
+    {{ etudiant.diplome.optResponsableQualite.displayPr }}</p>
 
-Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.
+<p>Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne
+   pourra être prise en compte.</p>

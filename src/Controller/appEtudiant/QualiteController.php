@@ -80,6 +80,7 @@ class QualiteController extends BaseController
                 $myMailer->sendMessage($this->getConnectedUser()->getMails(),
                     'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
 
+                $myMailer->initMessage();
                 $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
                     ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
                 $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),
