@@ -39,16 +39,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class QualiteController extends BaseController
 {
     /**
-     * @var SessionInterface
-     */
-    private SessionInterface $session;
-
-    public function __construct(SessionInterface $session)
-    {
-        $this->session = $session;
-    }
-
-    /**
      * @Route("/", name="application_etudiant_qualite_index")
      * @param QualiteQuestionnaireRepository $qualiteQuestionnaireRepository
      *
@@ -115,9 +105,7 @@ class QualiteController extends BaseController
         PrevisionnelRepository $previsionnelRepository,
         QualiteQuestionnaireSection $qualiteQuestionnaireSection
     ): Response {
-        if ($this->session->has('qualitequestionnaire')) {
-            $this->session->remove('qualitequestionnaire');
-        }
+
 
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
             'questionnaire' => $qualiteQuestionnaireSection->getQuestionnaire()->getId(),
@@ -163,20 +151,18 @@ class QualiteController extends BaseController
         $cleReponse = $request->request->get('cleReponse');
         $cleQuestion = $request->request->get('cleQuestion');
 
-        if (!$this->session->has('qualitequestionnaire')) {
-            $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                 'questionnaire' => $questionnaire->getId(),
                 'etudiant'      => $this->getConnectedUser()->getId()
             ]);
             if ($quizzEtudiant === null) {
                 $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
                 $this->entityManager->persist($quizzEtudiant);
-                $this->entityManager->flush();
+
                 $this->session->set('qualitequestionnaire', $quizzEtudiant->getId());
             }
-        }
 
-        $quizzEtudiant = $quizzEtudiantRepository->find($this->session->get('qualitequestionnaire'));
 
         /** @var QuizzEtudiantReponse $exist */
         $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant->getId());
