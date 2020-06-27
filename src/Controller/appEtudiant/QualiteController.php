@@ -115,7 +115,14 @@ class QualiteController extends BaseController
         PrevisionnelRepository $previsionnelRepository,
         QualiteQuestionnaireSection $qualiteQuestionnaireSection
     ): Response {
-        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $qualiteQuestionnaireSection->getQuestionnaire()->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+        if ($this->session->has('qualitequestionnaire')) {
+            $this->session->remove('qualitequestionnaire');
+        }
+
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+            'questionnaire' => $qualiteQuestionnaireSection->getQuestionnaire()->getId(),
+            'etudiant'      => $this->getConnectedUser()->getId()
+        ]);
         if ($quizzEtudiant !== null) {
             $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
         } else {
