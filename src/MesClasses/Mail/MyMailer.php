@@ -161,4 +161,9 @@ class MyMailer
 
         $this->template = $twig->render($templateName, $array);
     }
+
+    public function initMessage()
+    {
+        $this->mail = new TemplatedEmail();
+    }
 }
