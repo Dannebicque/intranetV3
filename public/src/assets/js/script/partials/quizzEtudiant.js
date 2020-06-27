@@ -1,6 +1,6 @@
 $(document).on('change', '.questionQualite', function () {
   $.ajax({
-    url: Routing.generate('app_etudiant_qualite_ajax_reponse', {uuid: $('#questionnaire').val()}),
+    url: Routing.generate('app_etudiant_qualite_ajax_reponse', {questionnaire: $('#questionnaire').val()}),
     method: 'POST',
     data: {
       cleReponse: $(this).attr('id'),
@@ -14,7 +14,7 @@ $(document).on('change', '.questionQualite', function () {
 
 $(document).on('blur', '.questionQualiteTextArea', function () {
   $.ajax({
-    url: Routing.generate('app_etudiant_qualite_ajax_reponse_txt', {uuid: $('#questionnaire').val()}),
+    url: Routing.generate('app_etudiant_qualite_ajax_reponse_txt', {questionnaire: $('#questionnaire').val()}),
     method: 'POST',
     data: {
       cleQuestion: $(this).attr('name'),

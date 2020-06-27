@@ -122,7 +122,7 @@ class QualiteController extends BaseController
     }
 
     /**
-     * @Route("/ajax/reponse/{uuid}", name="app_etudiant_qualite_ajax_reponse", options={"expose"=true})
+     * @Route("/ajax/reponse/{questionnaire}", name="app_etudiant_qualite_ajax_reponse", options={"expose"=true})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzReponseRepository         $quizzReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
@@ -206,7 +206,8 @@ class QualiteController extends BaseController
     }
 
     /**
-     * @Route("/ajax/reponse-txt/{uuid}", name="app_etudiant_qualite_ajax_reponse_txt", options={"expose"=true})
+     * @Route("/ajax/reponse-txt/{questionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
+     *                                             options={"expose"=true})
      * @param QuizzQuestionRepository        $quizzQuestionRepository
      * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuizzEtudiantRepository        $quizzEtudiantRepository
