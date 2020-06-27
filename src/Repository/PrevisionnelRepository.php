@@ -195,7 +195,9 @@ class PrevisionnelRepository extends ServiceEntityRepository
         $tPrevisionnel = [];
         /** @var Previsionnel $p */
         foreach ($q as $p) {
-            $tPrevisionnel[$p->getId()] = $p;
+            //$tPrevisionnel[$p->getId()] = $p;
+            $tPrevisionnel[$p->getId()]['matiere'] = $p->getMatiere()->getDisplay();
+            $tPrevisionnel[$p->getId()]['personnel'] = $p->getPersonnel()->getDisplayPr();
         }
 
         return $tPrevisionnel;
