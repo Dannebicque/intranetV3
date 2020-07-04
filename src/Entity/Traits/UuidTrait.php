@@ -3,15 +3,13 @@
 
 namespace App\Entity\Traits;
 
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UuidTrait
 {
     /**
-     *
-     * @ORM\Column(type="string", unique=true, length=36)
+     * @ORM\Column(type="uuid", unique=true)
      */
     protected $uuid;
 
