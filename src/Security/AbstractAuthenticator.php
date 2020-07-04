@@ -39,7 +39,7 @@ class AbstractAuthenticator
                 if (count($departements) === 1) {
                     /** @var Departement $departement */
                     $departement = $departements[0];
-                    $session->set('departement', $departement->getUuidString()); //on sauvegarde
+                    $session->set('departement', $departement->getId()); //on sauvegarde
                 } else {
                     echo 'pas de departement par defaut';
                     //pas de departement par défaut, ou pas de departement du tout.
