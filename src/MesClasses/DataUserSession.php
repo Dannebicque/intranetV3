@@ -313,7 +313,7 @@ class DataUserSession
             /** @var PersonnelDepartement $rf */
             foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
                 if ($rf->getDepartement() !== null &&
-                    in_array($role, $rf->getRoles(), true) !== false &&
+                    in_array($role, $rf->getRoles()) !== false &&
                     $rf->getDepartement()->getId() === $this->departement->getId()) {
                     return true;
                 }
