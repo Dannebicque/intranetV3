@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/EventSubscriber/AbsenceSubscriber.php
-// @author David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:13
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
@@ -65,7 +64,7 @@ class AbsenceSubscriber implements EventSubscriberInterface
     public function onJustifieAbsences(JustificatifEvent $event): void
     {
         $justificatif = $event->getAbsenceJustificatif();
-        $absences = $this->absenceRepository->findAbsencesAJustifer($justificatif);
+        $absences = $this->absenceRepository->getAJustifier($justificatif);
 
         /** @var Absence $absence */
         foreach ($absences as $absence) {

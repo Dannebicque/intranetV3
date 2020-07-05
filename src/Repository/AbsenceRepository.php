@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/AbsenceRepository.php
-// @author David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:09
 
 namespace App\Repository;
 
@@ -88,7 +87,7 @@ class AbsenceRepository extends ServiceEntityRepository
 
     public function findBySemestreRattrapage(Semestre $semestre, AnneeUniversitaire $anneeCourante): array
     {
-        $absences = $this->findBySemestre($semestre, $anneeCourante);
+        $absences = $this->getBySemestre($semestre, $anneeCourante);
 
         $trattrapages = [];
 
@@ -120,7 +119,7 @@ class AbsenceRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante)
+    public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante)
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant =e.id')
@@ -135,7 +134,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantSemestre(
+    public function getByEtudiantAndSemestre(
         Etudiant $etudiant,
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
@@ -154,7 +153,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAbsencesAJustifer(AbsenceJustificatif $justificatif)
+    public function getAJustifier(AbsenceJustificatif $justificatif)
     {
         //recherche toutes les absences sur la période du justificatif
 

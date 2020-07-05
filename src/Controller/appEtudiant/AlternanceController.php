@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appEtudiant/StageController.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:09
 
 namespace App\Controller\appEtudiant;
 
@@ -37,7 +36,7 @@ class AlternanceController extends BaseController
     public function index(AlternanceRepository $alternanceRepository): Response
     {
         /** @var Alternance $alternance */
-        $alternance = $alternanceRepository->findOneByEtudiantAnnee($this->getConnectedUser(),
+        $alternance = $alternanceRepository->getOneByEtudiantAndAnneeUniversitaire($this->getConnectedUser(),
             $this->dataUserSession->getAnneeUniversitaire());
         $form = null;
         if ($alternance !== null) {

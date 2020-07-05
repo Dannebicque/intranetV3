@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/MessageDestinatairePersonnelRepository.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:21
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MessageDestinatairePersonnelRepository.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:13
 
 namespace App\Repository;
 

@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/appPersonnel/StageController.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/StageController.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:14
 
 namespace App\Controller\appPersonnel;
 
@@ -46,9 +45,9 @@ class StageController extends BaseController
                     $this->dataUserSession->getAnneeUniversitaire()),
                 'stagesHistorique'      => $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'alternancesEnCours'    => $alternanceRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                'alternancesEnCours'    => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'alternancesHistorique' => $alternanceRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                'alternancesHistorique' => $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
             ]);
         }
@@ -97,10 +96,10 @@ class StageController extends BaseController
     public function exportAlternance(MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
     {
         if ($periode === 'courant') {
-            $alternances= $alternanceRepository->findByPersonnelAnnee($this->getConnectedUser(),
+            $alternances = $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         } else {
-            $alternances = $alternanceRepository->findByPersonnelHistorique($this->getConnectedUser(),
+            $alternances = $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         }
         return $myExport->genereFichierGenerique(

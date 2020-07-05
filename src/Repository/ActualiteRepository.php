@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Repository/ActualiteRepository.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ActualiteRepository.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:09
 /** @noinspection PhpUnused */
 
 namespace App\Repository;
@@ -37,7 +36,7 @@ class ActualiteRepository extends ServiceEntityRepository
      *
      * @return Actualite[]
      */
-    public function findByDepartement($departement, $nbResult = 2): array
+    public function getByDepartement($departement, $nbResult = 2): array
     {
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')

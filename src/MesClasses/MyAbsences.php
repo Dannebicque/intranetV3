@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyAbsences.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/MesClasses/MyAbsences.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:09
 
 /**
  * Created by PhpStorm.
@@ -101,7 +100,7 @@ class MyAbsences
     public function getAbsencesSemestre(Semestre $semestre): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
-        $this->absences = $this->absenceRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $this->absences = $this->absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
 
 
         /** @var Etudiant $etudiant */
