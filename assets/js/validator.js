@@ -1,10 +1,8 @@
-/*!
- * Validator v0.11.9 for Bootstrap 3, by @1000hz
- * Copyright 2017 Cina Saffary
- * Licensed under http://opensource.org/licenses/MIT
- *
- * https://github.com/1000hz/bootstrap-validator
- */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/validator.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 28/11/2019 19:40
 
 +function ($) {
   'use strict';
@@ -231,12 +229,10 @@
     var method = this.options.html ? 'html' : 'text'
     var errors = $el.data('bs.validator.errors')
     var $group = $el.closest('.form-group')
-    var $block = $group.find('.invalid-feedback')
-    var $feedback = $group.find('.invalid-feedback')
+    var $block = $group.find('.help-block.with-errors')
+    var $feedback = $group.find('.form-control-feedback')
 
     if (!errors.length) return
-
-    $el.addClass('is-invalid');
 
     errors = $('<ul/>')
       .addClass('list-unstyled')
@@ -254,10 +250,8 @@
 
   Validator.prototype.clearErrors = function ($el) {
     var $group = $el.closest('.form-group')
-    var $block = $group.find('.invalid-feedback')
-    var $feedback = $group.find('.invalid-feedback')
-
-    $el.removeClass('is-invalid');
+    var $block = $group.find('.help-block.with-errors')
+    var $feedback = $group.find('.form-control-feedback')
 
     $block.html($block.data('bs.validator.originalContent'))
     $group.removeClass('has-error has-danger has-success')
@@ -305,20 +299,19 @@
   }
 
   Validator.prototype.reset = function () {
-    this.$element.find('.invalid-feedback')
+    this.$element.find('.form-control-feedback')
       .removeClass(this.options.feedback.error)
       .removeClass(this.options.feedback.success)
 
     this.$inputs
       .removeData(['bs.validator.errors', 'bs.validator.deferred'])
-      .removeClass('is-invalid')
       .each(function () {
         var $this = $(this)
         var timeout = $this.data('bs.validator.timeout')
         window.clearTimeout(timeout) && $this.removeData('bs.validator.timeout')
       })
 
-    this.$element.find('.invalid-feedback')
+    this.$element.find('.help-block.with-errors')
       .each(function () {
         var $this = $(this)
         var originalContent = $this.data('bs.validator.originalContent')
