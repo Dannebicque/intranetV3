@@ -1,3 +1,9 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/vendor/datatables/js/dataTables.bootstrap4.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 28/11/2019 19:40
+
 /*! DataTables Bootstrap 3 integration
  * ©2011-2015 SpryMedia Ltd - datatables.net/license
  */
@@ -157,7 +163,7 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 	};
 
 	// IE9 throws an 'unknown error' if document.activeElement is used
-	// inside an iframe or frame. 
+	// inside an iframe or frame.
 	var activeEl;
 
 	try {
