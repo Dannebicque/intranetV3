@@ -22,13 +22,15 @@
         <div class="buttons">
             <a href="{{ path('administration_etudiant_groupe_synchro_parent', {semestre:semestre.id}) }}"
                class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.synchro_parent'|trans }}"><i class="ti-reload"></i></a>
+               data-placement="bottom" title="{{ 'atitle.synchro_parent'|trans }}"><i class="fas
+               fa-refresh"></i></a>
             <a href="{{ path('administration_etudiant_groupe_synchro_apogee', {semestre:semestre.id}) }}"
                class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.synchro_apogee'|trans }}"><i class="ti-import"></i></a>
+               data-placement="bottom" title="{{ 'atitle.synchro_apogee'|trans }}"><i class="fas
+               fa-file-import"></i></a>
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
         </div>

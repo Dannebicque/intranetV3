@@ -18,15 +18,15 @@
 {% endblock %}
 
 {% block headeractions %}
-  <div class="header-action">
-    <div class="buttons">
-      <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-         class="btn btn-primary btn-float" data-provide="tooltip"
-         data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
-      <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-         data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block content %}

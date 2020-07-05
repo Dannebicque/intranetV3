@@ -9,7 +9,7 @@
         <div class="buttons">
             <a href="{{ path('administration_stage_periode_offre_new', {stagePeriode: stagePeriode.uuidString }) }}"
                class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-plus"></i></a>
+               data-placement="bottom"><i class="fas fa-plus"></i></a>
             <a href="{{ path('administration_stage_periode_gestion', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i class="material-icons">arrow_back</i></a>
@@ -98,7 +98,7 @@
             type:'info',
             href:path('administration_stage_periode_offre_new', {stagePeriode:stagePeriode.uuidString}),
             title: 'ajouter'|trans,
-            icone: 'ti-plus'
+            icone: 'fas fa-plus'
         },
         {
             type:'info',

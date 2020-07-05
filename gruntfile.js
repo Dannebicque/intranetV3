@@ -1,4 +1,10 @@
 
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/gruntfile.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 16:27
+
 module.exports = function(grunt) {
   'use strict';
 
@@ -23,12 +29,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     // Metadata.
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('package-grunt.json'),
     banner: '/*!\n' +
-            ' * <%= pkg.banner_name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-            ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' * Licensed under the Themeforest Standard Licenses\n' +
-            ' */\n',
+      ' * <%= pkg.banner_name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+      ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+      ' * Licensed under the Themeforest Standard Licenses\n' +
+      ' */\n',
 
 
     // Task configuration

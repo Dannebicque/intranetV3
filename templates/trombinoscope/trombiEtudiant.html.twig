@@ -14,7 +14,7 @@
                 {% if selectedTypeGroupe != null %}
                     <ul class="card-controls">
                         <li class="dropdown">
-                            <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                            <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: selectedTypeGroupe.id}) }}"
                                    class="dropdown-item"><i class="fa fa-file-pdf-o"></i> {{ 'exporter.pdf'|trans }}</a>

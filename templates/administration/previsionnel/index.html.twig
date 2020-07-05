@@ -9,7 +9,7 @@
         <div class="buttons">
             <a href="{{ path('administration_previsionnel_import') }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.import_previsionnel'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-import"></i><span
+               data-placement="bottom"><i class="fas fa-file-import"></i><span
                         class="sr-only">importer</span></a>
             <a href="{{ path('administration_previsionnel_export_omega', {annee:annee}) }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.export_omega'|trans }}" data-provide="tooltip"
@@ -17,7 +17,7 @@
                         class="sr-only">Exporter</span></a>
             <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
-                        class="ti-plus"></i><span
+                        class="fas fa-plus"></i><span
                         class="sr-only">Ajouter</span></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
@@ -180,7 +180,7 @@
             type:'info',
             href:path('administration_previsionnel_new'),
             title: 'ajouter'|trans,
-            icone: 'ti-plus'
+            icone: 'fas fa-plus'
         },
         {
             type:'info',
