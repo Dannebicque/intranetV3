@@ -1,5 +1,8 @@
 <component name="CopyrightManager">
-  <settings default="David">
+  <settings default="david">
+    <module2copyright>
+      <element module="IntranetPhp" copyright="david" />
+    </module2copyright>
     <LanguageOptions name="PHP">
       <option name="fileTypeOverride" value="3" />
       <option name="block" value="false" />

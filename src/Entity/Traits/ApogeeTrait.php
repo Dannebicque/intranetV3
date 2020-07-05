@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Entity/Traits/ApogeeTrait.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/ApogeeTrait.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:14
 
 /**
  * Created by PhpStorm.
@@ -12,6 +11,7 @@
  * Date: 26/08/2018
  * Time: 09:59
  */
+
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;

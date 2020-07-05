@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/MesClasses/MyEtudiant.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/MesClasses/MyEtudiant.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:09
 
 namespace App\MesClasses;
 
@@ -145,7 +144,7 @@ class MyEtudiant
     public function getNotesAbsences(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
-        $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
+        $this->absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
             $anneeUniversitaire);
     }
 
@@ -325,7 +324,7 @@ class MyEtudiant
             $semestre = $this->etudiant->getSemestre();
         }
 
-        $this->absences = $this->absenceRepository->findByEtudiantSemestre($this->etudiant, $semestre,
+        $this->absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
             $semestre->getAnneeUniversitaire());
 
         $this->statistiques = StatsAbsences::calculsStatsSemestre($this->absences);

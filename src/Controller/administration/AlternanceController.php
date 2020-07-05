@@ -1,10 +1,9 @@
 <?php
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/src/Controller/administration/AlternanceController.php
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 23/11/2019 09:14
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 08:14
 
 namespace App\Controller\administration;
 
@@ -47,8 +46,8 @@ class AlternanceController extends BaseController
 
         return $this->render('administration/alternance/index.html.twig',
             [
-                'alternances' => $alternanceRepository->findByAnneeArray($annee,
-                    $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire(): null),
+                'alternances' => $alternanceRepository->getByAnneeAndAnneeUniversitaireArray($annee,
+                    $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null),
                 'annee'       => $annee,
                 'etudiants'   => $etudiants,
             ]);
@@ -140,7 +139,8 @@ class AlternanceController extends BaseController
         Annee $annee,
         $_format
     ): Response {
-        $actualites = $alternanceRepository->findByAnnee($annee, $annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire(): null);
+        $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
+            $annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
