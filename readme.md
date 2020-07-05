@@ -4,7 +4,7 @@
 
 Future version de l'intranet
 
-Based on Symfony 4.1
+Based on Symfony 5.x
 
 # Objectifs
 
