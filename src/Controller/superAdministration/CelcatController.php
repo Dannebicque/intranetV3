@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Diplome;
-use App\MesClasses\Celcat\MyCelcat;
+use App\Classes\Celcat\MyCelcat;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\DiplomeRepository;
 use Exception;

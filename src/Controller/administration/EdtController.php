@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\MesClasses\Edt\MyEdt;
-use App\MesClasses\Edt\MyEdtCelcat;
+use App\Classes\Edt\MyEdt;
+use App\Classes\Edt\MyEdtCelcat;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;

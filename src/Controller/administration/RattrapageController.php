@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -12,7 +12,7 @@ use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Event\RattrapageEvent;
-use App\MesClasses\MyExport;
+use App\Classes\MyExport;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
 use PhpOffice\PhpSpreadsheet\Exception;

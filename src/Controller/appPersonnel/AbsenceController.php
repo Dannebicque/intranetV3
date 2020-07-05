@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:36
 
 namespace App\Controller\appPersonnel;
 
@@ -12,10 +12,10 @@ use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
-use App\MesClasses\MyAbsences;
-use App\MesClasses\MyEtudiant;
-use App\MesClasses\MyGroupes;
-use App\MesClasses\Tools;
+use App\Classes\MyAbsences;
+use App\Classes\MyEtudiant;
+use App\Classes\MyGroupes;
+use App\Classes\Tools;
 use App\Repository\AbsenceRepository;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;

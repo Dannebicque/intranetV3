@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Entity;
 
@@ -196,7 +196,7 @@ class StageEtudiant extends BaseEntity
     public function __construct()
     {
         $this->setUuid(Uuid::v4());
-        $this->setGratificationMontant(\App\MesClasses\Configuration::get('GRATIFICATION_HEURE_STAGE'));
+        $this->setGratificationMontant(\App\Classes\Configuration::get('GRATIFICATION_HEURE_STAGE'));
     }
 
     /**

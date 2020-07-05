@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -13,7 +13,7 @@ use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\MesClasses\MyGroupes;
+use App\Classes\MyGroupes;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\Request;

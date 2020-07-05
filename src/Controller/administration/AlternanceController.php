@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:14
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -14,7 +14,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Form\AlternanceType;
-use App\MesClasses\MyExport;
+use App\Classes\MyExport;
 use App\Repository\AlternanceRepository;
 use App\Repository\EtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;

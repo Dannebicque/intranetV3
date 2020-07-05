@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 05/07/2020 08:33
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
@@ -13,7 +13,7 @@ use App\Event\EvaluationEvent;
 use App\Event\JustificatifEvent;
 use App\Event\NoteEvent;
 use App\Event\RattrapageEvent;
-use App\MesClasses\Mail\MyMailer;
+use App\Classes\Mail\MyMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\api;
 
@@ -11,7 +11,7 @@ use App\Controller\BaseController;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
-use App\MesClasses\MyPersonnel;
+use App\Classes\MyPersonnel;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;

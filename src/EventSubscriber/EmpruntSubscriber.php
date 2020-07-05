@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\EventSubscriber;
 
 use App\Entity\Notification;
 use App\Event\EmpruntEvent;
-use App\MesClasses\Mail\MyMailer;
+use App\Classes\Mail\MyMailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

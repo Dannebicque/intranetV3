@@ -3,15 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller;
 
 use App\Entity\Semestre;
-use App\MesClasses\Edt\MyEdt;
-use App\MesClasses\Edt\MyEdtCelcat;
-use App\MesClasses\Edt\MyEdtExport;
-use App\MesClasses\Pdf\MyPDF;
+use App\Classes\Edt\MyEdt;
+use App\Classes\Edt\MyEdtCelcat;
+use App\Classes\Edt\MyEdtExport;
+use App\Classes\Pdf\MyPDF;
 use App\Repository\EdtPlanningRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;

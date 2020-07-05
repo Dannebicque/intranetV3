@@ -4,16 +4,16 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
-use App\MesClasses\Apogee\MyApogee;
-use App\MesClasses\LDAP\MyLdap;
-use App\MesClasses\Tools;
+use App\Classes\Apogee\MyApogee;
+use App\Classes\LDAP\MyLdap;
+use App\Classes\Tools;
 use App\Repository\BacRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;

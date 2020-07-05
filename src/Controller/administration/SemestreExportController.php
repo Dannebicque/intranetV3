@@ -3,15 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\MesClasses\MyEtudiant;
-use App\MesClasses\MyEvaluations;
+use App\Classes\MyEtudiant;
+use App\Classes\MyEvaluations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;

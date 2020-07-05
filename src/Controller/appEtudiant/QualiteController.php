@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\appEtudiant;
 
@@ -13,7 +13,7 @@ use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiant;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
-use App\MesClasses\Mail\MyMailer;
+use App\Classes\Mail\MyMailer;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QualiteQuestionnaireRepository;
 use App\Repository\QuizzEtudiantReponseRepository;

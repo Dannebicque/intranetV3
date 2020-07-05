@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\superAdministration;
 
 use App\Entity\Diplome;
 use App\Entity\Semestre;
-use App\MesClasses\Excel\MyExcelRead;
+use App\Classes\Excel\MyExcelRead;
 use App\Repository\DiplomeRepository;
 use App\Repository\SemestreRepository;
 use PhpOffice\PhpSpreadsheet\Exception;

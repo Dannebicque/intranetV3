@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -12,8 +12,8 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
-use App\MesClasses\MyExport;
-use App\MesClasses\MyUpload;
+use App\Classes\MyExport;
+use App\Classes\MyUpload;
 use App\Repository\EtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;

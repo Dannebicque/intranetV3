@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration\stage;
 
@@ -14,7 +14,7 @@ use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Form\StageEtudiantType;
-use App\MesClasses\MyStageEtudiant;
+use App\Classes\MyStageEtudiant;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dompdf\Dompdf;

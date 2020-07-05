@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\appPersonnel;
 
@@ -12,11 +12,11 @@ use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Form\EvaluationType;
-use App\MesClasses\MyEtudiant;
-use App\MesClasses\MyEvaluation;
-use App\MesClasses\MyEvaluations;
-use App\MesClasses\MyExport;
-use App\MesClasses\MyUpload;
+use App\Classes\MyEtudiant;
+use App\Classes\MyEvaluation;
+use App\Classes\MyEvaluations;
+use App\Classes\MyExport;
+use App\Classes\MyUpload;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

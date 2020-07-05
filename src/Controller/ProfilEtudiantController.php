@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller;
 
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
-use App\MesClasses\Calendrier;
-use App\MesClasses\MyEtudiant;
+use App\Classes\Calendrier;
+use App\Classes\MyEtudiant;
 use App\Repository\AlternanceRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\MatiereRepository;

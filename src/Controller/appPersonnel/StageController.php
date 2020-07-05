@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/StageController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:14
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\StageEtudiant;
-use App\MesClasses\MyExport;
+use App\Classes\MyExport;
 use App\Repository\AlternanceRepository;
 use App\Repository\StageEtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;

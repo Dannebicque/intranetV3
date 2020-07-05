@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/EmpruntController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\appEtudiant;
 
@@ -14,8 +14,8 @@ use App\Entity\EmpruntEtudiant;
 use App\Entity\EmpruntMateriel;
 use App\Entity\Materiel;
 use App\Event\EmpruntEvent;
-use App\MesClasses\MyEmprunts;
-use App\MesClasses\Tools;
+use App\Classes\MyEmprunts;
+use App\Classes\Tools;
 use App\Repository\MaterielRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

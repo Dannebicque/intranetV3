@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\superAdministration;
 
@@ -14,7 +14,7 @@ use App\Entity\Matiere;
 use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\Form\PpnImportType;
-use App\MesClasses\MyPpn;
+use App\Classes\MyPpn;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;

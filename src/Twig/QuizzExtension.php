@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Twig;
 
 use App\Entity\QuizzQuestion;
-use App\MesClasses\Tools;
+use App\Classes\Tools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
