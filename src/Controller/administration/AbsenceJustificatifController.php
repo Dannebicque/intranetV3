@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -12,7 +12,7 @@ use App\Entity\AbsenceJustificatif;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Event\JustificatifEvent;
-use App\MesClasses\MyExport;
+use App\Classes\MyExport;
 use App\Repository\AbsenceJustificatifRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

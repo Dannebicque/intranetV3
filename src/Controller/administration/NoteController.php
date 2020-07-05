@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Semestre;
-use App\MesClasses\MyEvaluations;
-use App\MesClasses\MyExport;
+use App\Classes\MyEvaluations;
+use App\Classes\MyExport;
 use App\Repository\NoteRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;

@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\superAdministration\enquete;
 
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\Semestre;
-use App\MesClasses\Enquetes\MyEnquete;
+use App\Classes\Enquetes\MyEnquete;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PrevisionnelRepository;

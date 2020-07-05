@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -13,7 +13,7 @@ use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Form\EvaluationType;
-use App\MesClasses\MyEvaluation;
+use App\Classes\MyEvaluation;
 use App\Repository\EvaluationRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Matiere;
-use App\MesClasses\MyPrevisionnel;
+use App\Classes\MyPrevisionnel;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use Symfony\Component\HttpFoundation\Response;

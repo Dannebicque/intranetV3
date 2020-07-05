@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\EventSubscriber;
 
 use App\Entity\Notification;
 use App\Entity\StageMailTemplate;
 use App\Event\StageEvent;
-use App\MesClasses\Mail\MyMailer;
+use App\Classes\Mail\MyMailer;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;

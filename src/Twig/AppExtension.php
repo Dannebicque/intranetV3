@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Twig;
 
 use App\Entity\Constantes;
-use App\MesClasses\Configuration;
-use App\MesClasses\Tools;
+use App\Classes\Configuration;
+use App\Classes\Tools;
 use DateTime;
 use Exception;
 use Symfony\Contracts\Translation\TranslatorInterface;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -11,7 +11,7 @@ use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Entity\Constantes;
 use App\Form\BorneType;
-use App\MesClasses\MyExport;
+use App\Classes\MyExport;
 use App\Repository\BorneRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;

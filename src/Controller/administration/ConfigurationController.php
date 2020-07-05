@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ConfigurationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\MesClasses\MyConfiguration;
+use App\Classes\MyConfiguration;
 use App\Repository\AnneeUniversitaireRepository;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;

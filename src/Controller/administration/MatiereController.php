@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\administration;
 
@@ -13,8 +13,8 @@ use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Ue;
 use App\Form\MatiereType;
-use App\MesClasses\Configuration;
-use App\MesClasses\MyExport;
+use App\Classes\Configuration;
+use App\Classes\MyExport;
 use App\Repository\MatiereRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;

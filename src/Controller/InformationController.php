@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
-use App\MesClasses\MyArticle;
-use App\MesClasses\MyPagination;
+use App\Classes\MyArticle;
+use App\Classes\MyPagination;
 use App\Repository\ArticleRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -3,11 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller;
 
-use App\MesClasses\MyExportListing;
+use App\Classes\MyExportListing;
 use App\Repository\MatiereRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

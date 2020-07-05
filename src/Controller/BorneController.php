@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller;
 
 use App\Entity\Semestre;
-use App\MesClasses\Edt\MyEdtBorne;
+use App\Classes\Edt\MyEdtBorne;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

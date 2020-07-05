@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller;
 
 
-use App\MesClasses\Edt\MyEdtExport;
+use App\Classes\Edt\MyEdtExport;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;

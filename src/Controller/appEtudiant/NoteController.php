@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 08:33
 
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
 use App\Entity\Note;
-use App\MesClasses\MyEvaluation;
+use App\Classes\MyEvaluation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
