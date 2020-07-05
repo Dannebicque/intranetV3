@@ -10,7 +10,7 @@
       <a href="{{ path('application_index', {onglet: 'stage'}) }}" class="btn btn-primary btn-float"
          data-provide="tooltip"
          data-placement="bottom" title="{{ 'atitle.retour_application_stage'|trans }}"><i
-                class="ti-arrow-left"></i></a>
+                  class="fas fa-arrow-left"></i></a>
     </div>
   </div>
 {% endblock %}
@@ -19,12 +19,12 @@
     {% for offre in offres %}
         <div class="col-md-6 col-xl-4 code code-card code-fold">
             <div class="code-preview">
-              <div class="media align-items-center">
+                <div class="media align-items-center">
                 <span>
-                    <i class="ti-file fs-30 text-info"></i>
+                    <i class="fas fa-file-o fs-30 text-info"></i>
                 </span>
-                <div class="media-body">
-                  <h5>{{ offre.libelle }} / {{ offre.entreprise }}</h5>
+                    <div class="media-body">
+                        <h5>{{ offre.libelle }} / {{ offre.entreprise }}</h5>
                   <p class="gap-items">
                     <small>{{ 'ville'|trans }}: {{ offre.ville }}</small>
                   </p>
@@ -34,8 +34,8 @@
                 </div>
                 <a class="primary" href="{{ asset('upload/offre-stage/'~offre.documentName) }}" data-provide="tooltip"
                    title="{{ 'telecharger'|trans }}"><i
-                          class="ti-save"></i></a>
-              </div>
+                            class="fas fa-save"></i></a>
+                </div>
             </div>
         </div>
     {% endfor %}

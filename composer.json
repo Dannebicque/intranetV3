@@ -36,7 +36,8 @@
     "symfony/yaml": "^5.1",
     "twig/extra-bundle": "^3.0",
     "twig/intl-extra": "^3.0",
-    "vich/uploader-bundle": "^1.8"
+    "vich/uploader-bundle": "^1.8",
+    "symfony/webpack-encore-bundle": "^1.7"
   },
   "config": {
     "preferred-install": {

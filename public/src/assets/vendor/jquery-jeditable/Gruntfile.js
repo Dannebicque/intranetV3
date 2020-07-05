@@ -1,3 +1,9 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/public/src/assets/vendor/jquery-jeditable/Gruntfile.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/07/2020 12:32
+
 /**
  * Gruntfile.js
  *
@@ -7,7 +13,7 @@
 module.exports = function (grunt) {
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('package-grunt.json'),
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= pkg.homepage %> */\n',

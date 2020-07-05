@@ -6,7 +6,7 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('application_personnel_absence_index',{matiere:matiere.id}) }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_saisie'|trans }}"><i class="ti-plus"></i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_saisie'|trans }}"><i class="fas fa-plus"></i></a>
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
         </div>
@@ -33,27 +33,28 @@
                 <tbody>
                 {% for absence in absences %}
                   <tr class="{{ absence.justifie ? 'bg-pale-success':'bg-pale-error' }}" id="ligne_{{ absence.uuidString }}">
-                    <td>{{ absence.etudiant.nom }}</td>
-                    <td>{{ absence.etudiant.prenom }}</td>
-                    <td>{{ absence.date ? absence.date|format_date('long') : '' }}</td>
-                    <td>{{ absence.heure ? absence.heure|format_time('short') : '' }}</td>
-                    <td>{{ absence.duree ? absence.duree|format_time('short') : '' }}</td>
-                    <td>{{ absence.personnel.display }}</td>
-                    <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
-                    <td>
-                      <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, onglet: 'absences'}) }}"
-                         class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                         data-placement="bottom" title="{{ 'details.des.absences'|trans }}"><i class="ti-eye"></i></a>
-                        {% if absence.personnel.id == user_data.user.id and matiere.ue.semestre.diplome.optSupprAbsence == true %}
-                          <a href="{{ path('application_personnel_absence_delete', {uuid: absence.uuidString}) }}"
-                             class="btn btn-danger btn-outline btn-square supprimer"
-                             data-csrf="{{ csrf_token('delete' ~ absence.uuidString) }}"><i class="{{ iconDelete }}"
-                                                                                          data-provide="tooltip"
-                                                                                          data-placement="bottom"
-                                                                                          title="{{ 'supprimer'|trans }}"></i></a>
-                            {% endif %}
-                        </td>
-                    </tr>
+                      <td>{{ absence.etudiant.nom }}</td>
+                      <td>{{ absence.etudiant.prenom }}</td>
+                      <td>{{ absence.date ? absence.date|format_date('long') : '' }}</td>
+                      <td>{{ absence.heure ? absence.heure|format_time('short') : '' }}</td>
+                      <td>{{ absence.duree ? absence.duree|format_time('short') : '' }}</td>
+                      <td>{{ absence.personnel.display }}</td>
+                      <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
+                      <td>
+                          <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, onglet: 'absences'}) }}"
+                             class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                             data-placement="bottom" title="{{ 'details.des.absences'|trans }}"><i class="fas
+                         fa-eye"></i></a>
+                          {% if absence.personnel.id == user_data.user.id and matiere.ue.semestre.diplome.optSupprAbsence == true %}
+                              <a href="{{ path('application_personnel_absence_delete', {uuid: absence.uuidString}) }}"
+                                 class="btn btn-danger btn-outline btn-square supprimer"
+                                 data-csrf="{{ csrf_token('delete' ~ absence.uuidString) }}"><i class="{{ iconDelete }}"
+                                                                                                data-provide="tooltip"
+                                                                                                data-placement="bottom"
+                                                                                                title="{{ 'supprimer'|trans }}"></i></a>
+                          {% endif %}
+                      </td>
+                  </tr>
                 {% else %}
                     <tr>
                         <td colspan="8">{{ 'no.record.found'|trans }}</td>
@@ -89,7 +90,7 @@
             type:'info',
             href:path('application_personnel_absence_index',{matiere:matiere.id}),
             title: 'ajouter'|trans,
-            icone: 'ti-plus'
+            icone: 'fas fa-plus'
         },
         {
             type:'info',

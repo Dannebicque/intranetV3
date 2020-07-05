@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 05/07/2020 16:27 -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
     <unit id="baI_ZxO" name="An authentication exception occurred.">
@@ -13497,15 +13503,39 @@
     </unit>
     <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
       <segment>
-        <source>import.etudiants.groupes.heading</source>
-        <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
+          <source>import.etudiants.groupes.heading</source>
+          <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
       </segment>
     </unit>
-    <unit id="ctb8KK5" name="atitle.retour_groupes">
-      <segment>
-        <source>atitle.retour_groupes</source>
-        <target>Retour aux groupes</target>
-      </segment>
-    </unit>
+      <unit id="ctb8KK5" name="atitle.retour_groupes">
+          <segment>
+              <source>atitle.retour_groupes</source>
+              <target>Retour aux groupes</target>
+          </segment>
+      </unit>
+      <unit id="0">
+          <segment>
+              <source>déconnexion</source>
+              <target>Déconnexion</target>
+          </segment>
+      </unit>
+      <unit id="1">
+          <segment>
+              <source>vérouiller</source>
+              <target>Vérouiller</target>
+          </segment>
+      </unit>
+      <unit id="2">
+          <segment>
+              <source>paramètres</source>
+              <target>Paramètres</target>
+          </segment>
+      </unit>
+      <unit id="3">
+          <segment>
+              <source>profil</source>
+              <target>Profil</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

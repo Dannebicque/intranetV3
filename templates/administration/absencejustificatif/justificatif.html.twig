@@ -22,7 +22,7 @@
         <div class="buttons">
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
         </div>
@@ -59,12 +59,13 @@
                                     data-url="{{ path('administration_absence_justificatif_details', {uuid: justificatif.uuidString}) }}"
                                     data-title="{{ 'detail.absencejustificatif'|trans }}"
                                     data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
-                                        class="ti-eye"></i></button>
+                                        class="fas fa-eye"></i></button>
                             {% if justificatif.etat == 'A' %}
                                 <button
                                    class="btn btn-success btn-outline bx_{{ justificatif.uuidString }}"
-                                   ><i
-                                            class="ti-check"></i> Accepté</button>
+                                ><i
+                                            class="fas fa-check"></i> Accepté
+                                </button>
                                 <button
                                         data-justificatif="{{ justificatif.uuidString }}"
                                    class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"
@@ -73,7 +74,8 @@
                             {% elseif justificatif.etat == 'R' %}
                                 <button
                                    class="btn btn-warning btn-outline bx_{{ justificatif.uuidString }}"><i
-                                            class="ti-na"></i> Refusé</button>
+                                            class="fas fa-ban"></i> Refusé
+                                </button>
                                 <button
                                         data-justificatif="{{ justificatif.uuidString }}"
                                    class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"

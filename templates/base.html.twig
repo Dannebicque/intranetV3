@@ -9,11 +9,12 @@
     <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
 
     {% block stylesheets %}
-        <link href="{{ asset('assets/fonts/font.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/vendor/flag-icon/css/flag-icon.css') }}" rel="stylesheet">
+        {{ encore_entry_link_tags('app') }}
+        {#        <link href="{{ asset('assets/fonts/font.css') }}" rel="stylesheet">#}
+        {#        <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">#}
+        {#        <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">#}
+        {#        <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">#}
+        {#        <link href="{{ asset('src/assets/vendor/flag-icon/css/flag-icon.css') }}" rel="stylesheet">#}
     {% endblock %}
     <style>
         .btn-primary {
@@ -206,26 +207,26 @@
         </a>
 
         <div class="dropdown d-none d-md-block">
-            <span class="topbar-btn" data-toggle="dropdown"><i class="ti-layout-grid3-alt"></i></span>
+            <span class="topbar-btn" data-toggle="dropdown"><i class="material-icons">view_module</i></span>
             <div class="dropdown-menu dropdown-grid">
                 <a class="dropdown-item" href="{{ path('default_homepage') }}">
-                    <span data-i8-icon="home"></span>
+                    <span class="fas fa-home fa-3x fa-color-home"></span>
                     <span class="title">Dashboard</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('trombinoscope_index') }}">
-                    <span data-i8-icon="stack_of_photos"></span>
+                    <span class="fas fa-images fa-3x fa-color-trombi"></span>
                     <span class="title">Trombinoscope</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('agenda_index') }}">
-                    <span data-i8-icon="calendar"></span>
+                    <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
                     <span class="title">Agenda</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('messagerie_index') }}">
-                    <span data-i8-icon="invite"></span>
+                    <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
                     <span class="title">Messagerie</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
-                    <span data-i8-icon="businessman"></span>
+                    <span class="fas fa-address-card fa-3x  fa-color-profil"></span>
                     <span class="title">Profil</span>
                 </a>
             </div>
@@ -233,7 +234,7 @@
 
         {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
             <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
+                <span class="topbar-btn" data-toggle="dropdown"><i class="material-icons">swap_vert</i></span>
                 <div class="dropdown-menu dropdown-grid">
                     {% for departement in user_data.user.getPersonnelDepartements %}
                         <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
@@ -269,19 +270,21 @@
                         {% endif %}
                     </span>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
-                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
-                        Paramètres</a>
+                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="fas fa-user"></i> {{ 'profil'|trans }}
+                    </a>
+                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="fas fa-cogs"></i> {{ 'paramètres'|trans }}
+                    </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="ti-lock"></i> Lock</a>
-                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="ti-power-off"></i>
-                        Logout</a>
+                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="fas fa-user-lock"></i> {{ 'vérouiller'|trans }}
+                    </a>
+                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
+                        {{ 'déconnexion'|trans }}</a>
                 </div>
             </li>
 
             <!-- Change language -->
             <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown"><i class="ti-flag-alt-2"></i><span
+                    <span class="topbar-btn" data-toggle="dropdown"><i class="fas fa-flag"></i><span
                                 class="sr-only">Changer de langue</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item {% if app.request.locale == 'en' %}active{% endif %}" href="{{ path
@@ -303,7 +306,7 @@
             {% endfor %}
             <li class="dropdown d-none d-md-block">
                 <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i
-                            class="ti-bell"></i><span
+                            class="fas fa-bell"></i><span
                             class="sr-only">Notifications</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="media-list media-list-hover media-list-divided media-list-xs">
@@ -346,7 +349,8 @@
                     {% for message in user_data.messages|filter(message => (message.etat == 'U')) %}
                         {% set newNotification = true %}
                     {% endfor %}
-                    <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i class="ti-email"></i></span>
+                    <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}"
+                          data-toggle="dropdown"><i class="fas fa-envelope"></i></span>
                     <div class="dropdown-menu dropdown-menu-right">
 
                         <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
@@ -480,7 +484,7 @@
 
 <!-- Fullscreen search -->
 <div class="lookup-fullscreen" id="lookup-full">
-    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="ti-close"></i></span>
+    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="fas fa-times"></i></span>
 
     <div class="lookup-form">
         <label for="search"><span
@@ -534,12 +538,14 @@
 <!-- Routing -->
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
-<script src="{{ asset('src/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('src/assets/js/app.js') }}"></script>
 {% block javascripts %}
-    <script src="{{ asset('src/assets/js/script.min.js') }}"></script>
-    <script data-provide="sweetalert"></script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
+{#<script src="{{ asset('src/assets/js/core.min.js') }}"></script>#}
+{#<script src="{{ asset('src/assets/js/app.js') }}"></script>#}
+{#{% block javascripts %}#}
+{#    <script src="{{ asset('src/assets/js/script.min.js') }}"></script>#}
+{#    <script data-provide="sweetalert"></script>#}
+
 </body>
 </html>

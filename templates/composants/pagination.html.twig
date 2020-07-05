@@ -3,7 +3,7 @@
 
         <li class="page-item {% if not pagination.hasPreviousLink %}disabled{% endif %}">
             <a class="page-link" href="{% if pagination.hasPreviousLink %}{{ pagination.previousLink }}{% endif %}">
-                <span class="ti-arrow-left"></span>
+                <span class="fas fa-arrow-left"></span>
             </a>
         </li>
 
@@ -15,7 +15,7 @@
 
         <li class="page-item {% if not pagination.hasNextLink %}disabled{% endif %}">
             <a class="page-link" href="{% if pagination.hasNextLink %}{{ pagination.nextLink }}{% endif %}">
-                <span class="ti-arrow-right"></span>
+                <span class="fas fa-arrow-right"></span>
             </a>
         </li>
     </ul>
