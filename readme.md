@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/Dannebicque/intranetV3.svg?branch=master)](https://travis-ci.org/Dannebicque/intranetV3)
+[![Build Status](https://travis-ci.org/Dannebicque/intranetV3.svg?branch=master)](https://travis-ci.org/Dannebicque/intranetV3) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/build-status/master) [![Build Status](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/build-status/master)
 
 # IntranetV3
 
 Future version de l'intranet
 
-Based on Symfony 4.1
+Based on Symfony 5.x
 
 # Objectifs
 
