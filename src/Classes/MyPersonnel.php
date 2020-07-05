@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/07/2020 09:14
 
 /**
  * Created by PhpStorm.
@@ -19,7 +19,7 @@ use App\Repository\PersonnelRepository;
 
 /**
  * Class MyPersonnel
- * @package App\MesClasses
+ * @package App\Classes
  */
 class MyPersonnel
 {

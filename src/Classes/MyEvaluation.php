@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/07/2020 09:14
 
 /**
  * Created by PhpStorm.
@@ -32,7 +32,7 @@ use function count;
 
 /**
  * Class MyEvaluation
- * @package App\MesClasses
+ * @package App\Classes
  */
 class MyEvaluation
 {

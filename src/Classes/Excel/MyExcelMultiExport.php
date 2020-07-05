@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:36
+// @lastUpdate 05/07/2020 09:14
 
 /**
  * Created by PhpStorm.
@@ -30,7 +30,7 @@ use function is_array;
 
 /**
  * Class MyExcelMultiExport
- * @package App\MesClasses\Excel
+ * @package App\Classes\Excel
  */
 class MyExcelMultiExport
 {

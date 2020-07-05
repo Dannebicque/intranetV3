@@ -31,7 +31,7 @@ services:
         calls:
             - method: setConfig
               arguments:
-                  - '@App\MesClasses\Configuration'
+                  - '@App\Classes\Configuration'
 
     App\Event\SlugGenerator:
         tags:

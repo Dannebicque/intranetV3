@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/07/2020 09:14
 
 namespace App\Classes;
 
 /**
  * Class MyIcal
- * @package DA\KernelBundle\MesClasses
+ * @package DA\KernelBundle\Classes
  */
 class MyIcal
 {
