@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:12
+// @lastUpdate 07/07/2020 16:31
 
 var Encore = require('@symfony/webpack-encore')
 
@@ -34,6 +34,8 @@ Encore
   .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('documents', './assets/js/pages/documents.js')
+  .addEntry('profil', './assets/js/pages/profil.js')
+  .addEntry('planning', './assets/js/pages/planning.js')
 
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

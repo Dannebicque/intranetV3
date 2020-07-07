@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/documents.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/11/2019 19:40
+// @lastUpdate 07/07/2020 16:18
 
 $(document).on('click', '.afficheDocuments', function() {
   $('#zone_document').empty().load(Routing.generate('document_ajax', {typedocument: $(this).data('type')}));

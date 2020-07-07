@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/02/2020 15:39
+// @lastUpdate 07/07/2020 16:18
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
