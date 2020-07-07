@@ -2,16 +2,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/02/2020 18:40
+// @lastUpdate 07/07/2020 16:18
 
-function readUrlMenu($url) {
+import $ from 'jquery'
+
+function readUrlMenu ($url) {
   const $elt = $url.split('/')
   let $firstElt = 2
-    if ($elt[1] === 'index.php') {
-      if ($elt.length > 1) {
-        $firstElt = 3;
-      }
+  if ($elt[1] === 'index.php') {
+    if ($elt.length > 1) {
+      $firstElt = 3
     }
+  }
 
     if ($elt[$firstElt] === 'super-administration') {
         $firstElt = $firstElt+1;
@@ -184,4 +186,12 @@ function genereInput ($obj) {
   $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="ti-check"></i></button>'
   $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="ti-close"></i></button></div>'
   return $html
+}
+
+jQuery.fn.dataAttr = function (name, def) {
+  return $(this)[0].getAttribute('data-' + name) || def
+}
+
+jQuery.fn.hasDataAttr = function (name) {
+  return $(this)[0].hasAttribute('data-' + name)
 }

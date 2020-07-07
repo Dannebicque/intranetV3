@@ -1,18 +1,18 @@
-// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/applications.js
-// @author     David Annebicque
-// @project intranetv3
-// @date 16/10/2019 17:41
-// @lastUpdate 16/10/2019 17:40
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 07/07/2020 16:18
 
+import './messagerie'
 
-$(document).on('click', '.changeapplication', function(e) {
-  e.preventDefault();
-  e.stopPropagation();
+$(document).on('click', '.changeapplication', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
 
-  $('.changeapplication').removeClass('active show');
-  $(this).addClass('active show');
-  $('#mainContent').empty().load($(this).attr('href'));
+  $('.changeapplication').removeClass('active show')
+  $(this).addClass('active show')
+  $('#mainContent').empty().load($(this).attr('href'))
 });
 
 $(document).on('change', '#selectsemestre', function () {

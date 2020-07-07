@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 07/07/2020 16:18
 
 namespace App\Controller\administration;
 
@@ -71,7 +71,8 @@ class ActualiteController extends BaseController
         $actualite = new Actualite($this->dataUserSession->getDepartement());
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
-                'data-provide' => 'validation'
+                'data-provide' => 'validation',
+                'novalidate'   => true
             ]
         ]);
         $form->handleRequest($request);

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 19:15
+// @lastUpdate 07/07/2020 16:12
 
 var Encore = require('@symfony/webpack-encore')
 
@@ -30,8 +30,11 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry('app', './assets/js/app.js')
-  //.addEntry('datatable', './assets/js/datatable.js')
-  //.addEntry('page2', './assets/js/page2.js')
+  .addEntry('datatable', './assets/js/datatable.js')
+  .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
+  .addEntry('applications', './assets/js/pages/applications.js')
+  .addEntry('documents', './assets/js/pages/documents.js')
+
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -61,13 +64,6 @@ Encore
 
   // enables Sass/SCSS support
   .enableSassLoader()
-
-  // uncomment if you use TypeScript
-  //.enableTypeScriptLoader()
-
-  // uncomment to get integrity="..." attributes on your script & link tags
-  // requires WebpackEncoreBundle 1.4 or higher
-  //.enableIntegrityHashes(Encore.isProduction())
 
   // uncomment if you're having problems with a jQuery plugin
   .autoProvidejQuery()

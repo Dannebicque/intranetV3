@@ -1,9 +1,8 @@
-// Copyright (C) 10 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/messagerie.js
-// @author     David Annebicque
-// @project intranetv3
-// @date 21/10/2019 09:52
-// @lastUpdate 19/10/2019 17:49
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 28/02/2020 15:39
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
