@@ -1,3 +1,9 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/progression.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 09/02/2020 18:05
+
 $(document).on('change', '.updateProgression', function () {
   updateProgression($(this).data('semaine'), $(this).data('type'), $(this).data('matiere'), $(this).val())
   calculProgression($(this).data('semaine'), $(this).data('type'), $(this).data('matiere'))

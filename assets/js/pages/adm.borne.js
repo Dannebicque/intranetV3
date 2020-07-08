@@ -1,3 +1,9 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.borne.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 28/11/2019 19:40
+
 $(document).on('click', '.visibiliteBorne', function(){
   const btn = $(this)
   $.ajax({

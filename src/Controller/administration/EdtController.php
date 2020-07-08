@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/07/2020 14:16
 
 namespace App\Controller\administration;
 
@@ -80,7 +80,7 @@ class EdtController extends BaseController
         switch ($filtre) {
 
             case 'prof':
-                return $this->render('administration/edt/edt-prof.html.twig', [
+                return $this->render('administration/edt/_edt-prof.html.twig', [
                     'prof'       => $personnelRepository->find($valeur),
                     'filtre'     => $filtre,
                     'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
@@ -90,7 +90,7 @@ class EdtController extends BaseController
                 ]);
 
             case 'module':
-                return $this->render('administration/edt/edt-matiere.html.twig', [
+                return $this->render('administration/edt/_edt-matiere.html.twig', [
                     'matiere'    => $matiereRepository->find($valeur),
                     'filtre'     => $filtre,
                     'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
@@ -101,7 +101,7 @@ class EdtController extends BaseController
 //            case 'jour':
 //                return $this->render('DAKernelBundle:AdministrationEdt:edtJour.html.twig', $array);
             case 'salle':
-                return $this->render('administration/edt/edt-salle.html.twig', [
+                return $this->render('administration/edt/_edt-salle.html.twig', [
                     'salle'      => $valeur,
                     'filtre'     => $filtre,
                     'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
@@ -110,7 +110,7 @@ class EdtController extends BaseController
                     'edt'        => $edt,
                 ]);
             default:
-                return $this->render('administration/edt/edt-intranet.html.twig', [
+                return $this->render('administration/edt/_edt-intranet.html.twig', [
                     'filtre'     => $filtre,
                     'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
                     'salles'     => $salleRepository->findAll(),
@@ -138,7 +138,7 @@ class EdtController extends BaseController
         SalleRepository $salleRepository,
         MyEdtCelcat $myEdtCelcat
     ): Response {
-        return $this->render('administration/edt/edt-celcat.html.twig', [
+        return $this->render('administration/edt/_edt-celcat.html.twig', [
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles'     => $salleRepository->findAll(),
             'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),

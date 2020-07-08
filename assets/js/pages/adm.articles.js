@@ -1,5 +1,11 @@
 
 
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.articles.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 09/02/2020 18:05
+
 $(document).on('click', '#addCategorie', function () {
   if ($('#listeCategories').hasDataAttr('data-checkbox')) {
     const table = $('#listeCategories').DataTable()

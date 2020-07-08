@@ -1,3 +1,9 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.alternances.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 15/12/2019 21:57
+
 $(document).on('change', '.tuteurUniversitaireAlternance', function () {
   $.ajax({
     url: Routing.generate('administration_alternance_update_tuteur_universitaire', {

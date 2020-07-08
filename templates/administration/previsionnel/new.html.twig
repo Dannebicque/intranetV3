@@ -190,3 +190,13 @@
         </div>
     </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.previsionnel') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.previsionnel') }}
+{% endblock %}

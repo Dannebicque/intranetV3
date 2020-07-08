@@ -1,9 +1,8 @@
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/quizz.js
-// @author     David Annebicque
-// @project intranetv3
-// @date 28/11/2019 14:27
-// @lastUpdate 27/11/2019 12:39
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.quizz.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 28/11/2019 19:40
 
 $(document).on('change', 'input[type=radio][name="quizz_question[type]"]', function () {
   let $type = $('input[type=radio][name="quizz_question[type]"]:checked').val()

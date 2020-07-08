@@ -51,3 +51,13 @@
         }
     ]}) }}
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.matieres') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.matieres') }}
+{% endblock %}

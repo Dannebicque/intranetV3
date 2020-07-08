@@ -1,11 +1,8 @@
-/*
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/previsionnel.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 02/08/2019 12:40
- * @lastUpdate 02/08/2019 12:39
- */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.previsionnel.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 31/01/2020 07:38
 
 let nbLignePrevisionnel = 1
 

@@ -143,19 +143,19 @@ let diplome = {{ diplome.id }}
         {type: 'info',
             href: path('administration_rattrapage_planning_export', {diplome:diplome.id,_format:'pdf'}),
             title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"
+            icone : "fa fa-file-pdf"
         },
         {
             type:'info',
             href:path('administration_rattrapage_planning_export', {diplome:diplome.id,_format:'csv'}),
             title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
+            icone: 'fa fa-file-csv'
         },
         {
             type:'info',
             href:path('administration_rattrapage_planning_export', {diplome:diplome.id,_format:'xlsx'}),
             title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
+            icone: 'fa fa-file-excel'
         },
         {
             type:'info',
@@ -164,4 +164,14 @@ let diplome = {{ diplome.id }}
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.rattrapages') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.rattrapages') }}
 {% endblock %}

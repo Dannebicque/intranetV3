@@ -32,11 +32,12 @@
     {% endif %}
 {% endblock %}
 
-{% block javascripts %}
-    <script src="{{ asset('src/assets/vendor/jqueryui/jquery-ui.min.js') }}"></script>
+{% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('adm.groupe') }}
 {% endblock %}
 
-{% block fabactions %}
-
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.groupe') }}
 {% endblock %}

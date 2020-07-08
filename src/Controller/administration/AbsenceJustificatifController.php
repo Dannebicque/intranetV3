@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/07/2020 14:32
 
 namespace App\Controller\administration;
 
@@ -109,7 +109,7 @@ class AbsenceJustificatifController extends BaseController
      */
     public function details(AbsenceJustificatif $absenceJustificatif): Response
     {
-        return $this->render('administration/absencejustificatif/details.html.twig', [
+        return $this->render('administration/absencejustificatif/_details.html.twig', [
             'justificatif' => $absenceJustificatif
         ]);
     }
