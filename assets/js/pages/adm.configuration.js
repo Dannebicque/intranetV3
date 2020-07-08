@@ -1,9 +1,8 @@
-// Copyright (C) 11 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/configuration.js
-// @author     David Annebicque
-// @project intranetv3
-// @date 25/11/2019 10:20
-// @lastUpdate 25/11/2019 10:18
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.configuration.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 28/11/2019 19:40
 
 $(document).on('change', '.changeOption', function (e) {
   e.preventDefault();

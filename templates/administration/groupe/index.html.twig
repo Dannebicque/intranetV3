@@ -45,13 +45,13 @@
                                                     class="sr-only">Menu Export</span></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a href="{{ path('administration_groupe_export', {_format:'pdf',
-                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa
-                                            fa-file-pdf-o"></i> PDF</a>
-                                        <a href="{{ path('administration_groupe_export', {_format:'xlsx',
-                                            semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-excel-o"></i>
-                                            Excel</a>
+                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa
+                                            fa-file-pdf"></i> PDF</a>
+                                            <a href="{{ path('administration_groupe_export', {_format:'xlsx',
+                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-excel"></i>
+                                                Excel</a>
                                             <a href="{{ path('administration_groupe_export', {_format:'csv',
-                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-text-o"></i>
+                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-csv"></i>
                                                 CSV</a>
                                         </div>
                                     </li>
@@ -141,4 +141,14 @@
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.groupe') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.groupe') }}
 {% endblock %}

@@ -1,16 +1,8 @@
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/rattrapages.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.rattrapages.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 01/01/2020 18:22
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
   e.preventDefault()

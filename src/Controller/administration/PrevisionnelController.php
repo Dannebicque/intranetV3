@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/07/2020 14:12
 
 namespace App\Controller\administration;
 
@@ -68,7 +68,7 @@ class PrevisionnelController extends BaseController
 
         $myPrevisionnel->getPrevisionnelMatiere($matiere, $annee);
 
-        return $this->render('administration/previsionnel/matiere.html.twig', [
+        return $this->render('administration/previsionnel/_matiere.html.twig', [
             'previsionnel' => $myPrevisionnel,
             'annee'        => $annee
         ]);
@@ -92,7 +92,7 @@ class PrevisionnelController extends BaseController
 
         $myPrevisionnel->getPrevisionnelSemestre($semestre, $annee);
 
-        return $this->render('administration/previsionnel/semestre.html.twig', [
+        return $this->render('administration/previsionnel/_semestre.html.twig', [
             'previsionnel' => $myPrevisionnel,
             'annee'        => $annee
 
@@ -118,7 +118,7 @@ class PrevisionnelController extends BaseController
         $myPrevisionnel->getPrevisionnelEnseignantBySemestre($annee);
         $myPrevisionnel->getHrsEnseignant($annee);
 
-        return $this->render('administration/previsionnel/personnel.html.twig', [
+        return $this->render('administration/previsionnel/_personnel.html.twig', [
             'previsionnel' => $myPrevisionnel,
             'annee'        => $annee
         ]);

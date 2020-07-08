@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:31
+// @lastUpdate 08/07/2020 14:58
 
 var Encore = require('@symfony/webpack-encore')
 
@@ -36,6 +36,25 @@ Encore
   .addEntry('documents', './assets/js/pages/documents.js')
   .addEntry('profil', './assets/js/pages/profil.js')
   .addEntry('planning', './assets/js/pages/planning.js')
+  .addEntry('quizzQualite', './assets/js/pages/quizzQualite.js')
+  .addEntry('adm.configuration', './assets/js/pages/adm.configuration.js')
+  .addEntry('adm.articles', './assets/js/pages/adm.articles.js')
+  .addEntry('adm.quizz', './assets/js/pages/adm.quizz.js')
+  .addEntry('adm.groupe', './assets/js/pages/adm.groupe.js')
+  .addEntry('adm.edt', './assets/js/pages/adm.edt.js')
+  .addEntry('adm.rattrapages', './assets/js/pages/adm.rattrapages.js')
+  .addEntry('adm.previsionnel', './assets/js/pages/adm.previsionnel.js')
+  .addEntry('adm.notes', './assets/js/pages/adm.notes.js')
+  .addEntry('adm.bornes', './assets/js/pages/adm.borne.js')
+  .addEntry('adm.alternances', './assets/js/pages/adm.alternances.js')
+  .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
+  .addEntry('adm.stage', './assets/js/pages/adm.stage.js')
+  .addEntry('creneaux', './assets/js/pages/creneaux.js')
+  .addEntry('progression', './assets/js/pages/progression.js')
+  .addEntry('settings', './assets/js/pages/settings.js')
+  .addEntry('notes', './assets/js/pages/notes.js')
+  .addEntry('informations', './assets/js/pages/informations.js')
+  .addEntry('sadm.scolarite', './assets/js/pages/sadm.scolarite.js')
 
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

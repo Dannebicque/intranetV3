@@ -1,11 +1,8 @@
-/*
- * Copyright (C) 8 / 2019 | David annebicque | IUT de Troyes - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetv3/public/src/assets/js/script/partials/notes.js
- * @author     David Annebicque
- * @project intranetv3
- * @date 18/08/2019 11:48
- * @lastUpdate 18/08/2019 11:46
- */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/notes.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 09/02/2020 18:04
 
 $('.savegroupe').click(function () {
   const groupe = $(this).attr('id')

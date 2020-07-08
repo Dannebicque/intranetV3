@@ -34,10 +34,21 @@
     </div>
 </div>
 
-<div class="card">
-    <h4 class="card-title">{{ 'sadm.etudiant.resultat.heading'|trans }}</h4>
-    <div class="card-body" id="resultat">
-        <div class="alert alert-info">Veuillez saisir les premiers caractères de votre recherche</div>
+    <div class="card">
+        <h4 class="card-title">{{ 'sadm.etudiant.resultat.heading'|trans }}</h4>
+        <div class="card-body" id="resultat">
+            <div class="alert alert-info">Veuillez saisir les premiers caractères de votre recherche</div>
+        </div>
     </div>
-</div>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sadm.scolarite') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sadm.scolarite') }}
 {% endblock %}
