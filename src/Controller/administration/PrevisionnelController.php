@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 14:12
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Controller\administration;
 
@@ -201,6 +201,7 @@ class PrevisionnelController extends BaseController
      * @param Request        $request
      *
      * @return Response
+     * @throws \Exception
      */
     public function import(MyPrevisionnel $myPrevisionnel, Request $request): Response
     {

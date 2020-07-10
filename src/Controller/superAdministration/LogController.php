@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/LogController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Controller\superAdministration;
 
@@ -42,8 +42,6 @@ class LogController extends BaseController
 
     /**
      * @Route("/phpinfo", name="sa_log_phpinfo", methods="GET")
-     *
-     * @param ParameterBagInterface $parameterBag
      *
      * @return Response
      */

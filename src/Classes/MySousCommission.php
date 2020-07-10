@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 /**
  * Created by PhpStorm.
@@ -211,7 +211,6 @@ class MySousCommission
         $ligne = 7;
         $colonne = 9;
 
-        /** @var Matiere $matiere */
         foreach ($this->matieres as $matiere) {
             if ($matiere->getNbnotes() !== 0 && $matiere->getUE()->getSemestre()->getId() === $semestre->getId()) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $matiere->getCodeMatiere());
@@ -223,7 +222,6 @@ class MySousCommission
         $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colonne + count($this->ues) + 3, $ligne - 1);
         $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $semestre->getLibelle(), 'HORIZONTAL_CENTER');
 
-        /** @var Ue $ue */
         foreach ($this->ues as $ue) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE ' . $ue->getNumeroUe());
             $colonne++;
@@ -243,7 +241,6 @@ class MySousCommission
         $colonne++;
         /* semestres précédent */
 
-        /** @var Semestre $s */
         foreach ($this->semestres as $s) {
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
@@ -262,7 +259,6 @@ class MySousCommission
         $ligne++;
         $ligne++;
 
-        /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
             $moyennes = $this->sousCommissionEtudiants[$etudiant->getId()];
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getDisplay());
@@ -293,7 +289,6 @@ class MySousCommission
                 $moyennes->getNbSemestres());
             $colonne++;
 
-            /** @var Matiere $matiere */
             foreach ($this->matieres as $matiere) {
                 $moyenneMatiere = $moyennes->getMoyenneMatieres()[$matiere->getId()];
                 if ($matiere->getSemestre()->getId() === $semestre->getId() && $matiere->getNbnotes() != 0) {

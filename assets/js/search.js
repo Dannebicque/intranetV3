@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/search.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/02/2020 10:31
+// @lastUpdate 08/07/2020 15:07
 
 $(document).on('keyup', '#search', function (e) {
 

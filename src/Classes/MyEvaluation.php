@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 09/07/2020 11:21
 
 /**
  * Created by PhpStorm.
@@ -382,8 +382,6 @@ class MyEvaluation
      * @param string $fichier
      *
      * @return array
-     * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     private function importXlsx(string $fichier): array
     {

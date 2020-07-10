@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Classes\Enquetes;
 
@@ -204,8 +204,9 @@ class MyEnquete
     }
 
     /**
-     * @param QuizzQuestion $question
-     * @param string        $config
+     * @param QuizzQuestion  $question
+     * @param QualiteSection $section
+     * @param string         $config
      *
      * @throws Exception
      */
@@ -285,6 +286,7 @@ class MyEnquete
 
     /**
      * @param QuizzQuestion      $question
+     * @param QualiteSection     $section
      * @param string             $config
      * @param QuizzQuestion|null $questionParent
      */

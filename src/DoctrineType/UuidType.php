@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DoctrineType/UuidType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 09/07/2020 11:24
 
 declare(strict_types=1);
 
@@ -13,7 +13,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\GuidType;
 use Symfony\Component\Uid\Uuid;
-use Throwable;
 
 /**
  * @author Guillaume Loulier <contact@guillaumeloulier.fr>

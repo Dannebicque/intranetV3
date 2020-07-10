@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 /**
  * Created by PhpStorm.
@@ -43,7 +43,6 @@ class Configuration
     {
         $settings = self::$configurationRepository->findAll();
 
-        /** @var \App\Entity\Configuration $conf */
         foreach ($settings as $conf) {
             self::$settings[$conf->getCle()] = $conf->getValeur();
         }

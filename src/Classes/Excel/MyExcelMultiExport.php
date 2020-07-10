@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 09/07/2020 11:21
 
 /**
  * Created by PhpStorm.
@@ -75,7 +75,6 @@ class MyExcelMultiExport
     /**
      * @param $name
      *
-     * @throws Exception
      */
     public function pageSetup($name): void
     {

@@ -1,25 +1,17 @@
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/scolarite.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.scolarite.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 10/07/2020 09:45
 
-$(document).on('keyup', '#etudiant', function() {
+$(document).on('keyup', '#etudiant', function () {
   const $val = $(this).val()
   if ($val.length > 2) {
     $('#resultat').empty().load(Routing.generate('sa_scolarite_recherche', {needle: $val}))
   }
-});
+})
 
-$(document).on('change','#scolarite_semestre', function () {
+$(document).on('change', '#scolarite_semestre', function () {
   $.ajax(
     {
       url: Routing.generate('administration_scolarite_ues_semestre', {semestre: $(this).val()}),

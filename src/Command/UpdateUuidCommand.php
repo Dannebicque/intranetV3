@@ -3,13 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateUuidCommand.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/07/2020 11:24
 
 namespace App\Command;
 
 use App\Repository\DepartementRepository;
-use App\Repository\NotificationRepository;
-use App\Repository\QualiteQuestionnaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +27,8 @@ class UpdateUuidCommand extends Command
     /**
      * ClearOldNotificationCommand constructor.
      *
-     * @param DepartementRepository $repository
+     * @param EntityManagerInterface $entityManager
+     * @param DepartementRepository  $repository
      */
     public function __construct(EntityManagerInterface $entityManager, DepartementRepository $repository)
     {
