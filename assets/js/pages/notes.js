@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/02/2020 18:04
+// @lastUpdate 08/07/2020 15:07
 
 $('.savegroupe').click(function () {
   const groupe = $(this).attr('id')

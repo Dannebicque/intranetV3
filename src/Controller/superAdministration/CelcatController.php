@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Controller\superAdministration;
 
@@ -40,7 +40,9 @@ class CelcatController extends BaseController
     /**
      * @Route("/extraction", methods={"GET"}, name="sa_celcat_extraction_code")
      * @IsGranted("ROLE_SUPER_ADMIN")
+     * @param MyCelcat $myCelcat
      *
+     * @return Response
      */
     public function extraction(MyCelcat $myCelcat): Response
     {
@@ -52,6 +54,7 @@ class CelcatController extends BaseController
     /**
      * @Route("/update/{id}", methods={"GET"}, name="sa_celcat_update_events")
      * @IsGranted("ROLE_SUPER_ADMIN")
+     * @param MyCelcat               $myCelcat
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param Diplome                $diplome
      *

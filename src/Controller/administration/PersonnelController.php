@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/07/2020 18:05
 
 namespace App\Controller\administration;
 
@@ -213,7 +213,7 @@ class PersonnelController extends BaseController
             $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
                 $this->dataUserSession->getDepartement());
 
-            return $this->render('administration/personnel/droit.html.twig',
+            return $this->render('administration/personnel/_droit.html.twig',
                 ['personnel' => $personnel, 'droits' => $droits]);
         }
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CalendrierRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Repository;
 
@@ -40,7 +40,6 @@ class CalendrierRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var  $a Calendrier */
         foreach ($all as $a) {
             $t[$a->getSemaineFormation()]['lundi'] = $a->getDatelundi();
             $t[$a->getSemaineFormation()]['semainereelle'] = $a->getSemaineReelle();

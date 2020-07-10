@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Classes;
 
@@ -144,7 +144,6 @@ class MyMessagerie
 //        }
 
 
-        /** @var Etudiant $etu */
         foreach ($this->etudiants as $etu) {
             foreach ($etu->getMails() as $mail) {
                 $message->addTo($mail);

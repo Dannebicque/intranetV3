@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/07/2020 18:05
 
 namespace App\Controller\administration;
 
@@ -85,7 +85,7 @@ class EdtRealiseController extends BaseController
         if ($matiere && $personnel) {
             $t = $myEdtCompare->realise($matiere, $personnel, $this->dataUserSession->getAnneePrevisionnel());
 
-            return $this->render('administration/edtRealise/detailPersonnelMatiere.html.twig', [
+            return $this->render('administration/edtRealise/_detailPersonnelMatiere.html.twig', [
                 'planning'   => $myEdtCompare->getPlanning(),
                 'matiere'    => $matiere,
                 'calendrier' => $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire()),

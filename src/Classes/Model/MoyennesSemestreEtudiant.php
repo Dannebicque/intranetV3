@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Model/MoyennesSemestreEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 /**
  * Created by PhpStorm.
@@ -216,7 +216,6 @@ class MoyennesSemestreEtudiant
         } elseif (array_key_exists($this->semestre->getOrdreLmd() - 1, $parcours)) {
             //c'est pas le premier, on regarde le passé.
 
-            /** @var ParcoursEtudiant $prec */
             $prec = $parcours[$this->semestre->getOrdreLmd() - 1];
             if ($prec->getDecision() === ('V' || 'NV')) {
                 //donc pas utilisé pour VCA ou VCJ

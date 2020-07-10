@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Controller\superAdministration;
 
@@ -92,6 +92,8 @@ class CelcatCalendrierController extends BaseController
      * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
      *
      * @return Response
+     * @throws \Exception
+     * @throws \Exception
      */
     public function createNewYear(
         Request $request,

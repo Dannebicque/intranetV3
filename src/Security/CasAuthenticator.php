@@ -3,17 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/07/2020 11:24
 
 namespace App\Security;
 
-use App\Entity\Departement;
 use App\Event\CASAuthenticationFailureEvent;
-use App\Events;
 use App\Repository\DepartementRepository;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

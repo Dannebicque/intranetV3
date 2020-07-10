@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StructureController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Controller\administration;
 
@@ -36,6 +36,10 @@ class StructureController extends BaseController
      * @param MyStructure       $myStructure
      * @param Departement       $departement
      * @param                   $_format
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function export(MyStructure $myStructure, Departement $departement, $_format): void
     {

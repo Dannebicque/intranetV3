@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Classes;
 
@@ -95,7 +95,6 @@ class MyEmprunts
 
     private function calculStatistiques(): void
     {
-        /** @var Emprunt $emprunt */
         foreach ($this->emprunts as $emprunt) {
             $this->statistiques[$emprunt->getEtat()]++;
         }

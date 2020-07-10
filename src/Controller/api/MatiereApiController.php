@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/07/2020 11:21
 
 namespace App\Controller\api;
 
@@ -117,7 +117,6 @@ class MatiereApiController extends BaseController
             // Note: you can use a serializer as well, for explanation purposes, we'll do it manually
             $responseArray = [];
 
-            /** @var Ue $ue */
             foreach ($ues as $ue) {
                 $responseArray[] = [
                     'id'       => $ue->getId(),

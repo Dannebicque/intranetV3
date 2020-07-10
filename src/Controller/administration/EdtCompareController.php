@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/07/2020 18:05
 
 namespace App\Controller\administration;
 
@@ -91,7 +91,7 @@ class EdtCompareController extends BaseController
 
         $calendrier = $this->calendrierRepository->findCalendrier();
 
-        return $this->render('administration/edtCompare/plusInfo.html.twig', [
+        return $this->render('administration/edtCompare/_plusInfo.html.twig', [
             'planning'   => $planning,
             'matiere'    => $matiere,
             'calendrier' => $calendrier
