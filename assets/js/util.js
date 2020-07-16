@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:18
+// @lastUpdate 16/07/2020 09:47
 
 import $ from 'jquery'
 
@@ -194,4 +194,48 @@ jQuery.fn.dataAttr = function (name, def) {
 
 jQuery.fn.hasDataAttr = function (name) {
   return $(this)[0].hasAttribute('data-' + name)
+}
+
+function dataToOption (name) {
+  return name.replace(/-([a-z])/g, function (x) {
+    return x[1].toUpperCase()
+  })
+}
+
+export function getDataOptions (el, castList) {
+  var options = {}
+
+  $.each($(el).data(), function (key, value) {
+
+    key = dataToOption(key)
+
+    // Escape data-provide
+    if (key == 'provide') {
+      return
+    }
+
+    if (castList != undefined) {
+      var type = castList[key]
+      switch (type) {
+        case 'bool':
+          value = Boolean(value)
+          break
+
+        case 'num':
+          value = Number(value)
+          break
+
+        case 'array':
+          value = value.split(',')
+          break
+
+        default:
+
+      }
+    }
+
+    options[key] = value
+  })
+
+  return options
 }
