@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 15:03
+// @lastUpdate 16/07/2020 09:47
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -12,12 +12,15 @@ import $ from 'jquery'
 
 require('bootstrap')
 
+let lookup = {}
+
+import PerfectScrollbar from 'perfect-scrollbar'
 import './validator-bs4'
-import './util'
+import {getDataOptions} from './util'
 import './material'
 import './search'
+import './modaler'
 
-let lookup = {}
 
 // require('./theme')
 $(document).ready(function () {
@@ -58,6 +61,21 @@ $(document).ready(function () {
   })
 
   //tooltip
+  toolTip()
+
+  $('[data-provide="validation"]').validator()
+})
+
+$(document).ajaxComplete(function () {
+  toolTip()
+  // Enable data attribute options
+  $(document).on('click', '[data-provide~="modaler"]', function () {
+    modaler(getDataOptions($(this)))
+  })
+})
+
+function toolTip () {
+  //tooltip
   $('[data-provide~="tooltip"]').each(function () {
     var color = ''
 
@@ -71,9 +89,7 @@ $(document).ready(function () {
       template: '<div class="tooltip' + color + '" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
     })
   })
-
-  $('[data-provide="validation"]').validator()
-})
+}
 
 // Open fullscreen lookup
 //
