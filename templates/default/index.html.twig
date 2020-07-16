@@ -95,9 +95,16 @@
                 'App\\Controller\\BlocNotesAbsencesController::personnel'
             )) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
-            {{ render(controller(
-                'App\\Controller\\BlocNotesAbsencesController::etudiant'
-            )) }}
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                {{ render(controller(
+                    'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences'
+                )) }}
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                {{ render(controller(
+                    'App\\Controller\\BlocNotesAbsencesController::etudiantNotes'
+                )) }}
+            </div>
 
             {{ render(controller(
                 'App\\Controller\\BlocNotesAbsencesController::mccSemestre'

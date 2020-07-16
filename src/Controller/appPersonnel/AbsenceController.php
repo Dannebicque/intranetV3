@@ -3,17 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:36
+// @lastUpdate 16/07/2020 08:17
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\Etudiant\EtudiantAbsences;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Classes\MyAbsences;
-use App\Classes\MyEtudiant;
 use App\Classes\MyGroupes;
 use App\Classes\Tools;
 use App\Repository\AbsenceRepository;
@@ -159,19 +159,18 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/{uuid}", name="application_personnel_absence_delete", methods="DELETE")
-     * @param MyEtudiant $myEtudiant
-     * @param Request    $request
-     * @param Absence    $absence
+     * @param EtudiantAbsences $etudiantAbsences
+     * @param Request          $request
+     * @param Absence          $absence
      *
      * @return Response
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      */
-    public function supprimer(MyEtudiant $myEtudiant, Request $request, Absence $absence): Response
+    public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
     {
         $id = $absence->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            $myEtudiant->setEtudiant($absence->getEtudiant());
-            $myEtudiant->removeAbsence($absence);
+            $etudiantAbsences->removeAbsence($absence);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
@@ -205,7 +204,6 @@ class AbsenceController extends BaseController
     /**
      * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
      *                                             options={"expose":true})
-     * @param MyEtudiant        $myEtudiant
      * @param AbsenceRepository $absenceRepository
      * @param Request           $request
      * @param Matiere           $matiere
@@ -215,7 +213,7 @@ class AbsenceController extends BaseController
      * @throws Exception
      */
     public function ajaxSaisie(
-        MyEtudiant $myEtudiant,
+        EtudiantAbsences $etudiantAbsences,
         AbsenceRepository $absenceRepository,
         Request $request,
         Matiere $matiere,
@@ -233,9 +231,9 @@ class AbsenceController extends BaseController
 
         if ($request->get('action') === 'saisie' && count($absence) === 0) {
             if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $date)) {
-                $myEtudiant->setEtudiant($etudiant);
+                $etudiantAbsences->setEtudiant($etudiant);
 
-                $myEtudiant->addAbsence(
+                $etudiantAbsences->addAbsence(
                     $date,
                     $heure,
                     $matiere,
@@ -257,8 +255,7 @@ class AbsenceController extends BaseController
 
 
             //un tableau, donc une absence ?
-            $myEtudiant->setEtudiant($etudiant);
-            $myEtudiant->removeAbsence($absence[0]);
+            $etudiantAbsences->removeAbsence($absence[0]);
 
             $absences = $absenceRepository->getByMatiereArray(
                 $matiere,

@@ -3,50 +3,40 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/StatsAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/07/2020 08:41
 
 namespace App\Classes;
 
 
+use App\DTO\StatisquesAbsences;
 use App\Entity\Absence;
-use App\Entity\Etudiant;
-use DateInterval;
-use DateTime;
 use Exception;
 
-abstract class StatsAbsences
+class StatsAbsences
 {
 
     /**
      * @param               $absences
      *
-     * @param Etudiant|null $etudiant
-     *
      * @return mixed
      * @throws Exception
      */
-    public static function calculsStatsSemestre($absences, ?Etudiant $etudiant = null)
+    public function calculStatistiquesAbsencesEtudiant($absences)
     {
-        $statistiques['nbCoursManques'] = 0;
-        $statistiques['totalDuree'] = new DateTime('00:00');
-        $statistiques['nbNonJustifie'] = 0;
-        $statistiques['nbDemiJournee'] = 0; //todo: a gérer dans le calcul
-        $statistiques['nbJustifie'] = 0;
-
+        $statisquesAbsences = new StatisquesAbsences();
 
         /** @var Absence $absence */
         foreach ($absences as $absence) {
-            if ($etudiant === null || ($etudiant !== null && $absence->getEtudiant() !== null && $absence->getEtudiant()->getId() === $etudiant->getId())) {
-                $statistiques['nbCoursManques']++;
+            $statisquesAbsences->nbCoursManques++;
 
-                if ($absence->getDuree() !== null) {
-                    $statistiques['totalDuree']->add(new DateInterval('PT' . $absence->getDuree()->format('G') . 'H' . $absence->getDuree()->format('i') . 'M'));
-                }
-
-                $absence->isJustifie() ? $statistiques['nbJustifie']++ : $statistiques['nbNonJustifie']++;
+            if ($absence->getDuree() !== null) {
+                $statisquesAbsences->addDuree($absence->getDuree());
             }
+            $statisquesAbsences->incJustifieOrNotJutifie($absence->isJustifie());
+
         }
 
-        return $statistiques;
+
+        return $statisquesAbsences;
     }
 }

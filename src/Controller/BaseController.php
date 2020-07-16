@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/07/2020 08:41
 
 namespace App\Controller;
 
 use App\Classes\DataUserSession;
+use App\Entity\Etudiant;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -72,6 +73,20 @@ class BaseController extends AbstractController
     public function isEtudiant(): bool
     {
         return $this->isGranted('ROLE_ETUDIANT');
+    }
+
+    public function getEtudiantAnneeUniversitaire()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
+
+        return $this->getUser()->getAnneeUniversitaire();
+    }
+
+    public function getEtudiantSemestre()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
+
+        return $this->getUser()->getSemestre();
     }
 }
 

@@ -3,20 +3,21 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 16/07/2020 08:41
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\Etudiant\EtudiantNotes;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Form\EvaluationType;
-use App\Classes\MyEtudiant;
 use App\Classes\MyEvaluation;
 use App\Classes\MyEvaluations;
 use App\Classes\MyExport;
 use App\Classes\MyUpload;
+use App\Repository\EtudiantRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -129,26 +130,35 @@ class NoteController extends BaseController
     }
 
     /**
-     * @param MyEtudiant $myEtudiant
-     * @param Request    $request
+     * @param EtudiantNotes      $etudiantNotes
+     * @param EtudiantRepository $etudiantRepository
+     * @param Request            $request
      *
-     * @param Evaluation $evaluation
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param Evaluation         $evaluation
      *
      * @return RedirectResponse|Response
+     * @throws Exception
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     *
      * @Route("/sauvegarde/{uuid}",
      *     name="application_personnel_note_ajax_saisie",
      *     methods={"POST|GET"},
      *     options={"expose":true})
-     * @throws Exception
      */
-    public function enregistreNoteAction(MyEtudiant $myEtudiant, Request $request, Evaluation $evaluation)
-    {
+    public function enregistreNoteAction(
+        EtudiantNotes $etudiantNotes,
+        EtudiantRepository $etudiantRepository,
+        Request $request,
+        Evaluation $evaluation
+    ) {
         $tnote = $request->request->get('notes')['notes'];
 
         foreach ($tnote as $iValue) {
-            $myEtudiant->setIdEtudiant($iValue['id']);
-            $myEtudiant->addNote($evaluation, $iValue, $this->getConnectedUser());
+            $etudiant = $etudiantRepository->find($iValue['id']);
+            if ($etudiant !== null) {
+                $etudiantNotes->setEtudiant($etudiant);
+                $etudiantNotes->addNote($evaluation, $iValue, $this->getConnectedUser());
+            }
         }
 
         return new Response();

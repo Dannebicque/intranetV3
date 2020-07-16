@@ -29,7 +29,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for absence in myEtudiant.absences %}
+            {% for absence in absences %}
                 <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}" id="ligne_{{ absence.id }}">
                     <td>{{ absence.date ? absence.date|format_date('long') : '' }}</td>
                     <td>{{ absence.heure ? absence.heure|format_time('short') : '' }}</td>
@@ -69,17 +69,17 @@
         {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
             <div class="alert alert-info">* Si la case est cochée, l'absence est justifiée.</div>
         {% endif %}
-        {% if myEtudiant.etudiant.semestre.optPenaliteAbsence == true %}
+        {% if etudiant.semestre.optPenaliteAbsence == true %}
             <div class="alert alert-warning">
-                Vous avez <strong> {{ myEtudiant.absences|length }} </strong> cours manqués, dont
-                <strong>{{ myEtudiant.statistiques.nbNonJustifie }} non justifiées</strong>. <br/>
-                <strong>Vous avez perdu ce semestre {{ myEtudiant.statistiques.nbNonJustifie * myEtudiant.etudiant
+                Vous avez <strong> {{ absences|length }} </strong> cours manqués, dont
+                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifiées</strong>. <br/>
+                <strong>Vous avez perdu ce semestre {{ statistiquesAbsences.nbNonJustifie * etudiant
                     .semestre.optPointPenaliteAbsence }} points.</strong>
             </div>
         {% else %}
             <div class="alert alert-warning">
-                Vous avez <strong> {{ myEtudiant.absences|length }} </strong> cours manqués, dont
-                <strong>{{ myEtudiant.statistiques.nbNonJustifie }} non justifiées</strong>. <br/>
+                Vous avez <strong> {{ absences|length }} </strong> cours manqués, dont
+                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifiées</strong>. <br/>
             </div>
         {% endif %}
     </div>
