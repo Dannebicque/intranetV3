@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/07/2020 08:23
+// @lastUpdate 19/07/2020 08:24
 
 /**
  * Created by PhpStorm.
@@ -49,7 +49,6 @@ class MyAbsences
 
     /** @var Absence[] */
     private $absences;
-    private MyPDF $myPdf;
     /**
      * @var MyExcelMultiExport
      */
@@ -64,12 +63,10 @@ class MyAbsences
     public function __construct(
         AbsenceRepository $absenceRepository,
         EtudiantRepository $etudiantRepository,
-        MyPDF $myPdf,
         MyExcelMultiExport $myExcelMultiExport
     ) {
         $this->absenceRepository = $absenceRepository;
         $this->etudiantRepository = $etudiantRepository;
-        $this->myPdf = $myPdf;
         $this->myExcelMultiExport = $myExcelMultiExport;
     }
 
@@ -129,16 +126,17 @@ class MyAbsences
     public function export(
         Matiere $matiere,
         AnneeUniversitaire $anneeUniversitaire,
-        $_format,
-        Departement $departement
+        $_format
     ) {
         $absences = $this->getAbsencesMatiere($matiere, $anneeUniversitaire);
         $name = 'absences-' . $matiere->getCodeMatiere();
         switch ($_format) {
             case Constantes::FORMAT_PDF:
-                $this->myPdf::generePdf('pdf/absencesMatiere.html.twig', [
-                    'absences' => $absences,
-                ], $name, $departement->getLibelle());
+                $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
+                    $absences
+                );
+
+                return $this->myExcelMultiExport->savePdf($name);
                 break;
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(

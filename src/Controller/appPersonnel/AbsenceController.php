@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/07/2020 08:23
+// @lastUpdate 19/07/2020 08:24
 
 namespace App\Controller\appPersonnel;
 
@@ -153,8 +153,7 @@ class AbsenceController extends BaseController
      */
     public function export(Matiere $matiere, $_format): ?Response
     {
-        return $this->myAbsences->export($matiere, $matiere->getSemestre()->getAnneeUniversitaire(), $_format,
-            $this->dataUserSession->getDepartement());
+        return $this->myAbsences->export($matiere, $matiere->getSemestre()->getAnneeUniversitaire(), $_format);
     }
 
     /**
