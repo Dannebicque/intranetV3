@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/07/2020 08:24
+// @lastUpdate 19/07/2020 08:26
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Etudiant\EtudiantAbsences;
-use App\Classes\Export\ExportAbsences;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
@@ -41,7 +40,7 @@ use function count;
  */
 class AbsenceController extends BaseController
 {
-    private $myAbsences;
+    private MyAbsences $myAbsences;
 
     /**
      * AbsenceController constructor.
@@ -149,6 +148,8 @@ class AbsenceController extends BaseController
      * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
      * @param Matiere $matiere
      *
+     * @param         $_format
+     *
      * @return Response
      */
     public function export(Matiere $matiere, $_format): ?Response
@@ -203,6 +204,7 @@ class AbsenceController extends BaseController
     /**
      * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
      *                                             options={"expose":true})
+     * @param EtudiantAbsences  $etudiantAbsences
      * @param AbsenceRepository $absenceRepository
      * @param Request           $request
      * @param Matiere           $matiere
