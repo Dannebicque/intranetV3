@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 09:47
+// @lastUpdate 16/07/2020 10:06
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -61,20 +61,22 @@ $(document).ready(function () {
   })
 
   //tooltip
-  toolTip()
+  updateInterface()
 
   $('[data-provide="validation"]').validator()
 })
 
 $(document).ajaxComplete(function () {
-  toolTip()
-  // Enable data attribute options
+  updateInterface()
+})
+
+function updateInterface () {
+
+  //modaler
   $(document).on('click', '[data-provide~="modaler"]', function () {
     modaler(getDataOptions($(this)))
   })
-})
 
-function toolTip () {
   //tooltip
   $('[data-provide~="tooltip"]').each(function () {
     var color = ''
