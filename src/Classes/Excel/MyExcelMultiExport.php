@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 19/07/2020 08:15
 
 /**
  * Created by PhpStorm.
@@ -14,12 +14,13 @@
 
 namespace App\Classes\Excel;
 
+use App\Classes\MyAbsences;
+use App\Classes\MySerializer;
+use App\Entity\Absence;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use App\Classes\MyAbsences;
-use App\Classes\MySerializer;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -344,4 +345,48 @@ class MyExcelMultiExport
             }
         }
     }
+
+    /**
+     * @param $absences
+     */
+    public function genereReleveAbsencesMatiereExcel($absences): void
+    {
+        $this->myExcelWriter->createSheet('Absences');
+
+        $this->myExcelWriter->writeHeader([
+            'num_etudiant',
+            'nom',
+            'prenom',
+            'date Absence',
+            'heure Absence',
+            'Saisie par',
+            'Absence justifiée'
+        ]);
+
+        $ligne = 2;
+        $colonne = 1;
+
+        /** @var Absence $absence */
+        foreach ($absences as $absence) {
+            $etudiant = $absence->getEtudiant();
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
+            $colonne++;
+
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDate()->format('d/m/Y'));
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getHeure()->format('H:i'));
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getPersonnel()->getDisplayPr());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getJustifie() == 1 ? 'Oui' : 'Non');
+            $colonne = 1;
+            $ligne++;
+        }
+
+    }
+
 }

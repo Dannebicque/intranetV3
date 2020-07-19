@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:17
+// @lastUpdate 19/07/2020 08:23
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\Export\ExportAbsences;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
@@ -150,11 +151,10 @@ class AbsenceController extends BaseController
      *
      * @return Response
      */
-    public function export(Matiere $matiere): ?Response
+    public function export(Matiere $matiere, $_format): ?Response
     {
-        //save en csv
-        //todo: a faire.
-        return null;
+        return $this->myAbsences->export($matiere, $matiere->getSemestre()->getAnneeUniversitaire(), $_format,
+            $this->dataUserSession->getDepartement());
     }
 
     /**
