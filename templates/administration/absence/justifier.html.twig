@@ -38,7 +38,7 @@
                 <label for="justifier_etudiant"
                        class="form-control-label required">{{ 'choisir.letudiant'|trans }}</label>
                 <select id="justifier_etudiant" name="justifier_etudiant" required="required"
-                        class="form-control" data-provide="selectpicker" data-live-search="true">
+                        class="form-control selectpicker">
                     <option value="">{{ 'choisir.letudiant'|trans }}</option>
                     {% for etudiant in semestre.etudiants %}
                         <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
@@ -64,4 +64,16 @@
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+    {{ encore_entry_link_tags('adm.absences') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+    {{ encore_entry_script_tags('adm.absences') }}
 {% endblock %}

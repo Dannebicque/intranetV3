@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 17:58
 
 namespace App\Form;
 
@@ -40,7 +40,7 @@ class BorneType extends AbstractType
 
         $builder
             ->add('icone', ChoiceType::class, [
-                'attr'        => ['data-provide' => 'selectpicker'],
+                'attr'        => ['class' => 'form-control selectpicker'],
                 'label'       => 'label.icone',
                 'choices'     => Borne::ICONES,
                 'choice_attr' => static function($choiceValue, $key, $value) {

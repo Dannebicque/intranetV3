@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Form;
 
@@ -60,7 +60,7 @@ class RattrapageType extends AbstractType
                 'required'      => false,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr'     => ['data-live-search' => 'true', 'data-provide' => 'selectpicker']
+                'attr' => ['class' => 'form-control selectpicker']
 
             ))
             ->add('personnel', EntityType::class, array(
@@ -73,7 +73,7 @@ class RattrapageType extends AbstractType
                 'required'      => false,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr'     => ['data-live-search' => 'true', 'data-provide' => 'selectpicker']
+                'attr' => ['class' => 'form-control selectpicker']
 
             ));
     }

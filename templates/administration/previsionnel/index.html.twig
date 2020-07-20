@@ -34,7 +34,9 @@
                 <option value="{{ annee }}">{{ annee }}</option>
             {% endfor %}
         </select>
-        <small class="form-text">Le changement d'année de manière permanent <a href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel de l'année selectionné dans le configuration est celui actif sur l'intranet</small>
+        <small class="form-text">Le changement d'année de manière permanent
+            <a href="{{ path('administration_configuration') }}">se fait dans la configuration</a>. Le prévisionnel de
+                                 l'année selectionné dans le configuration est celui actif sur l'intranet</small>
     </div>
 
     <div class="row">
@@ -44,7 +46,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label class="sr-only" for="previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
-                        <select class="form-control" data-live-search="true" data-provide="selectpicker" data-annee="{{ annee }}"
+                        <select class="form-control selectpicker" data-annee="{{ annee }}"
                                 id="previPersonnel">
                             <option value="">{{ 'choisir.intervenant'|trans }}</option>
                             {% for personnel in user_data.personnels %}
@@ -60,7 +62,7 @@
                 <h4 class="card-title">Par matière</h4>
                 <div class="card-body">
                     <label class="sr-only" for="previMatiere">{{ 'choisir.matiere'|trans }}</label>
-                    <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previMatiere" data-annee="{{ annee }}">
+                    <select class="form-control selectpicker" id="previMatiere" data-annee="{{ annee }}">
                         <option value="">{{ 'choisir.matiere'|trans }}</option>
                         {% for matiere in matieres %}
                             <option value="{{ matiere.id }}">{{ matiere.codeMatiere }} | {{ matiere.libelle }}</option>
@@ -74,7 +76,7 @@
                 <h4 class="card-title">Par semestre</h4>
                 <div class="card-body">
                     <label class="sr-only" for="previSemestre">{{ 'choisir.un.semestre'|trans }}</label>
-                    <select class="form-control" data-live-search="true" data-provide="selectpicker" id="previSemestre" data-annee="{{ annee }}">
+                    <select class="form-control selectpicker" id="previSemestre" data-annee="{{ annee }}">
                         <option value="">{{ 'choisir.un.semestre'|trans }}</option>
                         {% for semestre in user_data.semestres %}
                             <option value="{{ semestre.id }}">{{ semestre.display }}</option>

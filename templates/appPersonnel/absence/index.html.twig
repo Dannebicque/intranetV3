@@ -22,10 +22,9 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="absence-matiere">{{ 'matiere'|trans }}</label>
-                        <select class="form-control"
+                        <select class="form-control selectpicker"
                                 id="absence-matiere"
-                                data-provide="selectpicker"
-                                data-live-search="true">
+                        >
                             {% for mati in matieres %}
                                 <option value="{{ mati.id }}"
                                         {% if mati.id == matiere.id %}selected{% endif %}>{{ mati.codeMatiere }}
@@ -50,8 +49,8 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="form-group">
                         <label for="absence-heure">Heure</label>
-                        <select class="form-control" id="absence-heure" data-provide="selectpicker"
-                                data-live-search="true">
+                        <select class="form-control selectpicker" id="absence-heure"
+                        >
                             <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                             {% for i in 08..19 %}
                                 <option value="{{ i }}:00" {% if i~':00' == heure %} selected {% endif %}>
@@ -169,4 +168,14 @@
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('absences') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('absences') }}
 {% endblock %}

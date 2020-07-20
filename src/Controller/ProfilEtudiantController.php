@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/07/2020 16:30
+// @lastUpdate 20/07/2020 11:05
 
 namespace App\Controller;
 
@@ -141,7 +141,7 @@ class ProfilEtudiantController extends BaseController
         $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
         //todo: gérer les mois, selon le semestre ?
-        return $this->render('user/composants/absences.html.twig', [
+        return $this->render('user/composants/_absences.html.twig', [
             'tabPlanning'          => Calendrier::getTabPlanning(), //objet...
             'tabJour'              => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],//objet...
             'tabFerie'             => Calendrier::getTabJoursFeries(),//objet Calendrier???...

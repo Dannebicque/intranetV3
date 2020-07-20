@@ -54,10 +54,9 @@
                         <tr>
                             <td colspan="11">
                                 <select
-                                        class="form-control changeIntervenantPrevi"
+                                        class="form-control changeIntervenantPrevi selectpicker"
                                         data-previ="{{ previsionnel.id }}"
-                                        data-provide="selectpicker"
-                                        data-live-search="true">
+                                >
                                     <option value="" {% if previsionnel.personnel == null %}selected{% endif %}>
                                         Intervenant non défini
                                     </option>

@@ -136,3 +136,14 @@
     ]}) }}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+    {{ encore_entry_link_tags('adm.justificatifs') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+    {{ encore_entry_script_tags('adm.justificatifs') }}
+{% endblock %}

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/theme.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 16:27
+// @lastUpdate 20/07/2020 17:43
 
 // Check if an element has a specific data attribute
 //
@@ -782,10 +782,10 @@ jQuery.fn.scrollToEnd = function () {
 
     // Load Bootstrap Select languages
     //
-    $('[data-provide="selectpicker"][data-lang]').each(function () {
-      var js = 'bootstrap-select/js/i18n/defaults-' + $(this).data('lang') + '.min.js'
-      provider.queueScript(js)
-    })
+    // $('[data-provide="selectpicker"][data-lang]').each(function () {
+    //   var js = 'bootstrap-select/js/i18n/defaults-' + $(this).data('lang') + '.min.js'
+    //   provider.queueScript(js)
+    // })
 
     // Datepicker
     //
@@ -1005,12 +1005,12 @@ jQuery.fn.scrollToEnd = function () {
     // ======================================================================
     // Form
     //
-    selectpicker: {
-      selector: 'selectpicker',
-      callback: 'initSelectpicker',
-      css: 'bootstrap-select/css/bootstrap-select.min.css',
-      js: 'bootstrap-select/js/bootstrap-select.min.js'
-    },
+    // selectpicker: {
+    //   selector: 'selectpicker',
+    //   callback: 'initSelectpicker',
+    //   css: 'bootstrap-select/css/bootstrap-select.min.css',
+    //   js: 'bootstrap-select/js/bootstrap-select.min.js'
+    // },
 
 
     datepicker: {
@@ -1837,7 +1837,7 @@ jQuery.fn.scrollToEnd = function () {
 
   provider.initForms = function () {
 
-    provider.initSelectpicker()
+    //provider.initSelectpicker()
     provider.initDatepicker()
     provider.initMinicolor()
     provider.initClockpicker()
@@ -1855,21 +1855,21 @@ jQuery.fn.scrollToEnd = function () {
 
   // Selectpicker
   //
-  provider.initSelectpicker = function () {
-
-    if (!$.fn.selectpicker) {
-      return
-    }
-
-    provider.provide('selectpicker', function () {
-      $(this).selectpicker({
-        iconBase: '',
-        tickIcon: 'ti-check',
-        style: 'btn-light'
-      })
-    })
-
-  }
+  // provider.initSelectpicker = function () {
+  //
+  //   if (!$.fn.selectpicker) {
+  //     return
+  //   }
+  //
+  //   provider.provide('selectpicker', function () {
+  //     $(this).selectpicker({
+  //       iconBase: '',
+  //       tickIcon: 'ti-check',
+  //       style: 'btn-light'
+  //     })
+  //   })
+  //
+  // }
 
 
   // Datepicker
@@ -4360,21 +4360,21 @@ jQuery.fn.scrollToEnd = function () {
     })
 
     // Select picker
-    $(document).on('show.bs.select', '.form-type-material [data-provide~="selectpicker"]', function () {
-      materialDoFloat($(this))
-    })
-
-    $(document).on('hidden.bs.select', '.form-type-material [data-provide~="selectpicker"]', function () {
-      if ($(this).selectpicker('val').length == 0) {
-        materialNoFloat($(this))
-      }
-    })
-
-    $(document).on('loaded.bs.select', '.form-type-material [data-provide~="selectpicker"]', function () {
-      if ($(this).selectpicker('val').length > 0) {
-        materialDoFloat($(this))
-      }
-    })
+    // $(document).on('show.bs.select', '.form-type-material [data-provide~="selectpicker"]', function () {
+    //   materialDoFloat($(this))
+    // })
+    //
+    // $(document).on('hidden.bs.select', '.form-type-material [data-provide~="selectpicker"]', function () {
+    //   if ($(this).selectpicker('val').length == 0) {
+    //     materialNoFloat($(this))
+    //   }
+    // })
+    //
+    // $(document).on('loaded.bs.select', '.form-type-material [data-provide~="selectpicker"]', function () {
+    //   if ($(this).selectpicker('val').length > 0) {
+    //     materialDoFloat($(this))
+    //   }
+    // })
 
     // Auto focus inputs
     materialDoFloat($('.form-type-material .form-control[autofocus="true"]'))

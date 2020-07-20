@@ -3,6 +3,7 @@
     "@fortawesome/fontawesome-free": "^5.13.1",
     "@symfony/webpack-encore": "^0.30.0",
     "bootstrap": "^4.5.0",
+    "bootstrap-select": "^1.13.18",
     "core-js": "^3.0.0",
     "datatables.net": "^1.10.21",
     "jquery": "^3.5.1",

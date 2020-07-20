@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 20/07/2020 17:16
 
 namespace App\Entity;
 
@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -38,36 +39,43 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"justificatif_administration"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"justificatif_administration"})
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"justificatif_administration"})
      */
     private $heureDebut;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups({"justificatif_administration"})
      */
     private $heureFin;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"justificatif_administration"})
      */
     private $motif;
 
     /**
      * @ORM\Column(type="string", length=1)
+     * @Groups({"justificatif_administration"})
      */
     private $etat;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs")
+     * @Groups({"justificatif_administration"})
      */
     private $etudiant;
 
