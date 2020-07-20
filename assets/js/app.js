@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 10:06
+// @lastUpdate 20/07/2020 10:34
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -71,6 +71,17 @@ $(document).ajaxComplete(function () {
 })
 
 function updateInterface () {
+  // Fullscreen
+  //
+  $(document).on('click', '.card-btn-fullscreen', function () {
+    $(this).closest('.card').toggleClass('card-fullscreen').removeClass('card-maximize')
+  })
+
+  // Slide up/down
+  $(document).on('click', '.card-btn-slide', function () {
+    console.log('toto')
+    $(this).toggleClass('rotate-180').closest('.card').find('.card-content').slideToggle()
+  })
 
   //modaler
   $(document).on('click', '[data-provide~="modaler"]', function () {

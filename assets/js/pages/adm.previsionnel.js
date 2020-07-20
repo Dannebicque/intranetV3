@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.previsionnel.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/01/2020 07:38
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 
 let nbLignePrevisionnel = 1
 

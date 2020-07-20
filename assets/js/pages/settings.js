@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/settings.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 15:03
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 
 $(document).on('change', '.departementParDefaut', function (e) {
   $.ajax({

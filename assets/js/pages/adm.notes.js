@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/11/2019 19:40
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 
 $(document).on('click', '.optAfficher', function () {
   const evaluation = $(this).data('id')

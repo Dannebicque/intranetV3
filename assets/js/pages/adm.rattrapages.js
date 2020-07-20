@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.rattrapages.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/01/2020 18:22
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
   e.preventDefault()

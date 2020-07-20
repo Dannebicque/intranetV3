@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 09:47
+// @lastUpdate 20/07/2020 10:28
 
 import $ from 'jquery'
 
@@ -112,7 +112,8 @@ $(document).on('click', '.supprimer', function (e) {
   })
 });
 
-function addCallout (message, label) {
+export function addCallout (message, label) {
+  console.log('callout')
   var translate = new Array()
   translate['success'] = 'Succès'
   translate['error'] = 'Erreur'
@@ -183,8 +184,8 @@ function updateData() {
 
 function genereInput ($obj) {
   let $html = '<div id="myEdit-zone"><input type="text" value="' + $obj.html().trim() + '" id="myedit-input" />'
-  $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="ti-check"></i></button>'
-  $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="ti-close"></i></button></div>'
+  $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="fas fa-check"></i></button>'
+  $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="fas fa-close"></i></button></div>'
   return $html
 }
 

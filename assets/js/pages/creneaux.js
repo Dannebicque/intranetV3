@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/creneaux.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/02/2020 18:04
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 
 $(document).on('click', '#btn_creneau_add', function(){
   const $annee = $('#change_annee_universitiare_temp').val()
