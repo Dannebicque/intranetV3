@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/07/2020 08:24
+// @lastUpdate 20/07/2020 18:05
 
 /**
  * Created by PhpStorm.
@@ -14,12 +14,11 @@
 
 namespace App\Classes;
 
+use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Excel\MyExcelMultiExport;
-use App\Classes\Pdf\MyPDF;
 use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
-use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -33,41 +32,44 @@ use Exception;
  */
 class MyAbsences
 {
-    /** @var AbsenceRepository */
-    private $absenceRepository;
+    private AbsenceRepository $absenceRepository;
 
-    /** @var EtudiantRepository */
-    private $etudiantRepository;
+    private EtudiantRepository $etudiantRepository;
 
-    /** @var array */
-    private $statistiques = [];
+    private array $statistiques = [];
 
     /**
      * @var Etudiant[]
      */
     private $etudiants;
 
-    /** @var Absence[] */
-    private $absences;
     /**
      * @var MyExcelMultiExport
      */
     private MyExcelMultiExport $myExcelMultiExport;
+    /**
+     * @var EtudiantAbsences
+     */
+    private EtudiantAbsences $etudiantAbsences;
 
     /**
      * MyAbsences constructor.
      *
-     * @param AbsenceRepository $absenceRepository
+     * @param AbsenceRepository  $absenceRepository
      * @param EtudiantRepository $etudiantRepository
+     * @param MyExcelMultiExport $myExcelMultiExport
+     * @param EtudiantAbsences   $etudiantAbsences
      */
     public function __construct(
         AbsenceRepository $absenceRepository,
         EtudiantRepository $etudiantRepository,
-        MyExcelMultiExport $myExcelMultiExport
+        MyExcelMultiExport $myExcelMultiExport,
+        EtudiantAbsences $etudiantAbsences
     ) {
         $this->absenceRepository = $absenceRepository;
         $this->etudiantRepository = $etudiantRepository;
         $this->myExcelMultiExport = $myExcelMultiExport;
+        $this->etudiantAbsences = $etudiantAbsences;
     }
 
     /**
@@ -85,15 +87,6 @@ class MyAbsences
     {
         return $this->etudiants;
     }
-
-    /**
-     * @return Absence[]
-     */
-    public function getAbsences(): array
-    {
-        return $this->absences;
-    }
-
 
     /**
      * @param $matiere
@@ -114,12 +107,14 @@ class MyAbsences
     public function getAbsencesSemestre(Semestre $semestre): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
-        $this->absences = $this->absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
-
 
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
-            $this->statistiques[$etudiant->getId()] = StatsAbsences::calculsStatsSemestre($this->absences, $etudiant);
+            $this->etudiantAbsences->setEtudiant($etudiant);
+            $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($semestre,
+                $semestre->getAnneeUniversitaire());
+            $statistiques = new StatsAbsences();
+            $this->statistiques[$etudiant->getId()] = $statistiques->calculStatistiquesAbsencesEtudiant($absencesEtudiant);
         }
     }
 

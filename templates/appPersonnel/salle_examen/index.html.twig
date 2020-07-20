@@ -49,23 +49,23 @@
             <div class="form-group">
                 <label class="control-label" for="enseignant1">Enseignant 1</label>
                 <div>
-                    <select class="form-control" id="enseignant1" name="enseignant1"
-                            data-provide="selectpicker" data-live-search="true">
-                            <option value="">Choisissez un enseignant</option>
-                            {% for enseignant in personnels %}
+                    <select class="form-control selectpicker" id="enseignant1" name="enseignant1"
+                    >
+                        <option value="">Choisissez un enseignant</option>
+                        {% for enseignant in personnels %}
                                 <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
                             {% endfor %}
-                        </select>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="enseignant2">Enseignant 2</label>
                 <div>
-                    <select class="form-control" id="enseignant2" name="enseignant2"
-                            data-provide="selectpicker" data-live-search="true">
-                            <option value="">Choisissez un enseignant</option>
-                            {% for enseignant in personnels %}
+                    <select class="form-control selectpicker" id="enseignant2" name="enseignant2"
+                    >
+                        <option value="">Choisissez un enseignant</option>
+                        {% for enseignant in personnels %}
                                 <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
                             {% endfor %}
                         </select>

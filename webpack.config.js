@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 14:58
+// @lastUpdate 20/07/2020 17:23
 
 var Encore = require('@symfony/webpack-encore')
 
@@ -32,6 +32,7 @@ Encore
   .addEntry('app', './assets/js/app.js')
   .addEntry('datatable', './assets/js/datatable.js')
   .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
+  .addEntry('absences', './assets/js/pages/absences.js')
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('documents', './assets/js/pages/documents.js')
   .addEntry('profil', './assets/js/pages/profil.js')
@@ -47,6 +48,8 @@ Encore
   .addEntry('adm.notes', './assets/js/pages/adm.notes.js')
   .addEntry('adm.bornes', './assets/js/pages/adm.borne.js')
   .addEntry('adm.alternances', './assets/js/pages/adm.alternances.js')
+  .addEntry('adm.justificatifs', './assets/js/pages/adm.justificatifs.js')
+  .addEntry('adm.absences', './assets/js/pages/adm.absences.js')
   .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
   .addEntry('adm.stage', './assets/js/pages/adm.stage.js')
   .addEntry('creneaux', './assets/js/pages/creneaux.js')

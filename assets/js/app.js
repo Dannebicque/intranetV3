@@ -2,10 +2,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:34
+// @lastUpdate 20/07/2020 18:05
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/css/all.min.css'
+import 'bootstrap-select/dist/css/bootstrap-select.min.css'
+
 import '../css/app.scss'
 
 import $ from 'jquery'
@@ -20,6 +22,8 @@ import {getDataOptions} from './util'
 import './material'
 import './search'
 import './modaler'
+
+require('bootstrap-select')
 
 
 // require('./theme')
@@ -71,6 +75,15 @@ $(document).ajaxComplete(function () {
 })
 
 function updateInterface () {
+  //selectpicker
+  $('.selectpicker').selectpicker({
+    iconBase: '',
+    tickIcon: 'ti-check',
+    style: 'btn-light',
+    size: 10,
+    liveSearch: true
+  })
+
   // Fullscreen
   //
   $(document).on('click', '.card-btn-fullscreen', function () {

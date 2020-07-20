@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySerializer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 20/07/2020 18:05
 
 /**
  * Created by PhpStorm.
@@ -34,11 +34,11 @@ class MySerializer
         $encoder = new JsonEncoder();
         $normalizer = new ObjectNormalizer($classMetaDataFactory);
 
-        $serializer = new Serializer(array(
-            new DateTimeNormalizer(DateTime::ATOM),
+        $serializer = new Serializer([
+            new DateTimeNormalizer(),
             new DataUriNormalizer(),
             $normalizer
-        ), array($encoder));
+        ], array($encoder));
 
         // encoding contents in JSON format
         return $serializer->serialize($data, 'json', ['enable_max_depth' => true, 'groups' => $groups]);

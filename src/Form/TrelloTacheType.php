@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TrelloTacheType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Form;
 
@@ -38,18 +38,18 @@ class TrelloTacheType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('deadline', DateTimeType::class, ['label' => 'label.deadline'])
             ->add('description', TextareaType::class, ['label' => 'label.description'])
-            ->add('personnels', EntityType::class, array(
+            ->add('personnels', EntityType::class, [
                 'class'         => Personnel::class,
                 'label'         => 'label.personnel',
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->formation);
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
                 'required'      => true,
                 'expanded'      => true,
                 'multiple'      => true
-            ));
+            ]);
     }
 
     /**

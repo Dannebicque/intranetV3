@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 20/07/2020 10:49
 
 namespace App\Classes\Etudiant;
 
@@ -41,7 +41,9 @@ class EtudiantAbsences
     /**
      * EtudiantAbsences constructor.
      *
-     * @param AbsenceRepository $absenceRepository
+     * @param AbsenceRepository        $absenceRepository
+     * @param EntityManagerInterface   $entityManager
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         AbsenceRepository $absenceRepository,

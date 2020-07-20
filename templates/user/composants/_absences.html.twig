@@ -31,22 +31,22 @@
                    </select></td>
                  <td><select class="form-control" name="moduleabs" id="moduleabs">
                              <option value="0">Choisir</option>
-                             {% for matiere in matieres %}
-                                 <option value="{{ matiere.id }}">{{ matiere.codeMatiere }}</option>
-                             {% endfor %}
-                         </select></td>
-                     <td>
-                         <input type="radio" id="justifabs" name="justifabs" value="true"> Oui |
-                         <input type="radio" name="justifabs" value="false" checked title="Justification de l'absence">
-                                                                                           Non
-                     </td>
-                     <td>
-                         <button class="btn btn-primary btn-block" id="btnabs" data-etudiant="{{ myEtudiant.etudiant.id }}">
-                             Ajouter
-                         </button>
-                     </td>
-                 </tr>
-                 </tbody>
+                         {% for matiere in matieres %}
+                             <option value="{{ matiere.id }}">{{ matiere.codeMatiere }}</option>
+                         {% endfor %}
+                     </select></td>
+                   <td>
+                       <input type="radio" id="justifabs" name="justifabs" value="true"> Oui |
+                       <input type="radio" name="justifabs" value="false" checked title="Justification de l'absence">
+                                                                                         Non
+                   </td>
+                   <td>
+                       <button class="btn btn-primary btn-block" id="btnabs" data-etudiant="{{ etudiant.id }}">
+                           Ajouter
+                       </button>
+                   </td>
+               </tr>
+               </tbody>
              </table>
          </div>
      </div>

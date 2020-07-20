@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/07/2020 08:15
+// @lastUpdate 20/07/2020 11:15
 
 /**
  * Created by PhpStorm.
@@ -237,25 +237,25 @@ class MyExcelMultiExport
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['nbCoursManques']
+                $myAbsences->getStatistiques()[$etudiant->getId()]->nbCoursManques
             );
             $colonne++;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['totalDuree']->format('H:i')
+                $myAbsences->getStatistiques()[$etudiant->getId()]->totalDuree->format('H:i')
             );
             $colonne++;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['nbNonJustifie']
+                $myAbsences->getStatistiques()[$etudiant->getId()]->nbNonJustifie
             );
             $colonne++;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['nbJustifie']
+                $myAbsences->getStatistiques()[$etudiant->getId()]->nbJustifie
             );
             $ligne++;
             $colonne = 1;

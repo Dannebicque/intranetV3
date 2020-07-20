@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Form;
 
@@ -50,7 +50,7 @@ class DiplomeType extends AbstractType
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
                 'choice_label'  => 'display',
                 'label'         => 'label.responsable_diplome'
             ])
@@ -59,7 +59,7 @@ class DiplomeType extends AbstractType
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
                 'choice_label'  => 'display',
                 'label'         => 'label.assistant_diplome'
             ])

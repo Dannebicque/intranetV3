@@ -20,12 +20,12 @@
 {% block content %}
   <div class="card">
     <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
-    <div class="card-body">
-      <label for="pdfenseignant">Selectionnez un intervenant ou laisser vide pour tout exporter</label>
-      <select class="form-control" id="pdfenseignant" name="pdfenseignant" data-provide="selectpicker"
-              data-live-search="true">
-        <option value="0">Selectionnez un intervenant ou laisser vide pour tout exporter</option>
-          {% for personnel in user_data.personnels %}
+      <div class="card-body">
+          <label for="pdfenseignant">Selectionnez un intervenant ou laisser vide pour tout exporter</label>
+          <select class="form-control selectpicker" id="pdfenseignant" name="pdfenseignant"
+          >
+              <option value="0">Selectionnez un intervenant ou laisser vide pour tout exporter</option>
+              {% for personnel in user_data.personnels %}
             <option value="{{ personnel.id }}">{{ personnel.display }}</option>
           {% endfor %}
       </select>

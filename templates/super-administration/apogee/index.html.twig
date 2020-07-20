@@ -127,8 +127,8 @@
                             <label class="control-label" for="importer_etudiant_semestre">Selectionnez le fichier en
                                                                                           respectant le format</label>
                             <select id="importer_etudiant_semestre"
-                                    name="importer_etudiant_semestre" class="form-control"
-                                    data-provide="selectpicker" data-live-search="true">
+                                    name="importer_etudiant_semestre" class="form-control selectpicker"
+                            >
                                 <option>Choisir</option>
                                 {% for diplome in diplomes %}
                                     <optgroup label="{{ diplome.sigle }}">

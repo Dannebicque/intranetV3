@@ -26,7 +26,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label class="form-control-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
-                            <select class="form-control" id="previsionnel_matiere" name="previsionnel_matiere" data-live-search="true" data-provide="selectpicker">
+                            <select class="form-control selectpicker" id="previsionnel_matiere" name="previsionnel_matiere">
                                 <option value="">{{ 'choisir.matiere'|trans }}</option>
                                 {% for matiere in matieres %}
                                     <option value="{{ matiere.id }}">{{ matiere.codeMatiere }}
@@ -81,8 +81,8 @@
                     <tr>
                         <td>
                             <label for="intervenant_1" class="sr-only">intervenant 1</label>
-                            <select class="form-control" name="intervenant_1" id="intervenant_1"
-                                    data-live-search="true" data-provide="selectpicker">
+                            <select class="form-control selectpicker" name="intervenant_1" id="intervenant_1"
+                            >
                                 <option value="">{{ 'choisir.intervenant'|trans }}</option>
                                 {% for personnel in user_data.personnels %}
                                     <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
