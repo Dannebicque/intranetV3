@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:24
+// @lastUpdate 20/07/2020 08:57
 
 namespace App\Entity;
 
@@ -15,7 +15,7 @@ use Exception;
 use Serializable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
@@ -96,7 +96,7 @@ class Absence extends BaseEntity implements Serializable
      */
     public function __construct()
     {
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->anneeUniversitaire = $this->etudiant !== null ? $this->etudiant->getAnneeUniversitaire() : null;
     }
 

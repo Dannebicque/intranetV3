@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 20/07/2020 08:57
 
 namespace App\Entity;
 
@@ -11,7 +11,7 @@ use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -195,7 +195,7 @@ class StageEtudiant extends BaseEntity
      */
     public function __construct()
     {
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->setGratificationMontant(\App\Classes\Configuration::get('GRATIFICATION_HEURE_STAGE'));
     }
 
