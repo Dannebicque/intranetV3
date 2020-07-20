@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/UuidTrait.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 20/07/2020 09:14
 
 namespace App\Entity\Traits;
 
@@ -15,7 +15,7 @@ trait UuidTrait
     /**
      * @ORM\Column(type="uuid_binary")
      */
-    protected $uuid;
+    private $uuid;
 
     /**
      * @return string
@@ -38,6 +38,4 @@ trait UuidTrait
     {
         $this->uuid = $uuid;
     }
-
-
 }
