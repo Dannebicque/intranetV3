@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 08:57
 
 namespace App\Entity;
 
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -159,7 +159,7 @@ class StagePeriode extends BaseEntity
         $this->stagePeriodeInterruptions = new ArrayCollection();
         $this->stagePeriodeSoutenances = new ArrayCollection();
         $this->responsables = new ArrayCollection();
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->stagePeriodeOffres = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->stageMailTemplates = new ArrayCollection();

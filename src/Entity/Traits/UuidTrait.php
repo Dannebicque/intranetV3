@@ -3,22 +3,22 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/UuidTrait.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 08:57
 
 namespace App\Entity\Traits;
 
-use Symfony\Component\Uid\UuidV4;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UuidTrait
 {
     /**
-     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\Column(type="uuid_binary")
      */
     protected $uuid;
 
     /**
-     * @return UuidV4
+     * @return string
      */
     public function getUuidString(): string
     {
@@ -26,16 +26,18 @@ trait UuidTrait
         return (string)$this->getUuid();
     }
 
-    /**
-     * @return UuidV4
-     */
-    public function getUuid(): ?UuidV4
+    public function getUuid()
     {
-        return $this->uuid !== null ? UuidV4::fromString($this->uuid) : null;
+        return $this->uuid;
     }
 
-    public function setUuid(UuidV4 $uuidV4)
+    /**
+     * @param mixed $uuid
+     */
+    public function setUuid($uuid): void
     {
-        $this->uuid = $uuidV4->toRfc4122();
+        $this->uuid = $uuid;
     }
+
+
 }
