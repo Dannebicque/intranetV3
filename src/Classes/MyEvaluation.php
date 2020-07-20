@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 20/07/2020 09:37
 
 /**
  * Created by PhpStorm.
@@ -442,5 +442,4 @@ class MyEvaluation
 
         return $data;
     }
-
 }

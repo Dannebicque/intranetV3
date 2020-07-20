@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 20/07/2020 09:37
 
 namespace App\Entity;
 
@@ -460,10 +460,14 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    public function setUuid($uuid): self
+    public function getAutorise($personnelId): bool
     {
-        $this->uuid = $uuid;
+        $personnels[] = $this->getPersonnelAuteur() !== null ? $this->getPersonnelAuteur()->getId() : null;
+        $autorises = $this->getPersonnelAutorise();
+        foreach ($autorises as $autorise) {
+            $personnels[] = $autorise->getId();
+        }
 
-        return $this;
+        return in_array($personnelId, $personnels, true);
     }
 }
