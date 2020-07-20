@@ -2,7 +2,7 @@
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
-/* @lastUpdate 05/07/2020 16:27 */
+/* @lastUpdate 20/07/2020 10:15 */
 
 @charset "UTF-8";
 body {
@@ -19927,9 +19927,10 @@ ul.flexbox {
     content: "\e646";
 }
 
-.card-btn-slide::before {
-    content: "\e648";
-}
+/*.card-btn-slide::before {*/
+/*    font-family: "Font Awesome 5 Free";*/
+/*    content: "\f054";*/
+/*}*/
 
 .card-btn-maximize::before {
     content: "\e6e8";
@@ -20238,9 +20239,10 @@ ul.flexbox {
     display: none;
 }
 
-.card-slided-up .card-btn-slide::before {
-    content: "\e64b";
-}
+/*.card-slided-up .card-btn-slide::before {*/
+/*    font-family: "Font Awesome 5 Free";*/
+/*    content: "\f054";*/
+/*}*/
 
 .card-columns {
     margin-bottom: 30px;

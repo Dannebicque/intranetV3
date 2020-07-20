@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 14:50
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 
 $(document).on('click', '.changeprofil', function (e) {
   e.preventDefault()

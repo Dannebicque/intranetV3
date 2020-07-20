@@ -2,8 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:18
-
+// @lastUpdate 20/07/2020 10:33
+import {addCallout} from '../util'
 import './messagerie'
 
 $(document).on('click', '.changeapplication', function (e) {

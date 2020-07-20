@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/NotificationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 09:42
 
 namespace App\Controller;
 
@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NotificationController extends BaseController
 {
-    // todo: gérer les notifications anciennes... Suppression après xx jours => tache cron ?
     // todo: gérer le "lu" lorsque l'on clique sur un lien
     // todo: comment détailler plus que le type ? des "sous-classes" ? En sauvegardant le type d'objet et un id ?
 

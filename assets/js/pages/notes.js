@@ -2,7 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 15:07
+// @lastUpdate 20/07/2020 10:31
+
+import {addCallout} from '../util'
 
 $('.savegroupe').click(function () {
   const groupe = $(this).attr('id')
@@ -30,6 +32,7 @@ $('.savegroupe').click(function () {
         notes: notes
       },
       success: function (data) {
+        console.log('success call')
         addCallout('Les notes de <strong>ce groupe</strong> ont été enregistrées avec succés ! Vous pouvez les modifier !', 'success')
         //feature: supprimer le "orange" sur les notes sauvegardées. Peut être récupérer en data les notes.
       },
