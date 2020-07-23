@@ -1,35 +1,10 @@
-/*
- * *
- *  *  Copyright (C) $month.$year | David annebicque | IUT de Troyes - All Rights Reserved
- *  *
- *  *
- *  * @file /Users/davidannebicque/htdocs/intranetv3/assets/js/partials/etudiants.js
- *  * @author     David annebicque
- *  * @project intranetv3
- *  * @date 3/30/19 12:11 PM
- *  * @lastUpdate 3/30/19 12:11 PM
- *  *
- *
- */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/public/src-a_supprimer/assets/js/script/partials/etudiants.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 22/07/2020 15:04
 
-const table = $('#datatableEtudiants').DataTable({})
-table.clear(); //effacer le datatable
-table.destroy(); //supprimer le datatable
 
-$('#datatableEtudiants').DataTable({
-  "language": langueFr,
-  "processing": true,
-  "serverSide": true,
-  "ajax": Routing.generate('api_etudiant_departement'),
-  "sAjaxDataProp": "data",
-  //"pageLength": 25,
-  "columns": [
-    {"data": "numetudiant"},
-    {"data": "nom"},
-    {"data": "prenom"},
-    {"data": "semestre"},
-    {"data": "profil"}]
-});
 
 
 $(document).on('click', '.admChangeTypeGroupe', function() {

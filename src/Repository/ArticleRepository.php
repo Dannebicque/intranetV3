@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 22/07/2020 14:50
 
 namespace App\Repository;
 
@@ -86,7 +86,7 @@ class ArticleRepository extends ServiceEntityRepository
      *
      * @return Article[]
      */
-    public function findByDepartement($departement, $nbResult = 2): array
+    public function findByDepartement($departement, $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
             ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
@@ -94,7 +94,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement)
             ->orderBy('a.created', 'DESC');
 
-        if ($nbResult > 0) {
+        if ($nbResult !== 0) {
             $q->setMaxResults($nbResult);
         }
 

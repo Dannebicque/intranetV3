@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/search.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 15:07
+// @lastUpdate 23/07/2020 08:43
 
 $(document).on('keyup', '#search', function (e) {
 
@@ -16,7 +16,7 @@ $(document).on('keyup', '#search', function (e) {
       url: Routing.generate('recherche', {keyword: keyword}),
       dataType: 'json',
       success: function (data) {
-
+        console.log(data)
 
         let html = ''
         if (data.etudiants.length > 0) {

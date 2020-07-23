@@ -195,13 +195,13 @@
 <header class="topbar">
     <div class="topbar-left">
         <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
-        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip" title=""
-           data-original-title="{{ 'fullscreen'|trans }}">
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip"
+           title="{{ 'fullscreen'|trans }}">
             <i class="material-icons fullscreen-default">fullscreen</i>
             <i class="material-icons fullscreen-active">fullscreen_exit</i>
         </a>
-        <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip" title=""
-           data-original-title="{{ 'lock'|trans }}">
+        <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip"
+           title="{{ 'lock'|trans }}">
             <i class="material-icons">lock_outline</i><span
                     class="sr-only">Vérouiller</span>
         </a>
@@ -221,7 +221,7 @@
                     <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
                     <span class="title">Agenda</span>
                 </a>
-                <a class="dropdown-item" href="{{ path('messagerie_index') }}">
+                <a class="dropdown-item" href="{{ path('application_index',{'onglet':'messagerie'}) }}">
                     <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
                     <span class="title">Messagerie</span>
                 </a>
@@ -282,18 +282,18 @@
             </li>
 
             <!-- Change language -->
-            <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown"><i class="fas fa-flag"></i><span
-                                class="sr-only">Changer de langue</span></span>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item {% if app.request.locale == 'en' %}active{% endif %}" href="{{ path
-                        ('default_homepage',
-                        {'_locale':'en'}) }}"><span
-                                class="flag-icon flag-icon-gb"></span> English</a>
-                    <a class="dropdown-item {% if app.request.locale == 'fr' %}active{% endif %}" href="{{ path
-                        ('default_homepage',{'_locale':'fr'}) }}"><span
-                                class="flag-icon flag-icon-fr"></span> Français</a>
-                </div>
+            <li>
+                {% if app.request.locale == 'en' %}
+                    <a class="topbar-btn d-none d-md-block" href="{{ path
+                        ('default_homepage',{'_locale':'fr'}) }}" data-provide="tooltip"
+                       title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}"
+                                                                     width="16px" alt="{{ 'passer.en.francais'|trans }}"></a>
+                {% else %}
+                    <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-provide="tooltip"
+                       title="{{ 'passer.en.anglais'|trans }}"
+                    ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a>
+
+                {% endif %}
             </li>
             <!-- END Change language -->
 

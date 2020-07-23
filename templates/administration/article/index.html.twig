@@ -42,10 +42,6 @@
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
                         </td>
                     </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
-                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -91,5 +87,15 @@
             icone: 'fas fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}
 

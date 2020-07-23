@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 22/07/2020 15:26
 
 namespace App\Repository;
 
@@ -86,7 +86,6 @@ class EtudiantRepository extends ServiceEntityRepository
      */
     public function getByDepartement($departement, $data, $page = 0, $max = null, $getResult = true)
     {
-
         $qb = $this->createQueryBuilder('u');
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
@@ -94,20 +93,21 @@ class EtudiantRepository extends ServiceEntityRepository
             ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
             ->where('u.departement = :departement')
             ->setParameters(['departement' => $departement]);
-
-        switch ($order[0]['column']) {
-            case 0:
-                $qb->orderBy('u.numEtudiant', $order[0]['dir']);
-                break;
-            case 1:
-                $qb->orderBy('u.nom', $order[0]['dir']);
-                break;
-            case 2:
-                $qb->orderBy('u.prenom', $order[0]['dir']);
-                break;
-            case 3:
-                $qb->orderBy('s.libelle', $order[0]['dir']);
-                break;
+        if ($order !== null) {
+            switch ($order[0]['column']) {
+                case 0:
+                    $qb->orderBy('u.numEtudiant', $order[0]['dir']);
+                    break;
+                case 1:
+                    $qb->orderBy('u.nom', $order[0]['dir']);
+                    break;
+                case 2:
+                    $qb->orderBy('u.prenom', $order[0]['dir']);
+                    break;
+                case 3:
+                    $qb->orderBy('s.libelle', $order[0]['dir']);
+                    break;
+            }
         }
 
         if ($query) {
