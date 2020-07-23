@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 23/07/2020 09:06
 
 namespace App\Controller\administration;
 
@@ -31,7 +31,9 @@ class DateController extends BaseController
      */
     public function index(DateRepository $dateRepository): Response
     {
-        return $this->render('administration/date/index.html.twig', ['dates' => $dateRepository->findAll()]);
+        $dates = $dateRepository->findByDepartement($this->getDepartement());
+
+        return $this->render('administration/date/index.html.twig', ['dates' => $dates]);
     }
 
     /**
@@ -46,13 +48,25 @@ class DateController extends BaseController
      */
     public function export(MyExport $myExport, DateRepository $dateRepository, $_format): Response
     {
-        $dates = $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
+        $dates = $dateRepository->findByDepartement($this->getDepartement());
         return $myExport->genereFichierGenerique(
             $_format,
             $dates,
             'dates',
-            ['date_administration', 'utilisateur'],
-            ['titre', 'texte', 'type', 'personnel' => ['nom', 'prenom']]
+            ['date_administration', 'semestre'],
+            [
+                'libelle',
+                'texte',
+                'dateDebut',
+                'heureDebut',
+                'dateFin',
+                'heureFin',
+                'lieu',
+                'allday',
+                'qui',
+                'type',
+                'semestre' => ['libelle']
+            ]
         );
     }
 
@@ -65,11 +79,12 @@ class DateController extends BaseController
     public function create(Request $request): Response
     {
         $date = new Date();
+        $date->setDepartement($this->getDepartement());
         $form = $this->createForm(
             DatesType::class,
             $date,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'attr'        => [
                     'data-provide' => 'validation'
                 ]

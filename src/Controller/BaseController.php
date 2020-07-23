@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 23/07/2020 09:06
 
 namespace App\Controller;
 
@@ -87,6 +87,11 @@ class BaseController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
         return $this->getUser()->getSemestre();
+    }
+
+    public function getDepartement()
+    {
+        return $this->dataUserSession->getDepartement();
     }
 }
 

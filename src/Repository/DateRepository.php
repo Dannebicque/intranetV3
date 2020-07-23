@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 22/07/2020 14:46
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Date;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,18 +40,20 @@ class DateRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByDepartement($departement, $nbResult = 2)
+    public function findByDepartement(Departement $departement, $nbResult = 0)
     {
-        return $this->createQueryBuilder('d')
+        $query = $this->createQueryBuilder('d')
             ->leftJoin('d.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
             ->where('p.departement = :departement')
-            ->setParameter('departement', $departement)
-            ->orderBy('d.dateDebut', 'DESC')
-            ->setMaxResults($nbResult)
-            ->getQuery()
-            ->getResult();
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('d.dateDebut', 'DESC');
+        if ($nbResult !== 0) {
+            $query->setMaxResults($nbResult);
+        }
+
+        return $query->getQuery()->getResult();
     }
 
     /**
@@ -80,14 +83,14 @@ class DateRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $tab = array();
+        $tab = [];
 
         /** @var Date $event */
         foreach ($query as $event) {
             if ($event->getDateDebut() !== null) {
                 $key = $event->getDateDebut()->format('Y-m-d');
                 if (!array_key_exists($key, $tab)) {
-                    $tab[$key] = array();
+                    $tab[$key] = [];
                 }
                 $tab[$key][] = $event;
                 //si sur plusieurs jours, faire une boucle pour remplir le tableau
@@ -95,5 +98,9 @@ class DateRepository extends ServiceEntityRepository
         }
 
         return $tab;
+    }
+
+    public function getByDepartement(?\App\Entity\Departement $getDepartement)
+    {
     }
 }
