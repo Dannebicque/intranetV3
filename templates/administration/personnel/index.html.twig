@@ -58,7 +58,9 @@
                                     <i class="fa fa-key"></i>
                                 </button>
                             {% endif %}
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt:'personnel', id:personnel.personnel.id}) }}
+
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt:'personnel', id:personnel
+                                .personnel.id, duplicate:false}) }}
                         </td>
                     </tr>
                 {% else %}

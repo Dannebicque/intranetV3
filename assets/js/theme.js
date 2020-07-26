@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/theme.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 17:43
+// @lastUpdate 23/07/2020 09:30
 
 // Check if an element has a specific data attribute
 //
@@ -1202,17 +1202,6 @@ jQuery.fn.scrollToEnd = function () {
         'datatables/js/jquery.dataTables.min.js',
         'datatables/js/dataTables.bootstrap4.min.js'
       ]
-    },
-
-
-    // ======================================================================
-    // UI
-    //
-    sweetalert: {
-      selector: 'sweetalert',
-      callback: 'initSweetalert2',
-      css: 'sweetalert2/sweetalert2.min.css',
-      js: 'sweetalert2/sweetalert2.min.js'
     },
 
 
@@ -2495,7 +2484,6 @@ jQuery.fn.scrollToEnd = function () {
 
   provider.initUIs = function () {
 
-    provider.initSweetalert2()
     provider.initAnimsition()
     provider.initLity()
     provider.initSortable()
@@ -2505,18 +2493,18 @@ jQuery.fn.scrollToEnd = function () {
   }
 
 
-  provider.initSweetalert2 = function () {
-    if (window['swal'] === undefined) {
-      return
-    }
-
-    sweetAlert.setDefaults({
-      confirmButtonClass: 'btn btn-bold btn-primary',
-      cancelButtonClass: 'btn btn-bold btn-secondary',
-      buttonsStyling: false
-    })
-
-  }
+  // provider.initSweetalert2 = function () {
+  //   if (window['swal'] === undefined) {
+  //     return
+  //   }
+  //
+  //   sweetAlert.setDefaults({
+  //     confirmButtonClass: 'btn btn-bold btn-primary',
+  //     sweetcancelButtonClass: 'btn btn-bold btn-secondary',
+  //     buttonsStyling: false
+  //   })
+  //
+  // }
 
 
   // Animsition page transition

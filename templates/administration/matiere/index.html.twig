@@ -28,7 +28,7 @@
         {% for diplome in user_data.diplomes %}
             {% if loop.first %}
                 {{ render(controller(
-                    'App\\Controller\\Administration\\MatiereController::diplome', {diplome:diplome}
+                    'App\\Controller\\administration\\MatiereController::diplome', {diplome:diplome.id}
                 )) }}
             {% endif %}
         {% endfor %}

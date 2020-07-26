@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 25/07/2020 11:21
 
 namespace App\Entity;
 
@@ -16,6 +16,7 @@ use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -44,6 +45,7 @@ class Document extends BaseEntity
      * @var TypeDocument
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", inversedBy="documents")
+     * @Groups({"document_administration"})
      */
     private $typeDocument;
 
@@ -51,6 +53,7 @@ class Document extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"document_administration"})
      */
     private $description;
 
@@ -58,6 +61,7 @@ class Document extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=100)
+     * @Groups({"document_administration"})
      */
     private $libelle;
 
@@ -78,6 +82,7 @@ class Document extends BaseEntity
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="documents")
+     * @Groups({"document_administration"})
      */
     private $semestres;
 

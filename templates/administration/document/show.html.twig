@@ -6,7 +6,7 @@
 
 {% block headeractions %}
 <div class="header-action">
-    {{ include('composants/adm-buttons-show.html.twig', {elt: 'document', id: document.id}) }}
+    {{ include('composants/adm-buttons-show.html.twig', {elt: 'document', id: document.uuidString}) }}
 
 </div>
 {% endblock %}
@@ -58,7 +58,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.semestres_document'|trans }}</th>
-                <td>{% for semestre in document.semestres %}{{ semestre.libelle }}{% endfor %}</td>
+                <td>{% for semestre in document.semestres %}{{ semestre.libelle }} {% endfor %}</td>
             </tr>
         </tbody>
     </table>

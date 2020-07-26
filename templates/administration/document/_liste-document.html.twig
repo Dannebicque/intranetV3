@@ -14,7 +14,7 @@
     </thead>
     <tbody>
     {% for document in documents %}
-        <tr>
+        <tr id="ligne_{{ document.id }}">
             <td></td>
             <td>{{ document.libelle }}</td>
             <td>{{ document.typeFichier }}</td>

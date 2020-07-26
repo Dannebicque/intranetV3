@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 26/07/2020 11:13
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
+use App\Repository\EtudiantRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,10 +144,17 @@ class EtudiantController extends BaseController
      * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function export(): Response
+    public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
+
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $etudiants,
+            'etudiants_' . $this->getDepartement()->getLibelle(),
+            ['etudiants_administration'],
+            ['nom', 'prenom', 'civilite', 'numEtudiant', 'mailUniv', 'semestre' => ['libelle']]
+        );
     }
 
 

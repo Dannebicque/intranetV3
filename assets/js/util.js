@@ -2,9 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 11:31
+// @lastUpdate 23/07/2020 15:44
 
 import $ from 'jquery'
+import Swal from 'sweetalert2'
 
 function readUrlMenu ($url) {
   const $elt = $url.split('/')
@@ -15,68 +16,52 @@ function readUrlMenu ($url) {
     }
   }
 
-    if ($elt[$firstElt] === 'super-administration') {
-        $firstElt = $firstElt+1;
-    }
-
-  if ($elt[$elt.length-1] === "") {
-    $elt.pop();
+  if ($elt[$firstElt] === 'super-administration') {
+    $firstElt = $firstElt + 1
   }
 
-  $('.menu-item').removeClass('active');
-  $('#menu-' + $elt[$firstElt]).addClass('active');
+  if ($elt[$elt.length - 1] === '') {
+    $elt.pop()
+  }
+
+  $('.menu-item').removeClass('active')
+  $('#menu-' + $elt[$firstElt]).addClass('active')
 }
 
 //colorise le bon menu
 readUrlMenu($(location).attr('pathname'))
 
-function updateAffichage (date, heure) {
-  $.ajax({
-    type: 'GET',
-    url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
-    dataType: 'json',
-    success: function (data) {
-      const t = date.split('/')
-      const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
-      if (heure.length === 4) {
-        heure = '0' + heure
-      }
-
-      for (let d in data) {
-        if (d == ddate) {
-          if (typeof data[d][heure] !== 'undefined') {
-            for (let i = 0; i < data[d][heure].length; i++) {
-              $('#etu_' + data[d][heure][i]).addClass('absent')
-            }
-          }
-        }
-      }
-    }
-  })
-}
-
+Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-primary',
+    cancelButton: 'btn btn-secondary'
+  },
+  buttonsStyling: false
+})
 //pop up de confirmation de suppression
 $(document).on('click', '.supprimer', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   const url = $(this).attr('href')
   const csrf = $(this).data('csrf')
-  swal({
+  Swal.fire({
     title: 'Confirmer la suppression ?',
-    text: "L'opération ne pourra pas être annulée.",
-    type: 'warning',
+    text: 'L\'opération ne pourra pas être annulée.',
+    icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Oui, je confirme',
     cancelButtonText: 'Non, Annuler',
-    confirmButtonClass: 'btn btn-primary',
-    cancelButtonClass: 'btn btn-secondary',
+    customClass: {
+      confirmButton: 'btn btn-primary',
+      cancelButton: 'btn btn-secondary'
+    },
     buttonsStyling: false
   }).then(function (result) {
     if (result.value) {
       $.ajax({
         url: url,
-        type: "DELETE",
+        type: 'DELETE',
         data: {
           _token: csrf
         },
@@ -86,31 +71,53 @@ $(document).on('click', '.supprimer', function (e) {
           } else {
             $('#ligne_' + id).closest('tr').remove()
             addCallout('Suppression effectuée avec succès', 'success')
-            swal(
-              'Supprimé!',
-              'L\'enregistrement a été supprimé.',
-              'success'
-            )
+            Swal.fire({
+              title: 'Supprimé!',
+              text: 'L\'enregistrement a été supprimé.',
+              icon: 'success',
+              confirmButtonText: 'OK',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+              },
+              buttonsStyling: false
+            })
           }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          swal("Erreur lors de la suppression!", "Merci de renouveler l\'opération", "error");
+          Swal.fire({
+            title: 'Erreur lors de la suppression!',
+            text: 'Merci de renouveler l\'opération',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+          })
           addCallout('Erreur lors de la tentative de suppression', 'danger')
         }
-      });
+      })
 
     } else if (
       // Read more about handling dismissals
       result.dismiss === 'cancel'
     ) {
-      swal(
-        'Cancelled',
-        'OK! Tout est comme avant !',
-        'error'
-      )
+      Swal.fire({
+        title: 'Cancelled',
+        text: 'OK! Tout est comme avant !',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary'
+        },
+        buttonsStyling: false
+      })
     }
   })
-});
+})
 
 export function addCallout (message, label) {
   console.log('callout')
@@ -137,36 +144,36 @@ let myEditInitialContent = ''
 $(document).on('click', '.myedit', function (e) {
   e.preventDefault()
   myEditInitialContent = $(this)
+  let html = ''
   if ($(this).data('type') === 'select') {
-
+    //todo: A finaliser
   } else {
-    let html = genereInput($(this))
+    console.log('toto')
+    html = genereInput($(this))
   }
   $(this).replaceWith(html)
   $('#myedit-input').focus()
 })
 
 $(document).on('keyup', '#myedit-input', function (e) {
-  if(e.keyCode === 13)
-  {
+  if (e.keyCode === 13) {
     updateData()
-  } else if(e.keyCode === 27)
-  {
+  } else if (e.keyCode === 27) {
     $('#myEdit-zone').replaceWith(myEditInitialContent)
   }
-});
+})
 
 $(document).on('click', '#myedit-valide', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   updateData()
 })
 
 $(document).on('click', '#myedit-annule', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   $('#myEdit-zone').replaceWith(myEditInitialContent)
 })
 
-function updateData() {
+function updateData () {
   let val = $('#myedit-input').val()
   $.ajax({
     url: myEditInitialContent.attr('href'),
@@ -175,7 +182,7 @@ function updateData() {
       value: val
     },
     method: 'POST',
-    success: function() {
+    success: function () {
       myEditInitialContent.html(val)
       $('#myEdit-zone').replaceWith(myEditInitialContent)
     }

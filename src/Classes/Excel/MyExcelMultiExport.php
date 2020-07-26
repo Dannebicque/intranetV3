@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 11:15
+// @lastUpdate 24/07/2020 08:06
 
 /**
  * Created by PhpStorm.
@@ -193,8 +193,15 @@ class MyExcelMultiExport
                             $row))) {
                     if (is_array($value)) {
                         foreach ($value as $col) {
-                            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
-                            $i++;
+                            if (is_array($row[$key])) {
+                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
+                                    $row[$key][$col]);
+                                $i++;
+                            } else {
+                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
+                                    '-');
+                                $i++;
+                            }
                         }
                     } else {
                         $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);

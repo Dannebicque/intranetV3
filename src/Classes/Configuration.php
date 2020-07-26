@@ -3,14 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 26/09/2018
- * Time: 09:17
- */
+// @lastUpdate 24/07/2020 09:15
 
 namespace App\Classes;
 
@@ -21,30 +14,30 @@ class Configuration
     /**
      * @var \App\Entity\Configuration[]
      */
-    protected static $settings = [];
+    private array $settings = [];
 
-    protected static $configurationRepository;
+    private ConfigurationRepository $configurationRepository;
 
     public function __construct(ConfigurationRepository $configurationRepository)
     {
-        self::$configurationRepository = $configurationRepository;
+        $this->configurationRepository = $configurationRepository;
     }
 
-    public static function get($name): string
+    public function get($name): string
     {
-        if (count(self::$settings) === 0) {
-            self::getAllSettings();
+        if (count($this->settings) === 0) {
+            $this->getAllSettings();
         }
 
-        return self::$settings[$name];
+        return $this->settings[$name];
     }
 
-    public static function getAllSettings(): void
+    public function getAllSettings(): void
     {
-        $settings = self::$configurationRepository->findAll();
+        $settings = $this->configurationRepository->findAll();
 
         foreach ($settings as $conf) {
-            self::$settings[$conf->getCle()] = $conf->getValeur();
+            $this->settings[$conf->getCle()] = $conf->getValeur();
         }
     }
 }

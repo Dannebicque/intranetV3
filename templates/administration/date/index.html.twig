@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                 {% for date in dates %}
-                    <tr>
+                    <tr id="ligne_{{ date.id }}">
                         <td></td>
                         <td>{{ date.libelle }}</td>
                         <td>{{ date.dateDebut ? date.dateDebut|format_date('long') : 'non.defini'|trans }}</td>

@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 05/07/2020 16:27 -->
+<!-- @lastUpdate 26/07/2020 11:13 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7413,25 +7413,31 @@
         <target>Synthèse des parcours</target>
       </segment>
     </unit>
-    <unit id="tij_04g" name="absence.delete.success.flash">
-      <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>absence.delete.success.flash</source>
-        <target>Absence supprimée avec succès</target>
-      </segment>
-    </unit>
-    <unit id="aiVr8XS" name="document.edit.success.flash">
-      <segment>
-        <source>document.edit.success.flash</source>
-        <target>Document modifié avec succès</target>
-      </segment>
-    </unit>
-    <unit id=".ZCeqfZ" name="ppn.import.success.flash">
-      <segment>
-        <source>ppn.import.success.flash</source>
-        <target>PPN importé avec succès</target>
+      <unit id="tij_04g" name="absence.delete.success.flash">
+          <notes>
+              <note priority="1">obsolete</note>
+          </notes>
+          <segment>
+              <source>absence.delete.success.flash</source>
+              <target>Absence supprimée avec succès</target>
+          </segment>
+      </unit>
+      <unit id="tij_04l" name="hrs.duplicate.success.flash">
+          <segment>
+              <source>hrs.duplicate.success.flash</source>
+              <target>HRS/Prime dupliqué avec succès</target>
+          </segment>
+      </unit>
+      <unit id="aiVr8XS" name="document.edit.success.flash">
+          <segment>
+              <source>document.edit.success.flash</source>
+              <target>Document modifié avec succès</target>
+          </segment>
+      </unit>
+      <unit id=".ZCeqfZ" name="ppn.import.success.flash">
+          <segment>
+              <source>ppn.import.success.flash</source>
+              <target>PPN importé avec succès</target>
       </segment>
     </unit>
     <unit id="6g2lhgH" name="import.d_un.ppn.heading">
@@ -9767,26 +9773,32 @@
         <target>Type de diplôme créé avec succès</target>
       </segment>
     </unit>
-    <unit id="KnFrunU" name="type_hrs.add.success.flash">
-      <segment>
-        <source>type_hrs.add.success.flash</source>
-        <target>Type de HRS/Prime créé avec succès</target>
-      </segment>
-    </unit>
-    <unit id="spGFmTn" name="hrs.add.success.flash">
-      <segment>
-        <source>hrs.add.success.flash</source>
-        <target>Errur lors de la suppression de HRS/Prime</target>
-      </segment>
-    </unit>
-    <unit id="xGsTEoC" name="adm.hrs.add.heading">
-      <segment>
-        <source>adm.hrs.add.heading</source>
-        <target>Création d'une HRS/Prime</target>
-      </segment>
-    </unit>
-    <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
-      <segment>
+      <unit id="KnFrunU" name="type_hrs.add.success.flash">
+          <segment>
+              <source>type_hrs.add.success.flash</source>
+              <target>Type de HRS/Prime créé avec succès</target>
+          </segment>
+      </unit>
+      <unit id="spGFmTn" name="hrs.add.success.flash">
+          <segment>
+              <source>hrs.add.success.flash</source>
+              <target>HRS/Prime ajoutée avec succès</target>
+          </segment>
+      </unit>
+      <unit id="spGFmTn" name="hrs.edit.success.flash">
+          <segment>
+              <source>hrs.edit.success.flash</source>
+              <target>HRS/Prime modifiée avec succès</target>
+          </segment>
+      </unit>
+      <unit id="xGsTEoC" name="adm.hrs.add.heading">
+          <segment>
+              <source>adm.hrs.add.heading</source>
+              <target>Création d'une HRS/Prime</target>
+          </segment>
+      </unit>
+      <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
+          <segment>
         <source>type_hrs.edit.success.flash</source>
         <target>Type de HRS/Prime modifié avec succès</target>
       </segment>

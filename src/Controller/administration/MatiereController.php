@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 24/07/2020 09:11
 
 namespace App\Controller\administration;
 
@@ -42,11 +42,11 @@ class MatiereController extends BaseController
      *
      * @return Response
      */
-    public function diplome(Diplome $diplome): Response
+    public function diplome(MatiereRepository $matiereRepository, Diplome $diplome): Response
     {
         return $this->render('administration/matiere/_tableau.html.twig', [
             'diplome'  => $diplome,
-            'matieres' => $this->getDoctrine()->getRepository(Matiere::class)->findByDiplome($diplome)
+            'matieres' => $matiereRepository->findByDiplome($diplome)
         ]);
     }
 
@@ -186,13 +186,15 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_matiere_duplicate", methods="GET|POST")
-     * @param Matiere $matiere
+     * @param Configuration $configuration
+     * @param Matiere       $matiere
      *
      * @return Response
      */
-    public function duplicate(Matiere $matiere): Response
+    public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
-        if ((int)Configuration::get('MODIFICATION_PPN')) {
+
+        if ((int)$configuration->get('MODIFICATION_PPN') === 1) {
             $newMatiere = clone $matiere;
 
             $this->entityManager->persist($newMatiere);
