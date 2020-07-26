@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/07/2020 15:26
+// @lastUpdate 24/07/2020 07:54
 
 namespace App\Repository;
 
@@ -108,6 +108,9 @@ class EtudiantRepository extends ServiceEntityRepository
                     $qb->orderBy('s.libelle', $order[0]['dir']);
                     break;
             }
+        } else {
+            $qb->orderBy('u.nom', 'ASC')
+                ->addOrderBy('u.prenom', 'ASC');
         }
 
         if ($query) {

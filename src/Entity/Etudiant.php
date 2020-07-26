@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 24/07/2020 08:04
 
 namespace App\Entity;
 
@@ -53,6 +53,7 @@ class Etudiant extends Utilisateur implements Serializable
      * @var Semestre
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="etudiants", fetch="EAGER")
+     * @Groups({"etudiants_administration"})
      */
     private $semestre;
 

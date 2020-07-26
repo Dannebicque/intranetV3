@@ -31,7 +31,6 @@
                data-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
                 <span class="material-icons">build</span></a>
-            {
         </div>
 
     </div>
@@ -53,7 +52,7 @@
                 </thead>
                 <tbody>
                 {% for type_document in type_documents %}
-                    <tr>
+                    <tr id="ligne_{{ type_document.id }}">
                         <td>{{ type_document.id }}</td>
                         <td>{{ type_document.libelle }}</td>
                         <td>{{ type_document.documents|length }}</td>
@@ -63,7 +62,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="3">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

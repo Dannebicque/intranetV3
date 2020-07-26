@@ -2,8 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+// @lastUpdate 23/07/2020 15:39
 import {addCallout} from '../util'
+import $ from 'jquery'
 
 let tabsences = []
 
@@ -114,3 +115,27 @@ $('#liste-absences').dataTable({
   }
 })
 
+function updateAffichage (date, heure) {
+  $.ajax({
+    type: 'GET',
+    url: Routing.generate('application_personnel_absence_get_ajax', {matiere: $('#absence-matiere').val()}),
+    dataType: 'json',
+    success: function (data) {
+      const t = date.split('/')
+      const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
+      if (heure.length === 4) {
+        heure = '0' + heure
+      }
+
+      for (let d in data) {
+        if (d == ddate) {
+          if (typeof data[d][heure] !== 'undefined') {
+            for (let i = 0; i < data[d][heure].length; i++) {
+              $('#etu_' + data[d][heure][i]).addClass('absent')
+            }
+          }
+        }
+      }
+    }
+  })
+}

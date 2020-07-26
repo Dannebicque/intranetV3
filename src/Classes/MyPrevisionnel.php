@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 26/07/2020 11:13
 
 namespace App\Classes;
 
@@ -618,13 +618,11 @@ class MyPrevisionnel
                 $colonne++;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getDiplome()->getLibelle());
-            }
-            {
+            } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
                 $colonne++;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
             }
-//LIBELLE VET
             $colonne++;
 //CODE ELEMENT*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,

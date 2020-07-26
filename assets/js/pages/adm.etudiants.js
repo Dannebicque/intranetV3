@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.etudiants.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 09:06
+// @lastUpdate 26/07/2020 11:13
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -16,7 +16,8 @@ $('#datatableEtudiants').DataTable({
   'serverSide': true,
   'ajax': Routing.generate('api_etudiant_departement'),
   'sAjaxDataProp': 'data',
-  //"pageLength": 25,
+  'order': [[1, 'asc'], [2, 'asc']],
+  'pageLength': 25,
   'columns': [
     {'data': 'numetudiant'},
     {'data': 'nom'},

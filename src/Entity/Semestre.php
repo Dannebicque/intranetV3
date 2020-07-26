@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/07/2020 14:36
+// @lastUpdate 26/07/2020 11:13
 
 namespace App\Entity;
 
@@ -22,7 +22,8 @@ class Semestre extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"article_administration", "date_administration", "semestre"})
+     * @Groups({"article_administration", "date_administration", "semestre",
+     *                                    "etudiants_administration","document_administration"})
      */
     private $libelle;
 

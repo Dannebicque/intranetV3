@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 23/07/2020 13:09
 
 namespace App\Controller\administration;
 
@@ -229,7 +229,7 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/annee/duplicate", name="administration_previsionnel_duplicate_annee", methods="POST")
+     * @Route("/dupliquer-annee-complete", name="administration_previsionnel_duplicate_annee", methods="POST")
      *
      * @param PrevisionnelRepository $previsionnelRepository
      * @param Request                $request
