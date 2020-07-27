@@ -100,14 +100,14 @@
                                                     data-provide="tooltip"
                                                     data-placement="bottom"
                                                     title="{% if evaluation.visible == true %}Evaluation visible. Masquer l'évaluation{% else %}Evaluation masquée. Rendre visible l'évaluation{% endif %}">
-                                                <i class="material-icons"> {% if evaluation.visible == true %}visibility{% else %}visibility_off{% endif %}</i>
+                                                <i class="fas {% if evaluation.visible == true %}fa-eye{% else %}fa-eye-slash{% endif %}"> </i>
                                             </button>
                                             <button class="btn {% if evaluation.modifiable == false %}btn-danger{% else %}btn-outline btn-warning{% endif %}  btn-square optVerrouiller"
                                                     data-id="{{ evaluation.uuidString }}"
                                                     data-provide="tooltip"
                                                     data-placement="bottom"
                                                     title="{% if evaluation.modifiable == false %}Modification interdite. Autoriser la modificaiton.{% else %}Modification autorisée. Interdire la modification{% endif %}">
-                                                <i class="material-icons"> {% if evaluation.modifiable == false %}lock_outlinek{% else %}lock_open{% endif %}</i>
+                                                <i class="fas {% if evaluation.modifiable == false %}fa-lock{% else %}fa-lock-open{% endif %}"> </i>
                                             </button>
                                             <a class="btn btn-danger btn-outline btn-square supprimer"
                                                data-provide="tooltip"

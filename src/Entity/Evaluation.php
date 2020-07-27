@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 09:37
+// @lastUpdate 27/07/2020 11:34
 
 namespace App\Entity;
 
@@ -59,7 +59,7 @@ class Evaluation extends BaseEntity
     private $coefficient;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $commentaire;
 

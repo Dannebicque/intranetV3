@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 27/07/2020 18:08
 
 namespace App\Controller\administration;
 
@@ -13,6 +13,8 @@ use App\Classes\MyExport;
 use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Absence;
+use App\Entity\Actualite;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\AbsenceJustificatifRepository;
@@ -235,5 +237,31 @@ class AbsenceController extends BaseController
         }
 
         return $this->json('false', Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @Route("/{id}", name="administration_absence_delete", methods="DELETE", options={"expose":true})
+     * @param Request $request
+     * @param Absence $absence
+     *
+     * @return Response
+     */
+    public function delete(Request $request, Absence $absence): Response
+    {
+        $id = $absence->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            $this->entityManager->remove($absence);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'absence.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'absence.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

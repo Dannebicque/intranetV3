@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 27/07/2020 11:00
 import {addCallout} from '../util'
 
 $(document).on('click', '.optAfficher', function () {
@@ -41,17 +41,18 @@ $(document).on('click', '.optVerrouiller', function () {
   $.ajax({
     url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
     success: function () {
-      if ($(this).children('i').hasClass('fa-pencil')) {
+      if ($child.hasClass('fa-lock-open')) {
+        console.log('ok')
         $a.addClass('btn-danger')
         $a.removeClass('btn-warning').removeClass('btn-outline')
-        $child.children('i').removeClass('fa-pencil')
-        $child.children('i').addClass('fa-lock')
+        $child.removeClass('fa-lock-open')
+        $child.addClass('fa-lock')
         $a.attr('data-original-title', 'Modification interdite. Autoriser la modificaiton')
       } else {
         $a.removeClass('btn-danger')
         $a.addClass('btn-warning').addClass('btn-outline')
-        $child.children('i').removeClass('fa-lock')
-        $child.addClass('fa-pencil')
+        $child.removeClass('fa-lock')
+        $child.addClass('fa-lock-open')
         $a.attr('data-original-title', 'Modification autorisée. Interdire la modification')
       }
       addCallout('Vérouillage de l\'évaluation modifiée !', 'success')

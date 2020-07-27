@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 27/07/2020 11:28
 
 namespace App\Controller\administration;
 
@@ -150,7 +150,7 @@ class EvaluationController extends BaseController
         $etat,
         Semestre $semestre
     ): RedirectResponse {
-        $evals = $evaluationRepository->findBySemestre($semestre);
+        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
 
 
         /** @var Evaluation $eval */
@@ -180,7 +180,7 @@ class EvaluationController extends BaseController
         $etat,
         Semestre $semestre
     ): RedirectResponse {
-        $evals = $evaluationRepository->findBySemestre($semestre);
+        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
 
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
