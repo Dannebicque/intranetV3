@@ -49,7 +49,7 @@
                         {% if matiere.nbnotes>0 %}
                             {% set nbeval=1 %}
 
-                            {% for eval in evaluations if eval.matiere.id==matiere.id %}
+                            {% for eval in evaluations|filter(eval =>  eval.matiere.id==matiere.id) %}
                                 <tr>
                                     <td>{{ matiere.display }}</td>
                                     <td colspan="4">Evaluation existante</td>

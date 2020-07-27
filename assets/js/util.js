@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 15:44
+// @lastUpdate 27/07/2020 12:04
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -124,6 +124,7 @@ export function addCallout (message, label) {
   var translate = new Array()
   translate['success'] = 'Succès'
   translate['error'] = 'Erreur'
+  translate['Warning'] = 'Attention'
 
   const html = '<div class="callout callout-' + label + '" role="alert">\n' +
     '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
@@ -212,7 +213,6 @@ function dataToOption (name) {
 
 export function getDataOptions (el, castList) {
   var options = {}
-
   $.each($(el).data(), function (key, value) {
 
     key = dataToOption(key)

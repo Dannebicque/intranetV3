@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ActualiteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 26/07/2020 11:21
 /** @noinspection PhpUnused */
 
 namespace App\Repository;
@@ -36,7 +36,7 @@ class ActualiteRepository extends ServiceEntityRepository
      *
      * @return Actualite[]
      */
-    public function getByDepartement($departement, $nbResult = 2): array
+    public function getByDepartement($departement, $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')

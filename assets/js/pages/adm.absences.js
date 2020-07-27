@@ -2,8 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+// @lastUpdate 27/07/2020 18:08
 import {addCallout} from '../util'
+import {dataTableLangueFr} from '../lang/fr'
 
 $(document).on('change', '#justifier_etudiant', function () {
 
@@ -28,27 +29,27 @@ $(document).on('change', '#justifier_etudiant', function () {
         '                </thead>' +
         '<tbody>')
 
-      jQuery.each(data, function (index, etudiant) {
-        let html = '<tr>\n' +
-          '                        <td>' + etudiant.date + '</td>\n' +
-          '                        <td>' + etudiant.heure + '</td>\n' +
-          '                        <td>' + etudiant.matiere + '</td>\n' +
-          '                        <td><input type="radio" value="true" data-absence="' + etudiant.id + '" name="radio_' + etudiant.id + '" class="justifieAbsence"'
-        if (etudiant.justifie === true) {
+      jQuery.each(data, function (index, absence) {
+        let html = '<tr id="ligne_' + absence.id + '">\n' +
+          '                        <td>' + absence.date + '</td>\n' +
+          '                        <td>' + absence.heure + '</td>\n' +
+          '                        <td>' + absence.matiere + '</td>\n' +
+          '                        <td><input type="radio" value="1" data-absence="' + absence.id + '" name="radio_' + absence.id + '" class="justifieAbsence"'
+        if (absence.justifie === true) {
           html = html + ' checked '
         }
-        html = html + '> Oui | <input type="radio" value="false" data-absence="' + etudiant.id + '" name="radio_' + etudiant.id + '" class="justifieAbsence"'
-        if (etudiant.justifie === false) {
+        html = html + '> Oui | <input type="radio" value="0" data-absence="' + absence.id + '" name="radio_' + absence.id + '" class="justifieAbsence"'
+        if (absence.justifie === false) {
           html = html + ' checked '
         }
         html = html + '> Non</td>\n' +
-          '                        <td><a href="" class="btn btn-danger supprimer"><i class="fas fa-trash"></i></a></td>\n' +
+          '                        <td><a href="' + Routing.generate('') + '" class="btn btn-danger supprimer"><i class="fas fa-trash"></i></a></td>\n' +
           '                    </tr>'
         table.append(html)
       })
       table.append('</tbody>')
       table.dataTable({
-        'language': langueFr
+        'language': dataTableLangueFr
       })
     }
   })

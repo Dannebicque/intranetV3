@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/modaler.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 09:47
+// @lastUpdate 27/07/2020 11:23
 
 // =====================
 // Modaler
@@ -53,7 +53,6 @@
 
 
   modaler = function (options) {
-
     var setting = $.extend({}, configModaler, options)
 
     if (setting.modalId) {
