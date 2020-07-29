@@ -78,20 +78,23 @@
     {{ include('composants/fab-buttons.html.twig', {
         boutons:[
             {type: 'info',
-                href: path('administration_personnel_export', {_format:'pdf'}),
+                href: path('administration_personnel_export', {_format:'pdf', type:'permanent'}),
                 title: 'exporter.pdf'|trans,
+                id: 'export_pdf',
                 icone : "fa fa-file-pdf"
             },
             {
                 type:'info',
-                href:path('administration_personnel_export', {_format:'csv'}),
+                href:path('administration_personnel_export', {_format:'csv', type:'permanent'}),
                 title: 'exporter.csv'|trans,
+                id: 'export_csv',
                 icone: 'fa fa-file-csv'
             },
             {
                 type:'info',
-                href:path('administration_personnel_export', {_format:'xlsx'}),
+                href:path('administration_personnel_export', {_format:'xlsx', type:'permanent'}),
                 title: 'exporter.xls'|trans,
+                id: 'export_xlsx',
                 icone: 'fa fa-file-excel'
             },
             {

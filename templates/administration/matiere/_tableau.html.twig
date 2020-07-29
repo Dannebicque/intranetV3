@@ -10,23 +10,23 @@
                        data-placement="bottom"><i class="fas fa-plus"></i></a>
                 </span>
             {% endif %}
-            <ul class="card-controls">
-                <li class="dropdown">
-                    <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ path('administration_matiere_export', {'_format':'pdf', 'diplome': diplome.id}) }}"
-                           class="dropdown-item"><i
-                                    class="fa
-                        fa-file-pdf"></i>
-                            PDF</a>
-                        <a href="{{ path('administration_matiere_export', {'_format':'xlsx', 'diplome': diplome.id}) }}"
-                           class="dropdown-item"><i class="fa fa-file-excel"></i>
-                            Excel</a>
-                        <a href="{{ path('administration_matiere_export', {'_format':'csv', 'diplome': diplome.id}) }}"
-                           class="dropdown-item"><i class="fa fa-file-csv"></i> CSV</a>
-                    </div>
-                </li>
-            </ul>
+            {#            <ul class="card-controls">#}
+            {#                <li class="dropdown">#}
+            {#                    <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>#}
+            {#                    <div class="dropdown-menu dropdown-menu-right">#}
+            {#                        <a href="{{ path('administration_matiere_export', {'_format':'pdf', 'diplome': diplome.id}) }}"#}
+            {#                           class="dropdown-item"><i#}
+            {#                                    class="fa#}
+            {#                        fa-file-pdf"></i>#}
+            {#                            PDF</a>#}
+            {#                        <a href="{{ path('administration_matiere_export', {'_format':'xlsx', 'diplome': diplome.id}) }}"#}
+            {#                           class="dropdown-item"><i class="fa fa-file-excel"></i>#}
+            {#                            Excel</a>#}
+            {#                        <a href="{{ path('administration_matiere_export', {'_format':'csv', 'diplome': diplome.id}) }}"#}
+            {#                           class="dropdown-item"><i class="fa fa-file-csv"></i> CSV</a>#}
+            {#                    </div>#}
+            {#                </li>#}
+            {#            </ul>#}
 
         </div>
     </header>

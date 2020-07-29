@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.matieres.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/01/2020 16:34
+// @lastUpdate 29/07/2020 08:50
 
 $('#matiere_semestre').change(function () {
   const semestreSelector = $(this)
@@ -88,15 +88,28 @@ $(document).on('click', '.change-diplome', function (e) {
   e.preventDefault()
   $('.change-diplome').removeClass('active show')
   $(this).addClass('active show')
+  let $diplome = $(this).data('diplome')
   $.ajax({
-    url: Routing.generate('administration_matiere_diplome', {diplome:$(this).data('diplome')}),
+    url: Routing.generate('administration_matiere_diplome', {diplome: $diplome}),
     dataType: 'HTML',
     type: 'GET',
     success: function (data) {
       $('#content_diplome').slideUp().empty().append(data).slideDown()
       $('.datatable_matieres').dataTable({
-        language:langueFr
+        language: langueFr
       })
+      $('#export_csv').attr('href', Routing.generate('administration_personnel_export', {
+        diplome: $diplome,
+        '_format': 'csv'
+      }))
+      $('#export_xlsx').attr('href', Routing.generate('administration_personnel_export', {
+        diplome: $diplome,
+        '_format': 'xlsx'
+      }))
+      $('#export_pdf').attr('href', Routing.generate('administration_personnel_export', {
+        diplome: $diplome,
+        '_format': 'pdf'
+      }))
     }
   })
 
