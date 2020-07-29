@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/07/2020 09:11
+// @lastUpdate 27/07/2020 18:32
 
 namespace App\Controller\administration;
 
@@ -37,7 +37,7 @@ class MatiereController extends BaseController
     }
 
     /**
-     * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose"=true})
+     * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose":true})
      * @param Diplome $diplome
      *
      * @return Response
@@ -53,7 +53,7 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_matiere_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
+     *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
      * @param MyExport $myExport
      * @param MatiereRepository $matiereRepository
      * @param Diplome $diplome

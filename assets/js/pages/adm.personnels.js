@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 09:06
+// @lastUpdate 29/07/2020 08:50
 
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
@@ -55,8 +55,9 @@ $(document).on('click', '.personnel_index_change', function () {
   const table = $('#tableau').DataTable()
   table.clear() //effacer le datatable
   table.destroy() //supprimer le datatable
+  let $type = $(this).data('type')
   $.ajax({
-    url: Routing.generate('api_enseignants_type', {type: $(this).data('type')}),
+    url: Routing.generate('api_enseignants_type', {type: $type}),
     dataType: 'json',
     success: function (data) {
       jQuery.each(data, function (index, pers) {
@@ -84,6 +85,19 @@ $(document).on('click', '.personnel_index_change', function () {
           '                    </tr>'
         $('#datatableau').append(html)
       })
+
+      $('#export_csv').attr('href', Routing.generate('administration_personnel_export', {
+        type: $type,
+        '_format': 'csv'
+      }))
+      $('#export_xlsx').attr('href', Routing.generate('administration_personnel_export', {
+        type: $type,
+        '_format': 'xlsx'
+      }))
+      $('#export_pdf').attr('href', Routing.generate('administration_personnel_export', {
+        type: $type,
+        '_format': 'pdf'
+      }))
 
       $('#tableau').DataTable({
         'langue': dataTableLangueFr

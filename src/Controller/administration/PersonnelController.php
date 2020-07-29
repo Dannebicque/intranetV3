@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 18:05
+// @lastUpdate 27/07/2020 18:21
 
 namespace App\Controller\administration;
 
@@ -40,8 +40,8 @@ class PersonnelController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_personnel_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/export_{type}.{_format}", name="administration_personnel_export", methods="GET",
+     *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
      * @param MyExport            $myExport
      * @param PersonnelRepository $personnelRepository
      * @param                     $type
