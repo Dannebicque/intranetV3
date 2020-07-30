@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/07/2020 12:13
 
 /**
  * Created by PhpStorm.
@@ -276,6 +276,17 @@ class DataUserSession
     {
         if ($this->getUser() !== null) {
             return $this->getUser()->getNotifications();
+        }
+
+        return null;
+    }
+
+    /**
+     */
+    public function getNbDocumentsFavoris()
+    {
+        if ($this->getUser() !== null) {
+            return count($this->getUser()->getDocumentsFavoris());
         }
 
         return null;

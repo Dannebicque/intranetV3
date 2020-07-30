@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.rattrapages.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2020 15:16
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
@@ -18,7 +18,7 @@ $(document).on('click', '.rattrapage-accepte', function (e) {
       addCallout('Demande de rattrapage validée !', 'success')
     },
     error: function () {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
@@ -36,7 +36,7 @@ $(document).on('click', '.rattrapage-refuse', function (e) {
       addCallout('Demande de rattrapage refusée !', 'success')
     },
     error: function () {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
@@ -52,7 +52,7 @@ $(document).on('change', '.dateChange', function () {
     },
     method: 'POST',
     error: function () {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
@@ -62,7 +62,7 @@ $(document).on('blur', '.salleChange', function () {
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'salle', data: $(this).val()}),
     error: function (e) {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
@@ -72,7 +72,7 @@ $(document).on('blur', '.heureChange', function () {
   $.ajax({
     url: Routing.generate('administration_rattrapage_planning_change', {uuid: rattrapage, type: 'heure', data: $(this).val()}),
     error: function () {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })

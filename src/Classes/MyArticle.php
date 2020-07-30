@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyArticle.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/07/2020 13:04
 
 namespace App\Classes;
 
@@ -20,20 +20,15 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MyArticle
 {
-    /** @var Article */
-    protected $article;
+    protected Article $article;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /** @var ArticleRepository */
-    protected $articleRepository;
+    protected ArticleRepository $articleRepository;
 
-    /** @var ArticleLikeEtudiantRepository */
-    protected $articleLikeEtudiantRepository;
+    protected ArticleLikeEtudiantRepository $articleLikeEtudiantRepository;
 
-    /** @var ArticleLikePersonnelRepository */
-    protected $articleLikePersonnelRepository;
+    protected ArticleLikePersonnelRepository $articleLikePersonnelRepository;
 
     /**
      * MyArticle constructor.
@@ -63,7 +58,7 @@ class MyArticle
         return $this;
     }
 
-    public function saveLike($getConnectedUser)
+    public function saveLike($getConnectedUser): void
     {
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->articleLikePersonnelRepository->findLike($getConnectedUser, $this->article);
@@ -89,7 +84,7 @@ class MyArticle
         $this->entityManager->flush();
     }
 
-    private function remove($r)
+    private function remove($r): void
     {
         foreach ($r as $t) {
             $this->entityManager->remove($t);

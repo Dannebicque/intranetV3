@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2020 15:16
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 
 $(document).on('click', '.optAfficher', function () {
@@ -29,7 +29,7 @@ $(document).on('click', '.optAfficher', function () {
       addCallout('Visibilité de l\'évaluation modifiée !', 'success')
     },
     error: function () {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })
@@ -58,7 +58,7 @@ $(document).on('click', '.optVerrouiller', function () {
       addCallout('Vérouillage de l\'évaluation modifiée !', 'success')
     },
     error: function () {
-      addCallout('Une erreur est survenue !', 'error')
+      addCallout('Une erreur est survenue !', 'danger')
     }
   })
 })

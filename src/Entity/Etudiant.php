@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2020 14:35
+// @lastUpdate 30/07/2020 12:15
 
 namespace App\Entity;
 
@@ -219,6 +219,11 @@ class Etudiant extends Utilisateur implements Serializable
     private $formationContinue = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriEtudiant", mappedBy="etudiant")
+     */
+    private $documentsFavoris;
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
@@ -240,6 +245,7 @@ class Etudiant extends Utilisateur implements Serializable
         $this->alternances = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
         $this->articlesLike = new ArrayCollection();
+        $this->documentsFavoris = new ArrayCollection();
 
         $this->promotion = date('Y');
         $this->anneeBac = date('Y');
@@ -1212,6 +1218,37 @@ class Etudiant extends Utilisateur implements Serializable
     public function setFormationContinue(bool $formationContinue = false): self
     {
         $this->formationContinue = $formationContinue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DocumentFavoriEtudiant[]
+     */
+    public function getDocumentsFavoris(): Collection
+    {
+        return $this->documentsFavoris;
+    }
+
+    public function addDocumentsFavori(DocumentFavoriEtudiant $documentsFavori): self
+    {
+        if (!$this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris[] = $documentsFavori;
+            $documentsFavori->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentsFavori(DocumentFavoriEtudiant $documentsFavori): self
+    {
+        if ($this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris->removeElement($documentsFavori);
+            // set the owning side to null (unless already changed)
+            if ($documentsFavori->getEtudiant() === $this) {
+                $documentsFavori->setEtudiant(null);
+            }
+        }
 
         return $this;
     }

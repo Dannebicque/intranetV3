@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2020 15:16
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 
 $(document).on('click', '.changeprofil', function (e) {
@@ -118,7 +118,7 @@ $(document).on('change', '#chgt_etudiant_semestre', function () {
       addCallout('Mofification enregistrée !', 'success')
     },
     error: function (e) {
-      addCallout('Erreur lors de la sauvegarde de la modification !', 'error')
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
     }
 
   })
@@ -133,7 +133,7 @@ $(document).on('change', '#chgt_etudiant_departement', function () {
       addCallout('Mofification enregistrée !', 'success')
     },
     error: function (e) {
-      addCallout('Erreur lors de la sauvegarde de la modification !', 'error')
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
     }
 
   })
@@ -147,7 +147,7 @@ $(document).on('change', '#chgt_etudiant_fin', function () {
       addCallout('Mofification enregistrée !', 'success')
     },
     error: function (e) {
-      addCallout('Erreur lors de la sauvegarde de la modification !', 'error')
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
     }
 
   })

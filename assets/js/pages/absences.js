@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 import '../../vendor/datatables'
 import $ from 'jquery'
@@ -71,7 +71,7 @@ $(document).on('click', '.etudiant', function () {
       },
       //affichage de l'erreur en cas de problème
       error: function () {
-        addCallout('Erreur lors de la tentative de suppression de l\'absence !', 'error')
+        addCallout('Erreur lors de la tentative de suppression de l\'absence !', 'danger')
       },
       success: function (data) {
         tabsences = data
@@ -96,9 +96,9 @@ $(document).on('click', '.etudiant', function () {
       //affichage de l'erreur en cas de problème
       error: function (msg) {
         if (msg.responseText === 'out') {
-          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'error')
+          addCallout('Le délai pour l\'enregistrement est dépassé. Contactez le responsable de la departement', 'danger')
         } else {
-          addCallout('Erreur lors de l\'enregistrement.', 'error')
+          addCallout('Erreur lors de l\'enregistrement.', 'danger')
         }
       },
       success: function (data) {

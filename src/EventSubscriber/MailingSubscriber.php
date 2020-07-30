@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/07/2020 11:36
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
@@ -69,7 +69,7 @@ class MailingSubscriber implements EventSubscriberInterface
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
                 ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
-
+        $this->myMailer->initMessage();
         //envoi en copie au responsable si l'option est activée
         if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
             $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig', ['absence' => $absence]);

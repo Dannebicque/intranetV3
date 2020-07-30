@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.previsionnel.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 
 let nbLignePrevisionnel = 1
@@ -21,7 +21,7 @@ $(document).on('change', '.changeIntervenantPrevi', function (e) {
       addCallout('Modification de prévisionnel enregistrée !', 'success')
     },
     error: function () {
-      addCallout('Erreur lors de la modification du prévisionnel !', 'error')
+      addCallout('Erreur lors de la modification du prévisionnel !', 'danger')
     }
   })
 })

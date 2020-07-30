@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 08:24
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
@@ -61,7 +61,7 @@ $(document).on('click', '.justifieAbsence', function () {
     type: 'GET',
     url: Routing.generate('administration_absences_justifie', {absence: $(this).data('absence'), etat: $(this).val()}),
     error: function () {
-      addCallout('Erreur lors de l\'enregistrement.', 'error')
+      addCallout('Erreur lors de l\'enregistrement.', 'danger')
     },
     success: function (data) {
       if (data === true) {

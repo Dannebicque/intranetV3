@@ -31,6 +31,24 @@
 
 
 {% block content %}
-{# todo: A faire, peut entre en fusionnant avec la partie application pro... Laisser le choix ? trombi ou saisie
-directe par "formulaire" assisté ? (saisie du nom)  #}
+    {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre
+        .id})) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('absences') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('absences') }}
+    {% if event is defined %}
+        <script>
+          $(document).ready(function () {
+            console.log('update')
+            updateAffichage("{{ dateFr }}", "{{ heure }}")
+          })
+        </script>
+    {% endif %}
 {% endblock %}

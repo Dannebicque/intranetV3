@@ -7,10 +7,7 @@
             <div class="media-body">
                 <h5>Vos documents favoris</h5>
                 <p class="gap-items">
-                    <small>{{ 'nb.documents.categories'|trans }} xx </small>
-                    {#
-                                                    <small>{{ typedocument.description }}</small>
-                    #}
+                    <small>{{ 'nb.documents.categories'|trans }} {{ user_data.nbDocumentsFavoris }} </small>
                 </p>
             </div>
         </div>
@@ -28,9 +25,6 @@
                     <h5>{{ typedocument.libelle }}</h5>
                     <p class="gap-items">
                         <small>{{ 'nb.documents.categories'|trans }} {{ typedocument.documents|length }} </small>
-                        {#
-                                                        <small>{{ typedocument.description }}</small>
-                        #}
                     </p>
                 </div>
             </div>
