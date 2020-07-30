@@ -3,14 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/DatabaseTwigLoader.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:14
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 07/08/2018
- * Time: 11:07
- */
+// @lastUpdate 29/07/2020 13:12
 
 namespace App\Twig;
 
@@ -58,6 +51,7 @@ class DatabaseTwigLoader implements LoaderInterface
         if ($this->getValue($name) !== null) {
             return $name === $this->getValue($name)->getName();
         }
+
         return false;
     }
 

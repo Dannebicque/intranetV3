@@ -2,11 +2,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 11:23
+// @lastUpdate 30/07/2020 10:13
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'bootstrap-select/dist/css/bootstrap-select.min.css'
+import '../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'
+import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
+import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 
 import '../css/app.scss'
 
@@ -115,6 +118,20 @@ function updateInterface () {
       template: '<div class="tooltip' + color + '" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
     })
   })
+
+  $('[data-provide~="datepicker"]').each(function () {
+    var options = {
+      multidateSeparator: ', ',
+      language: 'fr',
+      daysOfWeekHighlighted: '06',
+      templates: {
+        leftArrow: '>',
+        rightArrow: '<'
+      }
+    }
+    $(this).datepicker(options)
+  })
+
 }
 
 // Open fullscreen lookup

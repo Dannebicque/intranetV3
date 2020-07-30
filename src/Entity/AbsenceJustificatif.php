@@ -3,11 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 17:16
+// @lastUpdate 30/07/2020 10:13
 
 namespace App\Entity;
 
+use App\Classes\Tools;
 use App\Entity\Traits\UuidTrait;
+use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,28 +40,16 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     use UuidTrait;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      * @Groups({"justificatif_administration"})
      */
-    private $dateDebut;
+    private $dateHeureDebut;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      * @Groups({"justificatif_administration"})
      */
-    private $dateFin;
-
-    /**
-     * @ORM\Column(type="time")
-     * @Groups({"justificatif_administration"})
-     */
-    private $heureDebut;
-
-    /**
-     * @ORM\Column(type="time")
-     * @Groups({"justificatif_administration"})
-     */
-    private $heureFin;
+    private $dateHeureFin;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -99,6 +89,11 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      */
     private $anneeUniversitaire;
 
+    private $dateDebut;
+    private $heureDebut;
+    private $dateFin;
+    private $heureFin;
+
     /**
      * AbsenceJustificatif constructor.
      *
@@ -114,50 +109,26 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->setEtudiant($etudiant);
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateHeureDebut(): ?DateTimeInterface
     {
-        return $this->dateDebut;
+        return $this->dateHeureDebut;
     }
 
-    public function setDateDebut(DateTimeInterface $dateDebut): self
+    public function setDateHeureDebut(DateTimeInterface $dateHeureDebut): self
     {
-        $this->dateDebut = $dateDebut;
+        $this->dateHeureDebut = $dateHeureDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateHeureFin(): ?DateTimeInterface
     {
-        return $this->dateFin;
+        return $this->dateHeureFin;
     }
 
-    public function setDateFin(DateTimeInterface $dateFin): self
+    public function setDateHeureFin(DateTimeInterface $dateHeureFin): self
     {
-        $this->dateFin = $dateFin;
-
-        return $this;
-    }
-
-    public function getHeureDebut(): ?DateTimeInterface
-    {
-        return $this->heureDebut;
-    }
-
-    public function setHeureDebut(DateTimeInterface $heureDebut): self
-    {
-        $this->heureDebut = $heureDebut;
-
-        return $this;
-    }
-
-    public function getHeureFin(): ?DateTimeInterface
-    {
-        return $this->heureFin;
-    }
-
-    public function setHeureFin(DateTimeInterface $heureFin): self
-    {
-        $this->heureFin = $heureFin;
+        $this->dateHeureFin = $dateHeureFin;
 
         return $this;
     }
@@ -282,4 +253,86 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->uuid = unserialize($serialized, ['allowed_classes' => false]);
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeureDebut()
+    {
+        return $this->heureDebut;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeureFin()
+    {
+        return $this->heureFin;
+    }
+
+    /**
+     * @param mixed $dateDebut
+     */
+    public function setDateDebut($dateDebut): void
+    {
+        $this->dateDebut = $dateDebut;
+    }
+
+    /**
+     * @param mixed $heureDebut
+     */
+    public function setHeureDebut($heureDebut): void
+    {
+        $this->heureDebut = $heureDebut;
+    }
+
+    /**
+     * @param mixed $dateFin
+     */
+    public function setDateFin($dateFin): void
+    {
+        $this->dateFin = $dateFin;
+    }
+
+    /**
+     * @param mixed $heureFin
+     */
+    public function setHeureFin($heureFin): void
+    {
+        $this->heureFin = $heureFin;
+    }
+
+    public function prepareData()
+    {
+        $this->setDateDebut($this->getDateHeureDebut());
+        $this->setHeureDebut($this->getDateHeureDebut());
+        $this->setDateFin($this->getDateHeureFin());
+        $this->setHeureFin($this->getDateHeureFin());
+    }
+
+    public function transformeData()
+    {
+        $this->setDateHeureDebut(Carbon::createFromFormat('Y-m-d H:i',
+            $this->getDateDebut()->format('Y-m-d') . ' ' . $this->getHeureDebut()->format('H:i')));
+        $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
+            $this->getDateFin()->format('Y-m-d') . ' ' . $this->getHeureFin()->format('H:i')));
+    }
+
+
 }

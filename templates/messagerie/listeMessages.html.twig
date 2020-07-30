@@ -81,7 +81,7 @@
                 {% if filtre=='draft' %}
                     Modifier / Envoyer
                 {% else %}
-                    <time datetime="2018">{{ message.created|time_ago }}</time>
+                    <time datetime="2018">{{ message.created|time_ago(app.request.locale) }}</time>
                 {% endif %}
             </div>
         {% endfor %}
@@ -127,7 +127,7 @@
                     <a class="text-lighter fs-18 opacity-0" href="#"><i class="fas fa-clipboard"></i></a>
                 {% endif %}
 
-                <time datetime="2018">{{ message.message.created|time_ago }}</time>
+                <time datetime="2018">{{ message.message.created|time_ago(app.request.locale) }}</time>
             </div>
         {% endfor %}
     {% endif %}

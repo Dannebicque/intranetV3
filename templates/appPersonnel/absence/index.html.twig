@@ -53,17 +53,17 @@
                         >
                             <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                             {% for i in 08..19 %}
-                                <option value="{{ i }}:00" {% if i~':00' == heure %} selected {% endif %}>
-                                    {{ i }}h00
+                                <option value="{{ i|formatHeure }}:00" {% if i|formatHeure~':00' == heure %} selected {% endif %}>
+                                    {{ i|formatHeure }}h00
                                 </option>
-                                <option value="{{ i }}:15" {% if i~':15' == heure %} selected {% endif %}>
-                                    {{ i }}h15
+                                <option value="{{ i|formatHeure }}:15" {% if i|formatHeure~':15' == heure %} selected {% endif %}>
+                                    {{ i|formatHeure }}h15
                                 </option>
-                                <option value="{{ i }}:30" {% if i~':30' == heure %} selected {% endif %}>
-                                    {{ i }}h30
+                                <option value="{{ i|formatHeure }}:30" {% if i|formatHeure~':30' == heure %} selected {% endif %}>
+                                    {{ i|formatHeure }}h30
                                 </option>
-                                <option value="{{ i }}:45" {% if i~':45' == heure %} selected {% endif %}>
-                                    {{ i }}h45
+                                <option value="{{ i|formatHeure }}:45" {% if i|formatHeure~':45' == heure %} selected {% endif %}>
+                                    {{ i|formatHeure }}h45
                                 </option>
                             {% endfor %}
                         </select>
@@ -128,20 +128,6 @@
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {% if event is defined %}
-        <script>
-          $(document).ready(function () {
-            console.log('update')
-            updateAffichage("{{ dateFr }}", "{{ heure }}")
-          })
-
-        </script>
-    {% endif %}
-{% endblock %}
-
-
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
@@ -178,4 +164,12 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('absences') }}
+    {% if event is defined %}
+        <script>
+          $(document).ready(function () {
+            console.log('update')
+            updateAffichage("{{ dateFr }}", "{{ heure }}")
+          })
+        </script>
+    {% endif %}
 {% endblock %}

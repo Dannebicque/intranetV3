@@ -25,12 +25,13 @@
             {% for absence_justificatif in absence_justificatifs %}
                 <tr id="ligne_{{ absence_justificatif.uuidString }}">
 
-                    <td>{{ absence_justificatif.dateDebut ? absence_justificatif.dateDebut|format_date('long') : '' }}
-                        , {{ absence_justificatif.heureDebut ?
-                        absence_justificatif.heureDebut|format_time('short') : '' }}</td>
-                    <td>{{ absence_justificatif.dateFin ? absence_justificatif.dateFin|format_date('long') : '' }}
-                        , {{ absence_justificatif.heureFin ? absence_justificatif
-                        .heureFin|format_time('short') : '' }}</td>
+                    <td>{{ absence_justificatif.dateHeureDebut ? absence_justificatif.dateHeureDebut|format_date('long') :
+                        '' }}
+                        , {{ absence_justificatif.dateHeureDebut ?
+                        absence_justificatif.dateHeureDebut|format_time('short') : '' }}</td>
+                    <td>{{ absence_justificatif.dateHeureFin ? absence_justificatif.dateHeureFin|format_date('long') : '' }}
+                        , {{ absence_justificatif.dateHeureFin ? absence_justificatif
+                        .dateHeureFin|format_time('short') : '' }}</td>
                     <td>{{ absence_justificatif.motif }}</td>
                     <td>{{ absence_justificatif.etatLong }}</td>
                     <td>{{ absence_justificatif.created ? absence_justificatif.created|format_datetime('long', 'short') : '' }}</td>

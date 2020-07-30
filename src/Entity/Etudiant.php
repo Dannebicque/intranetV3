@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/07/2020 08:04
+// @lastUpdate 29/07/2020 14:35
 
 namespace App\Entity;
 
@@ -81,7 +81,7 @@ class Etudiant extends Utilisateur implements Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Absence", mappedBy="etudiant")
-     * @ORM\OrderBy({"date" = "desc", "heure" = "desc"})
+     * @ORM\OrderBy({"dateHeure" = "desc"})
      */
     private $absences;
 

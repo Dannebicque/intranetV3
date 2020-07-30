@@ -26,7 +26,7 @@
                     <span class="avatar bg-{{ notification.color }}"><i class="{{ notification.icone }}"></i></span>
                     <span class="title">{{ notification.type|trans }}</span>
                     <time datetime="{{ notification.created|format_datetime('short', 'short') }}">{{ notification
-                        .created|time_ago }}</time>
+                        .created|time_ago(app.request.locale) }}</time>
                 </a>
             {% else %}
                 <a class="media media-single notification"

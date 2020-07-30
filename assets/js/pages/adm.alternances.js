@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.alternances.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 29/07/2020 15:16
 import {addCallout} from '../util'
 
 $(document).on('change', '.tuteurUniversitaireAlternance', function () {
@@ -15,7 +15,7 @@ $(document).on('change', '.tuteurUniversitaireAlternance', function () {
       addCallout('Tuteur universitaire enregistré !', 'success')
     },
     error: function () {
-      addCallout('Une erreur est survenue !', 'danger')
+      addCallout('Une erreur est survenue !', 'error')
     }
   })
 })

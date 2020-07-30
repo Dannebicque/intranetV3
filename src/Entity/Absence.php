@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 29/07/2020 13:53
 
 namespace App\Entity;
 
@@ -28,18 +28,10 @@ class Absence extends BaseEntity implements Serializable
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="dateHeure", type="datetime")
      * @Groups({"absences_administration"})
      */
-    private $date;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="heure", type="time")
-     * @Groups({"absences_administration"})
-     */
-    private $heure;
+    private $dateHeure;
 
     /**
      * @var DateTime
@@ -103,33 +95,17 @@ class Absence extends BaseEntity implements Serializable
     /**
      * @return DateTime
      */
-    public function getDate(): ?DateTime
+    public function getDateHeure(): ?DateTime
     {
-        return $this->date;
+        return $this->dateHeure;
     }
 
     /**
-     * @param DateTime $date
+     * @param DateTime $dateHeure
      */
-    public function setDate(DateTime $date): void
+    public function setDateHeure(DateTime $dateHeure): void
     {
-        $this->date = $date;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getHeure(): ?DateTime
-    {
-        return $this->heure;
-    }
-
-    /**
-     * @param DateTime $heure
-     */
-    public function setHeure(DateTime $heure): void
-    {
-        $this->heure = $heure;
+        $this->dateHeure = $dateHeure;
     }
 
     /**
@@ -235,8 +211,8 @@ class Absence extends BaseEntity implements Serializable
             'id'          => $this->getId(),
             'justifie'    => $this->isJustifie(),
             'uuidString'  => $this->getUuidString(),
-            'date'        => $this->getDate() !== null ? $this->getDate()->format('d/m/Y') : '-',
-            'heure'       => $this->getHeure() !== null ? $this->getHeure()->format('H:i') : '-',
+            'date'        => $this->getDateHeure() !== null ? $this->getDateHeure()->format('d/m/Y') : '-',
+            'heure'       => $this->getDateHeure() !== null ? $this->getDateHeure()->format('H:i') : '-',
             'personnel'   => $this->getPersonnel() !== null ? $this->getPersonnel()->getDisplay() : '-',
             'codeMatiere' => $this->getMatiere() !== null ? $this->getMatiere()->getCodeMatiere() : '-',
         ];

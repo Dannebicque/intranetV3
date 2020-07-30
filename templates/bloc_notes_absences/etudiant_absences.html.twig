@@ -17,8 +17,7 @@
         <table class="table table-border" id="tableAbsence">
             <thead>
             <tr>
-                <th>{{ 'date'|trans }}</th>
-                <th>{{ 'heure'|trans }}</th>
+                <th>{{ 'dateHeure'|trans }}</th>
                 <th>{{ 'matiere'|trans }}</th>
                 <th>{{ 'justifiee'|trans }}</th>
                 <th class="hide">{{ 'saisie_par'|trans }}</th>
@@ -31,8 +30,7 @@
             <tbody>
             {% for absence in absences %}
                 <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}" id="ligne_{{ absence.id }}">
-                    <td>{{ absence.date ? absence.date|format_date('long') : '' }}</td>
-                    <td>{{ absence.heure ? absence.heure|format_time('short') : '' }}</td>
+                    <td>{{ absence.dateHeure ? absence.dateHeure|format_datetime('long', 'short') : '' }}</td>
                     <td>{{ absence.matiere.codeMatiere }}</td>
                     <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
                     <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
@@ -59,7 +57,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">
+                    <td colspan="5">
                         <div class="alert alert-info">Aucune absence n'a été saisie</div>
                     </td>
                 </tr>
