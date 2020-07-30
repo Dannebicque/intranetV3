@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 12:04
+// @lastUpdate 30/07/2020 11:18
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -123,8 +123,8 @@ export function addCallout (message, label) {
   console.log('callout')
   var translate = new Array()
   translate['success'] = 'Succès'
-  translate['error'] = 'Erreur'
-  translate['Warning'] = 'Attention'
+  translate['danger'] = 'Erreur'
+  translate['warning'] = 'Attention'
 
   const html = '<div class="callout callout-' + label + '" role="alert">\n' +
     '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.scolarite.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 30/07/2020 13:04
 import {addCallout} from '../util'
 
 $(document).on('keyup', '#etudiant', function () {
@@ -31,7 +31,7 @@ $(document).on('change', '#scolarite_semestre', function () {
         idUE.after($html)
       },
       error: function () {
-        addCallout('Erreur la requête.','error');
+        addCallout('Erreur la requête.', 'danger')
       }
     });
 });

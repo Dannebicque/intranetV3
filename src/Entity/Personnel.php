@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/07/2020 07:42
+// @lastUpdate 30/07/2020 12:15
 
 namespace App\Entity;
 
@@ -244,6 +244,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $articlesLike;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriPersonnel", mappedBy="personnel")
+     */
+    private $documentsFavoris;
+
     public function __construct()
     {
         parent::__construct();
@@ -270,6 +275,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->quizzQuestions = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->articlesLike = new ArrayCollection();
+        $this->documentsFavoris = new ArrayCollection();
     }
 
     /**
@@ -1381,6 +1387,37 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             // set the owning side to null (unless already changed)
             if ($articlesLike->getPersonnel() === $this) {
                 $articlesLike->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DocumentFavoriPersonnel[]
+     */
+    public function getDocumentsFavoris(): Collection
+    {
+        return $this->documentsFavoris;
+    }
+
+    public function addDocumentsFavori(DocumentFavoriPersonnel $documentsFavori): self
+    {
+        if (!$this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris[] = $documentsFavori;
+            $documentsFavori->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentsFavori(DocumentFavoriPersonnel $documentsFavori): self
+    {
+        if ($this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris->removeElement($documentsFavori);
+            // set the owning side to null (unless already changed)
+            if ($documentsFavori->getPersonnel() === $this) {
+                $documentsFavori->setPersonnel(null);
             }
         }
 

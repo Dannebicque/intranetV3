@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2020 11:21
+// @lastUpdate 30/07/2020 12:03
 
 namespace App\Entity;
 
@@ -85,6 +85,11 @@ class Document extends BaseEntity
      * @Groups({"document_administration"})
      */
     private $semestres;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
+     */
+    private $documentsFavoris;
 
     /**
      * Document constructor.

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2020 15:16
+// @lastUpdate 30/07/2020 11:18
 
 import {addCallout} from '../util'
 
@@ -37,7 +37,7 @@ $('.savegroupe').click(function () {
         //feature: supprimer le "orange" sur les notes sauvegardées. Peut être récupérer en data les notes.
       },
       error: function () {
-        addCallout('Une erreur est survenue pendant l\'envoi... <br>Veuillez réessayer', 'error')
+        addCallout('Une erreur est survenue pendant l\'envoi... <br>Veuillez réessayer', 'danger')
         //feature: être plus précis ?
       }
     })

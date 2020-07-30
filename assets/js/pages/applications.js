@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 30/07/2020 11:18
 import {addCallout} from '../util'
 import './messagerie'
 
@@ -38,7 +38,7 @@ $(document).on('change', '#selectsemestre', function () {
         selectMatiere.attr('data-live-search', 'true')
       },
       error: function () {
-        addCallout('Erreur lors de la tentative d\'affichage des matières du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'error')
+        addCallout('Erreur lors de la tentative d\'affichage des matières du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
       }
     });
   //groupes
@@ -60,7 +60,7 @@ $(document).on('change', '#selectsemestre', function () {
         });
       },
       error: function () {
-        addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'error')
+        addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
       }
     });
 });
@@ -82,7 +82,7 @@ $(document).on('change', '#selectgroupes', function () {
         $lgr.html($html);
       },
       error: function () {
-        addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'error')
+        addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
       }
     });
 });

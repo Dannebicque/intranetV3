@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 30/07/2020 13:04
 
 namespace App\Controller;
 
+use App\Classes\MyDocument;
+use App\Entity\Document;
 use App\Repository\DocumentRepository;
 use App\Repository\TypeDocumentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -44,6 +47,25 @@ class DocumentController extends BaseController
     }
 
     /**
+     *
+     * @param MyDocument $myDocument
+     *
+     * @return Response
+     * @Route("/ajax/document/favori", name="document_ajax_favori", options={"expose": true})
+     */
+    public function documentsFavoris(MyDocument $myDocument): Response
+    {
+        $documents = $myDocument->mesDocumentsFavoris($this->getConnectedUser());
+        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
+
+        return $this->render('document/documents.html.twig', [
+            'documents'     => $documents,
+            'listesFavoris' => $idDocuments
+        ]);
+    }
+
+    /**
+     * @param MyDocument         $myDocument
      * @param DocumentRepository $documentRepository
      *
      * @param                    $typedocument
@@ -51,12 +73,31 @@ class DocumentController extends BaseController
      * @return Response
      * @Route("/ajax/document/{typedocument}", name="document_ajax", options={"expose": true})
      */
-    public function documents(DocumentRepository $documentRepository, $typedocument): Response
+    public function documents(MyDocument $myDocument, DocumentRepository $documentRepository, $typedocument): Response
     {
         $documents = $documentRepository->findByTypeDocument($typedocument);
+        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
 
         return $this->render('document/documents.html.twig', [
-            'documents' => $documents
+            'documents'     => $documents,
+            'listesFavoris' => $idDocuments
         ]);
+    }
+
+
+    /**
+     * @Route("/ajax/add-favori/{document}", name="document_add_favori", options={"expose": true})
+     * @ParamConverter("document", options={"mapping": {"document": "uuid"}})
+     * @param MyDocument $myDocument
+     * @param Document   $document
+     *
+     * @return Response
+     */
+    public function addFavori(MyDocument $myDocument, Document $document): Response
+    {
+        $myDocument->setDocument($document);
+        $etat = $myDocument->addOrRemoveFavori($this->getConnectedUser());
+
+        return $this->json($etat, Response::HTTP_OK);
     }
 }
