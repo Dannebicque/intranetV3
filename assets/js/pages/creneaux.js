@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/creneaux.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 29/07/2020 15:16
 import {addCallout} from '../util'
 
 $(document).on('click', '#btn_creneau_add', function(){
@@ -21,7 +21,7 @@ $(document).on('click', '#btn_creneau_add', function(){
       addCallout('Créneau ajouté avec succès', 'success')
     },
     error: function() {
-      addCallout('Erreur lors de l\'ajout du créneau', 'danger')
+      addCallout('Erreur lors de l\'ajout du créneau', 'error')
     }
   })
 });

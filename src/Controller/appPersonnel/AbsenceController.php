@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/07/2020 08:26
+// @lastUpdate 30/07/2020 10:13
 
 namespace App\Controller\appPersonnel;
 
@@ -22,6 +22,8 @@ use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -220,23 +222,20 @@ class AbsenceController extends BaseController
         Matiere $matiere,
         Etudiant $etudiant
     ) {
-        $date = Tools::convertDateToObject($request->request->get('date'));
-        $heure = Tools::convertTimeToObject($request->request->get('heure'));
+        $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
         $absence = $absenceRepository->findBy([
             'matiere'            => $matiere->getId(),
             'etudiant'           => $etudiant->getId(),
-            'date'               => $date,
-            'heure'              => $heure,
+            'dateHeure'          => $dateHeure,
             'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0
         ]);
 
         if ($request->get('action') === 'saisie' && count($absence) === 0) {
-            if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $date)) {
+            if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $dateHeure)) {
                 $etudiantAbsences->setEtudiant($etudiant);
 
                 $etudiantAbsences->addAbsence(
-                    $date,
-                    $heure,
+                    $dateHeure,
                     $matiere,
                     $this->getConnectedUser()
                 );
@@ -245,7 +244,6 @@ class AbsenceController extends BaseController
                     $matiere,
                     $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
                 );
-
                 return $this->json($absences);
             }
 
@@ -270,15 +268,14 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @param          $nbjour
-     * @param DateTime $datesymfony
+     * @param                 $nbjour
+     *
+     * @param CarbonInterface $datesymfony
      *
      * @return bool
-     * @throws Exception
      */
-    private function saisieAutorise($nbjour, DateTime $datesymfony): bool
+    private function saisieAutorise($nbjour, CarbonInterface $datesymfony): bool
     {
-
-        return $nbjour === 0 ? true : (date_diff(new DateTime('now'), $datesymfony)->format('%a') <= $nbjour);
+        return $nbjour === 0 ? true : ($datesymfony->diffInDays(Carbon::now()) <= $nbjour);
     }
 }

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 10:33
+// @lastUpdate 29/07/2020 15:16
 import {addCallout} from '../util'
 
 $(document).on('change', '.typegroupe_defaut', function (e) {
@@ -15,7 +15,7 @@ $(document).on('change', '.typegroupe_defaut', function (e) {
     success: function () {
       addCallout('Type de groupe par défaut enregistré', 'success')
     }, error: function () {
-      addCallout('Erreur lors de l\'enregistrement du type de groupe par défaut', 'danger')
+      addCallout('Erreur lors de l\'enregistrement du type de groupe par défaut', 'error')
     }
   })
 })
@@ -38,7 +38,7 @@ $(document).on('click', '.add_groupe', function () {
       $('#groupe_bloc_' + data.semestre).empty().load(Routing.generate('administration_groupe_refresh', {parent: data.semestre}))
       addCallout('Groupe ajouté', 'success')
     }, error: function () {
-      addCallout('Erreur lors de l\'ajout du groupe', 'danger')
+      addCallout('Erreur lors de l\'ajout du groupe', 'error')
     }
   })
 })

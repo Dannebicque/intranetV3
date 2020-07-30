@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/07/2020 08:06
+// @lastUpdate 30/07/2020 09:03
 
 /**
  * Created by PhpStorm.
@@ -383,9 +383,9 @@ class MyExcelMultiExport
             $colonne++;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
             $colonne++;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDate()->format('d/m/Y'));
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('d/m/Y'));
             $colonne++;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getHeure()->format('H:i'));
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('H:i'));
             $colonne++;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getPersonnel()->getDisplayPr());
             $colonne++;

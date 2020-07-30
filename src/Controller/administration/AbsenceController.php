@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 18:08
+// @lastUpdate 30/07/2020 09:03
 
 namespace App\Controller\administration;
 
@@ -46,9 +46,9 @@ class AbsenceController extends BaseController
         $tAbs = [];
         foreach ($etudiant->getAbsences() as $abs) {
             $t = [];
-            $t['date'] = $abs->getDate() !== null ? $abs->getDate()->format('d/m/Y') : '';
+            $t['date'] = $abs->getDateHeure() !== null ? $abs->getDateHeure()->format('d/m/Y') : '';
             $t['id'] = $abs->getId();
-            $t['heure'] = $abs->getHeure() !== null ? $abs->getHeure()->format('H:i') : '';
+            $t['heure'] = $abs->getDateHeure() !== null ? $abs->getDateHeure()->format('H:i') : '';
             $t['matiere'] = $abs->getMatiere() !== null ? $abs->getMatiere()->getDisplay() : '';
             $t['justifie'] = $abs->isJustifie();
             $tAbs[] = $t;
@@ -223,8 +223,7 @@ class AbsenceController extends BaseController
             if ($matiere !== null) {
                 $etudiantAbsences->setEtudiant($etudiant);
                 $absence = $etudiantAbsences->addAbsence(
-                    Tools::convertDateToObject($request->request->get('date')),
-                    Tools::convertTimeToObject($request->request->get('heure')),
+                    Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure')),
                     $matiere,
                     $this->getConnectedUser(),
                     Tools::convertToBool($request->request->get('justif'))

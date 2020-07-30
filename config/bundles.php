@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 16:27
+// @lastUpdate 30/07/2020 10:13
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],

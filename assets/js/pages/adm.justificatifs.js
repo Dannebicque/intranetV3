@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.justificatifs.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 16:14
+// @lastUpdate 29/07/2020 15:16
 
 import {addCallout} from '../util'
 
@@ -23,7 +23,7 @@ $(document).on('click', '.justificatif-accepte', function (e) {
       addCallout('Justificatif d\'absence validé !', 'success')
     },
     error: function (e) {
-      addCallout('Une erreur est survenue !', 'danger')
+      addCallout('Une erreur est survenue !', 'error')
     }
   })
 })
@@ -45,7 +45,7 @@ $(document).on('click', '.justificatif-refuse', function (e) {
       addCallout('Justificatif d\'absence refusé !', 'success')
     },
     error: function () {
-      addCallout('Une erreur est survenue !', 'danger')
+      addCallout('Une erreur est survenue !', 'error')
     }
   })
 })
@@ -77,7 +77,7 @@ $(document).on('click', '.justificatif-annuler', function (e) {
       addCallout('Etat du justificatif d\'absence annulé !', 'success')
     },
     error: function (e) {
-      addCallout('Une erreur est survenue !', 'danger')
+      addCallout('Une erreur est survenue !', 'error')
     }
   })
 })

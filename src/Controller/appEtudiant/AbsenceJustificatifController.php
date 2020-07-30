@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 30/07/2020 10:13
 
 namespace App\Controller\appEtudiant;
 
+use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\Constantes;
 use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
+use Carbon\Carbon;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +52,7 @@ class AbsenceJustificatifController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $absenceJustificatif->transformeData();
                 $this->entityManager->persist($absenceJustificatif);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.add.success.flash');
@@ -76,12 +79,17 @@ class AbsenceJustificatifController extends BaseController
      */
     public function edit(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
+        $absenceJustificatif->prepareData();
+
         $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif, [
             'action' => $this->generateUrl('app_etudiant_absence_justificatif_edit', [
-                'id' => $absenceJustificatif->getUuidString()])]);
+                'id' => $absenceJustificatif->getUuidString()
+            ])
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $absenceJustificatif->transformeData();
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.edit.success.flash');
 

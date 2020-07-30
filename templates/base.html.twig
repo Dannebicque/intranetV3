@@ -316,7 +316,7 @@
                                                 class="{{ notification.icone }}"></i></span>
                                 <div class="media-body">
                                     <p>{{ notification.type|trans }}</p>
-                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago }}</time>
+                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago(app.request.locale) }}</time>
                                 </div>
                             </a>
                         {% else %}
@@ -369,7 +369,7 @@
                                     <div class="media-body">
                                         <p><strong>{{ message.message.expediteur.displayPr }}</strong>
                                             <time class="float-right"
-                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago }}</time>
+                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago(app.request.locale) }}</time>
                                         </p>
                                         <p class="text-truncate">{{ message.message.sujet }}</p>
                                     </div>
