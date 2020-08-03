@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 30/07/2020 14:08
 
 namespace App\Controller\api;
 
@@ -112,7 +112,6 @@ class EtudiantApiController extends BaseController
             ))
         ];
 
-        //return new Response(json_encode($output), 200, ['Content-Type' => 'application/json']);
         return $this->json($output, Response::HTTP_OK);
     }
 }

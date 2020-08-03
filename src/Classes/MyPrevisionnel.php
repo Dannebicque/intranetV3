@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2020 11:13
+// @lastUpdate 03/08/2020 16:52
 
 namespace App\Classes;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Hrs;
@@ -893,5 +894,12 @@ class MyPrevisionnel
     public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
     {
         //todo: a faire.
+    }
+
+    public function getRealiseChronologique(
+        Personnel $personnel,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
+
     }
 }

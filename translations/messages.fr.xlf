@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 26/07/2020 11:13 -->
+<!-- @lastUpdate 03/08/2020 16:52 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -13547,6 +13547,18 @@
           <segment>
               <source>profil</source>
               <target>Profil</target>
+          </segment>
+      </unit>
+      <unit id="4">
+          <segment>
+              <source>voir.détail.du.module</source>
+              <target>messages</target>
+          </segment>
+      </unit>
+      <unit id="5">
+          <segment>
+              <source>detail.du.module</source>
+              <target>Détail du module</target>
           </segment>
       </unit>
   </file>

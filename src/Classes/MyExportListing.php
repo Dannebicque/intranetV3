@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 03/08/2020 09:15
 
 /**
  * Created by PhpStorm.
@@ -263,8 +263,6 @@ class MyExportListing
         $this->myExcelWriter->writeCellName('J3', $this->titre, ['style' => 'HORIZONTAL_RIGHT']);
 
         $base = $this->base . 'public/upload/';
-
-        //todo: dans le writer ?
         $objDrawing = new Drawing();
         $objDrawing->setName('Logo Departement');
         $objDrawing->setDescription('Logo Departement');

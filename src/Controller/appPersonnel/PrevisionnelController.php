@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 03/08/2020 16:52
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\ServiceRealise\ServiceRealiseCelcat;
+use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
 use App\Classes\MyPrevisionnel;
+use App\Entity\Matiere;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +32,7 @@ class PrevisionnelController extends BaseController
      */
     public function index(MyPrevisionnel $myPrevisionnel): Response
     {
-        //todo: afficher prévisionnel uniquement du département dans application, et prévisionnel global dans le profil (message pour expliquer)
+        //feature: afficher prévisionnel uniquement du département dans application, et prévisionnel global dans le profil (message pour expliquer)
         $myPrevisionnel->setPersonnel($this->getConnectedUser());
         $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
         $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
@@ -42,22 +45,27 @@ class PrevisionnelController extends BaseController
 
     /**
      * @Route("/chronologique", name="previsionnel_chronologique")
-     * @param MyPrevisionnel $myPrevisionnel
+     *
+     * @param ServiceRealiseIntranet $serviceRealiseIntranet
+     * @param ServiceRealiseCelcat   $serviceRealiseCelcat
      *
      * @return Response
      */
-    public function chronologique(MyPrevisionnel $myPrevisionnel): Response
-    {
-        return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
-        ]);
-    }
+    public function chronologique(
+        ServiceRealiseIntranet $serviceRealiseIntranet,
+        ServiceRealiseCelcat $serviceRealiseCelcat
+    ): Response {
 
-    /**
-     * @Route("/help", name="previsionnel_help", methods="GET")
-     */
-    public function help(): Response
-    {
-        return $this->render('appPersonnel/previsionnel/help.html.twig');
+        if ($this->getDepartement() !== null && $this->getDepartement()->getOptUpdateCelcat() === true) {
+            $chronologique = $serviceRealiseCelcat;
+        } else {
+            $chronologique = $serviceRealiseIntranet;
+        }
+
+        return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
+            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire())
+        ]);
     }
 
     /**

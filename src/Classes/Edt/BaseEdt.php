@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 03/08/2020 09:48
 
 namespace App\Classes\Edt;
 
@@ -20,55 +20,44 @@ use RuntimeException;
 
 Abstract class BaseEdt
 {
-    protected $tabJour = [];
+    protected array $tabJour = [];
 
     protected $semaines;
 
     protected $semaine;
 
-    /** @var Calendrier */
-    protected $calendrier;
+    protected ?Calendrier $calendrier;
 
     protected $semaineFormation;
 
-    /** @var CalendrierRepository */
-    protected $calendrierRepository;
-    /**
-     * @var int|null
-     */
-    protected $semaineFormationIUT;
-    /** @var DateTime */
-    protected $semaineFormationLundi;
+    protected CalendrierRepository $calendrierRepository;
+
+    protected ?int $semaineFormationIUT;
+
+    protected ?DateTime $semaineFormationLundi;
     protected $filtre;
     protected $valeur;
-    protected $total = [];
+    protected array $total = [];
 
-    /**
-     * @var Semestre|null
-     */
-    protected $semestre;
+    protected ?Semestre $semestre;
 
     /**
      * @var Personnel|Etudiant
      */
     protected $user;
 
-    /**
-     * @var Matiere|null
-     */
-    protected $module;
+    protected ?Matiere $module;
 
     protected $groupes;
 
     protected $jour;
     protected $salle;
-    protected $groupetd = 0;
-    protected $groupetp = 0;
+    protected int $groupetd = 0;
+    protected int $groupetp = 0;
 
     protected $planning;
 
-    /** @var AnneeUniversitaire */
-    private $anneeUniversitaire;
+    private AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * MyEdt constructor.
@@ -177,8 +166,8 @@ Abstract class BaseEdt
     private function getJours(): void
     {
         $njour = (int)$this->semaineFormationLundi->format('d');
-        $mois = $this->semaineFormationLundi->format('m');
-        $annee = $this->semaineFormationLundi->format('Y');
+        $mois = (int)$this->semaineFormationLundi->format('m');
+        $annee = (int)$this->semaineFormationLundi->format('Y');
 
         $this->tabJour['lundi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour, $annee));
         $this->tabJour['mardi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 1, $annee));
