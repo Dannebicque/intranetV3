@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 12:15
+// @lastUpdate 30/07/2020 13:57
 
 namespace App\Entity;
 
@@ -24,8 +24,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
 
-    public const Permanent = 'permanent';
-    public const Vacataire = 'vacataire';
+    public const PERMANENT = 'permanent';
+    public const VACATAIRE = 'vacataire';
 
     /**
      * @ORM\Id()
@@ -301,9 +301,9 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     public function setStatut($statut): void
     {
         if ($statut === 'PRO') {
-            $this->setTypeUser(self::Vacataire);
+            $this->setTypeUser(self::VACATAIRE);
         } else {
-            $this->setTypeUser(self::Permanent);
+            $this->setTypeUser(self::PERMANENT);
         }
 
         $this->statut = $statut;

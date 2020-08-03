@@ -30,9 +30,18 @@
                                                            | {{ previsionnel.matiere.codeElement }}
                 </td>
 
-                {# todo: uniquement si admin... #}
                 <td colspan="2">
-                    <a href="">Détail du module</a>
+                    <button data-provide="modaler tooltip"
+                            data-url="{{ path('api_previsionnel_matiere', {'matiere': previsionnel.matiere.id}) }}"
+                            data-size="lg"
+                            data-confirm-text="{{ 'fermer'|trans }}"
+                            class="btn btn-block btn-cyan"
+                            data-placement="bottom"
+                            title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                            data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
+                    >
+                        {{ 'detail.du.module'|trans }}
+                    </button>
                 </td>
                 <td colspan="1">
                     {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}

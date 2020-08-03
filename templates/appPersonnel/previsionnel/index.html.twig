@@ -27,22 +27,22 @@
         <ul class="nav nav-tabs">
             {% for semestre in previsionnel.semestres %}
                 <li class="nav-item">
-                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
-                           href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
-                    </li>
-                {% endfor %}
-                {# todo: devrait afficher les semestres dans lesquels ont intervient ? Que faire si année de prévi différente ?
-                 Possibilité de changer l'année pour l'enseignant. #}
-            </ul>
+                    <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                       href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
+                </li>
+            {% endfor %}
+            {# feature: devrait afficher les semestres dans lesquels ont intervient ? Que faire si année de prévi
+                différente ? Possibilité de changer l'année pour l'enseignant. #}
+        </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                {% for semestre in previsionnel.semestres %}
-                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
-                        {{ include('bloc_previsionnel/previ_semestre.html.twig') }}
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% for semestre in previsionnel.semestres %}
+                <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
+                    {{ include('bloc_previsionnel/_previ_semestre.html.twig') }}
 
-                        <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
-                            Information indicative !
+                    <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
+                                                  Information indicative !
                         </div>
                     </div>
                 {% endfor %}

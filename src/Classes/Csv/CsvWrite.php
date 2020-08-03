@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Csv/CsvWrite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 30/07/2020 14:02
 
 /**
  * Created by PhpStorm.
@@ -42,9 +42,7 @@ abstract class CsvWrite
 
         if (is_string($value)) {
             $field .= self::ECHAPPEMENT . $value . self::ECHAPPEMENT;
-        } /* if ($data instanceof \DateTimeImmutable || $data instanceof \DateTime) {
-            return $data;
-        }*/
+        }
 
         elseif (is_object($value)) {
             if (get_class($value) === self::FORMAT_DATETIME) {

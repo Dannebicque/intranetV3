@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 03/08/2020 16:52
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -324,14 +325,15 @@ class EdtPlanning
     /**
      * @param $semaine
      *
-     * @return string
+     * @return Carbon
      */
-    public function getDate($semaine): string
+    public function getDate($semaine): Carbon
     {
         $lundi = $this->getLundiFromWeek($semaine, date('Y'));
 
-        return date('Y-m-d',
-            mktime(12, 30, 00, date('m', $lundi), date('d', $lundi) + $this->jour - 1, date('Y', $lundi)));
+        return Carbon::createFromDate(date('Y', $lundi), date('m', $lundi), date('d', $lundi) + $this->jour - 1);
+//        return date('Y-m-d',
+//            mktime(12, 30, 00, date('m', $lundi), date('d', $lundi) + $this->jour - 1, ));
     }
 
     /**

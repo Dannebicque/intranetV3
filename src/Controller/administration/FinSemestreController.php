@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/07/2020 16:53
+// @lastUpdate 30/07/2020 14:02
 
 namespace App\Controller\administration;
 
@@ -40,7 +40,6 @@ class FinSemestreController extends BaseController
         Semestre $semestre
     ): Response {
         $etudiants = $etudiantRepository->findBySemestre($semestre);
-        //$sc = $this->getDoctrine()->getRepository('DAKernelBundle:ScEtudiantSemestre')->findSemestre($semestre->getId());
 
         $tab = [];
 
@@ -48,12 +47,7 @@ class FinSemestreController extends BaseController
         foreach ($etudiants as $e) {
             $tab[$e->getId()] = null;
         }
-
-//          todo: a gérer...
-//        /** @var  $s */
-//        foreach ($sc as $s) {
-//            $tab[$s->getEtudiant()->getId()] = $s;
-//        }
+        //todo: a tester
 
         return $this->render('administration/fin_semestre/index.html.twig', [
             'semestre'     => $semestre,

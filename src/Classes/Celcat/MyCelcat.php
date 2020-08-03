@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 03/08/2020 09:39
 
 /**
  * Created by PhpStorm.
@@ -27,8 +27,8 @@ use http\Exception\InvalidArgumentException;
 class MyCelcat
 {
     private $conn;
-    /** @var EntityManagerInterface */
-    private $entityManger;
+
+    private EntityManagerInterface $entityManger;
 
     /**
      * MyCelcat constructor.
@@ -62,7 +62,7 @@ class MyCelcat
             $date = odbc_result($result, 'week_date');
             $cal = new Calendrier();
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
-            $cal->setSemaineReelle(date('W', strtotime($date)));
+            $cal->setSemaineReelle((int)date('W', strtotime($date)));
             $cal->setDateLundi(new DateTime($date));
             $this->entityManger->persist($cal);
         }
@@ -77,6 +77,7 @@ class MyCelcat
 
         $departements = [];
         while (odbc_fetch_array($results)) {
+            $dept = [];
             $dept['nom'] = odbc_result($results, 'name');
             $dept['code'] = odbc_result($results, 'dept_id');
             $departements[] = $dept;
@@ -85,8 +86,8 @@ class MyCelcat
     }
 
     /**
-     * @param int                $codeCelcatDepartement
-     * @param AnneeUniversitaire $anneeUniversitaire
+     * @param int                     $codeCelcatDepartement
+     * @param AnneeUniversitaire|null $anneeUniversitaire
      *
      * @throws Exception
      */

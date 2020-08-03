@@ -5,11 +5,20 @@
 {% endblock %}
 
 {% block headeractions %}
-    {{ include('application/menu.html.twig') }}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_index',{onglet:'previsionnel'}) }}" class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_applications'|trans }}"><i class="fas
+               fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_applications'|trans }}</span></a>
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-{#todo: est-ce que ca correspond au service réalisé ? Dans ce cas mettre en application uniquement #}
     <div class="card">
         <header class="card-header">
             <h4 class="card-title"><strong>{{ 'service.chronologique.heading'|trans }}</strong>
@@ -26,18 +35,40 @@
         </header>
 
         <div class="card-body">
-            <table class="table table-bordered table-condensed">
+            <table class="table table-bordered table-condensed" data-provide="datatable">
                 <thead>
                 <tr>
-                    <th>{{ 'table.matiere'|trans }}</th>
-                    <th>{{ 'table.jour'|trans }}</th>
                     <th>{{ 'table.date'|trans }}</th>
+                    <th>{{ 'table.jour'|trans }}</th>
                     <th>{{ 'table.heure'|trans }}</th>
+                    <th>{{ 'table.matiere'|trans }}</th>
                     <th>{{ 'table.type_cours'|trans }}</th>
                     <th>{{ 'table.groupe'|trans }}</th>
                 </tr>
                 </thead>
+                <tbody>
+                {% for cours in chronologique %}
+                    <tr>
+                        <td>{{ cours.date }}</td>
+                        <td>{{ cours.jour }}</td>
+                        <td>{{ cours.heure }}</td>
+                        <td>{{ cours.matiere }}</td>
+                        <td>{{ cours.type_cours }}</td>
+                        <td>{{ cours.groupe }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}

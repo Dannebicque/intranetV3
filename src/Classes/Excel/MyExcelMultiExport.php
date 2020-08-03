@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 09:03
+// @lastUpdate 03/08/2020 09:21
 
 /**
  * Created by PhpStorm.
@@ -282,7 +282,6 @@ class MyExcelMultiExport
         $ligne = 2;
         $colonne = 1;
         /** @var Etudiant $etudiant */
-        //todo: peut être a améliorer avec un filtre des étudiants?
         foreach ($semestre->getEtudiants() as $etudiant) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
             $colonne++;

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 03/08/2020 16:52
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/css/all.min.css'
@@ -128,6 +128,12 @@ function updateInterface () {
         leftArrow: '>',
         rightArrow: '<'
       }
+    }
+
+    if ($(this).prop('tagName') != 'INPUT') {
+      console.log('daterange')
+      //si ce n'est pas un input => donc un date range
+      options.inputs = [$(this).find('input:first'), $(this).find('input:last')]
     }
     $(this).datepicker(options)
   })
