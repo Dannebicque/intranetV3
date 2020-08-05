@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 09:48
+// @lastUpdate 05/08/2020 08:49
 
 namespace App\Classes\Edt;
 
@@ -15,6 +15,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
+use Carbon\Carbon;
 use DateTime;
 use RuntimeException;
 
@@ -34,7 +35,7 @@ Abstract class BaseEdt
 
     protected ?int $semaineFormationIUT;
 
-    protected ?DateTime $semaineFormationLundi;
+    protected ?Carbon $semaineFormationLundi;
     protected $filtre;
     protected $valeur;
     protected array $total = [];
@@ -96,6 +97,7 @@ Abstract class BaseEdt
 
     protected function init($filtre = '', $valeur = '', $semaine = 0, AnneeUniversitaire $anneeUniversitaire): BaseEdt
     {
+        $dateDuJour = Carbon::now();
         $this->anneeUniversitaire = $anneeUniversitaire;
 
         $this->total['CM'] = 0;
@@ -108,7 +110,7 @@ Abstract class BaseEdt
         }
 
         if ($semaine === 0) {
-            $semaine = (int)date('W');
+            $semaine = $dateDuJour->weekOfYear;
 
             if ($semaine >= 29 && $semaine < 35) {
                 $semaine = 35;
@@ -116,9 +118,9 @@ Abstract class BaseEdt
             $this->semaine = $semaine;
 
             //traitement du Week end
-            if (date('N') === ('6' || '7')) {
+            if ($dateDuJour->dayOfWeek === (Carbon::SATURDAY || Carbon::SUNDAY)) {
                 $this->semaine++;
-                if ($this->semaine > 52) {
+                if ($this->semaine > Carbon::WEEKS_PER_YEAR) {
                     $this->semaine = 1;
                 }
             }
@@ -165,15 +167,11 @@ Abstract class BaseEdt
 
     private function getJours(): void
     {
-        $njour = (int)$this->semaineFormationLundi->format('d');
-        $mois = (int)$this->semaineFormationLundi->format('m');
-        $annee = (int)$this->semaineFormationLundi->format('Y');
-
-        $this->tabJour['lundi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour, $annee));
-        $this->tabJour['mardi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 1, $annee));
-        $this->tabJour['mercredi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 2, $annee));
-        $this->tabJour['jeudi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 3, $annee));
-        $this->tabJour['vendredi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 4, $annee));
+        $this->tabJour['lundi'] = $this->semaineFormationLundi;
+        $this->tabJour['mardi'] = $this->semaineFormationLundi->copy()->addDays(1);
+        $this->tabJour['mercredi'] = $this->semaineFormationLundi->copy()->addDays(2);
+        $this->tabJour['jeudi'] = $this->semaineFormationLundi->copy()->addDays(3);
+        $this->tabJour['vendredi'] = $this->semaineFormationLundi->copy()->addDays(4);
     }
 
     /**
@@ -208,7 +206,7 @@ Abstract class BaseEdt
         $s = (int)$this->semaine - 1;
 
         if ($s === 0) {
-            return 52;
+            return Carbon::WEEKS_PER_YEAR;
         }
             return $s;
 
@@ -220,7 +218,7 @@ Abstract class BaseEdt
     public function getSemaineSuivante(): int
     {
         $s = $this->semaine + 1;
-        if ($s === 53) {
+        if ($s > Carbon::WEEKS_PER_YEAR) {
             return 1;
         }
             return $s;
