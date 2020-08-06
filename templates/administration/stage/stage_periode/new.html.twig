@@ -25,9 +25,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('src/assets/vendor/jquery.collection.min.js') }}"></script>
+    {{ encore_entry_script_tags('adm.stage') }}
     <script>
-      $('.selector-stagePeriodeSoutenances').collection()
-      $('.selector-stagePeriodeInterruptions').collection()
+
     </script>
 {% endblock %}

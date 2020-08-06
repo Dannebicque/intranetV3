@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 03/08/2020 16:52 -->
+<!-- @lastUpdate 06/08/2020 08:26 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -1162,9 +1162,6 @@
       </segment>
     </unit>
     <unit id="oehMN.Z" name="profil">
-      <notes>
-        <note priority="1">templates/trombinoscope/blocTrombi.html.twig:12</note>
-      </notes>
       <segment>
         <source>profil</source>
         <target>Profil</target>
@@ -7404,15 +7401,15 @@
         <target></target>
       </segment>
     </unit>
-    <unit id="QppWdJM" name="synthese.des.parcours">
-      <notes>
-        <note priority="1">templates/administration/semestre/index.html.twig:144</note>
-      </notes>
-      <segment>
-        <source>synthese.des.parcours</source>
-        <target>Synthèse des parcours</target>
-      </segment>
-    </unit>
+      <unit id="QppWdJM" name="synthese.des.parcours">
+          <notes>
+              <note priority="1">templates/administration/semestre/index.html.twig:144</note>
+          </notes>
+          <segment>
+              <source>synthese.des.parcours</source>
+              <target>Synthèse des parcours</target>
+          </segment>
+      </unit>
       <unit id="tij_04g" name="absence.delete.success.flash">
           <notes>
               <note priority="1">obsolete</note>
@@ -7422,7 +7419,7 @@
               <target>Absence supprimée avec succès</target>
           </segment>
       </unit>
-      <unit id="tij_04l" name="hrs.duplicate.success.flash">
+      <unit id="E6aZiKI" name="hrs.duplicate.success.flash">
           <segment>
               <source>hrs.duplicate.success.flash</source>
               <target>HRS/Prime dupliqué avec succès</target>
@@ -7438,16 +7435,16 @@
           <segment>
               <source>ppn.import.success.flash</source>
               <target>PPN importé avec succès</target>
-      </segment>
-    </unit>
-    <unit id="6g2lhgH" name="import.d_un.ppn.heading">
-      <segment>
-        <source>import.d_un.ppn.heading</source>
-        <target>Import d'un PPN</target>
-      </segment>
-    </unit>
-    <unit id="95ijfK1" name="absence.removed">
-      <notes>
+          </segment>
+      </unit>
+      <unit id="6g2lhgH" name="import.d_un.ppn.heading">
+          <segment>
+              <source>import.d_un.ppn.heading</source>
+              <target>Import d'un PPN</target>
+          </segment>
+      </unit>
+      <unit id="95ijfK1" name="absence.removed">
+          <notes>
         <note priority="1">obsolete</note>
       </notes>
       <segment>
@@ -9763,16 +9760,16 @@
     </unit>
     <unit id="UdmlLIA" name="ufr.add.success.flash">
       <segment>
-        <source>ufr.add.success.flash</source>
-        <target>UFR créée avec succès</target>
+          <source>ufr.add.success.flash</source>
+          <target>UFR créée avec succès</target>
       </segment>
     </unit>
-    <unit id="9EYv5vH" name="type_diplome.add.success.flash">
-      <segment>
-        <source>type_diplome.add.success.flash</source>
-        <target>Type de diplôme créé avec succès</target>
-      </segment>
-    </unit>
+      <unit id="9EYv5vH" name="type_diplome.add.success.flash">
+          <segment>
+              <source>type_diplome.add.success.flash</source>
+              <target>Type de diplôme créé avec succès</target>
+          </segment>
+      </unit>
       <unit id="KnFrunU" name="type_hrs.add.success.flash">
           <segment>
               <source>type_hrs.add.success.flash</source>
@@ -9785,7 +9782,7 @@
               <target>HRS/Prime ajoutée avec succès</target>
           </segment>
       </unit>
-      <unit id="spGFmTn" name="hrs.edit.success.flash">
+      <unit id="yRZGlef" name="hrs.edit.success.flash">
           <segment>
               <source>hrs.edit.success.flash</source>
               <target>HRS/Prime modifiée avec succès</target>
@@ -9799,16 +9796,16 @@
       </unit>
       <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
           <segment>
-        <source>type_hrs.edit.success.flash</source>
-        <target>Type de HRS/Prime modifié avec succès</target>
-      </segment>
-    </unit>
-    <unit id="UdQ4.mn" name="atitle.import_personnel">
-      <segment>
-        <source>atitle.import_personnel</source>
-        <target>Importer personnels</target>
-      </segment>
-    </unit>
+              <source>type_hrs.edit.success.flash</source>
+              <target>Type de HRS/Prime modifié avec succès</target>
+          </segment>
+      </unit>
+      <unit id="UdQ4.mn" name="atitle.import_personnel">
+          <segment>
+              <source>atitle.import_personnel</source>
+              <target>Importer personnels</target>
+          </segment>
+      </unit>
     <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
       <segment>
         <source>sadm.gestion.rh.import.heading</source>
@@ -13509,56 +13506,74 @@
     </unit>
     <unit id="HL9909K" name="atitle.import">
       <segment>
-        <source>atitle.import</source>
-        <target>Importer</target>
+          <source>atitle.import</source>
+          <target>Importer</target>
       </segment>
     </unit>
-    <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
-      <segment>
-          <source>import.etudiants.groupes.heading</source>
-          <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
-      </segment>
-    </unit>
+      <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
+          <segment>
+              <source>import.etudiants.groupes.heading</source>
+              <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
+          </segment>
+      </unit>
       <unit id="ctb8KK5" name="atitle.retour_groupes">
           <segment>
               <source>atitle.retour_groupes</source>
               <target>Retour aux groupes</target>
           </segment>
       </unit>
-      <unit id="0">
+      <unit id="ft.rUIK" name="déconnexion">
           <segment>
               <source>déconnexion</source>
               <target>Déconnexion</target>
           </segment>
       </unit>
-      <unit id="1">
+      <unit id="SHV8XV_" name="vérouiller">
           <segment>
               <source>vérouiller</source>
               <target>Vérouiller</target>
           </segment>
       </unit>
-      <unit id="2">
+      <unit id="BXZsYTO" name="paramètres">
           <segment>
               <source>paramètres</source>
               <target>Paramètres</target>
           </segment>
       </unit>
-      <unit id="3">
-          <segment>
-              <source>profil</source>
-              <target>Profil</target>
-          </segment>
-      </unit>
-      <unit id="4">
+      <unit id="kcIowSC" name="voir.détail.du.module">
           <segment>
               <source>voir.détail.du.module</source>
               <target>messages</target>
           </segment>
       </unit>
-      <unit id="5">
+      <unit id="WNaw61D" name="detail.du.module">
           <segment>
               <source>detail.du.module</source>
               <target>Détail du module</target>
+          </segment>
+      </unit>
+      <unit id="94SOG_J" name="passer.en.anglais">
+          <segment>
+              <source>passer.en.anglais</source>
+              <target>Go to english version</target>
+          </segment>
+      </unit>
+      <unit id="G2RAXGt" name="ETAT_STAGE_ERASMUS">
+          <segment>
+              <source>ETAT_STAGE_ERASMUS</source>
+              <target>Semestre/Stage ERASMUS</target>
+          </segment>
+      </unit>
+      <unit id="4j7_qaZ" name="ETAT_STAGE_ETRANGER">
+          <segment>
+              <source>ETAT_STAGE_ETRANGER</source>
+              <target>Semestre/Stage à l'étranger</target>
+          </segment>
+      </unit>
+      <unit id="1tlsCvG" name="ETAT_STAGE_APPRENTISSAGE">
+          <segment>
+              <source>ETAT_STAGE_APPRENTISSAGE</source>
+              <target>Année en apprentissage</target>
           </segment>
       </unit>
   </file>

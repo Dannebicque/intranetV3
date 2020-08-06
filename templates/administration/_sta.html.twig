@@ -15,7 +15,8 @@
                         <div class="col-md-6">
                             <div>
                                 <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
-                                   class="btn btn-block btn-primary"> Période {{ periode.libelle }}</a>
+                                   class="btn btn-block btn-primary"> Période : <strong>{{ periode.libelle }}
+                                        ({{ periode.semestre.display }})</strong></a>
                             </div>
                         </div>
                     {% else %}

@@ -164,7 +164,7 @@
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
-                                           title="Voir le stage"><i class="fa fa-eye"></i></a>
+                                           title="Voir le stage"><i class="{{ iconShow }}"></i></a>
                                         <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-success" data-provide="tooltip" data-placement="top"
@@ -172,17 +172,21 @@
                                                     class="fa fa-print"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: 'ETAT_STAGE_VALIDE'}) }}" class="btn
+                                                .etudiant.id, etat: constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE')}) }}" class="btn
                                                     btn-success" data-provide="tooltip" data-placement="top"
                                            title="Valider le stage"><i class="fa fa-check"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: 'ETAT_STAGE_INCOMPLET'}) }}" class="btn
+                                                .etudiant.id, etat: constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_INCOMPLET')}) }}" class="btn
                                                     btn-warning" data-provide="tooltip" data-placement="top"
                                            title="Proposition incomplète"><i class="fa fa-ban"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: 'ETAT_STAGE_REFUS'}) }}" class="btn btn-danger"
+                                                .etudiant.id, etat: constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_REFUS')}) }}" class="btn
+                                                btn-danger"
                                            data-provide="tooltip" data-placement="top" title="Refuser le stage"><i
                                                     class="fa fa-times"></i></a></td>
                                 </tr>
@@ -211,7 +215,7 @@
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
-                                           title="Voir/modifier le stage"><i class="fa fa-eye"></i></a>
+                                           title="Voir/modifier le stage"><i class="{{ iconShow }}"></i></a>
                                         <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-primary" data-provide="tooltip" data-placement="top"
@@ -223,7 +227,9 @@
                                                     class=" fa fa-envelope"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: 'ETAT_STAGE_CONVENTION_ENVOYEE'}) }}" class="btn
+                                                .etudiant.id, etat: constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE')}) }}"
+                                           class="btn
                                                     btn-success" data-provide="tooltip" data-placement="top"
                                            title="Convention envoyée"><i class="fa fa-check"></i></a>
                                     </td>
@@ -253,14 +259,16 @@
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
-                                           title="Voir le stage"><i class="fa fa-eye"></i></a>
+                                           title="Voir le stage"><i class="{{ iconShow }}"></i></a>
                                         <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-primary" data-provide="tooltip" data-placement="top"
                                            title="Imprimer la convention"><i class="fa fa-print"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: 'ETAT_STAGE_CONVENTION_RECUE'}) }}" class="btn
+                                                .etudiant.id, etat: constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_RECUE')}) }}"
+                                           class="btn
                                                     btn-success" data-provide="tooltip" data-placement="top"
                                            title="Convention complète"><i class="fa fa-check"></i></a>
                                     </td>
@@ -290,7 +298,7 @@
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
-                                           title="Voir le stage"><i class="fa fa-eye"></i></a>
+                                           title="Voir le stage"><i class="{{ iconShow }}"></i></a>
                                         <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-primary" data-provide="tooltip" data-placement="top"
@@ -312,7 +320,6 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <h4 class="card-header">Etudiants</h4>
-                {# todo: boutons exports du fab#}
                 <div class="card-body">
                     <table class="table table-striped" data-provide="datatables">
                         <thead>
@@ -331,7 +338,8 @@
                         <tr>
                             <td>{{ stageEtudiant.etudiant.display }}</td>
                             {% if stageEtudiant.stage is defined %}
-                                {% if stageEtudiant.stage.etatStage == 'ETAT_STAGE_AUTORISE' %}
+                                {% if stageEtudiant.stage.etatStage == constant
+                                    ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE') %}
                                     <td colspan="5">
                                         <button class="btn btn-block btn-primary">{{ 'saisie.autorise.formulaire.non.completee'|trans }}</button>
                                     </td>
@@ -342,16 +350,27 @@
                                                 ?</span>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ETRANGER'}) }}">{{ 'valider.stage.etranger'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER')}) }}">
+                                                    {{ 'valider.stage.etranger'|trans }}
+                                                </a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS')}) }}">
+                                                    {{ 'semestre.erasmus'|trans }}
+                                                </a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE')}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
                                             </div>
                                         </div>
                                     </td>
-                                {% elseif stageEtudiant.stage.etatStage == 'ETAT_STAGE_ETRANGER' or stageEtudiant
-                                    .stage.etatStage == 'ETAT_STAGE_APPRENTISSAGE' or stageEtudiant.stage.etatStage == 'ETAT_STAGE_ERASMUS' %}
+                                {% elseif stageEtudiant.stage.etatStage == constant
+                                    ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER') or
+                                    stageEtudiant.stage.etatStage == constant
+                                    ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE') or
+                                    stageEtudiant.stage.etatStage == constant
+                                    ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS') %}
                                     <td colspan="5">
                                         <button class="btn btn-block btn-primary">{{ stageEtudiant.stage.etatStage|trans }}</button>
                                     </td>
@@ -364,13 +383,21 @@
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_change_etat',
                                                        {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                           .etudiant.id, etat: 'ETAT_STAGE_AUTORISE'}) }}">{{ 'autoriser.la.saisie'|trans }}</a>
+                                                           .etudiant.id, etat: constant
+                                                           ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE')}) }}">{{ 'autoriser.la.saisie'|trans }}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ETRANGER'}) }}">{{ 'valider.stage.etranger'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat:constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER')}) }}">
+                                                    {{ 'valider.stage.etranger'|trans }}
+                                                </a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat:constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS')}) }}">
+                                                    {{ 'semestre.erasmus'|trans }}
+                                                </a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE')}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
                                             </div>
                                         </div>
                                     </td>
@@ -396,39 +423,46 @@
                                             {% for personnel in user_data.personnels %}
                                                 <option value="{{ personnel.id }}" {% if stageEtudiant.stage
                                                     .tuteurUniversitaire != null and personnel.id ==
-                                                  stageEtudiant.stage.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
+                                                    stageEtudiant.stage.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>
                                     <td>
-                                        {% if stageEtudiant.stage.etatStage == 'ETAT_STAGE_VALIDE' %}
+                                        {% if stageEtudiant.stage.etatStage ==constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE') %}
                                             <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
                                                class="btn btn-success btn-block" data-provide="tooltip"
                                                data-placement="top" title="Voir le stage">{{ 'stage.valide'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage == 'ETAT_STAGE_CONVENTION_ENVOYEE' %}
+                                        {% elseif stageEtudiant.stage.etatStage == constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE') %}
                                             <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
                                                class="btn btn-warning btn-block" data-provide="tooltip"
                                                data-placement="top"
                                                title="Voir le stage">{{ 'convention.envoyee'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage == 'ETAT_STAGE_CONVENTION_RECUE' %}
+                                        {% elseif stageEtudiant.stage.etatStage ==constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_RECUE') %}
                                             <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
                                                class="btn btn-success btn-block" data-provide="tooltip"
                                                data-placement="top"
                                                title="Voir le stage">{{ 'convention.complete'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage == 'ETAT_STAGE_DEPOSE' %}
+                                        {% elseif stageEtudiant.stage.etatStage == constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_DEPOSE') %}
                                             <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
                                                class="btn btn-warning btn-block" data-provide="tooltip"
                                                data-placement="top"
                                                title="Voir le stage">{{ 'proposition.effectuee'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage =='ETAT_STAGE_ETRANGER' %}
+                                        {% elseif stageEtudiant.stage.etatStage ==constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER') %}
                                             <a href="#" class="btn btn-success btn-block" data-provide="tooltip"
                                                data-placement="top"
                                                title="Stage à l'étranger">{{ 'valider.stage.etranger'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage =='ETAT_STAGE_ERASMUS' %}
+                                        {% elseif stageEtudiant.stage.etatStage ==constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS') %}
                                             <a href="#" class="btn btn-success btn-block" data-provide="tooltip"
                                                data-placement="top"
                                                title="ERASMUS">{{ 'semestre.erasmus'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage =='ETAT_STAGE_APPRENTISSAGE' %}
+                                        {% elseif stageEtudiant.stage.etatStage ==constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE') %}
                                             <a href="#" class="btn btn-success btn-block" data-provide="tooltip"
                                                data-placement="top"
                                                title="Apprentissage">{{ 'annee.en.apprentissage'|trans }}</a>
@@ -438,27 +472,45 @@
 
                                         <a href="{{ path('administration_stage_etudiant_show', {id:stageEtudiant.stage.id}) }}"
                                            class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
-                                                    class="material-icons">info_outline</i></a>
+                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
                                         <a href="{{ path('administration_stage_etudiant_edit', {id:stageEtudiant.stage.id}) }}"
                                            class="btn btn-warning btn-outline btn-square"
                                            data-provide="tooltip"
                                            data-placement="bottom"
-                                           title="{{ 'atitle.modifier'|trans }}"><i class="material-icons">edit</i></a>
+                                           title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_delete', {id:stageEtudiant.stage.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ stageEtudiant.stage.id) }}"
                                            class="btn btn-danger btn-outline btn-square supprimer"
                                            data-provide="tooltip" data-placement="bottom"
-                                           title="{{ 'atitle.supprimer'|trans }}"><i
-                                                    class="material-icons">delete</i></a>
+                                           title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
 
 
                                         <div class="dropdown table-action btn btn-primary btn-outline">
                                             <span class="dropdown-toggle no-caret hover-primary" data-toggle="dropdown"><i
                                                         class="fas fa-ellipsis-h rotate-90"></i> Actions</span>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                {# todo ajouter valider/refuser ? #}
+                                                {% if stageEtudiant.stage.etatStage == constant
+                                                    ('App\\Entity\\StageEtudiant::ETAT_STAGE_DEPOSE') %}
+                                                    <a class="dropdown-item" href="{{ path
+                                                        ('administration_stage_etudiant_change_etat',
+                                                        {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
+                                                            .etudiant.id, etat: constant
+                                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE')}) }}"
+                                                       title="Valider le stage">Valider le stage</a>
+                                                    <a class="dropdown-item" href="{{ path
+                                                        ('administration_stage_etudiant_change_etat',
+                                                        {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
+                                                            .etudiant.id, etat: constant
+                                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_INCOMPLET')}) }}"
+                                                       title="Proposition incomplète">Proposition incomplète</a>
+                                                    <a class="dropdown-item" href="{{ path
+                                                        ('administration_stage_etudiant_change_etat',
+                                                        {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
+                                                            .etudiant.id, etat: constant
+                                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_REFUS')}) }}"
+                                                       title="Refuser le stage">Refuser le stage</a>
+                                                {% endif %}
                                                 <a class="dropdown-item" href="{{ path
                                                     ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.stage.id}) }}">{{ 'telecharger.la.convention'|trans }}</a>
                                                 <a class="dropdown-item"
@@ -469,11 +521,20 @@
                                                     ('administration_stage_etudiant_fiche_enseignant', {id:stageEtudiant
                                                         .stage.id}) }}">{{ 'fiche.enseignant'|trans }}</a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ETRANGER'}) }}">{{ 'valider.stage.etranger'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER')}) }}">
+                                                    {{ 'valider.stage.etranger'|trans }}
+                                                </a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS')}) }}">
+                                                    {{ 'semestre.erasmus'|trans }}
+                                                </a>
                                                 <a class="dropdown-item"
-                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
+                                                   href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                       ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE')}) }}">
+                                                    {{ 'annee.en.apprentissage'|trans }}
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -484,7 +545,8 @@
                                 <td>{{ 'pas.de.stage'|trans }}</td>
                                 <td>{{ 'pas.de.stage'|trans }}</td>
                                 <td>
-                                    <a href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_AUTORISE'}) }}"
+                                    <a href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                        ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE')}) }}"
                                        class="btn btn-danger btn-block" data-provide="tooltip" data-placement="bottom"
                                        title="Cliquez pour autoriser la saisie des informations (proposition signée reçue)">{{ 'autoriser.la.saisie'|trans }}</a>
                                 </td>
@@ -495,11 +557,20 @@
                                             ?</span>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item"
-                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ETRANGER'}) }}">{{ 'valider.stage.etranger'|trans }}</a>
+                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                   ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER')}) }}">
+                                                {{ 'valider.stage.etranger'|trans }}
+                                            </a>
                                             <a class="dropdown-item"
-                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_ERASMUS'}) }}">{{ 'semestre.erasmus'|trans }}</a>
+                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                   ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS')}) }}">
+                                                {{ 'semestre.erasmus'|trans }}
+                                            </a>
                                             <a class="dropdown-item"
-                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_APPRENTISSAGE'}) }}">{{ 'annee.en.apprentissage'|trans }}</a>
+                                               href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                                   ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE')}) }}">
+                                                {{ 'annee.en.apprentissage'|trans }}
+                                            </a>
                                         </div>
                                     </div>
                                 </td>
@@ -512,6 +583,37 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_stage_periode_gestion_export', {_format:'pdf', uuid: stagePeriode
+            .uuidString}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf"
+        },
+        {
+            type:'info',
+            href:path('administration_stage_periode_gestion_export', {_format:'csv', uuid: stagePeriode
+            .uuidString}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_stage_periode_gestion_export', {_format:'xlsx', uuid: stagePeriode
+            .uuidString}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_stage_periode_gestion_export'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
 {% endblock %}
 
 

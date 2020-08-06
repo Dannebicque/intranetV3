@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 06/08/2020 08:26 -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
     <unit id="lRFM2Mc" name="label.libelle">
@@ -2136,15 +2142,15 @@
         <target>Nb. Groupes de TD</target>
       </segment>
     </unit>
-    <unit id="dLCEysP" name="label.nbGroupesTP">
-      <notes>
-        <note priority="1">src/Form/SemestreType.php:100</note>
-      </notes>
-      <segment>
-        <source>label.nbGroupesTP</source>
-        <target>Nb. Groupes de TP</target>
-      </segment>
-    </unit>
+      <unit id="dLCEysP" name="label.nbGroupesTP">
+          <notes>
+              <note priority="1">src/Form/SemestreType.php:100</note>
+          </notes>
+          <segment>
+              <source>label.nbGroupesTP</source>
+              <target>Nb. Groupes de TP</target>
+          </segment>
+      </unit>
       <unit id="5tg4tOt" name="choice.mcf">
           <notes>
               <note priority="1">src/Form/PersonnelType.php:47</note>
@@ -2154,7 +2160,7 @@
               <target>Maître de Conférences</target>
           </segment>
       </unit>
-      <unit id="5tg4t9t" name="choice.contractuel">
+      <unit id="_lBNq4I" name="choice.contractuel">
           <notes>
               <note priority="1">src/Form/PersonnelType.php:47</note>
           </notes>
@@ -2173,16 +2179,16 @@
           </segment>
       </unit>
       <unit id="E_m7NU2" name="choice.prag">
-      <notes>
-        <note priority="1">src/Form/PersonnelType.php:47</note>
-      </notes>
-      <segment>
-        <source>choice.prag</source>
-        <target>PRAG</target>
-      </segment>
-    </unit>
-    <unit id="CRu8YtD" name="choice.prce">
-      <notes>
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:47</note>
+          </notes>
+          <segment>
+              <source>choice.prag</source>
+              <target>PRAG</target>
+          </segment>
+      </unit>
+      <unit id="CRu8YtD" name="choice.prce">
+          <notes>
         <note priority="1">src/Form/PersonnelType.php:47</note>
       </notes>
       <segment>

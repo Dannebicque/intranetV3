@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:57
+// @lastUpdate 05/08/2020 10:19
 
 namespace App\Entity;
 
@@ -168,11 +168,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      * @ORM\OrderBy({"created" = "DESC"})
      */
     private $notifications;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\TrelloTache", mappedBy="personnels")
-     */
-    private $trelloTaches;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="expediteur")
@@ -796,44 +791,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             if ($notification->getPersonnel() === $this) {
                 $notification->setPersonnel(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|TrelloTache[]
-     */
-    public function getTrelloTaches(): Collection
-    {
-        return $this->trelloTaches;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Personnel
-     */
-    public function addTrelloTach(TrelloTache $trelloTach): self
-    {
-        if (!$this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches[] = $trelloTach;
-            $trelloTach->addPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Personnel
-     */
-    public function removeTrelloTach(TrelloTache $trelloTach): self
-    {
-        if ($this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches->removeElement($trelloTach);
-            $trelloTach->removePersonnel($this);
         }
 
         return $this;

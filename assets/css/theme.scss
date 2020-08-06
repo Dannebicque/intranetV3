@@ -1,4 +1,8 @@
-/* Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved */
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 05/08/2020 12:59
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -3733,8 +3737,8 @@ img {
 }
 
 .nav-process-circle .nav-link::after {
-    content: "\e64c";
-    font-family: themify;
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
     width: 0;
     height: 0;
     text-align: center;

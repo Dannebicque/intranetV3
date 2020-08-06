@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 05/08/2020 11:02
 
 namespace App\Entity;
 
@@ -55,6 +55,7 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="stageEtudiants")
+     * @Groups({"stage_periode_gestion"})
      */
     private $etudiant;
 
@@ -103,13 +104,13 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
+     * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
      */
     private $dateDebutStage;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
+     * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
      */
     private $dateFinStage;
 
@@ -155,12 +156,13 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="stageEtudiants")
+     * @Groups({"stage_periode_gestion"})
      */
     private $tuteurUniversitaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stageEtudiants", cascade={"persist", "remove"})
-     * @Groups({"stage_entreprise_administration"})
+     * @Groups({"stage_entreprise_administration", "stage_periode_gestion"})
      */
     private $entreprise;
 
@@ -193,10 +195,11 @@ class StageEtudiant extends BaseEntity
      * StageEtudiant constructor.
      * @throws Exception
      */
-    public function __construct()
+    public function __construct($gratificationMontant)
     {
         $this->setUuid(Uuid::uuid4());
-        $this->setGratificationMontant(\App\Classes\Configuration::get('GRATIFICATION_HEURE_STAGE'));
+
+        $this->setGratificationMontant($gratificationMontant);
     }
 
     /**
