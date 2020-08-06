@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 05/08/2020 10:19
 
 namespace App\Entity;
 
@@ -151,10 +151,6 @@ class Departement extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
      */
     private $actualites;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="departement")
-     */
-    private $trelloTaches;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
@@ -665,47 +661,6 @@ class Departement extends BaseEntity
         if (method_exists($this, $method)) {
             $this->$method($value);
         }
-    }
-
-    /**
-     * @return Collection|TrelloTache[]
-     */
-    public function getTrelloTaches(): Collection
-    {
-        return $this->trelloTaches;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Departement
-     */
-    public function addTrelloTach(TrelloTache $trelloTach): self
-    {
-        if (!$this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches[] = $trelloTach;
-            $trelloTach->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Departement
-     */
-    public function removeTrelloTach(TrelloTache $trelloTach): self
-    {
-        if ($this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches->removeElement($trelloTach);
-            // set the owning side to null (unless already changed)
-            if ($trelloTach->getDepartement() === $this) {
-                $trelloTach->setDepartement(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

@@ -17,7 +17,7 @@
             <table class="table table-striped table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
-                    <th>{{ 'table.mumeroPeriode'|trans }}</th>
+                    <th>{{ 'table.semestre'|trans }}</th>
                     <th>{{ 'table.libelle'|trans }}</th>
                     <th>{{ 'table.anneeUniversitaire'|trans }}</th>
                     <th>{{ 'table.duree_stage'|trans }}</th>
@@ -32,9 +32,9 @@
                 {% for stage_periode in stage_periodes %}
                     <tr>
 
-                        <td>{{ stage_periode.numeroPeriode }}</td>
-                        <td>{{ stage_periode.libelle }}</td>
-                        <td>{{ stage_periode.anneeUniversitaire ? stage_periode.anneeUniversitaire.annee : 'non.defini'|trans }}</td>
+                        <td>{{ stage_periode.semestre ? stage_periode.semestre.display : 'non.defini'|trans }}</td>
+                        <td>{{ stage_periode.libelle }} (période N°{{ stage_periode.numeroPeriode }})</td>
+                        <td>{{ stage_periode.anneeUniversitaire ? stage_periode.anneeUniversitaire.displayAnneeUniversitaire : 'non.defini'|trans }}</td>
                         <td>{{ stage_periode.nbSemaines }} sem. soit
                             {{ stage_periode.nbJours }} jours
                         </td>

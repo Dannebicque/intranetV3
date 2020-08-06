@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+// @lastUpdate 05/08/2020 09:03
 
 namespace App\Form;
 
@@ -65,12 +65,11 @@ class StagePeriodeType extends AbstractType
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
-                },
-                'attr'          => ['class' => 'form-control selectpicker'],
+                }
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.anneeUniversitaire',
-                'choice_label' => 'annee',
+                'choice_label' => 'displayAnneeUniversitaire',
                 'class'        => AnneeUniversitaire::class
             ])
             ->add('dateRange', DateRangeType::class,
