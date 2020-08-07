@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 12:00
+// @lastUpdate 07/08/2020 12:23
 
 import {addCallout} from '../util'
 
@@ -73,6 +73,21 @@ $(document).on('change', '.change-parcours', function () {
     success: function () {
       $('#groupes_semestre').empty().load(Routing.generate('administration_groupe_liste_semestre', {semestre: semestre}))
       addCallout('Mise à jour du parcours associé au groupe', 'success')
+    }
+  })
+})
+
+$(document).on('change', '.change-type_typegroupe', function () {
+  const semestre = $(this).data('semestre')
+  $.ajax({
+    url: Routing.generate('administration_typegroupe_change_type', {semestre: semestre}),
+    data: {
+      typegroupe: $(this).data('typegroupe'),
+      type: $(this).val()
+    },
+    method: 'POST',
+    success: function () {
+      addCallout('Mise à jour du type de type de groupe', 'success')
     }
   })
 })
