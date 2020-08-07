@@ -16,7 +16,12 @@
             <tbody>
             {% for tg in typeGroupes %}
                 <tr>
-                    <td>{{ tg.libelle }}</td>
+                    <td><a class="myedit"
+                           data-field="libelle"
+                           href="{{ path('administration_type_groupe_ajax_edit', {id:tg.id}) }}"
+                           data-title="Corriger le libellé du type de groupe">
+                            {{ tg.libelle }}</a>
+                    </td>
                     <td><label class="sr-only" for="typegroupe_{{ tg.id }}"></label>
                         <select id="typegroupe_{{ tg.id }}" name="typegroupe_{{ tg.id }}" class="form-control
         change-type_typegroupe" data-typegroupe="{{ tg.id }}" data-semestre="{{ semestre.id }}">

@@ -1,16 +1,16 @@
 <tr id="ligne_{{ groupe.id }}">
-    <th>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}
+    <td>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}
         <a class="myedit"
            data-field="libelle"
            href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
            data-title="Corriger le libellé du groupe">
-            {{ groupe.libelle }}</a></th>
-    <th><a class="myedit"
+            {{ groupe.libelle }}</a></td>
+    <td><a class="myedit"
            data-field="ordre"
            href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
            data-title="Corriger l\'ordre du groupe">
-            {{ groupe.ordre }}</a></th>
-    <th>
+            {{ groupe.ordre }}</a></td>
+    <td>
         <label class="sr-only" for="parent_{{ groupe.id }}"></label>
         <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-control change-parent"
                 data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
@@ -20,7 +20,7 @@
                     .libelle }}</option>
             {% endfor %}
         </select>
-    </th>
+    </td>
     <td><a class="myedit"
            data-field="codeapogee"
            href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
