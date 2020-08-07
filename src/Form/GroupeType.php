@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/GroupeType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 07/08/2020 09:50
 
 namespace App\Form;
 
 use App\Entity\Groupe;
+use App\Entity\Parcour;
 use App\Entity\TypeGroupe;
+use App\Repository\GroupeRepository;
+use App\Repository\ParcourRepository;
 use App\Repository\TypeGroupeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -34,8 +37,9 @@ class GroupeType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('ordre', TextType::class, ['label' => 'label.ordre'])
             ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee'])
-            ->add('typeGroupe', EntityType::class, array(
+            ->add('typeGroupe', EntityType::class, [
                 'class'         => TypeGroupe::class,
                 'label'         => 'label.typeGroupe',
                 'choice_label'  => 'libelle',
@@ -43,9 +47,31 @@ class GroupeType extends AbstractType
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required'      => true,
-                'expanded'      => true,
+                'expanded'      => false,
                 'multiple'      => false
-            ));
+            ])
+            ->add('parent', EntityType::class, [
+                'class'         => Groupe::class,
+                'label'         => 'label.groupe_parent',
+                'choice_label'  => 'libelle',
+                'query_builder' => function(GroupeRepository $groupeRepository) {
+                    return $groupeRepository->findBySemestreBuilder($this->semestre);
+                },
+                'required'      => false,
+                'expanded'      => false,
+                'multiple'      => false
+            ])
+            ->add('parcours', EntityType::class, [
+                'class'         => Parcour::class,
+                'label'         => 'label.parcours',
+                'choice_label'  => 'libelle',
+                'query_builder' => function(ParcourRepository $parcourRepository) {
+                    return $parcourRepository->findBySemestreBuilder($this->semestre);
+                },
+                'required'      => false,
+                'expanded'      => false,
+                'multiple'      => false
+            ]);
     }
 
     /**

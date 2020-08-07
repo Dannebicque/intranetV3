@@ -1,0 +1,11 @@
+Bonjour,
+
+La saisie des informations concernant le stage de {{ stageEtudiant.etudiant.displayPr }} vient d'être autorisée
+
+Bien cordialement
+
+Le(s) responsable(s) des {{stageEtudiant.stagePeriode.libelle }}
+{% for responsable in stageEtudiant.stagePeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}

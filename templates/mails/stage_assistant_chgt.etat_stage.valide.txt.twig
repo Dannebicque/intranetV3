@@ -1,0 +1,12 @@
+Bonjour,
+
+La proposition de stage de {{ stageEtudiant.etudiant.displayPr }} au sein de l'entreprise {{ stageEtudiant
+.entreprise.libelle }} vient d'être validée.
+
+Bien cordialement
+
+Le(s) responsable(s) des {{stageEtudiant.stagePeriode.libelle }}
+{% for responsable in stageEtudiant.stagePeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}

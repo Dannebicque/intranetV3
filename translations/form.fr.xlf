@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 06/08/2020 08:26 -->
+<!-- @lastUpdate 07/08/2020 12:00 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -2133,15 +2133,15 @@
         <target>Décembre</target>
       </segment>
     </unit>
-    <unit id="OzpDeKu" name="label.nbGroupesTd">
-      <notes>
-        <note priority="1">src/Form/SemestreType.php:96</note>
-      </notes>
-      <segment>
-        <source>label.nbGroupesTd</source>
-        <target>Nb. Groupes de TD</target>
-      </segment>
-    </unit>
+      <unit id="OzpDeKu" name="label.nbGroupesTd">
+          <notes>
+              <note priority="1">src/Form/SemestreType.php:96</note>
+          </notes>
+          <segment>
+              <source>label.nbGroupesTd</source>
+              <target>Nb. Groupes de TD</target>
+          </segment>
+      </unit>
       <unit id="dLCEysP" name="label.nbGroupesTP">
           <notes>
               <note priority="1">src/Form/SemestreType.php:100</note>
@@ -2189,16 +2189,16 @@
       </unit>
       <unit id="CRu8YtD" name="choice.prce">
           <notes>
-        <note priority="1">src/Form/PersonnelType.php:47</note>
-      </notes>
-      <segment>
-        <source>choice.prce</source>
-        <target>PRCE</target>
-      </segment>
-    </unit>
-    <unit id="rA25S_j" name="choice.vacataire">
-      <notes>
-        <note priority="1">src/Form/PersonnelType.php:47</note>
+              <note priority="1">src/Form/PersonnelType.php:47</note>
+          </notes>
+          <segment>
+              <source>choice.prce</source>
+              <target>PRCE</target>
+          </segment>
+      </unit>
+      <unit id="rA25S_j" name="choice.vacataire">
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:47</note>
       </notes>
       <segment>
         <source>choice.vacataire</source>

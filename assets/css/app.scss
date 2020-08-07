@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 08:26
+// @lastUpdate 07/08/2020 10:33
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -541,6 +541,11 @@ thead {
   content: "\f100";
   font-family: "Font Awesome 5 Free";
 }
+
+//.btn-table-action {
+// border:none;
+// background-color: white;
+//}
 
 //correctifs accessibilité
 

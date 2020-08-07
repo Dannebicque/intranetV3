@@ -1,23 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block header %}{{ 'adm.groupes.index.titre'|trans }}{% endblock %}
+{% block header %}
+    {{ 'adm.groupe.index.heading'|trans }}
+{% endblock %}
 
 {% block headeractions %}
-    <div class="header-action">
-        <ul class="nav nav-tabs" role="tablist">
+
+    <div class="header-action bg-white">
+        <nav class="nav nav-tabs">
             {% for semestre in user_data.semestres %}
                 {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
                     ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                     <li class="nav-item">
                         <a class="nav-link {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
-                            (afficheSemestre == null and loop.first) %}active show{% endif %}"
+                            (afficheSemestre == null and loop.first) %}active show{% endif %} change-semestre"
                            data-toggle="tab"
-                           href="#semestre{{ semestre.id }}" role="tab">{{ semestre.libelle }}
+                           href="#semestre{{ semestre.id }}" role="tab" data-semestre="{{ semestre.id }}">{{ semestre
+                            .libelle }}
                         </a>
                     </li>
                 {% endif %}
             {% endfor %}
-        </ul>
+        </nav>
+
         <div class="buttons">
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
@@ -26,119 +31,59 @@
 {% endblock %}
 
 {% block content %}
-    <div class="tab-content">
+    <div id="liste_semestre">
         {% for semestre in user_data.semestres %}
-            {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement
-                ('ROLE_RP')) or user_data.isGoodDepartement
+            {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
                 ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                <div class="tab-pane {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
-                    (afficheSemestre == null and loop.first) %} active show{% endif %}"
-                     id="semestre{{ semestre.id }}" role="tabpanel">
-                    <div class="card">
-                        <header class="card-header">
-                            <h2 class="card-title">Groupes du semestre {{ semestre.libelle }}</h2>
-                            <div class="card-header-actions">
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h
-                                        rotate-90"></i><span
-                                                    class="sr-only">Menu Export</span></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{ path('administration_groupe_export', {_format:'pdf',
-                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa
-                                            fa-file-pdf"></i> PDF</a>
-                                            <a href="{{ path('administration_groupe_export', {_format:'xlsx',
-                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-excel"></i>
-                                                Excel</a>
-                                            <a href="{{ path('administration_groupe_export', {_format:'csv',
-                                                semestre:semestre.id}) }}" class="dropdown-item"><i class="fa fa-file-csv"></i>
-                                                CSV</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
-
-                        <div class="card-body" id="groupe_bloc_{{ semestre.id }}">
-                            {{ include('administration/groupe/_liste.html.twig') }}
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <header class="card-header">
-                            <h2 class="card-title">Types de Groupe du semestre {{ semestre.libelle }}</h2>
-                        </header>
-
-                        <div class="card-body">
-                        <form action="{{ path('administration_type_groupe_new', {semestre:semestre.id}) }}"
-                              method="post">
-                            <table class="table table-separated">
-                                <tbody id="typgeGroupe_bloc_{{ semestre.id }}">
-                                {{ include('administration/type_groupe/_liste.html.twig') }}
-                                </tbody>
-                                <tfoot>
-                                <tr id="ligne_add">
-                                    <td>
-                                        <label for="type_groupe_libelle_{{ semestre.id }}" class="sr-only">Libellé du
-                                                                                                           type
-                                                                                                           de
-                                                                                                           groupe</label>
-                                        <input type="text"
-                                               class="form-control"
-                                               placeholder="Libellé du type de groupe"
-                                               id="type_groupe_libelle_{{ semestre.id }}"
-                                               name="type_groupe_libelle_{{ semestre.id }}">
-                                    </td>
-                                    <td>
-                                        <label for="type_groupe_type_{{ semestre.id }}" class="sr-only">Type de
-                                                                                                        groupe</label>
-                                        <select
-                                                class="form-control"
-                                                name="type_groupe_type_{{ semestre.id }}"
-                                                id="type_groupe_type_{{ semestre.id }}"
-                                        >
-                                            <option value="CM">CM</option>
-                                            <option value="TD">TD</option>
-                                            <option value="TP">TP</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input"
-                                                   type="radio"
-                                                   name="type_groupe_defaut_{{ semestre.id }}"
-                                                   id="type_groupe_defaut_{{ semestre.id }}"
-                                                   value="true">
-                                            <label class="form-check-label" for="type_groupe_defaut_{{ semestre.id }}_new">
-                                                Par défaut
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td class="text-right table-actions">
-                                        <button type="submit" class="btn btn-primary btn-block"><span
-                                                    class="fas fa-plus"></span> Ajouter
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tfoot>
-
-                            </table>
-                        </form>
-                        </div>
-                    </div>
-                </div>
+                {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
+                    (afficheSemestre == null and loop.first) %}
+                    {{ render(controller(
+                        'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
+                    )) }}
+                {% endif %}
             {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
 
 {% block fabactions %}
+    {% set semestreExport = 0 %}
+    {% for semestre in user_data.semestres %}
+        {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
+            ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+            {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
+                (afficheSemestre == null and loop.first) %}
+                {% set semestreExport = semestre.id %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_groupe_export', {_format:'pdf', semestre:semestreExport}),
+            title: 'exporter.pdf'|trans,
+            id: 'export_pdf',
+            icone : "fa fa-file-pdf"
+        },
+        {
+            type:'info',
+            href:path('administration_groupe_export', {_format:'csv',semestre:semestreExport}),
+            title: 'exporter.csv'|trans,
+            id: 'export_csv',
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_groupe_export', {_format:'xlsx',semestre:semestreExport}),
+            title: 'exporter.xls'|trans,
+            id: 'export_xlsx',
+            icone: 'fa fa-file-excel'
+        },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration_groupe'}),
             title: 'aide'|trans,
-            icone: 'fa fa-question'
+            icone: 'fas fa-question',
+            target: '_blank'
         }
     ]}) }}
 {% endblock %}
