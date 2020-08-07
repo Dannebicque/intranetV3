@@ -1,48 +1,66 @@
 <tr id="ligne_{{ groupe.id }}">
-    <th>{{ groupe.ordre }}</th>
-    <th>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ groupe.libelle }}</th>
-    <td>{{ groupe.codeapogee }}</td>
-    <td>{{ groupe.typegroupe.libelle }}</td>
+    <th>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}
+        <a class="myedit"
+           data-field="libelle"
+           href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
+           data-title="Corriger le libellé du groupe">
+            {{ groupe.libelle }}</a></th>
+    <th><a class="myedit"
+           data-field="ordre"
+           href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
+           data-title="Corriger l\'ordre du groupe">
+            {{ groupe.ordre }}</a></th>
+    <th>
+        <label class="sr-only" for="parent_{{ groupe.id }}"></label>
+        <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-control change-parent"
+                data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
+            <option value="" selected>Groupe Parent</option>
+            {% for gr in groupes %}
+                <option value="{{ gr.id }}" {% if groupe.parent != null and groupe.parent.id == gr.id %}selected{% endif %}>{{ gr
+                    .libelle }}</option>
+            {% endfor %}
+        </select>
+    </th>
+    <td><a class="myedit"
+           data-field="codeapogee"
+           href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
+           data-title="Corriger le code apogée du groupe">
+            {{ groupe.codeapogee }}</a></td>
     <td>
-        {% if semestre.parcours|length > 0 %}
+        <label class="sr-only" for="typegroupe_{{ groupe.id }}"></label>
+        <select id="typegroupe_{{ groupe.id }}" name="typegroupe_{{ groupe.id }}" class="form-control
+        change-typegroupe" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
+            <option value="" selected>Type de Groupe</option>
+            {% for tg in typeGroupes %}
+                <option value="{{ tg.id }}" {% if groupe.typegroupe != null and  groupe.typegroupe.id == tg.id %}selected{% endif %}>
+                    {{ tg.libelle }}
+                </option>
+            {% endfor %}
+        </select>
+    </td>
+    <td>
+        {% if parcours is defined and parcours|length > 0 %}
             <label class="sr-only" for="parcours_{{ groupe.id }}"></label>
-            <select id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}">
+            <select id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}" class="form-control
+            change-parcours" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
                 <option value="">Indiquer l'option</option>
-                {% for option in semestre.parcours %}
-                    <option value="{{ option.id }}">{{ option.libelle }}</option>
+                {% for option in parcours %}
+                    <option value="{{ option.id }}" {% if groupe.parcours != null and  groupe.parcours.id == option.id %}selected{% endif %}>{{ option.libelle }}</option>
                 {% endfor %}
             </select>
         {% else %}
             Pas d'option
         {% endif %}
     </td>
-    {# todo: duplicate (en js?) et modifier (en ligne ?) #}
     <td class="text-right table-actions">
-        <a class="table-action hover-primary"
-           href="{{ path('administration_groupe_duplicate', {id:groupe.id}) }}"
+        <a class="table-action hover-primary duplicate-groupe"
+           href="#"
            data-provide="tooltip"
+           data-groupe="{{ groupe.id }}"
+           data-semestre="{{ semestre.id }}"
            data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}">
             <span class="{{ iconDuplicate }}"></span>
             <span class="sr-only">Dupliquer le groupe</span>
-        </a>
-        <a class="table-action hover-info"
-           href="#"
-           data-provide="modaler tooltip"
-           data-size="lg"
-           data-confirm-text="{{ 'fermer'|trans }}"
-           data-url="{{ path('administration_groupe_show', {id:groupe.id}) }}"
-           data-placement="bottom"
-           data-title="{{ 'details.groupes.groupe'|trans }}"
-           title="{{ 'atitle.details'|trans }}">
-            <span class="fas fa-eye"></span>
-            <span class="sr-only">Voir le détail</span>
-        </a>
-        <a class="table-action hover-warning"
-           href=""
-           data-provide="tooltip"
-           data-placement="bottom" title="{{ 'atitle.modifier'|trans }}"><span
-                    class="{{ iconEdit }}"></span>
-            <span class="sr-only">Modifier le type de groupe</span>
         </a>
         <a class="table-action hover-danger supprimer"
            href="{{ path('administration_groupe_delete', {id:groupe.id}) }}"

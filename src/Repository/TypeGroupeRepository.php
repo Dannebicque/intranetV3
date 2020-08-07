@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 07/08/2020 09:52
 
 namespace App\Repository;
 
@@ -43,7 +43,8 @@ class TypeGroupeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('t')
             ->where('t.semestre = :semestre')
-            ->setParameter('semestre', $semestre);
+            ->setParameter('semestre', $semestre)
+            ->orderBy('t.libelle');
     }
 
     public function findBySemestre(Semestre $semestre)

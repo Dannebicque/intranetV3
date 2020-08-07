@@ -3,171 +3,119 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 07/08/2020 12:00
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use App\Classes\MyExport;
+use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
-use App\Repository\ParcourRepository;
-use App\Repository\TypeGroupeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
+use PHPUnit\Util\Json;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class GroupeController
- * @package App\Controller\administration
  * @Route("/administration/groupe")
  */
 class GroupeController extends BaseController
 {
     /**
-     * @Route("/{semestre}", name="administration_groupe_index", requirements={"semestre":"\d+"}, methods={"GET"})
-     * @param GroupeRepository $groupeRepository
-     *
-     * @param Semestre|null    $semestre
+     * @Route("/{semestre}", name="administration_groupe_index", methods={"GET"}, requirements={"semestre":"\d+"})
+     * @param Semestre|null $semestre
      *
      * @return Response
      */
-    public function index(GroupeRepository $groupeRepository, ?Semestre $semestre = null): Response
+    public function index(Semestre $semestre = null): Response
     {
-        if ($semestre !== null) {
-            $groupes = $groupeRepository->findByDepartement($semestre->getDiplome()->getDepartement());
-        } else {
-            $groupes = $groupeRepository->findByDepartement($this->dataUserSession->getDepartement());
-        }
-
-
         return $this->render('administration/groupe/index.html.twig', [
-            'groupes'         => $groupes,
             'afficheSemestre' => $semestre !== null ? $semestre->getId() : null
         ]);
     }
 
     /**
-     * @Route("/refresh/{parent}", name="administration_groupe_refresh", methods="GET", options={"expose"=true})
+     * @Route("/liste/{semestre}", name="administration_groupe_liste_semestre", methods={"GET"},
+     *                             options={"expose":true})
      * @param GroupeRepository $groupeRepository
-     * @param Groupe           $parent
+     * @param Semestre         $semestre
      *
      * @return Response
      */
-    public function refreshListe(GroupeRepository $groupeRepository, Groupe $parent): Response
+    public function listeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
-        if ($parent->getTypeGroupe() !== null) {
-            $semestre = $parent->getTypeGroupe()->getSemestre();
-            if ($semestre !== null) {
-                $groupes = $groupeRepository->findBySemestre($semestre);
+        $typeGroupes = $semestre->getTypeGroupes();
+        $groupes = $groupeRepository->findBySemestre($semestre);
+        $parcours = $semestre->getParcours();
 
-                return $this->render('administration/groupe/_liste.html.twig', [
-                    'groupes'  => $groupes,
-                    'semestre' => $semestre
-                ]);
-            }
-
-            return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
-        }
-
-        return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
-    }
-
-    /**
-     * @Route("/new", name="administration_groupe_new", methods="POST", options={"expose"=true})
-     * @param TypeGroupeRepository $typeGroupeRepository
-     * @param ParcourRepository    $parcourRepository
-     * @param GroupeRepository     $groupeRepository
-     * @param Request              $request
-     *
-     *
-     * @return Response
-     */
-    public function create(
-        TypeGroupeRepository $typeGroupeRepository,
-        ParcourRepository $parcourRepository,
-        GroupeRepository $groupeRepository,
-        Request $request
-    ): Response {
-        $typeGroupe = $typeGroupeRepository->find($request->request->get('type'));
-        if ($typeGroupe) {
-            $groupe = new Groupe($typeGroupe);
-            $parent = $request->request->get('parent');
-            if (strpos($parent, 's') !== 0) {
-                $parent = $groupeRepository->find($request->request->get('parent'));
-                if ($parent) {
-                    $groupe->setParent($parent);
-                }
-            }
-            if (!empty($request->request->get('groupe_parcours_2'))) {
-                $parcour = $parcourRepository->find($request->request->get('groupe_parcours'));
-                if ($parcour) {
-                    $groupe->setParcours($parcour);
-                }
-            }
-            $groupe->setOrdre($request->request->get('ordre'));
-            $groupe->setLibelle($request->request->get('libelle'));
-            $groupe->setCodeApogee($request->request->get('code'));
-
-            $this->entityManager->persist($groupe);
-            $this->entityManager->flush();
-
-            return $this->json(['semestre' => $typeGroupe->getSemestre()->getId()], Response::HTTP_OK);
-        }
-
-        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-
-    }
-
-    /**
-     * @Route("/{id}", name="administration_groupe_show", methods="GET")
-     * @param Groupe $groupe
-     *
-     * @return Response
-     */
-    public function show(Groupe $groupe): Response
-    {
-        return $this->render('administration/groupe/show.html.twig', ['groupe' => $groupe]);
+        return $this->render('administration/groupe/_listeSemestre.html.twig', [
+            'semestre'    => $semestre,
+            'groupes'     => $groupes,
+            'typeGroupes' => $typeGroupes,
+            'parcours'    => $parcours
+        ]);
     }
 
     /**
      * @Route("/{semestre}/export.{_format}", name="administration_groupe_export", methods="GET",
-     *                                        requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport         $myExport
-     * @param GroupeRepository $groupeRepository
-     * @param                  $_format
+     *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
+     * @param MyExport            $myExport
+     * @param GroupeRepository    $groupeRepository
      *
-     * @param Semestre         $semestre
+     * @param                     $_format
      *
      * @return Response
      * @throws Exception
      */
-    public function export(
-        MyExport $myExport,
-        GroupeRepository $groupeRepository,
-        $_format,
-        Semestre $semestre
-    ): Response {
-        $groupes = $groupeRepository->findBySemestre($semestre);
+    public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format): Response
+    {
+        $groupes = $groupeRepository->getByDepartement($this->dataUserSession->getDepartement());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $groupes,
             'groupes',
-            ['type_groupe_administration', 'groupe_administration', 'semestre'],
-            [
-                'libelle',
-                'codeApogee',
-                'parent'     => ['libelle'],
-                'typeGroupe' => ['libelle', 'type', 'codeApogee', 'semestre' => ['libelle']]
-            ]
+            ['groupes_administration'],
+            ['type_groupe' => ['semestre', 'libelle'], 'libelle', 'type']//todo: vérifier
         );
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_groupe_duplicate", methods="GET|POST")
+     * @Route("/new/{semestre}", name="administration_groupe_new", methods={"GET","POST"}, options={"expose":true})
+     * @param Request  $request
+     * @param Semestre $semestre
+     *
+     * @return Response
+     */
+    public function new(Request $request, Semestre $semestre): Response
+    {
+        $groupe = new Groupe();
+        $form = $this->createForm(GroupeType::class, $groupe,
+            ['semestre' => $semestre, 'attr' => ['id' => 'form_groupe']]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($groupe);
+            $entityManager->flush();
+
+            return new JsonResponse(true, Response::HTTP_OK);
+        }
+
+        return $this->render('administration/groupe/_new.html.twig', [
+            'groupe'   => $groupe,
+            'semestre' => $semestre,
+            'form'     => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/duplicate/{groupe}", name="administration_groupe_duplicate", methods={"GET"}, options={"expose":true})
      * @param Groupe $groupe
      *
      * @return Response
@@ -175,16 +123,17 @@ class GroupeController extends BaseController
     public function duplicate(Groupe $groupe): Response
     {
         $newGroupe = clone $groupe;
-
+        $newGroupe->setLibelle('Copie_' . $newGroupe->getLibelle());
+        $newGroupe->setCodeApogee('Copie_' . $newGroupe->getCodeApogee());
         $this->entityManager->persist($newGroupe);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_groupe_edit', ['id' => $newGroupe->getId()]);
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     /**
-     * @Route("/{id}", name="administration_groupe_delete", methods="DELETE")
+     * @Route("/supprimer/{id}", name="administration_groupe_delete", methods={"DELETE"})
      * @param Request $request
      * @param Groupe  $groupe
      *
@@ -192,17 +141,19 @@ class GroupeController extends BaseController
      */
     public function delete(Request $request, Groupe $groupe): Response
     {
-
         $id = $groupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($groupe);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.delete.success.flash');
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'groupe.delete.success.flash'
+            );
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupe.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'groupe.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

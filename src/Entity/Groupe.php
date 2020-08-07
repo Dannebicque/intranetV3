@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 07/08/2020 09:42
 
 namespace App\Entity;
 
@@ -62,9 +62,8 @@ class Groupe extends BaseEntity
      */
     private $parcours;
 
-    public function __construct(TypeGroupe $typeGroupe)
+    public function __construct()
     {
-        $this->typeGroupe = $typeGroupe;
         $this->etudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
     }

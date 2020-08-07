@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 07/08/2020 12:00
 
 namespace App\Controller\administration;
 
@@ -11,156 +11,102 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Form\TypeGroupeType;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/administration/type-groupe")
+ * @Route("/administration/type-de-groupe")
  */
 class TypeGroupeController extends BaseController
 {
     /**
-     * @Route("/new/{semestre}", name="administration_type_groupe_new", methods="POST", options={"expose"=true})
-     * @param Request            $request
-     *
-     * @param Semestre           $semestre
-     *
-     * @return Response
-     */
-    public function create(Request $request, Semestre $semestre): Response
-    {
-        $typeGroupe = new TypeGroupe($semestre);
-        $typeGroupe->setLibelle($request->request->get('type_groupe_libelle_' . $semestre->getId()));
-        $typeGroupe->setType($request->request->get('type_groupe_type_' . $semestre->getId()));
-        if ($request->request->get('type_groupe_defaut_' . $semestre->getId()) === 'true') {
-            //tous les autres à faux.
-            foreach ($semestre->getTypeGroupes() as $tg) {
-                $tg->setDefaut(false);
-                $this->entityManager->persist($tg);
-            }
-            $typeGroupe->setDefaut(true);
-        } else {
-            $typeGroupe->setDefaut(false);
-        }
-
-        $this->entityManager->persist($typeGroupe);
-        $this->entityManager->flush();
-
-        return $this->redirectToRoute('administration_groupe_index', ['semestre' => $semestre->getId()]);
-    }
-
-    /**
-     * @Route("/refresh/{semestre}", name="administration_type_groupe_refresh", methods="GET", options={"expose"=true})
+     * @Route("/liste/{semestre}", name="administration_type_groupe_liste_semestre", methods={"GET"},
+     *                             options={"expose":true})
      * @param Semestre $semestre
      *
      * @return Response
      */
-    public function refreshListe(Semestre $semestre): Response
+    public function listeSemestre(Semestre $semestre): Response
     {
-        return $this->render('administration/type_groupe/_liste.html.twig', [
-            'semestre' => $semestre
+        $typeGroupes = $semestre->getTypeGroupes();
+
+        return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
+            'semestre'    => $semestre,
+            'typeGroupes' => $typeGroupes,
         ]);
     }
 
     /**
-     * @param Request              $request
-     * @param TypeGroupeRepository $typeGroupeRepository
-     * @Route("/ajax/groupe_defaut", name="administration_type_groupe_defaut", methods="POST", options={"expose"=true})
-     *
-     * @return JsonResponse
-     */
-    public function typeGroupeDefaut(Request $request, TypeGroupeRepository $typeGroupeRepository): JsonResponse
-    {
-        $typeGroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
-
-        if ($typeGroupe) {
-            $groupes = $typeGroupeRepository->findBySemestre($typeGroupe->getSemestre());
-
-            /** @var TypeGroupe $groupe */
-            foreach ($groupes as $groupe) {
-                $groupe->setDefaut(false);
-                $this->entityManager->persist($groupe);
-            }
-
-            $typeGroupe->setDefaut(true);
-            $this->entityManager->persist($typeGroupe);
-            $this->entityManager->flush();
-
-            return $this->json(true, Response::HTTP_OK);
-        }
-
-        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-
-    }
-
-    /**
-     * @Route("/{id}", name="administration_type_groupe_show", methods="GET")
-     * @param TypeGroupe $typeGroupe
+     * @Route("/new/{semestre}", name="administration_type_groupe_new", methods={"POST"}, options={"expose":true})
+     * @param Request  $request
+     * @param Semestre $semestre
      *
      * @return Response
      */
-    public function show(TypeGroupe $typeGroupe): Response
+    public function new(Request $request, Semestre $semestre): Response
     {
-        return $this->render('administration/type_groupe/show.html.twig', ['type_groupe' => $typeGroupe]);
+        $typeGroupe = new TypeGroupe($semestre);
+        $typeGroupe->setLibelle($request->request->get('libelle'));
+        $typeGroupe->setType($request->request->get('type'));
+        $request->request->get('defaut') === 'on' ? $typeGroupe->setDefaut(true) : $typeGroupe->setDefaut(false);
+        $this->entityManager->persist($typeGroupe);
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_type_groupe_edit", methods="GET|POST")
+     * @Route("/update-defaut/{typegroupe}/{semestre}", name="administration_type_groupe_defaut", methods={"POST"},
+     *                                                  options={"expose":true})
      * @param Request    $request
-     * @param TypeGroupe $typeGroupe
+     * @param TypeGroupe $typegroupe
+     * @param Semestre   $semestre
      *
      * @return Response
      */
-    public function edit(Request $request, TypeGroupe $typeGroupe): Response
+    public function updateDefaut(Request $request, TypeGroupe $typegroupe, Semestre $semestre): Response
     {
-        $form = $this->createForm(TypeGroupeType::class, $typeGroupe,
-            ['departement' => $this->dataUserSession->getDepartement()]);
-        $form->handleRequest($request);
+        if (in_array($request->request->get('defaut'), ['on', 'true'])) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($typeGroupe->getDefaut() === true) {
-                /** @var TypeGroupe $groupe */
-                foreach ($typeGroupe->getSemestre()->getTypeGroupes() as $groupe) {
-                    $groupe->setDefaut(false);
-                    $this->entityManager->persist($groupe);
+            foreach ($semestre->getTypeGroupes() as $tg) {
+                if ($tg->getId() === $typegroupe->getId()) {
+                    $tg->setDefaut(true);
+                } else {
+                    $tg->setDefaut(false);
                 }
-                $typeGroupe->setDefaut(true);
             }
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.edit.success.flash');
-
-            return $this->redirectToRoute('administration_groupe_index');
+        } else {
+            $typegroupe->setDefaut(false);
         }
+        $this->entityManager->flush();
 
-        return $this->render('administration/type_groupe/edit.html.twig', [
-            'type_groupe' => $typeGroupe,
-            'form'        => $form->createView(),
-        ]);
+        return new JsonResponse(true, Response::HTTP_OK);
+
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_type_groupe_duplicate", methods="GET|POST")
-     * @param TypeGroupe $typeGroupe
+     * @Route("/duplicate/{typegroupe}", name="administration_type_groupe_duplicate", methods={"GET"},
+     *                                   options={"expose":true})
+     * @param TypeGroupe $typegroupe
      *
      * @return Response
      */
-    public function duplicate(TypeGroupe $typeGroupe): Response
+    public function duplicate(TypeGroupe $typegroupe): Response
     {
-        $newGroupe = clone $typeGroupe;
-
+        $newGroupe = clone $typegroupe;
+        $newGroupe->setLibelle('Copie_' . $newGroupe->getLibelle());
         $this->entityManager->persist($newGroupe);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_groupe_edit', ['id' => $newGroupe->getId()]);
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     /**
-     * @Route("/{id}", name="administration_type_groupe_delete", methods="DELETE")
+     * @Route("/supprimer/{id}", name="administration_type_groupe_delete", methods={"DELETE"})
      * @param Request    $request
      * @param TypeGroupe $typeGroupe
      *
@@ -168,18 +114,20 @@ class TypeGroupeController extends BaseController
      */
     public function delete(Request $request, TypeGroupe $typeGroupe): Response
     {
-        //todo: tester delete cascade et la suppression ds groupes et des étudiants affectés.
-
         $id = $typeGroupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($typeGroupe);
+            //todo: suppression des groupes enfants?
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.delete.success.flash');
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'type_groupe.delete.success.flash'
+            );
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'type_groupe.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

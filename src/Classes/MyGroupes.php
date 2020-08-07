@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 07/08/2020 11:56
 
 namespace App\Classes;
 
@@ -293,5 +293,16 @@ class MyGroupes
         }
 
         return false;
+    }
+
+    public function update(Groupe $groupe, string $name, $value)
+    {
+        $method = 'set' . $name;
+        if (method_exists($groupe, $method)) {
+            $groupe->$method($value);
+            $this->entityManager->flush();
+
+            return true;
+        }
     }
 }

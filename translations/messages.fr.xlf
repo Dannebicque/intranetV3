@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 06/08/2020 08:26 -->
+<!-- @lastUpdate 07/08/2020 12:00 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7391,16 +7391,16 @@
         <target></target>
       </segment>
     </unit>
-    <unit id="kSEnHx_" name="sadm.help.show.heading">
-      <notes>
-        <note priority="1">templates/super-administration/help/show.html.twig:4</note>
-        <note priority="1">templates/super-administration/help/show.html.twig:15</note>
-      </notes>
-      <segment>
-        <source>sadm.help.show.heading</source>
-        <target></target>
-      </segment>
-    </unit>
+      <unit id="kSEnHx_" name="sadm.help.show.heading">
+          <notes>
+              <note priority="1">templates/super-administration/help/show.html.twig:4</note>
+              <note priority="1">templates/super-administration/help/show.html.twig:15</note>
+          </notes>
+          <segment>
+              <source>sadm.help.show.heading</source>
+              <target></target>
+          </segment>
+      </unit>
       <unit id="QppWdJM" name="synthese.des.parcours">
           <notes>
               <note priority="1">templates/administration/semestre/index.html.twig:144</note>
@@ -7445,16 +7445,16 @@
       </unit>
       <unit id="95ijfK1" name="absence.removed">
           <notes>
-        <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>absence.removed</source>
-        <target>Absence supprimée</target>
-      </segment>
-    </unit>
-    <unit id="ruQIhH0" name="success">
-      <notes>
-        <note priority="1">obsolete</note>
+              <note priority="1">obsolete</note>
+          </notes>
+          <segment>
+              <source>absence.removed</source>
+              <target>Absence supprimée</target>
+          </segment>
+      </unit>
+      <unit id="ruQIhH0" name="success">
+          <notes>
+              <note priority="1">obsolete</note>
       </notes>
       <segment>
         <source>success</source>
@@ -9754,16 +9754,16 @@
     </unit>
     <unit id="fEyYbz0" name="site.add.success.flash">
       <segment>
-        <source>site.add.success.flash</source>
-        <target>Site créé avec succès</target>
+          <source>site.add.success.flash</source>
+          <target>Site créé avec succès</target>
       </segment>
     </unit>
-    <unit id="UdmlLIA" name="ufr.add.success.flash">
-      <segment>
-          <source>ufr.add.success.flash</source>
-          <target>UFR créée avec succès</target>
-      </segment>
-    </unit>
+      <unit id="UdmlLIA" name="ufr.add.success.flash">
+          <segment>
+              <source>ufr.add.success.flash</source>
+              <target>UFR créée avec succès</target>
+          </segment>
+      </unit>
       <unit id="9EYv5vH" name="type_diplome.add.success.flash">
           <segment>
               <source>type_diplome.add.success.flash</source>
@@ -9806,16 +9806,16 @@
               <target>Importer personnels</target>
           </segment>
       </unit>
-    <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
-      <segment>
-        <source>sadm.gestion.rh.import.heading</source>
-        <target>Gestion RH, importer des personnels</target>
-      </segment>
-    </unit>
-    <unit id="BijnuiW" name="fichier.personnel.import">
-      <segment>
-        <source>fichier.personnel.import</source>
-        <target>Fichier d'import de personnels</target>
+      <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
+          <segment>
+              <source>sadm.gestion.rh.import.heading</source>
+              <target>Gestion RH, importer des personnels</target>
+          </segment>
+      </unit>
+      <unit id="BijnuiW" name="fichier.personnel.import">
+          <segment>
+              <source>fichier.personnel.import</source>
+              <target>Fichier d'import de personnels</target>
       </segment>
     </unit>
     <unit id=".0s.MiM" name="diplome.add.success.flash">
@@ -13500,16 +13500,16 @@
     </unit>
     <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
       <segment>
-        <source>atitle.retour.alternance.etudiant</source>
-        <target>Retour à l'alternance de l'étudiant</target>
+          <source>atitle.retour.alternance.etudiant</source>
+          <target>Retour à l'alternance de l'étudiant</target>
       </segment>
     </unit>
-    <unit id="HL9909K" name="atitle.import">
-      <segment>
-          <source>atitle.import</source>
-          <target>Importer</target>
-      </segment>
-    </unit>
+      <unit id="HL9909K" name="atitle.import">
+          <segment>
+              <source>atitle.import</source>
+              <target>Importer</target>
+          </segment>
+      </unit>
       <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
           <segment>
               <source>import.etudiants.groupes.heading</source>
@@ -13574,6 +13574,30 @@
           <segment>
               <source>ETAT_STAGE_APPRENTISSAGE</source>
               <target>Année en apprentissage</target>
+          </segment>
+      </unit>
+      <unit id="sKldPJs" name="adm.groupe.index.heading">
+          <segment>
+              <source>adm.groupe.index.heading</source>
+              <target>Liste des groupes</target>
+          </segment>
+      </unit>
+      <unit id="pMfOjqq" name="adm.groupe.semestre.index.heading">
+          <segment>
+              <source>adm.groupe.semestre.index.heading</source>
+              <target>Groupes du semestre</target>
+          </segment>
+      </unit>
+      <unit id="kKeCQk_" name="adm.groupe.semestre.add.heading">
+          <segment>
+              <source>adm.groupe.semestre.add.heading</source>
+              <target>Ajouter un groupe dans le semestre</target>
+          </segment>
+      </unit>
+      <unit id="9dmm8Ma" name="adm.typegroupe.semestre.index.heading">
+          <segment>
+              <source>adm.typegroupe.semestre.index.heading</source>
+              <target>Type de groupe du semestre</target>
           </segment>
       </unit>
   </file>
