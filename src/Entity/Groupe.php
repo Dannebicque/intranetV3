@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:12
+// @lastUpdate 08/08/2020 08:18
 
 namespace App\Entity;
 
@@ -45,12 +45,12 @@ class Groupe extends BaseEntity
      * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
      * @ORM\OrderBy({"nom"="asc", "prenom"="asc"})
      */
-    private ArrayCollection $etudiants;
+    private $etudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parent", cascade={"remove"})
      */
-    private ArrayCollection $enfants;
+    private $enfants;
 
     /**
      * @ORM\Column(type="integer")

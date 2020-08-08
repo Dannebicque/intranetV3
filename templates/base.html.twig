@@ -10,11 +10,6 @@
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        {#        <link href="{{ asset('assets/fonts/font.css') }}" rel="stylesheet">#}
-        {#        <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">#}
-        {#        <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">#}
-        {#        <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">#}
-        {#        <link href="{{ asset('src/assets/vendor/flag-icon/css/flag-icon.css') }}" rel="stylesheet">#}
     {% endblock %}
     <style>
         .btn-primary {
@@ -311,7 +306,7 @@
                     <div class="media-list media-list-hover media-list-divided media-list-xs">
                         {% for notification in user_data.notifications|filter(notification => (notification.typeUser == user_data.typeUser)) %}
                             <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
-                               href="{{ notification.url }}">
+                               href="{{ path('notification_lire', {uuid:notification.uuidString}) }}">
                                     <span class="avatar bg-{{ notification.color }}"><i
                                                 class="{{ notification.icone }}"></i></span>
                                 <div class="media-body">

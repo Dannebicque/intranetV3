@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 12:23
+// @lastUpdate 08/08/2020 08:22
 
 namespace App\Controller\administration;
 
@@ -162,7 +162,6 @@ class TypeGroupeController extends BaseController
         $id = $typeGroupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($typeGroupe);
-            //todo: suppression des groupes enfants?
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
