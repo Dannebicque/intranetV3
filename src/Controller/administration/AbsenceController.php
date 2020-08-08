@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 09:03
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration;
 
@@ -13,7 +13,6 @@ use App\Classes\MyExport;
 use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Absence;
-use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;

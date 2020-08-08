@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/theme.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 08:54
+// @lastUpdate 08/08/2020 08:50
 
 // Check if an element has a specific data attribute
 //
@@ -3003,15 +3003,15 @@ jQuery.fn.scrollToEnd = function () {
       }
     })
 
-    // Topbar search
+    // // Topbar search
+    // //
+    // $(document).on('focus', '.topbar-search input', function () {
+    //   $(this).closest('.topbar-search').find('.lookup-placeholder span').css('opacity', '0')
+    // })
     //
-    $(document).on('focus', '.topbar-search input', function () {
-      $(this).closest('.topbar-search').find('.lookup-placeholder span').css('opacity', '0')
-    })
-
-    $(document).on('blur', '.topbar-search input', function () {
-      $(this).closest('.topbar-search').find('.lookup-placeholder span').css('opacity', '1')
-    })
+    // $(document).on('blur', '.topbar-search input', function () {
+    //   $(this).closest('.topbar-search').find('.lookup-placeholder span').css('opacity', '1')
+    // })
 
   }
 
@@ -3568,58 +3568,58 @@ jQuery.fn.scrollToEnd = function () {
 // Lookup
 // =====================
 //
-+function ($, window) {
-
-  var lookup = {}
-
-  lookup.init = function () {
-
-    // Handle lookup openner
-    //
-    $(document).on('click', '[data-toggle="lookup"]', function (e) {
-      e.preventDefault()
-      var target = app.getTarget($(this))
-
-      if (target == false) {
-        lookup.close($(this).closest('.lookup-fullscreen'))
-      } else {
-        lookup.toggle(target)
-      }
-    })
-
-  }
-
-
-  // Toggle open/close state of fullscreen lookup
-  //
-  lookup.toggle = function (e) {
-    if ($(e).hasClass('reveal')) {
-      lookup.close(e)
-    } else {
-      lookup.open(e)
-    }
-  }
-
-
-  // Close fullscreen lookup
-  //
-  lookup.close = function (e) {
-    $(e).removeClass('reveal')
-    $('body').removeClass('no-scroll')
-  }
-
-
-  // Close fullscreen lookup
-  //
-  lookup.open = function (e) {
-    $(e).addClass('reveal')
-    $(e).find('.lookup-form input').focus()
-    $('body').addClass('no-scroll')
-  }
-
-
-  window.lookup = lookup
-}(jQuery, window);
+// +function ($, window) {
+//
+//   var lookup = {}
+//
+//   lookup.init = function () {
+//
+//     // Handle lookup openner
+//     //
+//     $(document).on('click', '[data-toggle="lookup"]', function (e) {
+//       e.preventDefault()
+//       var target = app.getTarget($(this))
+//
+//       if (target == false) {
+//         lookup.close($(this).closest('.lookup-fullscreen'))
+//       } else {
+//         lookup.toggle(target)
+//       }
+//     })
+//
+//   }
+//
+//
+//   // Toggle open/close state of fullscreen lookup
+//   //
+//   lookup.toggle = function (e) {
+//     if ($(e).hasClass('reveal')) {
+//       lookup.close(e)
+//     } else {
+//       lookup.open(e)
+//     }
+//   }
+//
+//
+//   // Close fullscreen lookup
+//   //
+//   lookup.close = function (e) {
+//     $(e).removeClass('reveal')
+//     $('body').removeClass('no-scroll')
+//   }
+//
+//
+//   // Close fullscreen lookup
+//   //
+//   lookup.open = function (e) {
+//     $(e).addClass('reveal')
+//     $(e).find('.lookup-form input').focus()
+//     $('body').addClass('no-scroll')
+//   }
+//
+//
+//   window.lookup = lookup
+// }(jQuery, window);
 
 
 // =====================

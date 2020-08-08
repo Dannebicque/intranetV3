@@ -6,6 +6,7 @@
 parameters:
     locale: fr
     BASE_URL: '%env(resolve:BASE_URL)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -42,4 +43,3 @@ services:
         arguments:
             - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
             - '@Symfony\Component\HttpFoundation\Session\SessionInterface'
-

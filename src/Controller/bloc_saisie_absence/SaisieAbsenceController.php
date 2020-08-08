@@ -3,32 +3,24 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:04
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\bloc_saisie_absence;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Controller\BaseController;
-use App\Entity\Absence;
-use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Classes\MyAbsences;
-use App\Classes\MyGroupes;
 use App\Classes\Tools;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
-use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
-use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

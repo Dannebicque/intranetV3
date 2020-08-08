@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:22
+// @lastUpdate 08/08/2020 10:23
 
 namespace App\Repository;
 
@@ -60,7 +60,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     public function findBySemestreCount(Semestre $semestre, $annee = 0)
     {
         if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : date('Y');
+            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         return $this->createQueryBuilder('j')

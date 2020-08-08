@@ -3,11 +3,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Entity;
 
-use App\Classes\Tools;
 use App\Entity\Traits\UuidTrait;
 use Carbon\Carbon;
 use DateTime;
@@ -200,7 +199,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     }
 
     /**
-     * @param string $fichierName
+     * @param string|null $fichierName
      */
     public function setFichierName(?string $fichierName): void
     {
@@ -208,7 +207,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     }
 
 
-    public function getEtatLong()
+    public function getEtatLong(): string
     {
         $tabEtat = [
             'A' => 'Accepté, absences justifiées',

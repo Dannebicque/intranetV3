@@ -58,8 +58,7 @@
     {% if event is defined %}
         <script>
           $(document).ready(function () {
-            console.log('update')
-            updateAffichage("{{ dateFr }}", "{{ heure }}")
+            updateAffichage("{{ date|date('d/m/Y') }}", "{{ heure }}")
           })
         </script>
     {% endif %}

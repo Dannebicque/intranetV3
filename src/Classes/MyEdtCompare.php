@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes;
 
 
-use App\Entity\EdtPlanning;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;

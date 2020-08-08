@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Classes\Etudiant;
 
@@ -24,7 +24,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class EtudiantAbsences
 {
 
-    private $absences;
     private AbsenceRepository $absenceRepository;
     /**
      * @var Etudiant
@@ -70,10 +69,10 @@ class EtudiantAbsences
             $semestre = $this->etudiant->getSemestre();
         }
 
-        $this->absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
+        $absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
             $anneeUniversitaire);
 
-        return $this->absences;
+        return $absences;
     }
 
     public function addAbsence(

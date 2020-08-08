@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/08/2020 11:02
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -193,7 +193,8 @@ class StageEtudiant extends BaseEntity
 
     /**
      * StageEtudiant constructor.
-     * @throws Exception
+     *
+     * @param $gratificationMontant
      */
     public function __construct($gratificationMontant)
     {

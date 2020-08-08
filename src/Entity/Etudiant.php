@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 12:15
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -272,7 +272,7 @@ class Etudiant extends Utilisateur implements Serializable
     }
 
     /**
-     * @param Semestre $semestre
+     * @param Semestre|null $semestre
      */
     public function setSemestre(?Semestre $semestre): void
     {

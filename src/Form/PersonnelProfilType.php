@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelProfilType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 22:44
 
 namespace App\Form;
 
@@ -25,7 +25,6 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class PersonnelProfilType extends AbstractType
 {
-    private $locale;
 
     /**
      * @param FormBuilderInterface $builder
@@ -33,7 +32,7 @@ class PersonnelProfilType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->locale = $options['locale'];
+        $locale = $options['locale'];
 
         $builder
             ->add('civilite', CiviliteType::class, [
@@ -50,7 +49,7 @@ class PersonnelProfilType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
                 'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker', 'data-language' => $this->locale]
+                'attr' => ['data-provide' => 'datepicker', 'data-language' => $locale]
             ])
             ->add(
                 'numero_harpege',

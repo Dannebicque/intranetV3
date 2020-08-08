@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -214,7 +214,6 @@ class MyExcelWriter
      * @param $lig
      * @param $couleur
      *
-     * @throws Exception
      */
     public function colorCellRange($col, $lig, $couleur): void
     {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 14:02
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Classes;
 
@@ -32,7 +32,6 @@ class MyMessagerie
     private $sujet;
 
     private $message;
-    private $pjs;
 
     private $nbMessagesEnvoyes = 0;
     private $nbEtudiants = 0;
@@ -160,7 +159,7 @@ class MyMessagerie
         $this->sujet = $sujet;
         $this->expediteur = $expediteur;
         $this->message = $message;
-        $this->pjs = $pjs;
+        $pjs1 = $pjs;
     }
 
     /**

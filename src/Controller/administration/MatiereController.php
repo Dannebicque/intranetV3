@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 18:32
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration;
 
@@ -38,7 +38,8 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose":true})
-     * @param Diplome $diplome
+     * @param MatiereRepository $matiereRepository
+     * @param Diplome           $diplome
      *
      * @return Response
      */
@@ -105,9 +106,9 @@ class MatiereController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request, Diplome $diplome, Ue $ue = null): Response
+    public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
+        if ($configuration->get('MODIFICATION_PPN') === 1) {
 
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
@@ -156,9 +157,9 @@ class MatiereController extends BaseController
      *
      * @return Response
      */
-    public function edit(Request $request, Matiere $matiere): Response
+    public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
-        if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
+        if ($configuration->get('MODIFICATION_PPN') === 1) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
                 'attr'    => [

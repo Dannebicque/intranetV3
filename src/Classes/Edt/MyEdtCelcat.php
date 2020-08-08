@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -29,24 +29,13 @@ use App\Repository\MatiereRepository;
 
 class MyEdtCelcat extends BaseEdt
 {
-    /** @var CelcatEventsRepository */
-    protected $celcatEventsRepository;
+    protected CelcatEventsRepository $celcatEventsRepository;
 
+    private Annee $annee;
 
-    /** @var Annee */
-    private $annee;
+    private GroupeRepository $groupeRepository;
 
-    /**
-     * @var GroupeRepository
-     */
-    private $groupeRepository;
-
-    /** @var MatiereRepository */
-    private $matiereRepository;
-    /**
-     * @var string|null
-     */
-    private $groupecm;
+    private MatiereRepository $matiereRepository;
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
@@ -281,7 +270,7 @@ class MyEdtCelcat extends BaseEdt
                     $this->groupetp = $groupe->getCodeApogee();
 
                 } else {
-                    $this->groupecm = $groupe->getCodeApogee();
+                    $groupecm = $groupe->getCodeApogee();
                 }
             }
         }

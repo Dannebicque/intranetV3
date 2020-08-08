@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Classes;
 
@@ -474,7 +474,6 @@ class MyPrevisionnel
      * @param int         $anneePrevisionnel
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function exportOmegaDepartement(Departement $departement, int $anneePrevisionnel): StreamedResponse
     {

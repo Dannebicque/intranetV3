@@ -9,7 +9,6 @@
     <title>Intranet - {{  block('header')  }}</title>
 
     {% block stylesheets %}
-        {#        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">#}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
@@ -64,7 +63,8 @@
         </div>
     </div>
 </footer>
-
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}

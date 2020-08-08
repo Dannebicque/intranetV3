@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Twig;
 
@@ -11,12 +11,6 @@ use App\Entity\Constantes;
 use App\Classes\Configuration;
 use App\Classes\Tools;
 use Carbon\CarbonInterface;
-use DateTime;
-use Exception;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Intl\Locale;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;

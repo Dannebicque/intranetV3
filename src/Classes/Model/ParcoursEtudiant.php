@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Model/ParcoursEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 22:44
 
 /**
  * Created by PhpStorm.
@@ -22,11 +22,6 @@ use App\Repository\ScolariteRepository;
 
 class ParcoursEtudiant
 {
-    /** @var Etudiant */
-    private $etudiant;
-
-    /** @var Semestre */
-    private $semestreCourant;
 
     private $parcoursUe = [];
 
@@ -51,15 +46,17 @@ class ParcoursEtudiant
 
     public function calculScolarite(Etudiant $etudiant, Semestre $semestreCourant): ParcoursEtudiant
     {
-        $this->etudiant = $etudiant;
-        $this->semestreCourant = $semestreCourant;
+        $etudiant1 = $etudiant;
+        $semestreCourant1 = $semestreCourant;
 
-        foreach ($semestreCourant->getUes() as $ue)
-        {
+        foreach ($semestreCourant->getUes() as $ue) {
             $this->parcoursUe[$ue->getNumeroUe()]['style'] = '';
             $this->parcoursUe[$ue->getNumeroUe()]['moyenne'] = 0;
         }
-        $scolarite = $this->scolariteRepository->findBy(['etudiant' => $this->etudiant->getId(), 'semestre' => $this->semestreCourant->getId()], ['ordre' => 'DESC']);
+        $scolarite = $this->scolariteRepository->findBy([
+            'etudiant' => $etudiant1->getId(),
+            'semestre' => $semestreCourant1->getId()
+        ], ['ordre' => 'DESC']);
 
         if (count($scolarite) > 0) {
             $this->moyenne = $scolarite[0]->getMoyenne();

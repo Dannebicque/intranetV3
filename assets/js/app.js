@@ -2,12 +2,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/08/2020 14:23
+// @lastUpdate 08/08/2020 08:52
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
-//import '@fortawesome/fontawesome-free/js/all.js'
 import 'bootstrap-select/dist/css/bootstrap-select.min.css'
 import '../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'
 import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'

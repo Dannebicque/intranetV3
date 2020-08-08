@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 13:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller\administration;
 
@@ -18,6 +18,7 @@ use App\Classes\MyPrevisionnel;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -201,7 +202,7 @@ class PrevisionnelController extends BaseController
      * @param Request        $request
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function import(MyPrevisionnel $myPrevisionnel, Request $request): Response
     {

@@ -3,27 +3,19 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyDocument.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:04
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes;
 
 
-use App\Entity\Article;
-use App\Entity\ArticleLikeEtudiant;
-use App\Entity\ArticleLikePersonnel;
 use App\Entity\Document;
 use App\Entity\DocumentFavoriEtudiant;
 use App\Entity\DocumentFavoriPersonnel;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
-use App\Repository\ArticleLikeEtudiantRepository;
-use App\Repository\ArticleLikePersonnelRepository;
-use App\Repository\ArticleRepository;
 use App\Repository\DocumentFavoriEtudiantRepository;
 use App\Repository\DocumentFavoriPersonnelRepository;
-use App\Repository\DocumentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class MyDocument
 {
@@ -107,7 +99,7 @@ class MyDocument
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findAllUserFavoris($getConnectedUser);
         } elseif ($getConnectedUser instanceof Etudiant) {
-            $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser, $this->document);
+            $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser);
         }
 
         $tabDocuments = [];
@@ -123,7 +115,7 @@ class MyDocument
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findAllUserFavoris($getConnectedUser);
         } elseif ($getConnectedUser instanceof Etudiant) {
-            $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser, $this->document);
+            $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser);
         }
 
         $tabDocuments = [];

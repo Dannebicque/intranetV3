@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 09:21
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -54,7 +54,6 @@ class MyExcelMultiExport
      * @param $name
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function saveXlsx($name): StreamedResponse
     {
@@ -98,7 +97,6 @@ class MyExcelMultiExport
      * @param       $name
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function saveCsv($name): StreamedResponse
     {
@@ -121,7 +119,6 @@ class MyExcelMultiExport
      * @param       $name
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function savePdf($name): StreamedResponse
     {
@@ -146,7 +143,6 @@ class MyExcelMultiExport
      * @param $modele
      * @param $colonne
      *
-     * @throws Exception
      */
     public function genereExcelFromSerialization($data, $modele, $colonne): void
     {
@@ -221,7 +217,6 @@ class MyExcelMultiExport
     /**
      * @param MyAbsences $myAbsences
      *
-     * @throws Exception
      */
     public function genereExcelAbsence(MyAbsences $myAbsences): void
     {
@@ -272,7 +267,6 @@ class MyExcelMultiExport
     /**
      * @param Semestre $semestre
      *
-     * @throws Exception
      */
     public function genereModeleExcel(Semestre $semestre): void
     {
@@ -298,7 +292,6 @@ class MyExcelMultiExport
      * @param            $groupes
      * @param            $notes
      *
-     * @throws Exception
      */
     public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes): void
     {

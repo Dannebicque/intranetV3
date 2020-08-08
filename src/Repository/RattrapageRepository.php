@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:23
 
 namespace App\Repository;
 
@@ -84,7 +84,7 @@ class RattrapageRepository extends ServiceEntityRepository
     public function findBySemestreCount(Semestre $semestre, int $annee = 0)
     {
         if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : date('Y');
+            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         return $this->createQueryBuilder('r')

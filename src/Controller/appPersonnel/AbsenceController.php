@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:04
+// @lastUpdate 08/08/2020 22:44
 
 namespace App\Controller\appPersonnel;
 
@@ -21,10 +21,8 @@ use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
-use App\Repository\TypeGroupeRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -99,6 +97,7 @@ class AbsenceController extends BaseController
 
         if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
             $planning = $celcatEventsRepository->find($event);
+            $matiere = $planning !== null ? $matiereRepository->findOneBy(['codeElement' => $planning->getCodeModule()]) : null;
         } else {
             $planning = $edtPlanningRepository->find($event);
             $matiere = $planning !== null ? $planning->getMatiere() : null;
@@ -108,12 +107,11 @@ class AbsenceController extends BaseController
             $semaine = $calendrierRepository->findOneBy(['semaineFormation' => $planning->getSemaine()]);
 
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'matiere'  => $matiere,
-                'event'    => $planning,
-                'groupes'  => $myGroupes->getGroupesPlanning($planning),
-                'heure'    => Constantes::TAB_HEURES[$planning->getDebut()],
-                'date'     => $planning->getDate($semaine->getSemaineReelle()),
-                'dateFr'   => $planning->getDateFr($semaine->getSemaineReelle()),
+                'matiere' => $matiere,
+                'event'   => $planning,
+                'groupes' => $myGroupes->getGroupesPlanning($planning),
+                'heure'   => Constantes::TAB_HEURES[$planning->getDebut()],
+                'date'    => $planning->getDate(),
             ]);
         }
 

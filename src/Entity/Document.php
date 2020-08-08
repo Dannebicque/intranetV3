@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 12:03
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -110,7 +110,7 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param float $taille
+     * @param float|null $taille
      *
      * @return Document
      */
@@ -130,7 +130,7 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param string $typeFichier
+     * @param string|null $typeFichier
      *
      * @return Document
      */
@@ -235,7 +235,7 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param string $documentName
+     * @param string|null $documentName
      */
     public function setDocumentName(?string $documentName): void
     {

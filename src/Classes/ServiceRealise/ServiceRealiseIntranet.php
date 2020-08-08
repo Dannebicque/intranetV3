@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes\ServiceRealise;
 
@@ -14,7 +14,6 @@ use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
-use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 
 class ServiceRealiseIntranet implements ServiceRealise
@@ -53,7 +52,7 @@ class ServiceRealiseIntranet implements ServiceRealise
      */
     public function convertToEvenementEdt($event): EvenementEdt
     {
-        $date = $event->getDate($event->getSemaine());
+        $date = $event->getDate();
         $date->locale('fr');
 
         $ev = new EvenementEdt();

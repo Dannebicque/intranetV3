@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2020 11:13
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller\administration;
 
@@ -143,6 +143,12 @@ class EtudiantController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport           $myExport
+     * @param EtudiantRepository $etudiantRepository
+     * @param                    $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
