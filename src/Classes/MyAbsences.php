@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -16,7 +16,6 @@ namespace App\Classes;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Excel\MyExcelMultiExport;
-use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;

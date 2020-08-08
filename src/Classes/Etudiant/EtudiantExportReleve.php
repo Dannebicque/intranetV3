@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Classes\Etudiant;
 
@@ -40,6 +40,7 @@ class EtudiantExportReleve
      *
      * @param EtudiantNotes          $etudiantNotes
      * @param EtudiantAbsences       $etudiantAbsences
+     * @param MyPDF                  $myPdf
      * @param MyEvaluations          $myEvaluations
      * @param EntityManagerInterface $entityManager
      */

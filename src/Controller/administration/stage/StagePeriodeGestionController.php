@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 08:26
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration\stage;
 
@@ -11,7 +11,6 @@ use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\StagePeriode;
 use App\Classes\MyStage;
-use App\Repository\StageEtudiantRepository;
 use App\Repository\StagePeriodeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -31,10 +30,9 @@ class StagePeriodeGestionController extends BaseController
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      * @param MyExport               $myExport
-     * @param StagePeriodeRepository $stagePeriodeRepository
-     * @param                        $_format
-     *
      * @param StagePeriode           $stagePeriode
+     *
+     * @param                        $_format
      *
      * @return Response
      * @throws Exception

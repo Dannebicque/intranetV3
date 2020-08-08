@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 09:06
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller;
 
 use App\Classes\DataUserSession;
-use App\Entity\Etudiant;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface;

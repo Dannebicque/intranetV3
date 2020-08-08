@@ -3,11 +3,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/UuidTrait.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 09:14
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Entity\Traits;
 
-use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UuidTrait

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:29
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration;
 
@@ -14,9 +14,6 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 /**
  * Class SemestreExportController
@@ -40,7 +37,7 @@ class SemestreExportController extends BaseController
      * @Route("/provisoire/{slug}/{semestre}", name="administration_semestre_export_releve_provisoire")
      * @param EtudiantExportReleve $etudiantExportReleve
      * @param Etudiant             $etudiant
-     * @param Semestre             $semestre
+     * @param Semestre|null        $semestre
      *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
@@ -58,7 +55,7 @@ class SemestreExportController extends BaseController
      * @Route("/definitif/{slug}/{semestre}", name="administration_semestre_export_releve_definitif")
      * @param EtudiantExportReleve $etudiantExportReleve
      * @param Etudiant             $etudiant
-     * @param Semestre             $semestre
+     * @param Semestre|null        $semestre
      *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */

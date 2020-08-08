@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\appPersonnel;
 
@@ -11,7 +11,6 @@ use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
 use App\Classes\MyPrevisionnel;
-use App\Entity\Matiere;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

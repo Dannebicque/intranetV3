@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -17,7 +17,6 @@ namespace App\Classes;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
-use function count;
 
 abstract class Tools
 {
@@ -116,5 +115,17 @@ abstract class Tools
         $heure = Carbon::createFromTimeString($heureString);
 
         return Carbon::create($date->year, $date->month, $date->day, $heure->hour, $heure->minute, 0);
+    }
+
+    public static function updateFields($name, $value, $obj)
+    {
+        $t = explode('_', $name);
+        $name = $t[0];
+        $name[0] = chr(ord($name[0]) - 32);
+
+        $method = 'set' . $name;
+        if (method_exists($obj, $method)) {
+            $obj->$method($value);
+        }
     }
 }

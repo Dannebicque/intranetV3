@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2020 11:13
+// @lastUpdate 08/08/2020 22:44
 
 namespace App\Entity;
 
+use App\Classes\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -380,7 +381,7 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Semestre $precedent
+     * @param Semestre|null $precedent
      */
     public function setPrecedent(?Semestre $precedent): void
     {
@@ -396,7 +397,7 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Semestre $suivant
+     * @param Semestre|null $suivant
      */
     public function setSuivant(?Semestre $suivant): void
     {
@@ -412,7 +413,7 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Semestre $decale
+     * @param Semestre|null $decale
      */
     public function setDecale(?Semestre $decale): void
     {
@@ -911,14 +912,7 @@ class Semestre extends BaseEntity
      */
     public function update($name, $value): void
     {
-        $t = explode('_', $name);
-        $name = $t[0];
-        $name[0] = chr(ord($name[0]) - 32);
-
-        $method = 'set' . $name;
-        if (method_exists($this, $method)) {
-            $this->$method($value);
-        }
+        Tools::updateFields($name, $value, $this);
     }
 
     /**
@@ -1170,6 +1164,7 @@ class Semestre extends BaseEntity
         if ($this->nbGroupesTP % 2 === 0) {
             return $this->nbGroupesTP;
         }
+
         return $this->nbGroupesTP + 1;
     }
 

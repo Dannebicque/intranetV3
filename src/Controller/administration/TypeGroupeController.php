@@ -3,17 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:22
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration;
 
-use App\Classes\MyGroupes;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

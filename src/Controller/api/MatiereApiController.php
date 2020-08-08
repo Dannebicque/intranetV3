@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\api;
 
@@ -13,7 +13,6 @@ use App\Entity\Parcour;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
-use App\Entity\Ue;
 use App\Repository\MatiereRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\PrevisionnelRepository;

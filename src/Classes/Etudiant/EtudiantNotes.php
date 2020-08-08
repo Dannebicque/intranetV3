@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Classes\Etudiant;
 
@@ -23,7 +23,6 @@ use Exception;
 class EtudiantNotes
 {
     public NoteRepository $noteRepository;
-    private $notes;
     private Etudiant $etudiant;
     /**
      * @var EntityManagerInterface
@@ -34,6 +33,8 @@ class EtudiantNotes
     /**
      * EtudiantNotes constructor.
      *
+     * @param NoteRepository         $noteRepository
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(NoteRepository $noteRepository, EntityManagerInterface $entityManager)
     {
@@ -42,7 +43,7 @@ class EtudiantNotes
     }
 
 
-    public function setEtudiant(Etudiant $etudiant)
+    public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
     }

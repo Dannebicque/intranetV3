@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 09:15
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -47,9 +47,7 @@ class MyExportListing
     private $colonne = 1;
 
     private $exportTypeDocument;
-    private $exportFormat;
     private $exportChamps;
-    private $exportFiltre;
     /** @var Matiere */
     private $matiere;
 
@@ -111,9 +109,7 @@ class MyExportListing
         ?Matiere $matiere = null
     ): ?StreamedResponse {
         $this->exportTypeDocument = $exportTypeDocument;
-        $this->exportFormat = $exportFormat;
         $this->exportChamps = $exportChamps;
-        $this->exportFiltre = $exportFiltre;
         $this->matiere = $matiere;
 
         $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -384,7 +384,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $commentaire
+     * @param string|null $commentaire
      */
     public function setCommentaire(?string $commentaire): void
     {
@@ -465,7 +465,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $objectifsModule
+     * @param string|null $objectifsModule
      */
     public function setObjectifsModule(?string $objectifsModule): void
     {
@@ -481,7 +481,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $competencesVisees
+     * @param string|null $competencesVisees
      */
     public function setCompetencesVisees(?string $competencesVisees): void
     {
@@ -497,7 +497,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $contenu
+     * @param string|null $contenu
      */
     public function setContenu(?string $contenu): void
     {
@@ -513,7 +513,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $preRequis
+     * @param string|null $preRequis
      */
     public function setPreRequis(?string $preRequis): void
     {
@@ -529,7 +529,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $modalites
+     * @param string|null $modalites
      */
     public function setModalites(?string $modalites): void
     {
@@ -545,7 +545,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $prolongements
+     * @param string|null $prolongements
      */
     public function setProlongements(?string $prolongements): void
     {
@@ -561,7 +561,7 @@ class Matiere extends BaseEntity
     }
 
     /**
-     * @param string $motsCles
+     * @param string|null $motsCles
      */
     public function setMotsCles(?string $motsCles): void
     {

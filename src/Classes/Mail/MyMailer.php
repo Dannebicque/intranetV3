@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MyMailer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:48
+// @lastUpdate 08/08/2020 10:14
 
 /**
  * Created by PhpStorm.
@@ -38,11 +38,6 @@ class MyMailer
     /** @var MailerInterface */
     private $mailer;
 
-    /** @var Environment */
-    protected $templating;
-
-    private $template;
-
     /** @var DatabaseTwigLoader */
     protected $databaseTwigLoader;
 
@@ -61,14 +56,12 @@ class MyMailer
      * MyMailer constructor.
      *
      * @param MailerInterface     $mailer
-     * @param Environment         $templating
      * @param DatabaseTwigLoader  $databaseTwigLoader
      * @param TranslatorInterface $translator
      * @param Configuration       $configuration
      */
     public function __construct(
         MailerInterface $mailer,
-        Environment $templating,
         DatabaseTwigLoader $databaseTwigLoader,
         TranslatorInterface $translator,
         Configuration $configuration
@@ -76,7 +69,6 @@ class MyMailer
         $this->mailer = $mailer;
         $this->configuration = $configuration;
         $this->translator = $translator;
-        $this->templating = $templating;
         $this->databaseTwigLoader = $databaseTwigLoader;
         $this->mail = new TemplatedEmail();
     }
@@ -169,7 +161,7 @@ class MyMailer
     {
         $twig = new Environment($this->databaseTwigLoader);
 
-        $this->template = $twig->render($templateName, $array);
+        $template = $twig->render($templateName, $array);
     }
 
     public function initMessage()

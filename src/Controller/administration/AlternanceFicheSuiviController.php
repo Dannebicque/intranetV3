@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/07/2020 09:45
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration;
 
@@ -11,8 +11,6 @@ use App\Classes\MyAlternanceFicheSuivi;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
 use App\Form\AlternanceFicheSuiviType;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

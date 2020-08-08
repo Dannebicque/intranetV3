@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes\Enquetes;
 
@@ -11,7 +11,6 @@ namespace App\Classes\Enquetes;
 use App\Entity\Previsionnel;
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteSection;
-use App\Entity\QuizzEtudiant;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
 use App\Classes\Excel\MyExcelWriter;

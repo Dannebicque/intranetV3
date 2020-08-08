@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/07/2020 14:46
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Repository;
 
@@ -100,7 +100,7 @@ class DateRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByDepartement(?\App\Entity\Departement $getDepartement)
+    public function getByDepartement(?Departement $getDepartement)
     {
     }
 }

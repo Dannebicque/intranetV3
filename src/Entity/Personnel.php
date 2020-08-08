@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/08/2020 10:19
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -455,7 +455,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|UploadedFile $cv
+     * @param File|null $cv
      */
     public function setCvFile(?File $cv = null): void
     {

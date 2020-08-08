@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySerializer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -14,7 +14,6 @@
 
 namespace App\Classes;
 
-use DateTime;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;

@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 09:06
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller;
 
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
 use App\Repository\DepartementRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -53,8 +54,10 @@ class DefaultController extends BaseController
      *
      * @Route("/aide/{sujet}", name="help_article")
      * @param $sujet
+     *
+     * @return RedirectResponse
      */
-    public function help($sujet)
+    public function help($sujet): RedirectResponse
     {
         return $this->redirect('https://cours.davidannebicque.fr/intranet/' . $sujet);
     }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/08/2020 08:49
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes\Edt;
 
@@ -16,7 +16,6 @@ use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use Carbon\Carbon;
-use DateTime;
 use RuntimeException;
 
 Abstract class BaseEdt

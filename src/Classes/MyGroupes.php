@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 11:56
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Classes;
 
@@ -223,7 +223,8 @@ class MyGroupes
                         $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
                     }
 
-                    $groupe = new Groupe($typeGroupes[$ligne[4]][$ligne[5]]);
+                    $groupe = new Groupe();
+                    $groupe->setTypeGroupe($typeGroupes[$ligne[4]][$ligne[5]]);
                     $groupe->setLibelle($ligne[0]);
                     $groupe->setOrdre($ligne[1]);
                     $groupe->setCodeApogee($ligne[2]);

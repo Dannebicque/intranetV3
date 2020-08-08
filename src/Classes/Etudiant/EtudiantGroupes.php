@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Classes\Etudiant;
 
@@ -14,9 +14,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class EtudiantGroupes
 {
-    private $groupes;
-    private GroupeRepository $groupeRepository;
-
     /**
      * @var Etudiant
      */
@@ -30,11 +27,10 @@ class EtudiantGroupes
     /**
      * EtudiantGroupes constructor.
      *
-     * @param GroupeRepository $groupeRepository
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(GroupeRepository $groupeRepository, EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->groupeRepository = $groupeRepository;
         $this->entityManager = $entityManager;
     }
 
