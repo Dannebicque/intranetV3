@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 10:51
+// @lastUpdate 08/08/2020 08:20
 
 namespace App\Entity;
 
@@ -27,16 +27,16 @@ class TypeGroupe extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="typeGroupes")
      * @Groups({"type_groupe_administration"})
      */
-    private $semestre;
+    private Semestre $semestre;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"type_groupe_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER", orphanRemoval=true)
      * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $groupes;
@@ -44,12 +44,12 @@ class TypeGroupe extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $defaut = false;
+    private bool $defaut = false;
 
     /**
      * @ORM\Column(type="string", length=2)
      */
-    private $type;
+    private ?string $type;
 
     public function __construct(Semestre $semestre)
     {
