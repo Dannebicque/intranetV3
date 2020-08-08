@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Parcour.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 08:12
 
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParcourRepository")
@@ -18,28 +19,29 @@ class Parcour extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"groupe_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="parcours")
      */
-    private $matieres;
+    private ArrayCollection $matieres;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="parcours")
      */
-    private $semestre;
+    private Semestre $semestre;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeElement;
+    private ?string $codeElement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parcours")
      */
-    private $groupes;
+    private ArrayCollection $groupes;
 
     public function __construct(Semestre $semestre)
     {
@@ -118,11 +120,11 @@ class Parcour extends BaseEntity
     }
 
     /**
-     * @param Semestre|null $semestre
+     * @param Semestre $semestre
      *
      * @return Parcour
      */
-    public function setSemestre(?Semestre $semestre): self
+    public function setSemestre(Semestre $semestre): self
     {
         $this->semestre = $semestre;
 
