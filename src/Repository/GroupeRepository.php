@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 12:00
+// @lastUpdate 08/08/2020 08:16
 
 
 namespace App\Repository;
@@ -14,7 +14,6 @@ use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use DA\KernelBundle\Entity\Groupes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -150,9 +149,9 @@ class GroupeRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findGroupeSemestreEdt(Semestre $semestre)
+    public function findGroupeSemestreEdt(Semestre $semestre): array
     {
-        $groupes = array();
+        $groupes = [];
         $gtp = $this->getGroupesTP($semestre->getId());
         $gtd = $this->getGroupesTD($semestre->getId());
 

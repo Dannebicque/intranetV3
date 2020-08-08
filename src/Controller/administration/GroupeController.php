@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 12:00
+// @lastUpdate 08/08/2020 08:16
 
 namespace App\Controller\administration;
 
@@ -15,7 +15,6 @@ use App\Entity\Semestre;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
-use PHPUnit\Util\Json;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,21 +66,33 @@ class GroupeController extends BaseController
      * @param MyExport            $myExport
      * @param GroupeRepository    $groupeRepository
      *
+     * @param Semestre            $semestre
      * @param                     $_format
      *
      * @return Response
      * @throws Exception
      */
-    public function export(MyExport $myExport, GroupeRepository $groupeRepository, $_format): Response
-    {
-        $groupes = $groupeRepository->getByDepartement($this->dataUserSession->getDepartement());
+    public function export(
+        MyExport $myExport,
+        GroupeRepository $groupeRepository,
+        Semestre $semestre,
+        $_format
+    ): Response {
+        $groupes = $groupeRepository->findBySemestre($semestre);
 
         return $myExport->genereFichierGenerique(
             $_format,
             $groupes,
             'groupes',
             ['groupes_administration'],
-            ['type_groupe' => ['semestre', 'libelle'], 'libelle', 'type']//todo: vérifier
+            [
+                'libelle',
+                'typeGroupe' => ['libelle'],
+                'codeApogee',
+                'parent'     => ['libelle'],
+                'ordre',
+                'parcours'   => ['libelle']
+            ]
         );
     }
 

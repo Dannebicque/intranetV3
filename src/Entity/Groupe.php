@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 09:42
+// @lastUpdate 08/08/2020 08:12
 
 namespace App\Entity;
 
@@ -21,46 +21,48 @@ class Groupe extends BaseEntity
      * @ORM\Column(type="string", length=50)
      * @Groups({"groupe_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeGroupe", inversedBy="groupes")
      * @Groups({"groupe_administration"})
      */
-    private $typeGroupe;
+    private ?TypeGroupe $typeGroupe;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"groupe_administration"})
      */
-    private $codeApogee;
+    private ?string $codeApogee;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Groupe", inversedBy="enfants")
      * @Groups({"groupe_administration"})
      */
-    private $parent;
+    private ?Groupe $parent;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
      * @ORM\OrderBy({"nom"="asc", "prenom"="asc"})
      */
-    private $etudiants;
+    private ArrayCollection $etudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parent", cascade={"remove"})
      */
-    private $enfants;
+    private ArrayCollection $enfants;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"groupe_administration"})
      */
-    private $ordre;
+    private ?int $ordre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Parcour", inversedBy="groupes")
+     * @Groups({"groupe_administration"})
      */
-    private $parcours;
+    private ?Parcour $parcours;
 
     public function __construct()
     {
