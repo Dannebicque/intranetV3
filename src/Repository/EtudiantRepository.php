@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/07/2020 07:54
+// @lastUpdate 09/08/2020 13:15
 
 namespace App\Repository;
 
@@ -142,7 +142,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('e.semestre = :semestre')
             ->setParameter('semestre', $semestre)
             ->orderBy('e.nom', 'ASC')
-            ->orderBy('e.prenom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }

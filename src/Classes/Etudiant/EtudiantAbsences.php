@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:14
+// @lastUpdate 11/08/2020 14:22
 
 namespace App\Classes\Etudiant;
 
@@ -37,6 +37,10 @@ class EtudiantAbsences
      * @var EventDispatcherInterface
      */
     private EventDispatcherInterface $eventDispatcher;
+    /**
+     * @var int|mixed|string
+     */
+    private $absences;
 
     /**
      * EtudiantAbsences constructor.
@@ -69,10 +73,10 @@ class EtudiantAbsences
             $semestre = $this->etudiant->getSemestre();
         }
 
-        $absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
+        $this->absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
             $anneeUniversitaire);
 
-        return $absences;
+        return $this->absences;
     }
 
     public function addAbsence(
@@ -108,6 +112,24 @@ class EtudiantAbsences
 
         //On déclenche les events
         $this->eventDispatcher->dispatch($event, AbsenceEvent::REMOVED);
+    }
+
+    public function getPenalitesAbsencesParMatiere(
+        Semestre $semestre,
+        AnneeUniversitaire $anneeUniversitaire,
+        &$tabMatiere
+    ) {
+        $this->getAbsencesParSemestresEtAnneeUniversitaire($semestre, $anneeUniversitaire);
+
+        /** @var Absence $absence */
+        foreach ($this->absences as $absence) {
+            if ($absence->getJustifie() === false && $absence->getMatiere() !== null) {
+                $idMatiere = $absence->getMatiere()->getId();
+                if (array_key_exists($idMatiere, $tabMatiere)) {
+                    $tabMatiere[$idMatiere]->absences++;
+                }
+            }
+        }
     }
 
 }
