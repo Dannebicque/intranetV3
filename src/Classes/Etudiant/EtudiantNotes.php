@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 11/08/2020 14:22
 
 namespace App\Classes\Etudiant;
 
 
 use App\Classes\Tools;
+use App\DTO\MoyenneMatiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
@@ -16,6 +17,7 @@ use App\Entity\ModificationNote;
 use App\Entity\Note;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
+use App\Repository\MatiereRepository;
 use App\Repository\NoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -24,22 +26,31 @@ class EtudiantNotes
 {
     public NoteRepository $noteRepository;
     private Etudiant $etudiant;
-    /**
-     * @var EntityManagerInterface
-     */
+
     private EntityManagerInterface $entityManager;
+
+    private MatiereRepository $matiereRepository;
+    /**
+     * @var Note[]|int|mixed|string
+     */
+    private $notes;
 
 
     /**
      * EtudiantNotes constructor.
      *
+     * @param MatiereRepository      $matiereRepository
      * @param NoteRepository         $noteRepository
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(NoteRepository $noteRepository, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        MatiereRepository $matiereRepository,
+        NoteRepository $noteRepository,
+        EntityManagerInterface $entityManager
+    ) {
         $this->noteRepository = $noteRepository;
         $this->entityManager = $entityManager;
+        $this->matiereRepository = $matiereRepository;
     }
 
 
@@ -114,5 +125,34 @@ class EtudiantNotes
         }
         $this->entityManager->flush();
 
+    }
+
+    public function getMoyenneParMatiereParSemestresEtAnneeUniversitaire(
+        Semestre $semestre,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
+        $this->getNotesParSemestresEtAnneeUniversitaire($semestre, $anneeUniversitaire);
+
+        $matieres = $this->matiereRepository->findBySemestre($semestre);
+        $tabMatiere = [];
+        $groupes = $this->etudiant->getGroupes();
+        foreach ($matieres as $matiere) {
+            if ($matiere->isSuspendu() === false && $matiere->getNbNotes() > 0) {
+                $tabMatiere[$matiere->getId()] = new MoyenneMatiere($matiere, $semestre->getOptPointPenaliteAbsence(),
+                    $groupes);
+            }
+        }
+
+        /** @var Note $note */
+        foreach ($this->notes as $note) {
+            if ($note->getEvaluation() !== null && $note->getEvaluation()->getMatiere() !== null) {
+                $idMatiere = $note->getEvaluation()->getMatiere()->getId();
+                if (array_key_exists($idMatiere, $tabMatiere)) {
+                    $tabMatiere[$idMatiere]->addNote($note);
+                }
+            }
+        }
+
+        return $tabMatiere;
     }
 }

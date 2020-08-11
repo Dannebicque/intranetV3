@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 09/08/2020 15:06
 
 namespace App\Entity;
 
@@ -782,7 +782,7 @@ class Matiere extends BaseEntity
     /**
      * @return bool|null
      */
-    public function getSuspendu(): ?bool
+    public function isSuspendu(): ?bool
     {
         return $this->suspendu;
     }

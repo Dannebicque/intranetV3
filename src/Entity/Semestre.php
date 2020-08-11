@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 22:44
+// @lastUpdate 08/08/2020 22:53
 
 namespace App\Entity;
 
@@ -957,9 +957,8 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @return Collection|Ue[]
      */
-    public function getUes(): Collection
+    public function getUes()
     {
         return $this->ues;
     }
