@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 15/08/2020 09:06
 
 /**
  * Created by PhpStorm.
@@ -192,6 +192,10 @@ class Constantes
     public const SEMESTRE_VCA = 'VCA';
     public const SEMESTRE_VCJ = 'VCJ';
     public const PROPOSITION_INDEFINIE = '?';
+    public const SEMESTRE_EN_COURS = 'E.C.';
+    public const SEMESTRE_DEMISSIONNAIRE = 'DEM';
+    public const SEMESTRE_REORIENTE = 'REO';
+    public const SEMESTRE_BLANCHIMENT = 'BL';
 
     public const SS_COMM_DECISION_COULEUR = [
         Constantes::SEMESTRE_VALIDE     => 'ff00cc00',
@@ -200,4 +204,5 @@ class Constantes
         Constantes::SEMESTRE_VCJ        => 'fff30900',
         ''                              => 'ffffff'
     ];
+
 }

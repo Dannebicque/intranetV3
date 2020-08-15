@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 15/08/2020 09:06
 
 namespace App\Controller\administration;
 
@@ -45,7 +45,7 @@ class SemestreExportController extends BaseController
         EtudiantExportReleve $etudiantExportReleve,
         Etudiant $etudiant,
         Semestre $semestre = null
-    ): void {
+    ) {
         $etudiantExportReleve->setEtudiant($etudiant);
         $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
             $etudiant->getAnneeUniversitaire());

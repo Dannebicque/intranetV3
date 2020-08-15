@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 11/08/2020 14:24
 
 namespace App\Classes\SousCommission;
 
@@ -76,7 +76,7 @@ class SousCommissionExport
         $colonne = 9;
 
         foreach ($this->sousCommission->getMatieres() as $matiere) {
-            if (!$matiere->isSuspendu() && $matiere->getNbnotes() !== 0 && $matiere->getUE()->getSemestre()->getId() === $semestre->getId()) {
+            if (!$matiere->isSuspendu() && $matiere->getNbnotes() > 0) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $matiere->getCodeMatiere());
                 $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $matiere->getCoefficient());
                 $colonne++;

@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 07/08/2020 12:00 -->
+<!-- @lastUpdate 15/08/2020 09:06 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7381,16 +7381,16 @@
         <target>Exporter (xlsx)</target>
       </segment>
     </unit>
-    <unit id="vALasDq" name="sadm.help.modification.heading">
-      <notes>
-        <note priority="1">templates/super-administration/help/edit.html.twig:4</note>
-        <note priority="1">templates/super-administration/help/edit.html.twig:15</note>
-      </notes>
-      <segment>
-        <source>sadm.help.modification.heading</source>
-        <target></target>
-      </segment>
-    </unit>
+      <unit id="vALasDq" name="sadm.help.modification.heading">
+          <notes>
+              <note priority="1">templates/super-administration/help/edit.html.twig:4</note>
+              <note priority="1">templates/super-administration/help/edit.html.twig:15</note>
+          </notes>
+          <segment>
+              <source>sadm.help.modification.heading</source>
+              <target></target>
+          </segment>
+      </unit>
       <unit id="kSEnHx_" name="sadm.help.show.heading">
           <notes>
               <note priority="1">templates/super-administration/help/show.html.twig:4</note>
@@ -7455,16 +7455,16 @@
       <unit id="ruQIhH0" name="success">
           <notes>
               <note priority="1">obsolete</note>
-      </notes>
-      <segment>
-        <source>success</source>
-        <target>Succès</target>
-      </segment>
-    </unit>
-    <unit id="ie_S1Z5" name="table.ue">
-      <notes>
-        <note priority="1">templates/bloc_notes_absences/mcc.html.twig:9</note>
-      </notes>
+          </notes>
+          <segment>
+              <source>success</source>
+              <target>Succès</target>
+          </segment>
+      </unit>
+      <unit id="ie_S1Z5" name="table.ue">
+          <notes>
+              <note priority="1">templates/bloc_notes_absences/mcc.html.twig:9</note>
+          </notes>
       <segment>
         <source>table.ue</source>
         <target>UE</target>
@@ -9748,16 +9748,16 @@
     </unit>
     <unit id="L6dg8rP" name="table.portable">
       <segment>
-        <source>table.portable</source>
-        <target>Portable</target>
+          <source>table.portable</source>
+          <target>Portable</target>
       </segment>
     </unit>
-    <unit id="fEyYbz0" name="site.add.success.flash">
-      <segment>
-          <source>site.add.success.flash</source>
-          <target>Site créé avec succès</target>
-      </segment>
-    </unit>
+      <unit id="fEyYbz0" name="site.add.success.flash">
+          <segment>
+              <source>site.add.success.flash</source>
+              <target>Site créé avec succès</target>
+          </segment>
+      </unit>
       <unit id="UdmlLIA" name="ufr.add.success.flash">
           <segment>
               <source>ufr.add.success.flash</source>
@@ -9816,16 +9816,16 @@
           <segment>
               <source>fichier.personnel.import</source>
               <target>Fichier d'import de personnels</target>
-      </segment>
-    </unit>
-    <unit id=".0s.MiM" name="diplome.add.success.flash">
-      <segment>
-        <source>diplome.add.success.flash</source>
-        <target>Diplôme ajouté avec succès</target>
-      </segment>
-    </unit>
-    <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
-      <segment>
+          </segment>
+      </unit>
+      <unit id=".0s.MiM" name="diplome.add.success.flash">
+          <segment>
+              <source>diplome.add.success.flash</source>
+              <target>Diplôme ajouté avec succès</target>
+          </segment>
+      </unit>
+      <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
+          <segment>
         <source>diplome.delete.error.non-vide.flash</source>
         <target>Impossible de supprimer un diplôme non vide.</target>
       </segment>
@@ -11453,7 +11453,7 @@
     <unit id="iDuyNAq" name="adm.scolarite.edit.heading">
       <segment>
         <source>adm.scolarite.edit.heading</source>
-        <target>Parcours de scolarité modifié avec succès</target>
+          <target>Modifier le parcours de scolarité de %etudiant%</target>
       </segment>
     </unit>
     <unit id="sLwIhTO" name="adm.scolarite.add.flashbag">
@@ -13494,16 +13494,16 @@
     </unit>
     <unit id="hNdGPMK" name="adm.alternance.fiche_suivi.show.heading">
       <segment>
-        <source>adm.alternance.fiche_suivi.show.heading</source>
-        <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
+          <source>adm.alternance.fiche_suivi.show.heading</source>
+          <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
       </segment>
     </unit>
-    <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
-      <segment>
-          <source>atitle.retour.alternance.etudiant</source>
-          <target>Retour à l'alternance de l'étudiant</target>
-      </segment>
-    </unit>
+      <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
+          <segment>
+              <source>atitle.retour.alternance.etudiant</source>
+              <target>Retour à l'alternance de l'étudiant</target>
+          </segment>
+      </unit>
       <unit id="HL9909K" name="atitle.import">
           <segment>
               <source>atitle.import</source>
@@ -13598,6 +13598,12 @@
           <segment>
               <source>adm.typegroupe.semestre.index.heading</source>
               <target>Type de groupe du semestre</target>
+          </segment>
+      </unit>
+      <unit id="OFQ1JHK" name="scolarite.detail.heading">
+          <segment>
+              <source>scolarite.detail.heading</source>
+              <target>Détail de la scolarité de %etudiant% pour le semestre %semestre%</target>
           </segment>
       </unit>
   </file>

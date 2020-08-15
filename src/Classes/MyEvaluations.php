@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluations.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 15/08/2020 09:06
 
 /**
  * Created by PhpStorm.
@@ -14,6 +14,7 @@
 
 namespace App\Classes;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -83,6 +84,7 @@ class MyEvaluations
     public function setSemestre($semestre): MyEvaluations
     {
         $this->semestre = $semestre;
+
         return $this;
     }
 
@@ -103,19 +105,22 @@ class MyEvaluations
     }
 
     /**
+     * @param Semestre           $semestre
+     * @param AnneeUniversitaire $anneeUniversitaire
+     *
      * @return array
      */
-    public function getEvaluationsSemestre(): array
+    public function getEvaluationsSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $evaluations = $this->evaluationRespository->findBySemestre($this->semestre,
-            $this->semestre->getAnneeUniversitaire());
-        $tab = array();
+        $evaluations = $this->evaluationRespository->findBySemestre($semestre,
+            $anneeUniversitaire);
+        $tab = [];
         /** @var Evaluation $eval */
         foreach ($evaluations as $eval) {
             if ($eval->getMatiere() !== null) {
                 $matiereId = $eval->getMatiere()->getId();
                 if (!array_key_exists($matiereId, $tab)) {
-                    $tab[$matiereId] = array();
+                    $tab[$matiereId] = [];
                 }
 
                 $tab[$matiereId][] = $eval;

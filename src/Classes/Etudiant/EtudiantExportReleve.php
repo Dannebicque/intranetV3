@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 15/08/2020 09:06
 
 namespace App\Classes\Etudiant;
 
@@ -67,22 +67,25 @@ class EtudiantExportReleve
     /**
      * @param Semestre           $semestre
      * @param AnneeUniversitaire $anneeUniversitaire
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
+    public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
-        $this->myEvaluations->getEvaluationsSemestre();
+        $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
 
-        try {
-            $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
-                'etudiant'           => $this->etudiant,
-                'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
-                'syntheses'          => $this->myEvaluations->getStatistiques(),
-                'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
-            ], 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf', $this->etudiant->getDepartement());
-        } catch (LoaderError $e) {
-        } catch (RuntimeError $e) {
-        } catch (SyntaxError $e) {
-        }
+
+        return $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
+            'etudiant'           => $this->etudiant,
+            'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
+            'syntheses'          => $this->myEvaluations->getStatistiques(),
+            'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
+            'semestre'           => $semestre
+        ], 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf',
+            $this->etudiant->getDepartement()->getLibelle());
+
     }
 
     private function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)

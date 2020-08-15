@@ -3,20 +3,20 @@
         <td style="text-align: center; width:20%"><img
                     src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"
                     width="75"/></td>
-        <td style="text-align: center; width:60%"><h1>{{ user_data.departement.libelle }}</h1>
-            <stong>Année Universitaire {{ etudiant.annee.diplome.displayAnneeUniversitaire }}</stong>
+        <td style="text-align: center; width:60%"><h1>{{ semestre.diplome.departement.libelle }}</h1>
+            <stong>Année Universitaire {{ anneeUniversitaire.displayAnneeUniversitaire }}</stong>
             <br/>
             UNIVERSITE de REIMS CHAMPAGNE-ARDENNE<br/>
-            {{ settings('NOM_LONG_IUT') }}<br/>
-            <strong>{{ etudiant.annee.diplome.typediplome.libelle }}</strong><br/>
-            <strong>{{ etudiant.annee.diplome.nomdiplome }}</strong><br/>
+            {{ settings('NOM_IUT') }}<br/>
+            <strong>{{ semestre.diplome.typediplome.libelle }}</strong><br/>
+            <strong>{{ semestre.diplome.libelle }}</strong><br/>
         </td>
         <td style="text-align: center; width:20%">
             <img src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}" alt="logo"
                  width="75"/></td>
     </tr>
 </table>
-<h1>Liste des notes du Semestre {{ etudiant.semestre.display }}<br/>Relevé provisoire</h1><br/>
+<h1>Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
 <h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|format_date('short') }}
 <p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
     <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
@@ -35,7 +35,7 @@
     </thead>
     <tbody>
     {% for n in notes %}
-        {% if etudiant.diplome.colCommentaires == true %}
+        {% if semestre.diplome.colCommentaires == true %}
             {% if matprec is defined and matprec != n.evaluation.matiere.id %}
                 <tr style="height: 50px">
                     <td colspan="2">Commentaires :</td>
@@ -74,10 +74,10 @@
 <br/><br/><br/>
 <table style="width:100%">
     <tr>
-        <td style="width:50%">{{ settings('VILLE_IUT') }},
-                                                         le {{ 'now'|format_date('short') }}</td>
+        <td style="width:50%">{{ semestre.diplome.departement.ufr.sitePrincipal.adresse.ville }},
+                                                                                                le {{ 'now'|format_date('short') }}</td>
         <td style="width:50%">Le responsable du diplôme<br/>
-            {{ etudiant.diplome.respDiplome.displayPr }}</td>
+            {{ semestre.diplome.responsableDiplome.displayPr }}</td>
     </tr>
     <tr>
         <td colspan="2">&nbsp;</td>
