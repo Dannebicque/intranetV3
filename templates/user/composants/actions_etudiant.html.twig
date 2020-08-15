@@ -104,9 +104,16 @@
                         <a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                            data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
-                        <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
-                           class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
-                                    class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+                        {% if parcour.decision == constant('App\\Entity\\Constantes::SEMESTRE_EN_COURS') %}
+                            <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
+                               class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
+                                        class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+                        {% else %}
+                            <a href="{{ path('administration_semestre_export_releve_definitif',{slug:etudiant.slug,
+                                semestre: parcour.semestre.id}) }}"
+                               class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer le relevé de notes définitif"><i
+                                        class="fa fa-print"></i> Editer le relevé de notes définitif</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

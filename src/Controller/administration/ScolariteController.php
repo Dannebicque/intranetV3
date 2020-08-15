@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 11/08/2020 15:05
 
 namespace App\Controller\administration;
 
@@ -65,6 +65,8 @@ class ScolariteController extends BaseController
             }
             $this->entityManager->flush();
             $this->addFlashBag('success', 'adm.scolarite.add.flashbag');
+            $form = $this->createForm(ScolariteType::class, $scolarite,
+                ['departement' => $this->dataUserSession->getDepartement()]);
         }
         $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 

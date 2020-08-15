@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 11:05
+// @lastUpdate 15/08/2020 09:06
 
 namespace App\Controller;
 
@@ -103,18 +103,51 @@ class ProfilEtudiantController extends BaseController
      */
     public function notes(
         EtudiantNotes $etudiantNotes,
-        ScolariteRepository $scolariteRepository,
         Etudiant $etudiant
     ): Response {
-        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
-            $etudiant->getDepartement()); //todo: a finaliser, pour accéder à l'historique et le graph les semestres dans lesquels l'étudiant est passé dans le département...
+
         $etudiantNotes->setEtudiant($etudiant);
 
         return $this->render('user/composants/notes.html.twig', [
-            'notes'     => $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+            'notes'    => $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
                 $etudiant->getAnneeUniversitaire()),
-            'semestres' => $semestres
+            'etudiant' => $etudiant
         ]);
+    }
+
+    /**
+     * @Route("/profil-ajax/{slug}/notes", name="profil_etudiant_ajax_notes_graph", options={"expose":true})
+     * @param EtudiantNotes       $etudiantNotes
+     * @param ScolariteRepository $scolariteRepository
+     * @param Etudiant            $etudiant
+     *
+     * @return Response
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     */
+    public function ajaxGraphiquesNotes(
+        ScolariteRepository $scolariteRepository,
+        EtudiantNotes $etudiantNotes,
+        Etudiant $etudiant
+    ) {
+        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
+            $etudiant->getDepartement());
+        $etudiantNotes->setEtudiant($etudiant);
+        $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+            $etudiant->getAnneeUniversitaire());
+        $dataSets = [];
+        foreach ($semestres as $semestre) {
+            $dataset['label'] = $semestre->getSemestre()->getLibelle();
+            $dataset['backgroundColor'] = "rgba(51,202,185,0.7)";
+            $dataset['borderColor'] = "rgba(0,0,0,0)";
+            $dataset['pointBackgroundColor'] = "rgba(51,202,185,0.7)";
+            $dataset['pointBorderColor'] = "#fff";
+            $dataset['pointHoverBackgroundColor'] = "#fff";
+            $dataset['pointHoverBorderColor'] = "rgba(51,202,185,0.7)";
+            $dataset['data'] = [12, 13, 14, 15, 16, 10, 8];
+            $dataSets[] = $dataset;
+        }
+
+        return $this->json($dataSets);
     }
 
     /**

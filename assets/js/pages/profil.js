@@ -2,16 +2,48 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 15/08/2020 09:06
 import {addCallout} from '../util'
+
+require('chart.js')
 
 $(document).on('click', '.changeprofil', function (e) {
   e.preventDefault()
   e.stopPropagation()
-
+  let $onglet = $(this)
   $('.changeprofil').removeClass('active show')
   $(this).addClass('active show')
-  $('#profilContent').empty().load($(this).attr('href'))
+  $('#profilContent').empty().load($(this).attr('href'), function () {
+    if ($onglet.attr('id') === 'profil-notes') {
+      console.log('graph')
+      const graph = $('#chart-radar')
+      $.get(Routing.generate('profil_etudiant_ajax_notes_graph', {slug: $(graph).data('etudiant')}), function (datasets) {
+        console.log(datasets)
+        let labels = []
+        new Chart(graph, {
+          type: 'radar',
+
+          // Data
+          //
+          data: {
+            labels: ['Mx101', 'Mx102', 'Mx201', 'Mx203', 'Mx202', 'Mx204', 'Moyenne'],
+            datasets: datasets
+          },
+
+          // Options
+          //
+          options: {
+            responsive: false,
+            legend: {
+              display: true
+            }
+          }
+        })
+      })
+
+    }
+  })
+
 
 })
 
@@ -152,3 +184,18 @@ $(document).on('change', '#chgt_etudiant_fin', function () {
 
   })
 })
+
+/*        {% for semestre in semestres %}
+  {
+    label: "S1",
+      backgroundColor: "rgba(51,202,185,0.7)",
+    borderColor: "rgba(0,0,0,0)",
+    pointBackgroundColor: "rgba(51,202,185,0.7)",
+    pointBorderColor: "#fff",
+    pointHoverBackgroundColor: "#fff",
+    pointHoverBorderColor: "rgba(51,202,185,0.7)",
+    data: [10, 9, 19, 8, 15, 16, 8.5]
+  }{% if not loop.last %},{% endif %}
+  {% endfor %}
+
+ */

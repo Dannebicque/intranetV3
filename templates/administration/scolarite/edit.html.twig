@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.scolarite.edit.heading'|trans({'etudiant': etudiant.displayPr}) }}
+    {{ 'adm.scolarite.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -23,62 +23,20 @@
     {{ include('user/composants/scolarite.html.twig', {scolarite:scolarite}) }}
 
     <div class="card">
-        <h4 class="card-title">{{ 'adm.scolarite.edit.heading'|trans({'etudiant': etudiant.displayPr}) }}</h4>
+        <h4 class="card-title">{{ 'adm.scolarite.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}</h4>
         <div class="card-body">
-            {{ include('composants/adm-form.html.twig') }}
-
-{#            <form class="form form-horizontal" method="post" action="">#}
-{#                <div class="form-group">#}
-{#                    <label for="ordre" class="control-label required">Ordre dans le parcours scolaire *#}
-{#                                                                                :</label>#}
-{#                        <input type="text" name="ordre" class="form-control" id="ordre">#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="chg_semestre" class="control-label required">Année | Semestre * :</label>#}
-{#                        <select class="form-control" id="chg_semestre" name="semestre">#}
-{#                            <option value="">Choisir le semestre</option>#}
-{#                            {% for semestre in user_data.semestres %}#}
-{#                                <option value="{{ semestre.id }}">{{ semestre.display }}</option>#}
-{#                            {% endfor %}#}
-{#                        </select>#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="chg_semestre" class="control-label required">Moyennes dans les UE * :</label>#}
-{#                    <div id="idUE">#}
-{#                        Choisissiez d'abord un semestre#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="moyenne_semestre" class="control-label required">Moyenne du semestre *#}
-{#                                                                                           :</label>#}
-{#                        <input type="text" name="moyenne_semestre" class="form-control" id="moyenne_semestre">#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="decision_semestre" class="control-label required">Décision du semestre *#}
-{#                                                                                            :</label>#}
-{#                        <select id="decision_semestre" name="decision_semestre" class="form-control">#}
-{#                            <option value="EC">En cours</option>#}
-{#                            <option value="V">Validé</option>#}
-{#                            <option value="NV">Non Validé</option>#}
-{#                            <option value="MNC">MNC</option>#}
-{#                            <option value="DEM">Démission</option>#}
-{#                            <option value="REO">Réorientation</option>#}
-{#                            <option value="VCJ">VCJ</option>#}
-{#                        </select>#}
-{#                </div>#}
-{#                <div class="form-group">#}
-{#                    <label for="poursuite_semestre" class="control-label required">Proposition * :</label>#}
-{#                        <input type="text" name="poursuite_semestre" class="form-control" id="poursuite_semestre" placeholder="Sn+1, DUT, ...">#}
-{#                </div>#}
-{#                <div class="row">#}
-{#                    <div class="col-sm-offset-2 col-sm-9">#}
-{#                        <div class="form-actions">#}
-{#                            <button type="submit" id="alider" name="valider" class="btn btn-primary btn-large">Ajouter#}
-{#                            </button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </form>#}
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_row(form.ordre) }}
+            {{ form_row(form.semestre) }}
+            <div id="ues_semestre">
+                <div class="alert alert-info">Choisir le semestre pour compléter les données pour les UEs
+                                              associées
+                </div>
+            </div>
+            {{ form_rest(form) }}
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}
@@ -116,4 +74,14 @@
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('scolarite') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('scolarite') }}
 {% endblock %}

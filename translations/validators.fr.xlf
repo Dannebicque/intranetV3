@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/validators.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 07/08/2020 12:00 -->
+<!-- @lastUpdate 15/08/2020 09:06 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="validators.fr">
@@ -15,16 +15,16 @@
     </unit>
     <unit id="NN2_iru" name="This value should be true.">
       <segment>
-        <source>This value should be true.</source>
-        <target>Cette valeur doit être vraie.</target>
+          <source>This value should be true.</source>
+          <target>Cette valeur doit être vraie.</target>
       </segment>
     </unit>
-    <unit id="OjM_kpf" name="This value should be of type {{ type }}.">
-      <segment>
-          <source>This value should be of type {{ type }}.</source>
-          <target>Cette valeur doit être de type {{ type }}.</target>
-      </segment>
-    </unit>
+      <unit id="OjM_kpf" name="This value should be of type {{ type }}.">
+          <segment>
+              <source>This value should be of type {{ type }}.</source>
+              <target>Cette valeur doit être de type {{ type }}.</target>
+          </segment>
+      </unit>
       <unit id="f0P5pBD" name="This value should be blank.">
           <segment>
               <source>This value should be blank.</source>
@@ -69,26 +69,26 @@
           <segment>
               <source>This field is missing.</source>
               <target>Ce champ est manquant.</target>
-      </segment>
-    </unit>
-    <unit id="LO2vFKN" name="This value is not a valid date.">
-      <segment>
-        <source>This value is not a valid date.</source>
-        <target>Cette valeur n'est pas une date valide.</target>
-      </segment>
-    </unit>
-    <unit id="86dU_nv" name="This value is not a valid datetime.">
-      <segment>
-        <source>This value is not a valid datetime.</source>
-        <target>Cette valeur n'est pas une date valide.</target>
-      </segment>
-    </unit>
-    <unit id="PSvNXdi" name="This value is not a valid email address.">
-      <segment>
-          <source>This value is not a valid email address.</source>
-          <target>Cette valeur n'est pas une adresse email valide.</target>
-      </segment>
-    </unit>
+          </segment>
+      </unit>
+      <unit id="LO2vFKN" name="This value is not a valid date.">
+          <segment>
+              <source>This value is not a valid date.</source>
+              <target>Cette valeur n'est pas une date valide.</target>
+          </segment>
+      </unit>
+      <unit id="86dU_nv" name="This value is not a valid datetime.">
+          <segment>
+              <source>This value is not a valid datetime.</source>
+              <target>Cette valeur n'est pas une date valide.</target>
+          </segment>
+      </unit>
+      <unit id="PSvNXdi" name="This value is not a valid email address.">
+          <segment>
+              <source>This value is not a valid email address.</source>
+              <target>Cette valeur n'est pas une adresse email valide.</target>
+          </segment>
+      </unit>
       <unit id="3KeHbZy" name="The file could not be found.">
           <segment>
               <source>The file could not be found.</source>
@@ -159,16 +159,16 @@
           <segment>
               <source>This value should be null.</source>
               <target>Cette valeur doit être nulle.</target>
-      </segment>
-    </unit>
-    <unit id="zKzWejA" name="This value is not valid.">
-      <segment>
-        <source>This value is not valid.</source>
-        <target>Cette valeur n'est pas valide.</target>
-      </segment>
-    </unit>
-    <unit id="HSuBZpQ" name="This value is not a valid time.">
-      <segment>
+          </segment>
+      </unit>
+      <unit id="zKzWejA" name="This value is not valid.">
+          <segment>
+              <source>This value is not valid.</source>
+              <target>Cette valeur n'est pas valide.</target>
+          </segment>
+      </unit>
+      <unit id="HSuBZpQ" name="This value is not a valid time.">
+          <segment>
         <source>This value is not a valid time.</source>
         <target>Cette valeur n'est pas une heure valide.</target>
       </segment>
@@ -236,16 +236,16 @@
     </unit>
     <unit id="1YC0pOd" name="This value is not a valid country.">
       <segment>
-        <source>This value is not a valid country.</source>
-        <target>Ce pays n'est pas valide.</target>
+          <source>This value is not a valid country.</source>
+          <target>Ce pays n'est pas valide.</target>
       </segment>
     </unit>
-    <unit id="B5ebaMp" name="This value is already used.">
-      <segment>
-          <source>This value is already used.</source>
-          <target>Cette valeur est déjà utilisée.</target>
-      </segment>
-    </unit>
+      <unit id="B5ebaMp" name="This value is already used.">
+          <segment>
+              <source>This value is already used.</source>
+              <target>Cette valeur est déjà utilisée.</target>
+          </segment>
+      </unit>
       <unit id="L6097a6" name="The size of the image could not be detected.">
           <segment>
               <source>The size of the image could not be detected.</source>
@@ -368,16 +368,16 @@
           <segment>
               <source>This is not a valid International Bank Account Number (IBAN).</source>
               <target>Le numéro IBAN (International Bank Account Number) saisi n'est pas valide.</target>
-      </segment>
-    </unit>
-    <unit id="yHirwNr" name="This value is not a valid ISBN-10.">
-      <segment>
-        <source>This value is not a valid ISBN-10.</source>
-        <target>Cette valeur n'est pas un code ISBN-10 valide.</target>
-      </segment>
-    </unit>
-    <unit id="c_q0_ua" name="This value is not a valid ISBN-13.">
-      <segment>
+          </segment>
+      </unit>
+      <unit id="yHirwNr" name="This value is not a valid ISBN-10.">
+          <segment>
+              <source>This value is not a valid ISBN-10.</source>
+              <target>Cette valeur n'est pas un code ISBN-10 valide.</target>
+          </segment>
+      </unit>
+      <unit id="c_q0_ua" name="This value is not a valid ISBN-13.">
+          <segment>
         <source>This value is not a valid ISBN-13.</source>
         <target>Cette valeur n'est pas un code ISBN-13 valide.</target>
       </segment>
@@ -402,16 +402,16 @@
     </unit>
     <unit id="c.WxzFW" name="This value should be equal to {{ compared_value }}.">
       <segment>
-        <source>This value should be equal to {{ compared_value }}.</source>
-        <target>Cette valeur doit être égale à {{ compared_value }}.</target>
+          <source>This value should be equal to {{ compared_value }}.</source>
+          <target>Cette valeur doit être égale à {{ compared_value }}.</target>
       </segment>
     </unit>
-    <unit id="_jdjkwq" name="This value should be greater than {{ compared_value }}.">
-      <segment>
-          <source>This value should be greater than {{ compared_value }}.</source>
-          <target>Cette valeur doit être supérieure à {{ compared_value }}.</target>
-      </segment>
-    </unit>
+      <unit id="_jdjkwq" name="This value should be greater than {{ compared_value }}.">
+          <segment>
+              <source>This value should be greater than {{ compared_value }}.</source>
+              <target>Cette valeur doit être supérieure à {{ compared_value }}.</target>
+          </segment>
+      </unit>
       <unit id="o8A8a0H" name="This value should be greater than or equal to {{ compared_value }}.">
           <segment>
               <source>This value should be greater than or equal to {{ compared_value }}.</source>
@@ -504,16 +504,16 @@
           <segment>
               <source>This value does not match the expected {{ charset }} charset.</source>
               <target>Cette valeur ne correspond pas au jeu de caractères {{ charset }} attendu.</target>
-      </segment>
-    </unit>
-    <unit id="Wi2y9.N" name="This is not a valid Business Identifier Code (BIC).">
-      <segment>
-        <source>This is not a valid Business Identifier Code (BIC).</source>
-        <target>Ce n'est pas un code universel d'identification des banques (BIC) valide.</target>
-      </segment>
-    </unit>
-    <unit id="VKDowX6" name="Error">
-      <notes>
+          </segment>
+      </unit>
+      <unit id="Wi2y9.N" name="This is not a valid Business Identifier Code (BIC).">
+          <segment>
+              <source>This is not a valid Business Identifier Code (BIC).</source>
+              <target>Ce n'est pas un code universel d'identification des banques (BIC) valide.</target>
+          </segment>
+      </unit>
+      <unit id="VKDowX6" name="Error">
+          <notes>
         <note priority="1">templates/form/bootstrap_4_layout.html.twig:273</note>
       </notes>
       <segment>
@@ -559,16 +559,16 @@
     </unit>
     <unit id="ubHMK2q" name="This value should be either positive or zero.">
       <segment>
-        <source>This value should be either positive or zero.</source>
-        <target>Cette valeur doit être supérieure ou égale à zéro.</target>
+          <source>This value should be either positive or zero.</source>
+          <target>Cette valeur doit être supérieure ou égale à zéro.</target>
       </segment>
     </unit>
-    <unit id="IwNTzo_" name="This value should be negative.">
-      <segment>
-          <source>This value should be negative.</source>
-          <target>Cette valeur doit être strictement négative.</target>
-      </segment>
-    </unit>
+      <unit id="IwNTzo_" name="This value should be negative.">
+          <segment>
+              <source>This value should be negative.</source>
+              <target>Cette valeur doit être strictement négative.</target>
+          </segment>
+      </unit>
       <unit id="0GfwMfP" name="This value should be either negative or zero.">
           <segment>
               <source>This value should be either negative or zero.</source>
@@ -605,14 +605,14 @@
           <segment>
               <source>The uploaded file was too large. Please try to upload a smaller file.</source>
               <target>Le fichier téléchargé est trop volumineux. Merci d'essayer d'envoyer un fichier plus petit.
-        </target>
-      </segment>
-    </unit>
-    <unit id="fvxWW3V" name="The CSRF token is invalid. Please try to resubmit the form.">
-      <segment>
-        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
-        <target>Le jeton CSRF est invalide. Veuillez renvoyer le formulaire.</target>
-      </segment>
-    </unit>
+              </target>
+          </segment>
+      </unit>
+      <unit id="fvxWW3V" name="The CSRF token is invalid. Please try to resubmit the form.">
+          <segment>
+              <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+              <target>Le jeton CSRF est invalide. Veuillez renvoyer le formulaire.</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

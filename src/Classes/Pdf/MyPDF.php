@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 15/08/2020 09:06
 
 /**
  * Created by PhpStorm.
@@ -64,7 +64,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf($template, $data, $name, $departement):void
+    public static function generePdf($template, $data, $name, $departement)
     {
         $html = self::$templating->render($template, $data);
 
@@ -74,9 +74,9 @@ class MyPDF
 
         $date = new DateTime('now');
         $canvas = self::$domPdf->getCanvas();
-        $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, array(0, 0, 0));
+        $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
         $canvas->page_text(43, 800, $departement. ' | '.$date->format('d/m/Y').'. Généré depuis l\'intranet', 'Arial', 10, array(0,0,0));
 
-        self::$domPdf->stream($name, array('Attachment' => 1));
+        return self::$domPdf->stream($name, ['Attachment' => 1]);
     }
 }

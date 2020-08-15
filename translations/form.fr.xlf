@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 07/08/2020 12:00 -->
+<!-- @lastUpdate 15/08/2020 09:06 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -2124,15 +2124,15 @@
         <target>Novembre</target>
       </segment>
     </unit>
-    <unit id="ThI0lZz" name="Décembre">
-      <notes>
-        <note priority="1">src/Form/SemestreType.php:71</note>
-      </notes>
-      <segment>
-        <source>Décembre</source>
-        <target>Décembre</target>
-      </segment>
-    </unit>
+      <unit id="ThI0lZz" name="Décembre">
+          <notes>
+              <note priority="1">src/Form/SemestreType.php:71</note>
+          </notes>
+          <segment>
+              <source>Décembre</source>
+              <target>Décembre</target>
+          </segment>
+      </unit>
       <unit id="OzpDeKu" name="label.nbGroupesTd">
           <notes>
               <note priority="1">src/Form/SemestreType.php:96</note>
@@ -2199,16 +2199,16 @@
       <unit id="rA25S_j" name="choice.vacataire">
           <notes>
               <note priority="1">src/Form/PersonnelType.php:47</note>
-      </notes>
-      <segment>
-        <source>choice.vacataire</source>
-        <target>Vacataire</target>
-      </segment>
-    </unit>
-    <unit id="G0AF8Mk" name="label.nbHeuresService">
-      <notes>
-        <note priority="1">src/Form/PersonnelType.php:57</note>
-      </notes>
+          </notes>
+          <segment>
+              <source>choice.vacataire</source>
+              <target>Vacataire</target>
+          </segment>
+      </unit>
+      <unit id="G0AF8Mk" name="label.nbHeuresService">
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:57</note>
+          </notes>
       <segment>
         <source>label.nbHeuresService</source>
         <target>Nb. Heures dans service</target>

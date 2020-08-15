@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 11/08/2020 14:34
 
 namespace App\Controller;
 
@@ -59,7 +59,7 @@ class UserController extends BaseController
         PersonnelRepository $personnelRepository,
         $type,
         $slug,
-        $onglet = 'timeline'
+        $onglet = 'scolarite'
     ) {
         if ($type === 'personnel') {
             $user = $personnelRepository->findOneBySlug($slug);
