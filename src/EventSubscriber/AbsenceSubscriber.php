@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:55
+// @lastUpdate 16/08/2020 08:36
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
@@ -23,14 +23,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AbsenceSubscriber implements EventSubscriberInterface
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /** @var AbsenceRepository */
-    private $absenceRepository;
+    private AbsenceRepository $absenceRepository;
 
-    /** @var AbsenceJustificatifRepository */
-    private $absenceJustificatifRepository;
+    private AbsenceJustificatifRepository $absenceJustificatifRepository;
 
     /**
      * RegistrationNotifySubscriber constructor.
