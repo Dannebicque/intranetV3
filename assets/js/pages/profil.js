@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 15/08/2020 09:42
 import {addCallout} from '../util'
 
 require('chart.js')
@@ -88,8 +88,7 @@ $(document).on('click', '#btnabs', function (e) {
       }
 
       let html = '<tr class="' + classe + '" id="ligne_' + data.id + '">\n' +
-        '                    <td>' + data.date + '</td>\n' +
-        '                    <td>' + data.heure + '</td>\n' +
+        '                    <td>' + data.date + ' à ' + data.heure + '</td>\n' +
         '                    <td>' + data.codeMatiere + '</td>\n' +
         '                    <td>' + texte + '</td>\n' +
         '                    <td class="hide">' + data.personnel + '</td>\n' +
@@ -101,7 +100,7 @@ $(document).on('click', '#btnabs', function (e) {
         '                                title="Détails"\n' +
         '                                data-title="Détails de l\'absence"\n' +
         '                        >\n' +
-        '                            <i class="' + iconShow + '"></i>\n' +
+        '                            <i class="fas fa-info"></i>\n' +
         '                        </button>\n' +
         '                    </td>\n' +
         '                        <td>\n' +
@@ -113,7 +112,7 @@ $(document).on('click', '#btnabs', function (e) {
         '                        </td>\n' +
         '                </tr>'
 
-
+      console.log(html)
       $('#tableAbsence > tbody:last').append(html)
     }
   })
@@ -121,16 +120,18 @@ $(document).on('click', '#btnabs', function (e) {
 
 $(document).on('click', '.checkAbsence', function (e) {
   let absence = $(this).data('absence')
-  let etat = 1
+  console.log(absence)
+  let etat = 0
 
   if (($(this).is(':checked'))) {
-    etat = 0
+    etat = 1
   }
 
   $.ajax({
     url: Routing.generate('administration_absences_justifie', {'absence': absence, 'etat': etat}),
     type: 'GET',
     success: function (data) {
+      console.log(data)
       if (data) {
         $('#ligne_' + absence).removeClass('bg-pale-warning').addClass('bg-pale-success')
       } else {

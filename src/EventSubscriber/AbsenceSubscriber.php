@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 15/08/2020 09:55
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
@@ -56,12 +56,12 @@ class AbsenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE => 'onJustifieAbsences',
-            AbsenceEvent::ADDED                               => 'onVerificationJustificatif',
+            JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE => 'onJustificatifAccepte',
+            AbsenceEvent::ADDED                               => 'onVerificationJustificatif'
         ];
     }
 
-    public function onJustifieAbsences(JustificatifEvent $event): void
+    public function onJustificatifAccepte(JustificatifEvent $event): void
     {
         $justificatif = $event->getAbsenceJustificatif();
         $absences = $this->absenceRepository->getAJustifier($justificatif);

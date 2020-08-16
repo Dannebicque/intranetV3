@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 15/08/2020 09:43
 
 namespace App\Controller\administration;
 
@@ -191,7 +191,7 @@ class AbsenceController extends BaseController
     {
         $absence->setJustifie($etat);
         $this->entityManager->flush();
-
+//todo: event mail?
         return $this->json($etat);
     }
 

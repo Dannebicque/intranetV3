@@ -3,17 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:36
+// @lastUpdate 15/08/2020 09:55
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
 
+use App\Classes\Mail\MyMailer;
+use App\Entity\Configuration;
 use App\Event\AbsenceEvent;
 use App\Event\EvaluationEvent;
 use App\Event\JustificatifEvent;
 use App\Event\NoteEvent;
 use App\Event\RattrapageEvent;
-use App\Classes\Mail\MyMailer;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
@@ -46,12 +47,27 @@ class MailingSubscriber implements EventSubscriberInterface
         return [
             AbsenceEvent::ADDED         => 'onMailAbsenceAdded',
             AbsenceEvent::REMOVED       => 'onMailAbsenceRemoved',
+            AbsenceEvent::JUSTIFIED     => 'onMailAbsenceJustified',
             NoteEvent::UPDATED          => 'onMailNoteModificationResponsable',
             EvaluationEvent::ADDED      => 'onMailNewTranscriptResponsable',
             RattrapageEvent::DECISION   => 'onMailDecisionRattrapage',
             JustificatifEvent::DECISION => 'onMailDecisionJustificatif',
             JustificatifEvent::DELETED  => 'onMailDeleteJustificatif',
         ];
+    }
+
+    /**
+     * @param AbsenceEvent $event
+     *
+     * @throws TransportExceptionInterface
+     */
+    public function onMailAbsenceJustified(AbsenceEvent $event): void
+    {
+        $absence = $event->getAbsence();
+        if ($absence->getEtudiant() !== null) {
+            $this->myMailer->setTemplate('mails/absence_justified.txt.twig', ['absence' => $absence]);
+            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Une absence a été justifiée');
+        }
     }
 
     /**
