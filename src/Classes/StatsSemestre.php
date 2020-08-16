@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/StatsSemestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 09:48
+// @lastUpdate 16/08/2020 09:49
 
 namespace App\Classes;
 
@@ -34,10 +34,9 @@ class StatsSemestre
             }
 
             //bac
-            if ($etudiant->getBac() !== null) {
-                if (array_key_exists($etudiant->getBac()->getId(), $stats->repartitionBacEffectif)) {
-                    $stats->repartitionBacEffectif[$etudiant->getBac()->getId()]++;
-                }
+            if (($etudiant->getBac() !== null) &&
+                array_key_exists($etudiant->getBac()->getId(), $stats->repartitionBacEffectif)) {
+                $stats->repartitionBacEffectif[$etudiant->getBac()->getId()]++;
             }
             $stats->calculPourcentageRepartitionBac();
 
