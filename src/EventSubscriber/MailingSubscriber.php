@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:55
+// @lastUpdate 16/08/2020 08:36
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
 
 use App\Classes\Mail\MyMailer;
-use App\Entity\Configuration;
 use App\Event\AbsenceEvent;
 use App\Event\EvaluationEvent;
 use App\Event\JustificatifEvent;
@@ -24,8 +23,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
  */
 class MailingSubscriber implements EventSubscriberInterface
 {
-    /** @var MyMailer */
-    protected $myMailer;
+    protected MyMailer $myMailer;
 
     /**
      * MailingSubscriber constructor.
