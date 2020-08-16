@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 16/08/2020 14:28
 
 namespace App\Classes\ServiceRealise;
 
@@ -16,7 +16,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
 
-class ServiceRealiseIntranet implements ServiceRealise
+class ServiceRealiseIntranet implements ServiceRealiseInterface
 {
     /**
      * @var EdtPlanningRepository

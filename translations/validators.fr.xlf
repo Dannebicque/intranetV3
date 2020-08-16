@@ -3,16 +3,16 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/validators.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 16/08/2020 09:48 -->
+<!-- @lastUpdate 16/08/2020 16:45 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="validators.fr">
-    <unit id="zh5oKD9" name="This value should be false.">
-      <segment>
-          <source>This value should be false.</source>
-          <target>Cette valeur doit être fausse.</target>
-      </segment>
-    </unit>
+      <unit id="zh5oKD9" name="This value should be false.">
+          <segment>
+              <source>This value should be false.</source>
+              <target>Cette valeur doit être fausse.</target>
+          </segment>
+      </unit>
       <unit id="NN2_iru" name="This value should be true.">
           <segment>
               <source>This value should be true.</source>
@@ -179,16 +179,16 @@
               <target>Cette valeur n'est pas une URL valide.</target>
           </segment>
       </unit>
-    <unit id="jpaLsb2" name="The two values should be equal.">
-      <segment>
-        <source>The two values should be equal.</source>
-        <target>Les deux valeurs doivent être identiques.</target>
-      </segment>
-    </unit>
-    <unit id="fIlB1B_" name="The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.">
-      <segment>
-        <source>The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.</source>
-        <target>Le fichier est trop volumineux. Sa taille ne doit pas dépasser {{ limit }} {{ suffix }}.
+      <unit id="jpaLsb2" name="The two values should be equal.">
+          <segment>
+              <source>The two values should be equal.</source>
+              <target>Les deux valeurs doivent être identiques.</target>
+          </segment>
+      </unit>
+      <unit id="fIlB1B_" name="The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.">
+          <segment>
+              <source>The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.</source>
+              <target>Le fichier est trop volumineux. Sa taille ne doit pas dépasser {{ limit }} {{ suffix }}.
         </target>
       </segment>
     </unit>
@@ -224,16 +224,16 @@
     </unit>
     <unit id="lDOGNFX" name="This value is not a valid language.">
       <segment>
-        <source>This value is not a valid language.</source>
-        <target>Cette langue n'est pas valide.</target>
+          <source>This value is not a valid language.</source>
+          <target>Cette langue n'est pas valide.</target>
       </segment>
     </unit>
-    <unit id="y9IdYkA" name="This value is not a valid locale.">
-      <segment>
-          <source>This value is not a valid locale.</source>
-          <target>Ce paramètre régional n'est pas valide.</target>
-      </segment>
-    </unit>
+      <unit id="y9IdYkA" name="This value is not a valid locale.">
+          <segment>
+              <source>This value is not a valid locale.</source>
+              <target>Ce paramètre régional n'est pas valide.</target>
+          </segment>
+      </unit>
       <unit id="1YC0pOd" name="This value is not a valid country.">
           <segment>
               <source>This value is not a valid country.</source>
@@ -388,18 +388,18 @@
               <target>Cette valeur n'est ni un code ISBN-10, ni un code ISBN-13 valide.</target>
           </segment>
       </unit>
-    <unit id="cuct0Ow" name="This value is not a valid ISSN.">
-      <segment>
-        <source>This value is not a valid ISSN.</source>
-        <target>Cette valeur n'est pas un code ISSN valide.</target>
-      </segment>
-    </unit>
-    <unit id="JBLs1a1" name="This value is not a valid currency.">
-      <segment>
-          <source>This value is not a valid currency.</source>
-          <target>Cette valeur n'est pas une devise valide.</target>
-      </segment>
-    </unit>
+      <unit id="cuct0Ow" name="This value is not a valid ISSN.">
+          <segment>
+              <source>This value is not a valid ISSN.</source>
+              <target>Cette valeur n'est pas un code ISSN valide.</target>
+          </segment>
+      </unit>
+      <unit id="JBLs1a1" name="This value is not a valid currency.">
+          <segment>
+              <source>This value is not a valid currency.</source>
+              <target>Cette valeur n'est pas une devise valide.</target>
+          </segment>
+      </unit>
       <unit id="c.WxzFW" name="This value should be equal to {{ compared_value }}.">
           <segment>
               <source>This value should be equal to {{ compared_value }}.</source>
@@ -524,16 +524,16 @@
       <unit id="8zqt0Ik" name="This is not a valid UUID.">
           <segment>
               <source>This is not a valid UUID.</source>
-        <target>Ceci n'est pas un UUID valide.</target>
-      </segment>
-    </unit>
-    <unit id="ru.4wkH" name="This value should be a multiple of {{ compared_value }}.">
-      <segment>
-        <source>This value should be a multiple of {{ compared_value }}.</source>
-        <target>Cette valeur doit être un multiple de {{ compared_value }}.</target>
-      </segment>
-    </unit>
-    <unit id="M3vyK6s" name="This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.">
+              <target>Ceci n'est pas un UUID valide.</target>
+          </segment>
+      </unit>
+      <unit id="ru.4wkH" name="This value should be a multiple of {{ compared_value }}.">
+          <segment>
+              <source>This value should be a multiple of {{ compared_value }}.</source>
+              <target>Cette valeur doit être un multiple de {{ compared_value }}.</target>
+          </segment>
+      </unit>
+      <unit id="M3vyK6s" name="This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.">
       <segment>
         <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
         <target>Ce code d'identification d'entreprise (BIC) n'est pas associé à l'IBAN {{ iban }}.</target>
@@ -547,16 +547,16 @@
     </unit>
     <unit id="9CWVEGq" name="This collection should contain only unique elements.">
       <segment>
-        <source>This collection should contain only unique elements.</source>
-        <target>Cette collection ne doit pas comporter de doublons.</target>
+          <source>This collection should contain only unique elements.</source>
+          <target>Cette collection ne doit pas comporter de doublons.</target>
       </segment>
     </unit>
-    <unit id="WdvZfq." name="This value should be positive.">
-      <segment>
-          <source>This value should be positive.</source>
-          <target>Cette valeur doit être strictement positive.</target>
-      </segment>
-    </unit>
+      <unit id="WdvZfq." name="This value should be positive.">
+          <segment>
+              <source>This value should be positive.</source>
+              <target>Cette valeur doit être strictement positive.</target>
+          </segment>
+      </unit>
       <unit id="ubHMK2q" name="This value should be either positive or zero.">
           <segment>
               <source>This value should be either positive or zero.</source>

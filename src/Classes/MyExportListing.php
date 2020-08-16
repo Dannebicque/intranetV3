@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 16/08/2020 15:58
 
 /**
  * Created by PhpStorm.
@@ -122,20 +122,16 @@ class MyExportListing
             switch ($exportFormat) {
                 case Constantes::FORMAT_CSV_POINT_VIRGULE:
                     return $this->exportCsv(';');
-                    break;
                 case Constantes::FORMAT_CSV_VIRGULE:
                     return $this->exportCsv(',');
-                    break;
                 case Constantes::FORMAT_EXCEL:
                     return $this->exportExcel();
-                    break;
                 case Constantes::FORMAT_PDF:
                     return $this->exportPdf();
-                    break;
             }
         }
 
-        return false;
+        return null;
     }
 
     private function prepareColonnes(): void

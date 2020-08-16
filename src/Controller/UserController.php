@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:34
+// @lastUpdate 16/08/2020 16:04
 
 namespace App\Controller;
 
@@ -107,7 +107,6 @@ class UserController extends BaseController
             );
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                //$this->entityManager->persist($user);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
             }
@@ -119,7 +118,6 @@ class UserController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                //$this->entityManager->persist($user);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'donnees.update.success.flash');
             }

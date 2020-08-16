@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 08:39
+// @lastUpdate 16/08/2020 15:24
 
 namespace App\Controller;
 
@@ -20,14 +20,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class BaseController extends AbstractController
 {
-    /** @var DataUserSession */
-    protected $dataUserSession;
+    protected DataUserSession $dataUserSession;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /** @var TranslatorInterface */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * @param DataUserSession $dataUserSession
@@ -64,6 +61,9 @@ class BaseController extends AbstractController
         $this->addFlash($niveau, $this->translator->trans($cleTraduction));
     }
 
+    /**
+     * @return Personnel|Etudiant
+     */
     public function getConnectedUser()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -80,14 +80,14 @@ class BaseController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return $this->getUser()->getAnneeUniversitaire();
+        return $this->getUser() !== null ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
     public function getEtudiantSemestre()
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return $this->getUser()->getSemestre();
+        return $this->getUser() !== null ? $this->getUser()->getSemestre() : null;
     }
 
     public function getDepartement()

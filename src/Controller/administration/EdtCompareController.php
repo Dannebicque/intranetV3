@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 18:05
+// @lastUpdate 16/08/2020 16:26
 
 namespace App\Controller\administration;
 
@@ -22,11 +22,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EdtCompareController extends BaseController
 {
-    /** @var EdtPlanningRepository */
-    protected $edtPlanningRepository;
+    protected EdtPlanningRepository $edtPlanningRepository;
 
-    /** @var CalendrierRepository */
-    protected $calendrierRepository;
+    protected CalendrierRepository $calendrierRepository;
 
     /**
      * EdtRealiseController constructor.

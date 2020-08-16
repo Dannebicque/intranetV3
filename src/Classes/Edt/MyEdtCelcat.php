@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 16/08/2020 15:24
 
 /**
  * Created by PhpStorm.
@@ -27,7 +27,7 @@ use App\Repository\CelcatEventsRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 
-class MyEdtCelcat extends BaseEdt
+class MyEdtCelcat extends BaseEdt implements EdtInterface
 {
     protected CelcatEventsRepository $celcatEventsRepository;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 16/08/2020 15:45
 
 namespace App\Controller;
 
@@ -95,7 +95,6 @@ class ProfilEtudiantController extends BaseController
     /**
      * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
      * @param EtudiantNotes       $etudiantNotes
-     * @param ScolariteRepository $scolariteRepository
      * @param Etudiant            $etudiant
      *
      * @return Response
@@ -128,7 +127,7 @@ class ProfilEtudiantController extends BaseController
         ScolariteRepository $scolariteRepository,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
-    ) {
+    ): Response {
         $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
             $etudiant->getDepartement());
         $etudiantNotes->setEtudiant($etudiant);

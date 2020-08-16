@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:46
+// @lastUpdate 16/08/2020 15:38
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use App\Entity\ArticleCategorie;
 use App\Classes\MyArticle;
 use App\Classes\MyPagination;
+use App\Entity\Article;
+use App\Entity\ArticleCategorie;
 use App\Entity\ArticleLike;
 use App\Repository\ArticleRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -51,8 +51,7 @@ class InformationController extends BaseController
         ArticleRepository $articleRepository,
         ArticleCategorie $categorie,
         $page = 1
-    ): Response
-    {
+    ): Response {
         $articles = $articleRepository->findByTypeDepartementBuilder($categorie->getId(),
             $this->dataUserSession->getDepartement());
 
@@ -64,7 +63,9 @@ class InformationController extends BaseController
 
         $mesArticles = [];
         foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
-            $mesArticles[] = $like->getArticle()->getId();
+            if ($like->getArticle() !== null) {
+                $mesArticles[] = $like->getArticle()->getId();
+            }
         }
 
         return $this->render('information/articles.html.twig', [

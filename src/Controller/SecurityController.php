@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Controller;
 
@@ -173,12 +173,13 @@ class SecurityController extends AbstractController
             $credential = $request->request->get('password');
             $isPasswordValid = $passwordEncoder->isPasswordValid($this->getUser(), $credential);
 
-            if ($isPasswordValid) {
-                if (in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles()) || in_array('ROLE_SCOLARITE', $this->getUser()->getRoles())) {
+            if ($isPasswordValid && $this->getUser() !== null) {
+                if (in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles()) || in_array('ROLE_SCOLARITE',
+                        $this->getUser()->getRoles())) {
                     return new RedirectResponse($this->generateUrl('super_admin_homepage'));
-                } else {
-                    return new RedirectResponse($this->generateUrl('default_homepage'));
                 }
+
+                return new RedirectResponse($this->generateUrl('default_homepage'));
             }
 
             throw new CustomUserMessageAuthenticationException('Invalid username or password');

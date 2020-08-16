@@ -44,12 +44,12 @@
                 {{ include('composants/contact_array.html.twig', {contact: alternance.tuteur}) }}
 
                 <tr>
-                  <th>AnneeUniversitaire</th>
-                  <td>{{ alternance.anneeUniversitaire }}</td>
+                    <th>{{ 'table.anneeUniversitaire'|trans }}</th>
+                    <td>{{ alternance.anneeUniversitaire.displayAnneeUniversitaire }}</td>
                 </tr>
                 <tr>
-                  <th>TypeContrat</th>
-                  <td>{{ alternance.typeContrat }}</td>
+                    <th>{{ 'table.type_contrat'|trans }}</th>
+                    <td>{{ alternance.typeContrat }}</td>
                 </tr>
 
                 <tr>

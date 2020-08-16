@@ -1,9 +1,9 @@
 <?php
 // Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdt.php
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:45
 
 /**
  * Created by PhpStorm.
@@ -31,34 +31,19 @@ use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class MyEdt extends BaseEdt
+class MyEdtIntranet extends BaseEdt implements EdtInterface
 {
-    /** @var EdtPlanningRepository */
-    protected $edtPlanningRepository;
+    protected EdtPlanningRepository $edtPlanningRepository;
 
 
-    /** @var SemestreRepository */
-    private $semestreRepository;
+    private SemestreRepository $semestreRepository;
 
-    /**
-     * @var GroupeRepository
-     */
-    private $groupeRepository;
+    private GroupeRepository $groupeRepository;
 
-    /** @var MatiereRepository */
-    private $matiereRepository;
-    /**
-     * @var PersonnelRepository
-     */
-    private $personnelRepository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-    /**
-     * @var array
-     */
-    private $tab = [];
+    private MatiereRepository $matiereRepository;
+    private PersonnelRepository $personnelRepository;
+    private EntityManagerInterface $entityManager;
+    private array $tab = [];
 
 
     /**
@@ -97,10 +82,13 @@ class MyEdt extends BaseEdt
      * @param AnneeUniversitaire $anneeUniversitaire
      * @param int                $semaine
      *
-     * @return MyEdt
+     * @return MyEdtIntranet
      */
-    public function initPersonnel(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdt
-    {
+    public function initPersonnel(
+        Personnel $personnel,
+        AnneeUniversitaire $anneeUniversitaire,
+        $semaine = 0
+    ): MyEdtIntranet {
         $this->user = $personnel;
         $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
@@ -116,10 +104,13 @@ class MyEdt extends BaseEdt
      * @param AnneeUniversitaire $anneeUniversitaire
      * @param int                $semaine
      *
-     * @return MyEdt
+     * @return MyEdtIntranet
      */
-    public function initEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdt
-    {
+    public function initEtudiant(
+        Etudiant $etudiant,
+        AnneeUniversitaire $anneeUniversitaire,
+        $semaine = 0
+    ): MyEdtIntranet {
 
         $this->user = $etudiant;
         $this->init('etudiant', $etudiant->getId(), $semaine, $anneeUniversitaire);
@@ -186,7 +177,7 @@ class MyEdt extends BaseEdt
         $filtre,
         $valeur,
         AnneeUniversitaire $anneeUniversitaire
-    ): MyEdt {
+    ): MyEdtIntranet {
         if ($valeur === '') {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
             if (count($semestres) > 0) {
@@ -667,8 +658,11 @@ class MyEdt extends BaseEdt
         return [];
     }
 
-    public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): MyEdt
-    {
+    public function initSemestre(
+        int $semaine,
+        Semestre $semestre,
+        AnneeUniversitaire $anneeUniversitaire
+    ): MyEdtIntranet {
         $this->semestre = $semestre;
         $this->init('promo', $semestre->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
