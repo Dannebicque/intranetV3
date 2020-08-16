@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauCoursController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:26
 
 namespace App\Controller\administration;
 
@@ -168,7 +168,7 @@ class CreneauCoursController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'creneau_cours.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_creneau_cours_edit', ['id' => $newCreneauCours->getId()]);
+        return $this->redirectToRoute('administration_creneau_cours_index');
     }
 
     /**

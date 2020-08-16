@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 15:45
 
 namespace App\Controller;
 
@@ -21,20 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilPersonnelController extends BaseController
 {
     /**
-     * @Route("/profil/{slug}/timeline", name="profil_personnel_timeline")
-     * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
-     * @param Personnel $personnel
-     *
-     * @return Response
-     */
-    public function timeline(Personnel $personnel): Response
-    {
-        return $this->render('user/composants/timeline.html.twig', [
-
-        ]);
-    }
-
-    /**
      * @Route("/profil/{slug}/actions", name="profil_personnel_action")
      * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
      * @param Personnel $personnel
@@ -45,20 +31,6 @@ class ProfilPersonnelController extends BaseController
     {
         return $this->render('user/composants/actions_personnel.html.twig', [
             'personnel' => $personnel
-        ]);
-    }
-
-    /**
-     * @Route("/profil/{slug}/stages", name="profil_personnel_stages")
-     * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
-     * @param Personnel $personnel
-     *
-     * @return Response
-     */
-    public function stages(Personnel $personnel): Response
-    {
-        return $this->render('user/composants/stages.html.twig', [
-            'stages' => $this->getConnectedUser()->getAbsences()
         ]);
     }
 

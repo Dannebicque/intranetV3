@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CohorteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/08/2020 16:26
 
 namespace App\Controller\administration;
 
@@ -61,5 +61,6 @@ class CohorteController extends BaseController
      */
     public function export(): void
     {
+        //todo: a faire
     }
 }

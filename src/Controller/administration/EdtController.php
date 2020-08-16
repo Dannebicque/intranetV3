@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 14:16
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-use App\Classes\Edt\MyEdt;
+use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Edt\MyEdtCelcat;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
@@ -55,20 +55,21 @@ class EdtController extends BaseController
      * @param MatiereRepository   $matiereRepository
      * @param SalleRepository     $salleRepository
      * @param GroupeRepository    $groupeRepository
-     * @param MyEdt               $myEdt
+     * @param MyEdtIntranet       $myEdt
      * @param                     $semaine
      * @param                     $valeur
      * @param                     $filtre
      *
      * @return Response
-     * @Route("/ajax-update/{filtre}/{valeur}/{semaine}", name="administration_edt_ajax_update", options={"expose"=true})
+     * @Route("/ajax-update/{filtre}/{valeur}/{semaine}", name="administration_edt_ajax_update",
+     *                                                    options={"expose"=true})
      */
     public function edtIntranet(
         PersonnelRepository $personnelRepository,
         MatiereRepository $matiereRepository,
         SalleRepository $salleRepository,
         GroupeRepository $groupeRepository,
-        MyEdt $myEdt,
+        MyEdtIntranet $myEdt,
         $semaine,
         $valeur,
         $filtre

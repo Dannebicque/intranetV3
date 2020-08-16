@@ -1,9 +1,9 @@
 <?php
 // Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealise.php
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+// @lastUpdate 16/08/2020 14:19
 
 namespace App\Classes\ServiceRealise;
 
@@ -13,7 +13,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 
-interface ServiceRealise
+interface ServiceRealiseInterface
 {
     public function getServiceRealiseParMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire): array;
 

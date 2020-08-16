@@ -3,16 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 16/08/2020 16:26
 
 namespace App\Controller\administration;
 
 use App\Classes\MyAlternanceFicheSuivi;
+use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
+use App\Entity\Constantes;
 use App\Form\AlternanceFicheSuiviType;
 use Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/administration/alternance/fiche/suivi")
  */
-class AlternanceFicheSuiviController extends AbstractController
+class AlternanceFicheSuiviController extends BaseController
 {
     /**
      * @Route("/new/{alternance}", name="administration_alternance_fiche_suivi_new", methods={"GET","POST"})
@@ -38,9 +39,9 @@ class AlternanceFicheSuiviController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($alternanceFicheSuivi);
-            $entityManager->flush();
+            $this->entityManager->persist($alternanceFicheSuivi);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.new.success.flash');
 
             return $this->redirectToRoute('administration_alternance_show', ['alternance' => $alternance->getId()]);
         }
@@ -56,13 +57,12 @@ class AlternanceFicheSuiviController extends AbstractController
      * @param MyAlternanceFicheSuivi $myAlternanceFicheSuivi
      * @param AlternanceFicheSuivi   $alternanceFicheSuivi
      *
-     * @return Response
      */
     public function print(
         MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
         AlternanceFicheSuivi $alternanceFicheSuivi
-    ): Response {
-        return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
+    ): void {
+        $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
 
@@ -92,17 +92,16 @@ class AlternanceFicheSuiviController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if ($request->request->get('btn_update') !== null && $alternanceFicheSuivi->getAlternance() !== null) {
                 return $this->redirectToRoute('administration_alternance_show',
                     ['alternance' => $alternanceFicheSuivi->getAlternance()->getId()]);
             }
 
             return $this->redirectToRoute('administration_alternance_fiche_suivi_edit',
                 ['id' => $alternanceFicheSuivi->getId()]);
-
-
         }
 
         return $this->render('administration/alternance_fiche_suivi/edit.html.twig', [
@@ -120,13 +119,19 @@ class AlternanceFicheSuiviController extends AbstractController
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
+        $alternance = $alternanceFicheSuivi->getAlternance();
+
         if ($this->isCsrfTokenValid('delete' . $alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
-            $alternance = $alternanceFicheSuivi->getAlternance();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($alternanceFicheSuivi);
             $entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.delete.success.flash');
+        }
+        if ($alternance !== null) {
+            return $this->redirectToRoute('administration_alternance_show', ['alternance' => $alternance->getId()]);
         }
 
-        return $this->redirectToRoute('administration_alternance_show', ['alternance' => $alternance->getId()]);
+        return $this->redirectToRoute('administration_index');
     }
+
 }

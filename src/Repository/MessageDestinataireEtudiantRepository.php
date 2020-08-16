@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MessageDestinataireEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Repository;
 
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
@@ -28,14 +29,14 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, MessageDestinataireEtudiant::class);
     }
 
-    public function findLast(Etudiant $user, $nbMessage = 0, $filtre = '')
+    public function findLast(Etudiant $user, $nbMessage = 0, $filtre = '', $page = 0)
     {
         $query = $this->createQueryBuilder('m')
             ->where('m.etudiant = :etudiant')
             ->setParameter('etudiant', $user->getId())
             ->orderBy('m.created', 'DESC');
 
-        switch ($filtre){
+        switch ($filtre) {
             case 'all':
                 $query->andWhere('m.etat = :read or m.etat = :unread')
                     ->setParameter('read', 'R')
@@ -48,6 +49,10 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
             case 'starred':
                 $query->andWhere('m.starred = 1');
                 break;
+        }
+
+        if ($page > 0) {
+            $query->setFirstResult($page * Constantes::NB_MESSAGE_PAR_PAGE);
         }
 
         if ($nbMessage > 0) {

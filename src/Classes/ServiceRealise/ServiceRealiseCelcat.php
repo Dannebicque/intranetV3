@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+// @lastUpdate 16/08/2020 14:28
 
 namespace App\Classes\ServiceRealise;
 
@@ -15,7 +15,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Repository\CelcatEventsRepository;
 
-class ServiceRealiseCelcat implements ServiceRealise
+class ServiceRealiseCelcat implements ServiceRealiseInterface
 {
 
     /**

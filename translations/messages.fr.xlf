@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 16/08/2020 09:48 -->
+<!-- @lastUpdate 16/08/2020 14:38 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7372,109 +7372,109 @@
         <target>Intervenant</target>
       </segment>
     </unit>
-      <unit id="2B.2w.f" name="exporter.xlsx">
-          <notes>
-              <note priority="1">templates/administration/semestre/index.html.twig:91</note>
-          </notes>
-          <segment>
-              <source>exporter.xlsx</source>
-              <target>Exporter (xlsx)</target>
-          </segment>
-      </unit>
-      <unit id="vALasDq" name="sadm.help.modification.heading">
-          <notes>
-              <note priority="1">templates/super-administration/help/edit.html.twig:4</note>
-              <note priority="1">templates/super-administration/help/edit.html.twig:15</note>
-          </notes>
-          <segment>
-              <source>sadm.help.modification.heading</source>
-              <target></target>
-          </segment>
-      </unit>
-      <unit id="kSEnHx_" name="sadm.help.show.heading">
-          <notes>
-              <note priority="1">templates/super-administration/help/show.html.twig:4</note>
-              <note priority="1">templates/super-administration/help/show.html.twig:15</note>
-          </notes>
-          <segment>
-              <source>sadm.help.show.heading</source>
-              <target></target>
-          </segment>
-      </unit>
-      <unit id="QppWdJM" name="synthese.des.parcours">
-          <notes>
-              <note priority="1">templates/administration/semestre/index.html.twig:144</note>
-          </notes>
-          <segment>
-              <source>synthese.des.parcours</source>
-              <target>Synthèse des parcours</target>
-          </segment>
-      </unit>
-      <unit id="tij_04g" name="absence.delete.success.flash">
-          <notes>
-              <note priority="1">obsolete</note>
-          </notes>
-          <segment>
-              <source>absence.delete.success.flash</source>
-              <target>Absence supprimée avec succès</target>
-          </segment>
-      </unit>
-      <unit id="E6aZiKI" name="hrs.duplicate.success.flash">
-          <segment>
-              <source>hrs.duplicate.success.flash</source>
-              <target>HRS/Prime dupliqué avec succès</target>
-          </segment>
-      </unit>
-      <unit id="aiVr8XS" name="document.edit.success.flash">
-          <segment>
-              <source>document.edit.success.flash</source>
-              <target>Document modifié avec succès</target>
-          </segment>
-      </unit>
-      <unit id=".ZCeqfZ" name="ppn.import.success.flash">
-          <segment>
-              <source>ppn.import.success.flash</source>
-              <target>PPN importé avec succès</target>
-          </segment>
-      </unit>
-      <unit id="6g2lhgH" name="import.d_un.ppn.heading">
-          <segment>
-              <source>import.d_un.ppn.heading</source>
-              <target>Import d'un PPN</target>
-          </segment>
-      </unit>
-      <unit id="95ijfK1" name="absence.removed">
-          <notes>
-              <note priority="1">obsolete</note>
-          </notes>
-          <segment>
-              <source>absence.removed</source>
-              <target>Absence supprimée</target>
-          </segment>
-      </unit>
-      <unit id="ruQIhH0" name="success">
-          <notes>
-              <note priority="1">obsolete</note>
-          </notes>
-          <segment>
-              <source>success</source>
-              <target>Succès</target>
-          </segment>
-      </unit>
-      <unit id="ie_S1Z5" name="table.ue">
-          <notes>
-              <note priority="1">templates/bloc_notes_absences/mcc.html.twig:9</note>
-          </notes>
-          <segment>
-              <source>table.ue</source>
-              <target>UE</target>
-          </segment>
-      </unit>
-      <unit id="V2amomi" name="table.nombre.notes">
-          <notes>
-              <note priority="1">templates/bloc_notes_absences/mcc.html.twig:10</note>
-          </notes>
-          <segment>
+    <unit id="2B.2w.f" name="exporter.xlsx">
+      <notes>
+        <note priority="1">templates/administration/semestre/index.html.twig:91</note>
+      </notes>
+      <segment>
+        <source>exporter.xlsx</source>
+        <target>Exporter (xlsx)</target>
+      </segment>
+    </unit>
+    <unit id="vALasDq" name="sadm.help.modification.heading">
+      <notes>
+        <note priority="1">templates/super-administration/help/edit.html.twig:4</note>
+        <note priority="1">templates/super-administration/help/edit.html.twig:15</note>
+      </notes>
+      <segment>
+        <source>sadm.help.modification.heading</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="kSEnHx_" name="sadm.help.show.heading">
+      <notes>
+        <note priority="1">templates/super-administration/help/show.html.twig:4</note>
+        <note priority="1">templates/super-administration/help/show.html.twig:15</note>
+      </notes>
+      <segment>
+        <source>sadm.help.show.heading</source>
+        <target></target>
+      </segment>
+    </unit>
+    <unit id="QppWdJM" name="synthese.des.parcours">
+      <notes>
+        <note priority="1">templates/administration/semestre/index.html.twig:144</note>
+      </notes>
+      <segment>
+        <source>synthese.des.parcours</source>
+        <target>Synthèse des parcours</target>
+      </segment>
+    </unit>
+    <unit id="tij_04g" name="absence.delete.success.flash">
+      <notes>
+        <note priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>absence.delete.success.flash</source>
+        <target>Absence supprimée avec succès</target>
+      </segment>
+    </unit>
+    <unit id="E6aZiKI" name="hrs.duplicate.success.flash">
+      <segment>
+        <source>hrs.duplicate.success.flash</source>
+        <target>HRS/Prime dupliqué avec succès</target>
+      </segment>
+    </unit>
+    <unit id="aiVr8XS" name="document.edit.success.flash">
+      <segment>
+        <source>document.edit.success.flash</source>
+        <target>Document modifié avec succès</target>
+      </segment>
+    </unit>
+    <unit id=".ZCeqfZ" name="ppn.import.success.flash">
+      <segment>
+        <source>ppn.import.success.flash</source>
+        <target>PPN importé avec succès</target>
+      </segment>
+    </unit>
+    <unit id="6g2lhgH" name="import.d_un.ppn.heading">
+      <segment>
+        <source>import.d_un.ppn.heading</source>
+        <target>Import d'un PPN</target>
+      </segment>
+    </unit>
+    <unit id="95ijfK1" name="absence.removed">
+      <notes>
+        <note priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>absence.removed</source>
+        <target>Absence supprimée</target>
+      </segment>
+    </unit>
+    <unit id="ruQIhH0" name="success">
+      <notes>
+        <note priority="1">obsolete</note>
+      </notes>
+      <segment>
+        <source>success</source>
+        <target>Succès</target>
+      </segment>
+    </unit>
+    <unit id="ie_S1Z5" name="table.ue">
+      <notes>
+        <note priority="1">templates/bloc_notes_absences/mcc.html.twig:9</note>
+      </notes>
+      <segment>
+        <source>table.ue</source>
+        <target>UE</target>
+      </segment>
+    </unit>
+    <unit id="V2amomi" name="table.nombre.notes">
+      <notes>
+        <note priority="1">templates/bloc_notes_absences/mcc.html.twig:10</note>
+      </notes>
+      <segment>
         <source>table.nombre.notes</source>
         <target>Nombre de notes</target>
       </segment>
@@ -7910,7 +7910,7 @@
       </notes>
       <segment>
         <source>security.login.deverouiller</source>
-          <target>Déverrouiller</target>
+        <target>Déverrouiller</target>
       </segment>
     </unit>
     <unit id="hycyMwG" name="erreur.type.user">
@@ -9742,100 +9742,100 @@
     </unit>
     <unit id="GsD0Ln6" name="table.telephone">
       <segment>
-          <source>table.telephone</source>
-          <target>Téléphone</target>
+        <source>table.telephone</source>
+        <target>Téléphone</target>
       </segment>
     </unit>
-      <unit id="L6dg8rP" name="table.portable">
-          <segment>
-              <source>table.portable</source>
-              <target>Portable</target>
-          </segment>
-      </unit>
-      <unit id="fEyYbz0" name="site.add.success.flash">
-          <segment>
-              <source>site.add.success.flash</source>
-              <target>Site créé avec succès</target>
-          </segment>
-      </unit>
-      <unit id="UdmlLIA" name="ufr.add.success.flash">
-          <segment>
-              <source>ufr.add.success.flash</source>
-              <target>UFR créée avec succès</target>
-          </segment>
-      </unit>
-      <unit id="9EYv5vH" name="type_diplome.add.success.flash">
-          <segment>
-              <source>type_diplome.add.success.flash</source>
-              <target>Type de diplôme créé avec succès</target>
-          </segment>
-      </unit>
-      <unit id="KnFrunU" name="type_hrs.add.success.flash">
-          <segment>
-              <source>type_hrs.add.success.flash</source>
-              <target>Type de HRS/Prime créé avec succès</target>
-          </segment>
-      </unit>
-      <unit id="spGFmTn" name="hrs.add.success.flash">
-          <segment>
-              <source>hrs.add.success.flash</source>
-              <target>HRS/Prime ajoutée avec succès</target>
-          </segment>
-      </unit>
-      <unit id="yRZGlef" name="hrs.edit.success.flash">
-          <segment>
-              <source>hrs.edit.success.flash</source>
-              <target>HRS/Prime modifiée avec succès</target>
-          </segment>
-      </unit>
-      <unit id="xGsTEoC" name="adm.hrs.add.heading">
-          <segment>
-              <source>adm.hrs.add.heading</source>
-              <target>Création d'une HRS/Prime</target>
-          </segment>
-      </unit>
-      <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
-          <segment>
-              <source>type_hrs.edit.success.flash</source>
-              <target>Type de HRS/Prime modifié avec succès</target>
-          </segment>
-      </unit>
-      <unit id="UdQ4.mn" name="atitle.import_personnel">
-          <segment>
-              <source>atitle.import_personnel</source>
-              <target>Importer personnels</target>
-          </segment>
-      </unit>
-      <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
-          <segment>
-              <source>sadm.gestion.rh.import.heading</source>
-              <target>Gestion RH, importer des personnels</target>
-          </segment>
-      </unit>
-      <unit id="BijnuiW" name="fichier.personnel.import">
-          <segment>
-              <source>fichier.personnel.import</source>
-              <target>Fichier d'import de personnels</target>
-          </segment>
-      </unit>
-      <unit id=".0s.MiM" name="diplome.add.success.flash">
-          <segment>
-              <source>diplome.add.success.flash</source>
-              <target>Diplôme ajouté avec succès</target>
-          </segment>
-      </unit>
-      <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
-          <segment>
-              <source>diplome.delete.error.non-vide.flash</source>
-              <target>Impossible de supprimer un diplôme non vide.</target>
-          </segment>
-      </unit>
-      <unit id="Ej.WZqo" name="danger">
-          <segment>
-              <source>danger</source>
-              <target>danger</target>
-          </segment>
-      </unit>
+    <unit id="L6dg8rP" name="table.portable">
+      <segment>
+        <source>table.portable</source>
+        <target>Portable</target>
+      </segment>
+    </unit>
+    <unit id="fEyYbz0" name="site.add.success.flash">
+      <segment>
+        <source>site.add.success.flash</source>
+        <target>Site créé avec succès</target>
+      </segment>
+    </unit>
+    <unit id="UdmlLIA" name="ufr.add.success.flash">
+      <segment>
+        <source>ufr.add.success.flash</source>
+        <target>UFR créée avec succès</target>
+      </segment>
+    </unit>
+    <unit id="9EYv5vH" name="type_diplome.add.success.flash">
+      <segment>
+        <source>type_diplome.add.success.flash</source>
+        <target>Type de diplôme créé avec succès</target>
+      </segment>
+    </unit>
+    <unit id="KnFrunU" name="type_hrs.add.success.flash">
+      <segment>
+        <source>type_hrs.add.success.flash</source>
+        <target>Type de HRS/Prime créé avec succès</target>
+      </segment>
+    </unit>
+    <unit id="spGFmTn" name="hrs.add.success.flash">
+      <segment>
+        <source>hrs.add.success.flash</source>
+        <target>HRS/Prime ajoutée avec succès</target>
+      </segment>
+    </unit>
+    <unit id="yRZGlef" name="hrs.edit.success.flash">
+      <segment>
+        <source>hrs.edit.success.flash</source>
+        <target>HRS/Prime modifiée avec succès</target>
+      </segment>
+    </unit>
+    <unit id="xGsTEoC" name="adm.hrs.add.heading">
+      <segment>
+        <source>adm.hrs.add.heading</source>
+        <target>Création d'une HRS/Prime</target>
+      </segment>
+    </unit>
+    <unit id="5wc.rwT" name="type_hrs.edit.success.flash">
+      <segment>
+        <source>type_hrs.edit.success.flash</source>
+        <target>Type de HRS/Prime modifié avec succès</target>
+      </segment>
+    </unit>
+    <unit id="UdQ4.mn" name="atitle.import_personnel">
+      <segment>
+        <source>atitle.import_personnel</source>
+        <target>Importer personnels</target>
+      </segment>
+    </unit>
+    <unit id="3cuVuFh" name="sadm.gestion.rh.import.heading">
+      <segment>
+        <source>sadm.gestion.rh.import.heading</source>
+        <target>Gestion RH, importer des personnels</target>
+      </segment>
+    </unit>
+    <unit id="BijnuiW" name="fichier.personnel.import">
+      <segment>
+        <source>fichier.personnel.import</source>
+        <target>Fichier d'import de personnels</target>
+      </segment>
+    </unit>
+    <unit id=".0s.MiM" name="diplome.add.success.flash">
+      <segment>
+        <source>diplome.add.success.flash</source>
+        <target>Diplôme ajouté avec succès</target>
+      </segment>
+    </unit>
+    <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
+      <segment>
+        <source>diplome.delete.error.non-vide.flash</source>
+        <target>Impossible de supprimer un diplôme non vide.</target>
+      </segment>
+    </unit>
+    <unit id="Ej.WZqo" name="danger">
+      <segment>
+        <source>danger</source>
+        <target>danger</target>
+      </segment>
+    </unit>
     <unit id="BJ5_JHI" name="diplome.delete.success.flash">
       <segment>
         <source>diplome.delete.success.flash</source>
@@ -10799,7 +10799,7 @@
     <unit id="mGr5eBs" name="super-admin.add.personnel-departement.heading">
       <segment>
         <source>super-admin.add.personnel-departement.heading</source>
-          <target>Ajouter un personnel au département %departement%</target>
+        <target>Ajouter un personnel au département %departement%</target>
       </segment>
     </unit>
     <unit id="DV1gmkP" name="table.departements">
@@ -11453,7 +11453,7 @@
     <unit id="iDuyNAq" name="adm.scolarite.edit.heading">
       <segment>
         <source>adm.scolarite.edit.heading</source>
-          <target>Modifier le parcours de scolarité de %etudiant%</target>
+        <target>Modifier le parcours de scolarité de %etudiant%</target>
       </segment>
     </unit>
     <unit id="sLwIhTO" name="adm.scolarite.add.flashbag">
@@ -13488,141 +13488,147 @@
     </unit>
     <unit id="Sk65xfH" name="return.page.precedente">
       <segment>
-          <source>return.page.precedente</source>
-          <target>Revenir à la page précédente</target>
+        <source>return.page.precedente</source>
+        <target>Revenir à la page précédente</target>
       </segment>
     </unit>
-      <unit id="hNdGPMK" name="adm.alternance.fiche_suivi.show.heading">
-          <segment>
-              <source>adm.alternance.fiche_suivi.show.heading</source>
-              <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
-          </segment>
-      </unit>
-      <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
-          <segment>
-              <source>atitle.retour.alternance.etudiant</source>
-              <target>Retour à l'alternance de l'étudiant</target>
-          </segment>
-      </unit>
-      <unit id="HL9909K" name="atitle.import">
-          <segment>
-              <source>atitle.import</source>
-              <target>Importer</target>
-          </segment>
-      </unit>
-      <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
-          <segment>
-              <source>import.etudiants.groupes.heading</source>
-              <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
-          </segment>
-      </unit>
-      <unit id="ctb8KK5" name="atitle.retour_groupes">
-          <segment>
-              <source>atitle.retour_groupes</source>
-              <target>Retour aux groupes</target>
-          </segment>
-      </unit>
-      <unit id="ft.rUIK" name="déconnexion">
-          <segment>
-              <source>déconnexion</source>
-              <target>Déconnexion</target>
-          </segment>
-      </unit>
-      <unit id="SHV8XV_" name="vérouiller">
-          <segment>
-              <source>vérouiller</source>
-              <target>Vérouiller</target>
-          </segment>
-      </unit>
-      <unit id="BXZsYTO" name="paramètres">
-          <segment>
-              <source>paramètres</source>
-              <target>Paramètres</target>
-          </segment>
-      </unit>
-      <unit id="kcIowSC" name="voir.détail.du.module">
-          <segment>
-              <source>voir.détail.du.module</source>
-              <target>messages</target>
-          </segment>
-      </unit>
-      <unit id="WNaw61D" name="detail.du.module">
-          <segment>
-              <source>detail.du.module</source>
-              <target>Détail du module</target>
-          </segment>
-      </unit>
-      <unit id="94SOG_J" name="passer.en.anglais">
-          <segment>
-              <source>passer.en.anglais</source>
-              <target>Go to english version</target>
-          </segment>
-      </unit>
-      <unit id="G2RAXGt" name="ETAT_STAGE_ERASMUS">
-          <segment>
-              <source>ETAT_STAGE_ERASMUS</source>
-              <target>Semestre/Stage ERASMUS</target>
-          </segment>
-      </unit>
-      <unit id="4j7_qaZ" name="ETAT_STAGE_ETRANGER">
-          <segment>
-              <source>ETAT_STAGE_ETRANGER</source>
-              <target>Semestre/Stage à l'étranger</target>
-          </segment>
-      </unit>
-      <unit id="1tlsCvG" name="ETAT_STAGE_APPRENTISSAGE">
-          <segment>
-              <source>ETAT_STAGE_APPRENTISSAGE</source>
-              <target>Année en apprentissage</target>
-          </segment>
-      </unit>
-      <unit id="sKldPJs" name="adm.groupe.index.heading">
-          <segment>
-              <source>adm.groupe.index.heading</source>
-              <target>Liste des groupes</target>
-          </segment>
-      </unit>
-      <unit id="pMfOjqq" name="adm.groupe.semestre.index.heading">
-          <segment>
-              <source>adm.groupe.semestre.index.heading</source>
-              <target>Groupes du semestre</target>
-          </segment>
-      </unit>
-      <unit id="kKeCQk_" name="adm.groupe.semestre.add.heading">
-          <segment>
-              <source>adm.groupe.semestre.add.heading</source>
-              <target>Ajouter un groupe dans le semestre</target>
-          </segment>
-      </unit>
-      <unit id="9dmm8Ma" name="adm.typegroupe.semestre.index.heading">
-          <segment>
-              <source>adm.typegroupe.semestre.index.heading</source>
-              <target>Type de groupe du semestre</target>
-          </segment>
-      </unit>
-      <unit id="OFQ1JHK" name="scolarite.detail.heading">
-          <segment>
-              <source>scolarite.detail.heading</source>
-              <target>Détail de la scolarité de %etudiant% pour le semestre %semestre%</target>
-          </segment>
-      </unit>
-      <unit id="SoN8WPm" name="verrouiller">
-          <segment>
-              <source>verrouiller</source>
-              <target>Verrouiller</target>
-          </segment>
-      </unit>
-      <unit id=".SSDvOz" name="adm.statistiques.vue.globale.heading">
-          <segment>
-              <source>adm.statistiques.vue.globale.heading</source>
-              <target>Statistiques du département : vue globale</target>
-          </segment>
-      </unit>
-      <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
-          <segment>
-              <source>adm.statistiques.vue.detaillee.heading</source>
-              <target>Statistiques du département : vue détaillée</target>
-          </segment>
-      </unit>
+    <unit id="hNdGPMK" name="adm.alternance.fiche_suivi.show.heading">
+      <segment>
+        <source>adm.alternance.fiche_suivi.show.heading</source>
+        <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
+      </segment>
+    </unit>
+    <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
+      <segment>
+        <source>atitle.retour.alternance.etudiant</source>
+        <target>Retour à l'alternance de l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="HL9909K" name="atitle.import">
+      <segment>
+        <source>atitle.import</source>
+        <target>Importer</target>
+      </segment>
+    </unit>
+    <unit id="k.80LBZ" name="import.etudiants.groupes.heading">
+      <segment>
+        <source>import.etudiants.groupes.heading</source>
+        <target>Importer les étudiants dans les groupes du semestre %semestre%</target>
+      </segment>
+    </unit>
+    <unit id="ctb8KK5" name="atitle.retour_groupes">
+      <segment>
+        <source>atitle.retour_groupes</source>
+        <target>Retour aux groupes</target>
+      </segment>
+    </unit>
+    <unit id="ft.rUIK" name="déconnexion">
+      <segment>
+        <source>déconnexion</source>
+        <target>Déconnexion</target>
+      </segment>
+    </unit>
+    <unit id="SHV8XV_" name="vérouiller">
+      <segment>
+        <source>vérouiller</source>
+        <target>Vérouiller</target>
+      </segment>
+    </unit>
+    <unit id="BXZsYTO" name="paramètres">
+      <segment>
+        <source>paramètres</source>
+        <target>Paramètres</target>
+      </segment>
+    </unit>
+    <unit id="kcIowSC" name="voir.détail.du.module">
+      <segment>
+        <source>voir.détail.du.module</source>
+        <target>messages</target>
+      </segment>
+    </unit>
+    <unit id="WNaw61D" name="detail.du.module">
+      <segment>
+        <source>detail.du.module</source>
+        <target>Détail du module</target>
+      </segment>
+    </unit>
+    <unit id="94SOG_J" name="passer.en.anglais">
+      <segment>
+        <source>passer.en.anglais</source>
+        <target>Go to english version</target>
+      </segment>
+    </unit>
+    <unit id="G2RAXGt" name="ETAT_STAGE_ERASMUS">
+      <segment>
+        <source>ETAT_STAGE_ERASMUS</source>
+        <target>Semestre/Stage ERASMUS</target>
+      </segment>
+    </unit>
+    <unit id="4j7_qaZ" name="ETAT_STAGE_ETRANGER">
+      <segment>
+        <source>ETAT_STAGE_ETRANGER</source>
+        <target>Semestre/Stage à l'étranger</target>
+      </segment>
+    </unit>
+    <unit id="1tlsCvG" name="ETAT_STAGE_APPRENTISSAGE">
+      <segment>
+        <source>ETAT_STAGE_APPRENTISSAGE</source>
+        <target>Année en apprentissage</target>
+      </segment>
+    </unit>
+    <unit id="sKldPJs" name="adm.groupe.index.heading">
+      <segment>
+        <source>adm.groupe.index.heading</source>
+        <target>Liste des groupes</target>
+      </segment>
+    </unit>
+    <unit id="pMfOjqq" name="adm.groupe.semestre.index.heading">
+      <segment>
+        <source>adm.groupe.semestre.index.heading</source>
+        <target>Groupes du semestre</target>
+      </segment>
+    </unit>
+    <unit id="kKeCQk_" name="adm.groupe.semestre.add.heading">
+      <segment>
+        <source>adm.groupe.semestre.add.heading</source>
+        <target>Ajouter un groupe dans le semestre</target>
+      </segment>
+    </unit>
+    <unit id="9dmm8Ma" name="adm.typegroupe.semestre.index.heading">
+      <segment>
+        <source>adm.typegroupe.semestre.index.heading</source>
+        <target>Type de groupe du semestre</target>
+      </segment>
+    </unit>
+    <unit id="OFQ1JHK" name="scolarite.detail.heading">
+      <segment>
+        <source>scolarite.detail.heading</source>
+        <target>Détail de la scolarité de %etudiant% pour le semestre %semestre%</target>
+      </segment>
+    </unit>
+    <unit id="SoN8WPm" name="verrouiller">
+      <segment>
+        <source>verrouiller</source>
+        <target>Verrouiller</target>
+      </segment>
+    </unit>
+    <unit id=".SSDvOz" name="adm.statistiques.vue.globale.heading">
+      <segment>
+        <source>adm.statistiques.vue.globale.heading</source>
+        <target>Statistiques du département : vue globale</target>
+      </segment>
+    </unit>
+    <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
+      <segment>
+        <source>adm.statistiques.vue.detaillee.heading</source>
+        <target>Statistiques du département : vue détaillée</target>
+      </segment>
+    </unit>
+    <unit id="4ZFF._O" name="table.fax">
+      <segment>
+        <source>table.fax</source>
+        <target>Fax</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

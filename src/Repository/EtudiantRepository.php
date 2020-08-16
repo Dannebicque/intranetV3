@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/08/2020 13:15
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Repository;
 
@@ -55,11 +55,13 @@ class EtudiantRepository extends ServiceEntityRepository
         foreach ($etudiants as $etudiant) {
             $t = [];
 
-            $t['numetudiant'] = $etudiant->getId();
+            $t['id'] = $etudiant->getId();
+            $t['numetudiant'] = $etudiant->getNumEtudiant();
             $t['nom'] = $etudiant->getNom();
             $t['prenom'] = $etudiant->getPrenom();
             $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
-            $t['profil'] = '<a href="'.$this->router->generate('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug()]).'"
+            $t['profil'] = '<a href="' . $this->router->generate('user_profil',
+                    ['type' => 'etudiant', 'slug' => $etudiant->getSlug()]) . '"
        class="btn btn-info btn-outline btn-square"
        data-provide="tooltip"
        target="_blank"

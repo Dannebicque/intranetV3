@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 16/08/2020 15:38
 
 /**
  * Created by PhpStorm.
@@ -204,5 +204,6 @@ class Constantes
         Constantes::SEMESTRE_VCJ        => 'fff30900',
         ''                              => 'ffffff'
     ];
+    public const NB_MESSAGE_PAR_PAGE = 10;
 
 }

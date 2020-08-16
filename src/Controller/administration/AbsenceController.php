@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:43
+// @lastUpdate 16/08/2020 15:08
 
 namespace App\Controller\administration;
 
@@ -16,6 +16,7 @@ use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AbsenceController
@@ -181,17 +183,27 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @param Absence $absence
-     * @param         $etat
-     * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Absence                  $absence
+     * @param bool                     $etat
      *
      * @return JsonResponse
+     * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
+     *
      */
-    public function justifie(Absence $absence, bool $etat): JsonResponse
-    {
+    public function justifie(
+        EventDispatcherInterface $eventDispatcher,
+        Absence $absence,
+        bool $etat
+    ): JsonResponse {
         $absence->setJustifie($etat);
         $this->entityManager->flush();
-//todo: event mail?
+
+        if ($etat === true) {
+            $event = new AbsenceEvent($absence);
+            $eventDispatcher->dispatch($event, AbsenceEvent::JUSTIFIED);
+        }
+
         return $this->json($etat);
     }
 

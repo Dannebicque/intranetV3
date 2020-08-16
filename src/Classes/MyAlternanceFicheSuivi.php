@@ -3,33 +3,33 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAlternanceFicheSuivi.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:28
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Classes;
 
-
+use App\Classes\Pdf\MyPDF;
 use App\Entity\AlternanceFicheSuivi;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-use Symfony\Component\HttpFoundation\Response;
 
 class MyAlternanceFicheSuivi
 {
-    public function print(AlternanceFicheSuivi $alternanceFicheSuivi): Response
+    private MyPDF $myPdf;
+
+    /**
+     * MyAlternanceFicheSuivi constructor.
+     *
+     * @param MyPDF $myPdf
+     */
+    public function __construct(MyPDF $myPdf)
     {
-        $html = $this->renderView('pdf/ficheSuiviAlternant.html.twig', [
-            'alternance_fiche_suivi' => $alternanceFicheSuivi,
-        ]);
+        $this->myPdf = $myPdf;
+    }
 
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
 
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('Fiche-suivi-alternant-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom() . '-' . $alternanceFicheSuivi->getDate()->format('dmY'),
-            ['Attachment' => 1]));
+    public function print(AlternanceFicheSuivi $alternanceFicheSuivi): void
+    {
+        $this->myPdf::generePdf('pdf/ficheSuiviAlternant.html.twig',
+            ['alternance_fiche_suivi' => $alternanceFicheSuivi,],
+            'Fiche-suivi-alternant-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom() . '-' . $alternanceFicheSuivi->getDate()->format('dmY'),
+            $alternanceFicheSuivi->getAlternance()->getAnnee()->getDiplome()->getDepartement()->getLibelle());
     }
 }
