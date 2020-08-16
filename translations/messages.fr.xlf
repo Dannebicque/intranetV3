@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 15/08/2020 09:06 -->
+<!-- @lastUpdate 16/08/2020 09:48 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7030,7 +7030,7 @@
       </notes>
       <segment>
         <source>verouiller_deverouiller</source>
-        <target>verouiller_deverouiller</target>
+        <target>Verrouiller/Déverrouiller</target>
       </segment>
     </unit>
     <unit id="Xu5YSIq" name="detail.evaluation">
@@ -7372,15 +7372,15 @@
         <target>Intervenant</target>
       </segment>
     </unit>
-    <unit id="2B.2w.f" name="exporter.xlsx">
-      <notes>
-        <note priority="1">templates/administration/semestre/index.html.twig:91</note>
-      </notes>
-      <segment>
-        <source>exporter.xlsx</source>
-        <target>Exporter (xlsx)</target>
-      </segment>
-    </unit>
+      <unit id="2B.2w.f" name="exporter.xlsx">
+          <notes>
+              <note priority="1">templates/administration/semestre/index.html.twig:91</note>
+          </notes>
+          <segment>
+              <source>exporter.xlsx</source>
+              <target>Exporter (xlsx)</target>
+          </segment>
+      </unit>
       <unit id="vALasDq" name="sadm.help.modification.heading">
           <notes>
               <note priority="1">templates/super-administration/help/edit.html.twig:4</note>
@@ -7465,16 +7465,16 @@
           <notes>
               <note priority="1">templates/bloc_notes_absences/mcc.html.twig:9</note>
           </notes>
-      <segment>
-        <source>table.ue</source>
-        <target>UE</target>
-      </segment>
-    </unit>
-    <unit id="V2amomi" name="table.nombre.notes">
-      <notes>
-        <note priority="1">templates/bloc_notes_absences/mcc.html.twig:10</note>
-      </notes>
-      <segment>
+          <segment>
+              <source>table.ue</source>
+              <target>UE</target>
+          </segment>
+      </unit>
+      <unit id="V2amomi" name="table.nombre.notes">
+          <notes>
+              <note priority="1">templates/bloc_notes_absences/mcc.html.twig:10</note>
+          </notes>
+          <segment>
         <source>table.nombre.notes</source>
         <target>Nombre de notes</target>
       </segment>
@@ -7910,7 +7910,7 @@
       </notes>
       <segment>
         <source>security.login.deverouiller</source>
-        <target>Dévérouiller</target>
+          <target>Déverrouiller</target>
       </segment>
     </unit>
     <unit id="hycyMwG" name="erreur.type.user">
@@ -9742,16 +9742,16 @@
     </unit>
     <unit id="GsD0Ln6" name="table.telephone">
       <segment>
-        <source>table.telephone</source>
-        <target>Téléphone</target>
+          <source>table.telephone</source>
+          <target>Téléphone</target>
       </segment>
     </unit>
-    <unit id="L6dg8rP" name="table.portable">
-      <segment>
-          <source>table.portable</source>
-          <target>Portable</target>
-      </segment>
-    </unit>
+      <unit id="L6dg8rP" name="table.portable">
+          <segment>
+              <source>table.portable</source>
+              <target>Portable</target>
+          </segment>
+      </unit>
       <unit id="fEyYbz0" name="site.add.success.flash">
           <segment>
               <source>site.add.success.flash</source>
@@ -9826,16 +9826,16 @@
       </unit>
       <unit id="rzIGx6S" name="diplome.delete.error.non-vide.flash">
           <segment>
-        <source>diplome.delete.error.non-vide.flash</source>
-        <target>Impossible de supprimer un diplôme non vide.</target>
-      </segment>
-    </unit>
-    <unit id="Ej.WZqo" name="danger">
-      <segment>
-        <source>danger</source>
-        <target>danger</target>
-      </segment>
-    </unit>
+              <source>diplome.delete.error.non-vide.flash</source>
+              <target>Impossible de supprimer un diplôme non vide.</target>
+          </segment>
+      </unit>
+      <unit id="Ej.WZqo" name="danger">
+          <segment>
+              <source>danger</source>
+              <target>danger</target>
+          </segment>
+      </unit>
     <unit id="BJ5_JHI" name="diplome.delete.success.flash">
       <segment>
         <source>diplome.delete.success.flash</source>
@@ -13488,16 +13488,16 @@
     </unit>
     <unit id="Sk65xfH" name="return.page.precedente">
       <segment>
-        <source>return.page.precedente</source>
-        <target>Revenir à la page précédente</target>
+          <source>return.page.precedente</source>
+          <target>Revenir à la page précédente</target>
       </segment>
     </unit>
-    <unit id="hNdGPMK" name="adm.alternance.fiche_suivi.show.heading">
-      <segment>
-          <source>adm.alternance.fiche_suivi.show.heading</source>
-          <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
-      </segment>
-    </unit>
+      <unit id="hNdGPMK" name="adm.alternance.fiche_suivi.show.heading">
+          <segment>
+              <source>adm.alternance.fiche_suivi.show.heading</source>
+              <target>Détails de la fiche de suivi d'alternance de %etudiant%</target>
+          </segment>
+      </unit>
       <unit id="oG8lUhu" name="atitle.retour.alternance.etudiant">
           <segment>
               <source>atitle.retour.alternance.etudiant</source>
@@ -13604,6 +13604,24 @@
           <segment>
               <source>scolarite.detail.heading</source>
               <target>Détail de la scolarité de %etudiant% pour le semestre %semestre%</target>
+          </segment>
+      </unit>
+      <unit id="SoN8WPm" name="verrouiller">
+          <segment>
+              <source>verrouiller</source>
+              <target>Verrouiller</target>
+          </segment>
+      </unit>
+      <unit id=".SSDvOz" name="adm.statistiques.vue.globale.heading">
+          <segment>
+              <source>adm.statistiques.vue.globale.heading</source>
+              <target>Statistiques du département : vue globale</target>
+          </segment>
+      </unit>
+      <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
+          <segment>
+              <source>adm.statistiques.vue.detaillee.heading</source>
+              <target>Statistiques du département : vue détaillée</target>
           </segment>
       </unit>
   </file>

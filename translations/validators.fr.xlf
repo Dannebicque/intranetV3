@@ -3,22 +3,22 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/validators.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 15/08/2020 09:06 -->
+<!-- @lastUpdate 16/08/2020 09:48 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="validators.fr">
     <unit id="zh5oKD9" name="This value should be false.">
       <segment>
-        <source>This value should be false.</source>
-        <target>Cette valeur doit être fausse.</target>
+          <source>This value should be false.</source>
+          <target>Cette valeur doit être fausse.</target>
       </segment>
     </unit>
-    <unit id="NN2_iru" name="This value should be true.">
-      <segment>
-          <source>This value should be true.</source>
-          <target>Cette valeur doit être vraie.</target>
-      </segment>
-    </unit>
+      <unit id="NN2_iru" name="This value should be true.">
+          <segment>
+              <source>This value should be true.</source>
+              <target>Cette valeur doit être vraie.</target>
+          </segment>
+      </unit>
       <unit id="OjM_kpf" name="This value should be of type {{ type }}.">
           <segment>
               <source>This value should be of type {{ type }}.</source>
@@ -169,16 +169,16 @@
       </unit>
       <unit id="HSuBZpQ" name="This value is not a valid time.">
           <segment>
-        <source>This value is not a valid time.</source>
-        <target>Cette valeur n'est pas une heure valide.</target>
-      </segment>
-    </unit>
-    <unit id="snWc_QT" name="This value is not a valid URL.">
-      <segment>
-        <source>This value is not a valid URL.</source>
-        <target>Cette valeur n'est pas une URL valide.</target>
-      </segment>
-    </unit>
+              <source>This value is not a valid time.</source>
+              <target>Cette valeur n'est pas une heure valide.</target>
+          </segment>
+      </unit>
+      <unit id="snWc_QT" name="This value is not a valid URL.">
+          <segment>
+              <source>This value is not a valid URL.</source>
+              <target>Cette valeur n'est pas une URL valide.</target>
+          </segment>
+      </unit>
     <unit id="jpaLsb2" name="The two values should be equal.">
       <segment>
         <source>The two values should be equal.</source>
@@ -230,16 +230,16 @@
     </unit>
     <unit id="y9IdYkA" name="This value is not a valid locale.">
       <segment>
-        <source>This value is not a valid locale.</source>
-        <target>Ce paramètre régional n'est pas valide.</target>
+          <source>This value is not a valid locale.</source>
+          <target>Ce paramètre régional n'est pas valide.</target>
       </segment>
     </unit>
-    <unit id="1YC0pOd" name="This value is not a valid country.">
-      <segment>
-          <source>This value is not a valid country.</source>
-          <target>Ce pays n'est pas valide.</target>
-      </segment>
-    </unit>
+      <unit id="1YC0pOd" name="This value is not a valid country.">
+          <segment>
+              <source>This value is not a valid country.</source>
+              <target>Ce pays n'est pas valide.</target>
+          </segment>
+      </unit>
       <unit id="B5ebaMp" name="This value is already used.">
           <segment>
               <source>This value is already used.</source>
@@ -378,16 +378,16 @@
       </unit>
       <unit id="c_q0_ua" name="This value is not a valid ISBN-13.">
           <segment>
-        <source>This value is not a valid ISBN-13.</source>
-        <target>Cette valeur n'est pas un code ISBN-13 valide.</target>
-      </segment>
-    </unit>
-    <unit id="M4FlD6n" name="This value is neither a valid ISBN-10 nor a valid ISBN-13.">
-      <segment>
-        <source>This value is neither a valid ISBN-10 nor a valid ISBN-13.</source>
-        <target>Cette valeur n'est ni un code ISBN-10, ni un code ISBN-13 valide.</target>
-      </segment>
-    </unit>
+              <source>This value is not a valid ISBN-13.</source>
+              <target>Cette valeur n'est pas un code ISBN-13 valide.</target>
+          </segment>
+      </unit>
+      <unit id="M4FlD6n" name="This value is neither a valid ISBN-10 nor a valid ISBN-13.">
+          <segment>
+              <source>This value is neither a valid ISBN-10 nor a valid ISBN-13.</source>
+              <target>Cette valeur n'est ni un code ISBN-10, ni un code ISBN-13 valide.</target>
+          </segment>
+      </unit>
     <unit id="cuct0Ow" name="This value is not a valid ISSN.">
       <segment>
         <source>This value is not a valid ISSN.</source>
@@ -396,16 +396,16 @@
     </unit>
     <unit id="JBLs1a1" name="This value is not a valid currency.">
       <segment>
-        <source>This value is not a valid currency.</source>
-        <target>Cette valeur n'est pas une devise valide.</target>
+          <source>This value is not a valid currency.</source>
+          <target>Cette valeur n'est pas une devise valide.</target>
       </segment>
     </unit>
-    <unit id="c.WxzFW" name="This value should be equal to {{ compared_value }}.">
-      <segment>
-          <source>This value should be equal to {{ compared_value }}.</source>
-          <target>Cette valeur doit être égale à {{ compared_value }}.</target>
-      </segment>
-    </unit>
+      <unit id="c.WxzFW" name="This value should be equal to {{ compared_value }}.">
+          <segment>
+              <source>This value should be equal to {{ compared_value }}.</source>
+              <target>Cette valeur doit être égale à {{ compared_value }}.</target>
+          </segment>
+      </unit>
       <unit id="_jdjkwq" name="This value should be greater than {{ compared_value }}.">
           <segment>
               <source>This value should be greater than {{ compared_value }}.</source>
@@ -514,16 +514,16 @@
       </unit>
       <unit id="VKDowX6" name="Error">
           <notes>
-        <note priority="1">templates/form/bootstrap_4_layout.html.twig:273</note>
-      </notes>
-      <segment>
-        <source>Error</source>
-        <target></target>
-      </segment>
-    </unit>
-    <unit id="8zqt0Ik" name="This is not a valid UUID.">
-      <segment>
-        <source>This is not a valid UUID.</source>
+              <note priority="1">templates/form/bootstrap_4_layout.html.twig:273</note>
+          </notes>
+          <segment>
+              <source>Error</source>
+              <target></target>
+          </segment>
+      </unit>
+      <unit id="8zqt0Ik" name="This is not a valid UUID.">
+          <segment>
+              <source>This is not a valid UUID.</source>
         <target>Ceci n'est pas un UUID valide.</target>
       </segment>
     </unit>
@@ -553,16 +553,16 @@
     </unit>
     <unit id="WdvZfq." name="This value should be positive.">
       <segment>
-        <source>This value should be positive.</source>
-        <target>Cette valeur doit être strictement positive.</target>
+          <source>This value should be positive.</source>
+          <target>Cette valeur doit être strictement positive.</target>
       </segment>
     </unit>
-    <unit id="ubHMK2q" name="This value should be either positive or zero.">
-      <segment>
-          <source>This value should be either positive or zero.</source>
-          <target>Cette valeur doit être supérieure ou égale à zéro.</target>
-      </segment>
-    </unit>
+      <unit id="ubHMK2q" name="This value should be either positive or zero.">
+          <segment>
+              <source>This value should be either positive or zero.</source>
+              <target>Cette valeur doit être supérieure ou égale à zéro.</target>
+          </segment>
+      </unit>
       <unit id="IwNTzo_" name="This value should be negative.">
           <segment>
               <source>This value should be negative.</source>

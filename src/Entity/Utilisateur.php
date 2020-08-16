@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/07/2020 08:08
+// @lastUpdate 16/08/2020 09:14
 
 namespace App\Entity;
 
@@ -20,6 +20,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Utilisateur implements UserInterface
 {
+    public const HOMME = 'M.';
+    public const FEMME = 'Mme';
+
+
     /**
      * @ORM\Column(type="string", length=75)
      *
