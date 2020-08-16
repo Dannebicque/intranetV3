@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 15/08/2020 09:06 -->
+<!-- @lastUpdate 16/08/2020 09:48 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -2115,15 +2115,15 @@
         <target>Octobre</target>
       </segment>
     </unit>
-    <unit id="p62vZ_a" name="Novembre">
-      <notes>
-        <note priority="1">src/Form/SemestreType.php:71</note>
-      </notes>
-      <segment>
-        <source>Novembre</source>
-        <target>Novembre</target>
-      </segment>
-    </unit>
+      <unit id="p62vZ_a" name="Novembre">
+          <notes>
+              <note priority="1">src/Form/SemestreType.php:71</note>
+          </notes>
+          <segment>
+              <source>Novembre</source>
+              <target>Novembre</target>
+          </segment>
+      </unit>
       <unit id="ThI0lZz" name="Décembre">
           <notes>
               <note priority="1">src/Form/SemestreType.php:71</note>
@@ -2209,16 +2209,16 @@
           <notes>
               <note priority="1">src/Form/PersonnelType.php:57</note>
           </notes>
-      <segment>
-        <source>label.nbHeuresService</source>
-        <target>Nb. Heures dans service</target>
-      </segment>
-    </unit>
-    <unit id="LDhDPrF" name="label.username">
-      <notes>
-        <note priority="1">src/Form/PersonnelType.php:31</note>
-      </notes>
-      <segment>
+          <segment>
+              <source>label.nbHeuresService</source>
+              <target>Nb. Heures dans service</target>
+          </segment>
+      </unit>
+      <unit id="LDhDPrF" name="label.username">
+          <notes>
+              <note priority="1">src/Form/PersonnelType.php:31</note>
+          </notes>
+          <segment>
         <source>label.username</source>
         <target>Login</target>
       </segment>

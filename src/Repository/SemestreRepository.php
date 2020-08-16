@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/08/2020 09:25
 
 namespace App\Repository;
 
@@ -45,7 +45,8 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('s.ordreLmd', 'ASC');
+            ->orderBy('s.ordreLmd', 'ASC')
+            ->addOrderBy('s.libelle', 'ASC');
     }
 
     /**
