@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 17/08/2020 08:49
 
 namespace App\Repository;
 
@@ -67,9 +67,18 @@ class EtudiantRepository extends ServiceEntityRepository
        target="_blank"
        data-placement="bottom"
        title="Profil de l\'étudiant">
-        <i class="fa fa-info"></i>
+        <i class="fas fa-info"></i>
         <span class="sr-only">Profil de l\'étudiant</span>
+    </a> <a href="' . $this->router->generate('administration_etudiant_edit',
+                    ['origin' => 'etudiant', 'id' => $etudiant->getId()]) . '"
+       class="btn btn-warning btn-outline btn-square"
+       data-provide="tooltip"
+       data-placement="bottom"
+       title="Modifier les données de l\'étudiant">
+        <i class="fas fa-edit"></i>
+        <span class="sr-only">Modifier les données de l\'étudiant</span>
     </a>';
+
 
             $tab[] = $t;
         }
