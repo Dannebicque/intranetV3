@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.etudiant.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            {% if origin == 'semestre' and etudiant.semestre is defined %}
+                <a href="{{ path('administration_semestre_index', {semestre:etudiant.semestre.id}) }}"
+                   class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            {% else %}
+                <a href="{{ path('administration_etudiant_index') }}"
+                   class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_etudiants'|trans }}"><i class="fas
+                   fa-arrow-left"></i></a>
+            {% endif %}
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h3 class="card-header">{{ 'adm.etudiant.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}</h3>
+        <div class="card-body">
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+
+            <h4>Données personnelles</h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.civilite) }}
+                    {{ form_row(form.nom) }}
+                    {{ form_row(form.numEtudiant) }}
+                    {{ form_row(form.username) }}
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.date_naissance) }}
+                    {{ form_row(form.prenom) }}
+                    {{ form_row(form.numIne) }}
+                    {{ form_row(form.photoFile) }}
+                </div>
+            </div>
+
+            <h4>Scolarité</h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.promotion) }}
+                    {{ form_row(form.bac) }}
+                    {{ form_row(form.semestre) }}
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.anneeSortie) }}
+                    {{ form_row(form.anneeBac) }}
+                    {{ form_row(form.visible) }}
+                </div>
+            </div>
+
+            <h4>Contacts et sites</h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.mail_univ) }}
+                    {{ form_row(form.mail_perso) }}
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.site_univ) }}
+                    {{ form_row(form.site_perso) }}
+                </div>
+            </div>
+
+            <h4>Adresses et téléphones</h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.adresse) }}
+                    {{ form_row(form.tel1) }}
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.adresseParentale) }}
+                    {{ form_row(form.tel2) }}
+                </div>
+            </div>
+
+            <h4>Informations complémentaires</h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.demandeurEmploi) }}
+                    {{ form_row(form.amenagementsParticuliers) }}
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    {{ form_row(form.boursier) }}
+                    {{ form_row(form.remarque) }}
+                </div>
+            </div>
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+
+            <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

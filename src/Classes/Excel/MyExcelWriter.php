@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -69,7 +69,6 @@ class MyExcelWriter
     /**
      * @param $libelle
      *
-     * @throws Exception
      */
     public function createSheet($libelle): void
     {
@@ -185,7 +184,6 @@ class MyExcelWriter
      * @param       $value
      * @param array $options
      *
-     * @throws Exception
      */
     public function writeCellName($adresse, $value, array $options = []): void
     {
@@ -216,7 +214,6 @@ class MyExcelWriter
      * @param $lig
      * @param $couleur
      *
-     * @throws Exception
      */
     public function colorCellRange($col, $lig, $couleur): void
     {
@@ -228,7 +225,6 @@ class MyExcelWriter
      * @param $cells
      * @param $couleur
      *
-     * @throws Exception
      */
     public function colorCells($cells, $couleur): void
     {
@@ -324,7 +320,6 @@ class MyExcelWriter
      * @param       $lig2
      * @param array $array
      *
-     * @throws Exception
      */
     public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
     {

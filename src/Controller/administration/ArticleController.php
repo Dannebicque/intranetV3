@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 22/07/2020 14:50
 
 namespace App\Controller\administration;
 
@@ -35,7 +35,7 @@ class ArticleController extends BaseController
     public function index(ArticleRepository $articleRepository): Response
     {
         return $this->render('administration/article/index.html.twig',
-            ['articles' => $articleRepository->findByDepartement($this->dataUserSession->getDepartement())]);
+            ['articles' => $articleRepository->findByDepartement($this->getDepartement())]);
     }
 
     /**
@@ -50,7 +50,7 @@ class ArticleController extends BaseController
      */
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
-        $articles = $articleRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
+        $articles = $articleRepository->findByDepartement($this->getDepartement());
         return $myExport->genereFichierGenerique(
             $_format,
             $articles,
@@ -73,7 +73,7 @@ class ArticleController extends BaseController
             ArticleType::class,
             $article,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'attr'        => [
                     'data-provide' => 'validation'
                 ]

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Csv/Csv.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -15,7 +15,6 @@
 namespace App\Classes\Csv;
 
 use DateTime;
-use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,14 +36,13 @@ class Csv
     public const DELIMITER = ';';
 
     private $file;
-    private $filename;
+    private string$filename;
 
     /**
      * @param string $filename
      * @param array  $data
      * @param array  $groups
      *
-     * @throws AnnotationException
      */
     public function export(string $filename, array $data, array $groups): void
     {
@@ -53,32 +51,14 @@ class Csv
         //pour prendre en compte les annotations groups et maxdepth
         $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
-        //$serializer = new Serializer([new DateTimeNormalizer('d-m-Y')], [new CsvEncoder()]);
         $encoder = new CsvEncoder();
         $normalizer = new ObjectNormalizer($classMetaDataFactory);
 
-        // Add Circular reference handler
-        //a priori inutile si maxdepth suffisant
-        /*$normalizer->setCircularReferenceHandler(function ($object) {
-             return $object->getLibelle();
-         });*/
-
-        //callback pour gérer les dates
-        /* $callback = function ($dateTime) {
-             return $dateTime instanceof \DateTime
-                 ? $dateTime->format(\DateTime::ATOM)
-                 : '';
-         };*/
-
-
-        //$normalizer->setCallbacks(array('created' => $callback));
-        //$normalizer->setCallbacks(array('updated' => $callback));
-
-        $serializer = new Serializer(array(
-            new DateTimeNormalizer(DateTime::ATOM),
+        $serializer = new Serializer([
+            new DateTimeNormalizer([DateTime::ATOM]),
             new DataUriNormalizer(),
             $normalizer
-        ), array($encoder));
+        ], array($encoder));
 
         // encoding contents in CSV format
         $this->file = $serializer->serialize($data, 'csv', ['enable_max_depth' => true, 'groups' => $groups]);

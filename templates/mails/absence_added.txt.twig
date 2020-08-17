@@ -1,7 +1,7 @@
 Bonjour {{ absence.etudiant.displayPr  }},
 
 Vous avez été comptabilisé(e) absent(e) par - {{ absence.personnel.displayPr  }} - dans le cours - {{ absence.matiere
-.display }} - du - {{ absence.date|format_date('long') }} -, {{ absence.heure|format_time('short') }}. Vous devez
+.display }} - du - {{ absence.dateHeure|format_date('long') }} -, {{ absence.dateHeure|format_time('short') }}. Vous devez
 justifier de cette absence dans un délai de 5 jours après votre reprise des cours ! Passé ce délai cette absence sera considérée comme définitivement non justifiée.
 
 {%  if absence.matiere.semestre.optPenaliteAbsence == true %}

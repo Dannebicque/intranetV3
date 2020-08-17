@@ -27,8 +27,8 @@
         </div>
         <div id="blocDestSemestre" style="display:none">
             <label for="messageToSemestre" class="sr-only">Choix semestre(s)</label>
-            <select data-provide="selectpicker" multiple
-                    class="form-control"
+            <select multiple
+                    class="form-control selectpicker"
                     id="messageToSemestre" data-size="10"
                     title="Choisir le(s) semestre(s)"
             >
@@ -41,9 +41,9 @@
     </div>
     <div id="blocDestGroupe" style="display:none">
         <label for="messageToGroupe" class="sr-only">Choix groupe(s)</label>
-        <select data-provide="selectpicker"
+        <select
                 multiple
-                class="form-control"
+                class="form-control selectpicker"
                 id="messageToGroupe" data-size="10"
                 title="Choisir le(s) groupe(s)"
         >
@@ -58,13 +58,13 @@
     </div>
     <div id="blocDestLibreEtudiant" style="display:none">
         <label for="messageToLibreEtudiant" class="sr-only">Choisir le(s) étudiants(s)</label>
-        <select data-provide="selectpicker"
+        <select
                 multiple
-                class="form-control"
+                class="form-control selectpicker"
                 id="messageToLibreEtudiant"
                 title="Choisir le(s) étudiants(s)"
                 data-size="10"
-                data-live-search="true"
+
         >
             {% for semestre in user_data.semestres %}
                 <optgroup label="{{ semestre.display }}">
@@ -77,23 +77,23 @@
         <div>Saisissez les premières lettre d'un nom d'étudiant.</div>
     </div>
     <div id="blocDestLibrePersonnel" style="display:none">
-            <label for="messageToLibrePersonnel" class="sr-only">Destinataire(s)</label>
-            <select class="form-control" data-provide="selectpicker" data-size="10"
-                    title="{{ 'message.copy'|trans }}" id="messageToLibrePersonnel" name="messageToLibrePersonnel" data-live-search="true" multiple >
-                {% for personnel in user_data.personnels %}
-                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
-                {% endfor %}
-            </select>
+        <label for="messageToLibrePersonnel" class="sr-only">Destinataire(s)</label>
+        <select class="form-control selectpicker" data-size="10"
+                title="{{ 'message.copy'|trans }}" id="messageToLibrePersonnel" name="messageToLibrePersonnel" multiple>
+            {% for personnel in user_data.personnels %}
+                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+            {% endfor %}
+        </select>
         <div>Saisissez les premières lettre d'un enseignant, d'un vacataire.</div>
     </div>
     <br>
     <div class="form-group">
         <label for="messageCopy" class="sr-only">Copie(s)</label>
 
-        <select class="form-control" data-provide="selectpicker" data-size="10"
-               title="{{ 'message.copy'|trans }}" id="messageCopy" name="copie" data-live-search="true" multiple >
+        <select class="form-control selectpicker" data-size="10"
+                title="{{ 'message.copy'|trans }}" id="messageCopy" name="copie" multiple>
             {% for personnel in user_data.personnels %}
-            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
             {% endfor %}
         </select>
     </div>

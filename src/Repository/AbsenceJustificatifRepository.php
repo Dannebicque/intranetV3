@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 08/08/2020 10:23
 
 namespace App\Repository;
 
@@ -60,7 +60,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     public function findBySemestreCount(Semestre $semestre, $annee = 0)
     {
         if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : date('Y');
+            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         return $this->createQueryBuilder('j')
@@ -81,10 +81,10 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     public function findJustificatifByAbsence(Absence $absence): bool
     {
         $query = $this->createQueryBuilder('j')
-            ->where('j.dateDebut <= :date')
-            ->andWhere('j.dateFin >= :date')
+            ->where('j.dateHeureDebut <= :date')
+            ->andWhere('j.dateHeureFin >= :date')
             ->andWhere('j.etat = :etat')
-            ->setParameter('date', $absence->getDate())
+            ->setParameter('date', $absence->getDateHeure())
             ->setParameter('etat', AbsenceJustificatif::ACCEPTE)
             ->getQuery()
             ->getResult();

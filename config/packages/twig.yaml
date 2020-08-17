@@ -6,11 +6,11 @@ twig:
     globals:
         # the value is the service's id
         user_data: '@App\Classes\DataUserSession'
-        iconShow: 'fa fa-info'
-        iconEdit: 'fa fa-edit'
-        iconDelete: 'fa fa-trash'
-        iconPrint: 'fa fa-print'
-        iconDuplicate: 'fa fa-copy'
+        iconShow: 'fas fa-info'
+        iconEdit: 'fas fa-edit'
+        iconDelete: 'fas fa-trash'
+        iconPrint: 'fas fa-print'
+        iconDuplicate: 'fas fa-copy'
         linuxpath: '%env(resolve:BASE_URL)%'
 
     exception_controller: null # This is needed to fix the deprecation in Symfony 4.4

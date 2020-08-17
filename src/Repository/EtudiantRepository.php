@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 17/08/2020 08:49
 
 namespace App\Repository;
 
@@ -55,19 +55,30 @@ class EtudiantRepository extends ServiceEntityRepository
         foreach ($etudiants as $etudiant) {
             $t = [];
 
-            $t['numetudiant'] = $etudiant->getId();
+            $t['id'] = $etudiant->getId();
+            $t['numetudiant'] = $etudiant->getNumEtudiant();
             $t['nom'] = $etudiant->getNom();
             $t['prenom'] = $etudiant->getPrenom();
             $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
-            $t['profil'] = '<a href="'.$this->router->generate('user_profil', ['type' => 'etudiant', 'slug' => $etudiant->getSlug()]).'"
+            $t['profil'] = '<a href="' . $this->router->generate('user_profil',
+                    ['type' => 'etudiant', 'slug' => $etudiant->getSlug()]) . '"
        class="btn btn-info btn-outline btn-square"
        data-provide="tooltip"
        target="_blank"
        data-placement="bottom"
        title="Profil de l\'étudiant">
-        <i class="fa fa-info"></i>
+        <i class="fas fa-info"></i>
         <span class="sr-only">Profil de l\'étudiant</span>
+    </a> <a href="' . $this->router->generate('administration_etudiant_edit',
+                    ['origin' => 'etudiant', 'id' => $etudiant->getId()]) . '"
+       class="btn btn-warning btn-outline btn-square"
+       data-provide="tooltip"
+       data-placement="bottom"
+       title="Modifier les données de l\'étudiant">
+        <i class="fas fa-edit"></i>
+        <span class="sr-only">Modifier les données de l\'étudiant</span>
     </a>';
+
 
             $tab[] = $t;
         }
@@ -86,7 +97,6 @@ class EtudiantRepository extends ServiceEntityRepository
      */
     public function getByDepartement($departement, $data, $page = 0, $max = null, $getResult = true)
     {
-
         $qb = $this->createQueryBuilder('u');
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
@@ -94,20 +104,24 @@ class EtudiantRepository extends ServiceEntityRepository
             ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
             ->where('u.departement = :departement')
             ->setParameters(['departement' => $departement]);
-
-        switch ($order[0]['column']) {
-            case 0:
-                $qb->orderBy('u.numEtudiant', $order[0]['dir']);
-                break;
-            case 1:
-                $qb->orderBy('u.nom', $order[0]['dir']);
-                break;
-            case 2:
-                $qb->orderBy('u.prenom', $order[0]['dir']);
-                break;
-            case 3:
-                $qb->orderBy('s.libelle', $order[0]['dir']);
-                break;
+        if ($order !== null) {
+            switch ($order[0]['column']) {
+                case 0:
+                    $qb->orderBy('u.numEtudiant', $order[0]['dir']);
+                    break;
+                case 1:
+                    $qb->orderBy('u.nom', $order[0]['dir']);
+                    break;
+                case 2:
+                    $qb->orderBy('u.prenom', $order[0]['dir']);
+                    break;
+                case 3:
+                    $qb->orderBy('s.libelle', $order[0]['dir']);
+                    break;
+            }
+        } else {
+            $qb->orderBy('u.nom', 'ASC')
+                ->addOrderBy('u.prenom', 'ASC');
         }
 
         if ($query) {
@@ -139,7 +153,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('e.semestre = :semestre')
             ->setParameter('semestre', $semestre)
             ->orderBy('e.nom', 'ASC')
-            ->orderBy('e.prenom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }

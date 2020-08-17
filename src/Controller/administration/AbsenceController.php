@@ -3,26 +3,30 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:36
+// @lastUpdate 16/08/2020 15:08
 
 namespace App\Controller\administration;
 
-use App\Controller\BaseController;
-use App\Entity\Absence;
-use App\Entity\Etudiant;
-use App\Entity\Semestre;
+use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\MyAbsences;
-use App\Classes\MyEtudiant;
 use App\Classes\MyExport;
 use App\Classes\Tools;
+use App\Controller\BaseController;
+use App\Entity\Absence;
+use App\Entity\Constantes;
+use App\Entity\Etudiant;
+use App\Entity\Semestre;
+use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
+use App\Repository\EtudiantRepository;
 use App\Repository\MatiereRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AbsenceController
@@ -43,9 +47,9 @@ class AbsenceController extends BaseController
         $tAbs = [];
         foreach ($etudiant->getAbsences() as $abs) {
             $t = [];
-            $t['date'] = $abs->getDate() !== null ? $abs->getDate()->format('d/m/Y') : '';
+            $t['date'] = $abs->getDateHeure() !== null ? $abs->getDateHeure()->format('d/m/Y') : '';
             $t['id'] = $abs->getId();
-            $t['heure'] = $abs->getHeure() !== null ? $abs->getHeure()->format('H:i') : '';
+            $t['heure'] = $abs->getDateHeure() !== null ? $abs->getDateHeure()->format('H:i') : '';
             $t['matiere'] = $abs->getMatiere() !== null ? $abs->getMatiere()->getDisplay() : '';
             $t['justifie'] = $abs->isJustifie();
             $tAbs[] = $t;
@@ -117,6 +121,7 @@ class AbsenceController extends BaseController
         $_format
     ): Response {
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
+
         return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
     }
 
@@ -136,6 +141,7 @@ class AbsenceController extends BaseController
     public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
     {
         $myAbsences->getAbsencesSemestre($semestre);
+
         return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
     }
 
@@ -158,6 +164,7 @@ class AbsenceController extends BaseController
         $_format
     ): Response {
         $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $absences,
@@ -176,26 +183,37 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @param Absence $absence
-     * @param         $etat
-     * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Absence                  $absence
+     * @param bool                     $etat
      *
      * @return JsonResponse
+     * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
+     *
      */
-    public function justifie(Absence $absence, bool $etat): JsonResponse
-    {
+    public function justifie(
+        EventDispatcherInterface $eventDispatcher,
+        Absence $absence,
+        bool $etat
+    ): JsonResponse {
         $absence->setJustifie($etat);
         $this->entityManager->flush();
+
+        if ($etat === true) {
+            $event = new AbsenceEvent($absence);
+            $eventDispatcher->dispatch($event, AbsenceEvent::JUSTIFIED);
+        }
 
         return $this->json($etat);
     }
 
     /**
-     * @param MatiereRepository $matiereRepository
-     * @param Request           $request
+     * @param MatiereRepository  $matiereRepository
+     * @param Request            $request
      *
      *
-     * @param MyEtudiant        $myEtudiant
+     * @param EtudiantRepository $etudiantRepository
+     * @param EtudiantAbsences   $etudiantAbsences
      *
      * @return JsonResponse
      * @throws Exception
@@ -207,25 +225,53 @@ class AbsenceController extends BaseController
     public function ajaxAddAbsence(
         MatiereRepository $matiereRepository,
         Request $request,
-        MyEtudiant $myEtudiant
+        EtudiantRepository $etudiantRepository,
+        EtudiantAbsences $etudiantAbsences
     ): JsonResponse {
-        $myEtudiant->setIdEtudiant($request->request->get('etudiant'));
-        $matiere = $matiereRepository->find($request->request->get('matiere'));
+        $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
+        if ($etudiant !== null) {
+            $matiere = $matiereRepository->find($request->request->get('matiere'));
+            if ($matiere !== null) {
+                $etudiantAbsences->setEtudiant($etudiant);
+                $absence = $etudiantAbsences->addAbsence(
+                    Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure')),
+                    $matiere,
+                    $this->getConnectedUser(),
+                    Tools::convertToBool($request->request->get('justif'))
+                );
+            } else {
+                return $this->json('false', Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
-        if ($matiere !== null) {
-            $absence = $myEtudiant->addAbsence(
-                Tools::convertDateToObject($request->request->get('date')),
-                Tools::convertTimeToObject($request->request->get('heure')),
-                $matiere,
-                $this->getConnectedUser(),
-                Tools::convertToBool($request->request->get('justif'))
-            );
-        } else {
-            return $this->json('false', Response::HTTP_INTERNAL_SERVER_ERROR);
-
+            return $this->json($absence->getJson(), Response::HTTP_OK);
         }
 
+        return $this->json('false', Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
 
-        return $this->json($absence->getJson(), Response::HTTP_OK);
+    /**
+     * @Route("/{id}", name="administration_absence_delete", methods="DELETE", options={"expose":true})
+     * @param Request $request
+     * @param Absence $absence
+     *
+     * @return Response
+     */
+    public function delete(Request $request, Absence $absence): Response
+    {
+        $id = $absence->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            $this->entityManager->remove($absence);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'absence.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'absence.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

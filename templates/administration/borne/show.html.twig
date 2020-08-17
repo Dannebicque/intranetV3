@@ -35,21 +35,20 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.semestres'|trans }}</th>
-                    <td>{% for semestre in borne.semestres %}{{ semestre.display }}{% if not loop.last %}, {% endif
-                        %}{% endfor
-                        %}</td>
+                    <td>{% for semestre in borne.semestres %}{{ semestre.display }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                </tr>
+
+                <tr>
+                    <th>{{ 'table.message_visible'|trans }}</th>
+                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.url'|trans }}</th>
                     <td>{{ borne.url }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.message_visible'|trans }}</th>
-                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
-                </tr>
-                <tr>
                     <th>{{ 'table.qrcode'|trans }}</th>
-                    <td>{{ borne.url }} {% if borne.url is defined %}<img src="{{ qr_code_data_uri(borne.url, {
+                    <td>{% if borne.url|trim != '' or borne.url != null %}<img src="{{ qr_code_data_uri(borne.url, {
                             writer: 'svg', size: 150 }) }}" alt="QRcode de l'événement" />{% endif %}</td>
                 </tr>
                 <tr>

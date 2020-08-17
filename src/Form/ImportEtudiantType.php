@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ImportEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 22:44
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,8 +23,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class ImportEtudiantType extends AbstractType
 {
-    private $departement;
-    private $semestre;
+    private Departement $departement;
 
     /**
      * @param FormBuilderInterface $builder
@@ -32,7 +32,7 @@ class ImportEtudiantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
-        $this->semestre = $options['semestre'];
+        $semestre = $options['semestre'];
 
         $builder
             ->add(
@@ -45,7 +45,7 @@ class ImportEtudiantType extends AbstractType
                         return $semestreRepository->findByDepartementBuilder($this->departement);
                     },
                     'label'         => 'label.semestre',
-                    'data' => $this->semestre
+                    'data'          => $semestre
                 ]
             )
             ->add('annee', ChoiceType::class, [
@@ -66,8 +66,8 @@ class ImportEtudiantType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => null,
             'translation_domain' => 'form',
-            'departement'          => null,
-            'semestre'          => null
+            'departement'        => null,
+            'semestre'           => null
         ]);
     }
 }

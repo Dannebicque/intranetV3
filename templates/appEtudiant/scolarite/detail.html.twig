@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'scolarite.detail.heading'|trans({'%etudiant%': etudiant.displayPr, '%semestre%': scolarite.semestre.display}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+            <a href="{{ path('user_profil', {slug: etudiant.slug, type: 'etudiant'}) }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_profil'|trans }}">
+                <span class="material-icons">account_circle</span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h3 class="card-title">{{ 'scolarite.detail.heading'|trans({'%etudiant%': etudiant.displayPr, '%semestre%': scolarite.semestre.display}) }}</h3>
+        <div class="card-body">
+            <h4>Synthèse</h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-4">Moyenne semestre : {{ scolarite.moyenne|number_format(3) }}</div>
+                <div class="col-sm-12 col-md-4">Décision du semestre : {{ scolarite.decision }}</div>
+                <div class="col-sm-12 col-md-4">Proposition : {{ scolarite.proposition }}</div>
+            </div>
+            <div class="row">
+                {% for ue in scolarite.scolariteMoyenneUes %}
+                    <div class="col-sm-12 col-md-4">Moyenne UE {{ ue.ue.numeroUe }} : {{ ue.moyenne }}</div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">Nb absences : {{ scolarite.nbAbsences }}</div>
+                <div class="col-sm-12 col-md-6"></div>
+            </div>
+            <h4>Détails</h4>
+            {% for ue in scolarite.scolariteMoyenneUes %}
+                <div class="row">
+                    <div class="col-12"><h5>{{ ue.ue.display }}</h5></div>
+                    {% for matiere in scolarite.scolariteMoyenneMatieres|filter(matiere => matiere.matiere.ue.id == ue.ue.id) %}
+                        <div class="col-6">{{ matiere.matiere.display }} : {{ matiere.moyenne }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

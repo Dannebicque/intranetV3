@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Controller;
 
@@ -73,21 +73,22 @@ class MessagerieController extends BaseController
         $message = $messageRepository->find($request->request->get('message'));
         $etat = $request->request->get('etat');
 
+        if ($message !== null) {
+            if ($this->getConnectedUser() instanceof Etudiant) {
+                $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
+            } elseif ($this->getConnectedUser() instanceof Personnel) {
+                $messaged = $messagePersonnelRepository->findDest($this->getConnectedUser(), $message);
+            } else {
+                return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
-        if ($this->getConnectedUser() instanceof Etudiant) {
-            $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
-        } elseif ($this->getConnectedUser() instanceof Personnel) {
-            $messaged = $messagePersonnelRepository->findDest($this->getConnectedUser(), $message);
-        } else {
-            return $this->redirectToRoute('erreur_666');
-        }
+            if ($messaged !== null) {
+                $messaged->setEtat($etat);
+                $this->entityManager->persist($messaged);
+                $this->entityManager->flush();
 
-        if ($messaged !== null) {
-            $messaged->setEtat($etat);
-            $this->entityManager->persist($messaged);
-            $this->entityManager->flush();
-
-            return $this->json(true, Response::HTTP_OK);
+                return $this->json(true, Response::HTTP_OK);
+            }
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -151,13 +152,14 @@ class MessagerieController extends BaseController
         } elseif ($filtre === 'draft') {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
         } else if ($this->getConnectedUser() instanceof Etudiant) {
-            $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
+            $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre, $page);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
-            $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
+            $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre, $page);
         } else {
             $messages = null;
         }
 
+        //feature: gérer la pagination?
         return $this->render('messagerie/listeMessages.html.twig', [
             'filtre'     => $filtre,
             'messages'   => $messages,
@@ -223,18 +225,16 @@ class MessagerieController extends BaseController
         switch ($typeDestinataire) {
             case 's':
                 return $request->request->get('messageToSemestre');
-                break;
             case 'g':
                 return $request->request->get('messageToGroupe');
-                break;
             case 'e':
                 return $request->request->get('messageToLibreEtudiant');
-                break;
             case 'p':
                 return $request->request->get('messageToLibrePersonnel');
-                break;
 
         }
+
+        return null;
     }
 
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 03/08/2020 08:49
 
 namespace App\Repository;
 
@@ -116,13 +116,12 @@ class MatiereRepository extends ServiceEntityRepository
 
     public function findByDiplome(Diplome $diplome)
     {
-        //todo: vérifier le PPN actif...
-
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = u.semestre')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
+            ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('m.codeMatiere', 'ASC')
             ->orderBy('m.libelle', 'ASC')

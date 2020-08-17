@@ -3,20 +3,19 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Twig;
 
 use App\Entity\Constantes;
 use App\Classes\Configuration;
 use App\Classes\Tools;
-use DateTime;
-use Exception;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use function chr;
+use Carbon\Carbon;
 
 /**
  * Class AppExtension
@@ -24,38 +23,17 @@ use function chr;
  */
 class AppExtension extends AbstractExtension
 {
-/** @var Configuration */
-    protected $config;
-
-    private $tabMois;
-    private $tabJour;
-    /** @var TranslatorInterface */
-    private $translator;
+    /** @var Configuration */
+    protected Configuration $config;
 
     /**
      * AppExtension constructor.
      *
-     * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct()
     {
-        $this->tabMois = array(
-            '01' => 'janvier',
-            '02' => 'février',
-            '03' => 'mars',
-            '04' => 'avril',
-            '05' => 'mai',
-            '06' => 'juin',
-            '07' => 'juillet',
-            '08' => 'août',
-            '09' => 'septembre',
-            '10' => 'octobre',
-            '11' => 'novembre',
-            '12' => 'décembre'
-        );
-        $this->tabJour = array('', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
-        $this->translator = $translator;
     }
+
     /**
      * @return array
      */
@@ -72,17 +50,23 @@ class AppExtension extends AbstractExtension
             new TwigFilter('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
             new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
             new TwigFilter('border', [$this, 'border']),
-            new TwigFilter('format_note', [$this, 'formatNote'],['is_safe' => ['html']]),
+            new TwigFilter('format_note', [$this, 'formatNote'], ['is_safe' => ['html']]),
+            new TwigFilter('formatHeure', [$this, 'formatHeure'])
 
         );
     }
 
+    public function formatHeure($heure)
+    {
+        return strlen($heure) === 1 ? '0' . $heure : $heure;
+    }
+
     public function formatNote($note, $nbdecimales = 2, $seuil = 10)
     {
-        if ($note < $seuil)
-        {
-            return '<span class="badge badge-warning">'.number_format($note, $nbdecimales).'</span>';
+        if ($note < $seuil) {
+            return '<span class="badge badge-warning">' . number_format($note, $nbdecimales) . '</span>';
         }
+
         return number_format($note, $nbdecimales);
     }
 
@@ -112,7 +96,7 @@ class AppExtension extends AbstractExtension
 
     public function age($dateNaissance): string
     {
-        return date_diff(new DateTime('now'), $dateNaissance)->format('%Y');
+        return Carbon::instance($dateNaissance)->age;
     }
 
     public function mailto($email): string
@@ -145,22 +129,13 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @return string
-     * @throws Exception
-     */
-    public function dateDuJourLong(): string
-    {
-        return $this->dateTexte(new DateTime('now'));
-    }
-
-    /**
-     * @param DateTime $date
+     * @param $locale
      *
      * @return string
      */
-    public function dateTexte(DateTime $date): string
+    public function dateDuJourLong($locale): string
     {
-        return $this->tabJour[$date->format('N')] . ' ' . $date->format('d') . ' ' . $this->tabMois[$date->format('m')] . ' ' . $date->format('Y');
+        return Carbon::now()->locale($locale)->isoFormat('dddd Do MMMM YYYY');
     }
 
     /**
@@ -173,7 +148,7 @@ class AppExtension extends AbstractExtension
 
     public function getSetting($name): string
     {
-        return $this->config::get($name);
+        return $this->config->get($name);
     }
 
     /**
@@ -223,30 +198,16 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param DateTime $date
+     *
+     * @param CarbonInterface $date
+     *
+     * @param                 $locale
      *
      * @return mixed|string
      */
-    public function timeAgo(DateTime $date)
+    public function timeAgo(CarbonInterface $date, $locale)
     {
-        $timestamp = $date->getTimestamp();
-
-        $strTime = ['seconde', 'minute', 'heure', 'jour', 'mois', 'année'];
-        $length = ['60', '60', '24', '30', '12', '10'];
-
-        $currentTime = time();
-        if ($currentTime >= $timestamp) {
-            $diff = time() - $timestamp;
-            for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
-                $diff /= $length[$i];//todo: ne gère pas le cas des mois sur 28, 29 30 ou 31. C'est une moyenne à 30.
-            }
-
-            $diff = round($diff);
-
-            //todo: gérer la traduction avec pluralisation. Voir https://symfony.com/doc/current/translation/message_format.html
-            return $this->translator->trans('%diff% ' . $strTime[$i], ['%diff%' => $diff]);
-        }
-
-        return 'err.';
+        return $date->locale($locale)->diffForHumans(Carbon::now()->locale('fr'),
+            CarbonInterface::DIFF_RELATIVE_TO_NOW);
     }
 }

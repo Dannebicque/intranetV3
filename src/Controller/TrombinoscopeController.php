@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:01
 
 namespace App\Controller;
 
+use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
@@ -14,12 +15,13 @@ use App\Entity\TypeGroupe;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
 use App\Repository\PersonnelRepository;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class TrombinoscopeController
@@ -79,39 +81,36 @@ class TrombinoscopeController extends BaseController
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
             [],
-            $groupe->getTypeGroupe()->getId()
+            $groupe->getTypeGroupe() !== null ? $groupe->getTypeGroupe()->getId() : null
         );
     }
-
 
 
     /**
      * @Route("/etudiant/export-image/{typeGroupe}.pdf", name="trombinoscope_etudiant_image", methods="GET",
      *                                                   )
+     * @param MyPDF      $myPDF
      * @param TypeGroupe $typeGroupe
      *
-     * @return null|StreamedResponse
+     * @return void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function trombiEtudiantExportImage(
+        MyPDF $myPDF,
         TypeGroupe $typeGroupe
-    ): Response {
+    ): void {
 
-        $html = $this->renderView('pdf/trombinoscope.html.twig', [
-            'typeGroupe' => $typeGroupe,
-            'groupes'    => $typeGroupe->getGroupes(),
-            'semestre'   => $typeGroupe->getSemestre()
-        ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('trombinoscope-' . $typeGroupe->getSemestre()->getLibelle(),
-            ['Attachment' => 1]));
+        $myPDF::generePdf('pdf/trombinoscope.html.twig',
+            [
+                'typeGroupe' => $typeGroupe,
+                'groupes'    => $typeGroupe->getGroupes(),
+                'semestre'   => $typeGroupe->getSemestre()
+            ],
+            $typeGroupe->getSemestre() !== null ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : '',
+            $this->getDepartement() !== null ? $this->getDepartement()->getLibelle() : ''
+        );
     }
 
     /**

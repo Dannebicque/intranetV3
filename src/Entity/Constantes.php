@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/08/2020 15:38
 
 /**
  * Created by PhpStorm.
@@ -182,21 +182,28 @@ class Constantes
         19 => ['17h00', '18h30']
     ];
 
-//    /**
-//     * @return array
-//     */
-//    public static function getRoleList(): array
-//    {
-//        return array(
-//            self::ROLE_CDD,
-//            self::ROLE_DDE,
-//            self::ROLE_ASS,
-//            self::ROLE_RP,
-//            self::ROLE_RDA,
-//            self::ROLE_EDT,
-//            self::ROLE_RDS,
-//            self::ROLE_AUTEUR,
-//            self::ROLE_MAT
-//        );
-//    }
+    //Sous Commission
+    public const PAS_OPTION = 'pasoption';
+
+    public const SEUIL_UE = 8;
+    public const SEUIL_MOYENNE = 10;
+    public const SEMESTRE_VALIDE = 'V';
+    public const SEMESTRE_NON_VALIDE = 'NV';
+    public const SEMESTRE_VCA = 'VCA';
+    public const SEMESTRE_VCJ = 'VCJ';
+    public const PROPOSITION_INDEFINIE = '?';
+    public const SEMESTRE_EN_COURS = 'E.C.';
+    public const SEMESTRE_DEMISSIONNAIRE = 'DEM';
+    public const SEMESTRE_REORIENTE = 'REO';
+    public const SEMESTRE_BLANCHIMENT = 'BL';
+
+    public const SS_COMM_DECISION_COULEUR = [
+        Constantes::SEMESTRE_VALIDE     => 'ff00cc00',
+        Constantes::SEMESTRE_NON_VALIDE => 'ffff0000',
+        Constantes::SEMESTRE_VCA        => 'fff0a300',
+        Constantes::SEMESTRE_VCJ        => 'fff30900',
+        ''                              => 'ffffff'
+    ];
+    public const NB_MESSAGE_PAR_PAGE = 10;
+
 }

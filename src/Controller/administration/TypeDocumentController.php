@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 26/07/2020 11:13
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeDocument;
 use App\Form\TypeDocumentType;
 use App\Repository\TypeDocumentRepository;
+use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,11 +40,28 @@ class TypeDocumentController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_type_document_export", methods="GET",
      *                             requirements={"_format":"pdf|csv|xlsx"})
+     * @param MyExport               $myExport
+     * @param TypeDocumentRepository $typeDocumentRepository
+     * @param                        $_format
+     *
+     * @return Response
+     * @throws Exception
      */
-    public function export(): Response
+    public function export(MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $typesDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
+
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $typesDocuments,
+            'types documents',
+            ['typedocument_administration'],
+            [
+                'libelle',
+                'nbDocuments',//todo: comment l'intégrer ?
+
+            ]
+        );
     }
 
     /**

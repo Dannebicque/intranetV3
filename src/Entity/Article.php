@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -65,7 +65,7 @@ class Article extends BaseEntity
     /**
      * Article constructor.
      *
-     * @param Personnel $personnel
+     * @param Personnel|null $personnel
      */
     public function __construct(?Personnel $personnel)
     {

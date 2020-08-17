@@ -16,9 +16,7 @@
                     <br><br>
                 </div>
             </div>
-
         </div>
-
 
         <div class="col-md-6 col-lg-5 col-xl-4 align-self-center">
             <div class="header-special-lock" style="background-color: {{ settings('COLOR_IUT') }}">
@@ -27,8 +25,14 @@
             </div>
             <div class="px-80 py-30 text-center">
                 <div>
-                    <img class="avatar avatar-xxl" src="{{ asset('upload/photo/'~user_data.user.photoName) }}"
-                         alt="...">
+                    {% if is_granted('ROLE_ETUDIANT') %}
+                        <img class="avatar avatar-xxl" src="{{ asset('upload/etudiants/'~user_data.user.photoName) }}"
+                             alt="photo de {{ user_data.user.displayPr }}">
+                    {% else %}
+                        <img class="avatar avatar-xxl" src="{{ asset('upload/personnels/'~user_data.user
+                            .photoName) }}"
+                             alt="photo de {{ user_data.user.displayPr }}">
+                    {% endif %}
                     <br><br>
                     <h5 class="lead">{{ user_data.user.displayPr }}</h5>
                     <small>{{ 'saisir.password.lock'|trans }}</small>

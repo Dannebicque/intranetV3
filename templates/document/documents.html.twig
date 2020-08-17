@@ -3,7 +3,7 @@
         <div class="code-preview">
             <div class="media align-items-center">
                 <span>
-                    <i class="ti-file fs-30 text-info"></i>
+                    <i class="fas fa-file fs-30 text-info"></i>
                 </span>
                 <div class="media-body">
                     <h5>{{ document.libelle }}</h5>
@@ -18,12 +18,19 @@
                 <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
                    data-provide="tooltip"
                    title="{{ 'telecharger'|trans }}"><i
-                            class="ti-save"></i></a>
+                            class="fas fa-save"></i></a>
                 <label class="toggler toggler-danger fs-16" data-provide="tooltip" title="{{ 'favori'|trans }}">
-                    <input type="checkbox">
+                    <input type="checkbox" class="addFavori" data-document="{{ document.uuidString }}" {% if
+                        document.id in listesFavoris %}checked{% endif %}>
                     <i class="fa fa-heart"></i>
                 </label>
             </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            Il n'y a pas de document dans cette catégorie.
         </div>
     </div>
 {% endfor %}

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:17
 
 namespace App\Controller\administration;
 
@@ -226,6 +226,6 @@ class AlternanceController extends BaseController
         $this->entityManager->persist($alternance);
         $this->entityManager->flush();
 
-        return $this->json('ok');
+        return $this->json(true);
     }
 }

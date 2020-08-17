@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 08:20
 
 namespace App\Entity;
 
@@ -17,24 +17,26 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class TypeGroupe extends BaseEntity
 {
-    public const TYPE_GROUPE_CM = 'cm';
-    public const TYPE_GROUPE_TD = 'td';
-    public const TYPE_GROUPE_TP = 'tp';
+    public const TYPE_GROUPE_CM = 'CM';
+    public const TYPE_GROUPE_TD = 'TD';
+    public const TYPE_GROUPE_TP = 'TP';
+
+    public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP];
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="typeGroupes")
      * @Groups({"type_groupe_administration"})
      */
-    private $semestre;
+    private Semestre $semestre;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"type_groupe_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER", orphanRemoval=true)
      * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $groupes;
@@ -42,12 +44,12 @@ class TypeGroupe extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $defaut = false;
+    private bool $defaut = false;
 
     /**
      * @ORM\Column(type="string", length=2)
      */
-    private $type;
+    private ?string $type;
 
     public function __construct(Semestre $semestre)
     {

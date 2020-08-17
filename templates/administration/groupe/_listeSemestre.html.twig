@@ -1,0 +1,43 @@
+<div id="groupes_semestre">
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">{{ 'adm.groupe.semestre.index.heading'|trans }} | {{ semestre.libelle }}</h4>
+            <div class="card-header-actions" style=""></div>
+        </header>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Libellé</th>
+                    <th>Ordre</th>
+                    <th>Parent</th>
+                    <th>Code Apogée</th>
+                    <th>Type Groupe</th>
+                    <th>Parcours</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% import 'macros/tree-groupe.html.twig' as m %}
+                {% for groupe in groupes|filter(groupe => groupe.parent == null) %}
+                    {{ include('administration/groupe/_ligne_groupe.html.twig') }}
+                    {{ m.tree(groupe.enfants, 1, semestre, groupes, typeGroupes, parcours) }}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{ render(controller(
+        'App\\Controller\\administration\\GroupeController::new', {semestre:semestre.id}
+    )) }}
+</div>
+
+<div id="type_groupes_semestre">
+    {{ render(controller(
+        'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}
+    )) }}
+</div>
+
+
+

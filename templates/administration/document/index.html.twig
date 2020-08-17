@@ -14,7 +14,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.document.index.heading'|trans }}</h4>
         <div class="card-body">
-            {{ include('administration/document/liste-document.html.twig', {documents: documents}) }}
+            {{ include('administration/document/_liste-document.html.twig', {documents: documents}) }}
         </div>
     </div>
 {% endblock %}
@@ -24,25 +24,25 @@
         {type: 'info',
             href: path('administration_document_export', {_format:'pdf'}),
             title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"
+            icone : "fa fa-file-pdf"
         },
         {
             type:'info',
             href:path('administration_document_export', {_format:'csv'}),
             title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
+            icone: 'fa fa-file-csv'
         },
         {
             type:'info',
             href:path('administration_document_export', {_format:'xlsx'}),
             title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
+            icone: 'fa fa-file-excel'
         },
         {
             type:'info',
             href:path('administration_document_new'),
             title: 'ajouter'|trans,
-            icone: 'ti-plus'
+            icone: 'fas fa-plus'
         },
         {
             type:'info',
@@ -51,4 +51,14 @@
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}

@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label class="sr-only" for="sadm_previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
-                        <select class="form-control" data-live-search="true" data-provide="selectpicker" data-annee="{{ annee }}"
+                        <select class="form-control selectpicker" data-annee="{{ annee }}"
                                 id="sadm_previPersonnel">
                             <option value="">{{ 'choisir.intervenant'|trans }}</option>
                             {% for personnel in personnels %}

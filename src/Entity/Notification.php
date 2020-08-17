@@ -3,11 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 08:33
 
 namespace App\Entity;
 
+use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
@@ -52,6 +55,8 @@ class Notification extends BaseEntity
         'decision.justificatif.refuse'       => 'danger'
     ];
 
+    use UuidTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")
      */
@@ -81,6 +86,15 @@ class Notification extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="notifications")
      */
     private $personnel;
+
+    /**
+     * Absence constructor.
+     * @throws Exception
+     */
+    public function __construct()
+    {
+        $this->setUuid(Uuid::uuid4());
+    }
 
     /**
      * @return Etudiant|null

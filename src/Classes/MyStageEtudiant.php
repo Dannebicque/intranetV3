@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 06/08/2020 08:26
 
 /**
  * Created by PhpStorm.
@@ -27,29 +27,33 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyStageEtudiant
 {
-    /** @var EntityManagerInterface */
-    protected $entityManger;
+    protected EntityManagerInterface $entityManger;
 
-    /** @var EventDispatcherInterface  */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /** @var StageEtudiantRepository */
-    protected $stageEtudiantRepository;
+    protected StageEtudiantRepository $stageEtudiantRepository;
 
-    /** @var StageEtudiant */
-    protected $stageEtudiant;
+    protected StageEtudiant $stageEtudiant;
+
+    private Configuration $configuration;
 
     /**
      * MyStageEtudiant constructor.
      *
+     * @param Configuration            $configuration
      * @param EntityManagerInterface   $entityManger
      * @param EventDispatcherInterface $eventDispatcher
      * @param StageEtudiantRepository  $stageEtudiantRepository
      */
-    public function __construct(EntityManagerInterface $entityManger, EventDispatcherInterface $eventDispatcher, StageEtudiantRepository $stageEtudiantRepository)
-    {
+    public function __construct(
+        Configuration $configuration,
+        EntityManagerInterface $entityManger,
+        EventDispatcherInterface $eventDispatcher,
+        StageEtudiantRepository $stageEtudiantRepository
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->entityManger = $entityManger;
+        $this->configuration = $configuration;
         $this->stageEtudiantRepository = $stageEtudiantRepository;
     }
 
@@ -142,7 +146,7 @@ class MyStageEtudiant
      */
     private function createStageEtudiant(StagePeriode $stagePeriode, Etudiant $etudiant): StageEtudiant
     {
-        $stageEtudiant = new StageEtudiant();
+        $stageEtudiant = new StageEtudiant($this->configuration->get('GRATIFICATION_HEURE_STAGE'));
         $stageEtudiant->setEtudiant($etudiant);
         $stageEtudiant->setStagePeriode($stagePeriode);
         $stageEtudiant->setDateDebutStage($stagePeriode->getDateDebut());

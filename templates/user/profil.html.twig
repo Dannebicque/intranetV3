@@ -71,7 +71,7 @@
                     <li class="br-1 border-light">
 
                         <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
-                        {% if user.siteUniv != ''or user.siteUniv != null %}
+                        {% if user.siteUniv != '' or user.siteUniv != null %}
 
                             <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" title="{{ 'consulter.espace.travail'|trans }}" data-provide="tooltip" data-placement="bottom"><i class="fa fa-globe"></i></a></span>
                         {% else %}
@@ -125,4 +125,14 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profil') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('profil') }}
 {% endblock %}

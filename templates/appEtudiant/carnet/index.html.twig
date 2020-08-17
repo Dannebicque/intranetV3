@@ -15,7 +15,7 @@
 {#            <button class="btn btn-sm btn-primary btn-square btn-round"#}
 {#                    id="add_carnet"#}
 {#                    title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i#}
-{#                        class="ti-plus"></i><span class="sr-only">ajouter une demande de rattrapge</span></button>#}
+{#                        class="fas fa-plus"></i><span class="sr-only">ajouter une demande de rattrapge</span></button>#}
 {#        </div>#}
 {#    </header>#}
 {#    <div class="card-body" id="bloc_add_carnet" style="display:none">#}
@@ -30,7 +30,7 @@
 {#                <div class="col-sm-6">#}
 {#                    <div class="form-group">#}
 {#                        <label for="enseignant">Enseignant</label>#}
-{#                        <select class="form-control" id="enseignant" data-live-search="true"#}
+{#                        <select class="form-control" id="enseignant" #}
 {#                                data-provide="selectpicker">#}
 {#                            <option value="">Sans objet</option>#}
 {#                            {% for personnel in personnels %}#}
@@ -42,7 +42,7 @@
 {#                <div class="col-sm-6">#}
 {#                    <div class="form-group">#}
 {#                        <label for="matiere">Matière</label>#}
-{#                        <select class="form-control" id="matiere" data-live-search="true" data-provide="selectpicker">#}
+{#                        <select class="form-control" id="matiere"  data-provide="selectpicker">#}
 {#                            <option value="">Sans objet</option>#}
 {#                            {% for matiere in matieres %}#}
 {#                                <option value="{{ matiere.id }}">{{ matiere.codeMatiere }} {{ matiere.libelle }}</option>#}
@@ -296,7 +296,7 @@
 {#                <ul class="pagination justify-content-center">#}
 {#                    <li class="page-item disabled">#}
 {#                        <a class="page-link" href="#">#}
-{#                            <span class="ti-arrow-left"></span>#}
+{#                            <span class="fas fa-arrow-left"></span>#}
 {#                        </a>#}
 {#                    </li>#}
 {#                    <li class="page-item active"><a class="page-link" href="#">1</a></li>#}

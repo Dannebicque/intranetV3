@@ -14,7 +14,7 @@
                         <div class="card-header-actions" style="">
                             <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-primary"
                                title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-provide="tooltip" data-placement="bottom"><i
-                                        class="ti-plus"></i><span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span></a>
+                                        class="fas fa-plus"></i><span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span></a>
                         </div>
                     {% endif %}
                 </header>
@@ -48,7 +48,7 @@
                         <div class="card-header-actions" style="">
                             <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-primary"
                                title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-provide="tooltip" data-placement="bottom"><i
-                                        class="ti-plus"></i><span class="sr-only">{{ 'atitle.deposer_nouvel_evenement'|trans }}</span></a>
+                                        class="fas fa-plus"></i><span class="sr-only">{{ 'atitle.deposer_nouvel_evenement'|trans }}</span></a>
                         </div>
                     {% endif %}
                 </header>
@@ -95,9 +95,16 @@
                 'App\\Controller\\BlocNotesAbsencesController::personnel'
             )) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
-            {{ render(controller(
-                'App\\Controller\\BlocNotesAbsencesController::etudiant'
-            )) }}
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                {{ render(controller(
+                    'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences'
+                )) }}
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                {{ render(controller(
+                    'App\\Controller\\BlocNotesAbsencesController::etudiantNotes'
+                )) }}
+            </div>
 
             {{ render(controller(
                 'App\\Controller\\BlocNotesAbsencesController::mccSemestre'

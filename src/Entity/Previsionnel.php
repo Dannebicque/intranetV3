@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -171,7 +171,7 @@ class Previsionnel extends BaseEntity
     }
 
     /**
-     * @param float $nbHCm
+     * @param float|null $nbHCm
      *
      * @return Previsionnel
      */

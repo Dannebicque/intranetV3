@@ -3,20 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 15/08/2020 09:06
 
 namespace App\Controller\administration;
 
+use App\Classes\Etudiant\EtudiantExportReleve;
+use App\Classes\MyEvaluations;
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Classes\MyEtudiant;
-use App\Classes\MyEvaluations;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 /**
  * Class SemestreExportController
@@ -38,34 +35,38 @@ class SemestreExportController extends BaseController
 
     /**
      * @Route("/provisoire/{slug}/{semestre}", name="administration_semestre_export_releve_provisoire")
-     * @param MyEtudiant $myEtudiant
-     * @param Etudiant   $etudiant
-     * @param Semestre   $semestre
+     * @param EtudiantExportReleve $etudiantExportReleve
+     * @param Etudiant             $etudiant
+     * @param Semestre|null        $semestre
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function exportReleveProvisoire(MyEtudiant $myEtudiant, Etudiant $etudiant, Semestre $semestre = null): void
-    {
-        $myEtudiant->setEtudiant($etudiant)->exportReleveProvisoire($semestre ?: $etudiant->getSemestre());
+    public function exportReleveProvisoire(
+        EtudiantExportReleve $etudiantExportReleve,
+        Etudiant $etudiant,
+        Semestre $semestre = null
+    ) {
+        $etudiantExportReleve->setEtudiant($etudiant);
+        $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
+            $etudiant->getAnneeUniversitaire());
     }
 
     /**
      * @Route("/definitif/{slug}/{semestre}", name="administration_semestre_export_releve_definitif")
-     * @param MyEtudiant $myEtudiant
-     * @param Etudiant   $etudiant
-     * @param Semestre   $semestre
+     * @param EtudiantExportReleve $etudiantExportReleve
+     * @param Etudiant             $etudiant
+     * @param Semestre|null        $semestre
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function exportReleveDefinitif(MyEtudiant $myEtudiant, Etudiant $etudiant, Semestre $semestre = null): void
-    {
-        $myEtudiant->setEtudiant($etudiant)->exportReleveProvisoire($semestre ?: $etudiant->getSemestre());
+    public function exportReleveDefinitif(
+        EtudiantExportReleve $etudiantExportReleve,
+        Etudiant $etudiant,
+        Semestre $semestre = null
+    ): void {
+        $etudiantExportReleve->setEtudiant($etudiant);
+        $etudiantExportReleve->exportReleveDefinitif($semestre ?: $etudiant->getSemestre(),
+            $etudiant->getAnneeUniversitaire());
     }
 
 

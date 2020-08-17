@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -295,8 +295,6 @@ class MyEvaluation
      *
      *
      * @return array|null
-     * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      * @throws \Exception
      */
     public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
@@ -382,8 +380,6 @@ class MyEvaluation
      * @param string $fichier
      *
      * @return array
-     * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     private function importXlsx(string $fichier): array
     {
@@ -444,5 +440,4 @@ class MyEvaluation
 
         return $data;
     }
-
 }

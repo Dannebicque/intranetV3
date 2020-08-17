@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Classes;
 
@@ -32,7 +32,6 @@ class MyMessagerie
     private $sujet;
 
     private $message;
-    private $pjs;
 
     private $nbMessagesEnvoyes = 0;
     private $nbEtudiants = 0;
@@ -134,17 +133,9 @@ class MyMessagerie
         $mess = $this->saveMessageDatabase('E');
 
         //récupération des fichiers uploadés
-//        $files = $this->getDoctrine()->getRepository('DAKernelBundle:MessagePJ')->findBy(['cle' => $this->get('session')->get('clemessage')]);
-//
-//       foreach ($files as $file) {
-//           $message->attachFromPath($this->get('kernel')->getRootDir() . '/../web/uploads/mails/'  . $file->getFichier());
-//
-//            $file->setMessage($mess);
-//            $this->entityManager->persist($file);
-//        }
+        //todo: gérer les pièces jointes
 
 
-        /** @var Etudiant $etu */
         foreach ($this->etudiants as $etu) {
             foreach ($etu->getMails() as $mail) {
                 $message->addTo($mail);
@@ -168,7 +159,7 @@ class MyMessagerie
         $this->sujet = $sujet;
         $this->expediteur = $expediteur;
         $this->message = $message;
-        $this->pjs = $pjs;
+        $pjs1 = $pjs;
     }
 
     /**

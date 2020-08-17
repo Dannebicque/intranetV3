@@ -45,12 +45,14 @@ Bouton pour Synchro avec Celcat ou pour Synchro avec Fils (2 TP donne  TD)
                        value="0"
                        {% if grp!='ok' %}checked {% set grp_etu=0 %}{% endif %}
                 />
-                <input type="hidden" name="etu_{{ etudiant.id }}_old" id="etu_{{ etudiant.id }}_old" value="{{ grp_etu }}" /></td>
+                <input type="hidden" name="etu_{{ etudiant.id }}_old" id="etu_{{ etudiant.id }}_old" value="{{ grp_etu }}"/>
+            </td>
             <td class="ms">
                 <ul class="card-controls">
                     <li class="dropdown">
                         <a data-toggle="dropdown" href="#"><i
-                                    class="ti-more-alt rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i></a>
+                                    class="fas fa-ellipsis-h rotate-90" data-provide="tooltip" title="Options
+                                    d'export ou de synchronisation"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}"
                                class="dropdown-item"><i

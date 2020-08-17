@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller\api;
 
@@ -128,7 +128,7 @@ class PersonnelApiController extends BaseController
      * @param PersonnelDepartementRepository $personnelDepartementRepository
      * @param                                $slug
      *
-     * @param Departement                    $departement
+     * @param Departement|null               $departement
      *
      * @return Response
      * @throws NonUniqueResultException

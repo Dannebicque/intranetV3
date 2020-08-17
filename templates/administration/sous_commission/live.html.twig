@@ -23,13 +23,13 @@
             <a href="{{ path('administration_sous_commission_exporter', {semestre:semestre.id}) }}" class="btn btn-info
             btn-float btn-sm" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.exporter'|trans }}"><i
-                        class="ti-download"></i></a>
+                        class="fas fa-download"></i></a>
             <a href="{{ path('administration_sous_commission_travail', {semestre:semestre.id}) }}" class="btn btn-info
             btn-float btn-sm" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.basculer.sous_comm_travail'|trans }}"><i
-                        class="ti-ruler-pencil"></i></a>
+                        class="fas fa-pencil-ruler"></i></a>
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
         </div>
@@ -37,6 +37,7 @@
 {% endblock %}
 
 {% block content %}
+    {{ dump(semestre.optPenaliteAbsence) }}
             <div class="card">
                 <div class="card-header">
                     <h4><strong>Synthèse</strong> | {{ semestre.display }}</h4>
@@ -46,22 +47,19 @@
                     <button id="masqueMatieres">Masquer Matieres</button>
                     <div style="overflow: auto; width: 100%; height: 500px">
                         <table class=" table table-striped table-hover table-bordered"
-                        style="font-size:10px;" cellpadding="2">
+                               style="font-size:10px;" cellpadding="2">
                             <thead>
                             <tr>
-                                <th colspan="4" style="text-align: right">Module</th>
-                                {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
-                                    semestre.id
-                                    and
-                                    matiere.nbnotes!=0) %}
-                                    <th colspan="2" class="matiere"><abbr title="{{ matiere.libelle }}">{{ matiere
-                                            .codeMatiere
-                                            }}</abbr></th>
+                                <th colspan="4" style="text-align: right">Matière</th>
+                                {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0) %}
+                                    <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">
+                                        <abbr title="{{ matiere.libelle }}">{{ matiere
+                                            .codeMatiere }}</abbr></th>
                                 {% endfor %}
                                 <th colspan="{{ (sousCommission.ues|length *2 ) + 7 }}" style="text-align: center">
                                     Semestre {{ semestre.libelle }}</th>
-{#                                 decision semestre#}
-                                {% for sem in sousCommission.semestres|filter(sem => sem.id != semestre.id) %}
+                                {# decision semestre #}
+                                {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
                                     <th colspan="{{ sem.ues|length+2 }}" style="text-align: center">
                                         Semestre {{ sem.libelle }}</th>
                                 {% endfor %}
@@ -74,21 +72,21 @@
                                 <th>Coeff.</th>
                                 {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
                                     semestre.id and matiere.nbnotes!=0) %}
-                                    <th style="text-align: center" {% if semestre.optPenaliteAbsence == true
-                                    %}colspan="2"{% endif %} class="matiere">{{ matiere.coefficient }}</th>
+                                    <th style="text-align: center" {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">{{ matiere.coefficient }}</th>
                                 {% endfor %}
-{#                                #}{# decision semestre #}
+                                {# #}{# decision semestre #}
                                 {% for u in sousCommission.ues %}
 
-                                    <th colspan="2">UE {{ u.numeroue }}</th>
+                                    <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %}>
+                                        UE {{ u.numeroue }}</th>
                                 {% endfor %}
-                                <th colspan="2">Moy.</th>
+                                <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %}>Moy.</th>
                                 <th>Bonif</th>
                                 <th>Prop.</th>
                                 <th>Décis.</th>
                                 <th></th>
                                 <th>Abs.</th>
-                                {% for sem in sousCommission.semestres|filter(sem => sem.id != semestre.id) %}
+                                {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
                                     {% for ue in sem.ues %}
                                         <th>UE {{ ue.numeroue }}</th>
                                     {% endfor %}
@@ -100,7 +98,7 @@
                             </thead>
                             <tbody>
                             {% for etudiant in sousCommission.etudiants %}
-                                {% set myEtudiant = sousCommission.sousCommissionEtudiants[etudiant.id] %}
+                                {% set myEtudiant = sousCommission.sousCommissionEtudiant(etudiant.id) %}
                                 <tr>
                                     <td>{{ loop.index }}</td>
                                     <td><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
@@ -110,12 +108,9 @@
                                     <td>{{ etudiant.numetudiant }}</td>
 
                                       {# matieres #}
-                                    {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id
-                                        == semestre.id and matiere.nbnotes!=0) %}
+                                    {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0) %}
                                         <td class="matiere">
-                                            {% if myEtudiant.moyenneMatieres[matiere.id].style
-                                                ==
-                                                'pasoption' %}
+                                            {% if myEtudiant.moyenneMatieres[matiere.id].style==constant('App\\Entity\\Constantes::PAS_OPTION') %}
                                                 <span class="badge badge-dark">N.C.</span>
                                             {% elseif matiere.pac == true %}
                                                 {% if myEtudiant.moyenneMatieres[matiere.id].moyenne != '-0.01'
@@ -159,37 +154,40 @@
                                                 {{ myEtudiant.moyenneUes[u.numeroue].moyennePenalisee|number_format(3) }}
                                             </td>
                                         {% endif %}
-                                       {# fin penalite #}
+                                        {# fin penalite #}
 
                                     {% endfor %}
-                                    <td><span class="{{ myEtudiant.moyenneSemestre.styleMoyenne }}"><a
+                                    <td><span class="{{ myEtudiant.styleMoyenneSemestre }}"><a
                                                     href="#"
                                                     rel="tooltip"
-                                                    title="{{ etudiant.display }}">{{ myEtudiant.moyenneSemestre.moyenne|number_format(3) }}</a></span>
+                                                    title="{{ etudiant.display }}">{{ myEtudiant.moyenneSemestre|number_format(3) }}</a></span>
                                     </td>
 
-{#                                    penalite#}
+                                    {# penalite #}
                                     {% if semestre.optPenaliteAbsence == true %}
                                         <td style="background-color: #00B7FC;" class="{{ myEtudiant.moyenneSemestre
                                         .styleMoyennePenalisee }}">
-                                            {{ myEtudiant.moyenneSemestre.moyennePenalisee|number_format(3) }}
+                                            {{ myEtudiant.moyenneSemestrePenalisee|number_format(3) }}
                                         </td>
                                     {% endif %}
-{#                                    fin penalite#}
+                                    {# fin penalite #}
 
-                                    <td>{{ myEtudiant.moyenneSemestre.bonif|number_format(3) }}</td>
-                                    <td><span class="{{ myEtudiant.moyenneSemestre.decisionStyle }}"><a href="#"
-                                                                                                        rel="tooltip"
-                                 title="{{ etudiant.display }}">{{ myEtudiant.moyenneSemestre.decision }}</a></span>
+                                    <td>{{ myEtudiant.bonif|number_format(3) }}</td>
+                                    <td>
+                                        <span class="{{ myEtudiant.decisionStyle }}">
+                                            <a href="#" rel="tooltip" title="{{ etudiant.display }}">
+                                                {{ myEtudiant.decision }}
+                                            </a>
+                                        </span>
                                     </td>
 
-                                    <td>{{ myEtudiant.moyenneSemestre.proposition }}</td>
+                                    <td>{{ myEtudiant.proposition }}</td>
                                     <td><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
                                            target="_blank" title="Profil de l'étudiant"
                                            data-toggle="tooltip">{{ etudiant.display }}</a></td>
-                                    <td style="background: {{ myEtudiant.absencesStyle }}">{{ myEtudiant.absences }}</td>
-{#                                     decisions passées #}
-                                    {% for sem in sousCommission.semestres|filter(sem => sem.id != semestre.id) %}
+                                    <td style="background: {{ myEtudiant.absencesStyle }}">{{ myEtudiant.nbAbsences }}</td>
+                                    {# decisions passées #}
+                                    {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
 
                                         {% for ue in sem.ues %}
                                             {% if myEtudiant.parcours[sem.ordreLmd ] is defined %}

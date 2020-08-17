@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes;
 
 
-use App\Entity\EdtPlanning;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
@@ -82,7 +81,6 @@ class MyEdtCompare
             $t['tp']['previ'] += $pr->getNbHTP() * $pr->getNbGrTP();
         }
 
-        /** @var EdtPlanning $ma */
         foreach ($m as $ma) {
             switch ($ma->getType()) {
                 case 'CM':

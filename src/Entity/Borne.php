@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 03/08/2020 16:52
 
 namespace App\Entity;
 
@@ -19,7 +19,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Borne extends BaseEntity
 {
-    public const ICONES = array('information' => 'fa fa-info-circle', 'danger' => 'fa fa-warning');
+    public const ICONES = [
+        'information' => 'fas fa-info-circle',
+        'danger'      => 'fas fa-exclamation-circle',
+        'demande'     => 'fas fa-question-circle'
+    ];
+    public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
     /**
      * @ORM\Column(type="string", length=20)

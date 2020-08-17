@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/08/2020 08:54
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,7 +50,7 @@ class EdtPlanning
     /**
      * @ORM\Column(type="integer")
      */
-    private $semaine;
+    private $semaine;//semaine réelle...
 
     /**
      * @ORM\Column(type="boolean")
@@ -321,54 +322,13 @@ class EdtPlanning
         return $this;
     }
 
-    /**
-     * @param $semaine
-     *
-     * @return string
-     */
-    public function getDate($semaine): string
+
+    public function getDate(): Carbon
     {
-        $lundi = $this->getLundiFromWeek($semaine, date('Y'));
+        $date = new Carbon();
+        $date->setISODate(date('Y'), $this->getSemaine());
 
-        return date('Y-m-d',
-            mktime(12, 30, 00, date('m', $lundi), date('d', $lundi) + $this->jour - 1, date('Y', $lundi)));
-    }
-
-    /**
-     * @param $semaine
-     *
-     * @return false|string
-     */
-    public function getDateFr($semaine)
-    {
-        $lundi = $this->getLundiFromWeek($semaine, date('Y'));
-
-        return date('d/m/Y',
-            mktime(12, 30, 00, date('m', $lundi), date('d', $lundi) + $this->jour - 1, date('Y', $lundi)));
-    }
-
-    /**
-     * @param integer $week
-     * @param integer $year
-     *
-     * @return double
-     */
-    private function getLundiFromWeek($week, $year): float
-    {
-        $firstDayInYear = date('N', mktime(0, 0, 0, 1, 1, $year));
-        if ($firstDayInYear < 5) {
-            $shift = -($firstDayInYear - 1) * 86400;
-        } else {
-            $shift = (8 - $firstDayInYear) * 86400;
-        }
-
-        if ($week > 1) {
-            $weekInSeconds = ($week - 1) * 604800;
-        } else {
-            $weekInSeconds = 0;
-        }
-
-        return mktime(0, 0, 0, 1, 1, $year) + $weekInSeconds + $shift;
+        return $date->startOfWeek()->addDays($this->jour - 1);
     }
 
     /**

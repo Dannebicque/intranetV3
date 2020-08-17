@@ -13,7 +13,7 @@
                title="{{ 'atitle.creer_nouveau'|trans }}"
                data-provide="tooltip"
                data-placement="bottom">
-                <i class="ti-plus"></i>
+                <i class="fas fa-plus"></i>
                 <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
             </a>
             {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_QUALITE') %}
@@ -22,7 +22,7 @@
                    data-provide="tooltip"
                    data-placement="bottom"
                    title="{{ 'retour.administratif'|trans }}">
-                    <i class="ti-home"></i>
+                    <i class="fas fa-home"></i>
                     <span class="sr-only">{{ 'retour.qualite'|trans }}</span>
                 </a>
             {% elseif is_granted('ROLE_PERMANENT') %}

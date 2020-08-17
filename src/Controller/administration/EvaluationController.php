@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 14/08/2020 10:37
 
 namespace App\Controller\administration;
 
@@ -74,14 +74,13 @@ class EvaluationController extends BaseController
     /**
      * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
      * @param Request      $request
-     * @param MyEvaluation $myEvaluation
      *
      * @param Matiere      $matiere
      *
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function create(Request $request, MyEvaluation $myEvaluation, Matiere $matiere)
+    public function create(Request $request, Matiere $matiere)
     {
         $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
         $form = $this->createForm(
@@ -150,7 +149,7 @@ class EvaluationController extends BaseController
         $etat,
         Semestre $semestre
     ): RedirectResponse {
-        $evals = $evaluationRepository->findBySemestre($semestre);
+        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
 
 
         /** @var Evaluation $eval */
@@ -180,7 +179,7 @@ class EvaluationController extends BaseController
         $etat,
         Semestre $semestre
     ): RedirectResponse {
-        $evals = $evaluationRepository->findBySemestre($semestre);
+        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
 
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {

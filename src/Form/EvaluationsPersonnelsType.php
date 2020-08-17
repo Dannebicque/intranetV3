@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationsPersonnelsType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Form;
 
@@ -33,16 +33,16 @@ class EvaluationsPersonnelsType extends AbstractType
         $this->semestre = $options['semestre'];
 
         $builder
-            ->add('personnelAutorise', EntityType::class, array(
+            ->add('personnelAutorise', EntityType::class, [
                 'class'         => Personnel::class,
                 'choice_label'  => 'display',
                 'multiple'      => true,
                 'expanded'      => true,
-                'query_builder' => function (PersonnelRepository $repo) {
+                'query_builder' => function(PersonnelRepository $repo) {
                     return $repo->findBySemestreBuilder($this->semestre);
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
-            ));
+                'attr'          => ['class' => 'form-control selectpicker'],
+            ]);
     }
 
     /**

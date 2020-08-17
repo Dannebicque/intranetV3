@@ -15,7 +15,7 @@
                 <br>
                 <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center fs-14">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ 'report.problem'|trans }}</a>
+                        <a class="nav-link" href="mailto:{{ settings('MAIL_DEBUG') }}">{{ 'report.problem'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('default_homepage') }}">{{ 'retour.666'|trans }}</a>

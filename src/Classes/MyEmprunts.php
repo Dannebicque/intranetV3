@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Classes;
 
@@ -23,34 +23,20 @@ use Twig\Error\SyntaxError;
 
 class MyEmprunts
 {
-    /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /** @var EmpruntRepository */
-    protected $empruntRepository;
+    protected EmpruntRepository $empruntRepository;
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
     /** @var Emprunt[] */
-    protected $emprunts;
+    protected array $emprunts;
 
-    /** @var Emprunt */
-    protected $emprunt;
+    protected Emprunt $emprunt;
 
-    protected $statistiques;
-    /**
-     * @var array
-     */
-    private $jours;
-    /**
-     * @var int
-     */
-    private $nbjouremprunt;
-    /**
-     * @var MyPDF
-     */
-    private $myPDF;
+    protected array $statistiques;
+    private array $jours;
+    private MyPDF $myPDF;
 
     /**
      * MyEmprunts constructor.
@@ -95,7 +81,6 @@ class MyEmprunts
 
     private function calculStatistiques(): void
     {
-        /** @var Emprunt $emprunt */
         foreach ($this->emprunts as $emprunt) {
             $this->statistiques[$emprunt->getEtat()]++;
         }
@@ -161,18 +146,18 @@ class MyEmprunts
         $this->jours = [];
 
         if ($role === 'ETU') {
-            $this->nbjouremprunt = 7;
+            $nbjouremprunt = 7;
             if (date('N') === '5') {
                 $j = 4;
             } else {
                 $j = 2;
             }
         } else {
-            $this->nbjouremprunt = 10;
+            $nbjouremprunt = 10;
             $j = -2;
         }
 
-        for ($i = 0; $i < $this->nbjouremprunt; $i++) {
+        for ($i = 0; $i < $nbjouremprunt; $i++) {
             $d = mktime(0, 0, 0, date('m'), date('d') + $j, date('Y'));
 
             if (date('N', $d) == 6) {

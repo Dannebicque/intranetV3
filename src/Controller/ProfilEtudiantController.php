@@ -3,14 +3,16 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 15:45
 
 namespace App\Controller;
 
+use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\Etudiant\EtudiantNotes;
+use App\Classes\StatsAbsences;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Classes\Calendrier;
-use App\Classes\MyEtudiant;
 use App\Repository\AlternanceRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\MatiereRepository;
@@ -39,7 +41,7 @@ class ProfilEtudiantController extends BaseController
     public function timeline(Etudiant $etudiant): Response
     {
         return $this->render('user/composants/timeline.html.twig', [
-
+            'etudiant' => $etudiant
         ]);
     }
 
@@ -92,52 +94,96 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
-     * @param MyEtudiant          $myEtudiant
-     * @param ScolariteRepository $scolariteRepository
+     * @param EtudiantNotes       $etudiantNotes
      * @param Etudiant            $etudiant
      *
      * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function notes(
-        MyEtudiant $myEtudiant,
-        ScolariteRepository $scolariteRepository,
+        EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
-    ): Response
-    {
-        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
-            $etudiant->getDepartement()); //les semestres dans lesquels l'étudiant est passé dans le département...
+    ): Response {
+
+        $etudiantNotes->setEtudiant($etudiant);
 
         return $this->render('user/composants/notes.html.twig', [
-            'notes'     => $myEtudiant->setEtudiant($etudiant)->getNotesSemestre($etudiant->getSemestre()),
-            'semestres' => $semestres
+            'notes'    => $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+                $etudiant->getAnneeUniversitaire()),
+            'etudiant' => $etudiant
         ]);
+    }
+
+    /**
+     * @Route("/profil-ajax/{slug}/notes", name="profil_etudiant_ajax_notes_graph", options={"expose":true})
+     * @param EtudiantNotes       $etudiantNotes
+     * @param ScolariteRepository $scolariteRepository
+     * @param Etudiant            $etudiant
+     *
+     * @return Response
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     */
+    public function ajaxGraphiquesNotes(
+        ScolariteRepository $scolariteRepository,
+        EtudiantNotes $etudiantNotes,
+        Etudiant $etudiant
+    ): Response {
+        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
+            $etudiant->getDepartement());
+        $etudiantNotes->setEtudiant($etudiant);
+        $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+            $etudiant->getAnneeUniversitaire());
+        $dataSets = [];
+        foreach ($semestres as $semestre) {
+            $dataset['label'] = $semestre->getSemestre()->getLibelle();
+            $dataset['backgroundColor'] = "rgba(51,202,185,0.7)";
+            $dataset['borderColor'] = "rgba(0,0,0,0)";
+            $dataset['pointBackgroundColor'] = "rgba(51,202,185,0.7)";
+            $dataset['pointBorderColor'] = "#fff";
+            $dataset['pointHoverBackgroundColor'] = "#fff";
+            $dataset['pointHoverBorderColor'] = "rgba(51,202,185,0.7)";
+            $dataset['data'] = [12, 13, 14, 15, 16, 10, 8];
+            $dataSets[] = $dataset;
+        }
+
+        return $this->json($dataSets);
     }
 
     /**
      * @Route("/profil/{slug}/absences", name="profil_etudiant_absences")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      * @param MatiereRepository $matiereRepository
-     * @param MyEtudiant        $myEtudiant
+     * @param EtudiantAbsences  $etudiantAbsences
+     * @param StatsAbsences     $statsAbsences
      * @param Etudiant          $etudiant
      *
      * @return Response
      * @throws Exception
      */
-    public function absences(MatiereRepository $matiereRepository, MyEtudiant $myEtudiant, Etudiant $etudiant): Response
-    {
+    public function absences(
+        MatiereRepository $matiereRepository,
+        EtudiantAbsences $etudiantAbsences,
+        StatsAbsences $statsAbsences,
+        Etudiant $etudiant
+    ): Response {
         Calendrier::calculPlanning($etudiant->getAnneeUniversitaire()->getAnnee(), 2, Constantes::DUREE_SEMESTRE);
+        $etudiantAbsences->setEtudiant($etudiant);
+        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+            $etudiant->getAnneeUniversitaire());
+        $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
         //todo: gérer les mois, selon le semestre ?
-        return $this->render('user/composants/absences.html.twig', [
-            'tabPlanning' => Calendrier::getTabPlanning(),
-            'tabJour'     => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],
-            'tabFerie'    => Calendrier::getTabJoursFeries(),
-            'tabFinMois'  => Calendrier::getTabFinMois(),
-            'annee'       => $etudiant->getAnneeUniversitaire(),
-            'myEtudiant'  => $myEtudiant->setEtudiant($etudiant)->getAbsencesSemestre(),
-            'tabAbsence'  => [], //compte des absences par créneaux du planning.
-            'matieres'    => $matiereRepository->findBySemestre($etudiant->getSemestre())
+        return $this->render('user/composants/_absences.html.twig', [
+            'tabPlanning'          => Calendrier::getTabPlanning(), //objet...
+            'tabJour'              => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],//objet...
+            'tabFerie'             => Calendrier::getTabJoursFeries(),//objet Calendrier???...
+            'tabFinMois'           => Calendrier::getTabFinMois(),//objet...
+            'annee'                => $etudiant->getAnneeUniversitaire(),
+            'etudiant'             => $etudiant,
+            'absences'             => $absences,
+            'statistiquesAbsences' => $statistiquesAbsences,
+            'tabAbsence'           => [], //compte des absences par créneaux du planning.
+            'matieres'             => $matiereRepository->findBySemestre($etudiant->getSemestre())
         ]);
     }
 

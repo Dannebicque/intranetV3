@@ -9,7 +9,7 @@
         <div class="buttons">
             <a href="{{ path('administration_stage_periode_offre_new', {stagePeriode: stagePeriode.uuidString }) }}"
                class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-plus"></i></a>
+               data-placement="bottom"><i class="fas fa-plus"></i></a>
             <a href="{{ path('administration_stage_periode_gestion', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i class="material-icons">arrow_back</i></a>
@@ -80,25 +80,25 @@
         {type: 'info',
             href: path('administration_stage_periode_offre_export', {stagePeriode:stagePeriode.uuidString, _format:'pdf'}),
             title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"
+            icone : "fa fa-file-pdf"
         },
         {
             type:'info',
             href:path('administration_stage_periode_offre_export', {stagePeriode:stagePeriode.uuidString,_format:'csv'}),
             title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
+            icone: 'fa fa-file-csv'
         },
         {
             type:'info',
             href:path('administration_stage_periode_offre_export', {stagePeriode:stagePeriode.uuidString,_format:'xlsx'}),
             title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
+            icone: 'fa fa-file-excel'
         },
         {
             type:'info',
             href:path('administration_stage_periode_offre_new', {stagePeriode:stagePeriode.uuidString}),
             title: 'ajouter'|trans,
-            icone: 'ti-plus'
+            icone: 'fas fa-plus'
         },
         {
             type:'info',

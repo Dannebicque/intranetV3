@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/08/2020 09:06
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Scolarite;
+use App\Entity\ScolariteMoyenneUe;
 use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -17,11 +20,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ScolariteType extends AbstractType
 {
-    private $departement;
+    private Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -59,17 +64,20 @@ class ScolariteType extends AbstractType
             ])
             ->add('decision', ChoiceType::class, [
                 'choices' => [
-                    'E.C.'  => 'En cours',
-                    'V'   => 'Validé',
-                    'NV'  => 'Non Validé',
-                    'DEM' => 'Démission',
-                    'REO' => 'Réorientation',
-                    'VCJ' => 'VCJ'
+                    'En cours'      => Constantes::SEMESTRE_EN_COURS,
+                    'Validé'        => Constantes::SEMESTRE_VALIDE,
+                    'Non Validé'    => Constantes::SEMESTRE_NON_VALIDE,
+                    'Démission'     => Constantes::SEMESTRE_DEMISSIONNAIRE,
+                    'Réorientation' => Constantes::SEMESTRE_REORIENTE,
+                    'VCJ'           => Constantes::SEMESTRE_VCJ,
+                    'VCA'           => Constantes::SEMESTRE_VCA,
+                    'Blanchimenent' => Constantes::SEMESTRE_BLANCHIMENT
                 ],
                 'label'         => 'label.decision',
             ])
             ->add('proposition', TextType::class, [
                 'label'         => 'label.proposition',
+                'help' => 'Sn+1, DUT, ...'
             ])
             ->add('moyenne', TextType::class, [
                 'label'         => 'label.moyenne',

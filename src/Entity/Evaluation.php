@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 27/07/2020 11:34
 
 namespace App\Entity;
 
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")
@@ -59,7 +59,7 @@ class Evaluation extends BaseEntity
     private $coefficient;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $commentaire;
 
@@ -104,7 +104,7 @@ class Evaluation extends BaseEntity
      */
     public function __construct(Personnel $personnel, Matiere $matiere, Departement $departement)
     {
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
 
         $this->matiere = $matiere;
         $this->personnelAuteur = $personnel;
@@ -460,10 +460,14 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    public function setUuid($uuid): self
+    public function getAutorise($personnelId): bool
     {
-        $this->uuid = $uuid;
+        $personnels[] = $this->getPersonnelAuteur() !== null ? $this->getPersonnelAuteur()->getId() : null;
+        $autorises = $this->getPersonnelAutorise();
+        foreach ($autorises as $autorise) {
+            $personnels[] = $autorise->getId();
+        }
 
-        return $this;
+        return in_array($personnelId, $personnels, true);
     }
 }

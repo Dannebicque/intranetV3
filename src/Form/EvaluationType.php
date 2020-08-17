@@ -3,13 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
@@ -28,12 +30,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EvaluationType extends AbstractType
 {
-    private $departement;
-    private $semestre;
-    private $import = false;
-    private $matiereDisabled = false;
-
-    private $locale;
+    private Departement $departement;
+    private Semestre $semestre;
 
     /**
      * @param FormBuilderInterface $builder
@@ -42,10 +40,10 @@ class EvaluationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
-        $this->locale = $options['locale'];
+        $locale = $options['locale'];
         $this->semestre = $options['semestre'];
-        $this->import = $options['import'];
-        $this->matiereDisabled = $options['matiereDisabled'];
+        $import = $options['import'];
+        $matiereDisabled = $options['matiereDisabled'];
 
         $builder
             ->add('libelle', TextType::class,
@@ -55,7 +53,7 @@ class EvaluationType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
                 'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker', 'data-language' => $this->locale]
+                'attr'   => ['data-provide' => 'datepicker', 'data-language' => $locale]
             ])
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient', 'help' => 'help.coefficient'])
             ->add('commentaire', TextType::class, ['label' => 'label.commentaire', 'help' => 'help.commentaire_evaluation'])
@@ -69,7 +67,7 @@ class EvaluationType extends AbstractType
                 'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'disabled'      => $this->matiereDisabled
+                'disabled'      => $matiereDisabled
             ])
             ->add('typeGroupe', EntityType::class, [
                 'class'         => TypeGroupe::class,
@@ -97,7 +95,7 @@ class EvaluationType extends AbstractType
             ])//->add('parent')
         ;
 
-        if ($this->import === true) {
+        if ($import === true) {
             $builder->add('fichier_import', FileType::class, ['mapped' => false]);
         }
     }

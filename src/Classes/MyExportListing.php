@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 15:58
 
 /**
  * Created by PhpStorm.
@@ -47,9 +47,7 @@ class MyExportListing
     private $colonne = 1;
 
     private $exportTypeDocument;
-    private $exportFormat;
     private $exportChamps;
-    private $exportFiltre;
     /** @var Matiere */
     private $matiere;
 
@@ -111,9 +109,7 @@ class MyExportListing
         ?Matiere $matiere = null
     ): ?StreamedResponse {
         $this->exportTypeDocument = $exportTypeDocument;
-        $this->exportFormat = $exportFormat;
         $this->exportChamps = $exportChamps;
-        $this->exportFiltre = $exportFiltre;
         $this->matiere = $matiere;
 
         $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);
@@ -126,20 +122,16 @@ class MyExportListing
             switch ($exportFormat) {
                 case Constantes::FORMAT_CSV_POINT_VIRGULE:
                     return $this->exportCsv(';');
-                    break;
                 case Constantes::FORMAT_CSV_VIRGULE:
                     return $this->exportCsv(',');
-                    break;
                 case Constantes::FORMAT_EXCEL:
                     return $this->exportExcel();
-                    break;
                 case Constantes::FORMAT_PDF:
                     return $this->exportPdf();
-                    break;
             }
         }
 
-        return false;
+        return null;
     }
 
     private function prepareColonnes(): void
@@ -263,8 +255,6 @@ class MyExportListing
         $this->myExcelWriter->writeCellName('J3', $this->titre, ['style' => 'HORIZONTAL_RIGHT']);
 
         $base = $this->base . 'public/upload/';
-
-        //todo: dans le writer ?
         $objDrawing = new Drawing();
         $objDrawing->setName('Logo Departement');
         $objDrawing->setDescription('Logo Departement');
