@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 09:34
+// @lastUpdate 17/08/2020 14:18
 
 namespace App\Classes\Apogee;
 
@@ -37,8 +37,8 @@ abstract class MyApogee
     private static function connect(): ?PDO
     {
         try {
-            self::$conn = new PDO('oci:dbname=' . getenv('APOGEE_STRING'), getenv('APOGEE_LOGIN'),
-                getenv('APOGEE_PASSWORD'));
+            self::$conn = new PDO('oci:dbname=' . $_SERVER['APOGEE_STRING'], $_SERVER['APOGEE_LOGIN'],
+                $_SERVER['APOGEE_PASSWORD']);
 
             return self::$conn;
         } catch (PDOException $e) {

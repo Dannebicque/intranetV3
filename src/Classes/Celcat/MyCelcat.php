@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2020 09:39
+// @lastUpdate 17/08/2020 14:17
 
 /**
  * Created by PhpStorm.
@@ -43,7 +43,7 @@ class MyCelcat
 
     private function connect()
     {
-        $this->conn = odbc_connect('MSSQLSRV', getenv('MSSQL_USER'), getenv('MSSQL_PASS'));
+        $this->conn = odbc_connect('MSSQLSRV', $_SERVER['MSSQL_USER'], $_SERVER['MSSQL_PASS']);
 
         return $this->conn;
     }

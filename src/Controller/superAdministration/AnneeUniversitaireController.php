@@ -3,15 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 17/08/2020 12:39
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Form\AnneeUniversitaireType;
-use App\Classes\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,16 +38,29 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/annee-active/change/{annee}", name="sa_annee_universitaire_change_active", options={"expose":true})
-     * @param Request            $request
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     * @param Request                      $request
      *
-     * @param AnneeUniversitaire $annee
+     * @param AnneeUniversitaire           $annee
      *
      * @return Response
      */
-    public function changeOption(Request $request, AnneeUniversitaire $annee): Response
-    {
+    public function changeOption(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        Request $request,
+        AnneeUniversitaire $annee
+    ): Response {
         $value = $request->request->get('value');
-        $annee->setActive($value === 'true');
+        if ($value === 'true') {
+            $annees = $anneeUniversitaireRepository->findAll();
+            foreach ($annees as $uneAnnee) {
+                $uneAnnee->setActive(false);
+            }
+            $annee->setActive(true);
+        } else {
+            $annee->setActive(false);
+        }
+
         $this->entityManager->flush();
 
         return new Response('', Response::HTTP_OK);
@@ -70,6 +83,7 @@ class AnneeUniversitaireController extends BaseController
         $_format
     ): Response {
         $annee_universitaires = $anneeUniversitaireRepository->findAll();
+
         return $myExport->genereFichierGenerique(
             $_format,
             $annee_universitaires,

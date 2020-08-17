@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 17/08/2020 14:18
 
 namespace App\Classes\LDAP;
 
@@ -17,10 +17,10 @@ abstract class MyLdap
     public static function connect(): void
     {
         try {
-            self::$ds = ldap_connect(getenv('LDAP_HOST'));
+            self::$ds = ldap_connect($_SERVER['LDAP_HOST']);
             ldap_set_option(self::$ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if (self::$ds) {
-                ldap_bind(self::$ds, getenv('LDAP_LOGIN'), getenv('LDAP_PASSWORD'));
+                ldap_bind(self::$ds, $_SERVER['LDAP_LOGIN'], $_SERVER['LDAP_PASSWORD']);
             }
 
         } catch (Exception $e) {
@@ -31,7 +31,7 @@ abstract class MyLdap
     public static function getInfoEtudiant($numetudiant)
     {
         self::connect();
-        $sr = ldap_search(self::$ds, getenv('LDAP_BASE_DN'), 'supannetuid=' . $numetudiant);
+        $sr = ldap_search(self::$ds, $_SERVER['LDAP_BASE_DN'], 'supannetuid=' . $numetudiant);
         if (ldap_count_entries(self::$ds, $sr) === 1) {
             $etudiant = ldap_get_entries(self::$ds, $sr);
             $t['login'] = $etudiant[0]['uid'][0];
