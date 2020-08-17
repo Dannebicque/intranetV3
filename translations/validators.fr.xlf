@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/validators.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 16/08/2020 16:45 -->
+<!-- @lastUpdate 17/08/2020 08:57 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="validators.fr">
@@ -189,16 +189,16 @@
           <segment>
               <source>The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.</source>
               <target>Le fichier est trop volumineux. Sa taille ne doit pas dépasser {{ limit }} {{ suffix }}.
-        </target>
-      </segment>
-    </unit>
-    <unit id="tW7o0t9" name="The file is too large.">
-      <segment>
-        <source>The file is too large.</source>
-        <target>Le fichier est trop volumineux.</target>
-      </segment>
-    </unit>
-    <unit id=".exF5Ww" name="The file could not be uploaded.">
+              </target>
+          </segment>
+      </unit>
+      <unit id="tW7o0t9" name="The file is too large.">
+          <segment>
+              <source>The file is too large.</source>
+              <target>Le fichier est trop volumineux.</target>
+          </segment>
+      </unit>
+      <unit id=".exF5Ww" name="The file could not be uploaded.">
       <segment>
         <source>The file could not be uploaded.</source>
         <target>Le téléchargement de ce fichier est impossible.</target>
@@ -218,16 +218,16 @@
     </unit>
     <unit id="ydcT9kU" name="This is not a valid IP address.">
       <segment>
-        <source>This is not a valid IP address.</source>
-        <target>Cette adresse IP n'est pas valide.</target>
+          <source>This is not a valid IP address.</source>
+          <target>Cette adresse IP n'est pas valide.</target>
       </segment>
     </unit>
-    <unit id="lDOGNFX" name="This value is not a valid language.">
-      <segment>
-          <source>This value is not a valid language.</source>
-          <target>Cette langue n'est pas valide.</target>
-      </segment>
-    </unit>
+      <unit id="lDOGNFX" name="This value is not a valid language.">
+          <segment>
+              <source>This value is not a valid language.</source>
+              <target>Cette langue n'est pas valide.</target>
+          </segment>
+      </unit>
       <unit id="y9IdYkA" name="This value is not a valid locale.">
           <segment>
               <source>This value is not a valid locale.</source>
@@ -534,23 +534,23 @@
           </segment>
       </unit>
       <unit id="M3vyK6s" name="This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.">
-      <segment>
-        <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
-        <target>Ce code d'identification d'entreprise (BIC) n'est pas associé à l'IBAN {{ iban }}.</target>
-      </segment>
-    </unit>
-    <unit id="2v2xpAh" name="This value should be valid JSON.">
-      <segment>
-        <source>This value should be valid JSON.</source>
-        <target>Cette valeur doit être un JSON valide.</target>
-      </segment>
-    </unit>
-    <unit id="9CWVEGq" name="This collection should contain only unique elements.">
-      <segment>
-          <source>This collection should contain only unique elements.</source>
-          <target>Cette collection ne doit pas comporter de doublons.</target>
-      </segment>
-    </unit>
+          <segment>
+              <source>This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.</source>
+              <target>Ce code d'identification d'entreprise (BIC) n'est pas associé à l'IBAN {{ iban }}.</target>
+          </segment>
+      </unit>
+      <unit id="2v2xpAh" name="This value should be valid JSON.">
+          <segment>
+              <source>This value should be valid JSON.</source>
+              <target>Cette valeur doit être un JSON valide.</target>
+          </segment>
+      </unit>
+      <unit id="9CWVEGq" name="This collection should contain only unique elements.">
+          <segment>
+              <source>This collection should contain only unique elements.</source>
+              <target>Cette collection ne doit pas comporter de doublons.</target>
+          </segment>
+      </unit>
       <unit id="WdvZfq." name="This value should be positive.">
           <segment>
               <source>This value should be positive.</source>

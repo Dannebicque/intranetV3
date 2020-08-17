@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 16/08/2020 14:38 -->
+<!-- @lastUpdate 17/08/2020 08:55 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -13628,6 +13628,18 @@
       <segment>
         <source>table.fax</source>
         <target>Fax</target>
+      </segment>
+    </unit>
+    <unit id="N_XHxPn" name="adm.etudiant.edit.heading">
+      <segment>
+        <source>adm.etudiant.edit.heading</source>
+        <target>Modification des données de l'étudiant %etudiant%</target>
+      </segment>
+    </unit>
+    <unit id="KNgylNa" name="atitle.retour_etudiants">
+      <segment>
+        <source>atitle.retour_etudiants</source>
+        <target>Retour à la liste des étudiants</target>
       </segment>
     </unit>
   </file>

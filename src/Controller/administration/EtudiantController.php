@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 17/08/2020 08:43
 
 namespace App\Controller\administration;
 
@@ -60,6 +60,7 @@ class EtudiantController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             //todo: gérer l'import. En commun avec SuperAdministration/EtudiantController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.import.success.flash');
         }
@@ -68,14 +69,16 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @Route("/edit/{id}", name="administration_etudiant_edit", methods="{GET|POST}")
+     * @Route("/edit/{id}/{origin}", name="administration_etudiant_edit", methods="GET|POST")
      * @param Request  $request
      *
      * @param Etudiant $etudiant
      *
+     * @param string   $origin
+     *
      * @return Response
      */
-    public function edit(Request $request, Etudiant $etudiant): Response
+    public function edit(Request $request, Etudiant $etudiant, $origin = 'semestre'): Response
     {
         $form = $this->createForm(
             EtudiantType::class,
@@ -94,13 +97,25 @@ class EtudiantController extends BaseController
             $this->entityManager->persist($etudiant);
             $this->entityManager->flush();
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.add.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.edit.success.flash');
+
+            if ($request->request->get('btn_update') !== null) {
+                if ($origin === 'semestre' && $etudiant->getSemestre() !== null) {
+                    return $this->redirectToRoute('administration_semestre_index',
+                        ['semestre' => $etudiant->getSemestre()->getId()]);
+                }
+
+                return $this->redirectToRoute('administration_etudiant_index');
+
+            }
+
             $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestre()->getId()]);
         }
 
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
-            'form'     => $form->createView()
+            'form'     => $form->createView(),
+            'origin'   => $origin
         ]);
     }
 
