@@ -2,15 +2,12 @@
     <div class="code-preview afficheDocuments" data-type="favori">
         <div class="media align-items-center">
                 <span>
-                    <i class="ti-folder fs-30 text-info"></i>
+                    <i class="fas fa-folder fs-30 text-info"></i>
                 </span>
             <div class="media-body">
                 <h5>Vos documents favoris</h5>
                 <p class="gap-items">
-                    <small>{{ 'nb.documents.categories'|trans }} xx </small>
-                    {#
-                                                    <small>{{ typedocument.description }}</small>
-                    #}
+                    <small>{{ 'nb.documents.categories'|trans }} {{ user_data.nbDocumentsFavoris }} </small>
                 </p>
             </div>
         </div>
@@ -22,15 +19,12 @@
         <div class="code-preview afficheDocuments" data-type="{{ typedocument.id }}">
             <div class="media align-items-center">
                 <span>
-                    <i class="ti-folder fs-30 text-info"></i>
+                    <i class="fas fa-folder fs-30 text-info"></i>
                 </span>
                 <div class="media-body">
                     <h5>{{ typedocument.libelle }}</h5>
                     <p class="gap-items">
                         <small>{{ 'nb.documents.categories'|trans }} {{ typedocument.documents|length }} </small>
-                        {#
-                                                        <small>{{ typedocument.description }}</small>
-                        #}
                     </p>
                 </div>
             </div>

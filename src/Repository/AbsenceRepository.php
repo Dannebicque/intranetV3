@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 30/07/2020 10:13
 
 namespace App\Repository;
 
@@ -48,15 +48,15 @@ class AbsenceRepository extends ServiceEntityRepository
         $tab = array();
         /** @var Absence $absence */
         foreach ($absences as $absence) {
-            $date = $absence->getDate() !== null ? $absence->getDate()->format('Y-m-d') : '';
-            $heure = $absence->getHeure() !== null ? $absence->getHeure()->format('H:i') : '';
+            $date = $absence->getDateHeure() !== null ? $absence->getDateHeure()->format('Y-m-d') : '';
+            $heure = $absence->getDateHeure() !== null ? $absence->getDateHeure()->format('H:i') : '';
 
             if (!array_key_exists($date, $tab)) {
-                $tab[$date] = array();
+                $tab[$date] = [];
             }
 
             if (!array_key_exists($heure, $tab[$date])) {
-                $tab[$date][$heure] = array();
+                $tab[$date][$heure] = [];
             }
 
             $tab[$date][$heure][] = $absence->getEtudiant() !== null ? $absence->getEtudiant()->getId() : '';
@@ -79,8 +79,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('a.annee = :annee')
             ->setParameter('matiere', $matiere->getId())
             ->setParameter('annee', $anneeUniversitaire->getAnnee())
-            ->orderBy('m.date', 'DESC')
-            ->orderBy('m.heure', 'DESC')
+            ->orderBy('m.dateHeure', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -94,19 +93,19 @@ class AbsenceRepository extends ServiceEntityRepository
         /** @var Absence $absence */
         foreach ($absences as $absence) {
             if ($absence->getEtudiant() !== null &&
-                $absence->getDate() !== null &&
-                $absence->getHeure() !== null &&
+                $absence->getDateHeure() !== null &&
                 array_key_exists($absence->getEtudiant()->getId(), $trattrapages) &&
-                array_key_exists($absence->getDate()->format('Ymd'), $trattrapages[$absence->getEtudiant()->getId()]
+                array_key_exists($absence->getDateHeure()->format('Ymd'),
+                    $trattrapages[$absence->getEtudiant()->getId()]
                 )) {
-                    if (!array_key_exists(
-                        $absence->getHeure()->format('Hi'),
-                        $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')]
-                    )) {
-                        $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
-                    }
+                if (!array_key_exists(
+                    $absence->getDateHeure()->format('Hi'),
+                    $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')]
+                )) {
+                    $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')][$absence->getDateHeure()->format('Hi')] = $absence->isJustifie();
+                }
                 } else {
-                $trattrapages[$absence->getEtudiant()->getId()][$absence->getDate()->format('Ymd')][$absence->getHeure()->format('Hi')] = $absence->isJustifie();
+                $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')][$absence->getDateHeure()->format('Hi')] = $absence->isJustifie();
             }
         }
 
@@ -128,8 +127,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('u.annee = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $anneeCourante->getAnnee())
-            ->orderBy('a.date', 'DESC')
-            ->orderBy('a.heure', 'DESC')
+            ->orderBy('a.dateHeure', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -156,13 +154,11 @@ class AbsenceRepository extends ServiceEntityRepository
     public function getAJustifier(AbsenceJustificatif $justificatif)
     {
         //recherche toutes les absences sur la période du justificatif
-
-        //todo: a tester. Prise en compte de l'heure sur le justificatif ? Peut être juste un champs ? Idem pour absence... reconstruire un champs date-heure
         return $this->createQueryBuilder('a')
-            ->where('a.date >= :dateDebut')
-            ->andWhere('a.date <= :dateFin')
-            ->setParameter('dateDebut', $justificatif->getDateDebut())
-            ->setParameter('dateFin', $justificatif->getDateFin())
+            ->where('a.dateHeure >= :dateDebut')
+            ->andWhere('a.dateHeure <= :dateFin')
+            ->setParameter('dateDebut', $justificatif->getDateHeureDebut())
+            ->setParameter('dateFin', $justificatif->getDateHeureFin())
             ->getQuery()
             ->getResult();
     }

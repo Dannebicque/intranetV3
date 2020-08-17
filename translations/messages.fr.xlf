@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 17/08/2020 08:55 -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
     <unit id="baI_ZxO" name="An authentication exception occurred.">
@@ -1156,9 +1162,6 @@
       </segment>
     </unit>
     <unit id="oehMN.Z" name="profil">
-      <notes>
-        <note priority="1">templates/trombinoscope/blocTrombi.html.twig:12</note>
-      </notes>
       <segment>
         <source>profil</source>
         <target>Profil</target>
@@ -7027,7 +7030,7 @@
       </notes>
       <segment>
         <source>verouiller_deverouiller</source>
-        <target>verouiller_deverouiller</target>
+        <target>Verrouiller/Déverrouiller</target>
       </segment>
     </unit>
     <unit id="Xu5YSIq" name="detail.evaluation">
@@ -7414,6 +7417,12 @@
       <segment>
         <source>absence.delete.success.flash</source>
         <target>Absence supprimée avec succès</target>
+      </segment>
+    </unit>
+    <unit id="E6aZiKI" name="hrs.duplicate.success.flash">
+      <segment>
+        <source>hrs.duplicate.success.flash</source>
+        <target>HRS/Prime dupliqué avec succès</target>
       </segment>
     </unit>
     <unit id="aiVr8XS" name="document.edit.success.flash">
@@ -7901,7 +7910,7 @@
       </notes>
       <segment>
         <source>security.login.deverouiller</source>
-        <target>Dévérouiller</target>
+        <target>Déverrouiller</target>
       </segment>
     </unit>
     <unit id="hycyMwG" name="erreur.type.user">
@@ -9770,7 +9779,13 @@
     <unit id="spGFmTn" name="hrs.add.success.flash">
       <segment>
         <source>hrs.add.success.flash</source>
-        <target>Errur lors de la suppression de HRS/Prime</target>
+        <target>HRS/Prime ajoutée avec succès</target>
+      </segment>
+    </unit>
+    <unit id="yRZGlef" name="hrs.edit.success.flash">
+      <segment>
+        <source>hrs.edit.success.flash</source>
+        <target>HRS/Prime modifiée avec succès</target>
       </segment>
     </unit>
     <unit id="xGsTEoC" name="adm.hrs.add.heading">
@@ -10784,7 +10799,7 @@
     <unit id="mGr5eBs" name="super-admin.add.personnel-departement.heading">
       <segment>
         <source>super-admin.add.personnel-departement.heading</source>
-          <target>Ajouter un personnel au département %departement%</target>
+        <target>Ajouter un personnel au département %departement%</target>
       </segment>
     </unit>
     <unit id="DV1gmkP" name="table.departements">
@@ -11438,7 +11453,7 @@
     <unit id="iDuyNAq" name="adm.scolarite.edit.heading">
       <segment>
         <source>adm.scolarite.edit.heading</source>
-        <target>Parcours de scolarité modifié avec succès</target>
+        <target>Modifier le parcours de scolarité de %etudiant%</target>
       </segment>
     </unit>
     <unit id="sLwIhTO" name="adm.scolarite.add.flashbag">
@@ -13505,6 +13520,126 @@
       <segment>
         <source>atitle.retour_groupes</source>
         <target>Retour aux groupes</target>
+      </segment>
+    </unit>
+    <unit id="ft.rUIK" name="déconnexion">
+      <segment>
+        <source>déconnexion</source>
+        <target>Déconnexion</target>
+      </segment>
+    </unit>
+    <unit id="SHV8XV_" name="vérouiller">
+      <segment>
+        <source>vérouiller</source>
+        <target>Vérouiller</target>
+      </segment>
+    </unit>
+    <unit id="BXZsYTO" name="paramètres">
+      <segment>
+        <source>paramètres</source>
+        <target>Paramètres</target>
+      </segment>
+    </unit>
+    <unit id="kcIowSC" name="voir.détail.du.module">
+      <segment>
+        <source>voir.détail.du.module</source>
+        <target>messages</target>
+      </segment>
+    </unit>
+    <unit id="WNaw61D" name="detail.du.module">
+      <segment>
+        <source>detail.du.module</source>
+        <target>Détail du module</target>
+      </segment>
+    </unit>
+    <unit id="94SOG_J" name="passer.en.anglais">
+      <segment>
+        <source>passer.en.anglais</source>
+        <target>Go to english version</target>
+      </segment>
+    </unit>
+    <unit id="G2RAXGt" name="ETAT_STAGE_ERASMUS">
+      <segment>
+        <source>ETAT_STAGE_ERASMUS</source>
+        <target>Semestre/Stage ERASMUS</target>
+      </segment>
+    </unit>
+    <unit id="4j7_qaZ" name="ETAT_STAGE_ETRANGER">
+      <segment>
+        <source>ETAT_STAGE_ETRANGER</source>
+        <target>Semestre/Stage à l'étranger</target>
+      </segment>
+    </unit>
+    <unit id="1tlsCvG" name="ETAT_STAGE_APPRENTISSAGE">
+      <segment>
+        <source>ETAT_STAGE_APPRENTISSAGE</source>
+        <target>Année en apprentissage</target>
+      </segment>
+    </unit>
+    <unit id="sKldPJs" name="adm.groupe.index.heading">
+      <segment>
+        <source>adm.groupe.index.heading</source>
+        <target>Liste des groupes</target>
+      </segment>
+    </unit>
+    <unit id="pMfOjqq" name="adm.groupe.semestre.index.heading">
+      <segment>
+        <source>adm.groupe.semestre.index.heading</source>
+        <target>Groupes du semestre</target>
+      </segment>
+    </unit>
+    <unit id="kKeCQk_" name="adm.groupe.semestre.add.heading">
+      <segment>
+        <source>adm.groupe.semestre.add.heading</source>
+        <target>Ajouter un groupe dans le semestre</target>
+      </segment>
+    </unit>
+    <unit id="9dmm8Ma" name="adm.typegroupe.semestre.index.heading">
+      <segment>
+        <source>adm.typegroupe.semestre.index.heading</source>
+        <target>Type de groupe du semestre</target>
+      </segment>
+    </unit>
+    <unit id="OFQ1JHK" name="scolarite.detail.heading">
+      <segment>
+        <source>scolarite.detail.heading</source>
+        <target>Détail de la scolarité de %etudiant% pour le semestre %semestre%</target>
+      </segment>
+    </unit>
+    <unit id="SoN8WPm" name="verrouiller">
+      <segment>
+        <source>verrouiller</source>
+        <target>Verrouiller</target>
+      </segment>
+    </unit>
+    <unit id=".SSDvOz" name="adm.statistiques.vue.globale.heading">
+      <segment>
+        <source>adm.statistiques.vue.globale.heading</source>
+        <target>Statistiques du département : vue globale</target>
+      </segment>
+    </unit>
+    <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
+      <segment>
+        <source>adm.statistiques.vue.detaillee.heading</source>
+        <target>Statistiques du département : vue détaillée</target>
+      </segment>
+    </unit>
+    <unit id="4ZFF._O" name="table.fax">
+      <segment>
+        <source>table.fax</source>
+        <target>Fax</target>
+      </segment>
+    </unit>
+    <unit id="N_XHxPn" name="adm.etudiant.edit.heading">
+      <segment>
+        <source>adm.etudiant.edit.heading</source>
+        <target>Modification des données de l'étudiant %etudiant%</target>
+      </segment>
+    </unit>
+    <unit id="KNgylNa" name="atitle.retour_etudiants">
+      <segment>
+        <source>atitle.retour_etudiants</source>
+        <target>Retour à la liste des étudiants</target>
       </segment>
     </unit>
   </file>

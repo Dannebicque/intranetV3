@@ -14,18 +14,18 @@
                 {% if selectedTypeGroupe != null %}
                     <ul class="card-controls">
                         <li class="dropdown">
-                            <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
+                            <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: selectedTypeGroupe.id}) }}"
-                                   class="dropdown-item"><i class="fa fa-file-pdf-o"></i> {{ 'exporter.pdf'|trans }}</a>
+                                   class="dropdown-item"><i class="fa fa-file-pdf"></i> {{ 'exporter.pdf'|trans }}</a>
                                 <a href="{{ path('trombinoscope_etudiant_export', {_format:'xlsx', typeGroupe: selectedTypeGroupe.id}) }}"
-                                   class="dropdown-item"><i class="fa fa-file-excel-o"></i> {{ 'exporter.xlsx'|trans }}
+                                   class="dropdown-item"><i class="fa fa-file-excel"></i> {{ 'exporter.xlsx'|trans }}
                                 </a>
                                 <a href="{{ path('trombinoscope_etudiant_export', {_format:'csv', typeGroupe: selectedTypeGroupe.id}) }}"
-                                   class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.csv'|trans }}
+                                   class="dropdown-item"><i class="fa fa-file-csv"></i> {{ 'exporter.csv'|trans }}
                                 </a>
                                 <a href="{{ path('trombinoscope_etudiant_image', {typeGroupe: selectedTypeGroupe.id}) }}"
-                                   class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.trombi'|trans }}
+                                   class="dropdown-item"><i class="fa fa-file-csv"></i> {{ 'exporter.trombi'|trans }}
                                 </a>
                             </div>
                         </li>

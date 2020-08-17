@@ -3,11 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/NotificationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 08:36
 
 namespace App\Controller;
 
 use App\Entity\Notification;
+use App\Repository\NotificationRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,30 +22,47 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NotificationController extends BaseController
 {
-    // todo: gérer les notifications anciennes... Suppression après xx jours => tache cron ?
-    // todo: gérer le "lu" lorsque l'on clique sur un lien
-    // todo: comment détailler plus que le type ? des "sous-classes" ? En sauvegardant le type d'objet et un id ?
+    // feature: comment détailler plus que le type ? des "sous-classes" ? En sauvegardant le type d'objet et un id ?
 
 
     /**
      * @Route("/", name="notification_index")
+     * @param NotificationRepository $notificationRepository
+     *
+     * @return Response
      */
-    public function index(): Response
+    public function index(NotificationRepository $notificationRepository): Response
     {
         return $this->render('notification/index.html.twig', [
-            'notifications' => $this->getConnectedUser()->getNotifications(),
+            'notifications' => $notificationRepository->findByUser($this->getConnectedUser()),
         ]);
+    }
+
+    /**
+     * @param Notification $notification
+     * @Route("/lire/{uuid}", name="notification_lire")
+     * @ParamConverter("notification", options={"mapping": {"uuid": "uuid"}})
+     *
+     * @return RedirectResponse
+     */
+    public function lire(Notification $notification): RedirectResponse
+    {
+        $notification->setLu(true);
+        $this->entityManager->flush();
+
+        return $this->redirect($notification->getUrl());
     }
 
     /**
      * @Route("/marquer", name="notification_marquer_lu", options={"expose":true})
      *
+     * @param NotificationRepository $notificationRepository
+     *
      * @return Response
      */
-    public function marquerCommeLu(): Response
+    public function marquerCommeLu(NotificationRepository $notificationRepository): Response
     {
-        //vérifier si c'est le bon user ?
-        $notifications = $this->getConnectedUser()->getNotifications(); //todo: améliorer en récupérant uniquement les nom lu.
+        $notifications = $notificationRepository->findNonLuByUser($this->getConnectedUser());
 
         /** @var Notification $notif */
         foreach ($notifications as $notif) {

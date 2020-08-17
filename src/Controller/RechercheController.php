@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RechercheController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 08:47
 
 namespace App\Controller;
 
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RechercheController extends BaseController
 {
     /**
-     * @Route("/{keyword}", name="recherche", options={"expose":true})
+     * @Route("/{keyword}", name="recherche", options={"expose":true}, methods={"GET"})
      * @param EtudiantRepository  $etudiantRepository
      * @param PersonnelRepository $personnelRepository
      * @param                     $keyword
@@ -35,7 +35,7 @@ class RechercheController extends BaseController
         $t['etudiants'] = $etudiantRepository->search($keyword);
         $t['personnels'] = $personnelRepository->search($keyword);
         $t['autres'] = [];
-        $t['basepath'] = getenv('BASE_URL') . 'upload/';
+        $t['basepath'] = $this->getParameter('BASE_URL') . 'upload/';
 
         return $this->json($t);
     }

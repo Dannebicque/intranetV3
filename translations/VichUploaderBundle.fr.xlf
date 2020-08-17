@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/VichUploaderBundle.fr.xlf -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 17/08/2020 08:57 -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
     <file id="VichUploaderBundle.fr">
         <unit id="MVIu471" name="label.fichier">

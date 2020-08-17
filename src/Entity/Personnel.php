@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -23,6 +23,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
+
+    public const PERMANENT = 'permanent';
+    public const VACATAIRE = 'vacataire';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -166,11 +170,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     private $notifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\TrelloTache", mappedBy="personnels")
-     */
-    private $trelloTaches;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="expediteur")
      */
     private $messages;
@@ -240,6 +239,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $articlesLike;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriPersonnel", mappedBy="personnel")
+     */
+    private $documentsFavoris;
+
     public function __construct()
     {
         parent::__construct();
@@ -266,6 +270,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->quizzQuestions = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->articlesLike = new ArrayCollection();
+        $this->documentsFavoris = new ArrayCollection();
     }
 
     /**
@@ -290,6 +295,12 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     public function setStatut($statut): void
     {
+        if ($statut === 'PRO') {
+            $this->setTypeUser(self::VACATAIRE);
+        } else {
+            $this->setTypeUser(self::PERMANENT);
+        }
+
         $this->statut = $statut;
     }
 
@@ -444,7 +455,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|UploadedFile $cv
+     * @param File|null $cv
      */
     public function setCvFile(?File $cv = null): void
     {
@@ -780,44 +791,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             if ($notification->getPersonnel() === $this) {
                 $notification->setPersonnel(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|TrelloTache[]
-     */
-    public function getTrelloTaches(): Collection
-    {
-        return $this->trelloTaches;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Personnel
-     */
-    public function addTrelloTach(TrelloTache $trelloTach): self
-    {
-        if (!$this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches[] = $trelloTach;
-            $trelloTach->addPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Personnel
-     */
-    public function removeTrelloTach(TrelloTache $trelloTach): self
-    {
-        if ($this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches->removeElement($trelloTach);
-            $trelloTach->removePersonnel($this);
         }
 
         return $this;
@@ -1371,6 +1344,37 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             // set the owning side to null (unless already changed)
             if ($articlesLike->getPersonnel() === $this) {
                 $articlesLike->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DocumentFavoriPersonnel[]
+     */
+    public function getDocumentsFavoris(): Collection
+    {
+        return $this->documentsFavoris;
+    }
+
+    public function addDocumentsFavori(DocumentFavoriPersonnel $documentsFavori): self
+    {
+        if (!$this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris[] = $documentsFavori;
+            $documentsFavori->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentsFavori(DocumentFavoriPersonnel $documentsFavori): self
+    {
+        if ($this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris->removeElement($documentsFavori);
+            // set the owning side to null (unless already changed)
+            if ($documentsFavori->getPersonnel() === $this) {
+                $documentsFavori->setPersonnel(null);
             }
         }
 

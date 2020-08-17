@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Form;
 
@@ -28,8 +28,6 @@ class RattrapageType extends AbstractType
 {
     private $semestre;
 
-    private $locale;
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -37,7 +35,7 @@ class RattrapageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
-        $this->locale = $options['locale'];
+        $locale = $options['locale'];
 
         $builder
             ->add('dateEval', DateType::class, [
@@ -46,7 +44,7 @@ class RattrapageType extends AbstractType
                 'format'   => 'dd/MM/yyyy',
                 'widget'   => 'single_text',
                 'html5'    => false,
-                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $this->locale]
+                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $locale]
             ])
             ->add('heureEval', TimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, ['label' => 'label.duree_evaluation', 'required' => false])
@@ -60,7 +58,7 @@ class RattrapageType extends AbstractType
                 'required'      => false,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr'     => ['data-live-search' => 'true', 'data-provide' => 'selectpicker']
+                'attr' => ['class' => 'form-control selectpicker']
 
             ))
             ->add('personnel', EntityType::class, array(
@@ -73,7 +71,7 @@ class RattrapageType extends AbstractType
                 'required'      => false,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr'     => ['data-live-search' => 'true', 'data-provide' => 'selectpicker']
+                'attr' => ['class' => 'form-control selectpicker']
 
             ));
     }

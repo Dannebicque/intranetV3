@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 17/08/2020 08:55 -->
+
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
     <unit id="lRFM2Mc" name="label.libelle">
@@ -2145,34 +2151,34 @@
         <target>Nb. Groupes de TP</target>
       </segment>
     </unit>
-      <unit id="5tg4tOt" name="choice.mcf">
-          <notes>
-              <note priority="1">src/Form/PersonnelType.php:47</note>
-          </notes>
-          <segment>
-              <source>choice.mcf</source>
-              <target>Maître de Conférences</target>
-          </segment>
-      </unit>
-      <unit id="5tg4t9t" name="choice.contractuel">
-          <notes>
-              <note priority="1">src/Form/PersonnelType.php:47</note>
-          </notes>
-          <segment>
-              <source>choice.contractuel</source>
-              <target>Contractuel (CDD/CDI)</target>
-          </segment>
-      </unit>
-      <unit id="f.dmV00" name="choice.pr">
-          <notes>
-              <note priority="1">src/Form/PersonnelType.php:47</note>
-          </notes>
-          <segment>
-              <source>choice.pr</source>
-              <target>Professeur des universités</target>
-          </segment>
-      </unit>
-      <unit id="E_m7NU2" name="choice.prag">
+    <unit id="5tg4tOt" name="choice.mcf">
+      <notes>
+        <note priority="1">src/Form/PersonnelType.php:47</note>
+      </notes>
+      <segment>
+        <source>choice.mcf</source>
+        <target>Maître de Conférences</target>
+      </segment>
+    </unit>
+    <unit id="_lBNq4I" name="choice.contractuel">
+      <notes>
+        <note priority="1">src/Form/PersonnelType.php:47</note>
+      </notes>
+      <segment>
+        <source>choice.contractuel</source>
+        <target>Contractuel (CDD/CDI)</target>
+      </segment>
+    </unit>
+    <unit id="f.dmV00" name="choice.pr">
+      <notes>
+        <note priority="1">src/Form/PersonnelType.php:47</note>
+      </notes>
+      <segment>
+        <source>choice.pr</source>
+        <target>Professeur des universités</target>
+      </segment>
+    </unit>
+    <unit id="E_m7NU2" name="choice.prag">
       <notes>
         <note priority="1">src/Form/PersonnelType.php:47</note>
       </notes>
@@ -4096,6 +4102,36 @@
       <segment>
         <source>help.dateFermeture.enquete</source>
         <target>Date de fermeture de l'enquête (aucune réponse possible passée cette date)</target>
+      </segment>
+    </unit>
+    <unit id="FK2M.Qx" name="label.anneeSortie">
+      <segment>
+        <source>label.anneeSortie</source>
+        <target>Année de sortie</target>
+      </segment>
+    </unit>
+    <unit id="Jagy4Vy" name="Laissez 0 si scolarité en cours">
+      <segment>
+        <source>Laissez 0 si scolarité en cours</source>
+        <target>Laissez 0 si scolarité en cours</target>
+      </segment>
+    </unit>
+    <unit id="r.BWHpr" name="label.adresse_parentale">
+      <segment>
+        <source>label.adresse_parentale</source>
+        <target>Adresse parentale</target>
+      </segment>
+    </unit>
+    <unit id="Zk.KlSD" name="vich_uploader.link.download">
+      <segment>
+        <source>vich_uploader.link.download</source>
+        <target>Télécharger</target>
+      </segment>
+    </unit>
+    <unit id="_orotqB" name="vich_uploader.form_label.delete_confirm">
+      <segment>
+        <source>vich_uploader.form_label.delete_confirm</source>
+        <target>Confirmer la suppression</target>
       </segment>
     </unit>
   </file>

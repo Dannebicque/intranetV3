@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtActionsController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 15:24
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\EdtPlanning;
-use App\Classes\Edt\MyEdt;
+use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
@@ -61,7 +61,7 @@ class EdtActionsController extends BaseController
      * @param Request               $request
      *
      * @param EdtPlanningRepository $edtPlanningRepository
-     * @param MyEDT                 $myEdt
+     * @param MyEdtIntranet         $myEdt
      *
      * @return RedirectResponse
      * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
@@ -69,7 +69,7 @@ class EdtActionsController extends BaseController
     public function addCours(
         Request $request,
         EdtPlanningRepository $edtPlanningRepository,
-        MyEdt $myEdt
+        MyEdtIntranet $myEdt
     ): RedirectResponse {
         if ($request->request->get('idEdtUpdate') !== '') {
             $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));

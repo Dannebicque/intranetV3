@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Form;
 
@@ -51,7 +51,7 @@ class AlternanceEtudiantType extends AbstractType
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
             ])
             ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
             ->add('adresseAlternance', AdresseType::class,

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 08/08/2020 10:20
 
 /**
  * Created by PhpStorm.
@@ -14,12 +14,13 @@
 
 namespace App\Classes\Excel;
 
+use App\Classes\MyAbsences;
+use App\Classes\MySerializer;
+use App\Entity\Absence;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use App\Classes\MyAbsences;
-use App\Classes\MySerializer;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -53,7 +54,6 @@ class MyExcelMultiExport
      * @param $name
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function saveXlsx($name): StreamedResponse
     {
@@ -75,7 +75,6 @@ class MyExcelMultiExport
     /**
      * @param $name
      *
-     * @throws Exception
      */
     public function pageSetup($name): void
     {
@@ -98,7 +97,6 @@ class MyExcelMultiExport
      * @param       $name
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function saveCsv($name): StreamedResponse
     {
@@ -121,7 +119,6 @@ class MyExcelMultiExport
      * @param       $name
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function savePdf($name): StreamedResponse
     {
@@ -146,7 +143,6 @@ class MyExcelMultiExport
      * @param $modele
      * @param $colonne
      *
-     * @throws Exception
      */
     public function genereExcelFromSerialization($data, $modele, $colonne): void
     {
@@ -193,8 +189,15 @@ class MyExcelMultiExport
                             $row))) {
                     if (is_array($value)) {
                         foreach ($value as $col) {
-                            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$key][$col]);
-                            $i++;
+                            if (is_array($row[$key])) {
+                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
+                                    $row[$key][$col]);
+                                $i++;
+                            } else {
+                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
+                                    '-');
+                                $i++;
+                            }
                         }
                     } else {
                         $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
@@ -214,7 +217,6 @@ class MyExcelMultiExport
     /**
      * @param MyAbsences $myAbsences
      *
-     * @throws Exception
      */
     public function genereExcelAbsence(MyAbsences $myAbsences): void
     {
@@ -237,25 +239,25 @@ class MyExcelMultiExport
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['nbCoursManques']
+                $myAbsences->getStatistiques()[$etudiant->getId()]->nbCoursManques
             );
             $colonne++;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['totalDuree']->format('H:i')
+                $myAbsences->getStatistiques()[$etudiant->getId()]->totalDuree->format('H:i')
             );
             $colonne++;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['nbNonJustifie']
+                $myAbsences->getStatistiques()[$etudiant->getId()]->nbNonJustifie
             );
             $colonne++;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]['nbJustifie']
+                $myAbsences->getStatistiques()[$etudiant->getId()]->nbJustifie
             );
             $ligne++;
             $colonne = 1;
@@ -265,7 +267,6 @@ class MyExcelMultiExport
     /**
      * @param Semestre $semestre
      *
-     * @throws Exception
      */
     public function genereModeleExcel(Semestre $semestre): void
     {
@@ -275,7 +276,6 @@ class MyExcelMultiExport
         $ligne = 2;
         $colonne = 1;
         /** @var Etudiant $etudiant */
-        //todo: peut être a améliorer avec un filtre des étudiants?
         foreach ($semestre->getEtudiants() as $etudiant) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
             $colonne++;
@@ -292,7 +292,6 @@ class MyExcelMultiExport
      * @param            $groupes
      * @param            $notes
      *
-     * @throws Exception
      */
     public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes): void
     {
@@ -345,4 +344,48 @@ class MyExcelMultiExport
             }
         }
     }
+
+    /**
+     * @param $absences
+     */
+    public function genereReleveAbsencesMatiereExcel($absences): void
+    {
+        $this->myExcelWriter->createSheet('Absences');
+
+        $this->myExcelWriter->writeHeader([
+            'num_etudiant',
+            'nom',
+            'prenom',
+            'date Absence',
+            'heure Absence',
+            'Saisie par',
+            'Absence justifiée'
+        ]);
+
+        $ligne = 2;
+        $colonne = 1;
+
+        /** @var Absence $absence */
+        foreach ($absences as $absence) {
+            $etudiant = $absence->getEtudiant();
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
+            $colonne++;
+
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('d/m/Y'));
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('H:i'));
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getPersonnel()->getDisplayPr());
+            $colonne++;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getJustifie() == 1 ? 'Oui' : 'Non');
+            $colonne = 1;
+            $ligne++;
+        }
+
+    }
+
 }

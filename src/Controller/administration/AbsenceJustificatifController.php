@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Controller\administration;
 
@@ -68,7 +68,14 @@ class AbsenceJustificatifController extends BaseController
     ): Response {
         $justificatifs = $absenceJustificatifRepository->findBySemestre(
             $semestre);
-        return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
+
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $justificatifs,
+            'justificatifs_' . $semestre->getLibelle(),
+            ['justificatif_administration', 'utilisateur'],
+            ['dateDebut', 'heureDebut', 'dateFin', 'heureFin', 'motif', 'etat', 'etudiant' => ['prenom', 'nom']]
+        );
     }
 
     /**
@@ -109,7 +116,7 @@ class AbsenceJustificatifController extends BaseController
      */
     public function details(AbsenceJustificatif $absenceJustificatif): Response
     {
-        return $this->render('administration/absencejustificatif/details.html.twig', [
+        return $this->render('administration/absencejustificatif/_details.html.twig', [
             'justificatif' => $absenceJustificatif
         ]);
     }

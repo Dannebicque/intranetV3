@@ -42,10 +42,6 @@
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
                         </td>
                     </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
-                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -58,37 +54,48 @@
         {type: 'info',
             href: path('administration_article_export', {_format:'pdf'}),
             title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf-o"
+            icone : "fas fa-file-pdf"
         },
         {
             type:'info',
             href:path('administration_article_export', {_format:'csv'}),
             title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-text-o'
+            icone: 'fas fa-file-csv'
         },
         {
             type:'info',
             href:path('administration_article_export', {_format:'xlsx'}),
             title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel-o'
+            icone: 'fas fa-file-excel'
         },
         {
             type:'info',
             href:path('administration_article_new'),
             title: 'ajouter'|trans,
-            icone: 'ti-plus'
+            icone: 'fas fa-plus'
         },
         {
             type:'success',
             href:path('administration_article_categories'),
             title: 'article_categories'|trans,
-            icone: 'ti-tag'
+            icone: 'fas fa-tag'
         },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration_article'}),
             title: 'aide'|trans,
-            icone: 'fa fa-question'
+            icone: 'fas fa-question'
         }
     ]}) }}
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+{% endblock %}
+

@@ -3,15 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\MyAlternanceFicheSuivi;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
 use App\Form\AlternanceFicheSuiviType;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,28 +82,16 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}/imprimer", name="application_personnel_alternance_fiche_suivi_print", methods={"GET"})
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     * @param MyAlternanceFicheSuivi $myAlternanceFicheSuivi
+     * @param AlternanceFicheSuivi   $alternanceFicheSuivi
      *
      * @return Response
      */
-    public function print(AlternanceFicheSuivi $alternanceFicheSuivi): Response
-    {
-
-        $html = $this->renderView('pdf/ficheSuiviAlternant.html.twig', [
-            'alternance_fiche_suivi' => $alternanceFicheSuivi,
-        ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('Fiche-suivi-alternant-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom() . '-' . $alternanceFicheSuivi->getDate()->format('dmY'),
-            ['Attachment' => 1]));
-
+    public function print(
+        MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
+        AlternanceFicheSuivi $alternanceFicheSuivi
+    ): Response {
+        return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
     /**

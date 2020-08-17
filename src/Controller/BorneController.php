@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/07/2020 14:08
 
 namespace App\Controller;
 
@@ -33,8 +33,7 @@ class BorneController extends AbstractController
         $messages[] = $semestre2->getBornes();
 
         $response = new Response();
-        //$response->headers->set('Content-Type', 'application/json');
-        // Allow all websites
+
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $content = $this->renderView('borne/index.html.twig', [
             't'        => $myEdtBorne->getData(),

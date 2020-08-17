@@ -1,0 +1,551 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 16/08/2020 08:32
+
+@import "core.min.css";
+@import "./material-icons.css";
+@import "./theme.scss";
+
+#planning thead {
+  height: 30px;
+}
+
+#planning tbody {
+  height: 300px;
+  overflow: auto;
+}
+
+.card-trombi {
+  background-color: #f5f6f7;
+}
+
+a .btn-round {
+  color: white;
+}
+
+.afficheDocuments {
+  cursor: pointer;
+}
+
+.preloader {
+  opacity: 0.7;
+}
+
+.lignehover:hover {
+  background-color: #f5f6fa;
+}
+
+
+.previtd {
+  background-color: #e3fcf2;
+  color: #3f4a59;
+}
+
+.previtp {
+  background-color: #fcf0e3;
+  color: #3f4a59;
+}
+
+fieldset {
+  border: 1px solid #4d5259;
+  padding: 10px;
+}
+
+fieldset legend {
+  font-weight: 400;
+  padding: 5px;
+}
+
+.absent {
+  background-color: #f96868;
+}
+
+.carre {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
+.alternance {
+  background-color: darkred;
+  color: white
+}
+
+.stage {
+  background-color: green;
+}
+
+.bloquercreneau_eviter {
+  background-color: orange;
+}
+
+.bloquercreneau_interdit {
+  background-color: red;
+}
+
+.message-unread {
+  background-color: #f3f9ff;
+}
+
+.is-default {
+  background-color: #33cabb;
+  opacity: 0.8;
+  color: white;
+}
+
+.table-edt {
+  border: 1px solid #3f4a59;
+  width: 100%;
+}
+
+.table-edt td tr {
+  padding: 0;
+}
+
+.table-edt td {
+  border: 1px solid #3f4a59;
+  max-width: 15px;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  text-align: center;
+}
+
+.table-edt th {
+  border: 1px solid #3f4a59;
+  font-style: italic;
+  font-size: 10px;
+  padding: 0;
+  text-align: center;
+}
+
+.table-edt .lastcol {
+  border-left: 2px solid black;
+}
+
+
+/* Grid Notes Absences */
+.wrapper-notes-absences {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 1em;
+}
+
+.col-notes-header {
+  background-color: #3f4a59;
+  padding: 1em;
+  margin: 0;
+  grid-column-gap: 0;
+  color: white;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+/* Grid EDT Etudiant */
+.wrapper-edt-etudiant {
+  display: grid;
+  grid-template-columns: 100px repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 1em;
+}
+
+
+.edt-etudiant-col1 {
+
+}
+
+.edt-etudiant-col5 {
+  grid-column-start: 2;
+  grid-column-end: 7;
+}
+
+.col-edt-header {
+  background-color: #3f4a59;
+  padding: 1em;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+.col-edt-heure {
+  background-color: #3f4a59;
+  padding: 1em;
+  color: white;
+  text-align: center;
+  grid-column: 1/2;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+
+}
+
+.edt-cours {
+  background-color: #EBEAEA;
+  text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+table {
+  border: 1px solid #3f4a59;
+}
+
+thead {
+  background-color: #3f4a59;
+  color: white;
+}
+
+.th_titre {
+  background-color: #3f4a59;
+  color: white;
+}
+
+/** Responsive */
+
+@media screen and (max-width: 640px) {
+  /* Grid EDT Etudiant */
+  .wrapper-edt-etudiant {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+  }
+
+  .col-edt-hide {
+    display: none;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .col-notes-header {
+    display: none;
+  }
+
+  .wrapper-notes-absences {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* QuillJs */
+.ql-editor {
+  min-height: 200px;
+}
+
+.ql-snow .ql-picker.customsfields .ql-picker-label::before {
+  content: 'Choisir'
+}
+
+/*.ql-snow .ql-picker.customsfields::before,*/
+.ql-snow .ql-picker.ql-customsfields .ql-picker-item::before {
+  content: attr(data-value);
+}
+
+
+/*
+.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[prenom]"]::before,
+.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[prenom]"]::before {
+  content: "[prenom]";
+}
+.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[nom]"]::before,
+.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[nom]"]::before {
+  content: "[nom]";
+}
+.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[entreprise]"]::before,
+.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[entreprise]"]::before {
+  content: "[entreprise]";
+}
+*/
+.ql-snow span.ql-picker.ql-customsfields {
+  width: 8em;
+}
+
+.erreurPrevi {
+  color: red;
+  font-weight: bold;
+}
+
+.validePrevi {
+  color: green
+}
+
+/* Partie Jeditable */
+.editable {
+  border-bottom: 1px dashed;
+  color: darkgreen;
+}
+
+.editable-class input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.footer-speciale {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  clear: both;
+}
+
+.header-special {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  //  background-color: #F9B000;
+  border-radius: 4px;
+}
+
+.header-special-lock {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: -20px;
+  //  background-color: #F9B000;
+}
+
+.reserve {
+  background-color: #DDDDDD;
+}
+
+.reservationstudio {
+  background-color: orange;
+}
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+.myedit {
+  color: #77808D;
+  text-decoration: none;
+  border-bottom: dotted 1px #77808D;
+}
+
+.myedit:after {
+  content: '\f044';
+  font-family: "Font Awesome 5 Free", serif;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+
+  margin-left: 5px;
+  color: #77808D;
+}
+
+.ui-selected {
+  background-color: red;
+}
+
+#blocadd {
+  display: none;
+}
+
+#lottie {
+  background-color: #77808D;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  text-align: center;
+  opacity: 1;
+}
+
+/** LOGO **/
+.st0 {
+  fill: #46ABBC;
+}
+
+/* couleur claire - mmi Troyes */
+.st1 {
+  fill: #146F88;
+}
+
+/* couleur foncée - mmi Troyes */
+
+
+/* couleur foncée - iut Troyes */
+
+.st4 {
+  fill: #41C0F0;
+}
+
+/* couleur claire - iut Reims */
+.st5 {
+  fill: #083153;
+}
+
+/* couleur foncée - iut Reims */
+
+.div_logo {
+  background-color: white
+}
+
+.div_logo:hover {
+  cursor: pointer;
+}
+
+.div_logo:hover .bounce {
+  -webkit-animation: bounce 2s;
+  animation: bounce 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%,
+  25%,
+  50%,
+  75%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+.div_logo:hover .drop {
+  -webkit-animation: drop 2s;
+  animation: drop 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+@keyframes drop {
+  0%,
+  25%,
+  50%,
+  75%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+  60% {
+    -webkit-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+
+/** FIN LOGO **/
+
+/** AVATAR **/
+@mixin avatar($sizeda) {
+  width: $sizeda;
+  height: $sizeda;
+  text-align: center;
+  background-color: #FAB001;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  margin: auto;
+
+  .initials {
+    position: relative;
+    top: $sizeda*0.25;
+    font-size: $sizeda*0.5;
+    line-height: $sizeda*0.5;
+    color: #fff;
+    font-weight: bold;
+  }
+}
+
+.avatar-circle {
+  @include avatar(100px);
+}
+
+.avatar-circle-sm {
+  @include avatar(50px);
+}
+
+.avatar-circle-lg {
+  @include avatar(250px);
+}
+
+.datepicker-days .datepicker-switch {
+  color: white;
+}
+
+.datepicker-days .dow {
+  color: white;
+}
+
+.sub-question {
+  margin: 1px;
+  padding: 4px;
+}
+
+.row-striped {
+  background-color: #F2F2F2;
+
+}
+
+.required-etoile {
+  color: #f96868;
+}
+
+.sub-question-titre {
+  font-size: 14px;
+}
+
+.profil-nom {
+  background-color: #3f4a59;
+  color: white;
+}
+
+.edt-extra-time {
+  background-color: #E65100;
+  display: block;
+  color: white
+}
+
+.fa-color-home {
+  color: #4CAF50;
+}
+
+.fa-color-trombi {
+  color: #FF5252;
+}
+
+.fa-color-agenda {
+  color: #d0d0ff;
+}
+
+.fa-color-messagerie {
+  color: #007bb6;
+}
+
+.fa-color-profil {
+  color: #ffa000;
+}
+
+.datepicker .next::before {
+  content: "\f101";
+  font-family: "Font Awesome 5 Free", serif;
+}
+
+.datepicker .prev::before {
+  content: "\f100";
+  font-family: "Font Awesome 5 Free", serif;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free", serif;
+}
+
+//correctifs accessibilité
+

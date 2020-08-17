@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/07/2020 11:24
 
 namespace App\Entity;
 
@@ -55,7 +55,7 @@ class Contact extends BaseEntity
      * @ORM\Column(type="string", length=3)
      * @Groups({"alternance_administration"})
      */
-    private $civilite = 'M.';
+    private $civilite;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)

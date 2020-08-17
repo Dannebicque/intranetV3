@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 06/08/2020 08:26
 
 namespace App\Controller\administration\stage;
 
@@ -55,8 +55,8 @@ class StagePeriodeController extends BaseController
             $_format,
             $dates,
             'periodes_stage',
-            ['stage_periode_administration', 'utilisateur'],
-            ['numeroPeriode', 'libelle', 'numeroPeriode', 'dateDebut','dateFin','nbSemaines','nbJours','nbEcts']
+            ['stage_periode_administration'],
+            ['numeroPeriode', 'libelle', 'numeroPeriode', 'dateDebut', 'dateFin', 'nbSemaines', 'nbJours', 'nbEcts']
         );
     }
 

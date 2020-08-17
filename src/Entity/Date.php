@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 23/07/2020 09:06
 
 namespace App\Entity;
 
@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DateRepository")
@@ -43,11 +44,13 @@ class Date extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"date_administration"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"date_administration"})
      */
     private $texte;
 
@@ -55,6 +58,7 @@ class Date extends BaseEntity
      * @var DateTime
      *
      * @ORM\Column(type="date")
+     * @Groups({"date_administration"})
      */
     private $dateDebut;
 
@@ -62,6 +66,7 @@ class Date extends BaseEntity
      * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Groups({"date_administration"})
      */
     private $heureDebut;
 
@@ -69,6 +74,7 @@ class Date extends BaseEntity
      * @var DateTime
      *
      * @ORM\Column(type="date")
+     * @Groups({"date_administration"})
      */
     private $dateFin;
 
@@ -76,6 +82,7 @@ class Date extends BaseEntity
      * @var DateTime
      *
      * @ORM\Column(type="time", nullable=true)
+     * @Groups({"date_administration"})
      */
     private $heureFin;
 
@@ -83,6 +90,7 @@ class Date extends BaseEntity
      * @var string
      *
      * @ORM\Column(name="lieu", type="string", length=150)
+     * @Groups({"date_administration"})
      */
     private $lieu;
 
@@ -90,6 +98,7 @@ class Date extends BaseEntity
      * @var boolean
      *
      * @ORM\Column(type="boolean")
+     * @Groups({"date_administration"})
      */
     private $allday = false;
 
@@ -97,6 +106,7 @@ class Date extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=1)
+     * @Groups({"date_administration"})
      */
     private $qui;
 
@@ -109,11 +119,13 @@ class Date extends BaseEntity
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="dates")
+     * @Groups({"date_administration"})
      */
     private $semestres;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"date_administration"})
      */
     private $type;
 

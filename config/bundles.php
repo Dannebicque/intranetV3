@@ -1,4 +1,9 @@
 <?php
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 30/07/2020 10:13
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
@@ -17,4 +22,5 @@ return [
     Liip\ImagineBundle\LiipImagineBundle::class                          => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class                    => ['all' => true],
     Translation\Bundle\TranslationBundle::class                          => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class               => ['all' => true],
 ];

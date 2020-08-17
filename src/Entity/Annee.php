@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:14
 
 namespace App\Entity;
 
+use App\Classes\Tools;
 use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -245,14 +246,7 @@ class Annee extends BaseEntity
      */
     public function update($name, $value): void
     {
-        $t = explode('_', $name);
-        $name = $t[0];
-        $name[0] = chr(ord($name[0]) - 32);
-
-        $method = 'set' . $name;
-        if (method_exists($this, $method)) {
-            $this->$method($value);
-        }
+        Tools::updateFields($name, $value, $this);
     }
 
     /**

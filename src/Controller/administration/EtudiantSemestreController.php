@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller\administration;
 
@@ -47,10 +47,9 @@ class EtudiantSemestreController extends BaseController
 
     /**
      * @Route("/add/{semestre}", name="administration_etudiant_semestre_add", requirements={"semestre"="\d+"})
-     * @param Semestre $semestre
+     * @param Semestre|null $semestre
      *
      * @return Response
-     * @throws \Exception
      */
     public function addEtudiant(Semestre $semestre = null): Response
     {

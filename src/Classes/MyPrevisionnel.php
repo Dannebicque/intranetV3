@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Classes;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Hrs;
@@ -473,7 +474,6 @@ class MyPrevisionnel
      * @param int         $anneePrevisionnel
      *
      * @return StreamedResponse
-     * @throws Exception
      */
     public function exportOmegaDepartement(Departement $departement, int $anneePrevisionnel): StreamedResponse
     {
@@ -618,13 +618,11 @@ class MyPrevisionnel
                 $colonne++;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getDiplome()->getLibelle());
-            }
-            {
+            } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
                 $colonne++;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
             }
-//LIBELLE VET
             $colonne++;
 //CODE ELEMENT*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
@@ -895,5 +893,12 @@ class MyPrevisionnel
     public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
     {
         //todo: a faire.
+    }
+
+    public function getRealiseChronologique(
+        Personnel $personnel,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
+
     }
 }

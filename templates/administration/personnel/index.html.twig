@@ -58,7 +58,9 @@
                                     <i class="fa fa-key"></i>
                                 </button>
                             {% endif %}
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt:'personnel', id:personnel.personnel.id}) }}
+
+                            {{ include('composants/adm-buttons-table-index.html.twig', {elt:'personnel', id:personnel
+                                .personnel.id, duplicate:false}) }}
                         </td>
                     </tr>
                 {% else %}
@@ -76,27 +78,30 @@
     {{ include('composants/fab-buttons.html.twig', {
         boutons:[
             {type: 'info',
-                href: path('administration_personnel_export', {_format:'pdf'}),
+                href: path('administration_personnel_export', {_format:'pdf', type:'permanent'}),
                 title: 'exporter.pdf'|trans,
-                icone : "fa fa-file-pdf-o"
+                id: 'export_pdf',
+                icone : "fa fa-file-pdf"
             },
             {
                 type:'info',
-                href:path('administration_personnel_export', {_format:'csv'}),
+                href:path('administration_personnel_export', {_format:'csv', type:'permanent'}),
                 title: 'exporter.csv'|trans,
-                icone: 'fa fa-file-text-o'
+                id: 'export_csv',
+                icone: 'fa fa-file-csv'
             },
             {
                 type:'info',
-                href:path('administration_personnel_export', {_format:'xlsx'}),
+                href:path('administration_personnel_export', {_format:'xlsx', type:'permanent'}),
                 title: 'exporter.xls'|trans,
-                icone: 'fa fa-file-excel-o'
+                id: 'export_xlsx',
+                icone: 'fa fa-file-excel'
             },
             {
                 type:'info',
                 href:path('administration_personnel_new'),
                 title: 'ajouter'|trans,
-                icone: 'ti-plus'
+                icone: 'fas fa-plus'
             },
             {
                 type:'info',
@@ -105,4 +110,15 @@
                 icone: 'fa fa-question'
             }
         ]}) }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.personnels') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.personnels') }}
 {% endblock %}

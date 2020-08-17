@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -94,7 +94,7 @@ class Adresse extends BaseEntity
     }
 
     /**
-     * @param string $adresse1
+     * @param string|null $adresse1
      *
      * @return Adresse
      */
@@ -154,7 +154,7 @@ class Adresse extends BaseEntity
     }
 
     /**
-     * @param string $codePostal
+     * @param string|null $codePostal
      *
      * @return Adresse
      */
@@ -174,7 +174,7 @@ class Adresse extends BaseEntity
     }
 
     /**
-     * @param string $ville
+     * @param string|null $ville
      *
      * @return Adresse
      */
@@ -194,7 +194,7 @@ class Adresse extends BaseEntity
     }
 
     /**
-     * @param string $pays
+     * @param string|null $pays
      *
      * @return Adresse
      */

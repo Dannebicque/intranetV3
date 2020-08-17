@@ -49,10 +49,10 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="{{ path('edt_etudiant_export_semaine_courante', {semaine:edt.semaine}) }}"
                            class="dropdown-item"><i
-                                    class="fa fa-file-pdf-o"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>
+                                    class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>
                         <a href="{{ path('edt_etudiant_export_ical') }}"
                            class="dropdown-item"><i
-                                    class="ti-export"></i>{{ 'edt.etudiant.export.ical'|trans }}</a>
+                                    class="fas fa-file-export"></i>{{ 'edt.etudiant.export.ical'|trans }}</a>
                         <a href="#"
                            data-provide="modaler tooltip"
                            data-url="{{ path('edt_affiche_ical') }}"
@@ -60,7 +60,7 @@
                            title="{{ 'atitle.lien_ical'|trans }}"
                            data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
                            class="dropdown-item"><i
-                                    class="ti-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}</a>
+                                    class="fas fa-file-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}</a>
                     </div>
                 </li>
             </ul>

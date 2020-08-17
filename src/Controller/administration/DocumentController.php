@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Document;
@@ -38,11 +39,24 @@ class DocumentController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_document_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport           $myExport
+     * @param DocumentRepository $documentRepository
+     * @param                    $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $documents = $documentRepository->findByDepartement($this->getDepartement());
+
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $documents,
+            'documents',
+            ['document_administration', 'semestre'],
+            ['libelle', 'description', 'typeDocument' => ['libelle'], 'semestre' => ['libelle']]
+        );
     }
 
     /**

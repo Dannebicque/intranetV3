@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 16/08/2020 08:33
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
@@ -26,13 +26,8 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class RegistrationNotifySubscriber implements EventSubscriberInterface
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var RouterInterface */
-    private $router;
-
-
+    private EntityManagerInterface $entityManager;
+    private RouterInterface $router;
 
     /**
      * RegistrationNotifySubscriber constructor.
@@ -58,6 +53,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
             NoteEvent::ADDED            => 'onNoteAdded',
             AbsenceEvent::ADDED         => 'onAbsenceAdded',
             AbsenceEvent::REMOVED       => 'onAbsenceRemoved',
+            AbsenceEvent::JUSTIFIED     => 'onAbsenceJustified',
             CarnetEvent::ADDED          => 'onCarnetAdded',
             RattrapageEvent::DECISION   => 'onDecisionRattrapge',
             JustificatifEvent::DECISION => 'onDecisionJustficatif',
@@ -173,6 +169,14 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
     public function onAbsenceRemoved(AbsenceEvent $event): void
     {
         $this->onAbsence($event->getAbsence(), AbsenceEvent::REMOVED);
+    }
+
+    /**
+     * @param AbsenceEvent $event
+     */
+    public function onAbsenceJustified(AbsenceEvent $event): void
+    {
+        $this->onAbsence($event->getAbsence(), AbsenceEvent::JUSTIFIED);
     }
 
     /**

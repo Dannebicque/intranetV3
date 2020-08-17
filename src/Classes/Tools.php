@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -14,9 +14,9 @@
 
 namespace App\Classes;
 
+use Carbon\Carbon;
 use DateTime;
 use Exception;
-use function count;
 
 abstract class Tools
 {
@@ -28,12 +28,11 @@ abstract class Tools
      */
     public static function convertDateToObject($date): DateTime
     {
-        $t = explode('/', $date);
-        if (count($t) === 3) {
-            $date = trim($t[2]) . '-' . trim($t[1]) . '-' . trim($t[0]);
+        if (strpos('/', $date) === false) {
+            return Carbon::createFromFormat('Y-m-d', $date);
         }
 
-        return new DateTime($date);
+        return Carbon::createFromFormat('d/m/Y', $date);
     }
 
     /**
@@ -44,7 +43,7 @@ abstract class Tools
      */
     public static function convertTimeToObject($heure): DateTime
     {
-        return new DateTime($heure);
+        return Carbon::createFromTimeString($heure);
     }
 
     public static function convertToFloat($note)
@@ -104,5 +103,29 @@ abstract class Tools
         }
 
         return $texte;
+    }
+
+    public static function convertDateHeureToObject(string $dateString, string $heureString): Carbon
+    {
+        if (strpos($dateString, '/') === false) {
+            $date = Carbon::createFromFormat('Y-m-d', trim($dateString));
+        } else {
+            $date = Carbon::createFromFormat('d/m/Y', trim($dateString));
+        }
+        $heure = Carbon::createFromTimeString($heureString);
+
+        return Carbon::create($date->year, $date->month, $date->day, $heure->hour, $heure->minute, 0);
+    }
+
+    public static function updateFields($name, $value, $obj)
+    {
+        $t = explode('_', $name);
+        $name = $t[0];
+        $name[0] = chr(ord($name[0]) - 32);
+
+        $method = 'set' . $name;
+        if (method_exists($obj, $method)) {
+            $obj->$method($value);
+        }
     }
 }

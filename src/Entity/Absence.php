@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/08/2020 08:42
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
+use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,8 +16,7 @@ use Exception;
 use Serializable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Uid\UuidV4;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
@@ -27,69 +27,57 @@ class Absence extends BaseEntity implements Serializable
     use UuidTrait;
 
     /**
-     * @var DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="dateHeure", type="datetime")
      * @Groups({"absences_administration"})
      */
-    private $date;
+    private ?CarbonInterface $dateHeure;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="heure", type="time")
-     * @Groups({"absences_administration"})
-     */
-    private $heure;
-
-    /**
-     * @var DateTime
      *
      * @ORM\Column(name="duree", type="time")
      * @Groups({"absences_administration"})
      */
-    private $duree;
+    private ?CarbonInterface $duree;
 
     /**
-     * @var boolean
      *
      * @ORM\Column(name="justifie", type="boolean")
      * @Groups({"absences_administration"})
      */
-    private $justifie = false;
+    private bool $justifie = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
      */
-    private $personnel;
+    private Personnel $personnel;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="absences")
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
      */
-    private $matiere;
+    private Matiere $matiere;
 
     /**
-     * @var Etudiant
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
      */
-    private $etudiant;
+    private Etudiant $etudiant;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateJustifie;
+    private ?CarbonInterface $dateJustifie;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * Absence constructor.
@@ -97,54 +85,38 @@ class Absence extends BaseEntity implements Serializable
      */
     public function __construct()
     {
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->anneeUniversitaire = $this->etudiant !== null ? $this->etudiant->getAnneeUniversitaire() : null;
     }
 
     /**
-     * @return DateTime
+     * @return ?CarbonInterface
      */
-    public function getDate(): ?DateTime
+    public function getDateHeure(): ?CarbonInterface
     {
-        return $this->date;
+        return $this->dateHeure;
     }
 
     /**
-     * @param DateTime $date
+     * @param CarbonInterface $dateHeure
      */
-    public function setDate(DateTime $date): void
+    public function setDateHeure(CarbonInterface $dateHeure): void
     {
-        $this->date = $date;
+        $this->dateHeure = $dateHeure;
     }
 
     /**
-     * @return DateTime
+     * @return ?CarbonInterface
      */
-    public function getHeure(): ?DateTime
-    {
-        return $this->heure;
-    }
-
-    /**
-     * @param DateTime $heure
-     */
-    public function setHeure(DateTime $heure): void
-    {
-        $this->heure = $heure;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getDuree(): ?DateTime
+    public function getDuree(): ?CarbonInterface
     {
         return $this->duree;
     }
 
     /**
-     * @param DateTime $duree
+     * @param CarbonInterface $duree
      */
-    public function setDuree(DateTime $duree): void
+    public function setDuree(CarbonInterface $duree): void
     {
         $this->duree = $duree;
     }
@@ -207,23 +179,23 @@ class Absence extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Matiere|null $matiere
+     * @param Matiere $matiere
      *
      * @return Absence
      */
-    public function setMatiere(?Matiere $matiere): self
+    public function setMatiere(Matiere $matiere): self
     {
         $this->matiere = $matiere;
 
         return $this;
     }
 
-    public function getDateJustifie(): ?DateTimeInterface
+    public function getDateJustifie(): ?CarbonInterface
     {
         return $this->dateJustifie;
     }
 
-    public function setDateJustifie(DateTimeInterface $dateJustifie): self
+    public function setDateJustifie(CarbonInterface $dateJustifie): self
     {
         $this->dateJustifie = $dateJustifie;
 
@@ -236,8 +208,8 @@ class Absence extends BaseEntity implements Serializable
             'id'          => $this->getId(),
             'justifie'    => $this->isJustifie(),
             'uuidString'  => $this->getUuidString(),
-            'date'        => $this->getDate() !== null ? $this->getDate()->format('d/m/Y') : '-',
-            'heure'       => $this->getHeure() !== null ? $this->getHeure()->format('H:i') : '-',
+            'date'        => $this->getDateHeure() !== null ? $this->getDateHeure()->format('d/m/Y') : '-',
+            'heure'       => $this->getDateHeure() !== null ? $this->getDateHeure()->format('H:i') : '-',
             'personnel'   => $this->getPersonnel() !== null ? $this->getPersonnel()->getDisplay() : '-',
             'codeMatiere' => $this->getMatiere() !== null ? $this->getMatiere()->getCodeMatiere() : '-',
         ];

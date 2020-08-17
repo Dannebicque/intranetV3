@@ -9,10 +9,10 @@
         <div class="buttons">
             <a href="{{ path('administration_previsionnel_import') }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.import_previsionnel'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-import"></i></a>
+               data-placement="bottom"><i class="fas fa-file-import"></i></a>
             <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="ti-arrow-left"></i></a>
+               data-placement="bottom"><i class="fas fa-arrow-left"></i></a>
         </div>
     </div>
 {% endblock %}
@@ -26,7 +26,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label class="form-control-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
-                            <select class="form-control" id="previsionnel_matiere" name="previsionnel_matiere" data-live-search="true" data-provide="selectpicker">
+                            <select class="form-control selectpicker" id="previsionnel_matiere" name="previsionnel_matiere">
                                 <option value="">{{ 'choisir.matiere'|trans }}</option>
                                 {% for matiere in matieres %}
                                     <option value="{{ matiere.id }}">{{ matiere.codeMatiere }}
@@ -81,8 +81,8 @@
                     <tr>
                         <td>
                             <label for="intervenant_1" class="sr-only">intervenant 1</label>
-                            <select class="form-control" name="intervenant_1" id="intervenant_1"
-                                    data-live-search="true" data-provide="selectpicker">
+                            <select class="form-control selectpicker" name="intervenant_1" id="intervenant_1"
+                            >
                                 <option value="">{{ 'choisir.intervenant'|trans }}</option>
                                 {% for personnel in user_data.personnels %}
                                     <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
@@ -117,7 +117,7 @@
                         <td style="background-color: #FFC052">
                             <label for="gr_tp_1" class="sr-only">Nb groupe TP</label>
                             <input type="number" value="0" name="gr_tp_1" id="gr_tp_1"
-                                                                     data-ligne="1" class="form-control chgtp"></td>
+                                   data-ligne="1" class="form-control chgtp"></td>
                         <td style="background-color: #FFC052" id="ind_tp_1">0</td>
                     </tr>
 
@@ -127,7 +127,7 @@
                         </td>
                         <td colspan="4">
                             <button class="btn btn-block btn-primary" id="addIntervenantPrevisionnel"><i
-                                        class="ti-plus"></i>{{ 'ajouter.intervenant'|trans }}
+                                        class="fas fa-plus"></i>{{ 'ajouter.intervenant'|trans }}
                             </button>
                         </td>
                     </tr>
@@ -189,4 +189,14 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.previsionnel') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.previsionnel') }}
 {% endblock %}

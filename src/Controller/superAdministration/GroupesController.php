@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Controller\superAdministration;
 
@@ -20,6 +20,7 @@ use App\Classes\MyGroupes;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,7 +81,8 @@ class GroupesController extends BaseController
                 }
 
                 while ($ligne = $groupes->fetch()) {
-                    $groupe = new Groupe($tg);
+                    $groupe = new Groupe();
+                    $groupe->setTypeGroupe($tg);
                     $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
                     $groupe->setLibelle($ligne['LIB_GPE']);
                     $groupe->setOrdre($i);
@@ -171,6 +173,7 @@ class GroupesController extends BaseController
      * @param Departement $departement
      *
      * @return Response
+     * @throws Exception
      */
     public function import(MyGroupes $myGroupes, Request $request, Departement $departement): Response
     {
@@ -194,6 +197,7 @@ class GroupesController extends BaseController
      * @param Semestre  $semestre
      *
      * @return Response
+     * @throws Exception
      */
     public function importEtudiant(MyGroupes $myGroupes, Request $request, Semestre $semestre): Response
     {

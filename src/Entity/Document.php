@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -13,9 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -44,6 +45,7 @@ class Document extends BaseEntity
      * @var TypeDocument
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", inversedBy="documents")
+     * @Groups({"document_administration"})
      */
     private $typeDocument;
 
@@ -51,6 +53,7 @@ class Document extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"document_administration"})
      */
     private $description;
 
@@ -58,6 +61,7 @@ class Document extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=100)
+     * @Groups({"document_administration"})
      */
     private $libelle;
 
@@ -78,8 +82,14 @@ class Document extends BaseEntity
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="documents")
+     * @Groups({"document_administration"})
      */
     private $semestres;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
+     */
+    private $documentsFavoris;
 
     /**
      * Document constructor.
@@ -87,7 +97,7 @@ class Document extends BaseEntity
      */
     public function __construct()
     {
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->semestres = new ArrayCollection();
     }
 
@@ -100,7 +110,7 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param float $taille
+     * @param float|null $taille
      *
      * @return Document
      */
@@ -120,7 +130,7 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param string $typeFichier
+     * @param string|null $typeFichier
      *
      * @return Document
      */
@@ -225,7 +235,7 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param string $documentName
+     * @param string|null $documentName
      */
     public function setDocumentName(?string $documentName): void
     {

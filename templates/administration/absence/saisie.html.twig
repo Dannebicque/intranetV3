@@ -21,7 +21,7 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="ti-arrow-left"></i><span
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i><span
                         class="sr-only">{{ 'atitle.retour_semestres'|trans }}</span></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
@@ -31,5 +31,24 @@
 
 
 {% block content %}
+    {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre
+        .id})) }}
+{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('absences') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('absences') }}
+    {% if event is defined %}
+        <script>
+          $(document).ready(function () {
+            console.log('update')
+            updateAffichage("{{ dateFr }}", "{{ heure }}")
+          })
+        </script>
+    {% endif %}
 {% endblock %}

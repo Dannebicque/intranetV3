@@ -3,14 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 15:38
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use App\Entity\ArticleCategorie;
 use App\Classes\MyArticle;
 use App\Classes\MyPagination;
+use App\Entity\Article;
+use App\Entity\ArticleCategorie;
+use App\Entity\ArticleLike;
 use App\Repository\ArticleRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,8 +51,7 @@ class InformationController extends BaseController
         ArticleRepository $articleRepository,
         ArticleCategorie $categorie,
         $page = 1
-    ): Response
-    {
+    ): Response {
         $articles = $articleRepository->findByTypeDepartementBuilder($categorie->getId(),
             $this->dataUserSession->getDepartement());
 
@@ -63,7 +63,9 @@ class InformationController extends BaseController
 
         $mesArticles = [];
         foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
-            $mesArticles[$like->getArticle()->getId()] = 1;
+            if ($like->getArticle() !== null) {
+                $mesArticles[] = $like->getArticle()->getId();
+            }
         }
 
         return $this->render('information/articles.html.twig', [
@@ -81,8 +83,17 @@ class InformationController extends BaseController
      */
     public function show(Article $article): Response
     {
+        $like = false;
+        /** @var ArticleLike $like */
+        foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
+            if ($like->getArticle() !== null && $like->getArticle()->getId() === $article->getId()) {
+                $like = true;
+            }
+        }
+
         return $this->render('information/article.html.twig', [
-            'article' => $article
+            'article' => $article,
+            'like'    => $like
         ]);
     }
 

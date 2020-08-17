@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/08/2020 14:32
 
 namespace App\Entity;
 
@@ -20,6 +20,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Utilisateur implements UserInterface
 {
+    public const HOMME = 'M.';
+    public const FEMME = 'Mme';
+
+
     /**
      * @ORM\Column(type="string", length=75)
      *
@@ -31,7 +35,7 @@ abstract class Utilisateur implements UserInterface
      *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $password = '';
+    protected string $password = '';
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -46,13 +50,13 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=75)
-     * @Groups({"utilisateur"})
+     * @Groups({"utilisateur","etudiants_administration"})
      */
     protected $nom;
 
     /**
      * @ORM\Column(type="string", length=75)
-     * @Groups({"utilisateur"})
+     * @Groups({"utilisateur","etudiants_administration"})
      */
     protected $prenom;
 
@@ -84,7 +88,7 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(name="civilite", type="string", length=3, options={"default":"M."})
      * @Groups({"etudiants_administration"})
      */
-    protected $civilite = 'M.'; //M. ou Mme
+    protected string $civilite = 'M.'; //M. ou Mme
 
     /**
      * @ORM\Column(type="date",nullable=true)
@@ -120,13 +124,13 @@ abstract class Utilisateur implements UserInterface
      * @ORM\Column(type="boolean")
      *
      */
-    protected $visible = true;
+    protected bool $visible = true;
 
     /**
      * @var Adresse
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist"})
      */
-    private $adresse;
+    private Adresse $adresse;
 
 
     /**
@@ -134,24 +138,24 @@ abstract class Utilisateur implements UserInterface
      *
      * @ORM\Column(type="text")
      */
-    private $roles = '';
+    private string $roles = '';
 
     /**
      * @var DateTime $created
      * @ORM\Column(type="datetime")
      */
-    private $created;
+    private DateTime $created;
 
     /**
      * @var DateTime $updated
      * @ORM\Column(type="datetime")
      */
-    protected $updated;
+    protected DateTime $updated;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $resetToken;
+    private ?string $resetToken;
 
     public function __construct()
     {
@@ -503,7 +507,7 @@ abstract class Utilisateur implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = json_decode($this->roles, true);
+        $roles = json_decode($this->roles, true, 2, JSON_THROW_ON_ERROR);
 
         // Afin d'être sûr qu'un user a toujours au moins 1 rôle
         if (empty($roles)) {
@@ -515,10 +519,11 @@ abstract class Utilisateur implements UserInterface
 
     /**
      * @param array $roles
+     *
      */
     public function setRoles(array $roles): void
     {
-        $this->roles = json_encode($roles);
+        $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
     }
 
     /**

@@ -3,19 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/07/2020 14:02
 
 namespace App\Controller\administration;
 
+use App\Classes\Etudiant\EtudiantGroupes;
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
-use App\Classes\MyEtudiant;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +40,6 @@ class FinSemestreController extends BaseController
         Semestre $semestre
     ): Response {
         $etudiants = $etudiantRepository->findBySemestre($semestre);
-        //$sc = $this->getDoctrine()->getRepository('DAKernelBundle:ScEtudiantSemestre')->findSemestre($semestre->getId());
 
         $tab = [];
 
@@ -49,12 +47,7 @@ class FinSemestreController extends BaseController
         foreach ($etudiants as $e) {
             $tab[$e->getId()] = null;
         }
-
-//          todo: a gérer...
-//        /** @var  $s */
-//        foreach ($sc as $s) {
-//            $tab[$s->getEtudiant()->getId()] = $s;
-//        }
+        //todo: a tester
 
         return $this->render('administration/fin_semestre/index.html.twig', [
             'semestre'     => $semestre,
@@ -69,17 +62,16 @@ class FinSemestreController extends BaseController
      * @param EtudiantRepository $etudiantRepository
      * @param Request            $request
      * @param SemestreRepository $semestreRepository
-     * @param MyEtudiant         $myEtudiant
+     * @param EtudiantGroupes    $etudiantGroupes
      * @param Semestre           $semestre
      *
      * @return Response
-     * @throws Exception
      */
     public function confirme(
         EtudiantRepository $etudiantRepository,
         Request $request,
         SemestreRepository $semestreRepository,
-        MyEtudiant $myEtudiant,
+        EtudiantGroupes $etudiantGroupes,
         Semestre $semestre
     ): Response {
 
@@ -88,8 +80,8 @@ class FinSemestreController extends BaseController
         /** @var Etudiant $e */
         foreach ($etudiants as $e) {
             $valeur = $request->request->get('etu_' . $e->getId());
-
-            $myEtudiant->setEtudiant($e)->suppressionGroupes();
+            $etudiantGroupes->setEtudiant($e);
+            $etudiantGroupes->suppressionGroupes();
             if ($valeur !== '') {
                 switch ($valeur) {
                     case 'REO':

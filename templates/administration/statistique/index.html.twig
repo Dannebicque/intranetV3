@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    <strong>Statistiques</strong> de la formation
+    <strong>Statistiques</strong> du département
 {% endblock %}
 
 {% block headeractions %}
@@ -14,5 +14,111 @@
 {% endblock %}
 
 {% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.statistiques.vue.globale.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Semestre</th>
+                    <th>Effectif</th>
+                    <th>Répartition H/F</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for semestre in user_data.semestres %}
+                    <tr>
+                        <th>{{ semestre.libelle }}</th>
+                        <th>{{ statistiques[semestre.id].effectif }}</th>
+                        <th>{{ statistiques[semestre.id].hommes }} ({{ statistiques[semestre.id]
+                            .hommePourcentage|number_format(2) }} %) /
+                            {{ statistiques[semestre.id].femmes }} ({{ statistiques[semestre.id]
+                            .femmePourcentage|number_format(2) }} %)
+                        </th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.statistiques.vue.detaillee.heading'|trans }}</h4>
+        <div class="card-body">
+            <ul class="nav nav-tabs">
+                {% for semestre in user_data.semestres %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                           href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for semestre in user_data.semestres %}
+                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                         id="semestre{{ semestre.id }}">
+                        <h4>Répartition par bacs</h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <table class="table table-striped table-bordered" data-provide="datatables">
+                                    <thead>
+                                    <tr>
+                                        <th>Bac</th>
+                                        <th>Effectif</th>
+                                        <th>Pourcentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for bac in bacs %}
+                                        <tr>
+                                            <td>{{ bac.libelle }}</td>
+                                            <td>{{ statistiques[semestre.id].repartitionBacEffectif[bac.id] }}</td>
+                                            <td>{{ statistiques[semestre.id].repartitionBacPourcentage[bac
+                                                    .id]|number_format(2) }} %
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+
+                            </div>
+                        </div>
+
+                        <h4>Répartition par département d'origine</h4>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <table class="table table-striped table-bordered" data-provide="datatables">
+                                    <thead>
+                                    <tr>
+                                        <th>Département</th>
+                                        <th>Effectif</th>
+                                        <th>Pourcentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for departement, effectif in statistiques[semestre.id]
+                                        .repartitionGeographiqueEffectif %}
+                                        <tr>
+                                            <td>{{ departement }}</td>
+                                            <td>{{ effectif }}</td>
+                                            <td>{{ statistiques[semestre.id].repartitionGeographiquePourcentage[departement]|number_format(2) }}
+                                                %
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

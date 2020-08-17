@@ -93,4 +93,14 @@
     </div>
 {% endblock %}
 
+{%- block form_widget_simple -%}
+    {{ parent() }}
+    <div class="invalid-feedback"></div>
+{%- endblock form_widget_simple -%}
+
+{%- block form_widget_compound -%}
+    {{ parent() }}
+    <div class="invalid-feedback"></div>
+{%- endblock form_widget_compound -%}
+
 

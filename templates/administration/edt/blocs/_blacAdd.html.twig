@@ -42,8 +42,8 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="typecours" class="control-label">Type de cours</label>
-                                <select name="typecours" id="typecours" class="form-control" data-provide="selectpicker"
-                                        data-live-search="true">
+                                <select name="typecours" id="typecours" class="form-control selectpicker"
+                                >
                                     {% for groupe in groupes %}
                                         <option value="{{ groupe.id }}">{{ groupe.display }}</option>
                                     {% endfor %}
@@ -53,8 +53,8 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="salle" class="control-label">Salle</label>
-                                <select class="form-control" name="salle" id="salle" data-provide="selectpicker"
-                                        data-live-search="true">
+                                <select class="form-control selectpicker" name="salle" id="salle"
+                                >
                                     <option value="">Choisir la salle</option>
                                     {% for salle in salles %}
                                         <option value="{{ salle.libelle }}">{{ salle.libelle }}</option>
@@ -68,8 +68,8 @@
                             <div class="form-group">
                                 <label for="hdbt" class="control-label">Heure de début</label>
 
-                                <select name="hdbt" id="hdbt" class="form-control" data-provide="selectpicker"
-                                        data-live-search="true">
+                                <select name="hdbt" id="hdbt" class="form-control selectpicker
+                                        >
                                     {% set k=1 %}
                                     {% for i in 8..20 %}
                                         <option value="{{ k }}">{{ i }}h00</option>
@@ -84,8 +84,8 @@
                             <div class="form-group">
                                 <label for="hfin" class="control-label">Heure de fin</label>
 
-                                <select name="hfin" id="hfin" class="form-control" data-provide="selectpicker"
-                                        data-live-search="true">
+                                <select name="hfin" id="hfin" class="form-control selectpicker"
+                                >
                                     {% set k=2 %}
                                     {% for i in 8..20 %}
                                         {% if i==8 %}
@@ -114,8 +114,8 @@
                             <div class="form-group">
                                 <label for="selectmatiere" class="control-label">Matière</label>
 
-                                <select name="selectmatiere" id="selectmatiere" class="form-control" data-provide="selectpicker"
-                                        data-live-search="true">
+                                <select name="selectmatiere" id="selectmatiere" class="form-control selectpicker"
+                                >
                                     <option value="1">* Sans *</option>
                                     {% for matiere in matieres %}
                                         <option value="{{ matiere.id }}">{{ matiere.display }}</option>
@@ -127,9 +127,8 @@
                             <div class="form-group">
                                 <label for="selectenseignant" class="control-label">Enseignant</label>
 
-                                <select name="selectenseignant" id="selectenseignant" class="form-control"
-                                        data-provide="selectpicker"
-                                        data-live-search="true"
+                                <select name="selectenseignant" id="selectenseignant" class="form-control selectpicker"
+
                                         style="width: 100%">
                                     <option value="0">* Autre *</option>
                                     {% for enseignant in personnels %}

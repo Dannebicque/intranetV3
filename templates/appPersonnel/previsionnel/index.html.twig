@@ -1,47 +1,48 @@
 <div class="card">
-        <header class="card-header">
-            <h4 class="card-title"><strong>{{ 'service.previsionnel.heading'|trans }}</strong> | {{ personnel.display }}
-                                                                                               | ({{ 'periode'|trans }}
-                                                                                               : {{ previsionnel.anneePrevi }}
-                                                                                               )</h4>
-            <ul class="card-controls">
-                <li class="dropdown">
-                    <a data-toggle="dropdown" href="#"><i class="ti-more-alt rotate-90"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"><i class="ti-alarm-clock"></i> {{ 'chronologique'|trans }}</a>
-                        <a href="{{ path('application_personnel_previsionnel_export', {_format:'pdf'}) }}"
-                           class="dropdown-item"><i class="fa fa-file-pdf-o"></i> {{ 'exporter.pdf'|trans }}</a>
-                        <a href="{{ path('application_personnel_previsionnel_export', {_format:'xlsx'}) }}"
-                           class="dropdown-item"><i class="fa fa-file-excel-o"></i>
-                            {{ 'exporter.xls'|trans }}</a>
-                        <a href="{{ path('application_personnel_previsionnel_export', {_format:'csv'}) }}"
-                           class="dropdown-item"><i class="fa fa-file-text-o"></i> {{ 'exporter.csv'|trans }}</a>
-                    </div>
+    <header class="card-header">
+        <h4 class="card-title"><strong>{{ 'service.previsionnel.heading'|trans }}</strong> | {{ personnel.display }}
+                                                                                           | ({{ 'periode'|trans }}
+                                                                                           : {{ previsionnel.anneePrevi }}
+                                                                                           )</h4>
+        <ul class="card-controls">
+            <li class="dropdown">
+                <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"><i class="fas
+                        fa-bell"></i> {{ 'chronologique'|trans }}</a>
+                    <a href="{{ path('application_personnel_previsionnel_export', {_format:'pdf'}) }}"
+                       class="dropdown-item"><i class="fa fa-file-pdf"></i> {{ 'exporter.pdf'|trans }}</a>
+                    <a href="{{ path('application_personnel_previsionnel_export', {_format:'xlsx'}) }}"
+                       class="dropdown-item"><i class="fa fa-file-excel"></i>
+                        {{ 'exporter.xls'|trans }}</a>
+                    <a href="{{ path('application_personnel_previsionnel_export', {_format:'csv'}) }}"
+                       class="dropdown-item"><i class="fa fa-file-csv"></i> {{ 'exporter.csv'|trans }}</a>
+                </div>
+            </li>
+        </ul>
+    </header>
+
+    <div class="card-body">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            {% for semestre in previsionnel.semestres %}
+                <li class="nav-item">
+                    <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                       href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
                 </li>
-            </ul>
-        </header>
+            {% endfor %}
+            {# feature: devrait afficher les semestres dans lesquels ont intervient ? Que faire si année de prévi
+                différente ? Possibilité de changer l'année pour l'enseignant. #}
+        </ul>
 
-        <div class="card-body">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs">
-                {% for semestre in previsionnel.semestres %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
-                           href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
-                    </li>
-                {% endfor %}
-                {# todo: devrait afficher les semestres dans lesquels ont intervient ? Que faire si année de prévi différente ?
-                 Possibilité de changer l'année pour l'enseignant. #}
-            </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% for semestre in previsionnel.semestres %}
+                <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
+                    {{ include('bloc_previsionnel/_previ_semestre.html.twig') }}
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                {% for semestre in previsionnel.semestres %}
-                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
-                        {{ include('bloc_previsionnel/previ_semestre.html.twig') }}
-
-                        <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
-                            Information indicative !
+                    <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
+                                                  Information indicative !
                         </div>
                     </div>
                 {% endfor %}
@@ -59,19 +60,19 @@
     {type: 'info',
         href: path('application_personnel_previsionnel_export', {_format:'pdf'}),
         title: 'exporter.pdf'|trans,
-        icone : "fa fa-file-pdf-o"
+        icone : "fa fa-file-pdf"
     },
     {
         type:'info',
         href:path('application_personnel_previsionnel_export', {_format:'csv'}),
         title: 'exporter.csv'|trans,
-        icone: 'fa fa-file-text-o'
+        icone: 'fa fa-file-csv'
     },
     {
         type:'info',
         href:path('application_personnel_previsionnel_export', {_format:'xlsx'}),
         title: 'exporter.xls'|trans,
-        icone: 'fa fa-file-excel-o'
+        icone: 'fa fa-file-excel'
     },
     {
         type:'info',
@@ -82,5 +83,5 @@
     {type: 'info',
         href: path('previsionnel_chronologique'),
         title: 'chronologique'|trans,
-        icone : "ti-time"}
+        icone : "fas fa-clock"}
 ]}) }}

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -35,7 +35,6 @@ use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -65,42 +64,30 @@ class DataUserSession
     protected $annees;
 
     /** @var MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[] */
-    protected $messages = null;
+    protected $messages;
 
-    /**
-     * @var Departement
-     */
     protected $departement;
 
     protected $user;
 
-    /** @var SemestreRepository */
-    protected $semestreRepository;
+    protected SemestreRepository $semestreRepository;
 
     protected $messagesRepository;
 
-    /** @var AnneeRepository */
-    protected $anneeRepository;
+    protected AnneeRepository $anneeRepository;
 
-    /** @var AnneeUniversitaireRepository */
-    protected $anneeUniversitaireRepository;
+    protected AnneeUniversitaireRepository $anneeUniversitaireRepository;
 
-    /** @var DiplomeRepository */
-    protected $diplomeRepository;
+    protected DiplomeRepository $diplomeRepository;
 
-    /** @var PersonnelRepository */
-    protected $personnelRepository;
+    protected PersonnelRepository $personnelRepository;
 
-    /** @var DepartementRepository */
-    protected $departementRepository;
+    protected DepartementRepository $departementRepository;
 
-    /** @var NotificationRepository */
-    protected $notificationRepository;
+    protected NotificationRepository $notificationRepository;
 
     protected $security;
-    /**
-     * @var QueryBuilder
-     */
+
     private $semestresActifs;
     private $nbUnread;
 
@@ -108,7 +95,7 @@ class DataUserSession
      * @var string
      */
     private $type_user;
-    private $anneeUniversitaire = null;
+    private $anneeUniversitaire;
 
     /**
      * @return string
@@ -190,7 +177,6 @@ class DataUserSession
         }
 
         if ($this->departement !== null) {
-            //if ($this->security->isGranted('ROLE_PERMANENT') || $this->security->isGranted('ROLE_ETUDIANT')) {
             $this->semestres = $semestreRepository->findByDepartement($this->departement);
             $this->semestresActifs = [];
             foreach ($this->semestres as $semestre) {
@@ -282,6 +268,17 @@ class DataUserSession
     }
 
     /**
+     */
+    public function getNbDocumentsFavoris()
+    {
+        if ($this->getUser() !== null) {
+            return count($this->getUser()->getDocumentsFavoris());
+        }
+
+        return null;
+    }
+
+    /**
      * @return int|null
      */
     public function getAnneePrevisionnel(): ?int
@@ -348,7 +345,7 @@ class DataUserSession
             return count($this->getUser()->getPersonnelDepartements()) > 1;
         }
 
-        return false; //todo: pas le plus judicieux peut etre?
+        return false;
     }
 
     /**

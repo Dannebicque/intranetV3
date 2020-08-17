@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/08/2020 10:19
 
 namespace App\Entity;
 
@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -151,10 +151,6 @@ class Departement extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
      */
     private $actualites;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrelloTache", mappedBy="departement")
-     */
-    private $trelloTaches;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
@@ -217,7 +213,7 @@ class Departement extends BaseEntity
      */
     public function __construct()
     {
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->optAnneePrevisionnel = (int)date('Y');
         $this->typeDocuments = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
@@ -665,47 +661,6 @@ class Departement extends BaseEntity
         if (method_exists($this, $method)) {
             $this->$method($value);
         }
-    }
-
-    /**
-     * @return Collection|TrelloTache[]
-     */
-    public function getTrelloTaches(): Collection
-    {
-        return $this->trelloTaches;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Departement
-     */
-    public function addTrelloTach(TrelloTache $trelloTach): self
-    {
-        if (!$this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches[] = $trelloTach;
-            $trelloTach->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param TrelloTache $trelloTach
-     *
-     * @return Departement
-     */
-    public function removeTrelloTach(TrelloTache $trelloTach): self
-    {
-        if ($this->trelloTaches->contains($trelloTach)) {
-            $this->trelloTaches->removeElement($trelloTach);
-            // set the owning side to null (unless already changed)
-            if ($trelloTach->getDepartement() === $this) {
-                $trelloTach->setDepartement(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

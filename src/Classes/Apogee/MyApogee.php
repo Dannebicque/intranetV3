@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 03/08/2020 09:34
 
 namespace App\Classes\Apogee;
 
@@ -13,8 +13,8 @@ use App\Classes\Tools;
 use PDO;
 use PDOException;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -120,7 +120,6 @@ abstract class MyApogee
      *
      * @return StreamedResponse|null
      * @throws Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public static function transformeApogeeTexte($fichier, $nomfichier): ?StreamedResponse
     {
@@ -140,7 +139,7 @@ abstract class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (substr($name, 0, 5) === 'apoL_') {
+            if (strpos($name, 'apoL_') === 0) {
                 $G_tab_apoL[$i] = $name;
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
                 $i++;
@@ -149,7 +148,7 @@ abstract class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (substr($name, 0, 5) === 'apoC_') {
+            if (strpos($name, 'apoC_') === 0) {
                 $G_tab_apoC[$i] = $name;
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
                 $i++;
@@ -318,7 +317,6 @@ abstract class MyApogee
         $objWriter->setDelimiter("\t");
         $objWriter->setLineEnding("\r\n"); // cr lf (Windows)
         ob_start();
-        //$objWriter->save('php://output');
         $excelOutput = ob_get_clean();
 
         // conversion en iso-8859-1, car PHPExcel genere de l'utf-8

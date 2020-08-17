@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Classes\Edt;
 
@@ -15,60 +15,49 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use DateTime;
+use Carbon\Carbon;
 use RuntimeException;
 
 Abstract class BaseEdt
 {
-    protected $tabJour = [];
+    protected array $tabJour = [];
 
     protected $semaines;
 
     protected $semaine;
 
-    /** @var Calendrier */
-    protected $calendrier;
+    protected ?Calendrier $calendrier;
 
     protected $semaineFormation;
 
-    /** @var CalendrierRepository */
-    protected $calendrierRepository;
-    /**
-     * @var int|null
-     */
-    protected $semaineFormationIUT;
-    /** @var DateTime */
-    protected $semaineFormationLundi;
+    protected CalendrierRepository $calendrierRepository;
+
+    protected ?int $semaineFormationIUT;
+
+    protected ?Carbon $semaineFormationLundi;
     protected $filtre;
     protected $valeur;
-    protected $total = [];
+    protected array $total = [];
 
-    /**
-     * @var Semestre|null
-     */
-    protected $semestre;
+    protected ?Semestre $semestre;
 
     /**
      * @var Personnel|Etudiant
      */
     protected $user;
 
-    /**
-     * @var Matiere|null
-     */
-    protected $module;
+    protected ?Matiere $module;
 
     protected $groupes;
 
     protected $jour;
     protected $salle;
-    protected $groupetd = 0;
-    protected $groupetp = 0;
+    protected int $groupetd = 0;
+    protected int $groupetp = 0;
 
     protected $planning;
 
-    /** @var AnneeUniversitaire */
-    private $anneeUniversitaire;
+    private AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * MyEdt constructor.
@@ -107,6 +96,7 @@ Abstract class BaseEdt
 
     protected function init($filtre = '', $valeur = '', $semaine = 0, AnneeUniversitaire $anneeUniversitaire): BaseEdt
     {
+        $dateDuJour = Carbon::now();
         $this->anneeUniversitaire = $anneeUniversitaire;
 
         $this->total['CM'] = 0;
@@ -119,7 +109,7 @@ Abstract class BaseEdt
         }
 
         if ($semaine === 0) {
-            $semaine = (int)date('W');
+            $semaine = $dateDuJour->weekOfYear;
 
             if ($semaine >= 29 && $semaine < 35) {
                 $semaine = 35;
@@ -127,9 +117,9 @@ Abstract class BaseEdt
             $this->semaine = $semaine;
 
             //traitement du Week end
-            if (date('N') === ('6' || '7')) {
+            if ($dateDuJour->dayOfWeek === (Carbon::SATURDAY || Carbon::SUNDAY)) {
                 $this->semaine++;
-                if ($this->semaine > 52) {
+                if ($this->semaine > Carbon::WEEKS_PER_YEAR) {
                     $this->semaine = 1;
                 }
             }
@@ -176,15 +166,11 @@ Abstract class BaseEdt
 
     private function getJours(): void
     {
-        $njour = (int)$this->semaineFormationLundi->format('d');
-        $mois = $this->semaineFormationLundi->format('m');
-        $annee = $this->semaineFormationLundi->format('Y');
-
-        $this->tabJour['lundi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour, $annee));
-        $this->tabJour['mardi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 1, $annee));
-        $this->tabJour['mercredi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 2, $annee));
-        $this->tabJour['jeudi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 3, $annee));
-        $this->tabJour['vendredi'] = date('d-m-Y', mktime(12, 30, 00, $mois, $njour + 4, $annee));
+        $this->tabJour['lundi'] = $this->semaineFormationLundi;
+        $this->tabJour['mardi'] = $this->semaineFormationLundi->copy()->addDays(1);
+        $this->tabJour['mercredi'] = $this->semaineFormationLundi->copy()->addDays(2);
+        $this->tabJour['jeudi'] = $this->semaineFormationLundi->copy()->addDays(3);
+        $this->tabJour['vendredi'] = $this->semaineFormationLundi->copy()->addDays(4);
     }
 
     /**
@@ -219,7 +205,7 @@ Abstract class BaseEdt
         $s = (int)$this->semaine - 1;
 
         if ($s === 0) {
-            return 52;
+            return Carbon::WEEKS_PER_YEAR;
         }
             return $s;
 
@@ -231,7 +217,7 @@ Abstract class BaseEdt
     public function getSemaineSuivante(): int
     {
         $s = $this->semaine + 1;
-        if ($s === 53) {
+        if ($s > Carbon::WEEKS_PER_YEAR) {
             return 1;
         }
             return $s;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 08:18
 
 namespace App\Entity;
 
@@ -21,25 +21,25 @@ class Groupe extends BaseEntity
      * @ORM\Column(type="string", length=50)
      * @Groups({"groupe_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeGroupe", inversedBy="groupes")
      * @Groups({"groupe_administration"})
      */
-    private $typeGroupe;
+    private ?TypeGroupe $typeGroupe;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"groupe_administration"})
      */
-    private $codeApogee;
+    private ?string $codeApogee;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Groupe", inversedBy="enfants")
      * @Groups({"groupe_administration"})
      */
-    private $parent;
+    private ?Groupe $parent;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
@@ -54,17 +54,18 @@ class Groupe extends BaseEntity
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"groupe_administration"})
      */
-    private $ordre;
+    private ?int $ordre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Parcour", inversedBy="groupes")
+     * @Groups({"groupe_administration"})
      */
-    private $parcours;
+    private ?Parcour $parcours;
 
-    public function __construct(TypeGroupe $typeGroupe)
+    public function __construct()
     {
-        $this->typeGroupe = $typeGroupe;
         $this->etudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
     }

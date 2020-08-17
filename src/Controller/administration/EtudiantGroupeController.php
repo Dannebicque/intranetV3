@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:26
 
 namespace App\Controller\administration;
 
@@ -123,9 +123,7 @@ class EtudiantGroupeController extends BaseController
                     $this->entityManager->persist($oldgroupe);
                     $this->entityManager->flush();
                 }
-
             }
-
 
             if ($t[1] !== 0) {
                 $groupe = $groupeRepository->find(trim($t[1])); //récupérer groupe etudiant...
@@ -154,7 +152,6 @@ class EtudiantGroupeController extends BaseController
      */
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
-
         if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
             $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);

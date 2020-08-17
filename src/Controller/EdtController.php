@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Controller;
 
 use App\Entity\Semestre;
-use App\Classes\Edt\MyEdt;
+use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Edt\MyEdtCelcat;
 use App\Classes\Edt\MyEdtExport;
 use App\Classes\Pdf\MyPDF;
@@ -29,7 +29,7 @@ use Twig\Error\SyntaxError;
  */
 class EdtController extends BaseController
 {
-    private static $tabHeures = [
+    private static array $tabHeures = [
         1 => ['8h00', '9h30'],
         2 => ['9h30', '11h00'],
         3 => ['11h00', '12h30'],
@@ -38,16 +38,12 @@ class EdtController extends BaseController
         6 => ['15h30', '17h00'],
         7 => ['17h00', '18h30']
     ];
-    /**
-     * @var MyEdt
-     */
-    private $myEdt;
-    /** @var MyEdtCelcat */
-    private $myEdtCelcat;
+    private MyEdtIntranet $myEdtIntranet;
+    private MyEdtCelcat $myEdtCelcat;
 
-    public function __construct(MyEdt $myEdt, MyEdtCelcat $myEdtCelcat)
+    public function __construct(MyEdtIntranet $myEdt, MyEdtCelcat $myEdtCelcat)
     {
-        $this->myEdt = $myEdt;
+        $this->myEdtIntranet = $myEdt;
         $this->myEdtCelcat = $myEdtCelcat;
     }
 
@@ -74,11 +70,12 @@ class EdtController extends BaseController
                 ]);
             }
 
-            $this->myEdt->initPersonnel($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),
+            $this->myEdtIntranet->initPersonnel($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire(),
                 $semaine);
 
             return $this->render('edt/_intervenant.html.twig', [
-                'edt'       => $this->myEdt,
+                'edt'       => $this->myEdtIntranet,
                 'filtre'    => 'prof',
                 'valeur'    => $this->getConnectedUser()->getId(),
                 'tabHeures' => self::$tabHeures
@@ -103,10 +100,10 @@ class EdtController extends BaseController
             ]);
         }
 
-        $this->myEdt->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $this->myEdtIntranet->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('edt/_semestre.html.twig', [
-            'edt'       => $this->myEdt,
+            'edt'       => $this->myEdtIntranet,
             'semestre'  => $semestre,
             'filtre'    => 'promo',
             'valeur'    => $semestre->getId(),
@@ -132,11 +129,12 @@ class EdtController extends BaseController
                     'tabHeures' => self::$tabHeures
                 ]);
             }
-            $this->myEdt->initEtudiant($this->getConnectedUser(), $this->dataUserSession->getAnneeUniversitaire(),
+            $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
+                $this->dataUserSession->getAnneeUniversitaire(),
                 $semaine);
 
             return $this->render('edt/_etudiant.html.twig', [
-                'edt'       => $this->myEdt,
+                'edt'       => $this->myEdtIntranet,
                 'tabHeures' => self::$tabHeures
             ]);
         }
@@ -220,7 +218,7 @@ class EdtController extends BaseController
             $semaine = (int)date('W');
         }
 
-        if ($semaine != date('W') && $semaine != (date('W') + 1)) {
+        if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirect($this->generateUrl('erreur_666'));
         }
 
@@ -228,7 +226,7 @@ class EdtController extends BaseController
             $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         } else {
-            $edt = $this->myEdt->initEtudiant($this->getConnectedUser(),
+            $edt = $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         }
 
@@ -255,15 +253,19 @@ class EdtController extends BaseController
 
     /**
      * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
-     * @param MyEdt                 $myEdt
+     * @param MyEdtIntranet         $myEdt
      * @param EdtPlanningRepository $edtPlanningRepository
      * @param                       $event
      * @param                       $type
      *
      * @return Response|null
      */
-    public function detailEvent(MyEdt $myEdt, EdtPlanningRepository $edtPlanningRepository, $event, $type): ?Response
-    {
+    public function detailEvent(
+        MyEdtIntranet $myEdt,
+        EdtPlanningRepository $edtPlanningRepository,
+        $event,
+        $type
+    ): ?Response {
         if ($type === 'planning') {
             $pl = $edtPlanningRepository->find($event);
 

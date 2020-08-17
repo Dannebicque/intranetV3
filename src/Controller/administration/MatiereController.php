@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\administration;
 
@@ -37,23 +37,24 @@ class MatiereController extends BaseController
     }
 
     /**
-     * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose"=true})
-     * @param Diplome $diplome
+     * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose":true})
+     * @param MatiereRepository $matiereRepository
+     * @param Diplome           $diplome
      *
      * @return Response
      */
-    public function diplome(Diplome $diplome): Response
+    public function diplome(MatiereRepository $matiereRepository, Diplome $diplome): Response
     {
         return $this->render('administration/matiere/_tableau.html.twig', [
             'diplome'  => $diplome,
-            'matieres' => $this->getDoctrine()->getRepository(Matiere::class)->findByDiplome($diplome)
+            'matieres' => $matiereRepository->findByDiplome($diplome)
         ]);
     }
 
 
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_matiere_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
+     *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
      * @param MyExport $myExport
      * @param MatiereRepository $matiereRepository
      * @param Diplome $diplome
@@ -105,9 +106,9 @@ class MatiereController extends BaseController
      *
      * @return Response
      */
-    public function create(Request $request, Diplome $diplome, Ue $ue = null): Response
+    public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
+        if ($configuration->get('MODIFICATION_PPN') === 1) {
 
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
@@ -156,9 +157,9 @@ class MatiereController extends BaseController
      *
      * @return Response
      */
-    public function edit(Request $request, Matiere $matiere): Response
+    public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
-        if ((int)Configuration::get('MODIFICATION_PPN') === 1) {
+        if ($configuration->get('MODIFICATION_PPN') === 1) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
                 'attr'    => [
@@ -186,13 +187,15 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_matiere_duplicate", methods="GET|POST")
-     * @param Matiere $matiere
+     * @param Configuration $configuration
+     * @param Matiere       $matiere
      *
      * @return Response
      */
-    public function duplicate(Matiere $matiere): Response
+    public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
-        if ((int)Configuration::get('MODIFICATION_PPN')) {
+
+        if ((int)$configuration->get('MODIFICATION_PPN') === 1) {
             $newMatiere = clone $matiere;
 
             $this->entityManager->persist($newMatiere);

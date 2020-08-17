@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/08/2020 09:06
 
 namespace App\Controller\appEtudiant;
 
@@ -29,6 +29,7 @@ class ScolariteController extends BaseController
     public function details(Scolarite $scolarite): Response
     {
         return $this->render('appEtudiant/scolarite/detail.html.twig', [
+            'etudiant'  => $scolarite->getEtudiant(),
             'scolarite' => $scolarite,
         ]);
     }

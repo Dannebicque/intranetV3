@@ -1,0 +1,99 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title">{{ 'adm.typegroupe.semestre.index.heading'|trans }} | {{ semestre.libelle }}</h4>
+        <div class="card-header-actions" style=""></div>
+    </header>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Libellé</th>
+                <th>Type</th>
+                <th>Défauts?</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tg in typeGroupes %}
+                <tr>
+                    <td><a class="myedit"
+                           data-field="libelle"
+                           href="{{ path('administration_type_groupe_ajax_edit', {id:tg.id}) }}"
+                           data-title="Corriger le libellé du type de groupe">
+                            {{ tg.libelle }}</a>
+                    </td>
+                    <td><label class="sr-only" for="typegroupe_{{ tg.id }}"></label>
+                        <select id="typegroupe_{{ tg.id }}" name="typegroupe_{{ tg.id }}" class="form-control
+        change-type_typegroupe" data-typegroupe="{{ tg.id }}" data-semestre="{{ semestre.id }}">
+                            <option value="" selected>Type de type de Groupe</option>
+                            {% for type in constant
+                                ('App\\Entity\\TypeGroupe::TYPES') %}
+                                <option value="{{ type }}" {% if tg.type == type %}selected{% endif %}>
+                                    {{ type }}
+                                </option>
+                            {% endfor %}
+                        </select></td>
+                    <td>
+                        <label class="switch" for="defaut_{{ tg.id }}">
+                            <input type="checkbox" {{ tg.defaut ? 'checked': '' }}
+                                   class="changeDefaut"
+                                   name="defaut_{{ tg.id }}"
+                                   id="defaut_{{ tg.id }}"
+                                   data-type-groupe="{{ tg.id }}"
+                                   data-semestre="{{ semestre.id }}">
+                            <span class="switch-indicator"></span>
+                        </label>
+                    </td>
+                    <td class="text-right table-actions">
+                        <a class="table-action hover-primary duplicate-type_groupe"
+                           href="#"
+                           data-provide="tooltip"
+                           data-typegroupe="{{ tg.id }}"
+                           data-semestre="{{ semestre.id }}"
+                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}">
+                            <span class="{{ iconDuplicate }}"></span>
+                            <span class="sr-only">Dupliquer le type de groupe</span>
+                        </a>
+                        <a class="table-action hover-danger supprimer"
+                           href="{{ path('administration_type_groupe_delete', {id:tg.id}) }}"
+                           data-csrf="{{ csrf_token('delete' ~ tg.id) }}"
+                           data-provide="tooltip"
+                           data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}">
+                            <span class="{{ iconDelete }}"></span>
+                            <span class="sr-only">Supprimer le type de groupe</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <label class="sr-only" for="typegroupe_libelle">Libellé</label>
+                    <input type="text" name="typegroupe_libelle" id="typegroupe_libelle" class="form-control">
+                </td>
+                <td>
+                    <label class="sr-only" for="typegroupe_type">Type</label>
+                    <select id="typegroupe_type" name="typegroupe_type" class="form-control
+        change-type_typegroupe">
+                        <option value="" selected>Type de type de Groupe</option>
+                        {% for type in constant('App\\Entity\\TypeGroupe::TYPES') %}
+                            <option value="{{ type }}">
+                                {{ type }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <label class="switch" for="typegroupe_defaut">
+                        <input type="checkbox"
+                               name="typegroupe_defaut"
+                               id="typegroupe_defaut">
+                        <span class="switch-indicator"></span>
+                    </label></td>
+                <td>
+                    <button class="btn btn-success" id="addTypeGroupe" data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

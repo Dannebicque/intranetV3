@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ActualiteType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/07/2020 17:34
 
 namespace App\Form;
 
@@ -29,6 +29,7 @@ class ActualiteType extends AbstractType
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'label.titre',
+                'attr' => ['data-error' => 'Le titre est obligatoire']
             ])
             ->add('texte', TextareaType::class, [
                 'label'    => 'label.texte',

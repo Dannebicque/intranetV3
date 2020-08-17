@@ -17,10 +17,11 @@ doctrine:
 
         url: '%env(resolve:DATABASE_URL)%'
         types:
-            uuid: App\DoctrineType\UuidType
-            uuid_binary: App\DoctrineType\UuidType
-    #        mapping_types:
-    #            uuid_binary: binary
+            uuid_binary:  Ramsey\Uuid\Doctrine\UuidBinaryType
+            datetime_immutable: \Carbon\Doctrine\DateTimeImmutableType
+            datetime: \Carbon\Doctrine\DateTimeType
+        mapping_types:
+            uuid_binary: binary
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

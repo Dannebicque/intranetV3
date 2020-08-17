@@ -9,11 +9,7 @@
     <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
 
     {% block stylesheets %}
-        <link href="{{ asset('assets/fonts/font.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/css/core.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/css/app.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/css/style.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('src/assets/vendor/flag-icon/css/flag-icon.css') }}" rel="stylesheet">
+        {{ encore_entry_link_tags('app') }}
     {% endblock %}
     <style>
         .btn-primary {
@@ -194,38 +190,38 @@
 <header class="topbar">
     <div class="topbar-left">
         <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
-        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip" title=""
-           data-original-title="{{ 'fullscreen'|trans }}">
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip"
+           title="{{ 'fullscreen'|trans }}">
             <i class="material-icons fullscreen-default">fullscreen</i>
             <i class="material-icons fullscreen-active">fullscreen_exit</i>
         </a>
-        <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip" title=""
-           data-original-title="{{ 'lock'|trans }}">
+        <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip"
+           title="{{ 'lock'|trans }}">
             <i class="material-icons">lock_outline</i><span
                     class="sr-only">Vérouiller</span>
         </a>
 
         <div class="dropdown d-none d-md-block">
-            <span class="topbar-btn" data-toggle="dropdown"><i class="ti-layout-grid3-alt"></i></span>
+            <span class="topbar-btn" data-toggle="dropdown"><i class="material-icons">view_module</i></span>
             <div class="dropdown-menu dropdown-grid">
                 <a class="dropdown-item" href="{{ path('default_homepage') }}">
-                    <span data-i8-icon="home"></span>
+                    <span class="fas fa-home fa-3x fa-color-home"></span>
                     <span class="title">Dashboard</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('trombinoscope_index') }}">
-                    <span data-i8-icon="stack_of_photos"></span>
+                    <span class="fas fa-images fa-3x fa-color-trombi"></span>
                     <span class="title">Trombinoscope</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('agenda_index') }}">
-                    <span data-i8-icon="calendar"></span>
+                    <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
                     <span class="title">Agenda</span>
                 </a>
-                <a class="dropdown-item" href="{{ path('messagerie_index') }}">
-                    <span data-i8-icon="invite"></span>
+                <a class="dropdown-item" href="{{ path('application_index',{'onglet':'messagerie'}) }}">
+                    <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
                     <span class="title">Messagerie</span>
                 </a>
                 <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
-                    <span data-i8-icon="businessman"></span>
+                    <span class="fas fa-address-card fa-3x  fa-color-profil"></span>
                     <span class="title">Profil</span>
                 </a>
             </div>
@@ -233,7 +229,7 @@
 
         {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
             <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-toggle="dropdown"><i class="ti-exchange-vertical"></i></span>
+                <span class="topbar-btn" data-toggle="dropdown"><i class="material-icons">swap_vert</i></span>
                 <div class="dropdown-menu dropdown-grid">
                     {% for departement in user_data.user.getPersonnelDepartements %}
                         <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
@@ -248,8 +244,7 @@
         {% endif %}
 
         <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="{{ 'rechercher'|trans }}"
-           data-toggle="lookup"
-           data-target="#lookup-full"
+           id="lookup"
            data-original-title="{{ 'Rechercher'|trans }}">
             <i class="material-icons">search</i>
         </a>
@@ -269,29 +264,31 @@
                         {% endif %}
                     </span>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="ti-user"></i> Profil</a>
-                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="ti-settings"></i>
-                        Paramètres</a>
+                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="fas fa-user"></i> {{ 'profil'|trans }}
+                    </a>
+                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="fas fa-cogs"></i> {{ 'paramètres'|trans }}
+                    </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="ti-lock"></i> Lock</a>
-                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="ti-power-off"></i>
-                        Logout</a>
+                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="fas fa-user-lock"></i> {{ 'verrouiller'|trans }}
+                    </a>
+                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
+                        {{ 'déconnexion'|trans }}</a>
                 </div>
             </li>
 
             <!-- Change language -->
-            <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown"><i class="ti-flag-alt-2"></i><span
-                                class="sr-only">Changer de langue</span></span>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item {% if app.request.locale == 'en' %}active{% endif %}" href="{{ path
-                        ('default_homepage',
-                        {'_locale':'en'}) }}"><span
-                                class="flag-icon flag-icon-gb"></span> English</a>
-                    <a class="dropdown-item {% if app.request.locale == 'fr' %}active{% endif %}" href="{{ path
-                        ('default_homepage',{'_locale':'fr'}) }}"><span
-                                class="flag-icon flag-icon-fr"></span> Français</a>
-                </div>
+            <li>
+                {% if app.request.locale == 'en' %}
+                    <a class="topbar-btn d-none d-md-block" href="{{ path
+                        ('default_homepage',{'_locale':'fr'}) }}" data-provide="tooltip"
+                       title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}"
+                                                                     width="16px" alt="{{ 'passer.en.francais'|trans }}"></a>
+                {% else %}
+                    <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-provide="tooltip"
+                       title="{{ 'passer.en.anglais'|trans }}"
+                    ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a>
+
+                {% endif %}
             </li>
             <!-- END Change language -->
 
@@ -303,18 +300,18 @@
             {% endfor %}
             <li class="dropdown d-none d-md-block">
                 <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i
-                            class="ti-bell"></i><span
+                            class="fas fa-bell"></i><span
                             class="sr-only">Notifications</span></span>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="media-list media-list-hover media-list-divided media-list-xs">
                         {% for notification in user_data.notifications|filter(notification => (notification.typeUser == user_data.typeUser)) %}
                             <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
-                               href="{{ notification.url }}">
+                               href="{{ path('notification_lire', {uuid:notification.uuidString}) }}">
                                     <span class="avatar bg-{{ notification.color }}"><i
                                                 class="{{ notification.icone }}"></i></span>
                                 <div class="media-body">
                                     <p>{{ notification.type|trans }}</p>
-                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago }}</time>
+                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago(app.request.locale) }}</time>
                                 </div>
                             </a>
                         {% else %}
@@ -346,7 +343,8 @@
                     {% for message in user_data.messages|filter(message => (message.etat == 'U')) %}
                         {% set newNotification = true %}
                     {% endfor %}
-                    <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i class="ti-email"></i></span>
+                    <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}"
+                          data-toggle="dropdown"><i class="fas fa-envelope"></i></span>
                     <div class="dropdown-menu dropdown-menu-right">
 
                         <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
@@ -366,7 +364,7 @@
                                     <div class="media-body">
                                         <p><strong>{{ message.message.expediteur.displayPr }}</strong>
                                             <time class="float-right"
-                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago }}</time>
+                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago(app.request.locale) }}</time>
                                         </p>
                                         <p class="text-truncate">{{ message.message.sujet }}</p>
                                     </div>
@@ -479,47 +477,7 @@
 <!-- END Main container -->
 
 <!-- Fullscreen search -->
-<div class="lookup-fullscreen" id="lookup-full">
-    <span class="close" data-toggle="lookup" data-target="#lookup-full"><i class="ti-close"></i></span>
-
-    <div class="lookup-form">
-        <label for="search"><span
-                    class="sr-only">Rechercher</span></label>
-        <input type="text" placeholder="Recherche quelque chose" id="search">
-    </div>
-
-    <div class="lookup-results scrollable">
-        <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4">
-                <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }}</h5>
-
-                <div class="media-list media-list-divided media-list-hover" id="search_reponse_etudiant">
-                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
-                </div>
-            </div>
-
-
-            <div class="col-sm-12 col-md-4 col-lg-4">
-                <h5 class="text-uppercase fw-400">{{ 'permanents'|trans }}</h5>
-
-                <div class="media-list media-list-hover" id="search_reponse_personnel">
-                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
-                </div>
-            </div>
-
-            <div class="col-sm-12 col-md-4 col-lg-4" id="search_reponse_autre">
-                <h5 class="text-uppercase fw-400">{{ 'autres'|trans }}</h5>
-                {# ou dernier éléménts recherchés
-                #}
-                <div class="media-list media-list-hover">
-                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-</div>
+{{ include('recherche/_resultat.html.twig') }}
 <!-- END Fullscreen search -->
 
 
@@ -534,12 +492,11 @@
 <!-- Routing -->
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
-<script src="{{ asset('src/assets/js/core.min.js') }}"></script>
-<script src="{{ asset('src/assets/js/app.js') }}"></script>
 {% block javascripts %}
-    <script src="{{ asset('src/assets/js/script.min.js') }}"></script>
-    <script data-provide="sweetalert"></script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
+<script data-provide="sweetalert"></script>
+#}
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SemestreType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 20/07/2020 18:05
 
 namespace App\Form;
 
@@ -128,7 +128,7 @@ class SemestreType extends AbstractType
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
             ])
             ->add(
                 'optEvaluationModifiable',
@@ -154,7 +154,7 @@ class SemestreType extends AbstractType
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
             ])
             ->add(
                 'optEvaluationVisible',
@@ -196,7 +196,7 @@ class SemestreType extends AbstractType
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['data-live-search' => 'true', 'data-provide' => 'selectpicker'],
+                'attr'          => ['class' => 'form-control selectpicker'],
             ])
             ->add(
                 'optMailAbsenceEtudiant',

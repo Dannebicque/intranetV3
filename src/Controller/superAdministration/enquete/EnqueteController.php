@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/07/2020 13:57
 
 namespace App\Controller\superAdministration\enquete;
 
@@ -196,7 +196,7 @@ class EnqueteController extends AbstractController
         $previsionnel = $previsionnelRepository->findByDiplomeArray($questionnaire->getSemestre()->getDiplome(),
             $questionnaire->getSemestre()->getDiplome()->getAnneeUniversitaire());
 
-        return $myEnquete->ExportExcel($questionnaire, $previsionnel);
+        return $myEnquete->exportExcel($questionnaire, $previsionnel);
     }
 
     /**

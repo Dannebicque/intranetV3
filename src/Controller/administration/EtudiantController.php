@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 17/08/2020 08:43
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
+use App\Repository\EtudiantRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +60,7 @@ class EtudiantController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             //todo: gérer l'import. En commun avec SuperAdministration/EtudiantController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.import.success.flash');
         }
@@ -66,14 +69,16 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @Route("/edit/{id}", name="administration_etudiant_edit", methods="{GET|POST}")
+     * @Route("/edit/{id}/{origin}", name="administration_etudiant_edit", methods="GET|POST")
      * @param Request  $request
      *
      * @param Etudiant $etudiant
      *
+     * @param string   $origin
+     *
      * @return Response
      */
-    public function edit(Request $request, Etudiant $etudiant): Response
+    public function edit(Request $request, Etudiant $etudiant, $origin = 'semestre'): Response
     {
         $form = $this->createForm(
             EtudiantType::class,
@@ -92,13 +97,25 @@ class EtudiantController extends BaseController
             $this->entityManager->persist($etudiant);
             $this->entityManager->flush();
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.add.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.edit.success.flash');
+
+            if ($request->request->get('btn_update') !== null) {
+                if ($origin === 'semestre' && $etudiant->getSemestre() !== null) {
+                    return $this->redirectToRoute('administration_semestre_index',
+                        ['semestre' => $etudiant->getSemestre()->getId()]);
+                }
+
+                return $this->redirectToRoute('administration_etudiant_index');
+
+            }
+
             $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestre()->getId()]);
         }
 
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
-            'form'     => $form->createView()
+            'form'     => $form->createView(),
+            'origin'   => $origin
         ]);
     }
 
@@ -141,11 +158,24 @@ class EtudiantController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
+     * @param MyExport           $myExport
+     * @param EtudiantRepository $etudiantRepository
+     * @param                    $_format
+     *
+     * @return Response
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(): Response
+    public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
-        //save en csv
-        return new Response('', Response::HTTP_OK);
+        $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
+
+        return $myExport->genereFichierGenerique(
+            $_format,
+            $etudiants,
+            'etudiants_' . $this->getDepartement()->getLibelle(),
+            ['etudiants_administration'],
+            ['nom', 'prenom', 'civilite', 'numEtudiant', 'mailUniv', 'semestre' => ['libelle']]
+        );
     }
 
 

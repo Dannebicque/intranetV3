@@ -1,7 +1,7 @@
 Bonjour {{ absence.etudiant.displayPr  }},
 
 L'absence saisie par - {{ absence.personnel.displayPr  }} - dans le cours - {{ absence.matiere.display }} - du - {{
-absence.date|format_date('long') }} -, {{ absence.heure|format_time('short') }} vient d'être supprimée.
+absence.dateHeure|format_date('long') }} -, {{ absence.dateHeure|format_time('short') }} vient d'être supprimée.
 
 Vous pouvez suivre l'état de vos absences et les justifier en vous connectant sur l'intranet.
 

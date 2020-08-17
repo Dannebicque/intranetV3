@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 16/08/2020 16:45
 
 namespace App\Controller;
 
@@ -50,6 +50,8 @@ class SynchroIcalController extends AbstractController
                 'Content-Disposition' => 'attachment; filename="export.ics"'
             ]);
         }
+
+        return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
 
@@ -78,5 +80,7 @@ class SynchroIcalController extends AbstractController
                 'Content-Disposition' => 'attachment; filename="export.ics"'
             ]);
         }
+
+        return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

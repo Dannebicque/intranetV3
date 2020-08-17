@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDocument.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 25/07/2020 11:21
 
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeDocumentRepository")
@@ -22,6 +23,7 @@ class TypeDocument extends BaseEntity
      * @var string
      *
      * @ORM\Column(type="string", length=75)
+     * @Groups({"typedocument_administration","document_administration"})
      */
     private $libelle;
 

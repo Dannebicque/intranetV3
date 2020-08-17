@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/08/2020 15:24
 
 namespace App\Repository;
 
@@ -185,10 +185,7 @@ class PersonnelRepository extends ServiceEntityRepository
         $qb
             ->select('u')
             ->from(Personnel::class, 'u');
-        // ->andWhere('u.visible = :visible')
-        // ->andWhere('u.anneesortie = :anneesortie')
 
-        //todo: ordre des colonnes? ou essayer de récupérer les noms?
         if ($order !== null && count($order) > 0) {
             switch ($order[0]['column']) {
                 case 0:

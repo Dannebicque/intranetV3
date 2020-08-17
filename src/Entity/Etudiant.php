@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/08/2020 10:20
 
 namespace App\Entity;
 
@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Symfony\Component\Uid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -53,6 +53,7 @@ class Etudiant extends Utilisateur implements Serializable
      * @var Semestre
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="etudiants", fetch="EAGER")
+     * @Groups({"etudiants_administration"})
      */
     private $semestre;
 
@@ -80,7 +81,7 @@ class Etudiant extends Utilisateur implements Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Absence", mappedBy="etudiant")
-     * @ORM\OrderBy({"date" = "desc", "heure" = "desc"})
+     * @ORM\OrderBy({"dateHeure" = "desc"})
      */
     private $absences;
 
@@ -218,13 +219,18 @@ class Etudiant extends Utilisateur implements Serializable
     private $formationContinue = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriEtudiant", mappedBy="etudiant")
+     */
+    private $documentsFavoris;
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
     public function __construct()
     {
         parent::__construct();
-        $this->setUuid(Uuid::v4());
+        $this->setUuid(Uuid::uuid4());
         $this->notes = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->rattrapages = new ArrayCollection();
@@ -239,6 +245,7 @@ class Etudiant extends Utilisateur implements Serializable
         $this->alternances = new ArrayCollection();
         $this->materielPrets = new ArrayCollection();
         $this->articlesLike = new ArrayCollection();
+        $this->documentsFavoris = new ArrayCollection();
 
         $this->promotion = date('Y');
         $this->anneeBac = date('Y');
@@ -265,7 +272,7 @@ class Etudiant extends Utilisateur implements Serializable
     }
 
     /**
-     * @param Semestre $semestre
+     * @param Semestre|null $semestre
      */
     public function setSemestre(?Semestre $semestre): void
     {
@@ -1211,6 +1218,37 @@ class Etudiant extends Utilisateur implements Serializable
     public function setFormationContinue(bool $formationContinue = false): self
     {
         $this->formationContinue = $formationContinue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DocumentFavoriEtudiant[]
+     */
+    public function getDocumentsFavoris(): Collection
+    {
+        return $this->documentsFavoris;
+    }
+
+    public function addDocumentsFavori(DocumentFavoriEtudiant $documentsFavori): self
+    {
+        if (!$this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris[] = $documentsFavori;
+            $documentsFavori->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentsFavori(DocumentFavoriEtudiant $documentsFavori): self
+    {
+        if ($this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris->removeElement($documentsFavori);
+            // set the owning side to null (unless already changed)
+            if ($documentsFavori->getEtudiant() === $this) {
+                $documentsFavori->setEtudiant(null);
+            }
+        }
 
         return $this;
     }

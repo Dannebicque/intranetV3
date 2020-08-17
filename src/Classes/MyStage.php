@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:23
 
 /**
  * Created by PhpStorm.
@@ -62,7 +62,7 @@ class MyStage
     public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire = 0): MyStage
     {
         if ($anneeUniversitaire === 0) {
-            $anneeUniversitaire = $stagePeriode->getSemestre() ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : date('Y');
+            $anneeUniversitaire = $stagePeriode->getAnneeUniversitaire() !== null ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());

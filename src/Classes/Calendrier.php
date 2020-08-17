@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Calendrier.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 03/08/2020 09:36
 
 /**
  * Created by PhpStorm.
@@ -24,10 +24,10 @@ use Exception;
  */
 abstract class Calendrier
 {
-    private static $tabPlanning = array();
+    private static array $tabPlanning = [];
 
-    private static $tabFinMois = array();
-    private static $tabJoursFeries = array();
+    private static array $tabFinMois = [];
+    private static array $tabJoursFeries = [];
 
     /**
      * @param     $year
@@ -71,9 +71,9 @@ abstract class Calendrier
         $easterMonth = date('n', $easter);
         $easterYear = date('Y', $easter);
 
-        $lundiPaque = mktime(0, 0, 0, $easterMonth, $easterDay + 1, $easterYear);
-        $jeudiAscension = mktime(0, 0, 0, $easterMonth, $easterDay + 39, $easterYear);
-        $lundiPentecote = mktime(0, 0, 0, $easterMonth, $easterDay + 50, $easterYear);
+        $lundiPaque = mktime(0, 0, 0, $easterMonth, (int)$easterDay + 1, $easterYear);
+        $jeudiAscension = mktime(0, 0, 0, $easterMonth, (int)$easterDay + 39, $easterYear);
+        $lundiPentecote = mktime(0, 0, 0, $easterMonth, (int)$easterDay + 50, $easterYear);
 
         self::$tabJoursFeries = array(
             $year . '-11-01', //toussaints

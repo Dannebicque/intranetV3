@@ -28,7 +28,7 @@
         {% for diplome in user_data.diplomes %}
             {% if loop.first %}
                 {{ render(controller(
-                    'App\\Controller\\Administration\\MatiereController::diplome', {diplome:diplome}
+                    'App\\Controller\\administration\\MatiereController::diplome', {diplome:diplome.id}
                 )) }}
             {% endif %}
         {% endfor %}
@@ -36,18 +36,49 @@
 {% endblock %}
 
 {% block fabactions %}
+    {% set diplome_id = user_data.diplomes[0].id %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_matiere_export', {_format:'pdf', diplome: diplome_id}),
+            title: 'exporter.pdf'|trans,
+            id: 'export_pdf',
+            icone : "fa fa-file-pdf"
+        },
+        {
+            type:'info',
+            href:path('administration_matiere_export', {_format:'csv', diplome: diplome_id}),
+            title: 'exporter.csv'|trans,
+            id: 'export_csv',
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_matiere_export', {_format:'xlsx', diplome: diplome_id}),
+            title: 'exporter.xls'|trans,
+            id: 'export_xlsx',
+            icone: 'fa fa-file-excel'
+        },
         {type: 'warning',
             href: path('administration_ppn_index'),
             title: 'gestion.ppn'|trans,
-            icone : "ti-direction-alt"
+            icone : 'fas fa-maps-sign'
         },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration_matiere'}),
             title: 'aide'|trans,
-            icone: 'fa fa-question',
-            target: "_blank"
+            icone: 'fas fa-question',
+            target: '_blank'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.matieres') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.matieres') }}
 {% endblock %}

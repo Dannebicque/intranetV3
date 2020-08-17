@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 08/08/2020 10:27
 
 namespace App\Controller\appPersonnel;
 
@@ -47,7 +47,7 @@ class EvaluationController extends BaseController
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes,
-            'autorise'   => true //todo: a calculer
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getid())
         ]);
     }
 

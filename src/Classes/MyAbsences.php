@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 08/08/2020 10:27
 
 /**
  * Created by PhpStorm.
@@ -14,8 +14,12 @@
 
 namespace App\Classes;
 
-use App\Entity\Absence;
+use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\Excel\MyExcelMultiExport;
+use App\Entity\AnneeUniversitaire;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
@@ -27,33 +31,44 @@ use Exception;
  */
 class MyAbsences
 {
-    /** @var AbsenceRepository */
-    private $absenceRepository;
+    private AbsenceRepository $absenceRepository;
 
-    /** @var EtudiantRepository */
-    private $etudiantRepository;
+    private EtudiantRepository $etudiantRepository;
 
-    /** @var array */
-    private $statistiques = array();
+    private array $statistiques = [];
 
     /**
      * @var Etudiant[]
      */
     private $etudiants;
 
-    /** @var Absence[] */
-    private $absences;
+    /**
+     * @var MyExcelMultiExport
+     */
+    private MyExcelMultiExport $myExcelMultiExport;
+    /**
+     * @var EtudiantAbsences
+     */
+    private EtudiantAbsences $etudiantAbsences;
 
     /**
      * MyAbsences constructor.
      *
      * @param AbsenceRepository  $absenceRepository
      * @param EtudiantRepository $etudiantRepository
+     * @param MyExcelMultiExport $myExcelMultiExport
+     * @param EtudiantAbsences   $etudiantAbsences
      */
-    public function __construct(AbsenceRepository $absenceRepository, EtudiantRepository $etudiantRepository)
-    {
+    public function __construct(
+        AbsenceRepository $absenceRepository,
+        EtudiantRepository $etudiantRepository,
+        MyExcelMultiExport $myExcelMultiExport,
+        EtudiantAbsences $etudiantAbsences
+    ) {
         $this->absenceRepository = $absenceRepository;
         $this->etudiantRepository = $etudiantRepository;
+        $this->myExcelMultiExport = $myExcelMultiExport;
+        $this->etudiantAbsences = $etudiantAbsences;
     }
 
     /**
@@ -73,21 +88,12 @@ class MyAbsences
     }
 
     /**
-     * @return Absence[]
-     */
-    public function getAbsences(): array
-    {
-        return $this->absences;
-    }
-
-
-    /**
      * @param $matiere
      * @param $anneeCourante
      *
      * @return mixed
      */
-    public function getAbsencesMatiere($matiere, $anneeCourante)
+    public function getAbsencesMatiere(Matiere $matiere, AnneeUniversitaire $anneeCourante)
     {
         return $this->absenceRepository->getByMatiere($matiere, $anneeCourante);
     }
@@ -100,12 +106,47 @@ class MyAbsences
     public function getAbsencesSemestre(Semestre $semestre): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
-        $this->absences = $this->absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
-
 
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
-            $this->statistiques[$etudiant->getId()] = StatsAbsences::calculsStatsSemestre($this->absences, $etudiant);
+            $this->etudiantAbsences->setEtudiant($etudiant);
+            $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($semestre,
+                $semestre->getAnneeUniversitaire());
+            $statistiques = new StatsAbsences();
+            $this->statistiques[$etudiant->getId()] = $statistiques->calculStatistiquesAbsencesEtudiant($absencesEtudiant);
         }
     }
+
+    public function export(
+        Matiere $matiere,
+        AnneeUniversitaire $anneeUniversitaire,
+        $_format
+    ) {
+        $absences = $this->getAbsencesMatiere($matiere, $anneeUniversitaire);
+        $name = 'absences-' . $matiere->getCodeMatiere();
+        switch ($_format) {
+            case Constantes::FORMAT_PDF:
+                $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
+                    $absences
+                );
+
+                return $this->myExcelMultiExport->savePdf($name);
+                break;
+            case Constantes::FORMAT_EXCEL:
+                $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
+                    $absences
+                );
+
+                return $this->myExcelMultiExport->saveXlsx($name);
+                break;
+            case Constantes::FORMAT_CSV_POINT_VIRGULE:
+                $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
+                    $absences
+                );
+
+                return $this->myExcelMultiExport->saveCsv($name);
+                break;
+        }
+    }
+
 }
