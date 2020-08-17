@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 17/08/2020 13:26
 
 namespace App\Controller\superAdministration;
 
@@ -87,22 +87,23 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/new/year", name="sa_celcat_calendrier_new_year", methods="GET|POST")
+     * @param MyCelcat                     $myCelcat
      * @param Request                      $request
      *
      * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
      *
      * @return Response
      * @throws \Exception
-     * @throws \Exception
      */
     public function createNewYear(
+        MyCelcat $myCelcat,
         Request $request,
         AnneeUniversitaireRepository $anneeUniversitaireRepository
     ): Response {
         if ($request->isMethod('POST')) {
             $annee = $anneeUniversitaireRepository->find($request->request->get('annee_universitaire'));
             if ($annee) {
-                MyCelcat::getCalendar();
+                $myCelcat->getCalendar();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.create_year.success.flash');
             } else {
                 $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'celcat_calendrier.create_year.error.flash');

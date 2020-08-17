@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:21
+// @lastUpdate 17/08/2020 13:28
 
 namespace App\Controller\superAdministration;
 
@@ -23,6 +23,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CelcatController extends BaseController
 {
+
+    private MyCelcat $myCelcat;
+
+    /**
+     * CelcatController constructor.
+     *
+     * @param MyCelcat $myCelcat
+     */
+    public function __construct(MyCelcat $myCelcat)
+    {
+        $this->myCelcat = $myCelcat;
+    }
+
+
     /**
      * @Route("/index", methods={"GET"}, name="sa_celcat_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
@@ -40,21 +54,19 @@ class CelcatController extends BaseController
     /**
      * @Route("/extraction", methods={"GET"}, name="sa_celcat_extraction_code")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     * @param MyCelcat $myCelcat
      *
      * @return Response
      */
-    public function extraction(MyCelcat $myCelcat): Response
+    public function extraction(): Response
     {
         return $this->render('super-administration/celcat/extraction.html.twig', [
-            'diplomes' => $myCelcat->getDiplomes()
+            'diplomes' => $this->myCelcat->getDiplomes()
         ]);
     }
 
     /**
      * @Route("/update/{id}", methods={"GET"}, name="sa_celcat_update_events")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     * @param MyCelcat               $myCelcat
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param Diplome                $diplome
      *
@@ -62,7 +74,6 @@ class CelcatController extends BaseController
      * @throws Exception
      */
     public function update(
-        MyCelcat $myCelcat,
         CelcatEventsRepository $celcatEventsRepository,
         Diplome $diplome
     ): RedirectResponse {
@@ -71,7 +82,7 @@ class CelcatController extends BaseController
             $diplome->getAnneeUniversitaire());
 
         //récupération et ajouts des events.
-        $myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
+        $this->myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
 
         return $this->redirectToRoute('sa_celcat_index');
     }

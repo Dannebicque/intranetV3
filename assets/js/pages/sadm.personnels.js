@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/07/2020 16:07
+// @lastUpdate 17/08/2020 13:10
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -48,7 +48,7 @@ $(document).on('click', '.sa_addpersonnel', function () {
 $('#datatableRh').DataTable({
   'processing': true,
   'serverSide': true,
-  'langue': dataTableLangueFr,
+  'language': dataTableLangueFr,
   'ajax': Routing.generate('api_all_personnel'),
   'sAjaxDataProp': 'data',
   'pageLength': 25,
