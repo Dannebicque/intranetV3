@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 14:17
+// @lastUpdate 18/08/2020 10:44
 
 /**
  * Created by PhpStorm.
@@ -23,35 +23,41 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use http\Exception\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Request;
 
 class MyCelcat
 {
     private $conn;
 
     private EntityManagerInterface $entityManger;
+    private Request $request;
 
     /**
      * MyCelcat constructor.
      *
      * @param $entityManger
      */
-    public function __construct(EntityManagerInterface $entityManger)
+    public function __construct(EntityManagerInterface $entityManger, Request $request)
     {
         $this->entityManger = $entityManger;
+        $this->request = $request;
     }
 
 
     private function connect()
     {
-        $this->conn = odbc_connect('MSSQLSRV', $_SERVER['MSSQL_USER'], $_SERVER['MSSQL_PASS']);
+        $this->conn = odbc_connect('MSSQLSRV', $this->request->server->get('MSSQL_USER'),
+            $this->request->server->get('MSSQL_PASS'));
 
         return $this->conn;
     }
 
     /**
+     * @param AnneeUniversitaire $anneeUniversitaire
+     *
      * @throws Exception
      */
-    public function getCalendar(): void
+    public function getCalendar(AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->connect();
 
@@ -61,6 +67,7 @@ class MyCelcat
         while (odbc_fetch_row($result)) {
             $date = odbc_result($result, 'week_date');
             $cal = new Calendrier();
+            $cal->setAnneeUniversitaire($anneeUniversitaire);
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
             $cal->setSemaineReelle((int)date('W', strtotime($date)));
             $cal->setDateLundi(new DateTime($date));
@@ -94,14 +101,17 @@ class MyCelcat
     public function getEvents(
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
-    ): void {
+    ): void
+    {
         if ($anneeUniversitaire === null) {
             throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
         }
 
         $this->connect();
-        $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $codeCelcatDepartement . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
-        $result = odbc_exec($this->conn, $query);
+        $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=? ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+
+        $stmt = odbc_prepare($this->conn, $query);
+        $result = odbc_execute($stmt, [$codeCelcatDepartement]);
 
         while (odbc_fetch_row($result)) {
             $eventId = odbc_result($result, 1);
@@ -152,9 +162,10 @@ class MyCelcat
         $this->connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
-INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
+INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=?';
 
-        $result = odbc_exec($this->conn, $query);
+        $stmt = odbc_prepare($this->conn, $query);
+        $result = odbc_execute($stmt, [$semestre->getDiplome()->getCodeCelcatDepartement()]);
 
         while (odbc_fetch_row($result)) {
             // Vérifier si l'event est déjà dans l'intranet

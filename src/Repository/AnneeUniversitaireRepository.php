@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AnneeUniversitaireRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 17/08/2020 14:22
 
 namespace App\Repository;
 
@@ -15,7 +15,6 @@ use Doctrine\ORM\NonUniqueResultException;
 /**
  * @method AnneeUniversitaire|null find($id, $lockMode = null, $lockVersion = null)
  * @method AnneeUniversitaire|null findOneBy(array $criteria, array $orderBy = null)
- * @method AnneeUniversitaire[]    findAll()
  * @method AnneeUniversitaire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class AnneeUniversitaireRepository extends ServiceEntityRepository
@@ -23,6 +22,11 @@ class AnneeUniversitaireRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, AnneeUniversitaire::class);
+    }
+
+    public function findAll()
+    {
+        return $this->findBy([], ['annee' => 'DESC']);
     }
 
     public function findActive()

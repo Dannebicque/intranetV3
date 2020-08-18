@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 14:18
+// @lastUpdate 18/08/2020 10:44
 
 namespace App\Classes\Apogee;
 
@@ -17,75 +17,91 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-abstract class MyApogee
+class MyApogee
 {
     /** @var PDO */
-    private static $conn;
+    private PDO $conn;
 
-    public static function getEtudiantsDiplome(Diplome $diplome)
+    private Request $request;
+
+    /**
+     * MyApogee constructor.
+     *
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
-        self::connect();
-        $stid = self::$conn->prepare(
+        $this->request = $request;
+    }
+
+
+    public function getEtudiantsDiplome(Diplome $diplome)
+    {
+        $this->connect();
+        $stid = $this->conn->prepare(
             'SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND, DAA_ETB, IND_BAC.DAA_OBT_BAC_IBA, COD_BAC FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN IND_BAC ON INDIVIDU.COD_IND=IND_BAC.COD_IND WHERE COD_ETP=:codeetape');
         $stid->execute([':codeetape' => $diplome->getCodeEtape()]);
 
         return $stid;
     }
 
-    private static function connect(): ?PDO
+    private function connect(): ?PDO
     {
         try {
-            self::$conn = new PDO('oci:dbname=' . $_SERVER['APOGEE_STRING'], $_SERVER['APOGEE_LOGIN'],
-                $_SERVER['APOGEE_PASSWORD']);
+            $this->conn = new PDO('oci:dbname=' . $this->request->server->get('APOGEE_STRING'),
+                $this->request->server->get('APOGEE_LOGIN'),
+                $this->request->server->get('APOGEE_PASSWORD'));
 
-            return self::$conn;
+            return $this->conn;
         } catch (PDOException $e) {
             trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), E_USER_ERROR);
         }
     }
 
-    public static function getEtudiant($etudiant)
+    public function getEtudiant($etudiant)
     {
-        self::connect();
-        $stid = self::$conn->prepare(
+        $this->connect();
+        $stid = $this->conn->prepare(
             'SELECT * FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND WHERE INDIVIDU.COD_ETU=:etudiant');
-        $stid->execute(array(':etudiant' => $etudiant));
+        $stid->execute([':etudiant' => $etudiant]);
+
         return $stid;
     }
 
-    public static function getGroupesSemestre(Semestre $semestre)
+    public function getGroupesSemestre(Semestre $semestre)
     {
-        self::connect();
-        $stid = self::$conn->prepare(
+        $this->connect();
+        $stid = $this->conn->prepare(
             'SELECT GROUPE.COD_GPE, GROUPE.LIB_GPE, GROUPE.COD_EXT_GPE FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre AND GROUPE.DAA_FIN_VAL_GPE IS NULL');
-        $stid->execute(array(':semestre' => $semestre->getCodeElement()));
+        $stid->execute([':semestre' => $semestre->getCodeElement()]);
 
         return $stid;
     }
 
-    public static function getHierarchieGroupesSemestre(Semestre $semestre)
+    public function getHierarchieGroupesSemestre(Semestre $semestre)
     {
-        self::connect();
-        $stid = self::$conn->prepare(
+        $this->connect();
+        $stid = $this->conn->prepare(
             'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON (GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE OR GPE_INCLUS_GPE.COD_GPE_2=GPE_OBJ.COD_GPE) WHERE GPE_OBJ.COD_ELP=:semestre');
         $stid->execute([':semestre' => $semestre->getCodeElement()]);
 
         return $stid;
     }
 
-    public static function getEtudiantsGroupesSemestre(Semestre $semestre)
+    public function getEtudiantsGroupesSemestre(Semestre $semestre)
     {
-        self::connect();
-        $stid = self::$conn->prepare(
+        $this->connect();
+        $stid = $this->conn->prepare(
             'SELECT INDIVIDU.COD_ETU, GROUPE.COD_EXT_GPE FROM IND_AFFECTE_GPE INNER JOIN GROUPE ON GROUPE.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INDIVIDU ON INDIVIDU.COD_IND=IND_AFFECTE_GPE.COD_IND INNER JOIN GPE_OBJ ON GPE_OBJ.COD_GPE=IND_AFFECTE_GPE.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
-        $stid->execute([':semestre'=> $semestre->getCodeElement()]);
+        $stid->execute([':semestre' => $semestre->getCodeElement()]);
 
         return $stid;
     }
 
-    public static function transformeApogeeToArray($data, $tBac): array
+    public function transformeApogeeToArray($data, $tBac): array
     {
         // COD_ETU, COD_NNE_IND, DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, COD_SEX_ETU
         return [
@@ -121,7 +137,7 @@ abstract class MyApogee
      * @return StreamedResponse|null
      * @throws Exception
      */
-    public static function transformeApogeeTexte($fichier, $nomfichier): ?StreamedResponse
+    public function transformeApogeeTexte($fichier, $nomfichier): ?StreamedResponse
     {
         $objPEENotes = new Spreadsheet();
         $objPEENotes->setActiveSheetIndex(0);
@@ -187,13 +203,13 @@ abstract class MyApogee
             $deb = $maquetteSheet->getCell($name)->getCoordinate();
 
             // fin = calcul du décalage vertical de 11 lignes à partir de la cellule ci-dessus
-            $fin = self::getNewCoordinates($deb, 0, 11);
+            $fin = $this->getNewCoordinates($deb, 0, 11);
             $v_cell_occ = 0;
             $v_cpt_cell_vide = $maquetteSheet->getCell($deb)->getValue();
 
             if (!empty($v_cpt_cell_vide)) {
                 if ($v_cpt_cell_vide === 'APO_COL_VAL_FIN' ||
-                    $maquetteSheet->getCell(self::getNewCoordinates($deb, 0, 1))->getValue() === 'APO_COL_VAL_FIN'
+                    $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() === 'APO_COL_VAL_FIN'
                 ) {
                     $v_cell_apo_col_val_fin = $name;
                     $v_cell_occ = 2;
@@ -237,7 +253,7 @@ abstract class MyApogee
             }
 
             if ($v_cpt_cell_vide === 'APO_COL_VAL_FIN' ||
-                $maquetteSheet->getCell(self::getNewCoordinates($deb, 0, 1))->getValue() == 'APO_COL_VAL_FIN'
+                $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() == 'APO_COL_VAL_FIN'
             ) {
                 break;
             }
@@ -266,11 +282,11 @@ abstract class MyApogee
             $titre = $maquetteSheet->getCell($name)->getCoordinate();
 
             // cellule debut pour la copie
-            $deb = self::getNewCoordinates($titre, 0, 12);
+            $deb = $this->getNewCoordinates($titre, 0, 12);
             $numLigne = $maquetteSheet->getCell($name)->getRow();
 
             // cellule de fin
-            $fin = self::getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
+            $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
 
             // si on est pas a la derniere colonne
             if ($titre != $celluleFin) {
@@ -325,7 +341,7 @@ abstract class MyApogee
 
 
         return new StreamedResponse(
-            static function() use ($objWriter) {
+            function() use ($objWriter) {
                 $objWriter->save('php://output');
             },
             200,
@@ -346,7 +362,7 @@ abstract class MyApogee
      *
      * @return string
      */
-    public static function getNewCoordinates($cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
+    public function getNewCoordinates($cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
     {
         if (strlen($cellCoordonate) === 2) {
             $colonne = substr($cellCoordonate, 0, 1);
