@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 18/08/2020 10:44
 
 namespace App\Controller\superAdministration;
 
@@ -31,22 +31,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupesController extends BaseController
 {
     /**
-     * @Route("/{departement}", name="sa_groupes_departement_index")
+     * @Route("/{departement}/{semestre}", name="sa_groupes_departement_index")
      * @param GroupeRepository   $groupeRepository
      * @param SemestreRepository $semestreRepository
      * @param Departement        $departement
      *
+     * @param Semestre|null      $semestre
+     *
      * @return Response
      */
     public function index(
-        GroupeRepository $groupeRepository,
         SemestreRepository $semestreRepository,
-        Departement $departement
+        Departement $departement,
+        Semestre $semestre = null
     ): Response {
         return $this->render('super-administration/groupes/index.html.twig', [
-            'groupes'     => $groupeRepository->findByDepartement($departement),
-            'departement' => $departement,
-            'semestres'   => $semestreRepository->findByDepartement($departement)
+            'departement'     => $departement,
+            'semestres'       => $semestreRepository->findByDepartement($departement),
+            'afficheSemestre' => $semestre !== null ? $semestre->getId() : null
         ]);
     }
 

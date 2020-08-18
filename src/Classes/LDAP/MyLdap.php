@@ -3,24 +3,38 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 14:18
+// @lastUpdate 18/08/2020 10:44
 
 namespace App\Classes\LDAP;
 
 
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
-abstract class MyLdap
+class MyLdap
 {
-    private static $ds;
+    private $ds;
 
-    public static function connect(): void
+    private Request $request;
+
+    /**
+     * MyApogee constructor.
+     *
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    public function connect(): void
     {
         try {
-            self::$ds = ldap_connect($_SERVER['LDAP_HOST']);
-            ldap_set_option(self::$ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-            if (self::$ds) {
-                ldap_bind(self::$ds, $_SERVER['LDAP_LOGIN'], $_SERVER['LDAP_PASSWORD']);
+            $this->ds = ldap_connect($this->request->server->get('LDAP_HOST'));
+            ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+            if ($this->ds) {
+                ldap_bind($this->ds, $this->request->server->get('LDAP_LOGIN'),
+                    $this->request->server->get('LDAP_PASSWORD'));
             }
 
         } catch (Exception $e) {
@@ -28,19 +42,20 @@ abstract class MyLdap
         }
     }
 
-    public static function getInfoEtudiant($numetudiant)
+    public function getInfoEtudiant($numetudiant)
     {
-        self::connect();
-        $sr = ldap_search(self::$ds, $_SERVER['LDAP_BASE_DN'], 'supannetuid=' . $numetudiant);
-        if (ldap_count_entries(self::$ds, $sr) === 1) {
-            $etudiant = ldap_get_entries(self::$ds, $sr);
+        $this->connect();
+        $sr = ldap_search($this->ds, $_SERVER['LDAP_BASE_DN'], 'supannetuid=' . $numetudiant);
+        if (ldap_count_entries($this->ds, $sr) === 1) {
+            $etudiant = ldap_get_entries($this->ds, $sr);
             $t['login'] = $etudiant[0]['uid'][0];
             $t['mail'] = $etudiant[0]['mail'][0];
-            ldap_unbind(self::$ds);
+            ldap_unbind($this->ds);
 
             return $t;
-        } else {
-            return null;
         }
+
+        return null;
+
     }
 }
