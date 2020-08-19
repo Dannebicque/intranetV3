@@ -10,7 +10,6 @@
         <div class="buttons">
             <a href="{{ path('sa_celcat_index') }}" class="btn btn-primary btn-float"
                data-provide="tooltip"
-               target="_blank"
                data-placement="bottom" title="{{ 'atitle.retour_index'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
@@ -57,4 +56,14 @@
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}

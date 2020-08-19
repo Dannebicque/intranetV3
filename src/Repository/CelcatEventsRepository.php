@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 19/08/2020 21:26
 
 namespace App\Repository;
 
@@ -30,6 +30,8 @@ class CelcatEventsRepository extends ServiceEntityRepository
     protected $groupetp;
     protected $groupetd;
     protected $groupecm;
+    private string $chaine = '';
+    private array $params = [];
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -51,16 +53,11 @@ class CelcatEventsRepository extends ServiceEntityRepository
     {
         if ($user->getSemestre() !== null) {
             $this->groupes($user);
-
+            $this->params['semaine'] = $semaine;
             return $this->createQueryBuilder('p')
                 ->where('p.semaineFormation = :semaine')
-                ->andWhere('p.codeGroupe = :groupecm OR p.codeGroupe = :groupetd OR p.codeGroupe = :groupetp')
-                ->setParameters(array(
-                    'semaine'  => $semaine,
-                    'groupecm' => $this->groupecm,
-                    'groupetd' => $this->groupetd,
-                    'groupetp' => $this->groupetp,
-                ))
+                ->andWhere($this->chaine)
+                ->setParameters($this->params)
                 ->orderBy('p.jour, p.debut')
                 ->getQuery()
                 ->getResult();
@@ -73,16 +70,18 @@ class CelcatEventsRepository extends ServiceEntityRepository
      */
     private function groupes(Etudiant $user): void
     {
+        $i = 1;
         foreach ($user->getGroupes() as $groupe) {
             if ($groupe->getTypeGroupe() !== null) {
-                if ($groupe->getTypeGroupe()->isTD()) {
-                    $this->groupetd = $groupe->getCodeApogee();
-                } else if ($groupe->getTypegroupe()->isTP()) {
-                    $this->groupetp = $groupe->getCodeApogee();
-                } else {
-                    $this->groupecm = $groupe->getCodeApogee();
 
+                if ($i > 1) {
+                    $this->chaine .= ' OR ';
                 }
+                $this->chaine .= 'p.codeGroupe = :gr' . $i;
+
+                $this->params['gr' . $i] = $groupe->getCodeApogee();
+                $i++;
+
             }
         }
     }

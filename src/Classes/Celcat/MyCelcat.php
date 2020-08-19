@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/08/2020 10:44
+// @lastUpdate 19/08/2020 09:51
 
 /**
  * Created by PhpStorm.
@@ -22,25 +22,26 @@ use App\Entity\Semestre;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class MyCelcat
 {
     private $conn;
 
     private EntityManagerInterface $entityManger;
-    private Request $request;
+    private ?Request $request;
 
     /**
      * MyCelcat constructor.
      *
-     * @param $entityManger
+     * @param EntityManagerInterface $entityManger
+     * @param RequestStack           $request
      */
-    public function __construct(EntityManagerInterface $entityManger, Request $request)
+    public function __construct(EntityManagerInterface $entityManger, RequestStack $request)
     {
         $this->entityManger = $entityManger;
-        $this->request = $request;
+        $this->request = $request->getCurrentRequest();
     }
 
 

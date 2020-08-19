@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 19/08/2020 19:49
 
 namespace App\Classes\Edt;
 
@@ -98,7 +98,6 @@ Abstract class BaseEdt
     {
         $dateDuJour = Carbon::now();
         $this->anneeUniversitaire = $anneeUniversitaire;
-
         $this->total['CM'] = 0;
         $this->total['TD'] = 0;
         $this->total['TP'] = 0;
@@ -117,7 +116,7 @@ Abstract class BaseEdt
             $this->semaine = $semaine;
 
             //traitement du Week end
-            if ($dateDuJour->dayOfWeek === (Carbon::SATURDAY || Carbon::SUNDAY)) {
+            if ($dateDuJour->dayOfWeek === Carbon::SATURDAY || $dateDuJour->dayOfWeek === Carbon::SUNDAY) {
                 $this->semaine++;
                 if ($this->semaine > Carbon::WEEKS_PER_YEAR) {
                     $this->semaine = 1;
@@ -303,4 +302,29 @@ Abstract class BaseEdt
         return $this->semaines;
     }
 
+    protected function convertEdt($nb): ?int
+    {
+        switch ($nb) {
+            case 1:
+                return 1;
+            case 3:
+            case 4:
+                return 2;
+            case 7:
+            case 8:
+                return 3;
+            case 10:
+                return 4;
+            case 12:
+            case 13:
+                return 5;
+            case 16:
+            case 17:
+                return 6;
+            case 19:
+                return 7;
+            default:
+                return null;
+        }
+    }
 }

@@ -14,26 +14,29 @@
                 </div>
 
                 <div class="btn-group mr-2">
-                    {% if user_data.user.diplome.optSemainesVisibles > 2 %}
-                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente}) }}"
+                    {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
+                        .optSemainesVisibles == 0 %}
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
+                            filtre:'etudiant'}) }}"
                            data-provide="tooltip"
                            title="Semaine précédente"
                            id="semainePrecedente"><i
                                     class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante}) }}"
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
                            data-provide="tooltip"
                            title="Semaie suivante"
                            id="semaineSuivante"><i
                                     class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                     {% else %}
                         {% if edt.semaine=='now'|date('W') %}
-                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante}) }}"
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
                                data-provide="tooltip"
                                title="Semaie suivante"
                                id="semaineSuivante"><i
                                         class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                         {% else %}
-                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente}) }}"
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,filtre:'etudiant'
+                            }) }}"
                                data-provide="tooltip"
                                title="Semaine précédente"
                                id="semainePrecedente"><i
@@ -74,10 +77,10 @@
                     <br>{{ tabHeures[ligne][1] }}</div>
                 {% for j in 1..5 %}
                     {% if edt.planning[j][ligne] is defined %}
-                        <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}" style="background-color:{{ edt.planning[j][ligne]
-                        .couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                        <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
+                             style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
                             <a href="#" data-provide="modaler"
-                               data-url="{{ path('edt_etudiant_detail_event', {'event': edt.planning[j][ligne].pl,
+                               data-url="{{ path('edt_etudiant_detail_event', {'event': edt.planning[j][ligne].id,
                                    type: 'planning'}) }}"
                                title="{{ 'atitle.details'|trans }}"
                                data-title="{{ 'edt.etudiant.details'|trans }}"
@@ -85,9 +88,10 @@
                             >
                                 {{ edt.planning[j][ligne].texte|raw }}
                                 {% if edt.planning[j][ligne].format == 'nok' %}
-                                    <br>
-                                    <span class="edt-extra-time">{{ convertHeureEdt(edt.planning[j][ligne].debut) }} à
-                                        {{ convertHeureEdt(edt.planning[j][ligne].fin) }}</span>
+                                    <br/>
+                                    <span class="edt-extra-time">{{ convertHeureEdt(edt
+                                            .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
+                                            .planning[j][ligne].fin) }}</span>
                                 {% endif %}
                             </a>
                         </div>

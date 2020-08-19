@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:20
+// @lastUpdate 19/08/2020 10:20
 
 namespace App\Entity;
 
@@ -164,17 +164,17 @@ class TypeGroupe extends BaseEntity
 
     public function isTD(): bool
     {
-        return strtolower($this->getType()) === self::TYPE_GROUPE_TD;
+        return strtoupper($this->getType()) === self::TYPE_GROUPE_TD;
     }
 
     public function isTP(): bool
     {
-        return strtolower($this->getType()) === self::TYPE_GROUPE_TP;
+        return strtoupper($this->getType()) === self::TYPE_GROUPE_TP;
     }
 
     public function isCM(): bool
     {
-        return strtolower($this->getType()) === self::TYPE_GROUPE_CM;
+        return strtoupper($this->getType()) === self::TYPE_GROUPE_CM;
     }
 
     public function getType(): ?string

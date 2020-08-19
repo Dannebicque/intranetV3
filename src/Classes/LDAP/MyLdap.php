@@ -3,28 +3,29 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/08/2020 10:44
+// @lastUpdate 19/08/2020 09:52
 
 namespace App\Classes\LDAP;
 
 
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class MyLdap
 {
     private $ds;
 
-    private Request $request;
+    private ?Request $request;
 
     /**
      * MyApogee constructor.
      *
-     * @param Request $request
+     * @param RequestStack $request
      */
-    public function __construct(Request $request)
+    public function __construct(RequestStack $request)
     {
-        $this->request = $request;
+        $this->request = $request->getCurrentRequest();
     }
 
     public function connect(): void

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 19/08/2020 20:51
 
 namespace App\Controller;
 
@@ -119,15 +119,16 @@ class EdtController extends BaseController
      */
     public function dashboardEtudiant($semaine = 0): Response
     {
+
         if ($this->getConnectedUser() !== null) {
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine);
-
                 return $this->render('edt/_etudiant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
                     'tabHeures' => self::$tabHeures
                 ]);
+
             }
             $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire(),

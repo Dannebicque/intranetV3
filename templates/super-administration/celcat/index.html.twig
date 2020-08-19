@@ -37,21 +37,26 @@
                 {% for diplome in diplomes %}
                     <tr>
                         <td>{{ diplome.libelle }}</td>
-                        <td>{{ diplome.codeCelcatDepartement }}</td>
+                        <td>
+                            <a class="myedit"
+                               data-field="NbHCm"
+                               href="{{ path('sadm_diplome_edit_ajax', {id:diplome.id}) }}"
+                               data-title="Corriger le code celcat du diplôme">
+                                {{ diplome.codeCelcatDepartement }}</a>
+                        </td>
                         <td>{{ diplome.departement ? (diplome.departement.optUpdateCelcat == true ? '<span
-                        class="badge badge-primary">Synchronisé</span>' : 'Non') : 'Erreur'
-                            }}</td>
+                        class="badge badge-primary">Synchronisé</span>' : 'Non') : 'Erreur' }}</td>
                         <td>
                             <a href="{{ path('sa_diplome_edit', {'id': diplome.id}) }}"
                                class="btn btn-warning btn-outline btn-square" target="_blank"><i class="{{ iconEdit }}"
-                                                                                 data-provide="tooltip"
-                                                                                 data-placement="bottom"
-                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
-                            <a href="{{ path('sa_celcat_update_events', {'id': diplome.id}) }}"
-                               class="btn btn-success btn-outline btn-square" target="_blank"><i class="fas fa-sync"
                                                                                                  data-provide="tooltip"
                                                                                                  data-placement="bottom"
-                                                                                                 title="{{ 'atitle.update_events'|trans }}"></i></a>
+                                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
+                            <a href="{{ path('sa_celcat_update_events', {'id': diplome.id}) }}"
+                               class="btn btn-success btn-outline btn-square"><i class="fas fa-sync"
+                                                                                 data-provide="tooltip"
+                                                                                 data-placement="bottom"
+                                                                                 title="{{ 'atitle.update_events'|trans }}"></i></a>
                         </td>
                     </tr>
                 {% else %}
@@ -75,4 +80,14 @@
             icone: 'fa fa-question'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}
