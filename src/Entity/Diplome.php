@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 19/08/2020 21:26
 
 namespace App\Entity;
 
@@ -473,17 +473,22 @@ class Diplome extends BaseEntity
     /**
      * @param $name
      * @param $value
+     *
+     * @return bool
      */
-    public function update($name, $value): void
+    public function update($name, $value): bool
     {
         $t = explode('_', $name);
         $name = $t[0];
         $name[0] = chr(ord($name[0]) - 32);
         $method = 'set' . $name;
-        echo $method;
         if (method_exists($this, $method)) {
             $this->$method($value);
+
+            return true;
         }
+
+        return false;
     }
 
     /**

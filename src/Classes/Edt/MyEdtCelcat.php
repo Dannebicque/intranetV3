@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:24
+// @lastUpdate 19/08/2020 20:42
 
 /**
  * Created by PhpStorm.
@@ -15,9 +15,11 @@
 namespace App\Classes\Edt;
 
 
+use App\DTO\EventEdt;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
@@ -36,6 +38,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
     private GroupeRepository $groupeRepository;
 
     private MatiereRepository $matiereRepository;
+    private $tab = [];
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
@@ -56,12 +59,16 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
      *
      * @return MyEdtCelcat
      */
-    public function initPersonnel(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdtCelcat
-    {
+    public function initPersonnel(
+        Personnel $personnel,
+        AnneeUniversitaire $anneeUniversitaire,
+        $semaine = 0
+    ): MyEdtCelcat {
         $this->user = $personnel;
         $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
+
         return $this;
     }
 
@@ -74,9 +81,11 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
      */
     public function initEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire, $semaine = 0): MyEdtCelcat
     {
+
         $this->user = $etudiant;
         $this->init('etudiant', $etudiant->getId(), $semaine, $anneeUniversitaire);
         $this->calculEdt();
+
         return $this;
     }
 
@@ -95,7 +104,8 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
 
                     break;
                 case 'prof':
-                    $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(), $this->semaineFormationIUT);
+                    $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(),
+                        $this->semaineFormationIUT);
                     $this->planning = $this->transformeProf($pl);
                     break;
                 case 'etudiant':
@@ -139,7 +149,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
     public function transformePromo($pl): array
     {
 
-        $gr = array();
+        $gr = [];
         $groupes = $this->groupeRepository->getGroupesTP($this->semestre->getId());
 
         /** @var Groupe $groupe */
@@ -147,7 +157,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
             $gr[$groupe->getCodeapogee()] = $groupe->getOrdre();
         }
 
-        $tab = array();
+        $tab = [];
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
             if (array_key_exists($p->getCodeGroupe(), $gr)) {
@@ -227,52 +237,81 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
      *
      * @return array
      */
-    private function transformeEtudiant($pl) : array
+    private function transformeEtudiant($pl): array
     {
-        $tab = [];
-        $this->groupes();
 
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            if ((strtolower($p->getType()) === 'cm') || (strtolower($p->getType()) === 'td' && $p->getCodeGroupe() === $this->groupetd) || (strtolower($p->getType()) === 'tp' && $p->getCodeGroupe() === $this->groupetp)) {
-                $dbtEdt = $p->getDebut();
-                $finEdt = $p->getFin();
-                $debut = $p->getDebut();
-                $tab[$p->getJour()][$dbtEdt] = [];
-                $tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $debut;
+            $dbtEdt = $this->convertEdt(Constantes::TAB_HEURES_INDEX[$p->getDebut()->format('H:i:s')]);
+            $finEdt = $this->convertEdt(Constantes::TAB_HEURES_INDEX[$p->getFin()->format('H:i:s')]);
+            $eventEdt = new EventEdt();
 
-                for ($i = $dbtEdt; $i < $finEdt; $i++) {
-                    $tab[$p->getJour()][$i]['texte'] = 'xx';
-                }
 
-                $tab[$p->getJour()][$dbtEdt]['texte'] =  $p->getLibModule() . '<br />'. $p->getLibSalle() . ' | ' . $p->getLibGroupe() . ' <br /> ' . $p->getLibPersonnel();
+            $eventEdt->duree = $p->getFin()->diff($p->getDebut());
+            $eventEdt->debut = $dbtEdt;
+            $eventEdt->fin = $finEdt;
 
-                $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
-                $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-                $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->annee->getCouleurTexte();
-
+            $eventEdt->texte = $p->getLibModule() . '<br />' . $p->getLibSalle() . ' | ' . $p->getLibGroupe() . ' <br /> ' . $p->getLibPersonnel();
+            $eventEdt->couleur = $this->getCouleur($p);
+            $eventEdt->id = $p->getId();
+            $eventEdt->couleurTexte = $this->annee->getCouleurTexte();
+            $eventEdt->format = 'ok';
+            for ($i = $dbtEdt; $i < $finEdt; $i++) {
+                $evtEdtxx = new EventEdt();
+                $evtEdtxx->texte = 'xx';
+                $this->tab[$p->getJour()][$i] = $evtEdtxx;
             }
+            $this->tab[$p->getJour()][$dbtEdt] = $eventEdt;
+
+            $this->valideFormat($p);
+
+
         }
-        return $tab;
+
+        return $this->tab;
     }
 
-    /**
-     *
-     */
-    private function groupes() : void
+    private function valideFormat(CelcatEvent $p)
     {
-        /** @var Groupe $groupe */
-        foreach ($this->user->getGroupes() as $groupe) {
-            if ($groupe->getTypeGroupe() !== null) {
-                if ($groupe->getTypegroupe()->isTd()) {
-                    $this->groupetd = $groupe->getCodeApogee();
-                } else if ($groupe->getTypegroupe()->isTp()) {
-                    $this->groupetp = $groupe->getCodeApogee();
+        $casedebut = Constantes::TAB_HEURES_INDEX[$p->getDebut()->format('H:i:s')];
+        $casefin = Constantes::TAB_HEURES_INDEX[$p->getFin()->format('H:i:s')];
+        $idDebut = $this->convertEdt($casedebut);
+        $duree = $casefin - $casedebut;
 
-                } else {
-                    $groupecm = $groupe->getCodeApogee();
+
+        //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
+        if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
+            $this->tab[$p->getJour()][$idDebut]->format = 'ok';
+
+            if ($duree % 3 === 0) {
+                for ($i = 1; $i < $duree / 3; $i++) {
+                    $this->tab[$p->getJour()][$this->convertEdt($casedebut + ($i * 3))] = $this->tab[$p->getJour()][$idDebut];
                 }
             }
+        } else {
+            //pas sur un créneau classique pour le début
+            if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+                $casedebut -= ($duree % 3);
+            }
+
+            if ($casedebut === 11 || $casedebut === 12) {
+                $casedebut = 10;
+            }
+
+            if ($casedebut === 2 || $casedebut === 3) {
+                $casedebut = 1;
+            }
+
+            dump('newcas' . $casedebut);
+            if (!array_key_exists($casedebut, $this->tab[$p->getJour()])) {
+                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
+                unset($this->tab[$p->getJour()][$idDebut]);
+            }
+
+
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]->debut = Constantes::TAB_HEURES_INDEX[$p->getDebut()->format('H:i:s')];
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]->format = 'nok';
+            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]->fin = $casefin;
         }
     }
 
@@ -283,7 +322,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
      */
     private function getCouleurFromModule(CelcatEvent $p): string
     {
-        $matiere = $this->matiereRepository->findOneBy(array('codeapogee' => $p->getCodeModule()));
+        $matiere = $this->matiereRepository->findOneBy(['codeapogee' => $p->getCodeModule()]);
         if ($matiere !== null && $matiere->getSemestre() !== null) {
             $annee = $matiere->getSemestre()->getAnnee();
             if ($annee !== null) {
@@ -305,6 +344,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
 
         return 'CCCCCC';
     }
+
     /**
      * @param CelcatEvent $p
      *
@@ -334,6 +374,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
         $this->init('promo', $semestre->getId(), $semaine, $anneeUniversitaire);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
+
         return $this;
     }
 

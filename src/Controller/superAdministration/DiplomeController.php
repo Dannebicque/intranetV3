@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 19/08/2020 09:21
 
 namespace App\Controller\superAdministration;
 
@@ -15,6 +15,7 @@ use App\Form\DiplomeType;
 use Exception;
 use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,6 +103,25 @@ class DiplomeController extends BaseController
         }
 
         throw new RuntimeException('Le diplôme n\'est pas attaché à un département');
+    }
+
+    /**
+     * @param Request $request
+     * @param Diplome $diplome
+     * @Route("/{id}/edit-ajax", name="sa_diplome_edit_ajax", methods="POST")
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function editAjax(Request $request, Diplome $diplome): Response
+    {
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        $update = $diplome->update($name, $value);
+
+        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+            Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

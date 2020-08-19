@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 19/08/2020 21:26
 
 /**
  * Created by PhpStorm.
@@ -412,28 +412,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         }
     }
 
-
-    private function convertEdt($nb): ?int
-    {
-        switch ($nb) {
-            case 1:
-                return 1;
-            case 4:
-                return 2;
-            case 7:
-                return 3;
-            case 10:
-                return 4;
-            case 13:
-                return 5;
-            case 16:
-                return 6;
-            case 19:
-                return 7;
-            default:
-                return null;
-        }
-    }
 
     /**
      *
