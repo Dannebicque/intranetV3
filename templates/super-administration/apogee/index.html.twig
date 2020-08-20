@@ -51,11 +51,11 @@
                             </div>
                             <form class="form" action="{{ path('sa_apogee_maj', {type:'maj'}) }}" method="post">
                                 <div class="form-group">
-                                    <label for="anneeforce">Semestre/Année</label>
+                                    <label for="anneeforce">Année</label>
                                     <select class="form-control" id="anneeforce" name="anneeforce">
-                                        <option value="">Choisir le semestre/l'année à mettre à jour</option>
-                                        {% for semestre in semestres %}
-                                            <option value="{{ semestre.annee.id }}">{{ semestre.display }}</option>
+                                        <option value="">Choisir l'année à mettre à jour</option>
+                                        {% for annee in annees %}
+                                            <option value="{{ annee.id }}">{{ annee.libelle }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -79,11 +79,11 @@
                             </div>
                             <form class="form" action="{{ path('sa_apogee_maj', {type:'force'}) }}" method="post">
                                 <div class="form-group">
-                                    <label for="anneeforce">Semestre/Année</label>
+                                    <label for="anneeforce">Année</label>
                                     <select class="form-control" id="anneeforce" name="anneeforce">
-                                        <option value="">Choisir le semestre/l'année à mettre à jour</option>
-                                        {% for semestre in semestres %}
-                                            <option value="{{ semestre.annee.id }}">{{ semestre.display }}</option>
+                                        <option value="">Choisir l'année à mettre à jour</option>
+                                        {% for annee in annees %}
+                                            <option value="{{ annee.id }}">{{ annee.libelle }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 10:10
+// @lastUpdate 20/08/2020 10:29
 
 namespace App\Classes\Apogee;
 
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Classes\Tools;
 use PDO;

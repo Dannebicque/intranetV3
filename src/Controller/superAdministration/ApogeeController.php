@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 10:13
+// @lastUpdate 20/08/2020 10:32
 
 namespace App\Controller\superAdministration;
 
@@ -39,14 +39,14 @@ class ApogeeController extends BaseController
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param SemestreRepository $semestreRepository
+     * @param AnneeRepository $anneeRepository
      *
      * @return Response
      */
-    public function index(SemestreRepository $semestreRepository): Response
+    public function index(AnneeRepository $anneeRepository): Response
     {
         return $this->render('super-administration/apogee/index.html.twig', [
-            'semestres' => $semestreRepository->findAll()
+            'annees' => $anneeRepository->findAll()
         ]);
     }
 
@@ -82,7 +82,8 @@ class ApogeeController extends BaseController
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = $myApogee->getEtudiantsAnnee($annee);
             while ($row = $stid->fetch()) {
-                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $diplome->getAnneeUniversitaire()->getAnnee()) {
+                dump($row);
+                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $annee->getAnneeUniversitaire()) {
                     $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
 
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
