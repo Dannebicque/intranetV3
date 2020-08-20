@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 20/08/2020 10:13
 
 namespace App\Controller\superAdministration;
 
@@ -14,9 +14,11 @@ use App\Entity\Etudiant;
 use App\Classes\Apogee\MyApogee;
 use App\Classes\LDAP\MyLdap;
 use App\Classes\Tools;
+use App\Repository\AnneeRepository;
 use App\Repository\BacRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
+use App\Repository\SemestreRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,14 +39,14 @@ class ApogeeController extends BaseController
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param DiplomeRepository $diplomeRepository
+     * @param SemestreRepository $semestreRepository
      *
      * @return Response
      */
-    public function index(DiplomeRepository $diplomeRepository): Response
+    public function index(SemestreRepository $semestreRepository): Response
     {
         return $this->render('super-administration/apogee/index.html.twig', [
-            'diplomes' => $diplomeRepository->findAll()
+            'semestres' => $semestreRepository->findAll()
         ]);
     }
 
@@ -52,9 +54,10 @@ class ApogeeController extends BaseController
      * @Route("/import/diplome/{type}", methods={"POST"}, name="sa_apogee_maj")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
+     * @param MyApogee           $myApogee
+     * @param MyLdap             $myLdap
      * @param Request            $request
-     * @param DiplomeRepository  $diplomeRepository
-     *
+     * @param AnneeRepository    $anneeRepository
      * @param EtudiantRepository $etudiantRepository
      * @param BacRepository      $bacRepository
      * @param                    $type
@@ -63,25 +66,27 @@ class ApogeeController extends BaseController
      * @throws Exception
      */
     public function importMaj(
+        MyApogee $myApogee,
+        MyLdap $myLdap,
         Request $request,
-        DiplomeRepository $diplomeRepository,
+        AnneeRepository $anneeRepository,
         EtudiantRepository $etudiantRepository,
         BacRepository $bacRepository,
         $type
     ): Response {
 
-        $diplome = $diplomeRepository->find($request->request->get('diplomeforce'));
-        if ($diplome) {
+        $annee = $anneeRepository->find($request->request->get('anneeforce'));
+        if ($annee) {
             $this->etudiants = [];
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
-            $stid = MyApogee::getEtudiantsDiplome($diplome);
+            $stid = $myApogee->getEtudiantsAnnee($annee);
             while ($row = $stid->fetch()) {
-                if ((int) Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $diplome->getAnneeUniversitaire()->getAnnee()) {
-                    $dataApogee = MyApogee::transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $diplome->getAnneeUniversitaire()->getAnnee()) {
+                    $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
 
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
-                    $etuLdap = MyLdap::getInfoEtudiant($numEtudiant);
+                    $etuLdap = $myLdap->getInfoEtudiant($numEtudiant);
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if ($etudiant && $type === 'force') {
                         //todo: une classe ?

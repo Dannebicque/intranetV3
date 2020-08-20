@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 09:52
+// @lastUpdate 20/08/2020 10:10
 
 namespace App\Classes\Apogee;
 
+use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Classes\Tools;
@@ -36,17 +37,6 @@ class MyApogee
     public function __construct(RequestStack $request)
     {
         $this->request = $request->getCurrentRequest();
-    }
-
-
-    public function getEtudiantsDiplome(Diplome $diplome)
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            'SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND, DAA_ETB, IND_BAC.DAA_OBT_BAC_IBA, COD_BAC FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN IND_BAC ON INDIVIDU.COD_IND=IND_BAC.COD_IND WHERE COD_ETP=:codeetape');
-        $stid->execute([':codeetape' => $diplome->getCodeEtape()]);
-
-        return $stid;
     }
 
     private function connect(): ?PDO
@@ -380,6 +370,16 @@ class MyApogee
         }
 
         return $colonne . $ligne;
+    }
+
+    public function getEtudiantsAnnee(Annee $annee)
+    {
+        $this->connect();
+        $stid = $this->conn->prepare(
+            'SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND, DAA_ETB, IND_BAC.DAA_OBT_BAC_IBA, COD_BAC FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN IND_BAC ON INDIVIDU.COD_IND=IND_BAC.COD_IND WHERE COD_ETP=:codeetape');
+        $stid->execute([':codeetape' => $annee->getCodeEtape()]);
+
+        return $stid;
     }
 
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 20:42
+// @lastUpdate 19/08/2020 21:32
 
 /**
  * Created by PhpStorm.
@@ -302,7 +302,6 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
                 $casedebut = 1;
             }
 
-            dump('newcas' . $casedebut);
             if (!array_key_exists($casedebut, $this->tab[$p->getJour()])) {
                 $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
                 unset($this->tab[$p->getJour()][$idDebut]);
