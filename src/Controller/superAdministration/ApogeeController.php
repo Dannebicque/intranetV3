@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 11:30
+// @lastUpdate 20/08/2020 11:31
 
 namespace App\Controller\superAdministration;
 
@@ -120,7 +120,7 @@ class ApogeeController extends BaseController
 //        }
 //        $this->addFlashBag('error', 'import.etudiant.apogee.erreur.diplome');
 
-        return $this->redirectToRoute('sa_apogee_index');
+ //       return $this->redirectToRoute('sa_apogee_index');
     }
 
     /**
