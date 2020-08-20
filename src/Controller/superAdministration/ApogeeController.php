@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 11:36
+// @lastUpdate 20/08/2020 12:11
 
 namespace App\Controller\superAdministration;
 
@@ -74,63 +74,51 @@ class ApogeeController extends BaseController
         BacRepository $bacRepository,
         $type
     ): Response {
-        $stid = $myApogee->testApogee();
-        while ($row = $stid->fetch()) {
-            dump($row);
-            echo '-----';
-        }
-        echo 'INS_ADM_ETP';
-        $stid = $myApogee->testApogee2();
-        while ($row = $stid->fetch()) {
-            dump($row);
-            echo '-----';
-        }
-//        $annee = $anneeRepository->find($request->request->get('anneeforce'));
-//        if ($annee) {
-//            $this->etudiants = [];
-//            //requete pour récupérer les étudiants de la promo.
-//            //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
-//            $stid = $myApogee->getEtudiantsAnnee($annee);
-//            while ($row = $stid->fetch()) {
-//                dump($row);
-//                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $annee->getAnneeUniversitaire()) {
-//                    $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
-//
-//                    $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
-//                    $etuLdap = $myLdap->getInfoEtudiant($numEtudiant);
-//                    $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-//                    if ($etudiant && $type === 'force') {
-//                        //todo: une classe ?
-//                        //on met à jour
-//                        $etudiant->updateFromApogee($dataApogee['etudiant']);
-//                        if (count($etuLdap) === 2) {
-//                            $etudiant->updateFromLdap($etuLdap);
-//                        }
-//                        $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
-//                        $this->etudiants[$numEtudiant]['etat'] = 'maj';
-//                        $this->etudiants[$numEtudiant]['data'] = $etudiant;
-//                    } else {
-//                        //n'existe pas on ajoute.
-//                        $etudiant = new Etudiant();
-//                        $etudiant->updateFromApogee($dataApogee['etudiant']);
-//                        if (count($etuLdap) === 2) {
-//                            $etudiant->updateFromLdap($etuLdap);
-//                        }
-//                        $this->saveAdresse($dataApogee, $etudiant);
-//                    }
-//                    $this->entityManager->flush();
-//                }
-//            }
-//
-//            $this->addFlashBag('success', 'import.etudiant.apogee.ok');
-//
-        return $this->render('super-administration/apogee/confirmation.html.twig', [
-            'etudiants' => $this->etudiants
-        ]);
-//        }
-//        $this->addFlashBag('error', 'import.etudiant.apogee.erreur.diplome');
+        $annee = $anneeRepository->find($request->request->get('anneeforce'));
+        if ($annee) {
+            $this->etudiants = [];
+            //requete pour récupérer les étudiants de la promo.
+            //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
+            $stid = $myApogee->getEtudiantsAnnee($annee);
+            while ($row = $stid->fetch()) {
+                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $annee->getAnneeUniversitaire()) {
+                    $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
 
-        //       return $this->redirectToRoute('sa_apogee_index');
+                    $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+                    $etuLdap = $myLdap->getInfoEtudiant($numEtudiant);
+                    $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                    if ($etudiant && $type === 'force') {
+                        //todo: une classe ?
+                        //on met à jour
+                        $etudiant->updateFromApogee($dataApogee['etudiant']);
+                        if (count($etuLdap) === 2) {
+                            $etudiant->updateFromLdap($etuLdap);
+                        }
+                        $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
+                        $this->etudiants[$numEtudiant]['etat'] = 'maj';
+                        $this->etudiants[$numEtudiant]['data'] = $etudiant;
+                    } else {
+                        //n'existe pas on ajoute.
+                        $etudiant = new Etudiant();
+                        $etudiant->updateFromApogee($dataApogee['etudiant']);
+                        if (count($etuLdap) === 2) {
+                            $etudiant->updateFromLdap($etuLdap);
+                        }
+                        $this->saveAdresse($dataApogee, $etudiant);
+                    }
+                    $this->entityManager->flush();
+                }
+            }
+
+            $this->addFlashBag('success', 'import.etudiant.apogee.ok');
+
+            return $this->render('super-administration/apogee/confirmation.html.twig', [
+                'etudiants' => $this->etudiants
+            ]);
+        }
+        $this->addFlashBag('error', 'import.etudiant.apogee.erreur.diplome');
+
+        return $this->redirectToRoute('sa_apogee_index');
     }
 
     /**
