@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 11:31
+// @lastUpdate 20/08/2020 11:36
 
 namespace App\Controller\superAdministration;
 
@@ -74,7 +74,17 @@ class ApogeeController extends BaseController
         BacRepository $bacRepository,
         $type
     ): Response {
-        $myApogee->testApogee();
+        $stid = $myApogee->testApogee();
+        while ($row = $stid->fetch()) {
+            dump($row);
+            echo '-----';
+        }
+        echo 'INS_ADM_ETP';
+        $stid = $myApogee->testApogee2();
+        while ($row = $stid->fetch()) {
+            dump($row);
+            echo '-----';
+        }
 //        $annee = $anneeRepository->find($request->request->get('anneeforce'));
 //        if ($annee) {
 //            $this->etudiants = [];
@@ -114,13 +124,13 @@ class ApogeeController extends BaseController
 //
 //            $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 //
-//            return $this->render('super-administration/apogee/confirmation.html.twig', [
-//                'etudiants' => $this->etudiants
-//            ]);
+        return $this->render('super-administration/apogee/confirmation.html.twig', [
+            'etudiants' => $this->etudiants
+        ]);
 //        }
 //        $this->addFlashBag('error', 'import.etudiant.apogee.erreur.diplome');
 
- //       return $this->redirectToRoute('sa_apogee_index');
+        //       return $this->redirectToRoute('sa_apogee_index');
     }
 
     /**
