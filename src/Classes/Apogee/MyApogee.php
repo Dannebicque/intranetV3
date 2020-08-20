@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 10:29
+// @lastUpdate 20/08/2020 11:30
 
 namespace App\Classes\Apogee;
 
@@ -379,6 +379,26 @@ class MyApogee
         $stid->execute([':codeetape' => $annee->getCodeEtape()]);
 
         return $stid;
+    }
+
+    public function testApogee()
+    {
+        $this->connect();
+        $stid = $this->conn->prepare(
+            'SELECT * FROM INDIVIDU WHERE CODE_ETU=:etudiant');
+        $stid->execute([':etudiant' => '21601195']);
+        while ($row = $stid->fetch()) {
+            dump($row);
+            echo '-----';
+        }
+        echo 'INS_ADM_ETP';
+        $stid = $this->conn->prepare(
+            'SELECT * FROM INS_ADM_ETP WHERE CODE_IND=:etudiant');
+        $stid->execute([':etudiant' => '177441']);
+        while ($row = $stid->fetch()) {
+            dump($row);
+            echo '-----';
+        }
     }
 
 }
