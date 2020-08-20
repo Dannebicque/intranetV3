@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 20/08/2020 10:35
 
 /**
  * Created by PhpStorm.
@@ -28,7 +28,7 @@ abstract class Tools
      */
     public static function convertDateToObject($date): DateTime
     {
-        if (strpos('/', $date) === false) {
+        if (strpos($date, '/') === false) {
             return Carbon::createFromFormat('Y-m-d', $date);
         }
 
