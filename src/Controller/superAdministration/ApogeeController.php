@@ -4,19 +4,19 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 12:11
+// @lastUpdate 22/08/2020 14:29
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Apogee\MyApogee;
+use App\Classes\Etudiant\EtudiantImport;
+use App\Classes\LDAP\MyLdap;
+use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
-use App\Classes\Apogee\MyApogee;
-use App\Classes\LDAP\MyLdap;
-use App\Classes\Tools;
-use App\Repository\AnneeRepository;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
-use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
 use Exception;
@@ -39,14 +39,19 @@ class ApogeeController extends BaseController
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param AnneeRepository $anneeRepository
+     * @param SemestreRepository           $semestreRepository
+     *
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
      *
      * @return Response
      */
-    public function index(AnneeRepository $anneeRepository): Response
-    {
+    public function index(
+        SemestreRepository $semestreRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository
+    ): Response {
         return $this->render('super-administration/apogee/index.html.twig', [
-            'annees' => $anneeRepository->findAll()
+            'semestres'           => $semestreRepository->findAll(),
+            'anneeUniversitaires' => $anneeUniversitaireRepository->findAll()
         ]);
     }
 
@@ -54,57 +59,50 @@ class ApogeeController extends BaseController
      * @Route("/import/diplome/{type}", methods={"POST"}, name="sa_apogee_maj")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param MyApogee           $myApogee
-     * @param MyLdap             $myLdap
-     * @param Request            $request
-     * @param AnneeRepository    $anneeRepository
-     * @param EtudiantRepository $etudiantRepository
-     * @param BacRepository      $bacRepository
-     * @param                    $type
+     * @param MyApogee                     $myApogee
+     * @param MyLdap                       $myLdap
+     * @param Request                      $request
+     * @param SemestreRepository           $semestreRepository
+     * @param EtudiantRepository           $etudiantRepository
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     * @param BacRepository                $bacRepository
+     * @param                              $type
      *
      * @return Response
      * @throws Exception
      */
     public function importMaj(
         MyApogee $myApogee,
-        MyLdap $myLdap,
+        EtudiantImport $etudiantImport,
         Request $request,
-        AnneeRepository $anneeRepository,
+        SemestreRepository $semestreRepository,
         EtudiantRepository $etudiantRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         BacRepository $bacRepository,
         $type
     ): Response {
-        $annee = $anneeRepository->find($request->request->get('anneeforce'));
-        if ($annee) {
+        $semestre = $semestreRepository->find($request->request->get('semestreforce'));
+        $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('anneeuniversitaire'));
+        if ($semestre && $anneeUniversitaire) {
             $this->etudiants = [];
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
-            $stid = $myApogee->getEtudiantsAnnee($annee);
+            $stid = $myApogee->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
-                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $annee->getAnneeUniversitaire()) {
+                if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
                     $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
-
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
-                    $etuLdap = $myLdap->getInfoEtudiant($numEtudiant);
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-                    if ($etudiant && $type === 'force') {
-                        //todo: une classe ?
-                        //on met à jour
-                        $etudiant->updateFromApogee($dataApogee['etudiant']);
-                        if (count($etuLdap) === 2) {
-                            $etudiant->updateFromLdap($etuLdap);
-                        }
-                        $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
+                    if ($etudiant === null) {
+                        //l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
+                        $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
+                        $this->etudiants[$numEtudiant]['etat'] = 'force';
+                        $this->etudiants[$numEtudiant]['data'] = $etudiant;
+                    } elseif ($etudiant && $type === 'force') {
+                        //l'étudiant existe, et on force la mise à jour
+                        $etudiant = $etudiantImport->updateEtudiant($etudiant, $semestre, $dataApogee);
                         $this->etudiants[$numEtudiant]['etat'] = 'maj';
                         $this->etudiants[$numEtudiant]['data'] = $etudiant;
-                    } else {
-                        //n'existe pas on ajoute.
-                        $etudiant = new Etudiant();
-                        $etudiant->updateFromApogee($dataApogee['etudiant']);
-                        if (count($etuLdap) === 2) {
-                            $etudiant->updateFromLdap($etuLdap);
-                        }
-                        $this->saveAdresse($dataApogee, $etudiant);
                     }
                     $this->entityManager->flush();
                 }
@@ -125,28 +123,34 @@ class ApogeeController extends BaseController
      * @Route("/import/etudiant", methods={"POST"}, name="sa_apogee_import_etudiant")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
+     * @param EtudiantImport     $etudiantImport
+     * @param MyApogee           $myApogee
      * @param Request            $request
      *
      * @param EtudiantRepository $etudiantRepository
      *
+     * @param SemestreRepository $semestreRepository
      * @param BacRepository      $bacRepository
      *
      * @return Response
-     * @throws Exception
      */
     public function importEtudiant(
+        EtudiantImport $etudiantImport,
+        MyApogee $myApogee,
         Request $request,
         EtudiantRepository $etudiantRepository,
+        SemestreRepository $semestreRepository,
         BacRepository $bacRepository
     ): Response {
         $listeetudiants = explode(';', $request->request->get('listeetudiants'));
+        $semestre = $semestreRepository->find($request->request->get('semestreforce'));
+
         $this->etudiants = [];
         foreach ($listeetudiants as $etudiant) {
-            $stid = MyApogee::getEtudiant($etudiant);
-
+            $stid = $myApogee->getEtudiant($etudiant);
             while ($row = $stid->fetch()) {
                 //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
-                $dataApogee = MyApogee::transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
 
                 //Stocker réponse dans un tableau pour page confirmation
@@ -156,9 +160,9 @@ class ApogeeController extends BaseController
                     $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 } else {
                     //n'existe pas on ajoute.
-                    $etudiant = new Etudiant();
-                    $etudiant->updateFromApogee($dataApogee['etudiant']);
-                    $this->saveAdresse($dataApogee, $etudiant);
+                    $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
+                    $this->etudiants[$numEtudiant]['etat'] = 'add';
+                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 }
             }
         }
@@ -168,17 +172,6 @@ class ApogeeController extends BaseController
         return $this->render('super-administration/apogee/confirmation.html.twig', [
             'etudiants' => $this->etudiants
         ]);
-    }
-
-    private function saveAdresse($dataApogee, Etudiant $etudiant): void
-    {
-        $adresse = new Adresse();
-        $adresse->updateFromApogee($dataApogee['adresse']);
-        $this->entityManager->persist($adresse);
-        $etudiant->setAdresse($adresse);
-        $this->entityManager->persist($etudiant);
-        $this->etudiants[$etudiant->getNumEtudiant()]['etat'] = 'add';
-        $this->etudiants[$etudiant->getNumEtudiant()]['data'] = $etudiant;
     }
 
 
