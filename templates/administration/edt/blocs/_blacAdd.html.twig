@@ -68,8 +68,7 @@
                             <div class="form-group">
                                 <label for="hdbt" class="control-label">Heure de début</label>
 
-                                <select name="hdbt" id="hdbt" class="form-control selectpicker
-                                        >
+                                <select name="hdbt" id="hdbt" class="form-control selectpicker">
                                     {% set k=1 %}
                                     {% for i in 8..20 %}
                                         <option value="{{ k }}">{{ i }}h00</option>
@@ -84,8 +83,7 @@
                             <div class="form-group">
                                 <label for="hfin" class="control-label">Heure de fin</label>
 
-                                <select name="hfin" id="hfin" class="form-control selectpicker"
-                                >
+                                <select name="hfin" id="hfin" class="form-control selectpicker">
                                     {% set k=2 %}
                                     {% for i in 8..20 %}
                                         {% if i==8 %}
