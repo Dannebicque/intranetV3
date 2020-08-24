@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 12:35
+// @lastUpdate 24/08/2020 14:44
 
 var Encore = require('@symfony/webpack-encore')
 
@@ -51,6 +51,7 @@ Encore
   .addEntry('adm.notes', './assets/js/pages/adm.notes.js')
   .addEntry('adm.bornes', './assets/js/pages/adm.borne.js')
   .addEntry('adm.alternances', './assets/js/pages/adm.alternances.js')
+  .addEntry('adm.etudiant_groupe', './assets/js/pages/adm.etudiant_groupe.js')
   .addEntry('adm.justificatifs', './assets/js/pages/adm.justificatifs.js')
   .addEntry('adm.absences', './assets/js/pages/adm.absences.js')
   .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
