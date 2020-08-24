@@ -83,3 +83,13 @@
         </div>
     {% endif %}
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.etudiant_groupe') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.etudiant_groupe') }}
+{% endblock %}
