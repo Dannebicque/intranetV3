@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 23/08/2020 18:31
 
 namespace App\Classes\Edt;
 
@@ -99,7 +99,6 @@ class MyEdtImport
         $tabIntervenants = $this->personnelRepository->tableauIntervenants($this->dataUserSession->getDepartement());
         $tabMatieres = $this->matiereRepository->tableauMatieres($this->dataUserSession->getDepartement());
         $tabSemestre = $this->semestreRepository->tableauSemestres($this->dataUserSession->getDepartement());
-
         $tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
         $handle = fopen($this->nomfile, 'rb');

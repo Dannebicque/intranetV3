@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 09:25
+// @lastUpdate 23/08/2020 18:31
 
 namespace App\Repository;
 
@@ -115,7 +115,7 @@ class SemestreRepository extends ServiceEntityRepository
             if (strlen($index) === 1) {
                 $index = '0' . $index;
             }
-
+            dump($index);
             $tabsemestre[$index] = $semestre;
         }
 
