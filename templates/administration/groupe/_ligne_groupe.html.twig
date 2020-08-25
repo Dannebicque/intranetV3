@@ -15,9 +15,10 @@
         <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-control change-parent"
                 data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
             <option value="" selected>Groupe Parent</option>
-            {% for gr in groupes %}
-                <option value="{{ gr.id }}" {% if groupe.parent != null and groupe.parent.id == gr.id %}selected{% endif %}>{{ gr
-                    .libelle }}</option>
+            {% for gr in groupes|filter(gr => gr.typegroupe.id != groupe.typegroupe.id) %}
+                <option value="{{ gr.id }}" {% if groupe.parent != null and groupe.parent.id == gr.id %}selected{% endif %}>
+                    {{ gr.libelle }}
+                </option>
             {% endfor %}
         </select>
     </td>
