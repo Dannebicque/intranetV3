@@ -470,24 +470,13 @@
                 </ul>
             </div>
         </div>
-    </footer>
-          <!-- END Footer -->
-
+    </footer><!-- END Footer -->
 </main>
 <!-- END Main container -->
 
 <!-- Fullscreen search -->
 {{ include('recherche/_resultat.html.twig') }}
 <!-- END Fullscreen search -->
-
-
-<!-- Global quickview -->
-<div id="qv-global" class="quickview" data-url="assets/data/quickview-global.html">
-    <div class="spinner-linear">
-        <div class="line"></div>
-    </div>
-</div>
-<!-- END Global quickview -->
 
 <!-- Routing -->
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
@@ -496,7 +485,5 @@
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
 <script data-provide="sweetalert"></script>
-#}
-
 </body>
 </html>

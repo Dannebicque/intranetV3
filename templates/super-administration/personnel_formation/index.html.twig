@@ -129,6 +129,7 @@
                 <tr>
                     <th>{{ 'table.nom'|trans }}</th>
                     <th>{{ 'table.prenom'|trans }}</th>
+                    <th>{{ 'table.numero_harpege'|trans }}</th>
                     <th>{{ 'table.login'|trans }}</th>
                     <th>{{ 'table.mail_univ'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
@@ -136,10 +137,21 @@
                 </thead>
                 <tbody id="result">
                 <tr id="ligne-no-result">
-                    <td colspan="5">Saisissez quelques caractères pour afficher des résultats</td>
+                    <td colspan="6">Saisissez quelques caractères pour afficher des résultats</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sadm.personnels') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sadm.personnels') }}
+{% endblock %}
+
