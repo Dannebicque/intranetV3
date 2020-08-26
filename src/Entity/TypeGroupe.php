@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 10:20
+// @lastUpdate 26/08/2020 10:12
 
 namespace App\Entity;
 
@@ -37,7 +37,7 @@ class TypeGroupe extends BaseEntity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER", orphanRemoval=true)
-     * @ORM\OrderBy({"libelle" = "ASC"})
+     * @ORM\OrderBy({"ordre" = "ASC"})
      */
     private $groupes;
 
