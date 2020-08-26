@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 20:51
+// @lastUpdate 26/08/2020 14:19
 
 namespace App\Controller;
 
+use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Edt\MyEdtCelcat;
@@ -29,15 +30,7 @@ use Twig\Error\SyntaxError;
  */
 class EdtController extends BaseController
 {
-    private static array $tabHeures = [
-        1 => ['8h00', '9h30'],
-        2 => ['9h30', '11h00'],
-        3 => ['11h00', '12h30'],
-        4 => ['12h30', '14h00'],
-        5 => ['14h00', '15h30'],
-        6 => ['15h30', '17h00'],
-        7 => ['17h00', '18h30']
-    ];
+
     private MyEdtIntranet $myEdtIntranet;
     private MyEdtCelcat $myEdtCelcat;
 
@@ -66,7 +59,7 @@ class EdtController extends BaseController
                     'edt'       => $this->myEdtCelcat,
                     'filtre'    => 'prof',
                     'valeur'    => $this->getConnectedUser()->getId(),
-                    'tabHeures' => self::$tabHeures
+                    'tabHeures' => Constantes::TAB_HEURES_EDT
                 ]);
             }
 
@@ -78,7 +71,7 @@ class EdtController extends BaseController
                 'edt'       => $this->myEdtIntranet,
                 'filtre'    => 'prof',
                 'valeur'    => $this->getConnectedUser()->getId(),
-                'tabHeures' => self::$tabHeures
+                'tabHeures' => Constantes::TAB_HEURES_EDT
             ]);
         }
 
@@ -94,7 +87,7 @@ class EdtController extends BaseController
             return $this->render('edt/_semestre.html.twig', [
                 'edt'       => $this->myEdtCelcat,
                 'semestre'  => $semestre,
-                'filtre' => 'promo',
+                'filtre'    => 'promo',
                 'valeur'    => $semestre->getId(),
                 'tabHeures' => self::$tabHeures
             ]);
@@ -124,6 +117,7 @@ class EdtController extends BaseController
             if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+
                 return $this->render('edt/_etudiant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
                     'tabHeures' => self::$tabHeures

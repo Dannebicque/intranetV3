@@ -1,37 +1,43 @@
-<div>
-    <h2>Emploi du temps de {{ prof.displayPr }}</h2>
-    <table class="table-edt">
-        <thead>
-        <tr>
-            <th>&nbsp;</th>
-            <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
-            <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
-            <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
-            <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
-            <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for ligne in 1..27 %}
-            {% set heure=(ligne/2+7.5)|number_format(0) %}
+<div class="card">
+    {{ include('administration/edt/_header.html.twig') }}
 
-            <tr>
-                <td class="heures">{% if(ligne/2+7.5)-heure!=0 %}{{ heure-1 }}h30{% else %}{{ heure }}h00{% endif %}</td>
-                {% for jour in 1..5 %}
-                    {% if edt.planning[jour][ligne] is defined %}
-                        {% if edt.planning[jour][ligne].texte!='xx' %}
-                            <td class="center td-edt edt_cours" rowspan="{{ edt.planning[jour][ligne].duree }}" style="background:{{ edt.planning[jour][ligne].couleur }}; color:{{ edt.planning[jour][ligne].couleurTexte }};" id="cell_{{ ligne }}_{{ jour }}_0_{{ edt.planning[jour][ligne].pl }}">{{ edt.planning[jour][ligne].texte|raw }}</td>
-                        {% endif %}
-                    {% else %}
-                        <td>&nbsp;</td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <br/>
-    <div class="alert alert-warning">Soit pour cette semaine : {{ edt.total.CM }} heure(s) de CM (non
-                                     majorée), {{ edt.total.TD }} heure(s) de TD, {{ edt.total.TP }} heure(s) de TP
+    <div>
+        <h2>Emploi du temps de {{ prof.displayPr }}</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="wrapper-edt-etudiant">
+                    {{ include('edt/_header_edt.html.twig') }}
+                    {% for ligne in 1..7 %}
+                        <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}
+                            <br>{{ tabHeures[ligne][1] }}</div>
+                        {% for j in 1..5 %}
+                            {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
+                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
+                                     style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                                    <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
+                                    .couleurTexte }};">
+                                        {{ edt.planning[j][ligne].texte|raw }}
+                                        {% if edt.planning[j][ligne].format == 'nok' %}
+                                            <br/>
+                                            <span class="edt-extra-time">{{ convertHeureEdt(edt
+                                                    .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
+                                                    .planning[j][ligne].fin) }}</span>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
+                                    &nbsp;
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="alert alert-warning">Soit pour cette semaine : {{ edt.total.CM }} heure(s) de CM (non
+                                         majorée), {{ edt.total.TD }} heure(s) de TD, {{ edt.total.TP }} heure(s) de TP
+        </div>
     </div>
 </div>
