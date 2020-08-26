@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 14:19
+// @lastUpdate 26/08/2020 15:16
 
 namespace App\Controller;
 
@@ -89,7 +89,7 @@ class EdtController extends BaseController
                 'semestre'  => $semestre,
                 'filtre'    => 'promo',
                 'valeur'    => $semestre->getId(),
-                'tabHeures' => self::$tabHeures
+                'tabHeures' => Constantes::TAB_HEURES_EDT
             ]);
         }
 
@@ -100,7 +100,7 @@ class EdtController extends BaseController
             'semestre'  => $semestre,
             'filtre'    => 'promo',
             'valeur'    => $semestre->getId(),
-            'tabHeures' => self::$tabHeures
+            'tabHeures' => Constantes::TAB_HEURES_EDT
         ]);
     }
 
@@ -120,7 +120,7 @@ class EdtController extends BaseController
 
                 return $this->render('edt/_etudiant.html.twig', [
                     'edt'       => $this->myEdtCelcat,
-                    'tabHeures' => self::$tabHeures
+                    'tabHeures' => Constantes::TAB_HEURES_EDT
                 ]);
 
             }
@@ -130,7 +130,7 @@ class EdtController extends BaseController
 
             return $this->render('edt/_etudiant.html.twig', [
                 'edt'       => $this->myEdtIntranet,
-                'tabHeures' => self::$tabHeures
+                'tabHeures' => Constantes::TAB_HEURES_EDT
             ]);
         }
 
