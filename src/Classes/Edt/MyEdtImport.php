@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/08/2020 18:31
+// @lastUpdate 26/08/2020 11:50
 
 namespace App\Classes\Edt;
 
@@ -160,10 +160,10 @@ class MyEdtImport
                                 $matiere .= $typecours[0];
                                 $typecours = substr($phrase, 18, 2);
                                 $ordre = substr($phrase, 20, 2);
-                                $salle = substr($phrase, 22, 4);
+                                $salle = substr($phrase, 22);
                             } else {
                                 $ordre = substr($phrase, 19, 2);
-                                $salle = substr($phrase, 21, 4);
+                                $salle = substr($phrase, 21);
                             }
                         } else {
                             $matiere = substr($phrase, 11, 5);
@@ -172,10 +172,10 @@ class MyEdtImport
                                 $matiere .= $typecours[0];
                                 $typecours = substr($phrase, 17, 2);
                                 $ordre = substr($phrase, 19, 2);
-                                $salle = substr($phrase, 21, 4);
+                                $salle = substr($phrase, 21);
                             } else {
                                 $ordre = substr($phrase, 18, 2);
-                                $salle = substr($phrase, 20, 4);
+                                $salle = substr($phrase, 20);
                             }
                         }
 

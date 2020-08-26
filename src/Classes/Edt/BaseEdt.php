@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 19:49
+// @lastUpdate 26/08/2020 11:55
 
 namespace App\Classes\Edt;
 
@@ -130,13 +130,17 @@ Abstract class BaseEdt
         }
 
 
-        $this->calendrier = $this->calendrierRepository->findOneBy(['semaineReelle' => $this->semaine]);
+        $this->calendrier = $this->calendrierRepository->findOneBy(['semaineReelle'      => $this->semaine,
+                                                                    'anneeUniversitaire' => $anneeUniversitaire->getId()
+        ]);
         if ($this->calendrier !== null) {
             $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
             $this->semaineFormationLundi = $this->calendrier->getDatelundi();
         } else {
             //si la requete est vide, on prend la première...
-            $this->calendrier = $this->calendrierRepository->findOneBy(['semaineFormation' => 1]);
+            $this->calendrier = $this->calendrierRepository->findOneBy(['semaineFormation'   => 1,
+                                                                        'anneeUniversitaire' => $anneeUniversitaire->getId()
+            ]);
             if ($this->calendrier !== null) {
                 $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
                 $this->semaineFormationLundi = $this->calendrier->getDatelundi();
