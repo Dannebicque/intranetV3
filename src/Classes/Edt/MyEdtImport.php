@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 11:50
+// @lastUpdate 26/08/2020 12:14
 
 namespace App\Classes\Edt;
 
@@ -140,7 +140,12 @@ class MyEdtImport
                         $pl->setJour($jour);
                         $pl->setSalle($salle);
                         $pl->setGroupe(1);
-                        $pl->setType('cm');
+                        if (substr($pl->getSemestre()->getLibelle(), -1) === 'D') {
+                            $pl->setType('td');
+                        } else {
+                            $pl->setType('cm');
+                        }
+
                         $pl->setDebut($tabdebut[$heure]);
                         $pl->setFin($tabdebut[$heure] + (3 * $fin));
                         $pl->setSemaine($this->semaine);

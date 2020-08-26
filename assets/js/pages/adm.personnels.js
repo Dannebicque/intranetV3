@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2020 08:50
+// @lastUpdate 26/08/2020 12:07
 
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
@@ -29,7 +29,7 @@ $(document).on('keyup', '#login_urca', function () {
             '<td>' + pers.numeroHarpege + '</td>' +
             '<td>' + pers.username + '</td>' +
             '<td>' + pers.mail_univ + '</td>' +
-            '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '"><i class="ti-plus"></i></a></td>' +
+            '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '"><i class="fas fa-plus"></i></a></td>' +
             '</tr>'
           $('#result').append(html)
         })
