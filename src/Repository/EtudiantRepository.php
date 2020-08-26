@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 08:49
+// @lastUpdate 26/08/2020 19:26
 
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
@@ -78,6 +79,12 @@ class EtudiantRepository extends ServiceEntityRepository
         <i class="fas fa-edit"></i>
         <span class="sr-only">Modifier les données de l\'étudiant</span>
     </a>';
+            $t['etat'] = '<select class="form-control changeEtat" data-etudiant="' . $etudiant->getUuidString() . '">
+                        <option value="">Choisir une action</option>
+                        <option value="' . Constantes::SCOLARITE_DIPLOME . '">Diplômé</option>
+                        <option value="' . Constantes::SEMESTRE_REORIENTE . '">Réorienter</option>
+                        <option value="erreur">Erreur/Pas dans la formation</option>
+                        </select>';
 
 
             $tab[] = $t;

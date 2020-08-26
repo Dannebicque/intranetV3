@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.etudiants.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2020 11:13
+// @lastUpdate 26/08/2020 19:26
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -23,5 +23,17 @@ $('#datatableEtudiants').DataTable({
     {'data': 'nom'},
     {'data': 'prenom'},
     {'data': 'semestre'},
+    {'data': 'etat'},
     {'data': 'profil'}]
+})
+
+
+$(document).on('change', '.changeEtat', function () {
+  $.ajax({
+    url: Routing.generate('adm_etudiant_change_etat', {uuid: $(this).data('etudiant'), etat: $(this).val()}),
+    method: 'POST',
+    success: function () {
+
+    }
+  })
 })

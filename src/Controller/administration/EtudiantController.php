@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 08:43
+// @lastUpdate 26/08/2020 19:26
 
 namespace App\Controller\administration;
 
+use App\Classes\Etudiant\EtudiantScolarite;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -15,6 +16,8 @@ use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -152,6 +155,23 @@ class EtudiantController extends BaseController
         }
 
         return $this->redirectToRoute('administration_etudiant_semestre_add');
+    }
+
+    /**
+     * @Route("/change-etat/{uuid}/{etat}", name="adm_etudiant_change_etat", methods="POST", options={"expose":true})
+     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
+     * @param EtudiantScolarite $etudiantScolarite
+     * @param Etudiant          $etudiant
+     * @param                   $etat
+     *
+     * @return JsonResponse
+     */
+    public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat)
+    {
+        $etudiantScolarite->setEtudiant($etudiant);
+        $etudiantScolarite->changeEtat($etat);
+
+        return $this->json(true, Response::HTTP_OK);
     }
 
 
