@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 14:08
+// @lastUpdate 26/08/2020 16:52
 
 /**
  * Created by PhpStorm.
@@ -196,6 +196,7 @@ class Constantes
     public const SEMESTRE_DEMISSIONNAIRE = 'DEM';
     public const SEMESTRE_REORIENTE = 'REO';
     public const SEMESTRE_BLANCHIMENT = 'BL';
+    public const SCOLARITE_DIPLOME = 'diplome';
 
     public const SS_COMM_DECISION_COULEUR = [
         Constantes::SEMESTRE_VALIDE     => 'ff00cc00',

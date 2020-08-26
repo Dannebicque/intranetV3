@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 09:54
+// @lastUpdate 26/08/2020 19:26
 
 namespace App\Classes\Apogee;
 
@@ -107,7 +107,8 @@ class MyApogee
                 'setCivilite'      => $data['COD_SEX_ETU'] === 'M' ? 'M.' : 'Mme', //M ou F
                 'setTypeUser'      => 'etudiant',
                 'setBac'           => array_key_exists($data['COD_BAC'],
-                    $tBac) === true ? $tBac[$data['COD_BAC']] : null
+                    $tBac) === true ? $tBac[$data['COD_BAC']] : null,
+                'setCommentaire'   => $data['COD_BAC']
             ],
             'adresse'  => [
                 'setAdresse1'   => $data['LIB_AD1'],
