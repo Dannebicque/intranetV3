@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:38
+// @lastUpdate 26/08/2020 14:08
 
 /**
  * Created by PhpStorm.
@@ -205,5 +205,14 @@ class Constantes
         ''                              => 'ffffff'
     ];
     public const NB_MESSAGE_PAR_PAGE = 10;
+    public const TAB_HEURES_EDT = [
+        1 => ['8h00', '9h30'],
+        2 => ['9h30', '11h00'],
+        3 => ['11h00', '12h30'],
+        4 => ['12h30', '14h00'],
+        5 => ['14h00', '15h30'],
+        6 => ['15h30', '17h00'],
+        7 => ['17h00', '18h30']
+    ];
 
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 26/08/2020 13:48
 
 namespace App\Classes;
 
@@ -440,7 +440,7 @@ class MyPrevisionnel
     {
         if ($previ) {
             if ($name === 'personnel') {
-                if ($value === 'null') {
+                if ($value === '') {
                     $previ->setPersonnel(null);
                     $this->entityManager->flush();
 

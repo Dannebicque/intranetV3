@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 26/08/2020 14:08
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Edt\MyEdtCelcat;
+use App\Entity\Constantes;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
@@ -88,6 +89,7 @@ class EdtController extends BaseController
                     'salles'     => $salleRepository->findAll(),
                     'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
                     'edt'        => $edt,
+                    'tabHeures' => Constantes::TAB_HEURES_EDT
                 ]);
 
             case 'module':

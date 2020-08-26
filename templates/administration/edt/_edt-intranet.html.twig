@@ -1,48 +1,10 @@
 <div class="card">
-    <h4 class="card-title"><strong>Semaine {{ edt.semaine }}
-                                   (semaine formation {{ edt.semaineFormation }})</strong></h4>
-    <div class="card-body">
+    <div id="zone_edt">
+
+        {{ include('administration/edt/_header.html.twig') }}
 
         <div class="row gap-y">
-            <div class="col-md-2 col-sm-6"></div>
-            <div class="col-md-2 col-sm-6"></div>
-            <div class="col-md-2 col-sm-6">
-                <div class="btn-toolbar">
-                    <div class="btn-group">
-                        <a class="btn btn-primary"
-                           href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
-                               semaine:edt.semainePrecedente}) }}" title="{{ 'semaine.precedente'|trans }}"><i
-                                    class="material-icons">keyboard_arrow_left</i></a>
-                        <a class="btn btn-primary"
-                           href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
-                               semaine:'now'|date('W')}) }}" title="{{ 'semaine.courante'|trans }}"><i
-                                    class="material-icons">perm_contact_calendar</i></a>
-                        <a class="btn btn-primary"
-                           href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
-                               semaine:edt.semaineSuivante}) }}" title="{{ 'semaine.suivante'|trans }}"><i
-                                    class="material-icons">keyboard_arrow_right</i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <div class="btn-toolbar">
-                    <div class="btn-group">
-                        {% for semestre in user_data.semestres %}
-                            <a class="btn {% if semestre == null and edt.semestre.id == semestre.id %}btn-primary{% endif %}"
-                               href="{{ path('administration_edt_index',{valeur:semestre.id, filtre:'promo',
-                                   semaine:edt.semaine}) }}">{{ semestre
-                                .libelle }}</a>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{ include('administration/edt/blocs/_edt_nav.html.twig') }}
-
-        <div class="row gap-y">
-            <div class="col-sm-12" id="zone_edt">
+            <div class="col-sm-12">
                 <table class="table-edt" id="selectable">
                     <thead>
                     <tr>
@@ -100,6 +62,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {% if filtre == 'promo' %}
