@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 21:26
+// @lastUpdate 27/08/2020 13:00
 
 /**
  * Created by PhpStorm.
@@ -254,7 +254,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
 
                 $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
-                $this->tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
+                $this->tab[$p->getJour()][$dbtEdt]['id'] = $p->getId();
                 $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
                 $this->tab[$p->getJour()][$dbtEdt]['commentaire'] = $this->hasCommentaire($p);
                 $this->valideFormat($p);
