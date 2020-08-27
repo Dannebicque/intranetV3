@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 18:17
+// @lastUpdate 27/08/2020 10:07
 
 namespace App\Classes\Etudiant;
 
@@ -39,17 +39,21 @@ class EtudiantImport
      *
      * @return Etudiant
      */
-    public function createEtudiant(?Semestre $semestre, array $dataApogee): Etudiant
+    public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant
     {
         $etudiant = new Etudiant();
         $etudiant->setSemestre($semestre);
         $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
         $etudiant->updateFromApogee($dataApogee['etudiant']);
-        $this->updateLdap($etudiant);
+        $update = $this->updateLdap($etudiant);
         $this->saveAdresse($dataApogee, $etudiant);
-        $this->entity->persist($etudiant);
+        if ($update) {
+            $this->entity->persist($etudiant);
 
-        return $etudiant;
+            return $etudiant;
+        }
+
+        return null;
     }
 
     private function updateLdap(Etudiant $etudiant)
@@ -57,7 +61,12 @@ class EtudiantImport
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
         if (count($etuLdap) === 2) {
             $etudiant->updateFromLdap($etuLdap);
+
+            return true;
         }
+
+        return false;
+
     }
 
     private function saveAdresse($dataApogee, Etudiant $etudiant): void
