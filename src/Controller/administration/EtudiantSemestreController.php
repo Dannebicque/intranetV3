@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 27/08/2020 16:29
 
 namespace App\Controller\administration;
 
@@ -14,6 +14,8 @@ use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
 use App\Classes\MyExport;
 use App\Classes\MyUpload;
+use App\Repository\BacRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -135,17 +137,23 @@ class EtudiantSemestreController extends BaseController
     }
 
 
-
     /**
      * @Route("/{semestre}", name="administration_etudiant_semestre_index", requirements={"semestre"="\d+"})
-     * @param Semestre $semestre
+     * @param DepartementRepository $departementRepository
+     * @param BacRepository         $bacRepository
+     * @param Semestre              $semestre
      *
      * @return Response
      */
-    public function semestre(Semestre $semestre): Response
-    {
+    public function semestre(
+        DepartementRepository $departementRepository,
+        BacRepository $bacRepository,
+        Semestre $semestre
+    ): Response {
         return $this->render('administration/etudiant/semestre.html.twig', [
-            'semestre' => $semestre
+            'semestre' => $semestre,
+            'departements' => $departementRepository->findActifs(),
+            'bacs' => $bacRepository->findAll()
         ]);
     }
 

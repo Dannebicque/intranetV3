@@ -42,6 +42,8 @@
                     <th>{{ 'table.numetudiant'|trans }}</th>
                     <th>{{ 'table.bac'|trans }}</th>
                     <th>{{ 'table.groupes'|trans }}</th>
+                    <th>{{ 'table.semestre'|trans }}</th>
+                    <th>{{ 'table.departement'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -52,11 +54,39 @@
                         <td>{{ etudiant.nom }}</td>
                         <td>{{ etudiant.prenom }}</td>
                         <td>{{ etudiant.numEtudiant }}</td>
-                        <td>{{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
+                        <td>
+                            <select class="form-control editEtudiant" data-field="bac" data-etudiant="{{ etudiant.id }}">
+                                <option value="null" selected>Non défini</option>
+                                {% for bac in bacs %}
+                                    <option value="{{ bac.id }}"
+                                            {% if etudiant.bac!=null and etudiant.bac.id == bac.id %}selected{% endif %}
+                                    >{{ bac.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
                         <td>{% for groupe in etudiant.groupes %}{{ groupe.libelle }}, {% else %}-{% endfor %}</td>
                         <td>
-
-
+                            <select class="form-control editEtudiant" data-field="semestre" data-etudiant="{{ etudiant
+                            .id }}">
+                                <option value="null" selected>Non défini</option>
+                                {% for semestre in user_data.semestres %}
+                                    <option value="{{ semestre.id }}"
+                                            {% if etudiant.semestre!=null and etudiant.semestre.id == semestre.id %}selected{% endif %}
+                                    >{{ semestre.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control editEtudiant" data-field="departement" data-etudiant="{{ etudiant.id }}">
+                                <option value="null" selected>Non défini</option>
+                                {% for departement in departements %}
+                                    <option value="{{ departement.id }}"
+                                            {% if etudiant.departement!=null and etudiant.departement.id == departement.id %}selected{% endif %}
+                                    >{{ departement.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
                             <a href="{{ path('user_profil', {type: 'etudiant', slug:etudiant.slug}) }}"
                                class="btn btn-info btn-outline btn-square"
                                data-provide="tooltip"
@@ -113,10 +143,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
+    {{ encore_entry_link_tags('adm.etudiants') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
+    {{ encore_entry_script_tags('adm.etudiants') }}
 {% endblock %}

@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 19:26
+// @lastUpdate 27/08/2020 16:16
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantScolarite;
+use App\Classes\Etudiant\EtudiantUpdate;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -166,10 +167,28 @@ class EtudiantController extends BaseController
      *
      * @return JsonResponse
      */
-    public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat)
+    public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat($etat);
+
+        return $this->json(true, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/edit-ajax/{id}", name="adm_etudiant_edit_ajax", methods="POST", options={"expose":true})
+     * @param EtudiantUpdate $etudiantUpdate
+     * @param Request        $request
+     * @param Etudiant       $etudiant
+     *
+     * @return JsonResponse
+     */
+    public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
+    {
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        $etudiantUpdate->update($etudiant, $field, $value);
 
         return $this->json(true, Response::HTTP_OK);
     }

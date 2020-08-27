@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.etudiants.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 19:26
+// @lastUpdate 27/08/2020 15:59
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -37,3 +37,17 @@ $(document).on('change', '.changeEtat', function () {
     }
   })
 })
+
+$(document).on('change', '.editEtudiant', function () {
+  $.ajax({
+    url: Routing.generate('adm_etudiant_edit_ajax', {id: $(this).data('etudiant')}),
+    method: 'POST',
+    data: {
+      field: $(this).data('field'),
+      value: $(this).val()
+    },
+    success: function () {
+    }
+  })
+})
+
