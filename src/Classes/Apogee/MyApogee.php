@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 19:26
+// @lastUpdate 27/08/2020 17:01
 
 namespace App\Classes\Apogee;
 
@@ -108,7 +108,7 @@ class MyApogee
                 'setTypeUser'      => 'etudiant',
                 'setBac'           => array_key_exists($data['COD_BAC'],
                     $tBac) === true ? $tBac[$data['COD_BAC']] : null,
-                'setCommentaire'   => $data['COD_BAC']
+                'setRemarque' => $data['COD_BAC']
             ],
             'adresse'  => [
                 'setAdresse1'   => $data['LIB_AD1'],
