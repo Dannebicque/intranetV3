@@ -53,13 +53,8 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="salle" class="control-label">Salle</label>
-                                <select class="form-control selectpicker" name="salle" id="salle"
-                                >
-                                    <option value="">Choisir la salle</option>
-                                    {% for salle in salles %}
-                                        <option value="{{ salle.libelle }}">{{ salle.libelle }}</option>
-                                    {% endfor %}
-                                </select>
+                                <input class="form-control" name="salle" id="salle"
+                                       type="text">
                             </div>
                         </div>
                     </div>
