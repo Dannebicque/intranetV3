@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/theme.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:50
+// @lastUpdate 27/08/2020 13:16
 
 // Check if an element has a specific data attribute
 //
@@ -3057,21 +3057,21 @@ jQuery.fn.scrollToEnd = function () {
 // Sidebar
 // =====================
 //
-+function ($, window) {
+//+function ($, window) {
+//
+var sidebar = {}
+//
+//   sidebar.init = function () {
 
-  var sidebar = {}
-
-  sidebar.init = function () {
-
-    // Scrollable
-    //
-    $('.sidebar-navigation').perfectScrollbar()
+// Scrollable
+//
+//$('.sidebar-navigation').perfectScrollbar()
 
 
-    // Handle sidebar openner
-    //
-    $(document).on('click', '.sidebar-toggler', function () {
-      sidebar.open()
+// Handle sidebar openner
+//
+$(document).on('click', '.sidebar-toggler', function () {
+  sidebar.open()
     })
 
 
@@ -3111,7 +3111,7 @@ jQuery.fn.scrollToEnd = function () {
       sidebar.toggleFold()
     })
 
-  }
+//}
 
 
   sidebar.toggleFold = function () {
@@ -3147,26 +3147,27 @@ jQuery.fn.scrollToEnd = function () {
 
 
   sidebar.open = function () {
+    console.log(open)
     $('body').addClass('sidebar-open').prepend('<div class="app-backdrop backdrop-sidebar"></div>')
   }
 
   sidebar.close = function () {
-    $('body').removeClass('sidebar-open')
-    $('.backdrop-sidebar').remove()
-  }
+      $('body').removeClass('sidebar-open')
+      $('.backdrop-sidebar').remove()
+    }
 
 
-  window.sidebar = sidebar
-}(jQuery, window);
+    //   window.sidebar = sidebar
+    // }(jQuery, window);
 
 
-// =====================
-// Quickview
-// =====================
-//
-+function ($, window) {
+    // =====================
+    // Quickview
+    // =====================
+    //
+    + function ($, window) {
 
-  var quickview = {}
+      var quickview = {}
 
   quickview.init = function () {
 
