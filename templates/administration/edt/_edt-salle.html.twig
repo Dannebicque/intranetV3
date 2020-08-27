@@ -1,35 +1,38 @@
-<div>
-    <h2>Occupation de la salle {{ salle }}</h2>
-    <table class="table-edt" id="selectable">
-        <thead>
-        <tr>
-            <th>&nbsp;</th>
-            <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
-            <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
-            <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
-            <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
-            <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for ligne in 1..27 %}
-            {% set heure=(ligne/2+7.5)|number_format(0) %}
-
+<div class="card">
+    {{ include('administration/edt/_header.html.twig') }}
+    <div>
+        <h2>Occupation de la salle {{ salle }}</h2>
+        <table class="table-edt" id="selectable">
+            <thead>
             <tr>
-                <td class="heures">{% if(ligne/2+7.5)-heure!=0 %}{{ heure-1 }}h30{% else %}{{ heure }}h00{% endif %}</td>
-                {% for jour in 1..5 %}
-                    {% if edt.planning[jour][ligne] is defined %}
-                        {% if edt.planning[jour][ligne].texte!='xx' %}
-                            <td class="center td-edt edt_cours" rowspan="{{ edt.planning[jour][ligne].duree }}"
-                                style="background:{{ edt.planning[jour][ligne].couleur }}; color:{{ edt
-                                .planning[jour][ligne].couleurTexte }};">{{ edt.planning[jour][ligne].texte|raw }}</td>
-                        {% endif %}
-                    {% else %}
-                        <td>&nbsp;</td>
-                    {% endif %}
-                {% endfor %}
+                <th>&nbsp;</th>
+                <th class="center">Lundi {{ edt.tabJour.lundi|date('d/m/Y') }}</th>
+                <th class="center">Mardi {{ edt.tabJour.mardi|date('d/m/Y') }}</th>
+                <th class="center">Mercredi {{ edt.tabJour.mercredi|date('d/m/Y') }}</th>
+                <th class="center">Jeudi {{ edt.tabJour.jeudi|date('d/m/Y') }}</th>
+                <th class="center">Vendredi {{ edt.tabJour.vendredi|date('d/m/Y') }}</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for ligne in 1..27 %}
+                {% set heure=(ligne/2+7.5)|number_format(0) %}
+
+                <tr>
+                    <td class="heures">{% if(ligne/2+7.5)-heure!=0 %}{{ heure-1 }}h30{% else %}{{ heure }}h00{% endif %}</td>
+                    {% for jour in 1..5 %}
+                        {% if edt.planning[jour][ligne] is defined %}
+                            {% if edt.planning[jour][ligne].texte!='xx' %}
+                                <td class="center td-edt edt_cours" rowspan="{{ edt.planning[jour][ligne].duree }}"
+                                    style="background:{{ edt.planning[jour][ligne].couleur }}; color:{{ edt
+                                    .planning[jour][ligne].couleurTexte }};">{{ edt.planning[jour][ligne].texte|raw }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td>&nbsp;</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>

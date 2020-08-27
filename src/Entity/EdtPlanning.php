@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/08/2020 08:54
+// @lastUpdate 27/08/2020 07:53
 
 namespace App\Entity;
 
@@ -354,8 +354,9 @@ class EdtPlanning
             'typecours'   => $this->getType(),
             'texte'       => $this->getTexte(),
             'matiereId'   => $this->getMatiere() !== null ? $this->getMatiere()->getId() : null,
-            'personnelId' => $this->getIntervenant()!== null ?$this->getIntervenant()->getId(): null,
-            'groupe'      => $this->getGroupe()
+            'personnelId' => $this->getIntervenant() !== null ? $this->getIntervenant()->getId() : null,
+            'groupe'      => $this->getGroupe(),
+            'groupeId'    => $this->getGroupe() !== null ? $this->getGroupe()->getId() : null
         ];
     }
 }
