@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 14:32
+// @lastUpdate 28/08/2020 09:56
 
 namespace App\Entity;
 
@@ -127,10 +127,10 @@ abstract class Utilisateur implements UserInterface
     protected bool $visible = true;
 
     /**
-     * @var Adresse
+     * @var Adresse|null
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist"})
      */
-    private Adresse $adresse;
+    private ?Adresse $adresse;
 
 
     /**
@@ -429,7 +429,7 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @return Adresse
+     * @return Adresse|null
      */
     public function getAdresse(): ?Adresse
     {
@@ -437,9 +437,9 @@ abstract class Utilisateur implements UserInterface
     }
 
     /**
-     * @param Adresse $adresse
+     * @param Adresse|null $adresse
      */
-    public function setAdresse(Adresse $adresse): void
+    public function setAdresse(?Adresse $adresse): void
     {
         $this->adresse = $adresse;
     }

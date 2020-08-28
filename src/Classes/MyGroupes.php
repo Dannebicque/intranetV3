@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:14
+// @lastUpdate 27/08/2020 17:40
 
 namespace App\Classes;
 
@@ -45,6 +45,10 @@ class MyGroupes
     /** @var EtudiantRepository */
     protected $etudiantRepository;
     private $myUpload;
+    /**
+     * @var MyCelcat
+     */
+    private MyCelcat $myCelcat;
 
     /**
      * MyGroupes constructor.
@@ -60,6 +64,7 @@ class MyGroupes
         TypeGroupeRepository $typeGroupeRepository,
         GroupeRepository $groupeRepository,
         MyUpload $myUpload,
+        MyCelcat $myCelcat,
         EtudiantRepository $etudiantRepository
     ) {
         $this->groupedefaut = null;
@@ -68,6 +73,7 @@ class MyGroupes
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
         $this->myUpload = $myUpload;
+        $this->myCelcat = $myCelcat;
     }
 
     /**
@@ -167,7 +173,7 @@ class MyGroupes
         $this->removeGroupeFromSemestre($semestre);
         $groupes = $this->groupeRepository->findBySemestreArray($semestre);
         $etudiants = $this->etudiantRepository->findBySemestreArray($semestre);
-        MyCelcat::updateGroupeBySemestre($semestre, $groupes, $etudiants);
+        $this->myCelcat->updateGroupeBySemestre($semestre, $groupes, $etudiants);
     }
 
     private function removeGroupeFromSemestre(Semestre $semestre): void
