@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 28/08/2020 11:43
 
 namespace App\Controller;
 
@@ -29,9 +29,13 @@ class DefaultController extends BaseController
      */
     public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository): Response
     {
+        if ($this->isGranted('ROLE_SUPER_ADMIN') || $this->isGranted('ROLE_ADMINISTRATIF')) {
+            return $this->redirectToRoute('super_admin_homepage');
+        }
+
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->dataUserSession->getDepartement()),
-            'dates' => $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 2)
+            'dates'      => $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 2)
         ]);
     }
 

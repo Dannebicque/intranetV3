@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 21:26
+// @lastUpdate 28/08/2020 09:46
 
 namespace App\Repository;
 
@@ -43,8 +43,10 @@ class CelcatEventsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.codePersonnel = :idprof')
-            ->setParameters(array('semaine' => $semaine, 'idprof' => $getNumeroHarpege))
-            ->orderBy('p.jour, p.debut, p.codeGroupe')
+            ->setParameters(['semaine' => $semaine, 'idprof' => $getNumeroHarpege])
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.codeGroupe', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -54,14 +56,20 @@ class CelcatEventsRepository extends ServiceEntityRepository
         if ($user->getSemestre() !== null) {
             $this->groupes($user);
             $this->params['semaine'] = $semaine;
-            return $this->createQueryBuilder('p')
-                ->where('p.semaineFormation = :semaine')
-                ->andWhere($this->chaine)
-                ->setParameters($this->params)
-                ->orderBy('p.jour, p.debut')
-                ->getQuery()
-                ->getResult();
+            $query = $this->createQueryBuilder('p')
+                ->where('p.semaineFormation = :semaine');
+
+            if ($this->chaine !== '') {
+                $query->andWhere($this->chaine);
+            }
+
+            $query->setParameters($this->params)
+                ->orderBy('p.jour', 'ASC')
+                ->addOrderBy('p.debut', 'ASC');
+
+            return $query->getQuery()->getResult();
         }
+
         return null;
     }
 
@@ -123,16 +131,17 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.jour = :jour ')
             ->andWhere('u.semestre = :semestre')
-            ->setParameters(array(
+            ->setParameters([
                 'semaine'  => $semaineReelle,
                 'jour'     => $jsem + 1,
                 'semestre' => $semestre->getId(),
-            ))
-            ->orderBy('p.codeGroupe, p.debut')
+            ])
+            ->orderBy('p.codeGroupe', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
             ->getQuery()
             ->getResult();
 
-        $planning = array();
+        $planning = [];
 
         /** @var  $row CelcatEvent */
         foreach ($query as $row) {
@@ -147,12 +156,12 @@ class CelcatEventsRepository extends ServiceEntityRepository
             }
 
             if ($row->getLibPersonnel() !== null) {
-                $prof  = substr($row->getLibPersonnel(), 0, $max);
+                $prof = substr($row->getLibPersonnel(), 0, $max);
             } else {
                 $prof = '';
             }
 
-            $refmatiere = explode(' ',$row->getLibModule());
+            $refmatiere = explode(' ', $row->getLibModule());
 
 
             if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
@@ -188,8 +197,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
                     $casedebut -= ($duree % 3);
                 }
 
-                if ($casedebut == 11 || $casedebut == 12)
-                {
+                if ($casedebut == 11 || $casedebut == 12) {
                     $casedebut = 10;
                 }
 
@@ -228,8 +236,10 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->where('p.semaineFormation = :semaine')
             ->andWhere('u.semestre = :semestre')
-            ->setParameters(array('semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()))
-            ->orderBy('p.jour, p.debut, p.codeGroupe')
+            ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.codeGroupe', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -242,9 +252,11 @@ class CelcatEventsRepository extends ServiceEntityRepository
     public function getByPersonnelArray(Personnel $user): array
     {
         $query = $this->createQueryBuilder('p')
-            ->andWhere('p.codePersonnel = :idprof')
+            ->where('p.codePersonnel = :idprof')
             ->setParameter('idprof', $user->getNumeroHarpege())
-            ->orderBy('p.jour, p.debut, p.libGroupe')
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.libGroupe', 'ASC')
             ->getQuery()
             ->getResult();
 

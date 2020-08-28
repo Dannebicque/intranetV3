@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/08/2020 10:44
+// @lastUpdate 28/08/2020 11:43
 
 namespace App\Controller\superAdministration;
 
@@ -54,22 +54,26 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/departement/{departement}", name="sa_groupes_departement_synchro_all")
+     * @param MyApogee $myApogee
      * @param SemestreRepository $semestreRepository
-     * @param Departement        $departement
+     * @param Departement $departement
      *
      * @return Response
      */
-    public function synchroApogeeAll(SemestreRepository $semestreRepository, Departement $departement): Response
-    {
+    public function synchroApogeeAll(
+        MyApogee $myApogee,
+        SemestreRepository $semestreRepository,
+        Departement $departement
+    ): Response {
         $semestres = $semestreRepository->findByDepartement($departement);
         /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
-            $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
+            $groupes = $myApogee->getHierarchieGroupesSemestre($semestre);
             $nbgroupes = $groupes->rowCount();
             //todo: déplacer dans une classe si OK.
             if ($nbgroupes === 0) {
                 //pas de hierarchie
-                $groupes = MyApogee::getGroupesSemestre($semestre);
+                $groupes = $myApogee->getGroupesSemestre($semestre);
                 $i = 1;
                 if (count($semestre->getTypeGroupes()) > 0) {
                     $tg = $semestre->getTypeGroupes()[0];
