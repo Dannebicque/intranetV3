@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 16:29
+// @lastUpdate 29/08/2020 12:15
 
 namespace App\Controller\administration;
 
@@ -121,7 +121,7 @@ class EtudiantSemestreController extends BaseController
     public function importPhotoZip(MyUpload $myUpload, Request $request, Semestre $semestre): Response
     {
         $file = $request->files->get('fichierimport');
-        $fichier = $myUpload->upload($file, '/temp');
+        $fichier = $myUpload->upload($file, '/temp', ['zip']);
         $extract = $myUpload->extractZip($fichier, '/ph');
 
         if ($extract === false) {
