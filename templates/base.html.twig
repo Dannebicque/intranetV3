@@ -277,19 +277,19 @@
             </li>
 
             <!-- Change language -->
-            <li>
-                {% if app.request.locale == 'en' %}
-                    <a class="topbar-btn d-none d-md-block" href="{{ path
-                        ('default_homepage',{'_locale':'fr'}) }}" data-provide="tooltip"
-                       title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}"
-                                                                     width="16px" alt="{{ 'passer.en.francais'|trans }}"></a>
-                {% else %}
-                    <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-provide="tooltip"
-                       title="{{ 'passer.en.anglais'|trans }}"
-                    ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a>
+            {# <li> #}
+            {# {% if app.request.locale == 'en' %} #}
+            {# <a class="topbar-btn d-none d-md-block" href="{{ path #}
+            {# ('default_homepage',{'_locale':'fr'}) }}" data-provide="tooltip" #}
+            {# title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}" #}
+            {# width="16px" alt="{{ 'passer.en.francais'|trans }}"></a> #}
+            {# {% else %} #}
+            {# <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-provide="tooltip" #}
+            {# title="{{ 'passer.en.anglais'|trans }}" #}
+            {# ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a> #}
 
-                {% endif %}
-            </li>
+            {# {% endif %} #}
+            {# </li> #}
             <!-- END Change language -->
 
             <!-- Notifications -->
