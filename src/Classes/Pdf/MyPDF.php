@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 29/08/2020 09:50
 
 /**
  * Created by PhpStorm.
@@ -45,6 +45,7 @@ class MyPDF
         self::$options->set('isRemoteEnabled', true);
         self::$options->set('isPhpEnabled', true);
         self::$options->set('defaultPaperSize', 'A4');
+        self::$options->set('defaultPaperSize', 'A4');
     }
 
     /**
@@ -64,7 +65,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf($template, $data, $name, $departement)
+    public static function generePdf($template, $data, $name, $departement): void
     {
         $html = self::$templating->render($template, $data);
 
@@ -77,6 +78,6 @@ class MyPDF
         $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
         $canvas->page_text(43, 800, $departement. ' | '.$date->format('d/m/Y').'. Généré depuis l\'intranet', 'Arial', 10, array(0,0,0));
 
-        return self::$domPdf->stream($name, ['Attachment' => 1]);
+        self::$domPdf->stream($name, ['Attachment' => 1]);
     }
 }

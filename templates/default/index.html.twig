@@ -134,8 +134,8 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="row">
-                                            {% for typeGroupe in semestre.typegroupes|filter(typeGroupe => typeGroupe.defaut ==
-                                                true) %}
+                                            {% for typeGroupe in semestre.typegroupes|filter(typeGroupe => typeGroupe
+                                                .defaut == true) %}
                                                 {% for groupe in typeGroupe.groupes %}
                                                     <div class="col-sm-12 col-md-3 mb-2">
                                                         <a href="{{ path('trombinoscope_etudiant_export_groupe',

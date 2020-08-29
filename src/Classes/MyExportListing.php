@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:58
+// @lastUpdate 29/08/2020 09:55
 
 /**
  * Created by PhpStorm.
@@ -29,6 +29,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyExportListing
 {
@@ -100,6 +103,9 @@ class MyExportListing
      *
      * @return null|StreamedResponse
      * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function genereFichier(
         $exportTypeDocument,
@@ -127,7 +133,8 @@ class MyExportListing
                 case Constantes::FORMAT_EXCEL:
                     return $this->exportExcel();
                 case Constantes::FORMAT_PDF:
-                    return $this->exportPdf();
+                    $this->exportPdf();
+                    break;
             }
         }
 
@@ -371,6 +378,11 @@ class MyExportListing
         $this->myExcelWriter->getSheet()->getPageSetup()->setFitToPage(true);
     }
 
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     private function exportPdf(): void
     {
         $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name,
