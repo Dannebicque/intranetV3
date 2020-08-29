@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 29/08/2020 12:26
 
 /**
  * Created by PhpStorm.
@@ -40,7 +40,7 @@ class MyUpload
     public function upload(UploadedFile $fichier, $destination, $extensions = [])
     {
         $extension = $this->getExtension($fichier);
-        $this->dir .= $this->valideDir($destination);
+        $dir = $this->valideDir($destination);
 
         if ($fichier !== null) {
 
@@ -49,9 +49,9 @@ class MyUpload
             }
 
             $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.' . $extension;
-            $fichier->move($this->dir, $nomfile);
+            $fichier->move($this->dir . $dir, $nomfile);
 
-            return $this->dir . $nomfile;
+            return $this->dir . $dir . $nomfile;
         }
 
         return null;
@@ -107,15 +107,13 @@ class MyUpload
         closedir($dossier);
     }
 
-    public function extractZip(bool $fichier, $dest): bool
+    public function extractZip(string $fichier, $dest): bool
     {
         chmod($fichier, 0777);
         $filezip = realpath($fichier);
-
         $zip = new ZipArchive;
         // Ouvrir l'archive
         if ($zip->open($filezip) !== true) {
-
             return false;
         }
         // Extraire le contenu dans le dossier de destination
