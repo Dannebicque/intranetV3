@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 16:29
+// @lastUpdate 29/08/2020 12:38
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Form\EtudiantType;
@@ -121,17 +122,17 @@ class EtudiantSemestreController extends BaseController
     public function importPhotoZip(MyUpload $myUpload, Request $request, Semestre $semestre): Response
     {
         $file = $request->files->get('fichierimport');
-        $fichier = $myUpload->upload($file, '/temp');
-        $extract = $myUpload->extractZip($fichier, '/ph');
+        $fichier = $myUpload->upload($file, 'temp/');
+        $extract = $myUpload->extractZip($fichier, 'ph/');
 
         if ($extract === false) {
-            $this->addFlashBag('error', 'Impossible d\'accéder à l\'archive.');
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Impossible d\'accéder à l\'archive.');
 
             return $this->redirectToRoute('administration_etudiant_semestre_add', ['semestre' => $semestre->getId()]);
         }
         //on parcours les fichiers, on renome, on copie et on supprime.
-        $myUpload->traitePhoto('/ph', '/etudiants/');
-        $this->addFlashBag('notice', 'Photos importées avec succés.');
+        $myUpload->traitePhoto('ph/', 'etudiants/');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Photos importées avec succés.');
 
         return $this->redirectToRoute('administration_etudiant_semestre_add', ['semestre' => $semestre->getId()]);
     }

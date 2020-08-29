@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 10:07
+// @lastUpdate 29/08/2020 12:38
 
 namespace App\Classes\Etudiant;
 
@@ -43,6 +43,7 @@ class EtudiantImport
     {
         $etudiant = new Etudiant();
         $etudiant->setSemestre($semestre);
+        $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
         $etudiant->updateFromApogee($dataApogee['etudiant']);
         $update = $this->updateLdap($etudiant);
