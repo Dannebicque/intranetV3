@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:01
+// @lastUpdate 30/08/2020 15:28
 
 namespace App\Controller;
 
@@ -48,6 +48,9 @@ class TrombinoscopeController extends BaseController
      *
      * @return null|StreamedResponse
      * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function trombiEtudiantExport(
         MyExportListing $myExportListing,

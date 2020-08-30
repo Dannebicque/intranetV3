@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2020 09:55
+// @lastUpdate 30/08/2020 15:29
 
 /**
  * Created by PhpStorm.
@@ -134,7 +134,7 @@ class MyExportListing
                     return $this->exportExcel();
                 case Constantes::FORMAT_PDF:
                     $this->exportPdf();
-                    break;
+                    exit;
             }
         }
 
@@ -383,7 +383,7 @@ class MyExportListing
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private function exportPdf(): void
+    private function exportPdf()
     {
         $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name,
             $this->dataUserSession->getDepartement()->getLibelle());
