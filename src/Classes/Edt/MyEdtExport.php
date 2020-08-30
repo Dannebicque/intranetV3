@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/08/2020 16:19
 
 namespace App\Classes\Edt;
 
@@ -84,16 +84,16 @@ class MyEdtExport
                 'semaineReelle'      => date('W'),
                 'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId()
             ]);
-            $max = $emaineActuelle->getSemaineReelle() + $nbSemaines;
+            $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
             if ($user->getDepartement()->isOptUpdateCelcat()) {
-                for ($i = date('W'); $i < $max; $i++) {
+                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; $i++) {
                     $temp = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
                     foreach ($temp as $row) {
                         $edt[] = $row;
                     }
                 }
             } else {
-                for ($i = date('W'); $i < $max; $i++) {
+                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; $i++) {
                     $temp = $this->edtPlanningRepository->getByEtudiantArray($user, $i);
                     foreach ($temp as $row) {
                         $edt[] = $row;
