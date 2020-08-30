@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 30/08/2020 09:14
 
 namespace App\Controller;
 
@@ -175,7 +175,7 @@ class MessagerieController extends BaseController
      * @return JsonResponse
      * @throws TransportExceptionInterface
      */
-    public function messageSend(Request $request, MyMessagerie $messagerie): JsonResponse
+    public function sendMessage(Request $request, MyMessagerie $messagerie): JsonResponse
     {
         $typeDestinataire = $request->request->get('typeDestinataire');
         $destinataires = $this->getDestinataires($typeDestinataire, $request);
@@ -237,6 +237,20 @@ class MessagerieController extends BaseController
         return null;
     }
 
+    /**
+     * @Route("/message-envoyé/{message}", name="messagerie_message_envoye", options={"expose":true})
+     * @param Message $message
+     *
+     * @return Response
+     */
+    public function messageSent(
+        Message $message
+    ): Response {
+        return $this->render('messagerie/message_envoye.html.twig', [
+            'message' => $message
+        ]);
+    }
+
 
     /**
      * @Route("/{message}", name="messagerie_message", options={"expose":true})
@@ -271,4 +285,6 @@ class MessagerieController extends BaseController
             'message' => $message
         ]);
     }
+
+
 }

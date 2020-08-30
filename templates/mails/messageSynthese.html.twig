@@ -1,0 +1,14 @@
+Copie du message envoyé à {{ nbetudiant }} personne(s). Au total {{ nb }} message(s) ont été envoyé(s) (mail
+université et mail personnel lorsque disponible).
+====
+
+{{ message|raw }}
+
+
+{% if expediteur.signature=="" %}
+    {{ expediteur.displayPr }}
+{% else %}
+    {{ expediteur.signature }}
+{% endif %}
+
+Ce message est envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}.

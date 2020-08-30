@@ -87,6 +87,7 @@
     {{ parent() }}
     {{ encore_entry_link_tags('applications') }}
     {% if not is_granted('ROLE_ETUDIANT') %}
+        {{ encore_entry_link_tags('quill') }}
         {{ encore_entry_link_tags('progression') }}
         {{ encore_entry_link_tags('creneaux') }}
     {% endif %}
@@ -96,6 +97,7 @@
     {{ parent() }}
     {{ encore_entry_script_tags('applications') }}
     {% if not is_granted('ROLE_ETUDIANT') %}
+        {{ encore_entry_script_tags('quill') }}
         {{ encore_entry_script_tags('progression') }}
         {{ encore_entry_script_tags('creneaux') }}
     {% endif %}

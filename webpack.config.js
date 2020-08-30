@@ -2,9 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/08/2020 14:44
+// @lastUpdate 30/08/2020 09:37
 
 var Encore = require('@symfony/webpack-encore')
+var path = require('path')
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -31,6 +32,7 @@ Encore
    */
   .addEntry('app', './assets/js/app.js')
   .addEntry('datatable', './assets/js/datatable.js')
+  .addEntry('quill', './assets/js/quill.js')
   .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
   .addEntry('absences', './assets/js/pages/absences.js')
   .addEntry('applications', './assets/js/pages/applications.js')
@@ -97,6 +99,57 @@ Encore
 
   // uncomment if you're having problems with a jQuery plugin
   .autoProvidejQuery()
+  .configureBabel(function (babelConfig) {
+    // add additional presets
+    //babelConfig.presets.push('@babel/preset-es2015');
 
+    // no plugins are added by default, but you can add some
+    //babelConfig.plugins.push('styled-jsx/babel');
+  }, {})
+  .disableImagesLoader()
+  .addRule({
+    test: /\.(svg|png|jpg|jpeg|gif|ico)/,
+    exclude: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
+    use: [{
+      loader: 'file-loader',
+      options: {
+        filename: 'images/[name].[hash:8].[ext]',
+        publicPath: '/build/'
+      }
+    }]
+  })
+  .addLoader(
+    {
+      test: /\.svg$/,
+      use: [{
+        loader: 'html-loader',
+        options: {
+          minimize: true
+        }
+      }]
+    }
+  )
+  .addLoader({
+    test: /\.ts$/,
+    use: [{
+      loader: 'ts-loader',
+      options: {
+        compilerOptions: {
+          declaration: false,
+          target: 'es5',
+          module: 'commonjs'
+        },
+        transpileOnly: true
+      }
+    }]
+  })
 
-module.exports = Encore.getWebpackConfig()
+config = Encore.getWebpackConfig()
+
+config.resolve.alias = {
+  'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
+  'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
+}
+config.resolve.extensions = ['.js', '.ts', '.svg']
+
+module.exports = config
