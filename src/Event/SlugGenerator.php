@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SlugGenerator.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 30/08/2020 10:48
 
 namespace App\Event;
 
@@ -43,7 +43,11 @@ class SlugGenerator implements EventSubscriber
         if ($entity instanceof Article) {
             return $entity->setSlug(Tools::slug($entity->getTitre()));
         } elseif ($entity instanceof Utilisateur) {
-            return $entity->setSlug(Tools::slug($entity->getPrenom() . '-' . $entity->getNom()));
+            if ($entity->getMailUniv() !== '' && $entity->getMailUniv() !== null) {
+                $tabSlug = explode('@', $entity->getMailUniv());
+
+                return $entity->setSlug($tabSlug[0]);
+            }
         }
 
 // ... get the entity information and log it somehow
