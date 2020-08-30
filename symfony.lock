@@ -44,35 +44,14 @@
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
     },
-    "symfony/amqp-messenger": {
-        "version": "v5.1.2"
-    },
     "symfony/deprecation-contracts": {
         "version": "v2.1.2"
-    },
-    "symfony/doctrine-messenger": {
-        "version": "v5.1.2"
-    },
-    "symfony/messenger": {
-        "version": "4.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.3",
-            "ref": "8a2675c061737658bed85102e9241c752620e575"
-        },
-        "files": [
-            "config/packages/messenger.yaml"
-        ]
     },
     "symfony/polyfill-php80": {
         "version": "v1.17.0"
     },
     "symfony/property-info": {
         "version": "v5.1.0"
-    },
-    "symfony/redis-messenger": {
-        "version": "v5.1.2"
     },
     "symfony/webpack-encore-bundle": {
         "version": "1.6",
