@@ -20,6 +20,7 @@ doctrine:
             uuid_binary:  Ramsey\Uuid\Doctrine\UuidBinaryType
             datetime_immutable: \Carbon\Doctrine\DateTimeImmutableType
             datetime: \Carbon\Doctrine\DateTimeType
+            time: \Carbon\Doctrine\DateTimeType
         mapping_types:
             uuid_binary: binary
     orm:
