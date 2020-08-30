@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 30/08/2020 15:13
 
 namespace App\Controller;
 
@@ -150,7 +150,7 @@ class SecurityController extends AbstractController
             }
 
             $user->setResetToken(null);
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('inputPassword')));
             $entityManager->flush();
 
             return $this->redirectToRoute('security_login', ['message' => 'Mot de passe mis à jour']);

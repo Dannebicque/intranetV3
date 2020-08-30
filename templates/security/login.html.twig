@@ -49,9 +49,10 @@
                     <input type="checkbox" class="custom-control-input" checked id="remenber-me">
                     <label class="custom-control-label" for="remenber-me">{{ 'security.login.remenber-me'|trans }}</label>
                 </div>
-
-                <a class="text-muted hover-primary fs-13"
-                   href="{{ path('security_password_lost') }}">{{ 'security.login.forgot-password'|trans }}</a>
+                {% if not is_granted('ROLE_ETUDIANT') %}
+                    <a class="text-muted hover-primary fs-13"
+                       href="{{ path('security_password_lost') }}">{{ 'security.login.forgot-password'|trans }}</a>
+                {% endif %}
             </div>
 
             <div class="form-group">
