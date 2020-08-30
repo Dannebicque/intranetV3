@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:14
+// @lastUpdate 30/08/2020 09:36
 
 namespace App\Classes;
 
@@ -23,11 +23,11 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class MyMessagerie
 {
-    /** @var MailerInterface */
-    private $myMailer;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private Configuration $configuration;
+    private MailerInterface $myMailer;
+
+    private EntityManagerInterface $entityManager;
 
     private $sujet;
 
@@ -36,20 +36,16 @@ class MyMessagerie
     private $nbMessagesEnvoyes = 0;
     private $nbEtudiants = 0;
 
-    /** @var Personnel */
-    private $expediteur;
+    private Personnel $expediteur;
 
     /** @var Etudiant[] */
     private $etudiants = [];
 
-    /** @var GroupeRepository */
-    private $groupeRepository;
+    private GroupeRepository $groupeRepository;
 
-    /** @var EtudiantRepository */
-    private $etudiantRepository;
+    private EtudiantRepository $etudiantRepository;
 
-    /** @var PersonnelRepository */
-    private $personnelRepository;
+    private PersonnelRepository $personnelRepository;
 
     private $typeDestinataires = '';
     private $type;
@@ -69,13 +65,15 @@ class MyMessagerie
         EntityManagerInterface $entityManager,
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
-        PersonnelRepository $personnelRepository
+        PersonnelRepository $personnelRepository,
+        Configuration $configuration
     ) {
         $this->myMailer = $mailer;
         $this->entityManager = $entityManager;
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
         $this->personnelRepository = $personnelRepository;
+        $this->configuration = $configuration;
     }
 
 
@@ -126,7 +124,7 @@ class MyMessagerie
         $message = (new TemplatedEmail())
             ->subject($this->sujet)
             ->from($this->expediteur->getMailuniv())
-            ->textTemplate('mails/message.txt.twig')
+            ->htmlTemplate('mails/message.html.twig')
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
         //sauvegarde en BDD
@@ -180,9 +178,9 @@ class MyMessagerie
         //envoi de la synthèse à l'auteur
         $email = (new TemplatedEmail())
             ->subject('Votre message : ' . $this->sujet)
-            ->from(Configuration::get('MAIL_FROM'))
+            ->from($this->configuration->get('MAIL_FROM'))
             ->to($this->expediteur->getMailuniv())
-            ->textTemplate('mails/messageSynthese.txt.twig')
+            ->htmlTemplate('mails/messageSynthese.html.twig')
             ->context([
                 'message'    => $this->message,
                 'expediteur' => $this->expediteur,

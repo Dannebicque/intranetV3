@@ -42,16 +42,16 @@
 <div class="media-list-body bg-white b-1">
     {% if filtre == 'sent' or filtre=='draft' %}
         {% for message in messages %}
-            <div class="media align-items-center">
+            <div class="media align-items-center message-read-auteur" data-message="{{ message.id }}">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input">
                     <label class="custom-control-label"></label>
                 </div>
 
-{#                <label class="toggler ml-20 fs-16">#}
-                {#                    <input type="checkbox">#}
-                {#                    <i class="fa fa-star"></i>#}
-                {#                </label>#}
+                {# <label class="toggler ml-20 fs-16"> #}
+                {# <input type="checkbox"> #}
+                {# <i class="fa fa-star"></i> #}
+                {# </label> #}
 
                 {% if message.important == true %}
                     <span class="badge badge-dot badge-danger"></span>
@@ -60,7 +60,9 @@
                 {% endif %}
                 <a href="">
                     <div class="avatar-circle-sm">
-                        <span class="initials">{{ message.type|upper }}</span>
+                        <span class="initials">
+                            {{ message.type|upper }}
+                        </span>
                     </div>
                 </a>
                 <a class="media-body text-truncate" href="#" data-message="{{ message.id }}">

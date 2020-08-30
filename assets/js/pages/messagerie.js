@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:18
+// @lastUpdate 30/08/2020 09:37
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -39,15 +39,22 @@ $(document).on('click', '.message-read', function (e) {
   $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: $(this).data('message')}))
 })
 
+$(document).on('click', '.message-read-auteur', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
+
+  $('#messages-liste').empty().load(Routing.generate('messagerie_message_envoye', {message: $(this).data('message')}))
+})
+
 $(document).on('click', '#new-message', function (e) {
   e.preventDefault()
-  e.stopPropagation();
+  e.stopPropagation()
 
-  $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'));
+  $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'))
 })
 
 $(document).on('click', '#marquerNotificationsRead', function (e) {
-  e.preventDefault();
+  e.preventDefault()
   e.stopPropagation();
 
   $.ajax({
@@ -76,7 +83,7 @@ $(document).on('click', '#messageSent', function (e) {
     },
     method: 'POST',
     success: function (data) {
-      $('#messages-liste').empty().load(Routing.generate('messagerie_message', {message: data.message}))
+      $('#messages-liste').empty().load(Routing.generate('messagerie_message_envoye', {message: data.message}))
     }
   })
 })

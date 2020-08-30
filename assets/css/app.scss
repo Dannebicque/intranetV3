@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 08:32
+// @lastUpdate 30/08/2020 09:37
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -545,6 +545,23 @@ thead {
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
   content: "\f00c";
   font-family: "Font Awesome 5 Free", serif;
+}
+
+#sidebar_departement {
+  /* [VERTICAL TEXT] */
+  /* Use transform-origin & margin to help you position
+  transform: rotate(270deg);
+  transform-origin: left top 0;*/
+
+  /* [NOT IMPORTANT] */
+  display: inline-block;
+  padding: 10px;
+  font-size: 3em;
+  width: 100%;
+  text-align: center;
+  bottom: 0px;
+  position: fixed;
+  color: white;
 }
 
 //correctifs accessibilité
