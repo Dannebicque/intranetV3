@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 31/08/2020 20:41
 
 namespace App\Controller\administration;
 
@@ -20,20 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PrevisionnelExportController extends BaseController
 {
-
-
     /**
      * @param MyPrevisionnel $myPrevisionnel
      * @param                $annee
      *
      * @return StreamedResponse
-     * @throws Exception
      * @Route("/omega/{annee}", name="administration_previsionnel_export_omega", methods="GET")
      *
      */
     public function exportOmega(MyPrevisionnel $myPrevisionnel, $annee): StreamedResponse
     {
-        return $myPrevisionnel->exportOmegaDepartement($this->dataUserSession->getDepartement(), $annee);
+        return $myPrevisionnel->exportOmegaDepartement($this->getDepartement(), $annee);
     }
 
     /**
@@ -51,7 +48,7 @@ class PrevisionnelExportController extends BaseController
      */
     public function export(MyPrevisionnel $myPrevisionnel, $annee, $type, $data, $_format): StreamedResponse
     {
-        return $myPrevisionnel->export($this->dataUserSession->getDepartement(), $annee, $type, $data, $_format);
+        return $myPrevisionnel->export($this->getDepartement(), $annee, $type, $data, $_format);
     }
 
 
