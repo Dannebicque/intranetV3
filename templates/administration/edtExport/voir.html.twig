@@ -18,38 +18,57 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h4 class="card-title">Liste des <strong>fichiers</strong></h4>
-        <div class="card-body">
-            <div class="row">
-                {% for f in docs %}
-                    <div class="col-sm-3">
-                        <div class="card">
-                            <h5 class="card-title"><strong>#{{ loop.index }}</strong> | {{ f.pers.displayPr }}</h5>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-5">
-                                        <a href="{{ asset('uploads/pdfedt/'~connect.formation.id~'/'~f.fichier) }}" target="_blank"><img src="{{ asset('uploads/img/icone/pdf.png') }}" alt="pdf">
-                                            Télécharger</a>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <a href="#" data-fichier="{{ f.fichier }}" data-pers="{{ f.pers.id }}" class="btn btn-success sendone" title="Envoyer par mail"><i class="fa fa-envelope"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+    <form class="form" method="post" action="">
+        <div class="card">
+            <h4 class="card-title">Liste des <strong>fichiers</strong></h4>
+            <div class="card-body">
+                <table class="table table-bordered" data-provide="datatable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom Prénom</th>
+                        <th>Fichier</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for personnel in user_data.personnels %}
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>{{ personnel.display }}</td>
+                            <td>
+                                {% if docs[personnel.id] is defined %}
+                                    <a href="{{ asset('uploads/pdfedt/'~user_data.departement.id~'/'~docs[personnel.id]) }}"
+                                       class="btn btn-info btn-block"
+                                       target="_blank"><i class="fas fa-download"></i></a>
+                                {% else %}
+                                    Pas de fichier
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="#" data-pers="{{ personnel.id }}"
+                                   class="btn btn-warning genereOne" title="Générer/Mettre à jour le
+                                        fichier">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                                {% if docs[personnel.id] is defined %}
+                                    <a href="#" data-fichier="{{ docs[personnel.id] }}" data-pers="{{ personnel.id }}" class="btn btn-success sendone" title="Envoyer par mail">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
 
 
-    <div class="card">
-
-        <h4 class="card-title"><strong>Envoyer</strong> par mail les PDF</h4>
-        <div class="card-body">
-            <form class="form" method="post" action="">
+        <div class="card">
+            <h4 class="card-title"><strong>Envoyer</strong> par mail les PDF</h4>
+            <div class="card-body">
                 <div class="form-group">
                     <label for="titre" class="control-label required">Sujet *</label>
                     <input type="text" id="titre" name="titre" required="required" class="form-control">
@@ -65,7 +84,8 @@
                 <div class="form-actions">
                     <input type="submit" class="btn btn-block btn-primary" value="Envoyer les mails">
                 </div>
-            </form>
+
+            </div>
         </div>
-    </div>
+    </form>
 {% endblock %}

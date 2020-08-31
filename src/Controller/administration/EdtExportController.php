@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 31/08/2020 18:17
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Classes\Edt\MyEdtExport;
+use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EdtExportController extends BaseController
 {
     /**
-     * @Route("/voir/{source}", name="administration_edt_export_voir")
+     * @Route("/voir/{source}", name="administration_edt_export_voir", requirements={"source"="intranet|celcat"})
      *
      *
      * @param MyEdtExport $myEdtExport
@@ -28,16 +29,18 @@ class EdtExportController extends BaseController
      *
      * @return Response
      */
-    public function voirPdf(MyEdtExport $myEdtExport, $source): Response
-    {
+    public function voirPdf(
+        MyEdtExport $myEdtExport,
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        $source
+    ): Response {
         return $this->render('administration/edtExport/voir.html.twig', [
-            'docs' => $myEdtExport->getAllDocs($this->dataUserSession->getDepartement(),
-                $this->dataUserSession->getPersonnels())
+            'docs' => $myEdtExport->getAllDocs($this->dataUserSession->getDepartement())
         ]);
     }
 
     /**
-     * @Route("/{source}", name="administration_edt_export_index")
+     * @Route("/{source}", name="administration_edt_export_index", requirements={"source"="intranet|celcat"})
      *
      *
      * @param $source
@@ -52,18 +55,25 @@ class EdtExportController extends BaseController
     }
 
     /**
-     * @Route("/{source}.{_format}", name="administration_edt_export_all")
+     * @Route("/tous/{source}.{_format}", name="administration_edt_export_all",
+     *                                    requirements={"source"="intranet|celcat"})
      *
      *
-     * @param $source
+     * @param MyEdtExport $myEdtExport
+     * @param             $source
+     *
+     * @param             $_format
      *
      * @return Response
      */
-    public function exportAll($source): Response
+    public function exportAll(MyEdtExport $myEdtExport, $source, $_format): Response
     {
-        return $this->render('administration/edtExport/index.html.twig', [
+        $myEdtExport->genereAllDocument($source, $_format, $this->dataUserSession->getDepartement());
 
-        ]);
+
+//        return $this->render('administration/edtExport/index.html.twig', [
+//            'source' => $source
+//        ]);
     }
 
 

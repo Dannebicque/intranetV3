@@ -3,11 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 16:19
+// @lastUpdate 31/08/2020 18:17
 
 namespace App\Classes\Edt;
 
 
+use App\Classes\Pdf\MyPDF;
+use App\Classes\Tools;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
@@ -19,19 +21,16 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class MyEdtExport
 {
-    /** @var EdtPlanningRepository */
-    protected $edtPlanningRepository;
+    protected EdtPlanningRepository $edtPlanningRepository;
 
-    /** @var CelcatEventsRepository */
-    protected $celcatEventsRepository;
+    protected CelcatEventsRepository $celcatEventsRepository;
 
-    /** @var CalendrierRepository */
-    protected $calendrierRepository;
+    protected CalendrierRepository $calendrierRepository;
 
-    /** @var MyIcal */
-    protected $myIcal;
+    protected MyIcal $myIcal;
 
     private $calendrier;
+
 
     /**
      * @var string
@@ -45,6 +44,7 @@ class MyEdtExport
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param CalendrierRepository   $calendrierRepository
      * @param MyIcal                 $myIcal
+     * @param MyPDF                  $myPDF
      * @param KernelInterface        $kernel
      */
     public function __construct(
@@ -52,6 +52,7 @@ class MyEdtExport
         CelcatEventsRepository $celcatEventsRepository,
         CalendrierRepository $calendrierRepository,
         MyIcal $myIcal,
+        MyPDF $myPDF,
         KernelInterface $kernel
     ) {
 
@@ -61,6 +62,7 @@ class MyEdtExport
         $this->celcatEventsRepository = $celcatEventsRepository;
         $this->calendrierRepository = $calendrierRepository;
         $this->myIcal = $myIcal;
+        $this->myPDF = $myPDF;
     }
 
 
@@ -137,26 +139,52 @@ class MyEdtExport
      *
      * @return array
      */
-    public function getAllDocs(Departement $departement, $personnels)
+    public function getAllDocs(Departement $departement)
     {
         //parcour fichiers
         $folder = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         $dossier = opendir($folder);
 
         $t = [];
-        $i = 0;
         while ($fichier = readdir($dossier)) {
 
             if ($fichier !== '.' && $fichier !== '..') {
-                $t[$i]['fichier'] = $fichier;
                 $id = explode('_', $fichier);
-                $t[$i]['pers'] = $personnels[$id[0]];
-                $i++;
+                $t[$id[0]] = $fichier;
             }
         }
 
         closedir($dossier);
 
         return $t;
+    }
+
+    public function genereAllDocument($source, $_format, ?Departement $departement): void
+    {
+        if ($_format === 'pdf') {
+            $this->genereaAllPdf($source, $departement);
+        } else {
+            //todo: export CSV/XLSX
+        }
+    }
+
+    private function genereaAllPdf($source, ?Departement $departement): void
+    {
+        foreach ($departement->getPersonnelDepartements() as $personnelDepartement) {
+            $this->generePdf($personnelDepartement->getPersonnel(), $source, $departement);
+        }
+    }
+
+    private function generePdf(Personnel $personnel, $source, Departement $departement): void
+    {
+        $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
+        Tools::CheckDirectoryExist($dir);
+
+        if ($source === 'intranet') {
+            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId());
+            $this->myPDF::genereAndSavePdf('pdf/planning.html.twig',
+                ['planning' => $planning, 'personnel' => $personnel], $personnel->getId() . '_' . $personnel->getNom(),
+                $dir, $departement->getLibelle());
+        }
     }
 }

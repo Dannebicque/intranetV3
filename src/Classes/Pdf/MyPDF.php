@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2020 09:50
+// @lastUpdate 31/08/2020 18:17
 
 /**
  * Created by PhpStorm.
@@ -14,6 +14,7 @@
 
 namespace App\Classes\Pdf;
 
+use App\Entity\Departement;
 use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -67,6 +68,37 @@ class MyPDF
      */
     public static function generePdf($template, $data, $name, $departement): void
     {
+        self::genereOutputPdf($template, $data, $departement);
+
+        self::$domPdf->stream($name, ['Attachment' => 1]);
+    }
+
+    public static function genereAndSavePdf(
+        string $template,
+        array $data,
+        string $name,
+        string $dir,
+        string $departement
+    ): void {
+        self::genereOutputPdf($template, $data, $departement);
+
+        $output = self::$domPdf->output();
+
+        file_put_contents($dir . $name . '.pdf', $output);
+
+    }
+
+    /**
+     * @param $template
+     * @param $data
+     * @param $departement
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    private static function genereOutputPdf($template, $data, $departement): void
+    {
         $html = self::$templating->render($template, $data);
 
         self::$domPdf = new Dompdf(self::$options);
@@ -76,8 +108,7 @@ class MyPDF
         $date = new DateTime('now');
         $canvas = self::$domPdf->getCanvas();
         $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
-        $canvas->page_text(43, 800, $departement. ' | '.$date->format('d/m/Y').'. Généré depuis l\'intranet', 'Arial', 10, array(0,0,0));
-
-        self::$domPdf->stream($name, ['Attachment' => 1]);
+        $canvas->page_text(43, 800, $departement . ' | ' . $date->format('d/m/Y') . '. Généré depuis l\'intranet',
+            'Arial', 10, [0, 0, 0]);
     }
 }
