@@ -18,48 +18,62 @@
 {% endblock %}
 
 {% block content %}
-  <div class="card">
-    <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
-      <div class="card-body">
-          <label for="pdfenseignant">Selectionnez un intervenant ou laisser vide pour tout exporter</label>
-          <select class="form-control selectpicker" id="pdfenseignant" name="pdfenseignant"
-          >
-              <option value="0">Selectionnez un intervenant ou laisser vide pour tout exporter</option>
-              {% for personnel in user_data.personnels %}
-            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
-          {% endfor %}
-      </select>
-      <div class="alert alert-info">Ne rien choisir pour tout exporter</div>
+    <div class="card">
+        <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
+        <div class="card-body">
+            Choisir
+            <div class="row">
+                {% for personnel in user_data.personnels %}
+                    <div class="form-check col-sm-6 col-md-3">
+                        <input class="form-check-input"
+                               name="personnels[]"
+                               type="checkbox"
+                               value="{{ personnel.id }}"
+                               id="personnel_{{ personnel.id }}">
+                        <label class="form-check-label" for="personnel_{{ personnel.id }}">
+                            {{ personnel.displayPr }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3"></div>
+                <div class="col-sm-6 col-md-3"></div>
+                <div class="col-sm-6 col-md-6">
+                    <button class="btn btn-success btn-block">Exporter les éléments séléectionnés</button>
+                </div>
 
-      <div class="row">
-        <div class="col-sm-4">
-          <a href="{{ path('administration_edt_export_all', {source:source, _format: 'pdf'}) }}"
-             class="btn btn-info btn-block">
-            Export PDF
-          </a>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-4">
+                    <a href="{{ path('administration_edt_export_all', {source:source, _format: 'pdf'}) }}"
+                       class="btn btn-info btn-block">
+                        Générer les PDF pour tous
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="{{ path('administration_edt_export_all', {source:source, _format: 'xlsx'}) }}"
+                       class="btn btn-info btn-block">
+                        Générer les XLSX (Excel) pour tous
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="{{ path('administration_edt_export_all', {source:source, _format: 'csv'}) }}"
+                       class="btn btn-info btn-block">
+                        Générer les CSV (;) pour tous
+                    </a>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ path('administration_edt_export_voir', {source:source}) }}" class="btn btn-info btn-block">
+                        Voir/Envoyer (mail) les PDF / Ical</a>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-4">
-          <a href="{{ path('administration_edt_export_all', {source:source, _format: 'xlsx'}) }}"
-             class="btn btn-info btn-block">
-            Export Xlsx
-          </a>
-        </div>
-        <div class="col-sm-4">
-          <a href="{{ path('administration_edt_export_all', {source:source, _format: 'csv'}) }}"
-             class="btn btn-info btn-block">
-            Export Csv (;)
-          </a>
-        </div>
-      </div>
-      <br/>
-      <div class="row">
-        <div class="col-sm-12">
-          <a href="{{ path('administration_edt_export_voir', {source:source}) }}" class="btn btn-info btn-block">
-            Voir/Envoyer (mail) les PDF / Ical</a>
-        </div>
-      </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block fabactions %}

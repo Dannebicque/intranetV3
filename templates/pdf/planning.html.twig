@@ -1,0 +1,50 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+    <table style="width: 100%; border:none;">
+        <tr>
+            <td style="text-align: center; width:20%">
+                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
+            </td>
+            <td style="text-align: center; width:60%"><h2>Planning | {{ personnel.display }} | {{ user_data
+                    .displayAnneeUniversitaire }}</h2></td>
+            <td style="text-align: center; width:20%"><img
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
+                        alt="logo"
+                        height="75px"/></td>
+        </tr>
+    </table>
+
+
+    <table style="clear:both;width:100%" class="table">
+        <thead>
+        <tr>
+            <th>Promo</th>
+            <th>Module</th>
+            <th>Date</th>
+            <th colspan="2">Heures</th>
+            <th>Cours</th>
+            <th>Durée</th>
+            <th>Groupes</th>
+            <th>Salle</th>
+            <th>Eval</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pl in planning %}
+            <tr style="height: 27px;">
+                <td>{{ pl.annee }}</td>
+                <td>{{ pl.matiere }}</td>
+                <td>{{ pl.datecours }}</td>
+                <td>{{ pl.hdebut }}</td>
+                <td>{{ pl.hfin }}</td>
+                <td>{{ pl.type|upper }}</td>
+                <td>{{ pl.duree }}</td>
+                <td>{{ pl.groupe }}</td>
+                <td>{{ pl.salle }}</td>
+                <td>{{ pl.evaluation }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

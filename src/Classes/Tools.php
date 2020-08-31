@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/08/2020 10:35
+// @lastUpdate 31/08/2020 18:17
 
 /**
  * Created by PhpStorm.
@@ -127,5 +127,15 @@ abstract class Tools
         if (method_exists($obj, $method)) {
             $obj->$method($value);
         }
+    }
+
+    public static function CheckDirectoryExist(string $dir)
+    {
+
+        if (!is_dir($dir) && !mkdir($dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+        }
+
+        return true;
     }
 }
