@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeDocumentRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 31/08/2020 18:13
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\TypeDocument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,9 +35,9 @@ class TypeDocumentRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findByDepartement($departement)
+    public function findByDepartement(Departement $departement)
     {
-        return $this->findByDepartementBuilder($departement)
+        return $this->findByDepartementBuilder($departement->getId())
             ->getQuery()
             ->getResult();
     }
