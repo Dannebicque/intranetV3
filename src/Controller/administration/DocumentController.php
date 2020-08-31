@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 31/08/2020 18:19
 
 namespace App\Controller\administration;
 
@@ -33,7 +33,7 @@ class DocumentController extends BaseController
     public function index(DocumentRepository $documentRepository): Response
     {
         return $this->render('administration/document/index.html.twig',
-            ['documents' => $documentRepository->findAll()]);
+            ['documents' => $documentRepository->findByDepartement($this->getDepartement())]);
     }
 
     /**

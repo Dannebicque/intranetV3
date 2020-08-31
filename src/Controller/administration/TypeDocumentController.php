@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2020 11:13
+// @lastUpdate 31/08/2020 19:32
 
 namespace App\Controller\administration;
 
@@ -33,7 +33,7 @@ class TypeDocumentController extends BaseController
     {
         return $this->render(
             'administration/type_document/index.html.twig',
-            ['type_documents' => $typeDocumentRepository->findAll()]
+            ['type_documents' => $typeDocumentRepository->findByDepartement($this->getDepartement())]
         );
     }
 
