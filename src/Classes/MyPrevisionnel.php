@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 13:48
+// @lastUpdate 31/08/2020 20:40
 
 namespace App\Classes;
 
@@ -567,7 +567,7 @@ class MyPrevisionnel
                 $colonne++;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    strtoupper($previ->getPersonnel()->getNom()) . ' ' . strtoupper($previ->getPersonnel()->getPrenom()));
+                    strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 'ERR-XXX');
                 $colonne++;
@@ -645,7 +645,7 @@ class MyPrevisionnel
                 $colonne++;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    strtoupper($previ->getPersonnel()->getNom()) . ' ' . strtoupper($previ->getPersonnel()->getPrenom()));
+                    strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 'ERR-XXX');
                 $colonne++;

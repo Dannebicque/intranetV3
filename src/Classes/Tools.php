@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 18:17
+// @lastUpdate 31/08/2020 20:40
 
 /**
  * Created by PhpStorm.
@@ -71,6 +71,13 @@ abstract class Tools
         }
 
         return $str;
+    }
+
+    public static function supprimeAccent(string $texte)
+    {
+        return strtr($texte,
+            "ÀÁÂàÄÅàáâàäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ",
+            "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
     }
 
     public static function slug(string $texte)
