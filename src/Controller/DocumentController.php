@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:04
+// @lastUpdate 31/08/2020 18:13
 
 namespace App\Controller;
 
@@ -39,7 +39,7 @@ class DocumentController extends BaseController
      */
     public function typeDocument(TypeDocumentRepository $typeDocumentRepository): Response
     {
-        $typeDocuments = $typeDocumentRepository->findByDepartement(1);
+        $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
         return $this->render('document/typedocument.html.twig', [
             'typedocuments' => $typeDocuments
