@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:37
+// @lastUpdate 01/09/2020 17:42
 
 /**
  * Created by PhpStorm.
@@ -70,7 +70,7 @@ class MyPDF
     {
         self::genereOutputPdf($template, $data, $departement);
 
-        self::$domPdf->stream($name, ['Attachment' => 1]);
+        self::$domPdf->stream($name . '.zip', ['Attachment' => 1]);
     }
 
     public static function genereAndSavePdf(
