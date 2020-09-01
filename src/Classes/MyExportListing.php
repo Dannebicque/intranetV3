@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 07:21
+// @lastUpdate 01/09/2020 07:42
 
 /**
  * Created by PhpStorm.
@@ -18,6 +18,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Matiere;
+use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Classes\Excel\MyExcelWriter;
 use App\Classes\Pdf\MyPDF;
@@ -67,6 +68,10 @@ class MyExportListing
     /** @var MyPDF */
     private $myPdf;
     private $titre = '';
+    /**
+     * @var Personnel|null
+     */
+    private ?Personnel $personnel;
 
     /**
      * MyExport constructor.
@@ -95,11 +100,13 @@ class MyExportListing
     }
 
     /**
-     * @param              $exportTypeDocument
-     * @param              $exportFormat
-     * @param              $exportChamps
-     * @param              $exportFiltre
-     * @param Matiere|null $matiere
+     * @param                $exportTypeDocument
+     * @param                $exportFormat
+     * @param                $exportChamps
+     * @param                $exportFiltre
+     * @param Matiere|null   $matiere
+     *
+     * @param Personnel|null $personnel
      *
      * @return null|StreamedResponse
      * @throws Exception
@@ -112,11 +119,13 @@ class MyExportListing
         $exportFormat,
         $exportChamps,
         $exportFiltre,
-        ?Matiere $matiere = null
+        ?Matiere $matiere = null,
+        ?Personnel $personnel = null
     ): ?StreamedResponse {
         $this->exportTypeDocument = $exportTypeDocument;
         $this->exportChamps = $exportChamps;
         $this->matiere = $matiere;
+        $this->personnel = $personnel;
 
         $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);
 
@@ -295,18 +304,33 @@ class MyExportListing
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
-                $this->myExcelWriter->writeCellName(
-                    'A8',
-                    'NOM DE L\'ENSEIGNANT :'
-                );
-                $this->myExcelWriter->writeCellName(
-                    'A10',
-                    'MATIERE ENSEIGNEE :'
-                );
+                if ($this->matiere !== null) {
+                    $this->myExcelWriter->writeCellName(
+                        'A10',
+                        'MATIERE ENSEIGNEE :' . $this->matiere->getDisplay()
+                    );
+                } else {
+                    $this->myExcelWriter->writeCellName(
+                        'A10',
+                        'MATIERE ENSEIGNEE :'
+                    );
+                }
+
+                if ($this->personnel !== null) {
+                    $this->myExcelWriter->writeCellName(
+                        'A8',
+                        'NOM DE L\'ENSEIGNANT :' . $this->personnel->getDisplayPr()
+                    );
+                } else {
+                    $this->myExcelWriter->writeCellName(
+                        'A8',
+                        'NOM DE L\'ENSEIGNANT :'
+                    );
+                }
 
                 $this->myExcelWriter->writeCellName(
                     'J5',
-                    'Période du 1er '.Constantes::TAB_MOIS[date('n')].' au '.date('t').' '.Constantes::TAB_MOIS[date('n')].' '.date('Y'),
+                    'Période du 1er ' . Constantes::TAB_MOIS[date('n')] . ' au ' . date('t') . ' ' . Constantes::TAB_MOIS[date('n')] . ' ' . date('Y'),
                     ['style' => 'HORIZONTAL_RIGHT']
                 );
                 $this->myExcelWriter->writeCellName(
@@ -408,7 +432,9 @@ class MyExportListing
      */
     private function exportPdf()
     {
-        $this->myPdf::generePdf('pdf/listing.html.twig', ['typeGroupe' => $this->typeGroupe], $this->name,
+        $this->myPdf::generePdf('pdf/listing.html.twig',
+            ['typeGroupe' => $this->typeGroupe, 'matiere' => $this->matiere, 'personnel' => $this->personnel],
+            $this->name,
             $this->dataUserSession->getDepartement()->getLibelle());
     }
 }

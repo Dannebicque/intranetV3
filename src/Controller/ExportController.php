@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 01/09/2020 07:42
 
 namespace App\Controller;
 
@@ -43,6 +43,7 @@ class ExportController extends AbstractController
         $exportFormat = $request->request->get('exportFormat');
         $exportFiltre = $request->request->get('exportFiltre');
 
-        return $myExport->genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $matiere);
+        return $myExport->genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $matiere,
+            $this->getUser());
     }
 }
