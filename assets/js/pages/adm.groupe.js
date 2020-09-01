@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/08/2020 12:23
+// @lastUpdate 01/09/2020 21:31
 
 import {addCallout} from '../util'
 
@@ -78,11 +78,9 @@ $(document).on('change', '.change-parcours', function () {
 })
 
 $(document).on('change', '.change-type_typegroupe', function () {
-  const semestre = $(this).data('semestre')
   $.ajax({
-    url: Routing.generate('administration_typegroupe_change_type', {semestre: semestre}),
+    url: Routing.generate('administration_typegroupe_change_type', {typeGroupe: $(this).data('typegroupe')}),
     data: {
-      typegroupe: $(this).data('typegroupe'),
       type: $(this).val()
     },
     method: 'POST',

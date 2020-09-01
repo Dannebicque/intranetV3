@@ -24,7 +24,7 @@
                     </td>
                     <td><label class="sr-only" for="typegroupe_{{ tg.id }}"></label>
                         <select id="typegroupe_{{ tg.id }}" name="typegroupe_{{ tg.id }}" class="form-control
-        change-type_typegroupe" data-typegroupe="{{ tg.id }}" data-semestre="{{ semestre.id }}">
+        change-type_typegroupe" data-typegroupe="{{ tg.id }}">
                             <option value="" selected>Type de type de Groupe</option>
                             {% for type in constant
                                 ('App\\Entity\\TypeGroupe::TYPES') %}
@@ -72,8 +72,7 @@
                 </td>
                 <td>
                     <label class="sr-only" for="typegroupe_type">Type</label>
-                    <select id="typegroupe_type" name="typegroupe_type" class="form-control
-        change-type_typegroupe">
+                    <select id="typegroupe_type" name="typegroupe_type" class="form-control">
                         <option value="" selected>Type de type de Groupe</option>
                         {% for type in constant('App\\Entity\\TypeGroupe::TYPES') %}
                             <option value="{{ type }}">

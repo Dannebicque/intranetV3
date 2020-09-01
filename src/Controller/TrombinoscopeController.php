@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:42
+// @lastUpdate 01/09/2020 17:50
 
 namespace App\Controller;
 
@@ -102,7 +102,6 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     public function trombiEtudiantExportImage(
-        KernelInterface $kernel,
         MyPDF $myPDF,
         TypeGroupe $typeGroupe
     ) {

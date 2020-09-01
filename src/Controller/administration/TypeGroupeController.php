@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 01/09/2020 20:36
 
 namespace App\Controller\administration;
 
@@ -79,25 +79,24 @@ class TypeGroupeController extends BaseController
     }
 
     /**
-     * @Route("/ajax/update-type", name="administration_typegroupe_change_type", methods={"POST"},
+     * @Route("/ajax/update-type/{typeGroupe}", name="administration_typegroupe_change_type", methods={"POST"},
      *                             options={"expose":true})
-     * @param TypeGroupeRepository $typeGroupeRepository
-     * @param Request              $request
+     * @param Request    $request
+     *
+     * @param TypeGroupe $typeGroupe
      *
      * @return JsonResponse|null
      */
-    public function updateType(TypeGroupeRepository $typeGroupeRepository, Request $request): ?JsonResponse
-    {
-        $typegroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
+    public function updateType(
+        Request $request,
+        TypeGroupe $typeGroupe
+    ): ?JsonResponse {
 
-        if ($typegroupe !== null) {
-            $typegroupe->setType($request->request->get('type'));
-            $this->entityManager->flush();
+        $typeGroupe->setType($request->request->get('type'));
+        $this->entityManager->flush();
 
-            return new JsonResponse(true, Response::HTTP_OK);
-        }
+        return new JsonResponse(true, Response::HTTP_OK);
 
-        return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

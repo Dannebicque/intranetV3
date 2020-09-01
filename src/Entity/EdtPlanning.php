@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 15:50
+// @lastUpdate 01/09/2020 21:18
 
 namespace App\Entity;
 
@@ -136,6 +136,16 @@ class EdtPlanning
     public function getDebut(): ?int
     {
         return $this->debut;
+    }
+
+    public function getDebutTexte(): ?string
+    {
+        return Constantes::TAB_HEURES[$this->debut];
+    }
+
+    public function getFinTexte(): ?string
+    {
+        return Constantes::TAB_HEURES[$this->fin];
     }
 
     public function setDebut(int $debut): self
