@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:38
+// @lastUpdate 01/09/2020 17:40
 
 namespace App\Controller;
 
@@ -19,6 +19,7 @@ use App\Repository\PersonnelRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -101,6 +102,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     public function trombiEtudiantExportImage(
+        KernelInterface $kernel,
         MyPDF $myPDF,
         TypeGroupe $typeGroupe
     ) {
@@ -112,7 +114,7 @@ class TrombinoscopeController extends BaseController
                 'semestre'   => $typeGroupe->getSemestre()
             ],
             $typeGroupe->getSemestre() !== null ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : '',
-            '/temp',
+            $kernel->getProjectDir() . '/public/upload/temp/',
             $this->getDepartement() !== null ? $this->getDepartement()->getLibelle() : ''
         );
 
