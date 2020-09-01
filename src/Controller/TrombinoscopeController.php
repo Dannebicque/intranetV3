@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:11
+// @lastUpdate 01/09/2020 17:38
 
 namespace App\Controller;
 
@@ -105,13 +105,14 @@ class TrombinoscopeController extends BaseController
         TypeGroupe $typeGroupe
     ) {
 
-        $myPDF::generePdf('pdf/trombinoscope.html.twig',
+        $myPDF::genereAndSavePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
                 'groupes'    => $typeGroupe->getGroupes(),
                 'semestre'   => $typeGroupe->getSemestre()
             ],
             $typeGroupe->getSemestre() !== null ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : '',
+            '/temp',
             $this->getDepartement() !== null ? $this->getDepartement()->getLibelle() : ''
         );
 
