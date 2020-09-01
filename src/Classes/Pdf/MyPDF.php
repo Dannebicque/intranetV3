@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:36
+// @lastUpdate 01/09/2020 17:37
 
 /**
  * Created by PhpStorm.
@@ -84,7 +84,7 @@ class MyPDF
 
         $output = self::$domPdf->output();
 
-        file_put_contents($dir . $name . '.jpeg', $output);
+        file_put_contents($dir . $name . '.pdf', $output);
 
     }
 
