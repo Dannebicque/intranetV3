@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 12:18
+// @lastUpdate 01/09/2020 17:11
 
 namespace App\Controller;
 
@@ -96,7 +96,6 @@ class TrombinoscopeController extends BaseController
      * @param MyPDF      $myPDF
      * @param TypeGroupe $typeGroupe
      *
-     * @return void
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -104,7 +103,7 @@ class TrombinoscopeController extends BaseController
     public function trombiEtudiantExportImage(
         MyPDF $myPDF,
         TypeGroupe $typeGroupe
-    ): void {
+    ) {
 
         $myPDF::generePdf('pdf/trombinoscope.html.twig',
             [
@@ -115,6 +114,8 @@ class TrombinoscopeController extends BaseController
             $typeGroupe->getSemestre() !== null ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : '',
             $this->getDepartement() !== null ? $this->getDepartement()->getLibelle() : ''
         );
+
+        return new Response(Response::HTTP_OK);
     }
 
     /**
