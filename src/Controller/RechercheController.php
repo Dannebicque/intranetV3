@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RechercheController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:47
+// @lastUpdate 01/09/2020 06:47
 
 namespace App\Controller;
 
 use App\Repository\EtudiantRepository;
+use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,11 +30,11 @@ class RechercheController extends BaseController
      */
     public function index(
         EtudiantRepository $etudiantRepository,
-        PersonnelRepository $personnelRepository,
+        PersonnelDepartementRepository $personnelRepository,
         $keyword
     ): JsonResponse {
-        $t['etudiants'] = $etudiantRepository->search($keyword);
-        $t['personnels'] = $personnelRepository->search($keyword);
+        $t['etudiants'] = $etudiantRepository->search($keyword, $this->getDepartement());
+        $t['personnels'] = $personnelRepository->search($keyword, $this->getDepartement());
         $t['autres'] = [];
         $t['basepath'] = $this->getParameter('BASE_URL') . 'upload/';
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:24
+// @lastUpdate 01/09/2020 06:53
 
 namespace App\Repository;
 
@@ -27,7 +27,7 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class PersonnelRepository extends ServiceEntityRepository
 {
-    private $router;
+
 
 
     /**
@@ -36,10 +36,10 @@ class PersonnelRepository extends ServiceEntityRepository
      * @param ManagerRegistry $registry
      * @param RouterInterface $router
      */
-    public function __construct(ManagerRegistry $registry, RouterInterface $router)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Personnel::class);
-        $this->router = $router;
+
 
     }
 
@@ -63,55 +63,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $needle
-     *
-     * @return array
-     */
-    public function search($needle): array
-    {
-        $query = $this->createQueryBuilder('p')
-            ->where('p.nom LIKE :needle')
-            ->orWhere('p.prenom LIKE :needle')
-            ->orWhere('p.username LIKE :needle')
-            ->orWhere('p.mailUniv LIKE :needle')
-            ->setParameter('needle', '%' . $needle . '%')
-            ->orderBy('p.nom', 'ASC')
-            ->addOrderBy('p.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
 
-        $t = array();
-
-        /** @var Personnel $personnel */
-        foreach ($query as $personnel) {
-            $tt = array();
-            $tt['displayPr'] = $personnel->getDisplayPr();
-            $tt['slug'] = $personnel->getSlug();
-            $tt['photo'] = $personnel->getPhotoName();
-            $tt['nom'] = $personnel->getNom();
-            $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
-            $tt['prenom'] = $personnel->getPrenom();
-            $tt['username'] = $personnel->getUsername();
-            $tt['mail_univ'] = $personnel->getMailUniv();
-            $tt['mail_perso'] = $personnel->getMailPerso();
-            $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
-            $tt['profil'] = '<a href="' . $this->router->generate('user_profil',
-                    ['type' => 'personnel', 'slug' => $personnel->getSlug()]) . '"
-       class="btn btn-info btn-outline btn-square"
-       data-provide="tooltip"
-       target="_blank"
-       data-placement="bottom"
-       title="Profil du personne">
-        <i class="fa fa-info"></i>
-        <span class="sr-only">Profil du personnel</span>
-    </a>';
-
-            $t[] = $tt;
-        }
-
-        return $t;
-    }
 
     /**
      * @param $slug
