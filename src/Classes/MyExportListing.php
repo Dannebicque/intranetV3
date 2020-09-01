@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 15:29
+// @lastUpdate 01/09/2020 07:21
 
 /**
  * Created by PhpStorm.
@@ -174,7 +174,30 @@ class MyExportListing
 
     private function exportCsv($separateur): StreamedResponse
     {
+        $this->myExcelWriter->createSheet('export');
+        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Nom');
+        $this->newColonne();
+        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Prénom');
+        $this->newColonne();
+        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Groupe');
+        $this->newLine();
+
+        /** @var Groupe $groupe */
+        foreach ($this->groupes as $groupe) {
+            /** @var Etudiant $etudiant */
+            foreach ($groupe->getEtudiants() as $etudiant) {
+                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
+                $this->newColonne();
+                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getPrenom()));
+                $this->newColonne();
+                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $groupe->getLibelle());
+                $this->newLine();
+            }
+        }
+
+
         $writer = new Csv($this->myExcelWriter->getSpreadsheet());
+        $writer->setDelimiter($separateur);
 
         return new StreamedResponse(
             static function() use ($writer) {
