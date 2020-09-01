@@ -18,13 +18,13 @@
         <table>
             <tr style="height:25px">
                 <td>Enseignant :</td>
-                <td>____________________________________</td>
+                <td>{% if personnel != null %}{{ personnel.displayPr }}{% else %}____________________________________{% endif %}</td>
                 <td>&nbsp;</td>
-                <td>Module :</td>
-                <td>____________________________________</td>
+                <td>Matiere :</td>
+                <td>{% if matiere != null %}{{ matiere.display }}{% else %}____________________________________{% endif %}</td>
             </tr>
         </table>
-        <br /><br />
+        <br/><br/>
         <table style="width:100%" class="table">
             <tr>
                 <td style="font-weight: bold; width:30px;" rowspan="2">#</td>
