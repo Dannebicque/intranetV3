@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/08/2020 09:56
+// @lastUpdate 01/09/2020 13:50
 
 namespace App\Entity;
 
@@ -25,7 +25,7 @@ abstract class Utilisateur implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string", length=75)
+     * @ORM\Column(type="string", length=75, nullable=true)
      *
      */
     protected $username;
