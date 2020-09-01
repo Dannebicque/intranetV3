@@ -12,7 +12,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for etudiant in etudiants %}
+                {% for etudiant in etudiants|filter(etudiant => etudiant.data != null) %}
                     <tr>
                         <td>{{ etudiant.data.display }}</td>
                         <td>{{ etudiant.etat }}</td>
