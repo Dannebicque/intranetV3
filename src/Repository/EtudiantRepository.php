@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 19:26
+// @lastUpdate 01/09/2020 06:42
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
@@ -185,9 +186,9 @@ class EtudiantRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function search($needle): array
+    public function search($needle, Departement $departement): array
     {
-        $query = $this->searchObject($needle);
+        $query = $this->searchObject($needle, $departement);
 
         $t = [];
 
@@ -253,7 +254,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function searchObject($needle)
+    public function searchObject($needle, Departement $departement)
     {
         return $this->createQueryBuilder('p')
             ->where('p.nom LIKE :needle')
@@ -262,7 +263,9 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
+            ->andWhere('p.departement = :departement')
             ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')
             ->getQuery()

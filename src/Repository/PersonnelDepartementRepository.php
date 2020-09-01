@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 01/09/2020 06:54
 
 namespace App\Repository;
 
@@ -13,6 +13,7 @@ use App\Entity\PersonnelDepartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method PersonnelDepartement|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,14 +23,18 @@ use Doctrine\ORM\NonUniqueResultException;
  */
 class PersonnelDepartementRepository extends ServiceEntityRepository
 {
+    private RouterInterface $router;
+
     /**
      * PersonnelDepartementRepository constructor.
      *
      * @param ManagerRegistry $registry
+     * @param RouterInterface $router
      */
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, RouterInterface $router)
     {
         parent::__construct($registry, PersonnelDepartement::class);
+        $this->router = $router;
     }
 
     /**
@@ -115,5 +120,59 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->addOrderBy('p.prenom', 'asc')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param $needle
+     *
+     * @return array
+     */
+    public function search($needle, Departement $departement): array
+    {
+        $query = $this->createQueryBuilder('d')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 'd.personnel = p.id')
+            ->where('p.nom LIKE :needle')
+            ->orWhere('p.prenom LIKE :needle')
+            ->orWhere('p.username LIKE :needle')
+            ->orWhere('p.mailUniv LIKE :needle')
+            ->andWhere('d.departement = :departement')
+            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('p.nom', 'ASC')
+            ->addOrderBy('p.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+
+        /** @var Personnel $personnel */
+        foreach ($query as $pers) {
+            $personnel = $pers->getPersonnel();
+            $tt = [];
+            $tt['displayPr'] = $personnel->getDisplayPr();
+            $tt['slug'] = $personnel->getSlug();
+            $tt['photo'] = $personnel->getPhotoName();
+            $tt['nom'] = $personnel->getNom();
+            $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
+            $tt['prenom'] = $personnel->getPrenom();
+            $tt['username'] = $personnel->getUsername();
+            $tt['mail_univ'] = $personnel->getMailUniv();
+            $tt['mail_perso'] = $personnel->getMailPerso();
+            $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
+            $tt['profil'] = '<a href="' . $this->router->generate('user_profil',
+                    ['type' => 'personnel', 'slug' => $personnel->getSlug()]) . '"
+       class="btn btn-info btn-outline btn-square"
+       data-provide="tooltip"
+       target="_blank"
+       data-placement="bottom"
+       title="Profil du personne">
+        <i class="fa fa-info"></i>
+        <span class="sr-only">Profil du personnel</span>
+    </a>';
+
+            $t[] = $tt;
+        }
+
+        return $t;
     }
 }
