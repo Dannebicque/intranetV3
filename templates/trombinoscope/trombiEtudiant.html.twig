@@ -35,10 +35,10 @@
         </div>
     </header>
     <div class="card-body">
-        {% if selectedTypeGroupe != null and selectedTypeGroupe.groupes|length >0 %}
+        {% if selectedTypeGroupe != null and groupes|length >0 %}
             <div class="tabs">
                 <ul class="nav nav-tabs">
-                    {% for groupe in selectedTypeGroupe.groupes %}
+                    {% for groupe in groupes %}
                         <li class="nav-item">
                             <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
                                href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }})</a>
@@ -48,7 +48,7 @@
             </div>
 
             <div class="tab-content">
-                {% for groupe in selectedTypeGroupe.groupes %}
+                {% for groupe in groupes %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
                         <div class="row">
                             {% if groupe.etudiants|length >0 %}

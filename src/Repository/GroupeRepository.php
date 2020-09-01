@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:16
+// @lastUpdate 01/09/2020 12:16
 
 
 namespace App\Repository;
@@ -175,5 +175,15 @@ class GroupeRepository extends ServiceEntityRepository
         }
 
         return $groupes;
+    }
+
+    public function findByTypeGroupe(?TypeGroupe $typegroupe)
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.typeGroupe = :typeGroupe')
+            ->orderBy('g.ordre', 'ASC')
+            ->setParameter('typeGroupe', $typegroupe)
+            ->getQuery()
+            ->getResult();
     }
 }
