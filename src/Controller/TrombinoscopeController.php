@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 15:28
+// @lastUpdate 01/09/2020 12:18
 
 namespace App\Controller;
 
@@ -14,6 +14,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
+use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -124,11 +125,18 @@ class TrombinoscopeController extends BaseController
      *
      * @return Response
      */
-    public function trombiEtudiantSemestre(Semestre $semestre, TypeGroupe $typegroupe = null): Response
-    {
+    public function trombiEtudiantSemestre(
+        GroupeRepository $groupeRepository,
+        Semestre $semestre,
+        TypeGroupe $typegroupe = null
+    ): Response {
+
+        $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
+
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
-            'semestre'           => $semestre,
-            'selectedTypeGroupe' => $typegroupe
+            'semestre' => $semestre,
+            'selectedTypeGroupe' => $typegroupe,
+            'groupes' => $groupes
 
         ]);
     }

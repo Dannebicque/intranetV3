@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/search.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2020 08:43
+// @lastUpdate 01/09/2020 11:59
 
 $(document).on('keyup', '#search', function (e) {
 
@@ -16,8 +16,6 @@ $(document).on('keyup', '#search', function (e) {
       url: Routing.generate('recherche', {keyword: keyword}),
       dataType: 'json',
       success: function (data) {
-        console.log(data)
-
         let html = ''
         if (data.etudiants.length > 0) {
           jQuery.each(data.etudiants, function (index, etudiant) {
@@ -43,7 +41,7 @@ $(document).on('keyup', '#search', function (e) {
           html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
         }
 
-        search_reponse_etudiant.slideUp().empty().append(html).slideDown()
+        search_reponse_etudiant.empty().append(html)
 
         html = ''
         if (data.personnels.length > 0) {
@@ -65,7 +63,7 @@ $(document).on('keyup', '#search', function (e) {
         } else {
           html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
         }
-        search_reponse_personnel.slideUp().empty().append(html).slideDown()
+        search_reponse_personnel.empty().append(html)
 
         html = ''
         if (data.autres.length > 0) {
@@ -78,13 +76,13 @@ $(document).on('keyup', '#search', function (e) {
         } else {
           html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
         }
-        search_reponse_autre.slideUp().empty().append(html).slideDown()
+        search_reponse_autre.empty().append(html)
       }
     })
   } else {
     var html = '<div class="alert alert-info">Saisir au moins 3 caractères</div>'
-    search_reponse_autre.slideUp().empty().append(html).slideDown()
-    search_reponse_personnel.slideUp().empty().append(html).slideDown()
-    search_reponse_etudiant.slideUp().empty().append(html).slideDown()
+    search_reponse_autre.empty().append(html)
+    search_reponse_personnel.empty().append(html)
+    search_reponse_etudiant.empty().append(html)
   }
 })

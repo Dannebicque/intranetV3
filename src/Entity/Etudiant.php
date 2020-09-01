@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 16:23
+// @lastUpdate 01/09/2020 12:10
 
 namespace App\Entity;
 
@@ -107,7 +107,7 @@ class Etudiant extends Utilisateur implements Serializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant")
-     * @ORM\OrderBy({"ordre":"ASC"})
+     * @ORM\OrderBy({"ordre" = "ASC"})
      */
     private $scolarites;
 
