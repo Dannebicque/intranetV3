@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 13:37
+// @lastUpdate 01/09/2020 13:47
 
 namespace App\Classes\Etudiant;
 
@@ -43,14 +43,13 @@ class EtudiantImport
     {
         $etudiant = new Etudiant();
         $etudiant->setSemestre($semestre);
-        $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
         $etudiant->updateFromApogee($dataApogee['etudiant']);
+        $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $update = $this->updateLdap($etudiant);
         $this->saveAdresse($dataApogee, $etudiant);
         if ($update) {
             $this->entity->persist($etudiant);
-
             return $etudiant;
         }
 
@@ -60,7 +59,7 @@ class EtudiantImport
     private function updateLdap(Etudiant $etudiant)
     {
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
-        if (is_array($etuLdap) && count($etuLdap) === 2) {
+        if (is_array($etuLdap) && count($etuLdap) === 2 && $etuLdap['mail'] !== '' && $etuLdap['login']) {
             $etudiant->updateFromLdap($etuLdap);
 
             return true;
@@ -88,10 +87,10 @@ class EtudiantImport
         $etudiant->setSemestre($semestre);
         $ldap = $this->updateLdap($etudiant);
         $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
+        $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $this->saveAdresse($dataApogee, $etudiant);
         if ($ldap) {
             $this->entity->persist($etudiant);
-
             return $etudiant;
         } else {
             return null;
