@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:26
+// @lastUpdate 01/09/2020 12:24
 
 namespace App\Controller\administration;
 
@@ -43,17 +43,23 @@ class EtudiantGroupeController extends BaseController
 
     /**
      * @Route("/affecte/{typeGroupe}", name="administration_etudiant_groupe_affecte", options={"expose":true})
+     * @param GroupeRepository $groupeRepository
      * @param EtudiantRepository $etudiantRepository
-     * @param TypeGroupe         $typeGroupe
+     * @param TypeGroupe $typeGroupe
      *
      * @return Response
      */
-    public function affecte(EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
-    {
+    public function affecte(
+        GroupeRepository $groupeRepository,
+        EtudiantRepository $etudiantRepository,
+        TypeGroupe $typeGroupe
+    ): Response {
         $etudiants = $etudiantRepository->findBySemestre($typeGroupe->getSemestre());
+        $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [
             'typeGroupe' => $typeGroupe,
+            'groupes'    => $groupes,
             'etudiants'  => $etudiants
         ]);
     }
