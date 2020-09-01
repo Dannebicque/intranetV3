@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 13:55
+// @lastUpdate 01/09/2020 15:31
 
 namespace App\Classes\Etudiant;
 
@@ -65,8 +65,9 @@ class EtudiantImport
 
             return true;
         }
-        $etudiant->setUsername(substr($etudiant->getNumEtudiant(), 0, 6));
 
+        $etudiant->setUsername(substr($etudiant->getNumEtudiant(), 0, 6));
+        $etudiant->setSlug(substr($etudiant->getNumEtudiant(), 0, 6));
         return false;
 
     }
@@ -91,14 +92,16 @@ class EtudiantImport
         $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
         $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $this->saveAdresse($dataApogee, $etudiant);
+
         if ($ldap) {
             $this->entity->persist($etudiant);
 
             return $etudiant;
-        } else {
-            $this->entity->clear($etudiant);
-
-            return null;
         }
+
+        $this->entity->clear($etudiant);
+
+        return null;
+
     }
 }
