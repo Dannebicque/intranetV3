@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 02/09/2020 12:28
 
 namespace App\Entity;
 
@@ -26,6 +26,12 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
 
     public const PERMANENT = 'permanent';
     public const VACATAIRE = 'vacataire';
+    public const CONTRACTUEL = 'contractuel';
+    public const MCF = 'MCF';
+    public const PU = 'PU';
+    public const PRAG = 'PRAG';
+    public const PRCE = 'PRCE';
+    public const ATER = 'ATER';
 
     /**
      * @ORM\Id()
@@ -295,7 +301,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     public function setStatut($statut): void
     {
-        if ($statut === 'PRO') {
+        if ($statut === self::VACATAIRE) {
             $this->setTypeUser(self::VACATAIRE);
         } else {
             $this->setTypeUser(self::PERMANENT);
