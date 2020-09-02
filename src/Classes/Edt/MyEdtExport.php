@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 18:17
+// @lastUpdate 02/09/2020 12:05
 
 namespace App\Classes\Edt;
 
@@ -170,12 +170,13 @@ class MyEdtExport
 
     private function genereaAllPdf($source, ?Departement $departement): void
     {
+        set_time_limit(120);
         foreach ($departement->getPersonnelDepartements() as $personnelDepartement) {
             $this->generePdf($personnelDepartement->getPersonnel(), $source, $departement);
         }
     }
 
-    private function generePdf(Personnel $personnel, $source, Departement $departement): void
+    public function generePdf(Personnel $personnel, $source, Departement $departement): void
     {
         $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         Tools::CheckDirectoryExist($dir);

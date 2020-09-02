@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 18:17
+// @lastUpdate 02/09/2020 12:11
 
 namespace App\Controller\administration;
 
-use App\Controller\BaseController;
 use App\Classes\Edt\MyEdtExport;
-use App\Repository\PersonnelDepartementRepository;
+use App\Controller\BaseController;
+use App\Repository\PersonnelRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,18 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class EdtExportController extends BaseController
 {
     /**
-     * @Route("/voir/{source}", name="administration_edt_export_voir", requirements={"source"="intranet|celcat"})
+     * @Route("/voir", name="administration_edt_export_voir", requirements={"source"="intranet|celcat"})
      *
      *
      * @param MyEdtExport $myEdtExport
-     * @param             $source
      *
      * @return Response
      */
     public function voirPdf(
-        MyEdtExport $myEdtExport,
-        PersonnelDepartementRepository $personnelDepartementRepository,
-        $source
+        MyEdtExport $myEdtExport
     ): Response {
         return $this->render('administration/edtExport/voir.html.twig', [
             'docs' => $myEdtExport->getAllDocs($this->dataUserSession->getDepartement())
@@ -70,10 +68,37 @@ class EdtExportController extends BaseController
     {
         $myEdtExport->genereAllDocument($source, $_format, $this->dataUserSession->getDepartement());
 
+        return $this->redirectToRoute('administration_edt_export_voir');
+    }
 
-//        return $this->render('administration/edtExport/index.html.twig', [
-//            'source' => $source
-//        ]);
+    /**
+     * @Route("/profs/{source}.pdf", name="administration_edt_export_profs",
+     *                                    requirements={"source"="intranet|celcat"})
+     *
+     *
+     * @param Request             $request
+     * @param PersonnelRepository $personnelRepository
+     * @param MyEdtExport         $myEdtExport
+     * @param                     $source
+     *
+     * @return Response
+     */
+    public function exportProfs(
+        Request $request,
+        PersonnelRepository $personnelRepository,
+        MyEdtExport $myEdtExport,
+        $source
+    ): Response {
+        $profs = $request->request->get('personnels');
+
+        foreach ($profs as $prof) {
+            $personnel = $personnelRepository->find($prof);
+            if ($personnel !== null) {
+                $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
+            }
+        }
+
+        return $this->redirectToRoute('administration_edt_export_voir');
     }
 
 
