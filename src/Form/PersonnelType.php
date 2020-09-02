@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 02/09/2020 12:27
 
 namespace App\Form;
 
@@ -33,7 +33,7 @@ class PersonnelType extends AbstractType
     {
         $builder
             ->add('civilite', CiviliteType::class, [
-                'label'                     => 'label.civilite'
+                'label' => 'label.civilite'
             ])
             ->add('nom', TextType::class, ['label' => 'label.nom'])
             ->add('prenom', TextType::class, ['label' => 'label.prenom'])
@@ -46,23 +46,21 @@ class PersonnelType extends AbstractType
             ->add('statut', ChoiceType::class, [
                 'label'                     => 'label.statut',
                 'choices'                   => [
-                    'choice.contractuel' => 'CONTRAC',
-                    'choice.mcf'         => 'MCF',
-                    'choice.pr'          => 'PU',
-                    'choice.prag'        => 'PRAG',
-                    'choice.prce'        => 'PRCE',
-                    'choice.vacataire'   => 'PRO'
+                    'choice.contractuel' => Personnel::CONTRACTUEL,
+                    'choice.mcf'         => Personnel::MCF,
+                    'choice.pr'          => Personnel::PU,
+                    'choice.prag'        => Personnel::PRAG,
+                    'choice.prce'        => Personnel::PRCE,
+                    'choice.vacataire'   => Personnel::VACATAIRE,
+                    'choice.ater'        => Personnel::ATER
                 ],
                 'choice_translation_domain' => 'form',
                 'expanded'                  => true
             ])
             ->add('nbHeuresService', TextType::class, ['label' => 'label.nbHeuresService'])
-
             ->add('site_univ', TextType::class, ['label' => 'label.site_univ', 'required' => false])
             ->add('mail_perso', TextType::class, ['label' => 'label.mail_perso', 'required' => false])
             ->add('site_perso', TextType::class, ['label' => 'label.site_perso', 'required' => false])
-
-
             ->add('poste_interne', TextType::class, ['label' => 'label.poste_interne', 'required' => false])
             ->add('tel_bureau', TextType::class, ['label' => 'label.tel_bureau', 'required' => false])
             ->add('tel1', TextType::class, ['label' => 'label.tel1', 'required' => false])
