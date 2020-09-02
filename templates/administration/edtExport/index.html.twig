@@ -21,29 +21,31 @@
     <div class="card">
         <h4 class="card-title"><strong>{{ 'adm.edt.actions'|trans }}</strong></h4>
         <div class="card-body">
-            Choisir
-            <div class="row">
-                {% for personnel in user_data.personnels %}
-                    <div class="form-check col-sm-6 col-md-3">
-                        <input class="form-check-input"
-                               name="personnels[]"
-                               type="checkbox"
-                               value="{{ personnel.id }}"
-                               id="personnel_{{ personnel.id }}">
-                        <label class="form-check-label" for="personnel_{{ personnel.id }}">
-                            {{ personnel.displayPr }}
-                        </label>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-sm-6 col-md-3"></div>
-                <div class="col-sm-6 col-md-3"></div>
-                <div class="col-sm-6 col-md-6">
-                    <button class="btn btn-success btn-block">Exporter les éléments séléectionnés</button>
+            <form action="{{ path('administration_edt_export_profs', {source:source}) }}" method="post">
+                Choisir
+                <div class="row">
+                    {% for personnel in user_data.personnels %}
+                        <div class="form-check col-sm-6 col-md-3">
+                            <input class="form-check-input"
+                                   name="personnels[]"
+                                   type="checkbox"
+                                   value="{{ personnel.id }}"
+                                   id="personnel_{{ personnel.id }}">
+                            <label class="form-check-label" for="personnel_{{ personnel.id }}">
+                                {{ personnel.displayPr }}
+                            </label>
+                        </div>
+                    {% endfor %}
                 </div>
-
-            </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3"></div>
+                    <div class="col-sm-6 col-md-3"></div>
+                    <div class="col-sm-6 col-md-6">
+                        <button class="btn btn-success btn-block" type="submit">Exporter les éléments séléectionnés
+                        </button>
+                    </div>
+                </div>
+            </form>
             <br>
             <div class="row">
                 <div class="col-sm-4">
@@ -68,7 +70,7 @@
             <br/>
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{ path('administration_edt_export_voir', {source:source}) }}" class="btn btn-info btn-block">
+                    <a href="{{ path('administration_edt_export_voir') }}" class="btn btn-info btn-block">
                         Voir/Envoyer (mail) les PDF / Ical</a>
                 </div>
             </div>
