@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 13:15
+// @lastUpdate 03/09/2020 12:30
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
@@ -29,6 +29,11 @@ import './modaler'
 
 require('bootstrap-select')
 
+$('input[type="file"]').on('change', function (e) {
+  console.log('toto')
+  let filename = e.target.files[0].name
+  $('.custom-file-label').html(filename)
+})
 
 // require('./theme')
 $(document).ready(function () {
