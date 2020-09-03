@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 16:52
+// @lastUpdate 03/09/2020 13:46
 
 /**
  * Created by PhpStorm.
@@ -76,10 +76,10 @@ class Constantes
 
     public const TAB_HEURES = [
         '',
-        '8:00',
-        '8:30',
-        '9:00',
-        '9:30',
+        '08:00',
+        '08:30',
+        '09:00',
+        '09:30',
         '10:00',
         '10:30',
         '11:00',

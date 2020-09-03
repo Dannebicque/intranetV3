@@ -16,7 +16,7 @@
 
 {% block content %}
     {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre
-        .id, matiere:matiere.id})) }}
+        .id, matiere:matiere.id, event:event.id})) }}
 {% endblock %}
 
 {% block fabactions %}

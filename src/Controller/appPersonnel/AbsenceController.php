@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 22:44
+// @lastUpdate 03/09/2020 13:54
 
 namespace App\Controller\appPersonnel;
 
@@ -104,14 +104,15 @@ class AbsenceController extends BaseController
         }
 
         if ($planning !== null) {
-            $semaine = $calendrierRepository->findOneBy(['semaineFormation' => $planning->getSemaine()]);
+//            $semaine = $calendrierRepository->findOneBy(['semaineFormation' => $planning->getSemaine()]);
 
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'matiere' => $matiere,
-                'event'   => $planning,
-                'groupes' => $myGroupes->getGroupesPlanning($planning),
-                'heure'   => Constantes::TAB_HEURES[$planning->getDebut()],
-                'date'    => $planning->getDate(),
+                'semestre' => $matiere->getSemestre(),
+                'matiere'  => $matiere,
+                'event'    => $planning,
+                'groupes'  => $myGroupes->getGroupesPlanning($planning),
+                'heure'    => Constantes::TAB_HEURES[$planning->getDebut()],
+                'date'     => $planning->getDate(),
             ]);
         }
 
