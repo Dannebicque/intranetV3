@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 15:13
+// @lastUpdate 03/09/2020 07:47
 
 namespace App\Controller;
 
@@ -226,7 +226,7 @@ class SecurityController extends AbstractController
         $departements = $personnelDepartementRepository->findByPersonnel($user);
 
         if ($request->getMethod() === 'POST') {
-            $departement = $personnelDepartementRepository->find($request->request->get('departement'));
+            $departement = $personnelDepartementRepository->findOneBy(['departement' => $request->request->get('departement')]);
             if ($departement !== null) {
 
                 $departement->setDefaut(true);
