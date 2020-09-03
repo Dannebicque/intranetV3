@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 09:36
+// @lastUpdate 03/09/2020 12:54
 
 namespace App\Classes;
 
@@ -105,7 +105,7 @@ class MyMessagerie
                 $this->saveDestinatairePersonnelDatabase($mess, $personnel);
                 $this->nbEtudiants++;
                 $this->myMailer->send($message);
-                $this->nbMessagesEnvoyes ++;
+                $this->nbMessagesEnvoyes++;
                 //todo: envoyer notification ?
             }
         }
@@ -120,21 +120,19 @@ class MyMessagerie
     {
         $this->nbMessagesEnvoyes = 0;
         $this->nbEtudiants = 0;
-
-        $message = (new TemplatedEmail())
-            ->subject($this->sujet)
-            ->from($this->expediteur->getMailuniv())
-            ->htmlTemplate('mails/message.html.twig')
-            ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
-
-        //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase('E');
-
-        //récupération des fichiers uploadés
-        //todo: gérer les pièces jointes
-
-
         foreach ($this->etudiants as $etu) {
+            $message = (new TemplatedEmail())
+                ->subject($this->sujet)
+                ->from($this->expediteur->getMailuniv())
+                ->htmlTemplate('mails/message.html.twig')
+                ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
+
+            //sauvegarde en BDD
+            $mess = $this->saveMessageDatabase('E');
+
+            //récupération des fichiers uploadés
+            //todo: gérer les pièces jointes
+
             foreach ($etu->getMails() as $mail) {
                 $message->addTo($mail);
             }
@@ -145,7 +143,6 @@ class MyMessagerie
             $this->nbMessagesEnvoyes++;
             //todo: envoyer notification ?
         }
-
 
         $this->entityManager->flush();
 
@@ -280,7 +277,7 @@ class MyMessagerie
     /**
      * @param $destinataires
      */
-    private function prepareEtudiants($destinataires) : void
+    private function prepareEtudiants($destinataires): void
     {
         $this->etudiants = [];
         foreach ($destinataires as $destinatiare) {
