@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 20:40
+// @lastUpdate 03/09/2020 07:36
 
 namespace App\Classes;
 
@@ -711,12 +711,12 @@ class MyPrevisionnel
                         }
 
                         $pr = new Previsionnel($matieres[$ligne[2]], $annee, $personnel);
-                        $pr->setNbHCm(str_replace(',', '.', $ligne[6]));
-                        $pr->setNbGrCm(trim($ligne[7]));
-                        $pr->setNbHTd(str_replace(',', '.', $ligne[8]));
-                        $pr->setNbGrTd(trim($ligne[9]));
-                        $pr->setNbHTp(str_replace(',', '.', $ligne[10]));
-                        $pr->setNbGrTp(trim($ligne[11]));
+                        $pr->setNbHCm(Tools::convertToFloat($ligne[6]));
+                        $pr->setNbGrCm(Tools::convertToInt($ligne[7]));
+                        $pr->setNbHTd(Tools::convertToFloat($ligne[8]));
+                        $pr->setNbGrTd(Tools::convertToInt($ligne[9]));
+                        $pr->setNbHTp(Tools::convertToFloat($ligne[10]));
+                        $pr->setNbGrTp(Tools::convertToInt($ligne[11]));
                         $this->entityManager->persist($pr);
                     }
                 }
