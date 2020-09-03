@@ -11,8 +11,14 @@
             l' {{ settings('NOM_IUT') }}" class="img-fluid" style="height: 100px">
         </div>
         <div>
-            <img class="avatar avatar-xxl" src="{{ asset('upload/photo/'~user.photoName) }}" alt="Photo de {{ user
-            .display }}">
+            {% if user.photoName != null and user.photoName != 'noimage.png' %}
+                <img class="avatar" src="{% if user.typeUser == 'permanent' %}
+{{ asset('upload/personnels/'~user.photoName)|imagine_filter('avatar') }}{% else %}
+{{ asset('upload/etudiants/'~user.photoName)|imagine_filter('avatar') }}
+                                {% endif %}" alt="Votre avatar">
+            {% else %}
+                {{ include('composants/_avatar.html.twig', {user:user, size:'xxl'}) }}
+            {% endif %}
             <br><br>
             <h5 class="lead">{{ user.displayPr }}</h5>
             <p>Veuillez définir votre formation par défaut</p>
@@ -25,12 +31,12 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="custom-control custom-control-lg custom-radio">
                             <input type="radio" class="custom-control-input" id="departement_{{ departement.id }}"
-                                   value="{{ departement.id }}"
+                                   value="{{ departement.departement.id }}"
                                    name="departement">
                             <label class="custom-control-label"
                                    for="departement_{{ departement.id }}" style="padding: 5px; background-color: {{ departement
                             .departement.couleur }}; color:white;
-                                   display:block">{{ departement.departement.libelle }}</label>
+                                    display:block">{{ departement.departement.libelle }}</label>
                         </div>
                     </div>
                 {% endfor %}
