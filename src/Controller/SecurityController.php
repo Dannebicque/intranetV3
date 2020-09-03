@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 07:47
+// @lastUpdate 03/09/2020 12:14
 
 namespace App\Controller;
 
@@ -226,16 +226,15 @@ class SecurityController extends AbstractController
         $departements = $personnelDepartementRepository->findByPersonnel($user);
 
         if ($request->getMethod() === 'POST') {
-            $departement = $personnelDepartementRepository->findOneBy(['departement' => $request->request->get('departement')]);
-            if ($departement !== null) {
-
-                $departement->setDefaut(true);
+            $personnelDepartement = $personnelDepartementRepository->findOneBy(['departement' => $request->request->get('departement')]);
+            if ($personnelDepartement !== null) {
+                $personnelDepartement->setDefaut(true);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($departement);
+                //$em->persist($departement);
                 $em->flush();
-                if ($departement->getDepartement() !== null) {
+                if ($personnelDepartement->getDepartement() !== null) {
                     $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
-                    $session->set('departement', $departement->getDepartement()->getUuidString()); //on sauvegarde
+                    $session->set('departement', $personnelDepartement->getDepartement()->getUuid()); //on sauvegarde
 
                     return $this->redirectToRoute('default_homepage');
                 }
