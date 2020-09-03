@@ -42,6 +42,7 @@ security:
     # Les regles de securité
     # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
     # peuvent acceder à toutes les pages commençant par /admin
+    - { path: '^/[a-z]{2}/borne', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/sso/redirect/cas', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/connexion', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/mentions-legales/', roles: IS_AUTHENTICATED_ANONYMOUSLY }

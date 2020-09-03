@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 20:40
+// @lastUpdate 03/09/2020 07:37
 
 /**
  * Created by PhpStorm.
@@ -48,6 +48,11 @@ abstract class Tools
 
     public static function convertToFloat($note)
     {
+        $note = trim($note);
+        if ($note === '' || $note === null) {
+            $note = 0;
+        }
+
         return str_replace(',', '.', $note);
     }
 
@@ -144,5 +149,16 @@ abstract class Tools
         }
 
         return true;
+    }
+
+    public static function convertToInt($int)
+    {
+        $int = trim($int);
+        if ($int === '' || $int === null) {
+            $int = 0;
+        }
+
+        return $int;
+
     }
 }
