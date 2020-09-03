@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 21:18
+// @lastUpdate 03/09/2020 13:54
 
 namespace App\Entity;
 
@@ -336,7 +336,8 @@ class EdtPlanning
     public function getDate(): Carbon
     {
         $date = new Carbon();
-        $date->setISODate(date('Y'), $this->getSemaine());
+        //todo: gérer la semaine qui n'est pas la semaine annuel
+        $date->setISODate(date('Y'), $this->getSemaine() + 35);
 
         return $date->startOfWeek()->addDays($this->jour - 1);
     }

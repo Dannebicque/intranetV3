@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 03/09/2020 13:54
 
 namespace App\Controller\bloc_saisie_absence;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Controller\BaseController;
+use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Classes\MyAbsences;
@@ -52,14 +53,25 @@ class SaisieAbsenceController extends BaseController
         MatiereRepository $matiereRepository,
         TypeGroupeRepository $typeGroupeRepository,
         Semestre $semestre,
-        Matiere $matiere = null
+        Matiere $matiere = null,
+        EdtPlanning $event = null
     ): Response {
 
+        if ($event !== null) {
+            $groupes = $typeGroupeRepository->findOneBy([
+                'semestre' => $semestre->getId(),
+                'type'     => $event->getType()
+            ]);
+        } else {
+            $groupes = null;
+        }
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere'     => $matiere,
             'matieres'    => $matiereRepository->findBySemestre($semestre),
             'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
+            'event'       => $event,
+            'groupes'     => $groupes
         ]);
     }
 
