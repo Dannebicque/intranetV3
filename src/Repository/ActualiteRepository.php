@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ActualiteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 04/09/2020 13:04
 
 namespace App\Repository;
 
 use App\Entity\Actualite;
+use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,11 +36,11 @@ class ActualiteRepository extends ServiceEntityRepository
      *
      * @return Actualite[]
      */
-    public function getByDepartement($departement, $nbResult = 0): array
+    public function getByDepartement(Departement $departement, $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')
-            ->setParameter('departement', $departement)
+            ->setParameter('departement', $departement->getId())
             ->orderBy('a.created', 'DESC');
 
         if ($nbResult > 0) {

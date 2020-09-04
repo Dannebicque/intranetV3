@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/08/2020 11:43
+// @lastUpdate 04/09/2020 12:58
 
 namespace App\Controller;
 
@@ -34,8 +34,8 @@ class DefaultController extends BaseController
         }
 
         return $this->render('default/index.html.twig', [
-            'actualites' => $actualiteRepository->getByDepartement($this->dataUserSession->getDepartement()),
-            'dates'      => $dateRepository->findByDepartement($this->dataUserSession->getDepartement(), 2)
+            'actualites' => $actualiteRepository->getByDepartement($this->getDepartement()),
+            'dates'      => $dateRepository->findByDepartement($this->getDepartement(), 2)
         ]);
     }
 
