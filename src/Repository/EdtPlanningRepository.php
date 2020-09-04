@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 19:18
+// @lastUpdate 04/09/2020 06:16
 
 namespace App\Repository;
 
@@ -46,7 +46,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $query->andWhere('p.semaine = :semaine')
                 ->setParameter('semaine', $semaine);
         }
-        $query->orderBy('p.jour, p.debut, p.groupe');
+        $query->orderBy('p.semaine, p.jour, p.debut, p.groupe');
 
 
         return $query->getQuery()
