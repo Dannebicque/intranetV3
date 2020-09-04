@@ -23,7 +23,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" data-provide="datepicker"
                                data-language="{{ app.request.getLocale() }}" id="absence-date"
-                               value="{% if event is defined %}{{ event.date|date('d/m/Y') }} {% else %} {{ date("now")
+                               value="{% if event != null %}{{ event.date|date('d/m/Y') }} {% else %} {{ date("now")
                                |date('d/m/Y') }}{% endif %}">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -38,19 +38,19 @@
                     >
                         <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                         {% for i in 08..19 %}
-                            <option value="{{ i|formatHeure }}:00" {% if event is defined and i|formatHeure~':00' ==
+                            <option value="{{ i|formatHeure }}:00" {% if event != null and i|formatHeure~':00' ==
                                 event.debutTexte %} selected {% endif %}>
                                 {{ i|formatHeure }}h00
                             </option>
-                            <option value="{{ i|formatHeure }}:15" {% if event is defined and
+                            <option value="{{ i|formatHeure }}:15" {% if event != null and
                                 i|formatHeure~':15'
                                 == event.debutTexte %} selected {% endif %}>
                                 {{ i|formatHeure }}h15
                             </option>
-                            <option value="{{ i|formatHeure }}:30" {% if event is defined and  i|formatHeure~':30' == event.debutTexte %} selected {% endif %}>
+                            <option value="{{ i|formatHeure }}:30" {% if event != null and  i|formatHeure~':30' == event.debutTexte %} selected {% endif %}>
                                 {{ i|formatHeure }}h30
                             </option>
-                            <option value="{{ i|formatHeure }}:45" {% if event is defined and  i|formatHeure~':45' == event.debutTexte %} selected {% endif %}>
+                            <option value="{{ i|formatHeure }}:45" {% if event != null and  i|formatHeure~':45' == event.debutTexte %} selected {% endif %}>
                                 {{ i|formatHeure }}h45
                             </option>
                         {% endfor %}
@@ -65,7 +65,7 @@
                             {% for typeGroupe in typeGroupes %}
                                 <div class="col-sm-2">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event is defined and event.type|upper ==
+                                            class="btn btn-block {% if event != null and event.type|upper ==
                                                 typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                                 </div>
                             {% else %}
@@ -89,7 +89,7 @@
                             {% for typeGroupe in groupes.typeGroupes %}
                                 <div class="col-sm-2">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event is defined and event.type|upper ==
+                                            class="btn btn-block {% if event != null and event.type|upper ==
                                                 typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                                 </div>
 
@@ -104,7 +104,7 @@
 <div class="card">
     <h4 class="card-title">{{ 'etudiants.du.semestre'|trans }}</h4>
     <div class="card-body" id="listeEtudiantsAbsences">
-        {% if event is defined %}
+        {% if event != null %}
             {{ include('api/absence/listeEtudiant.html.twig', {selectedTypeGroupe: groupes, numerogroupe: event.groupe}) }}
         {% else %}
             <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>

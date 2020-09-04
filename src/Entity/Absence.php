@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 08:42
+// @lastUpdate 03/09/2020 20:39
 
 namespace App\Entity;
 
@@ -86,7 +86,6 @@ class Absence extends BaseEntity implements Serializable
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
-        $this->anneeUniversitaire = $this->etudiant !== null ? $this->etudiant->getAnneeUniversitaire() : null;
     }
 
     /**
