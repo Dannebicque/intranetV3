@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 03/09/2020 20:40
 
 namespace App\Classes\Etudiant;
 
@@ -16,6 +16,7 @@ use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,17 +26,11 @@ class EtudiantAbsences
 {
 
     private AbsenceRepository $absenceRepository;
-    /**
-     * @var Etudiant
-     */
+
     private Etudiant $etudiant;
-    /**
-     * @var EntityManagerInterface
-     */
+
     private EntityManagerInterface $entityManager;
-    /**
-     * @var EventDispatcherInterface
-     */
+
     private EventDispatcherInterface $eventDispatcher;
     /**
      * @var int|mixed|string
@@ -90,7 +85,7 @@ class EtudiantAbsences
         $absence->setPersonnel($personnel);
         $absence->setDateHeure($dateHeure);
         $absence->setAnneeUniversitaire($matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null);
-        $absence->setDuree(new DateTime('01:30'));
+        $absence->setDuree(new Carbon('01:30'));
         $absence->setMatiere($matiere);
         $absence->setJustifie($justifie);
 
