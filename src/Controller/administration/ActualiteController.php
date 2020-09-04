@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:18
+// @lastUpdate 04/09/2020 13:05
 
 namespace App\Controller\administration;
 
@@ -33,7 +33,7 @@ class ActualiteController extends BaseController
     {
         return $this->render(
             'administration/actualite/index.html.twig',
-            ['actualites' => $actualiteRepository->getByDepartement($this->dataUserSession->getDepartement())]
+            ['actualites' => $actualiteRepository->getByDepartement($this->getDepartement())]
         );
     }
 
@@ -50,7 +50,7 @@ class ActualiteController extends BaseController
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
-        $actualites = $actualiteRepository->getByDepartement($this->dataUserSession->getDepartement(), 0);
+        $actualites = $actualiteRepository->getByDepartement($this->getDepartement(), 0);
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
