@@ -38,7 +38,7 @@
                             <td>{{ personnel.display }}</td>
                             <td>
                                 {% if docs[personnel.id] is defined %}
-                                    <a href="{{ asset('uploads/pdfedt/'~user_data.departement.id~'/'~docs[personnel.id]) }}"
+                                    <a href="{{ url('uploads/pdfedt/'~user_data.departement.id~'/'~docs[personnel.id]) }}"
                                        class="btn btn-info btn-block"
                                        target="_blank"><i class="fas fa-download"></i></a>
                                 {% else %}
