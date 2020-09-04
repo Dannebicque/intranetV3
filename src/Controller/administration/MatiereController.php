@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 04/09/2020 06:53
 
 namespace App\Controller\administration;
 
@@ -108,7 +108,7 @@ class MatiereController extends BaseController
      */
     public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        if ($configuration->get('MODIFICATION_PPN') === 1) {
+        if ($configuration->get('MODIFICATION_PPN') === '1') {
 
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
@@ -159,7 +159,7 @@ class MatiereController extends BaseController
      */
     public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
-        if ($configuration->get('MODIFICATION_PPN') === 1) {
+        if ($configuration->get('MODIFICATION_PPN') === '1') {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
                 'attr'    => [
@@ -195,7 +195,7 @@ class MatiereController extends BaseController
     public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
 
-        if ((int)$configuration->get('MODIFICATION_PPN') === 1) {
+        if ((int)$configuration->get('MODIFICATION_PPN') === '1') {
             $newMatiere = clone $matiere;
 
             $this->entityManager->persist($newMatiere);
