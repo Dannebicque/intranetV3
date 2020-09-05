@@ -1,9 +1,11 @@
 {% extends 'base-speciale.html.twig' %}
 
 {% block header %}{{ 'security.login.heading'|trans }}{% endblock %}
+
 {% block body %}
     class="min-h-fullscreen bg-img center-vh" style="background-image: url({{ asset('assets/bg/2.jpg') }});" data-overlay="7"
 {% endblock %}
+
 {% block content %}
     <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0 text-center" style="max-width: 100%">
         <div class="header-special" style="background-color: {{ settings('COLOR_IUT') }}">
@@ -13,9 +15,11 @@
         <div>
             {% if user.photoName != null and user.photoName != 'noimage.png' %}
                 <img class="avatar" src="{% if user.typeUser == 'permanent' %}
-{{ asset('upload/personnels/'~user.photoName)|imagine_filter('avatar') }}{% else %}
-{{ asset('upload/etudiants/'~user.photoName)|imagine_filter('avatar') }}
-                                {% endif %}" alt="Votre avatar">
+                        {{ asset('upload/personnels/'~user.photoName)|imagine_filter('avatar') }}
+                    {% else %}
+                        {{ asset('upload/etudiants/'~user.photoName)|imagine_filter('avatar') }}
+                    {% endif %}"
+                     alt="Votre avatar">
             {% else %}
                 {{ include('composants/_avatar.html.twig', {user:user, size:'xxl'}) }}
             {% endif %}
@@ -34,9 +38,8 @@
                                    value="{{ departement.departement.id }}"
                                    name="departement">
                             <label class="custom-control-label"
-                                   for="departement_{{ departement.id }}" style="padding: 5px; background-color: {{ departement
-                            .departement.couleur }}; color:white;
-                                    display:block">{{ departement.departement.libelle }}</label>
+                                   for="departement_{{ departement.id }}" style="padding: 5px; background-color: {{ departement.departement.couleur }}; color:white;display:block; width:100%">{{ departement
+                                .departement.libelle }}</label>
                         </div>
                     </div>
                 {% endfor %}
@@ -45,7 +48,7 @@
             <p>Si le département n'apparaît pas dans la liste, merci de contacter le responsable de ce département
                .</p>
             <br>
-            <button class="btn btn-bold btn-block btn-primary" type="submit"><i class="fa fa-unlock-alt mr-2"></i>
+            <button class="btn btn-bold btn-block btn-primary" type="submit"><i class="fas fa-save mr-2"></i>
                 Enregistrer
             </button>
         </form>
