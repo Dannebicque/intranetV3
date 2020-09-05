@@ -86,12 +86,10 @@
                                     <button class="ql-list" value="ordered" type="button"></button>
                                     <button class="ql-list" value="bullet" type="button"></button>
 
-                                    <select class="ql-align">
-                                        <option selected=""></option>
-                                        <option value="center"></option>
-                                        <option value="right"></option>
-                                        <option value="justify"></option>
-                                    </select>
+                                    <button class="ql-align" type="button"></button>
+                                    <button class="ql-align" value="center" type="button"></button>
+                                    <button class="ql-align" value="right" type="button"></button>
+                                    <button class="ql-align" value="justify" type="button"></button>
                                 </span>
                                 <span>
                                     <select id="custom-fields_{{ etat }}" class="ql-customsfields">
@@ -109,9 +107,19 @@
                                     </select>
                                 </span>
                             </div>
-                            <div class="editCourrier" id="text_{{ etat }}"></div>
+                            <div class="editCourrier" id="text_{{ etat }}">
+                                {% if courriers[etat] is defined %}
+                                    {{ courriers[etat].twigTemplate.source|raw }}
+                                {% endif %}
+                            </div>
 
                             <div class="row mt-10">
+
+                                <div class="col-sm-12">
+                                    <div class="alert alert-info">
+                                        Laisser vide pour utiliser le mail par défaut.
+                                    </div>
+                                </div>
                                 <div class="col-sm-12 col-md-4">
                                     <button id="" class="btn btn-danger btn-block">Revenir au mail par défaut
                                                                                    (effacera le contenu du
@@ -123,12 +131,10 @@
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
-                                    btn-block enregistreModeleMail">Enregistrer le modèle
+                                    btn-block enregistreModeleMail" data-ed="{{ etat }}">Enregistrer le modèle
                                     </button>
                                 </div>
                             </div>
-
-
                         </div>
                     {% endfor %}
                 </div>
@@ -137,28 +143,14 @@
     </div>
 {% endblock %}
 
+
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('src/assets/vendor/quill/quill.core.css') }}" rel="stylesheet">
-    <link href="{{ asset('src/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+    {{ encore_entry_link_tags('adm.stage_courrier') }}
 {% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('src/assets/vendor/quill/quill.min.js') }}"></script>
-    <script src="{{ asset('src/assets/js/script/plugins/myQuill.js') }}"></script>
-    <script>
-      let ed2, ed3, ed4, ed5, ed6, ed7, ed8, ed9
-
-      const champs = ['[CiviliteEtudiant]', '[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]', '[Tuteur]']
-      ed2 = loadQuill('ETAT_STAGE_AUTORISE')
-      ed3 = loadQuill('ETAT_STAGE_DEPOSE')
-      ed4 = loadQuill('ETAT_STAGE_VALIDE')
-      ed5 = loadQuill('ETAT_STAGE_REFUS')
-      ed6 = loadQuill('ETAT_STAGE_INCOMPLET')
-      ed7 = loadQuill('ETAT_STAGE_IMPRIME')
-      ed8 = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
-      ed9 = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
-
-    </script>
+    {{ encore_entry_script_tags('adm.stage_courrier') }}
 {% endblock %}
-{# todo: a refaire en webpack#}
+

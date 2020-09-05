@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TwigTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/09/2020 13:06
 
 namespace App\Entity;
 
@@ -25,6 +25,7 @@ class TwigTemplate extends BaseEntity
      * @ORM\Column(type="text")
      */
     private $source;
+
 
     public function getName(): ?string
     {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/09/2020 13:25
 
 namespace App\Controller\administration\stage;
 
@@ -11,6 +11,8 @@ use App\Controller\BaseController;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Classes\MyStageMailTemplate;
+use App\Repository\CourrierRepository;
+use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,10 +74,12 @@ class StagePeriodeCourrierController extends BaseController
      *
      * @return Response
      */
-    public function index(StagePeriode $stagePeriode): Response
-    {
+    public function index(
+        StageMailTemplateRepository $stageMailTemplateRepository,
+        StagePeriode $stagePeriode
+    ): Response {
 
-        $courriers = null;
+        $courriers = $stageMailTemplateRepository->findByStagePeriodeArray($stagePeriode);
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
             'etatsConvention' => StageEtudiant::ETATS,

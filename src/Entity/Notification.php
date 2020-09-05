@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:33
+// @lastUpdate 05/09/2020 13:16
 
 namespace App\Entity;
 
@@ -26,11 +26,11 @@ class Notification extends BaseEntity
         'absence.added'                      => 'ti-bookmark-alt',
         'decision.rattrapage.acceptee'       => 'ti-check',
         'decision.rattrapage.refusee'        => 'ti-na',
-        'chgt.etat_stage.autorise'           => 'ti-info',
-        'chgt.etat_stage.depose'             => 'ti-info',
-        'chgt.etat_stage.valide'             => 'ti-info',
-        'chgt.etat_stage.convention_envoyee' => 'ti-info',
-        'chgt.etat_stage.convention_recue'   => 'ti-info',
+        'chgt.etat_stage_autorise'           => 'ti-info',
+        'chgt.etat_stage_depose'             => 'ti-info',
+        'chgt.etat_stage_valide'             => 'ti-info',
+        'chgt.etat_stage_convention_envoyee' => 'ti-info',
+        'chgt.etat_stage_convention_recue'   => 'ti-info',
         'chgt.emprunt.demande'               => 'ti-info',
         'chgt.emprunt.accepte'               => 'ti-success',
         'chgt.emprunt.refus'                 => 'ti-danger',
@@ -43,11 +43,11 @@ class Notification extends BaseEntity
         'absence.added'                      => 'danger',
         'decision.rattrapage.acceptee'       => 'success',
         'decision.rattrapage.refusee'        => 'warning',
-        'chgt.etat_stage.autorise'           => 'info',
-        'chgt.etat_stage.depose'             => 'info',
-        'chgt.etat_stage.valide'             => 'info',
-        'chgt.etat_stage.convention_envoyee' => 'info',
-        'chgt.etat_stage.convention_recue'   => 'info',
+        'chgt.etat_stage_autorise'           => 'info',
+        'chgt.etat_stage_depose'             => 'info',
+        'chgt.etat_stage_valide'             => 'info',
+        'chgt.etat_stage_convention_envoyee' => 'info',
+        'chgt.etat_stage_convention_recue'   => 'info',
         'chgt.emprunt.demande'               => 'info',
         'chgt.emprunt.accepte'               => 'success',
         'chgt.emprunt.refus'                 => 'danger',

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/09/2020 13:25
 
 namespace App\Classes;
 
@@ -17,10 +17,8 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class MyStageMailTemplate
 {
-    /** @var StageMailTemplateRepository */
-    protected $stageMailTemplateRepository;
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected StageMailTemplateRepository $stageMailTemplateRepository;
+    protected EntityManagerInterface $entityManager;
 
     /**
      * MyStageMailTemplate constructor.
@@ -48,7 +46,7 @@ class MyStageMailTemplate
     public function updateTemplate($code, $sujet, $message, StagePeriode $stagePeriode): void
     {
         //rechercher si le modèle existe
-        $modele = $this->stageMailTemplateRepository->findEventPeriode('MAIL_CHGT_' . $code, $stagePeriode);
+        $modele = $this->stageMailTemplateRepository->findEventPeriode($code, $stagePeriode);
 
         if ($modele !== null) {
             $modele->setSubject($sujet);
