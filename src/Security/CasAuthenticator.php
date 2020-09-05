@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:24
+// @lastUpdate 05/09/2020 14:37
 
 namespace App\Security;
 
@@ -59,7 +59,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('cas_return', [],
             UrlGeneratorInterface::ABSOLUTE_URL));
-
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
 

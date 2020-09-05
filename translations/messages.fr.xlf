@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 05/09/2020 13:21 -->
+<!-- @lastUpdate 05/09/2020 13:38 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -9899,7 +9899,7 @@
     <unit id="Byj02Tr" name="formation.par.defaut.sauvegarde">
       <segment>
         <source>formation.par.defaut.sauvegarde</source>
-        <target>Département par défaut sauvegardée</target>
+        <target>Département par défaut sauvegardé</target>
       </segment>
     </unit>
     <unit id="2cOTHPo" name="diplome.create.success.flash">
@@ -12726,13 +12726,13 @@
     <unit id="6w5pAOd" name="atitle.export_apogee">
       <segment>
         <source>atitle.export_apogee</source>
-        <target>atitle.export_apogee</target>
+        <target>Export Apogée</target>
       </segment>
     </unit>
     <unit id="9SEDvHu" name="atitle.retour_scolarite">
       <segment>
         <source>atitle.retour_scolarite</source>
-        <target>atitle.retour_scolarite</target>
+        <target>Retour à la scolarité</target>
       </segment>
     </unit>
     <unit id="KJMuG_y" name="scolarite.semestre.heading">
@@ -12744,37 +12744,37 @@
     <unit id="CMfO1_p" name="atitle.retour_diplome">
       <segment>
         <source>atitle.retour_diplome</source>
-        <target>atitle.retour_diplome</target>
+        <target>Retour au diplôme</target>
       </segment>
     </unit>
     <unit id="ywyrnmG" name="atitle.retour_administratif">
       <segment>
         <source>atitle.retour_administratif</source>
-        <target>atitle.retour_administratif</target>
+        <target>Retour à l'administration</target>
       </segment>
     </unit>
     <unit id="6RjGqzJ" name="administratif_homepage.heading">
       <segment>
         <source>administratif_homepage.heading</source>
-        <target>administratif_homepage.heading</target>
+        <target>Tableau de bord administratif</target>
       </segment>
     </unit>
     <unit id="u7yX.85" name="recherche.etudiant.heading">
       <segment>
         <source>recherche.etudiant.heading</source>
-        <target>recherche.etudiant.heading</target>
+        <target>Rechercher un étudiant</target>
       </segment>
     </unit>
     <unit id="3wwEtea" name="recherche.personnel.heading">
       <segment>
         <source>recherche.personnel.heading</source>
-        <target>recherche.personnel.heading</target>
+        <target>Rechercher un personnel/intervenant</target>
       </segment>
     </unit>
     <unit id="VvnCvPS" name="scolarite.recherche.heading">
       <segment>
         <source>scolarite.recherche.heading</source>
-        <target>scolarite.recherche.heading</target>
+        <target>Rechercher</target>
       </segment>
     </unit>
     <unit id="AnJvT_I" name="diplome.duplicate.success.flash">
@@ -13167,7 +13167,7 @@
     <unit id="pn3K5kd" name="%diff% minute">
       <segment>
         <source>%diff% minute</source>
-        <target>2 minute</target>
+        <target>%diff% minute</target>
       </segment>
     </unit>
     <unit id="n8v7krd" name="DEMANDE">
@@ -13203,19 +13203,19 @@
     <unit id="dkAqfT9" name="%diff% heure">
       <segment>
         <source>%diff% heure</source>
-        <target>1 heure</target>
+        <target>%diff% heure</target>
       </segment>
     </unit>
     <unit id="bXxUdLN" name="copie chgt.etat_stage_autorise">
       <segment>
         <source>copie chgt.etat_stage_autorise</source>
-        <target>copie chgt.etat_stage_autorise</target>
+        <target>copie stage autorisé</target>
       </segment>
     </unit>
     <unit id="jRHjW3T" name="copie chgt.etat_stage_depose">
       <segment>
         <source>copie chgt.etat_stage_depose</source>
-        <target>copie chgt.etat_stage_depose</target>
+        <target>copie formulaire de stage complété</target>
       </segment>
     </unit>
     <unit id="vx2jpsS" name="%diff% seconde">
@@ -13227,19 +13227,19 @@
     <unit id="SU2E2OE" name="stage_etudiant.delete.success.flash">
       <segment>
         <source>stage_etudiant.delete.success.flash</source>
-        <target>stage_etudiant.delete.success.flash</target>
+        <target>Données du stage étudiant supprimées avec succès</target>
       </segment>
     </unit>
     <unit id="MRm43jJ" name="stage_periode.delete.error.flash">
       <segment>
         <source>stage_periode.delete.error.flash</source>
-        <target>stage_periode.delete.error.flash</target>
+        <target>Erreur lors de la suppression de la période de stage</target>
       </segment>
     </unit>
     <unit id="gZDMQMO" name="stage_periode.delete.success.flash">
       <segment>
         <source>stage_periode.delete.success.flash</source>
-        <target>stage_periode.delete.success.flash</target>
+        <target>Période de stage supprimée avec succès</target>
       </segment>
     </unit>
     <unit id="irLYUfS" name="absence.justificatif.valide.success.flash">
@@ -13269,7 +13269,7 @@
     <unit id="nUS.wUK" name="eval.de">
       <segment>
         <source>eval.de</source>
-        <target>eval.de</target>
+        <target>Evaluation de</target>
       </segment>
     </unit>
     <unit id="9hVT7sB" name="affecter.enseignant.groupe">
@@ -13338,16 +13338,6 @@
         <target>Retour qualité</target>
       </segment>
     </unit>
-    <unit id="R4k7WF6" name="non&#10;          .defini&#10;        ">
-      <segment>
-        <source>non
-          .defini
-        </source>
-        <target>__non
-          .defini
-        </target>
-      </segment>
-    </unit>
     <unit id="P_pOqNh" name="non-defini">
       <segment>
         <source>non-defini</source>
@@ -13381,7 +13371,7 @@
     <unit id="8ImBN2v" name="adm.edt.export.voir.heading">
       <segment>
         <source>adm.edt.export.voir.heading</source>
-        <target>__adm.edt.export.voir.heading</target>
+        <target>Voir les exports de l'emploi du temps</target>
       </segment>
     </unit>
     <unit id="7L2rM7l" name="adm.alternance_fiche_suivi.edit.heading">
@@ -13471,7 +13461,7 @@
     <unit id="yUtlpQl" name="%diff%">
       <segment>
         <source>%diff%</source>
-        <target>__%diff%</target>
+        <target>%diff%</target>
       </segment>
     </unit>
     <unit id="ny.ACQC" name="atitle.import_ppn">
@@ -13543,13 +13533,13 @@
     <unit id="kcIowSC" name="voir.détail.du.module">
       <segment>
         <source>voir.détail.du.module</source>
-        <target>messages</target>
+        <target>Voir les détails de la matière</target>
       </segment>
     </unit>
     <unit id="WNaw61D" name="detail.du.module">
       <segment>
         <source>detail.du.module</source>
-        <target>Détail du module</target>
+        <target>Détail de la matière</target>
       </segment>
     </unit>
     <unit id="94SOG_J" name="passer.en.anglais">

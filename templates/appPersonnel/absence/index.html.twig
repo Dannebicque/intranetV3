@@ -15,12 +15,14 @@
 {% endblock %}
 
 {% block content %}
-    {% if event is defined %}
-        {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre
-            .id, matiere:matiere.id, event:event.id})) }}
+    {% if semestre == null %}
+        <div class="alert alert-info">Ce créneau ne peut pas faire l'objet d'une saisie d'absence</div>
     {% else %}
-        {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre
-            .id, matiere:matiere.id})) }}
+        {% if event is defined %}
+            {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre.id, matiere:matiere.id, event:event.id})) }}
+        {% else %}
+            {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre.id, matiere:matiere.id})) }}
+        {% endif %}
     {% endif %}
 {% endblock %}
 
