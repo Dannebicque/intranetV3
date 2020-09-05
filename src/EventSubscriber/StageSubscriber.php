@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/09/2020 13:25
 
 namespace App\EventSubscriber;
 
@@ -222,7 +222,7 @@ class StageSubscriber implements EventSubscriberInterface
             $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $mailTemplate->getSubject());
         } else {
             //mail par défaut
-            $this->myMailer->setTemplate('mails/stage_' . $codeEvent . '.txt.twig',
+            $this->myMailer->setTemplate('mails/stages/stage_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant]);
             $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $codeEvent);
 
@@ -245,7 +245,7 @@ class StageSubscriber implements EventSubscriberInterface
                 );
             } else {
                 //sinon mail par défaut
-                $this->myMailer->setTemplate('mails/stage_assistant_' . $codeEvent . '.txt.twig',
+                $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
                     ['stageEtudiant' => $stageEtudiant]);
                 $this->myMailer->sendMessage($stageEtudiant->getStagePeriode()->getMailAssistant(),
                     'copie ' . $codeEvent);
@@ -254,7 +254,7 @@ class StageSubscriber implements EventSubscriberInterface
 
         //copie au RP lors du dépôt par l'étudiant
         if ($codeEvent === StageEvent::CHGT_ETAT_STAGE_DEPOSE) {
-            $this->myMailer->setTemplate('mails/stage_copie_depot_rp.txt.twig',
+            $this->myMailer->setTemplate('mails/stages/stage_copie_depot_rp.txt.twig',
                 ['stageEtudiant' => $stageEtudiant]);
             $tMails = [];
             foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $resp) {

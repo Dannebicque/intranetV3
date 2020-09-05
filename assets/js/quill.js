@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/quill.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 09:37
+// @lastUpdate 05/09/2020 13:25
 
 import '../css/quill.css'
 
@@ -13,7 +13,9 @@ import Snow from 'quill/themes/snow'
 
 import Bold from 'quill/formats/bold'
 import Italic from 'quill/formats/italic'
+import Underline from 'quill/formats/underline'
 import Header from 'quill/formats/header'
+import {AlignStyle} from 'quill/formats/align'
 import $ from 'jquery'
 
 
@@ -22,7 +24,9 @@ Quill.register({
   'themes/snow': Snow,
   'formats/bold': Bold,
   'formats/italic': Italic,
-  'formats/header': Header
+  'formats/underline': Underline,
+  'formats/header': Header,
+  'formats/align': AlignStyle
 })
 
 
@@ -38,7 +42,7 @@ let toolbarFullOptions = [
     {'header': [1, 2, 3, 4, 5, 6, false]},
     {'size': ['small', false, 'large', 'huge']}
   ],
-  ['bold', 'italic'],        // toggled buttons
+  ['bold', 'italic', 'underline'],        // toggled buttons
   [{'color': []}, {'background': []}],          // dropdown with defaults from theme
   [{'header': 1}, {'header': 2}, 'blockquote', 'code-block'],
   [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
