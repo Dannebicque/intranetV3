@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/09/2020 12:28
+// @lastUpdate 05/09/2020 14:25
 
 namespace App\Entity;
 
@@ -32,6 +32,8 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     public const PRAG = 'PRAG';
     public const PRCE = 'PRCE';
     public const ATER = 'ATER';
+    public const ASSISTANTE = 'ASS';
+    public const ADMINISTRATIF = 'TEC';
 
     /**
      * @ORM\Id()

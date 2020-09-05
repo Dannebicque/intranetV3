@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 05/09/2020 16:15
 
 namespace App\Twig;
 
 use App\Entity\Constantes;
 use App\Classes\Configuration;
 use App\Classes\Tools;
+use App\Entity\Personnel;
 use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -25,14 +26,6 @@ class AppExtension extends AbstractExtension
 {
     /** @var Configuration */
     protected Configuration $config;
-
-    /**
-     * AppExtension constructor.
-     *
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @return array
@@ -75,19 +68,18 @@ class AppExtension extends AbstractExtension
         return array(
             new TwigFunction('settings', array($this, 'getSetting')),
             new TwigFunction('datedujourlong', array($this, 'dateDuJourLong')),
-            new TwigFunction('convertHeureEdt', array($this, 'convertHeureEdt')),
-
+            new TwigFunction('convertHeureEdt', array($this, 'convertHeureEdt'))
         );
     }
 
     public function border($statut): string
     {
-        switch ($statut){
-            case 'TEC':
-            case 'ASS':
+        switch ($statut) {
+            case Personnel::ADMINISTRATIF:
+            case Personnel::ASSISTANTE:
                 return 'card-outline-warning';
-            case 'MCF':
-            case 'PU':
+            case Personnel::MCF:
+            case Personnel::PU:
                 return 'card-outline-primary';
             default:
                 return 'card-outline-info';
