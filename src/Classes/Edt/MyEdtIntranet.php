@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 19:33
+// @lastUpdate 06/09/2020 20:31
 
 /**
  * Created by PhpStorm.
@@ -247,10 +247,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 $debut = $p->getDebut();
                 $this->tab[$p->getJour()][$dbtEdt] = [];
                 $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $debut;
-
-                for ($i = $dbtEdt; $i < $finEdt; $i++) {
-                    $this->tab[$p->getJour()][$i]['texte'] = 'xx';
-                }
+                $this->tab[$p->getJour()][$dbtEdt]['fin'] = $p->getFin();
 
                 $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
 
@@ -724,7 +721,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             }
         } else {
             //pas sur un créneau classique pour le début
-
             if ($casedebut === 11 || $casedebut === 12) {
                 $casedebut = 10;
             } else if ($casedebut === 2 || $casedebut === 3) {
@@ -735,11 +731,12 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
             if ($idDebut !== null) {
                 $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
-                unset($this->tab[$p->getJour()][$idDebut]);
             }
+
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $p->getDebut();
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'nok';
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['fin'] = $casefin;
+
         }
     }
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 11:55
+// @lastUpdate 06/09/2020 20:00
 
 namespace App\Classes\Edt;
 
@@ -318,6 +318,7 @@ Abstract class BaseEdt
             case 8:
                 return 3;
             case 10:
+            case 11:
                 return 4;
             case 12:
             case 13:
