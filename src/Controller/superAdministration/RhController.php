@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 12:45
+// @lastUpdate 06/09/2020 12:49
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\LDAP\MyLdap;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
@@ -78,38 +79,18 @@ class RhController extends BaseController
 
     /**
      * @Route("/import", name="sa_rh_ldap_search", options={"expose"=true})
+     * @param MyLdap  $myLdap
      * @param Request $request
      *
      * @return Response
      */
-    public function searchLdap(Request $request): Response
+    public function searchLdap(MyLdap $myLdap, Request $request): Response
     {
-        $nom = $request->request->get('nom');
-        $prenom = $request->request->get('prenom');
-        $mail = $request->request->get('mail');
         $numero = $request->request->get('numero');
+        $myLdap->connect();
+        $data = $myLdap->getInfoPersonnel($numero);
 
-        $ldap = Ldap::create('ext_ldap', [
-            'host'       => 'ldap.univ-reims.fr',
-            'encryption' => 'ssl',
-        ]);
-        $ldap->bind('uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr', 'heXzHr7p7MKuccQ2UqKu');
-//supannEmpId ou uid
-
-        if ($mail !== '' && strpos('@univ-reims.fr', $mail) !== false) {
-            $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
-                '((mail=' . $mail . '))');
-        } elseif ($numero !== '') {
-            $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
-                '(|(supannEmpId=' . $numero . ')(uid=' . $numero . '))');
-        } else {
-            $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
-                '(|(cn=' . $nom . ')(givenname=' . $prenom . '))');
-        }
-
-        $results = $query->execute();
-
-        dump($results);
+        return $this->json($data);
     }
 
     /**
