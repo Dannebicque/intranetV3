@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:23
+// @lastUpdate 06/09/2020 16:14
 
 namespace App\Repository;
 
@@ -90,5 +90,18 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getResult();
 
         return count($query) >= 1;
+    }
+
+    public function findByEtudiant(Etudiant $etudiant)
+    {
+        return $this->createQueryBuilder('j')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
+            ->where('e.etudiant = :etudiant')
+            ->andWhere('j.anneeUniversitaire = :annee')
+            ->setParameter('semestre', $etudiant->getId())
+            ->setParameter('annee', $etudiant->getAnneeUniversitaire())
+            ->orderBy('j.created', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

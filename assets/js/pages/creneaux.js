@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/creneaux.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 06/09/2020 16:14
 import {addCallout} from '../util'
 
 $(document).on('click', '#btn_creneau_add', function(){
@@ -16,28 +16,28 @@ $(document).on('click', '#btn_creneau_add', function(){
       fin:$('#creneau_fin').val()
     },
     url: Routing.generate('administration_creneau_cours_new'),
-    success: function() {
-      $('#liste_creneaux').empty().load(Routing.generate('administration_creneau_cours_liste', {annee_universitaire: $annee}));
+    success: function () {
+      $('#liste_creneaux').empty().load(Routing.generate('administration_creneau_cours_liste', {annee_universitaire: $annee}))
       addCallout('Créneau ajouté avec succès', 'success')
     },
-    error: function() {
+    error: function () {
       addCallout('Erreur lors de l\'ajout du créneau', 'danger')
     }
   })
-});
+})
 
 $(document).on('click', '.bloquercreneau', function(){
   const $cr = $(this)
   if ($cr.hasClass('bloquercreneau_eviter')) {
-    updateCreneau('dispo', $cr.data('creneau'), $cr.data('semaine'));
+    updateCreneau('dispo', $cr.data('creneau'), $cr.data('semaine'))
     $cr.removeClass('bloquercreneau_eviter')
   } else if($cr.hasClass('bloquercreneau_interdit')) {
     $cr.removeClass('bloquercreneau_interdit')
     $cr.addClass('bloquercreneau_eviter')
-    updateCreneau('au', $cr.data('creneau'), $cr.data('semaine'));
+    updateCreneau('au', $cr.data('creneau'), $cr.data('semaine'))
   } else {
     $cr.addClass('bloquercreneau_interdit')
-    updateCreneau('va', $cr.data('creneau'), $cr.data('semaine'));
+    updateCreneau('va', $cr.data('creneau'), $cr.data('semaine'))
   }
 })
 
