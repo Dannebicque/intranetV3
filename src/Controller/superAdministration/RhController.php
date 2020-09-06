@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 12:31
+// @lastUpdate 06/09/2020 12:40
 
 namespace App\Controller\superAdministration;
 
@@ -87,6 +87,7 @@ class RhController extends BaseController
         $nom = $request->request->get('nom');
         $prenom = $request->request->get('prenom');
         $mail = $request->request->get('mail');
+        $numero = $request->request->get('numero');
 
         $ldap = Ldap::create('ext_ldap', [
             'host'       => 'ldap.univ-reims.fr',
@@ -98,6 +99,9 @@ class RhController extends BaseController
         if ($mail !== '' && strpos('@univ-reims.fr', $mail) !== false) {
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
                 '((mail=' . $mail . '))');
+        } elseif ($numero !== '') {
+            $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
+                '((uid=' . $mail . '))');
         } else {
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
                 '(|(cn=' . $nom . ')(givenname=' . $prenom . '))');
