@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 12:10
+// @lastUpdate 05/09/2020 18:16
 
 namespace App\Entity;
 
@@ -224,6 +224,12 @@ class Etudiant extends Utilisateur implements Serializable
     private $documentsFavoris;
 
     /**
+     * @ORM\ManyToMany(targetEntity=ProjetEtudiant::class, mappedBy="etudiants")
+     */
+    private $projetEtudiants;
+
+
+    /**
      * Etudiant constructor.
      * @throws Exception
      */
@@ -253,6 +259,7 @@ class Etudiant extends Utilisateur implements Serializable
         $this->emprunts = new ArrayCollection();
         $this->empruntEtudiants = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
+        $this->projetEtudiants = new ArrayCollection();
     }
 
     /**
@@ -1253,4 +1260,31 @@ class Etudiant extends Utilisateur implements Serializable
         return $this;
     }
 
+    /**
+     * @return Collection|ProjetEtudiant[]
+     */
+    public function getProjetEtudiants(): Collection
+    {
+        return $this->projetEtudiants;
+    }
+
+    public function addProjetEtudiant(ProjetEtudiant $projetEtudiant): self
+    {
+        if (!$this->projetEtudiants->contains($projetEtudiant)) {
+            $this->projetEtudiants[] = $projetEtudiant;
+            $projetEtudiant->addEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetEtudiant(ProjetEtudiant $projetEtudiant): self
+    {
+        if ($this->projetEtudiants->contains($projetEtudiant)) {
+            $this->projetEtudiants->removeElement($projetEtudiant);
+            $projetEtudiant->removeEtudiant($this);
+        }
+
+        return $this;
+    }
 }

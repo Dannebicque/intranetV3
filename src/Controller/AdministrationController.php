@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AdministrationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 06/09/2020 10:59
 
 namespace App\Controller;
 
+use App\Repository\ProjetPeriodeRepository;
 use App\Repository\StagePeriodeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,8 +26,10 @@ class AdministrationController extends BaseController
      *
      * @return Response
      */
-    public function index(StagePeriodeRepository $stagePeriodeRepository): Response
-    {
+    public function index(
+        StagePeriodeRepository $stagePeriodeRepository,
+        ProjetPeriodeRepository $projetPeriodeRepository
+    ): Response {
         $tperiodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $periodes = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
@@ -35,10 +38,21 @@ class AdministrationController extends BaseController
             }
         }
 
+        $projetPeriodes = [];
+        foreach ($this->dataUserSession->getDiplomes() as $diplome) {
+            $periodes = $projetPeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            foreach ($periodes as $periode) {
+                $projetPeriodes[] = $periode;
+            }
+        }
+
 
         return $this->render(
             'administration/index.html.twig',
-            ['periodes' => $tperiodes]
+            [
+                'stagePeriodes' => $tperiodes,
+                'projetPeriodes' => $projetPeriodes,
+            ]
         );
     }
 }
