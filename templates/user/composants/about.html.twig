@@ -88,7 +88,7 @@
     </div>
 {% endif %}
 
-{% if user.typeUser|lower == 'etudiant' %}
+{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
     <div class="card">
         <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
         <div class="card-body">

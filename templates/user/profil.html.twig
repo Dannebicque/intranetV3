@@ -26,7 +26,6 @@
             {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                 {{ include('user/composants/content_personnel.html.twig') }}
             {% elseif user.typeUser|lower == 'etudiant' %}
-
                 {{ include('user/composants/content_etudiant.html.twig') }}
             {% endif %}
         </div>
