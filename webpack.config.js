@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2020 18:39
+// @lastUpdate 06/09/2020 13:57
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -14,12 +14,12 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
+
   // directory where compiled assets will be stored
   .setOutputPath('public/build/')
   // public path used by the web server to access the output path
   .setPublicPath('/build')
   // only needed for CDN's or sub-directory deploy
-  //.setManifestKeyPrefix('build/')
 
   /*
    * ENTRY CONFIG

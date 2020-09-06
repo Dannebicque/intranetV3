@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/settings.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 06/09/2020 13:49
 import {addCallout} from '../util'
 
 $(document).on('change', '.departementParDefaut', function (e) {
@@ -16,5 +16,5 @@ $(document).on('change', '.departementParDefaut', function (e) {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
     }
   })
-});
+})
 

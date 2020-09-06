@@ -2,12 +2,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.configuration.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 06/09/2020 16:14
 import {addCallout} from '../util'
 
 $(document).on('change', '.changeOption', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault()
+  e.stopPropagation()
 
   $.ajax({
     url: Routing.generate('administration_configuration_change_option'),
@@ -18,14 +18,13 @@ $(document).on('change', '.changeOption', function (e) {
       name: $(this).attr('name'),
       id: $(this).data('id')
     },
-    success: function(data) {
+    success: function (data) {
       addCallout('Configuration enregistrée', 'success')
-    }, error: function(e){
+    }, error: function (e) {
       addCallout('Erreur lors de l\'enregistrement de la configuration', 'danger')
     }
   })
-
-});
+})
 
 $(document).on('change', '.changeOptionSelect', function () {
   $.ajax({
@@ -37,14 +36,13 @@ $(document).on('change', '.changeOptionSelect', function () {
       name: $(this).attr('name'),
       id: $(this).data('id')
     },
-    success: function(data) {
+    success: function (data) {
       addCallout('Configuration enregistrée', 'success')
-    }, error: function(e){
+    }, error: function (e) {
       addCallout('Erreur lors de l\'enregistrement de la configuration', 'danger')
     }
   })
-
-});
+})
 
 $(document).on('change', '.activeAnneeUniversitaire', function (e) {
   e.preventDefault()

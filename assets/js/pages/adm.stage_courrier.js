@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 09:02
+// @lastUpdate 06/09/2020 13:49
 
 import Quill from '../quill'
 import {addCallout} from '../util'
@@ -27,7 +27,6 @@ function loadQuill ($id) {
           }
         }
       }
-
     },
     placeholder: 'Composez le corps du message...',
     theme: 'snow'
@@ -36,9 +35,6 @@ function loadQuill ($id) {
 }
 
 $(document).ready(function () {
-
-
-  const champs = ['[CiviliteEtudiant]', '[NomEtudiant]', '[PrenomEtudiant]', '[Entreprise]', '[Tuteur]']
   ed_ETAT_STAGE_AUTORISE = loadQuill('ETAT_STAGE_AUTORISE')
   ed_ETAT_STAGE_DEPOSE = loadQuill('ETAT_STAGE_DEPOSE')
   ed_ETAT_STAGE_VALIDE = loadQuill('ETAT_STAGE_VALIDE')
