@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 12:40
+// @lastUpdate 06/09/2020 12:45
 
 namespace App\Controller\superAdministration;
 
@@ -101,7 +101,7 @@ class RhController extends BaseController
                 '((mail=' . $mail . '))');
         } elseif ($numero !== '') {
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
-                '((uid=' . $mail . '))');
+                '(|(supannEmpId=' . $numero . ')(uid=' . $numero . '))');
         } else {
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
                 '(|(cn=' . $nom . ')(givenname=' . $prenom . '))');
