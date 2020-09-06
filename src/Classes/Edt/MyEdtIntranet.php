@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 13:00
+// @lastUpdate 06/09/2020 19:33
 
 /**
  * Created by PhpStorm.
@@ -22,6 +22,7 @@ use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
@@ -240,7 +241,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if ((strtolower($p->getType()) === 'cm') || (strtolower($p->getType()) === 'td' && $p->getGroupe() === $this->groupetd) || (strtolower($p->getType()) === 'tp' && $p->getGroupe() === $this->groupetp)) {
+            if (($p->getType() === TypeGroupe::TYPE_GROUPE_CM) || ($p->getType() === TypeGroupe::TYPE_GROUPE_TD && $p->getGroupe() === $this->groupetd) || ($p->getType() === TypeGroupe::TYPE_GROUPE_TP && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
                 $finEdt = $this->convertEdt($p->getFin());
                 $debut = $p->getDebut();
@@ -543,18 +544,15 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
-                case 'CM':
-                case 'cm':
+                case TypeGroupe::TYPE_GROUPE_CM:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = $p->getSemestre()->getNbgroupeTpEdt();
                     $taille = 0;
                     break;
-                case 'TP':
-                case 'tp':
+                case TypeGroupe::TYPE_GROUPE_TP:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 1;
                     $taille = 4;
                     break;
-                case 'TD':
-                case 'td':
+                case TypeGroupe::TYPE_GROUPE_TD:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 2;
                     $taille = 8;
                     break;
@@ -607,18 +605,15 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $t['salle'] = $pl->getSalle();
 
             switch ($pl->getType()) {
-                case 'cm':
-                case 'CM':
+                case TypeGroupe::TYPE_GROUPE_CM:
                     $t['type'] = 'Cours Magistral';
                     $t['groupes'] = 'Tous';
                     break;
-                case 'td':
-                case 'TD':
+                case TypeGroupe::TYPE_GROUPE_TD:
                     $t['type'] = 'Travaux Dirigés';
                     $t['groupes'] = chr($pl->getGroupe() + 64) . chr($pl->getGroupe() + 65);
                     break;
-                case 'tp':
-                case 'TP':
+                case TypeGroupe::TYPE_GROUPE_TP:
                     $t['type'] = 'Travaux Pratiques';
                     $t['groupes'] = chr($pl->getGroupe() + 64);
                     break;
@@ -693,14 +688,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $plann->setType($tc[0]);
 
         switch ($tc[0]) {
-            case 'cm':
-            case 'CM':
+            case TypeGroupe::TYPE_GROUPE_CM:
                 $plann->setGroupe(1);
                 break;
-            case 'td':
-            case 'TD':
-            case 'tp':
-            case 'TP':
+            case TypeGroupe::TYPE_GROUPE_TD:
+            case TypeGroupe::TYPE_GROUPE_TP:
                 $plann->setGroupe(trim($tc[1]));
                 break;
         }
@@ -719,6 +711,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $casefin = $p->getFin();
         $duree = $casefin - $casedebut;
         $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $casedebut;
+        $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'aie';
 
         //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
         if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
@@ -731,18 +724,16 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             }
         } else {
             //pas sur un créneau classique pour le début
-            if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
-                $casedebut -= ($duree % 3);
-            }
 
             if ($casedebut === 11 || $casedebut === 12) {
                 $casedebut = 10;
+            } else if ($casedebut === 2 || $casedebut === 3) {
+                $casedebut = 1;
+            } else if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+                $casedebut -= ($duree % 3);
             }
 
-            if ($casedebut === 2 || $casedebut === 3) {
-                $casedebut = 1;
-            }
-            if ($idDebut === null) {
+            if ($idDebut !== null) {
                 $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
                 unset($this->tab[$p->getJour()][$idDebut]);
             }

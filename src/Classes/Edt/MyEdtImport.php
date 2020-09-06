@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 12:14
+// @lastUpdate 06/09/2020 19:20
 
 namespace App\Classes\Edt;
 
@@ -12,6 +12,7 @@ use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
 use App\Classes\DataUserSession;
 use App\Classes\MyUpload;
+use App\Entity\TypeGroupe;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
@@ -141,9 +142,9 @@ class MyEdtImport
                         $pl->setSalle($salle);
                         $pl->setGroupe(1);
                         if (substr($pl->getSemestre()->getLibelle(), -1) === 'D') {
-                            $pl->setType('td');
+                            $pl->setType(TypeGroupe::TYPE_GROUPE_TD);
                         } else {
-                            $pl->setType('cm');
+                            $pl->setType(TypeGroupe::TYPE_GROUPE_CM);
                         }
 
                         $pl->setDebut($tabdebut[$heure]);
@@ -194,7 +195,7 @@ class MyEdtImport
                             $pl->setSalle($salle);
                             $pl->setOrdre($ordre);
                             $pl->setGroupe(ord($groupe) - 64);
-                            $pl->setType(strtolower($typecours));
+                            $pl->setType(strtoupper($typecours));
                             $pl->setDebut($tabdebut[$heure]);
                             $pl->setFin($tabdebut[$heure] + 3);
                             $pl->setSemaine($this->semaine);
