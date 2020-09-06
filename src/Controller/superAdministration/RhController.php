@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 12:49
+// @lastUpdate 06/09/2020 12:52
 
 namespace App\Controller\superAdministration;
 
@@ -78,7 +78,7 @@ class RhController extends BaseController
     }
 
     /**
-     * @Route("/import", name="sa_rh_ldap_search", options={"expose"=true})
+     * @Route("/search-ldap", name="sa_rh_ldap_search", options={"expose"=true})
      * @param MyLdap  $myLdap
      * @param Request $request
      *
