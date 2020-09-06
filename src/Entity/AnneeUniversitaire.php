@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AnneeUniversitaire.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/09/2020 16:44
 
 namespace App\Entity;
 
@@ -91,6 +91,11 @@ class AnneeUniversitaire extends BaseEntity
      */
     private $active;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProjetPeriode::class, mappedBy="anneeUniversitaire")
+     */
+    private $projetPeriodes;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
@@ -104,6 +109,7 @@ class AnneeUniversitaire extends BaseEntity
         $this->progressionPedagogiques = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
+        $this->projetPeriodes = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -479,6 +485,37 @@ class AnneeUniversitaire extends BaseEntity
     public function __toString()
     {
         return (string)$this->getAnnee();
+    }
+
+    /**
+     * @return Collection|ProjetPeriode[]
+     */
+    public function getProjetPeriodes(): Collection
+    {
+        return $this->projetPeriodes;
+    }
+
+    public function addProjetPeriode(ProjetPeriode $projetPeriode): self
+    {
+        if (!$this->projetPeriodes->contains($projetPeriode)) {
+            $this->projetPeriodes[] = $projetPeriode;
+            $projetPeriode->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetPeriode(ProjetPeriode $projetPeriode): self
+    {
+        if ($this->projetPeriodes->contains($projetPeriode)) {
+            $this->projetPeriodes->removeElement($projetPeriode);
+            // set the owning side to null (unless already changed)
+            if ($projetPeriode->getAnneeUniversitaire() === $this) {
+                $projetPeriode->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
     }
 
 

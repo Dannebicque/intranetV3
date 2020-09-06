@@ -131,7 +131,7 @@
                 </header>
                 <div class="card-body">
                     <div class="row gap-y">
-                        {% for periode in periodes %}
+                        {% for periode in stagePeriodes %}
                             <div class="col-md-6">
                                 <div>
                                     <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
@@ -165,6 +165,36 @@
                             <div class="alert alert-info">Aucune année n'est proposée en alternance</div>
                         {% endif %}
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.projet'|trans }}</h2>
+                <div class="card-header-actions" style="">
+                    <a href="{{ path('administration_projet_periode_index') }}" class="btn btn-sm btn-info"
+                       title="Créer une période de projet" data-provide="tooltip"> <i class="fas fa-plus"></i><span
+                                class="sr-only">Créer une période de projet</span></a>
+                </div>
+            </header>
+            <div class="card-body">
+                <div class="row gap-y">
+                    {% for periode in projetPeriodes %}
+                        <div class="col-md-6">
+                            <div>
+                                <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}"
+                                   class="btn btn-block btn-primary"> Période : <strong>{{ periode.libelle }}
+                                        ({{ periode.semestre.display }})</strong></a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-sm-12">
+                            <div class="alert alert-info">Aucune période de projet.</div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

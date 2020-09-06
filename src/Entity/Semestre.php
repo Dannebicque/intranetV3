@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 22:53
+// @lastUpdate 05/09/2020 16:17
 
 namespace App\Entity;
 
@@ -275,6 +275,11 @@ class Semestre extends BaseEntity
      */
     private $optNbJoursSaisieAbsence = 10;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProjetPeriode::class, mappedBy="semestre")
+     */
+    private $projetPeriodes;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -290,6 +295,7 @@ class Semestre extends BaseEntity
         $this->scolaritePromos = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
         $this->qualiteQuestionnaires = new ArrayCollection();
+        $this->projetPeriodes = new ArrayCollection();
     }
 
     /**
@@ -1328,6 +1334,37 @@ class Semestre extends BaseEntity
     public function setOptNbJoursSaisieAbsence(int $optNbJoursSaisieAbsence): self
     {
         $this->optNbJoursSaisieAbsence = $optNbJoursSaisieAbsence;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProjetPeriode[]
+     */
+    public function getProjetPeriodes(): Collection
+    {
+        return $this->projetPeriodes;
+    }
+
+    public function addProjetPeriode(ProjetPeriode $projetPeriode): self
+    {
+        if (!$this->projetPeriodes->contains($projetPeriode)) {
+            $this->projetPeriodes[] = $projetPeriode;
+            $projetPeriode->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetPeriode(ProjetPeriode $projetPeriode): self
+    {
+        if ($this->projetPeriodes->contains($projetPeriode)) {
+            $this->projetPeriodes->removeElement($projetPeriode);
+            // set the owning side to null (unless already changed)
+            if ($projetPeriode->getSemestre() === $this) {
+                $projetPeriode->setSemestre(null);
+            }
+        }
 
         return $this;
     }

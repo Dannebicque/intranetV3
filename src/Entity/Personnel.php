@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 14:25
+// @lastUpdate 05/09/2020 16:17
 
 namespace App\Entity;
 
@@ -252,6 +252,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $documentsFavoris;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=ProjetPeriode::class, mappedBy="responsables")
+     */
+    private $projetPeriodes;
+
     public function __construct()
     {
         parent::__construct();
@@ -279,6 +284,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->emprunts = new ArrayCollection();
         $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
+        $this->projetPeriodes = new ArrayCollection();
     }
 
     /**
@@ -1384,6 +1390,34 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
             if ($documentsFavori->getPersonnel() === $this) {
                 $documentsFavori->setPersonnel(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProjetPeriode[]
+     */
+    public function getProjetPeriodes(): Collection
+    {
+        return $this->projetPeriodes;
+    }
+
+    public function addProjetPeriode(ProjetPeriode $projetPeriode): self
+    {
+        if (!$this->projetPeriodes->contains($projetPeriode)) {
+            $this->projetPeriodes[] = $projetPeriode;
+            $projetPeriode->addResponsable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetPeriode(ProjetPeriode $projetPeriode): self
+    {
+        if ($this->projetPeriodes->contains($projetPeriode)) {
+            $this->projetPeriodes->removeElement($projetPeriode);
+            $projetPeriode->removeResponsable($this);
         }
 
         return $this;

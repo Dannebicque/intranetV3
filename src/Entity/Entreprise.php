@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/09/2020 18:13
 
 namespace App\Entity;
 
@@ -51,9 +51,15 @@ class Entreprise extends BaseEntity
      */
     private $stageEtudiants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="organisme")
+     */
+    private $projetEtudiants;
+
     public function __construct()
     {
         $this->stageEtudiants = new ArrayCollection();
+        $this->projetEtudiants = new ArrayCollection();
     }
 
     public function getSiret(): ?string
@@ -141,6 +147,37 @@ class Entreprise extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($stageEtudiant->getEntreprise() === $this) {
                 $stageEtudiant->setEntreprise(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProjetEtudiant[]
+     */
+    public function getProjetEtudiants(): Collection
+    {
+        return $this->projetEtudiants;
+    }
+
+    public function addProjetEtudiant(ProjetEtudiant $projetEtudiant): self
+    {
+        if (!$this->projetEtudiants->contains($projetEtudiant)) {
+            $this->projetEtudiants[] = $projetEtudiant;
+            $projetEtudiant->setOrganisme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetEtudiant(ProjetEtudiant $projetEtudiant): self
+    {
+        if ($this->projetEtudiants->contains($projetEtudiant)) {
+            $this->projetEtudiants->removeElement($projetEtudiant);
+            // set the owning side to null (unless already changed)
+            if ($projetEtudiant->getOrganisme() === $this) {
+                $projetEtudiant->setOrganisme(null);
             }
         }
 

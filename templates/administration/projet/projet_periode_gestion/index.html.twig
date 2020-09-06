@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'projet_periode_gestion.heading'|trans({'%libelle%':projetPeriode.libelle})|raw }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for periode in periodes %}
+            <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}"
+               class="btn btn-round {% if periode.id == projetPeriode.id %}btn-primary{% endif %}"
+               title="{{ 'changer.de.projet_periode'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ periode.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_projet_periode_edit', {id: projetPeriode.uuidString}) }}"
+               class="btn btn-warning btn-sm btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.modifier.la.periode'|trans }}"><i
+                        class="material-icons">edit</i></a>
+
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 sol-sm-12">
+            <div class="card card-slided-up">
+                <header class="card-header">
+                    <h4 class="card-title">{{ 'periode'|trans }} : <strong>{{ projetPeriode.libelle }}</strong>
+                                                                 ({{ projetPeriode.semestre.libelle }})</h4>
+                    <ul class="card-controls">
+                        <li><a class="card-btn-slide" href="#" title="plus de détails" data-provide="tooltip">
+                                <i class="fas fa-chevron-down"></i>
+                            </a></li>
+                    </ul>
+                </header>
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <p>{{ 'periode.de.projet.du'|trans }}
+                                    <strong>{{ projetPeriode.dateDebut ? projetPeriode.dateDebut|format_date('long') : 'non.defini'|trans }}
+                                        {{ 'au'|trans }}   {{ projetPeriode.dateFin ? projetPeriode
+                                        .dateFin|format_date('long') : 'non.defini'|trans }}</strong>
+                                </p>
+                                <p>{{ 'les.responsables.sont'|trans }} : </p>
+                                <ul>
+                                    {% for personnel in projetPeriode.responsables %}
+                                        <li>{{ personnel.displayPr }}</li>
+                                    {% else %}
+                                        {{ 'non.defini'|trans }}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <h4 class="card-header">Etudiants</h4>
+                <div class="card-body">
+                    <table class="table table-striped" data-provide="datatables">
+                        <thead>
+                        <tr>
+                            <th>{{ 'table.etudiant'|trans }}</th>
+                            <th>{{ 'table.entreprise'|trans }}</th>
+                            <th>{{ 'table.ville'|trans }}</th>
+                            <th>{{ 'table.periode'|trans }}</th>
+                            <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                            <th>{{ 'table.actions'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for projetEtudiant in myProjet.dataEtudiants %}
+                        <tr>
+                            <td>{{ projetEtudiant.etudiant.display }}</td>
+                            {% if projetEtudiant.projet is defined %}
+                                <td>{{ projetEtudiant.projet.entreprise.libelle }}</td>
+                                <td>{% if projetEtudiant.projet.entreprise.adresse != null %}
+
+                                        {{ projetEtudiant.projet.entreprise.adresse.ville|capitalize }} ({{ projetEtudiant.projet.entreprise.adresse.codePostal }})
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td {% if projetEtudiant.projet.dateDebutStage != projetPeriode.dateDebut or
+                                    projetEtudiant.projet.dateFinStage != projetPeriode.dateFin %} style="background-color: firebrick; color: whitesmoke"{% endif %}>
+                                    {{ projetEtudiant.projet.dateDebutStage|format_date('long') }}
+                                    <br/> {{ projetEtudiant.projet.dateFinStage|format_date('long') }}
+                                </td>
+                                <td>
+                                    <label for="tuteur_{{ projetEtudiant.etudiant.id }}" class="sr-only"></label>
+                                    <select name="tuteur_{{ projetEtudiant.etudiant.id }}" id="tuteur_{{ projetEtudiant.etudiant.id }}" data-stage="{{ projetEtudiant.projet.id }}"
+                                            class="changetuteur form-control">
+                                        <option>{{ 'table.tuteur_universitaire'|trans }}</option>
+                                        {% for personnel in user_data.personnels %}
+                                            <option value="{{ personnel.id }}" {% if projetEtudiant.projet
+                                                .tuteurUniversitaire != null and personnel.id ==
+                                                projetEtudiant.projet.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+
+                                    <a href="{{ path('administration_stage_etudiant_show', {id:projetEtudiant.projet.id}) }}"
+                                       class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+
+                                    <a href="{{ path('administration_stage_etudiant_edit', {id:projetEtudiant.projet.id}) }}"
+                                       class="btn btn-warning btn-outline btn-square"
+                                       data-provide="tooltip"
+                                       data-placement="bottom"
+                                       title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
+                                    <a href="{{ path('administration_stage_etudiant_delete', {id:projetEtudiant.projet.id}) }}"
+                                       data-csrf="{{ csrf_token('delete' ~ projetEtudiant.projet.id) }}"
+                                       class="btn btn-danger btn-outline btn-square supprimer"
+                                       data-provide="tooltip" data-placement="bottom"
+                                       title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
+                                </td>
+                            {% else %}
+                                <td>{{ 'pas.de.projet'|trans }}</td>
+                                <td>{{ 'pas.de.projet'|trans }}</td>
+                                <td>{{ 'pas.de.projet'|trans }}</td>
+                                <td>{{ 'pas.de.projet'|trans }}</td>
+
+                                <td>
+
+                                </td>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_projet_periode_gestion_export', {_format:'pdf', uuid: projetPeriode
+            .uuidString}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf"
+        },
+        {
+            type:'info',
+            href:path('administration_projet_periode_gestion_export', {_format:'csv', uuid: projetPeriode
+            .uuidString}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_projet_periode_gestion_export', {_format:'xlsx', uuid: projetPeriode
+            .uuidString}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_projet_periode_gestion_export'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.stage') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.stage') }}
+{% endblock %}

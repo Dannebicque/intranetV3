@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 08:26
+// @lastUpdate 05/09/2020 17:18
 
 namespace App\Controller\administration\stage;
 
@@ -70,6 +70,7 @@ class StagePeriodeController extends BaseController
     public function create(Request $request): Response
     {
         $stagePeriode = new StagePeriode();
+        $stagePeriode->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
@@ -79,7 +80,6 @@ class StagePeriodeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $stagePeriode->setAnneeUniversitaire($stagePeriode->getSemestre() ? $stagePeriode->getSemestre()->getAnneeUniversitaire() : 0);
             $this->entityManager->persist($stagePeriode);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode.create.success.flash');
