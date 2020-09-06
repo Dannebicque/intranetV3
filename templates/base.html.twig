@@ -191,11 +191,13 @@
 <header class="topbar">
     <div class="topbar-left">
         <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
-        <a class="topbar-btn d-none d-md-block"
-           href="{{ block('link_homepage') }}"
-        >
-            Département {{ user_data.departement.libelle }}
-        </a>
+        {% if is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT') %}
+            <a class="topbar-btn d-none d-md-block"
+               href="{{ block('link_homepage') }}"
+            >
+                Département {{ user_data.departement.libelle }}
+            </a>
+        {% endif %}
         <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip"
            title="{{ 'fullscreen'|trans }}">
             <i class="material-icons fullscreen-default">fullscreen</i>
