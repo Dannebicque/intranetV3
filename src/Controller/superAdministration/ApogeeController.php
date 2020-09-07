@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/08/2020 14:29
+// @lastUpdate 07/09/2020 20:54
 
 namespace App\Controller\superAdministration;
 
@@ -146,8 +146,8 @@ class ApogeeController extends BaseController
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
 
         $this->etudiants = [];
-        foreach ($listeetudiants as $etudiant) {
-            $stid = $myApogee->getEtudiant($etudiant);
+        foreach ($listeetudiants as $numEtu) {
+            $stid = $myApogee->getEtudiant($numEtu);
             while ($row = $stid->fetch()) {
                 //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
                 $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
