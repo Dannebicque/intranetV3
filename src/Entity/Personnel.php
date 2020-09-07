@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 16:17
+// @lastUpdate 07/09/2020 15:13
 
 namespace App\Entity;
 
@@ -43,7 +43,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=15)
      *
      */
     protected $statut;
