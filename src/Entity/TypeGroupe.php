@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 10:12
+// @lastUpdate 07/09/2020 15:21
 
 namespace App\Entity;
 
@@ -21,7 +21,8 @@ class TypeGroupe extends BaseEntity
     public const TYPE_GROUPE_TD = 'TD';
     public const TYPE_GROUPE_TP = 'TP';
 
-    public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP];
+    public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
+    public const TYPE_GROUPE_LV = 'LV';
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="typeGroupes")

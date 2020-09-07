@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 17:40
+// @lastUpdate 07/09/2020 15:21
 
 namespace App\Classes;
 
@@ -143,7 +143,7 @@ class MyGroupes
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             //pas d'enfant c'est le groupe de plus bas  niveau
-            if (count($groupe->getEnfants()) === 0) {
+            if (count($groupe->getEnfants()) === 0 && $groupe->getTypeGroupe()->getType() !== TypeGroupe::TYPE_GROUPE_LV) {
                 $groupeParents = [];
                 $g = $groupe;
                 while ($g->getParent() !== null) {
