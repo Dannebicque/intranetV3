@@ -27,12 +27,12 @@
             <div class="btn-toolbar">
                 <div class="btn-group">
                     {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
-                        <a class="btn {% if semestre == null and edt.semestre.id == semestre.id %}btn-primary{% endif %}"
+                        <a class="btn {% if edt.semestre.id == semestre.id %}btn-primary{% endif %}"
                            href="{{ path('administration_edt_index',{valeur:semestre.id, filtre:'promo',
                                semaine:edt.semaine}) }}">{{ semestre.libelle }}</a>
                     {% endfor %}
                     {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %}
-                        <a class="btn {% if semestre == null and edt.semestre.id == semestre.id %}btn-primary{% endif %}"
+                        <a class="btn {% if edt.semestre.id == semestre.id %}btn-primary{% endif %}"
                            href="{{ path('administration_edt_index',{valeur:semestre.id, filtre:'promo',
                                semaine:edt.semaine}) }}"><i>{{ semestre.libelle }}</i></a>
                     {% endfor %}
