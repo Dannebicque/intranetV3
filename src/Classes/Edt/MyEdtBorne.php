@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/09/2020 12:25
+// @lastUpdate 07/09/2020 12:27
 
 namespace App\Classes\Edt;
 
@@ -72,9 +72,9 @@ class MyEdtBorne
                     $semestre2, $this->data['jsem']);
             } else {
                 $this->data['p1']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre1, $this->data['jsem'] + 1);
+                    $semestre1, $this->data['jsem']);
                 $this->data['p2']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre2, $this->data['jsem'] + 1);
+                    $semestre2, $this->data['jsem']);
             }
 
             $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre1);
