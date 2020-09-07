@@ -78,26 +78,30 @@
                                     {% for groupe in 1..edt.semestre.nbgroupeTPEDT %}
                                         {% if edt.planning[jour][ligne][groupe] is defined %}
                                             {% if edt.planning[jour][ligne][groupe].texte!='xx' %}
-                                                <td class="center td-edt"
+                                                <td class="center td-edt {% if groupe == 1 %} col-new-day{% endif %}"
                                                     colspan="{{ edt.planning[jour][ligne][groupe].largeur }}"
                                                     rowspan="{{ edt.planning[jour][ligne][groupe].duree }}"
                                                     style="background-color:{{ edt.planning[jour][ligne][groupe].couleur }}; color:{{ edt.planning[jour][ligne][groupe].couleurTexte }};padding:0;">
-                                                    {#<a href="#modalEdt" title="plus d'infos" class="lienedt"#}
-                                                    {#data-toggle="modal"#}
-                                                    {#style="color:{{ edt.planning[jour][ligne][groupe].couleurTexte }};"#}
-                                                    {#data-idedt="{{ edt.planning[jour][ligne][groupe].planning.id }}">#}
+                                                    {# <a href="#modalEdt" title="plus d'infos" class="lienedt" #}
+                                                    {# data-toggle="modal" #}
+                                                    {# style="color:{{ edt.planning[jour][ligne][groupe].couleurTexte }};" #}
+                                                    {# data-idedt="{{ edt.planning[jour][ligne][groupe].planning.id }}"> #}
                                                     {{ edt.planning[jour][ligne][groupe].texte|raw }}
-                                                    {#{% if edt.planning[jour][ligne][groupe].commentaire==true %}#}
-                                                    {#<i class="icon-info-circled-1"></i>{% endif %}</a>#}
+                                                    {# {% if edt.planning[jour][ligne][groupe].commentaire==true %} #}
+                                                    {# <i class="icon-info-circled-1"></i>{% endif %}</a> #}
                                                 </td>
                                             {% endif %}
                                         {% else %}
-                                            <td style="padding:0;">&nbsp;</td>
+                                            <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
+                                                &nbsp;
+                                            </td>
                                         {% endif %}
                                     {% endfor %}
                                 {% else %}
                                     {% for groupe in 1..edt.semestre.nbgroupeTPEDT %}
-                                        <td style="padding:0;">&nbsp;</td>
+                                        <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
+                                            &nbsp;
+                                        </td>
                                     {% endfor %}
                                 {% endif %}
                             {% endfor %}
