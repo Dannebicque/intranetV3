@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2020 06:16
+// @lastUpdate 08/09/2020 12:27
 
 namespace App\Repository;
 
@@ -11,6 +11,7 @@ use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -387,15 +388,17 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
-            $pl = [];
-            $pl['semaine'] = $event->getSemaine();
-            $pl['jour'] = $event->getJour();
-            $pl['debut'] = $event->getDebut();
-            $pl['fin'] = $event->getFin();
-            $pl['commentaire'] = '';
-            $pl['ical'] = $event->getDisplayIcal();
-            $pl['salle'] = $event->getSalle();
-            $t[] = $pl;
+            if (($event->getType() === TypeGroupe::TYPE_GROUPE_CM) || ($event->getType() === TypeGroupe::TYPE_GROUPE_TD && $event->getGroupe() === $this->groupetd) || ($event->getType() === TypeGroupe::TYPE_GROUPE_TP && $event->getGroupe() === $this->groupetp)) {
+                $pl = [];
+                $pl['semaine'] = $event->getSemaine();
+                $pl['jour'] = $event->getJour();
+                $pl['debut'] = $event->getDebut();
+                $pl['fin'] = $event->getFin();
+                $pl['commentaire'] = '';
+                $pl['ical'] = $event->getDisplayIcal();
+                $pl['salle'] = $event->getSalle();
+                $t[] = $pl;
+            }
         }
 
         return $t;
