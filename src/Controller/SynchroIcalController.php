@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 08/09/2020 11:46
 
 namespace App\Controller;
 
@@ -44,10 +44,11 @@ class SynchroIcalController extends AbstractController
         $personnel = $personnelRepository->findByCode($code);
         if ($personnel !== null) {
             $ical = $myEdtExport->export($personnel, $_format, 'Personnel');
+            $timestamp = new \DateTime('now');
 
             return new Response($ical, 200, [
-                'Content-Type'        => 'application/force-download',
-                'Content-Disposition' => 'attachment; filename="export.ics"'
+                'Content-Type'        => 'text/calendar; charset=utf-8',
+                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"'
             ]);
         }
 
@@ -74,10 +75,11 @@ class SynchroIcalController extends AbstractController
         $etudiant = $etudiantRepository->findByCode($code);
         if ($etudiant !== null) {
             $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant');
+            $timestamp = new \DateTime('now');
 
             return new Response($ical, 200, [
-                'Content-Type'        => 'application/force-download',
-                'Content-Disposition' => 'attachment; filename="export.ics"'
+                'Content-Type'        => 'text/calendar; charset=utf-8',
+                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"'
             ]);
         }
 
