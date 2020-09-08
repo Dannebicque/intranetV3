@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 12:54
+// @lastUpdate 08/09/2020 15:10
 
 namespace App\Classes;
 
@@ -120,15 +120,15 @@ class MyMessagerie
     {
         $this->nbMessagesEnvoyes = 0;
         $this->nbEtudiants = 0;
+        //sauvegarde en BDD
+        $mess = $this->saveMessageDatabase('E');
+
         foreach ($this->etudiants as $etu) {
             $message = (new TemplatedEmail())
                 ->subject($this->sujet)
                 ->from($this->expediteur->getMailuniv())
                 ->htmlTemplate('mails/message.html.twig')
                 ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
-
-            //sauvegarde en BDD
-            $mess = $this->saveMessageDatabase('E');
 
             //récupération des fichiers uploadés
             //todo: gérer les pièces jointes
