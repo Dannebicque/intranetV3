@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 08/09/2020 11:54
 
 namespace App\Classes;
 
@@ -41,6 +41,7 @@ class MyIcal
         $this->filevt .= 'BEGIN:DAYLIGHT' . chr(13) . chr(10);
         $this->filevt .= 'TZOFFSETFROM:+0100' . chr(13) . chr(10);
         $this->filevt .= 'TZOFFSETTO:+0200' . chr(13) . chr(10);
+        $this->filevt .= 'LAST-MODIFIED:' . gmdate('Ymd') . 'T' . gmdate('His') . 'Z' . chr(13) . chr(10);
         $this->filevt .= 'TZNAME:CEST' . chr(13) . chr(10);
         $this->filevt .= 'DTSTART:19700329T020000' . chr(13) . chr(10);
         $this->filevt .= 'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3' . chr(13) . chr(10);
