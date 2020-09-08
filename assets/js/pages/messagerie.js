@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 09:37
+// @lastUpdate 08/09/2020 20:03
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -67,8 +67,10 @@ $(document).on('click', '#marquerNotificationsRead', function (e) {
 })
 
 $(document).on('click', '#messageSent', function (e) {
-  e.preventDefault();
-  e.stopPropagation();
+  $(this).attr('disabled', true)
+  $(this).text('Envoi en cours...')
+  e.preventDefault()
+  e.stopPropagation()
   $.ajax({
     url: Routing.generate('messagerie_sent'),
     data: {
@@ -84,6 +86,8 @@ $(document).on('click', '#messageSent', function (e) {
     method: 'POST',
     success: function (data) {
       $('#messages-liste').empty().load(Routing.generate('messagerie_message_envoye', {message: data.message}))
+      $('#messageSent').attr('disabled', false)
+      $(this).text('Envoyer')
     }
   })
 })
