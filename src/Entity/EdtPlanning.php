@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 13:54
+// @lastUpdate 09/09/2020 14:41
 
 namespace App\Entity;
 
@@ -348,7 +348,7 @@ class EdtPlanning
     public function getDisplayIcal(): string
     {
         if ($this->getMatiere() !== null) {
-            return $this->getMatiere()->getCodeMatiere() . ' ' . $this->getDisplayGroupe();
+            return $this->getMatiere()->getLibelle() . '(' . $this->getMatiere()->getCodeMatiere() . ') ' . $this->getDisplayGroupe();
         }
 
         return $this->getTexte() . ' ' . $this->getDisplayGroupe();
