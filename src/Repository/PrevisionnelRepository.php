@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 09/09/2020 09:55
 
 namespace App\Repository;
 
@@ -88,7 +88,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
     public function findPrevisionnelMatiere(Matiere $matiere, $annee)
     {
         return $this->createQueryBuilder('p')
-            ->innerJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
+            ->leftJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
             ->where('p.annee = :annee')
             ->andWhere('p.matiere = :matiere')
             ->setParameter('annee', $annee)
