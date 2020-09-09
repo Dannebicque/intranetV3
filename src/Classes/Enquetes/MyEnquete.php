@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 09/09/2020 15:20
 
 namespace App\Classes\Enquetes;
 
@@ -195,10 +195,8 @@ class MyEnquete
         } else {
             $c = substr($config, 2, strlen($config));
             if (array_key_exists($c, $this->previsionnel)) {
-                $libQuestion = Tools::personnaliseTexte($question->getLibelle(), [
-                    'matiere'   => $this->previsionnel[$c]->getMatiere()->getLibelle(),
-                    'personnel' => $this->previsionnel[$c]->getPersonnel()->getDisplayPr()
-                ]);
+                $libQuestion = Tools::personnaliseTexte($question->getLibelle(),
+                    $this->previsionnel[$c]);
             }
         }
         $this->ligne++;
