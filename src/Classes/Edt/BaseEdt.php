@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 20:00
+// @lastUpdate 09/09/2020 06:31
 
 namespace App\Classes\Edt;
 
@@ -68,6 +68,7 @@ Abstract class BaseEdt
         CalendrierRepository $calendrierRepository
     ) {
         $this->calendrierRepository = $calendrierRepository;
+        $this->semestre = null;
     }
 
     /**
