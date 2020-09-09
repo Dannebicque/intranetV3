@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:04
+// @lastUpdate 09/09/2020 06:35
 
 namespace App\Controller;
 
@@ -63,22 +63,24 @@ class UserController extends BaseController
     ) {
         if ($type === 'personnel') {
             $user = $personnelRepository->findOneBySlug($slug);
-
-            return $this->render('user/profil.html.twig', [
-                'user'      => $user,
-                'onglet'    => $onglet,
-                'monprofil' => false
-            ]);
+            if ($user !== null) {
+                return $this->render('user/profil.html.twig', [
+                    'user'      => $user,
+                    'onglet'    => $onglet,
+                    'monprofil' => false
+                ]);
+            }
         }
 
         if ($type === 'etudiant') {
             $user = $etudiantRepository->findOneBySlug($slug);
-
-            return $this->render('user/profil.html.twig', [
-                'user'      => $user,
-                'onglet'    => $onglet,
-                'monprofil' => false
-            ]);
+            if ($user !== null) {
+                return $this->render('user/profil.html.twig', [
+                    'user'      => $user,
+                    'onglet'    => $onglet,
+                    'monprofil' => false
+                ]);
+            }
         }
 
         return $this->redirectToRoute('erreur_404');
