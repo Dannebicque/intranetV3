@@ -4,7 +4,8 @@
     {% if monprofil %}
         {{ 'mon.profil.heading'|trans }}
     {% else %}
-        {{ 'profil.heading'|trans({'%user%': user.displayPr}) }}
+        {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestre != null ? user.semestre
+            .libelle : 'non.defini'}) }}
     {% endif %}
 {% endblock %}
 

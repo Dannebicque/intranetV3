@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 10/09/2020 08:39 -->
+<!-- @lastUpdate 10/09/2020 11:27 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7485,7 +7485,7 @@
       </notes>
       <segment>
         <source>profil.heading</source>
-        <target>Profil de %user%</target>
+        <target>Profil de %user% (%semestre%)</target>
       </segment>
     </unit>
     <unit id="1LWOZnS" name="numero.harpege">
