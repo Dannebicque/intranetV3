@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/validators.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 17/08/2020 08:57 -->
+<!-- @lastUpdate 10/09/2020 08:39 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="validators.fr">
@@ -199,29 +199,29 @@
           </segment>
       </unit>
       <unit id=".exF5Ww" name="The file could not be uploaded.">
-      <segment>
-        <source>The file could not be uploaded.</source>
-        <target>Le téléchargement de ce fichier est impossible.</target>
-      </segment>
-    </unit>
-    <unit id="d7sS5yw" name="This value should be a valid number.">
-      <segment>
-        <source>This value should be a valid number.</source>
-        <target>Cette valeur doit être un nombre.</target>
-      </segment>
+          <segment>
+              <source>The file could not be uploaded.</source>
+              <target>Le téléchargement de ce fichier est impossible.</target>
+          </segment>
+      </unit>
+      <unit id="d7sS5yw" name="This value should be a valid number.">
+          <segment>
+              <source>This value should be a valid number.</source>
+              <target>Cette valeur doit être un nombre.</target>
+          </segment>
     </unit>
     <unit id="BS2Ez6i" name="This file is not a valid image.">
       <segment>
-        <source>This file is not a valid image.</source>
-        <target>Ce fichier n'est pas une image valide.</target>
+          <source>This file is not a valid image.</source>
+          <target>Ce fichier n'est pas une image valide.</target>
       </segment>
     </unit>
-    <unit id="ydcT9kU" name="This is not a valid IP address.">
-      <segment>
-          <source>This is not a valid IP address.</source>
-          <target>Cette adresse IP n'est pas valide.</target>
-      </segment>
-    </unit>
+      <unit id="ydcT9kU" name="This is not a valid IP address.">
+          <segment>
+              <source>This is not a valid IP address.</source>
+              <target>Cette adresse IP n'est pas valide.</target>
+          </segment>
+      </unit>
       <unit id="lDOGNFX" name="This value is not a valid language.">
           <segment>
               <source>This value is not a valid language.</source>

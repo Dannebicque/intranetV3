@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 20:31
+// @lastUpdate 10/09/2020 08:39
 
 /**
  * Created by PhpStorm.
@@ -364,14 +364,14 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     {
         if ($p->getEvaluation()) {
             if ($p->getMatiere() !== null) {
-                return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';
+                return '** ' . $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ') **';
             }
 
             return '** ' . $p->getTexte() . ' **';
         }
 
         if ($p->getMatiere() !== null) {
-            return $p->getMatiere()->getCodeMatiere();
+            return $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ')';
         }
 
         return $p->getTexte();
