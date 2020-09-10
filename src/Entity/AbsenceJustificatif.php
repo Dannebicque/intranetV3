@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 10/09/2020 10:56
 
 namespace App\Entity;
 
@@ -72,7 +72,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $fichierName;
 
