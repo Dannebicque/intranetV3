@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 10/09/2020 11:32
 
 namespace App\Form;
 
@@ -30,7 +30,8 @@ class AbsenceJustificatifType extends AbstractType
                 'required'       => false,
                 'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
+                'help'           => 'Le justificitif ne peut être qu\'une convocation officielle ou un certificat médicale'
             ]);
     }
 
