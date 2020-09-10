@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/09/2020 10:56
+// @lastUpdate 10/09/2020 18:22
 
 namespace App\Entity;
 
@@ -102,6 +102,10 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      */
     public function __construct(Etudiant $etudiant)
     {
+        $this->dateDebut = new DateTime('now');
+        $this->dateFin = new DateTime('now');
+        $this->heureDebut = new DateTime('08:00');
+        $this->heureFin = new DateTime('18:30');
         $this->etat = 'D';
         $this->setUuid(Uuid::uuid4());
         $this->anneeUniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
