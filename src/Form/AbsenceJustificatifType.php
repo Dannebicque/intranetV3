@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/09/2020 11:32
+// @lastUpdate 10/09/2020 18:21
 
 namespace App\Form;
 
@@ -21,10 +21,10 @@ class AbsenceJustificatifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut', DateType::class, ['label' => 'label.date_debut', 'widget' => 'single_text'])
-            ->add('heureDebut', TimeType::class, ['label' => 'label.heure_debut', 'widget' => 'single_text'])
-            ->add('dateFin', DateType::class, ['label' => 'label.date_fin', 'widget' => 'single_text'])
-            ->add('heureFin', TimeType::class, ['label' => 'label.heure_fin', 'widget' => 'single_text'])
+            ->add('dateDebut', DateType::class, ['label' => 'label.date_debut'])
+            ->add('heureDebut', TimeType::class, ['label' => 'label.heure_debut'])
+            ->add('dateFin', DateType::class, ['label' => 'label.date_fin'])
+            ->add('heureFin', TimeType::class, ['label' => 'label.heure_fin'])
             ->add('motif', TextType::class, ['label' => 'label.motif'])
             ->add('fichierFile', VichFileType::class, [
                 'required'       => false,
