@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 07:37
+// @lastUpdate 10/09/2020 18:19
 
 /**
  * Created by PhpStorm.
@@ -78,11 +78,14 @@ abstract class Tools
         return $str;
     }
 
-    public static function supprimeAccent(string $texte)
+    public static function supprimeAccent(string $texte): string
     {
-        return strtr($texte,
-            "ÀÁÂàÄÅàáâàäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ",
-            "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
+        $search = explode(",",
+            "À,Á,Â,à,Ä,Å,à,á,â,à,ä,å,Ò,Ó,Ô,Õ,Ö,Ø,ò,ó,ô,õ,ö,ø,È,É,Ê,Ë,è,é,ê,ë,Ç,ç,Ì,Í,Î,Ï,ì,í,î,ï,Ù,Ú,Û,Ü,ù,ú,û,ü,ÿ,Ñ,ñ");
+        $replace = explode(",",
+            "a,a,a,a,a,a,a,a,a,a,a,a,o,o,o,o,o,o,o,o,o,o,o,o,e,e,e,e,e,e,e,e,c,c,i,i,i,i,i,i,i,i,u,u,u,u,u,u,u,u,y,n,n");
+
+        return str_replace($search, $replace, $texte);
     }
 
     public static function slug(string $texte)
