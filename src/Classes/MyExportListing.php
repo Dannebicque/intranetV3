@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 07:42
+// @lastUpdate 11/09/2020 06:36
 
 /**
  * Created by PhpStorm.
@@ -127,25 +127,30 @@ class MyExportListing
         $this->matiere = $matiere;
         $this->personnel = $personnel;
 
-        $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);
+        if ($exportFiltre instanceof Groupe) {
+            $this->typeGroupe = $exportFiltre->getTypeGroupe();
+            $this->groupes = [$exportFiltre];
+        } else {
+            $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);
+            if ($this->typeGroupe !== null) {
+                $this->groupes = $this->typeGroupe->getGroupes();
+            }
+        }
 
-        if ($this->typeGroupe !== null) {
-            $this->groupes = $this->typeGroupe->getGroupes();
+        $this->prepareColonnes();
 
-            $this->prepareColonnes();
-
-            switch ($exportFormat) {
-                case Constantes::FORMAT_CSV_POINT_VIRGULE:
-                    return $this->exportCsv(';');
-                case Constantes::FORMAT_CSV_VIRGULE:
-                    return $this->exportCsv(',');
-                case Constantes::FORMAT_EXCEL:
-                    return $this->exportExcel();
+        switch ($exportFormat) {
+            case Constantes::FORMAT_CSV_POINT_VIRGULE:
+                return $this->exportCsv(';');
+            case Constantes::FORMAT_CSV_VIRGULE:
+                return $this->exportCsv(',');
+            case Constantes::FORMAT_EXCEL:
+                return $this->exportExcel();
                 case Constantes::FORMAT_PDF:
                     $this->exportPdf();
                     exit;
             }
-        }
+
 
         return null;
     }
@@ -433,7 +438,12 @@ class MyExportListing
     private function exportPdf()
     {
         $this->myPdf::generePdf('pdf/listing.html.twig',
-            ['typeGroupe' => $this->typeGroupe, 'matiere' => $this->matiere, 'personnel' => $this->personnel],
+            [
+                'typeGroupe' => $this->typeGroupe,
+                'matiere'    => $this->matiere,
+                'personnel'  => $this->personnel,
+                'groupes'    => $this->groupes
+            ],
             $this->name,
             $this->dataUserSession->getDepartement()->getLibelle());
     }
