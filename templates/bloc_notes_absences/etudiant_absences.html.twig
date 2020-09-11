@@ -22,7 +22,8 @@
                 <th>{{ 'justifiee'|trans }}</th>
                 <th class="hide">{{ 'saisie_par'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
-                {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                {% if  user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or
+                    user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                     <th>Justifiée?</th>
                 {% endif %}
             </tr>
@@ -45,7 +46,7 @@
                             <i class="{{ iconShow }}"></i>
                         </button>
                     </td>
-                    {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                    {% if  user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                         <td>
                             <div class="custom-control custom-control-lg custom-checkbox">
                                 <input type="checkbox" class="custom-control-input checkAbsence" id="check_{{ absence.id }}"

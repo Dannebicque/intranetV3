@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2020 06:36
+// @lastUpdate 11/09/2020 08:13
 
 /**
  * Created by PhpStorm.
@@ -191,6 +191,8 @@ class MyExportListing
         $this->myExcelWriter->createSheet('export');
         $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Nom');
         $this->newColonne();
+        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Num Etudiant');
+        $this->newColonne();
         $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Prénom');
         $this->newColonne();
         $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Groupe');
@@ -200,6 +202,8 @@ class MyExportListing
         foreach ($this->groupes as $groupe) {
             /** @var Etudiant $etudiant */
             foreach ($groupe->getEtudiants() as $etudiant) {
+                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $etudiant->getNumEtudiant());
+                $this->newColonne();
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
                 $this->newColonne();
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getPrenom()));
@@ -244,6 +248,8 @@ class MyExportListing
                 $id++;
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $id);
                 $this->newColonne();
+                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $etudiant->getNumEtudiant());
+                $this->newColonne();
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
                 $this->newColonne();
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getPrenom()));
@@ -257,6 +263,7 @@ class MyExportListing
             $this->myExcelWriter->getColumnDimension('A', 3);
             $this->myExcelWriter->getColumnAutoSize('B');
             $this->myExcelWriter->getColumnAutoSize('C');
+            $this->myExcelWriter->getColumnAutoSize('D');
             $this->myExcelWriter->getColumnDimension('E', 8);
             $this->myExcelWriter->getColumnDimension('F', 8);
             $this->myExcelWriter->getColumnDimension('G', 8);
