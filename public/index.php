@@ -1,4 +1,9 @@
 <?php
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/public/index.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 11/09/2020 08:55
 
 use App\Kernel;
 use Symfony\Component\Dotenv\Dotenv;
@@ -29,4 +34,3 @@ $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
-

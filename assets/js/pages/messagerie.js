@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2020 20:03
+// @lastUpdate 11/09/2020 12:32
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -67,6 +67,11 @@ $(document).on('click', '#marquerNotificationsRead', function (e) {
 })
 
 $(document).on('click', '#messageSent', function (e) {
+  let messageToLibrePersonnel = []
+  $('input:checkbox[name=messageToLibrePersonnel]:checked').each(function () {
+    messageToLibrePersonnel.push($(this).val())
+  })
+
   $(this).attr('disabled', true)
   $(this).text('Envoi en cours...')
   e.preventDefault()
@@ -77,7 +82,7 @@ $(document).on('click', '#messageSent', function (e) {
       messageToSemestre: $('#messageToSemestre').val(),
       messageToGroupe: $('#messageToGroupe').val(),
       messageToLibreEtudiant: $('#messageToLibreEtudiant').val(),
-      messageToLibrePersonnel: $('#messageToLibrePersonnel').val(),
+      messageToLibrePersonnel: messageToLibrePersonnel,
       typeDestinataire: $('input[type=radio][name=messageDestinataireType]:checked').val(),
       copie: $('#messageCopy').val(),
       message: $('.ql-editor').html(),

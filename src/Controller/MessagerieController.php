@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/08/2020 09:14
+// @lastUpdate 11/09/2020 12:42
 
 namespace App\Controller;
 
@@ -180,13 +180,12 @@ class MessagerieController extends BaseController
         $typeDestinataire = $request->request->get('typeDestinataire');
         $destinataires = $this->getDestinataires($typeDestinataire, $request);
 
-
         $sujet = $request->request->get('sujet');
         $copie = $request->request->get('copie');
         $message = $request->request->get('message');
 
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
-        $messagerie->sendToDestinataires($destinataires, $typeDestinataire);
+        $messagerie->sendToDestinataires($destinataires, $typeDestinataire, $this->getDepartement());
 
 
         if ($copie !== null) {
@@ -238,7 +237,7 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @Route("/message-envoyé/{message}", name="messagerie_message_envoye", options={"expose":true})
+     * @Route("/message-envoye/{message}", name="messagerie_message_envoye", options={"expose":true})
      * @param Message $message
      *
      * @return Response
