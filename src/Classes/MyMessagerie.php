@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2020 15:10
+// @lastUpdate 11/09/2020 13:00
 
 namespace App\Classes;
 
 
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
@@ -82,31 +83,46 @@ class MyMessagerie
      *
      * @throws TransportExceptionInterface
      */
-    public function sendToPersonnels($destinataires): void
+    public function sendToPersonnels($destinataires, Departement $departement): void
     {
         //mail réel + notification (utiliser le busMessage ?
-        $message = (new TemplatedEmail())
-            ->subject($this->sujet)
-            ->from($this->expediteur->getMailuniv())
-            ->textTemplate('mails/message.txt.twig')
-            ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
+
 
         //sauvegarde en BDD
         $mess = $this->saveMessageDatabase('E');
+        $listeDestinataires = [];
+        $this->typeDestinataires = '';
 
         foreach ($destinataires as $destinataire) {
-            $personnel = $this->personnelRepository->find($destinataire);
-            if ($personnel !== null) {
-                $this->typeDestinataires .= $personnel->getDisplayPr() . ', ';
-                foreach ($personnel->getMails() as $mail) {
-                    $message->addTo($mail);
-                }
+            if ($destinataire === Personnel::PERMANENT) {
+                $listeDestinataires[] = $this->personnelRepository->findByType(Personnel::PERMANENT, $departement);
+                $this->typeDestinataires .= Personnel::PERMANENT . ', ';
+            } elseif ($destinataire === Personnel::VACATAIRE) {
+                $listeDestinataires[] = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
+                $this->typeDestinataires .= Personnel::VACATAIRE . ', ';
+            }
+        }
 
-                $this->saveDestinatairePersonnelDatabase($mess, $personnel);
-                $this->nbEtudiants++;
-                $this->myMailer->send($message);
-                $this->nbMessagesEnvoyes++;
-                //todo: envoyer notification ?
+        foreach ($listeDestinataires as $tdestinataire) {
+            foreach ($tdestinataire as $destinataire) {
+                if ($destinataire !== null) {
+
+                    $message = (new TemplatedEmail())
+                        ->subject($this->sujet)
+                        ->from($this->expediteur->getMailuniv())
+                        ->textTemplate('mails/message.txt.twig')
+                        ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
+
+                    foreach ($destinataire->getMails() as $mail) {
+                        $message->addTo($mail);
+                    }
+
+                    $this->saveDestinatairePersonnelDatabase($mess, $destinataire);
+                    $this->nbEtudiants++;
+                    $this->myMailer->send($message);
+                    $this->nbMessagesEnvoyes++;
+                    //todo: envoyer notification ?
+                }
             }
         }
         $mess->setTypeDestinataires($this->typeDestinataires);
@@ -195,12 +211,12 @@ class MyMessagerie
      *
      * @throws TransportExceptionInterface
      */
-    public function sendToDestinataires($destinataires, $typeDestinataire): void
+    public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement = null): void
     {
         $this->type = $typeDestinataire;
         switch ($typeDestinataire) {
             case 'p':
-                $this->sendToPersonnels($destinataires);
+                $this->sendToPersonnels($destinataires, $departement);
                 break;
             case 's':
                 foreach ($destinataires as $destinataire) {

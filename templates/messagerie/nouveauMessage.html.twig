@@ -77,14 +77,22 @@
         <div>Saisissez les premières lettre d'un nom d'étudiant.</div>
     </div>
     <div id="blocDestLibrePersonnel" style="display:none">
-        <label for="messageToLibrePersonnel" class="sr-only">Destinataire(s)</label>
-        <select class="form-control selectpicker" data-size="10"
-                title="{{ 'message.copy'|trans }}" id="messageToLibrePersonnel" name="messageToLibrePersonnel" multiple>
-            {% for personnel in user_data.personnels %}
-                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
-            {% endfor %}
-        </select>
-        <div>Saisissez les premières lettre d'un enseignant, d'un vacataire.</div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="cc-permanent"
+                           name="messageToLibrePersonnel" value="permanent">
+                    <label class="custom-control-label" for="cc-permanent">Tous les permanents</label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="custom-control custom-checkbox" data-children-count="1">
+                    <input type="checkbox" class="custom-control-input" id="cc-vacataires"
+                           name="messageToLibrePersonnel" value="vacataire">
+                    <label class="custom-control-label" for="cc-vacataires">Tous les vacataires</label>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
     <div class="form-group">
