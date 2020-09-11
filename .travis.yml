@@ -32,7 +32,7 @@ install:
   #- cp .env .env.test
   - cp phpunit.xml.dist phpunit.xml
   - mysql -e 'create database testing;'
-  - composer install
+  - composer update #si install pas la bonne version de Ocramius/proxy-manager
   #- php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
   #- bin/console make:migration
