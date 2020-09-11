@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:50
+// @lastUpdate 11/09/2020 06:32
 
 namespace App\Controller;
 
@@ -86,7 +86,7 @@ class TrombinoscopeController extends BaseController
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
             [],
-            $groupe->getTypeGroupe() !== null ? $groupe->getTypeGroupe()->getId() : null
+            $groupe
         );
     }
 
