@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/09/2020 18:22
+// @lastUpdate 11/09/2020 15:05
 
 namespace App\Entity;
 
@@ -51,7 +51,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     private $dateHeureFin;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      * @Groups({"justificatif_administration"})
      */
     private $motif;

@@ -3,7 +3,8 @@
         <ul class="nav nav-tabs">
             {% for groupe in selectedTypeGroupe.groupes %}
                 <li class="nav-item">
-                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                    <a class="nav-link {% if (event is defined and event.groupe == groupe.ordre) or (event is not
+                        defined and loop.first) %}active{% endif %}" data-toggle="tab"
                        href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }})</a>
                 </li>
             {% endfor %}
@@ -12,7 +13,10 @@
 
     <div class="tab-content">
         {% for groupe in selectedTypeGroupe.groupes %}
-            <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
+            <div class="tab-pane {% if (event is defined and event.groupe == groupe.ordre) or (event is not
+                defined and loop.first) %}fade active
+            show{% endif %}"
+                 id="groupe_{{ groupe.id }}">
                 <div class="row">
                     {% if groupe.etudiants|length >0 %}
                         {% for etudiant in groupe.etudiants %}
