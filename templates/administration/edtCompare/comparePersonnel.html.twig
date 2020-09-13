@@ -6,8 +6,26 @@
 
 {% block headeractions %}
     <div class="header-action">
-        <a href="" class="btn btn-primary btn-block">Comparer
-            par modules</a>
+        <div class="buttons">
+            <a href="{{ path('administration_edt_compare_matiere', {source:source}) }}"
+               class="btn btn-info btn-float btn-sm"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.comparer_par_matiere'|trans }}">
+                <i class="fas fa-random"></i></a>
+            <a href="{{ path('administration_edt_index') }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <span class="material-icons">build</span></a>
+        </div>
     </div>
 {% endblock %}
 
@@ -19,9 +37,9 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th colspan>Module</th>
+                    <th colspan>Matière</th>
                     <th>Semestre</th>
-                    <th colspan="2">CM</th><!-- afficher OK, + ou - -->
+                    <th colspan="2">CM</th>
                     <th colspan="2">TD</th>
                     <th colspan="2">TP</th>
                     <th>&nbsp;</th>
@@ -47,34 +65,34 @@
                             <td>
                                 <button data-provide="modaler tooltip"
                                         data-url="{{ path('administration_edt_compare_plus_info',
-                                            {'module': ed.matiere.id}) }}"
+                                            {'matiere': ed.matiere.id}) }}"
                                         class="btn btn-info"
                                         data-placement="bottom"
                                         title="{{ 'compare.plusinfos.details'|trans }}"
                                         data-title="{{ 'compare.plusinfos.details.title'|trans }}"
                                 >
-                                    <i class="{{ iconShow }}"></i> { ed.matiere.display }}
+                                    <i class="{{ iconShow }}"></i> {{ ed.matiere.display }}
                                 </button>
-                            <td>{{ ed.matiere.ue.semestre.nom }}</td>
+                            <td>{{ ed.matiere.ue.semestre.libelle }}</td>
                             <td>
-                                <span class="label {% if ed.nbCMEDT > ed.nbCMPrevi %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMEDT }}</span>
+                                <span class="badge badge-pill {% if ed.nbCMEDT > ed.nbCMPrevi %} badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMEDT }}</span>
                             </td><!--CM -->
                             <td>
-                                <span class="label {% if ed.nbCMPrevi > ed.nbCMEDT %} label-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
+                                <span class="badge badge-pill {% if ed.nbCMPrevi > ed.nbCMEDT %} badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
                             </td>
 
                             <td>
-                                <span class="label {% if ed.nbTDEDT > ed.nbTDPrevi %} label-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTDEDT }}</span>
+                                <span class="badge badge-pill {% if ed.nbTDEDT > ed.nbTDPrevi %} badge-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTDEDT }}</span>
                             </td><!--TD -->
                             <td>
-                                <span class="label {% if ed.nbTDPrevi > ed.nbTDEDT %} label-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
+                                <span class="badge badge-pill {% if ed.nbTDPrevi > ed.nbTDEDT %} badge-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
                             </td>
 
                             <td>
-                                <span class="label {% if ed.nbTPEDT > ed.nbTPPrevi %} label-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTPEDT }}</span>
+                                <span class="badge badge-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPEDT }}</span>
                             </td><!-- TP -->
                             <td>
-                                <span class="label {% if ed.nbTPPrevi > ed.nbTPEDT %} label-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} label-success {% else %} label-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
+                                <span class="badge badge-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
                             </td>
 
                         </tr>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 07:36
+// @lastUpdate 13/09/2020 17:52
 
 namespace App\Classes;
 
@@ -16,6 +16,8 @@ use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Classes\Excel\MyExcelWriter;
+use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
@@ -90,6 +92,10 @@ class MyPrevisionnel
      * @var PersonnelRepository
      */
     private $personnelRepository;
+    /**
+     * @var Personnel[]|mixed
+     */
+    private $personnels;
 
     /**
      * @return mixed
@@ -121,6 +127,8 @@ class MyPrevisionnel
      * @param PersonnelRepository    $personnelRepository
      * @param HrsRepository          $hrsRepository
      * @param MyExcelWriter          $myExcelWriter
+     * @param EdtPlanningRepository  $edtPlanningRepository
+     * @param CelcatEventsRepository $celcatEventsRepository
      * @param MyUpload               $myUpload
      */
     public function __construct(
@@ -129,14 +137,26 @@ class MyPrevisionnel
         PersonnelRepository $personnelRepository,
         HrsRepository $hrsRepository,
         MyExcelWriter $myExcelWriter,
+        EdtPlanningRepository $edtPlanningRepository,
+        CelcatEventsRepository $celcatEventsRepository,
         MyUpload $myUpload
     ) {
         $this->previsionnelRepository = $previsionnelRepository;
         $this->personnelRepository = $personnelRepository;
+        $this->edtPlanningRepository = $edtPlanningRepository;
+        $this->celcatEventsRepository = $celcatEventsRepository;
         $this->hrsRepository = $hrsRepository;
         $this->entityManager = $entityManager;
         $this->myExcelWriter = $myExcelWriter;
         $this->myUpload = $myUpload;
+    }
+
+    /**
+     * @return Personnel[]|mixed
+     */
+    public function getPersonnels()
+    {
+        return $this->personnels;
     }
 
     /**
@@ -746,149 +766,10 @@ class MyPrevisionnel
         $this->entityManager->flush();
     }
 
-    public function compareEdtPreviPersonnels(Departement $departement, $planning, $annee): array
-    {
-        $personnels = $this->personnelRepository->findByDepartement($departement);
-        $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
-        $t = [];
 
-        /** @var Personnel $ens */
-        foreach ($personnels as $ens) {
-            $t[$ens->getId()] = [];
-        }
 
-        /** @var  $p Previsionnel */
-        foreach ($previsionnels as $p) {
-            if ($p !== null &&
-                $p->getPersonnel() !== null &&
-                $p->getMatiere() !== null &&
-                array_key_exists($p->getPersonnel()->getId(), $t)) {
-                if (!array_key_exists($p->getMatiere()->getId(), $t[$p->getPersonnel()->getId()])) {
-                    $ligne = $p->getPersonnel()->getId();
-                    $colonne = $p->getMatiere()->getId();
-                    $t[$ligne][$colonne]['matiere'] = $p->getMatiere();
-                    $t[$ligne][$colonne]['nbCMPrevi'] = 0;
-                    $t[$ligne][$colonne]['nbTDPrevi'] = 0;
-                    $t[$ligne][$colonne]['nbTPPrevi'] = 0;
-                    $t[$ligne][$colonne]['nbCMEDT'] = 0;
-                    $t[$ligne][$colonne]['nbTDEDT'] = 0;
-                    $t[$ligne][$colonne]['nbTPEDT'] = 0;
 
-                }
 
-                $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbCMPrevi'] += $p->getNbHCm();
-                $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbTDPrevi'] += $p->getNbHTd() * $p->getNbGrTd();
-                $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbTPPrevi'] += $p->getNbHTp() * $p->getNbGrTp();
-            }
-        }
-
-        foreach ($planning as $pl) {
-            if ($pl->getMatiere() !== null &&
-                $pl->getIntervenant() !== null &&
-                array_key_exists($pl->getIntervenant()->getId(), $t)) {
-                if (!array_key_exists($pl->getMatiere()->getId(), $t[$pl->getIntervenant()->getId()])) {
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['matiere'] = $pl->getMatiere();
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMPrevi'] = 0;
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDPrevi'] = 0;
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTPPrevi'] = 0;
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMEDT'] = 0;
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDEDT'] = 0;
-                    $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTPEDT'] = 0;
-                }
-
-                switch ($pl->getType()) {
-                    case 'cm':
-                    case 'CM':
-                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMEDT'] += $pl->getDuree2();
-                        break;
-                    case 'td':
-                    case 'TD':
-                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDEDT'] += $pl->getDuree2();
-                        break;
-                    case 'tp':
-                    case 'TP':
-                        $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTPEDT'] += $pl->getDuree2();
-                        break;
-                }
-            }
-        }
-
-        return $t;
-    }
-
-    /**
-     * @param Departement $departement
-     * @param             $annee
-     *
-     * @return array
-     */
-    public function compareEdtPreviMatiere(Departement $departement, $annee): array
-    {
-        $this->recupPlanning($departement, $annee);
-        $this->recupMatieres($departement, $annee);
-
-        $t = [];
-
-        /** @var Matiere $module */
-        foreach ($this->matieres as $matiere) {
-            $t[$matiere->getId()] = [];
-        }
-
-        /** @var  $p Previsionnel */
-        foreach ($this->previMatieres as $p) {
-            if (($p !== null && $p->getMatiere() !== null && $p->getPersonnel() !== null) &&
-                array_key_exists($p->getMatiere()->getId(), $t)) {
-                if (!array_key_exists($p->getPersonnel()->getId(), $t[$p->getMatiere()->getId()])) {
-
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['personnel'] = $p->getPersonnel();
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPPrevi'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMEDT'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDEDT'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPEDT'] = 0;
-
-                }
-
-                $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] += $p->getNbHCM();
-                $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] += $p->getNbHTD() * $p->getNbGrTD();
-                $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPPrevi'] += $p->getNbHTP() * $p->getNbGrTP();
-            }
-        }
-
-        foreach ($this->planning as $pl) {
-            if ($pl->getMatiere() !== null &&
-                $pl->getIntervenant() !== null &&
-                array_key_exists($pl->getMatiere()->getId(), $t)) {
-                if (!array_key_exists($pl->getIntervenant()->getId(), $t[$pl->getMatiere()->getId()])) {
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['personnel'] = $pl->getIntervenant();
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMPrevi'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDPrevi'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPPrevi'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMEDT'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDEDT'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPEDT'] = 0;
-                }
-
-                switch ($pl->getType()) {
-                    case 'cm':
-                    case 'CM':
-                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMEDT'] += $pl->getDuree2();
-                        break;
-                    case 'td':
-                    case 'TD':
-                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDEDT'] += $pl->getDuree2();
-                        break;
-                    case 'tp':
-                    case 'TP':
-                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPEDT'] += $pl->getDuree2();
-                        break;
-                }
-            }
-        }
-
-        return $t;
-    }
 
     public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
     {

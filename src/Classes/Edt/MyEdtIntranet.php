@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/09/2020 08:39
+// @lastUpdate 13/09/2020 18:11
 
 /**
  * Created by PhpStorm.
@@ -215,7 +215,8 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 $this->tab[$p->getJour()][$i]['texte'] = 'xx';
             }
 
-            $this->tab[$p->getJour()][$dbtEdt]['texte'] = $p->getSalle() . '<br />' . $this->isEvaluation($p) . '<br />' . $p->getSemestre()->getLibelle() . ' |  ' . $p->getDisplayGroupe();
+            $this->tab[$p->getJour()][$dbtEdt]['texte'] = $p->getSalle() . '<br />' . $this->isEvaluation($p,
+                    'long') . '<br />' . $p->getSemestre()->getLibelle() . ' |  ' . $p->getDisplayGroupe();
 
             $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
             $this->tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
@@ -249,7 +250,8 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $debut;
                 $this->tab[$p->getJour()][$dbtEdt]['fin'] = $p->getFin();
 
-                $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
+                $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p,
+                        'long') . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
 
                 $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
                 $this->tab[$p->getJour()][$dbtEdt]['id'] = $p->getId();
@@ -360,10 +362,14 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
      *
      * @return string
      */
-    private function isEvaluation(EdtPlanning $p): string
+    private function isEvaluation(EdtPlanning $p, $type = 'short'): string
     {
         if ($p->getEvaluation()) {
             if ($p->getMatiere() !== null) {
+                if ($type === 'short') {
+                    return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';
+                }
+
                 return '** ' . $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ') **';
             }
 
@@ -371,6 +377,10 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         }
 
         if ($p->getMatiere() !== null) {
+            if ($type === 'short') {
+                return $p->getMatiere()->getCodeMatiere();
+            }
+
             return $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ')';
         }
 

@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2020 12:27
+// @lastUpdate 13/09/2020 18:11
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
@@ -402,6 +403,21 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findByDepartement(Departement $departement)
+    {
+        $quer = $this->createQueryBuilder('p');
+        $i = 0;
+        foreach ($departement->getDiplomes() as $diplome) {
+            foreach ($diplome->getSemestres() as $semestre) {
+                $quer = $quer->orWhere('p.semestre = :anne' . $i)
+                    ->setParameter('anne' . $i, $semestre->getId());
+                $i++;
+            }
+        }
+
+        return $quer->getQuery()->getResult();
     }
 
 }

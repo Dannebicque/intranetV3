@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/09/2020 09:55
+// @lastUpdate 13/09/2020 17:46
 
 namespace App\Repository;
 
@@ -133,6 +133,10 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->andWhere('d.departement = :departement')
             ->setParameter('annee', $annee)
             ->setParameter('departement', $departement->getId())
+            ->orderBy('d.libelle', 'ASC')
+            ->addOrderBy('a.ordre', 'ASC')
+            ->addOrderBy('s.ordreLmd', 'ASC')
+            ->addOrderBy('m.codeMatiere', 'ASC')
             ->getQuery()
             ->getResult();
 

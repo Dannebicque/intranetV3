@@ -3,15 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:26
+// @lastUpdate 13/09/2020 18:11
 
 namespace App\Controller\administration;
 
+use App\Classes\ComparePrevisionnel\ComparePrevisionnelPersonnel;
+use App\Classes\ComparePrevisionnel\ComparePrevisonnelMatiere;
 use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\Classes\MyPrevisionnel;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -44,17 +47,20 @@ class EdtCompareController extends BaseController
      *
      * @param MyPrevisionnel $myPrevisionnel
      *
-     * @return Response
-     * @Route("/personnels/", name="administration_edt_compare_personnels", methods={"GET"})
+     * @param                $source
      *
+     * @return Response
+     * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"})
      */
-    public function comparePersonnel(MyPrevisionnel $myPrevisionnel): Response
+    public function comparePersonnel(ComparePrevisionnelPersonnel $myPrevisionnel, $source): Response
     {
-        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($this->dataUserSession->getDepartement(),
-            $this->dataUserSession->getAnneePrevisionnel());
+        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($this->getDepartement(),
+            $this->dataUserSession->getAnneePrevisionnel(), $source);
 
         return $this->render('administration/edtCompare/comparePersonnel.html.twig', [
-            'edts' => $comparatif
+            'comparatifs' => $comparatif,
+            'personnels'  => $myPrevisionnel->getPersonnels(),
+            'source'      => $source
         ]);
     }
 
@@ -63,15 +69,17 @@ class EdtCompareController extends BaseController
      * @param MyPrevisionnel $myPrevisionnel
      *
      * @return Response
-     * @Route("/matieres", name="administration_edt_compare_matiere", methods={"GET"})
+     * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"})
      */
-    public function compareMatiereAction(MyPrevisionnel $myPrevisionnel): Response
+    public function compareMatiereAction(ComparePrevisonnelMatiere $myPrevisionnel, $source): Response
     {
         $comparatif = $myPrevisionnel->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),
-            $this->dataUserSession->getAnneePrevisionnel());
+            $this->dataUserSession->getAnneePrevisionnel(), $source);
 
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [
-            'edts' => $comparatif
+            'comparatifs' => $comparatif,
+            'matieres'    => $myPrevisionnel->getMatieres(),
+            'source'      => $source
         ]);
     }
 
