@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 13/09/2020 15:11
 
 namespace App\Entity;
 
@@ -81,29 +81,29 @@ class StagePeriode extends BaseEntity implements Serializable
     private $dateFin;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $competencesVisees = 'texte';
+    private $competencesVisees;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $modaliteEvaluation = 'texte';
+    private $modaliteEvaluation;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $modaliteEvaluationPedagogique = 'texte';
+    private $modaliteEvaluationPedagogique;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $modaliteEncadrement = 'texte';
+    private $modaliteEncadrement;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $documentRendre = 'texte';
+    private $documentRendre;
     /**
      * @ORM\Column(type="float")
      * @Groups({"stage_periode_administration"})
@@ -137,7 +137,7 @@ class StagePeriode extends BaseEntity implements Serializable
     private $responsables;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $texteLibre;
 

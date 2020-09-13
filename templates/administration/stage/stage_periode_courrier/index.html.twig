@@ -103,7 +103,7 @@
                             </div>
                             <div class="editCourrier" id="text_{{ etat }}">
                                 {% if courriers[etat] is defined %}
-                                    {{ courriers[etat].twigTemplate.source|transformeFromTwig }}
+                                    {{ courriers['MAIL_CHGT_' ~ etat].twigTemplate.source|transformeFromTwig }}
                                 {% endif %}
                             </div>
 
