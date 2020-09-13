@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 08:36
+// @lastUpdate 13/09/2020 15:37
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
@@ -13,7 +13,7 @@ use App\Event\AbsenceEvent;
 use App\Event\JustificatifEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
-use DateTime;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -66,12 +66,10 @@ class AbsenceSubscriber implements EventSubscriberInterface
         /** @var Absence $absence */
         foreach ($absences as $absence) {
             $absence->setJustifie(true);
-            $absence->setDateJustifie(new DateTime('now'));
+            $absence->setDateJustifie(new Carbon('now'));
             $this->entityManager->persist($absence);
         }
-
         $this->entityManager->flush();
-
     }
 
     public function onVerificationJustificatif(AbsenceEvent $event): void
@@ -82,13 +80,9 @@ class AbsenceSubscriber implements EventSubscriberInterface
         if ($justificatifs) {
             //il existe un justificatif valide, donc on justifie
             $absence->setJustifie(true);
-            $absence->setDateJustifie(new DateTime('now'));
+            $absence->setDateJustifie(new Carbon('now'));
             $this->entityManager->persist($absence);
             $this->entityManager->flush();
         }
-
-
     }
-
-
 }

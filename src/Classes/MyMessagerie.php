@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2020 13:00
+// @lastUpdate 13/09/2020 15:39
 
 namespace App\Classes;
 
@@ -178,9 +178,9 @@ class MyMessagerie
      *
      * @throws TransportExceptionInterface
      */
-    public function setCopie(array $copie): void
+    public function setCopie(array $copie, Departement $departement): void
     {
-        $this->sendToPersonnels($copie);
+        $this->sendToPersonnels($copie, $departement);
     }
 
     /**
