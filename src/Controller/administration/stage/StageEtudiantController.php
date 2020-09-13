@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 12/09/2020 08:33
 
 namespace App\Controller\administration\stage;
 
@@ -115,12 +115,13 @@ class StageEtudiantController extends BaseController
         StagePeriode $stagePeriode,
         Etudiant $etudiant,
         $etat
-    ): RedirectResponse {
+    ) {
         $myStageEtudiant->changeEtat($stagePeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.change_etat.success.flash');
 
-        return $this->redirectToRoute('administration_stage_periode_gestion',
-            ['uuid' => $stagePeriode->getUuidString()]);
+        return $this->render('test-mail.html.twig');
+//        return $this->redirectToRoute('administration_stage_periode_gestion',
+//            ['uuid' => $stagePeriode->getUuidString()]);
     }
 
     /**

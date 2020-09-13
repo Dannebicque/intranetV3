@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 18:16
+// @lastUpdate 13/09/2020 10:13
 
 namespace App\Entity;
 
@@ -23,7 +23,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\EtudiantRepository")
  * @Vich\Uploadable
  */
-class Etudiant extends Utilisateur implements Serializable
+class Etudiant extends Utilisateur
 {
     use UuidTrait;
 

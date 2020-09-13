@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 13:53
+// @lastUpdate 13/09/2020 10:13
 
 namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -18,11 +19,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
-abstract class Utilisateur implements UserInterface
+abstract class Utilisateur implements UserInterface, Serializable
 {
     public const HOMME = 'M.';
     public const FEMME = 'Mme';
-
 
     /**
      * @ORM\Column(type="string", length=75)
@@ -606,5 +606,15 @@ abstract class Utilisateur implements UserInterface
     public function getAvatarInitiales()
     {
         return strtoupper(substr(trim($this->getPrenom()), 0, 1) . '' . substr(trim($this->getNom()), 0, 1));
+    }
+
+    public function serialize()
+    {
+        return serialize($this->getId());
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->uuid = unserialize($serialized);
     }
 }

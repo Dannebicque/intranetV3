@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Event/StageEvent.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 13:16
+// @lastUpdate 13/09/2020 11:21
 
 namespace App\Event;
 
@@ -18,6 +18,15 @@ class StageEvent extends Event
     public const CHGT_ETAT_STAGE_IMPRIME = 'chgt.etat_stage_imprime';
     public const CHGT_ETAT_STAGE_CONVENTION_ENVOYEE = 'chgt.etat_stage_convention_envoyee';
     public const CHGT_ETAT_CONVENTION_RECUE = 'chgt.etat_stage_convention_recue';
+
+    public const EQ_ETATS = [
+        self::CHGT_ETAT_STAGE_AUTORISE           => StageEtudiant::ETAT_STAGE_AUTORISE,
+        self::CHGT_ETAT_STAGE_DEPOSE             => StageEtudiant::ETAT_STAGE_DEPOSE,
+        self::CHGT_ETAT_STAGE_VALIDE             => StageEtudiant::ETAT_STAGE_VALIDE,
+        self::CHGT_ETAT_STAGE_IMPRIME            => StageEtudiant::ETAT_STAGE_IMPRIME,
+        self::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE,
+        self::CHGT_ETAT_CONVENTION_RECUE         => StageEtudiant::ETAT_STAGE_CONVENTION_RECUE
+    ];
 
     /** @var StageEtudiant */
     protected $stageEtudiant;

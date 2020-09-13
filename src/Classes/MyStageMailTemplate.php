@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 13:25
+// @lastUpdate 13/09/2020 11:21
 
 namespace App\Classes;
 
 
+use App\Entity\StageEtudiant;
 use App\Entity\StageMailTemplate;
 use App\Entity\StagePeriode;
 use App\Entity\TwigTemplate;
@@ -52,9 +53,10 @@ class MyStageMailTemplate
             $modele->setSubject($sujet);
             $template = $modele->getTwigTemplate();
             if ($template !== null) {
-                $template->setSource($message);
+                $template->setSource($this->transformeFromEditeur($message));
             } else {
-                $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(), $message);
+                $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(),
+                    $this->transformeFromEditeur($message));
                 $this->entityManager->persist($template);
                 $modele->setTwigTemplate($template);
             }
@@ -70,5 +72,11 @@ class MyStageMailTemplate
         }
 
         $this->entityManager->flush();
+    }
+
+    private function transformeFromEditeur($message)
+    {
+        return str_replace(array_keys(StageMailTemplate::CHAMPS_PUBLIPOSTAGE),
+            array_values(StageMailTemplate::CHAMPS_PUBLIPOSTAGE), $message);
     }
 }

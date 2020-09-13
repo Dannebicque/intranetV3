@@ -3,14 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 13:25
+// @lastUpdate 13/09/2020 08:36
 
 namespace App\EventSubscriber;
 
+use App\Classes\Stage\MailerStage;
 use App\Entity\Notification;
 use App\Entity\StageMailTemplate;
 use App\Event\StageEvent;
-use App\Classes\Mail\MyMailer;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -25,30 +25,26 @@ use Twig\Error\SyntaxError;
 class StageSubscriber implements EventSubscriberInterface
 {
 
-    /** @var MyMailer */
-    protected $myMailer;
+    protected MailerStage $myMailer;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
-    /** @var StageMailTemplateRepository */
-    private $stageMailTemplateRepository;
+    private StageMailTemplateRepository $stageMailTemplateRepository;
 
     /**
      * StageSubscriber constructor.
      *
      * @param EntityManagerInterface      $entityManager
      * @param RouterInterface             $router
-     * @param MyMailer                    $myMailer
+     * @param MailerStage                 $myMailer
      * @param StageMailTemplateRepository $stageMailTemplateRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        MyMailer $myMailer,
+        MailerStage $myMailer,
         StageMailTemplateRepository $stageMailTemplateRepository
     ) {
         $this->entityManager = $entityManager;
@@ -114,7 +110,6 @@ class StageSubscriber implements EventSubscriberInterface
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE);
-
     }
 
     /**
@@ -212,19 +207,23 @@ class StageSubscriber implements EventSubscriberInterface
         //table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
         /** @var StageMailTemplate $mailTemplate */
         $mailTemplate = $this->stageMailTemplateRepository->findEventPeriode(
-            $codeEvent,
+            StageEvent::EQ_ETATS[$codeEvent],
             $stageEtudiant->getStagePeriode()
         );
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null && $stageEtudiant->getEtudiant() !== null) {
-            $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
-                ['stageEtudiant' => $stageEtudiant]);
-            $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $mailTemplate->getSubject());
+            $this->myMailer->setTemplateFromDatabase(
+                $mailTemplate->getTwigTemplate()->getName(),
+                ['stageEtudiant' => $stageEtudiant],
+                $stageEtudiant->getEtudiant()->getMails(),
+                $mailTemplate->getSubject());
         } else {
+            echo 'defaut';
             //mail par défaut
             $this->myMailer->setTemplate('mails/stages/stage_' . $codeEvent . '.txt.twig',
-                ['stageEtudiant' => $stageEtudiant]);
-            $this->myMailer->sendMessage($stageEtudiant->getEtudiant()->getMails(), $codeEvent);
+                ['stageEtudiant' => $stageEtudiant],
+                $stageEtudiant->getEtudiant()->getMails(),
+                $codeEvent);
 
         }
 
@@ -238,29 +237,27 @@ class StageSubscriber implements EventSubscriberInterface
 
             if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() && $stageEtudiant->getEtudiant() !== null) {
                 $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
-                    ['stageEtudiant' => $stageEtudiant]);
-                $this->myMailer->sendMessage(
+                    ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
                     $mailTemplate->getSubject()
                 );
             } else {
                 //sinon mail par défaut
                 $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
-                    ['stageEtudiant' => $stageEtudiant]);
-                $this->myMailer->sendMessage($stageEtudiant->getStagePeriode()->getMailAssistant(),
+                    ['stageEtudiant' => $stageEtudiant],
+                    $stageEtudiant->getStagePeriode()->getMailAssistant(),
                     'copie ' . $codeEvent);
             }
         }
 
         //copie au RP lors du dépôt par l'étudiant
         if ($codeEvent === StageEvent::CHGT_ETAT_STAGE_DEPOSE) {
-            $this->myMailer->setTemplate('mails/stages/stage_copie_depot_rp.txt.twig',
-                ['stageEtudiant' => $stageEtudiant]);
             $tMails = [];
             foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $resp) {
                 $tMails[] = $resp->getMailUniv();
             }
-            $this->myMailer->sendMessage($tMails, 'Formulaire de stage complété');
+            $this->myMailer->setTemplate('mails/stages/stage_copie_depot_rp.txt.twig',
+                ['stageEtudiant' => $stageEtudiant], $tMails, 'Formulaire de stage complété');
         }
     }
 }
