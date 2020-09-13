@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 12:14
+// @lastUpdate 12/09/2020 09:35
 
 namespace App\Controller;
 
 use App\Entity\Departement;
-use App\Classes\Mail\MyMailer;
+use App\Classes\Mail\MailerFromTwig;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
@@ -56,7 +56,7 @@ class SecurityController extends AbstractController
      * @param TokenGeneratorInterface $tokenGenerator
      * @param EntityManagerInterface  $entityManager
      *
-     * @param MyMailer                $myMailer
+     * @param MailerFromTwig          $myMailer
      * @param PersonnelRepository     $personnelRepository
      * @param EtudiantRepository      $etudiantRepository
      *
@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
         Request $request,
         TokenGeneratorInterface $tokenGenerator,
         EntityManagerInterface $entityManager,
-        MyMailer $myMailer,
+        MailerFromTwig $myMailer,
         PersonnelRepository $personnelRepository,
         EtudiantRepository $etudiantRepository
     ): Response {

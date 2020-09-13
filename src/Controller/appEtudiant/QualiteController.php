@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:24
+// @lastUpdate 13/09/2020 11:21
 
 namespace App\Controller\appEtudiant;
 
@@ -13,7 +13,7 @@ use App\Entity\QualiteQuestionnaireSection;
 use App\Entity\QuizzEtudiant;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
-use App\Classes\Mail\MyMailer;
+use App\Classes\Mail\MailerFromTwig;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QualiteQuestionnaireRepository;
 use App\Repository\QuizzEtudiantReponseRepository;
@@ -57,15 +57,21 @@ class QualiteController extends BaseController
     /**
      * @Route("/complet/{uuid}", name="app_etudiant_qualite_questionnaire_complete")
      * @param QuizzEtudiantRepository $quizzEtudiantRepository
-     * @param MyMailer                $myMailer
+     * @param MailerFromTwig          $myMailer
      * @param QualiteQuestionnaire    $qualiteQuestionnaire
      *
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function complet(QuizzEtudiantRepository $quizzEtudiantRepository, MyMailer $myMailer, QualiteQuestionnaire $qualiteQuestionnaire): Response
-    {
-        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $qualiteQuestionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+    public function complet(
+        QuizzEtudiantRepository $quizzEtudiantRepository,
+        MailerFromTwig $myMailer,
+        QualiteQuestionnaire $qualiteQuestionnaire
+    ): Response {
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+            'questionnaire' => $qualiteQuestionnaire->getId(),
+            'etudiant'      => $this->getConnectedUser()->getId()
+        ]);
         if ($quizzEtudiant !== null) {
             $quizzEtudiant->setDateTermine(new DateTime('now'));
             $quizzEtudiant->setTermine(true);
@@ -77,7 +83,7 @@ class QualiteController extends BaseController
                 $myMailer->sendMessage($this->getConnectedUser()->getMails(),
                     'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
 
-                $myMailer->initMessage();
+                $myMailer->initEmail();
                 $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
                     ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
                 $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),

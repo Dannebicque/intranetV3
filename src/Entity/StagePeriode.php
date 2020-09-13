@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 13/09/2020 11:21
 
 namespace App\Entity;
 
@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -24,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\StagePeriodeRepository")
  * @Vich\Uploadable
  */
-class StagePeriode extends BaseEntity
+class StagePeriode extends BaseEntity implements Serializable
 {
 
     use UuidTrait;
@@ -35,58 +36,70 @@ class StagePeriode extends BaseEntity
      * @ORM\Column(type="string", length=50)
      */
     private $documentName;
+
     /**
      * @var UploadedFile
      *
      * @Vich\UploadableField(mapping="ficheRenseignement", fileNameProperty="documentName")
      */
     private $documentFile;
+
     /**
      * @ORM\Column(type="integer")
      * @Groups({"stage_periode_administration"})
      */
     private $numeroPeriode = 1;
+
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"stage_periode_administration"})
      */
     private $libelle = 'stage';
+
     /**
      * @ORM\Column(type="integer")
      * @Groups({"stage_periode_administration"})
      */
     private $nbSemaines = 10;
+
     /**
      * @ORM\Column(type="integer")
      * @Groups({"stage_periode_administration"})
      */
     private $nbJours = 40;
+
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_periode_administration"})
      */
     private $dateDebut;
+
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_periode_administration"})
      */
     private $dateFin;
+
     /**
      * @ORM\Column(type="text")
      */
     private $competencesVisees = 'texte';
+
     /**
      * @ORM\Column(type="text")
      */
     private $modaliteEvaluation = 'texte';
+
     /**
      * @ORM\Column(type="text")
      */
     private $modaliteEvaluationPedagogique = 'texte';
+
     /**
      * @ORM\Column(type="text")
      */
     private $modaliteEncadrement = 'texte';
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -600,5 +613,15 @@ class StagePeriode extends BaseEntity
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        return serialize($this->getId());
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->uuid = unserialize($serialized,);
     }
 }

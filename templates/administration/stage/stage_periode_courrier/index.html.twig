@@ -94,41 +94,35 @@
                                 <span>
                                     <select id="custom-fields_{{ etat }}" class="ql-customsfields">
                                         <option selected>Choisir</option>
-                                        <option value="[prenom_etudiant]"></option>
-                                        <option value="[nom_etudiant]"></option>
-                                        <option value="[entreprise]"></option>
-                                        <option value="[prenom_tuteur]"></option>
-                                        <option value="[nom_tuteur]"></option>
-                                        <option value="[prenom_tuteur_univ]"></option>
-                                        <option value="[nom_tuteur_univ]"></option>
-                                        <option value="[date_debut_stage]"></option>
-                                        <option value="[date_fin_stage]"></option>
-                                        <option value="[nom_periode_stage]"></option>
+                                        {% for field in constant
+                                            ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %}
+                                            <option value="{{ '{{'~field~'}}' }}"></option>
+                                        {% endfor %}
                                     </select>
                                 </span>
                             </div>
                             <div class="editCourrier" id="text_{{ etat }}">
                                 {% if courriers[etat] is defined %}
-                                    {{ courriers[etat].twigTemplate.source|raw }}
+                                    {{ courriers[etat].twigTemplate.source|transformeFromTwig }}
                                 {% endif %}
                             </div>
 
                             <div class="row mt-10">
-
                                 <div class="col-sm-12">
                                     <div class="alert alert-info">
                                         Laisser vide pour utiliser le mail par défaut.
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <button id="" class="btn btn-danger btn-block">Revenir au mail par défaut
-                                                                                   (effacera le contenu du
-                                                                                   texte ci-dessus)
-                                    </button>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <button id="" class="btn btn-info btn-block">Aperçu du mail</button>
-                                </div>
+                                {# <div class="col-sm-12 col-md-4"> #}
+                                {# <button id="" class="btn btn-danger btn-block">Revenir au mail par défaut #}
+                                {# (effacera le contenu du #}
+                                {# texte ci-dessus) #}
+                                {# </button> #}
+                                {# </div> #}
+                                {# <div class="col-sm-12 col-md-4"> #}
+                                {# <a href="{{ path('test_mail_stage_twig') }}" class="btn btn-info btn-block">Aperçu #}
+                                {# du mail</a> #}
+                                {# </div> #}
                                 <div class="col-sm-12 col-md-4">
                                     <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
                                     btn-block enregistreModeleMail" data-ed="{{ etat }}">Enregistrer le modèle

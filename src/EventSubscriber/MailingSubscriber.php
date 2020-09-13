@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 08:36
+// @lastUpdate 13/09/2020 07:42
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
 
-use App\Classes\Mail\MyMailer;
+use App\Classes\Mail\MailerFromTwig;
 use App\Event\AbsenceEvent;
 use App\Event\EvaluationEvent;
 use App\Event\JustificatifEvent;
@@ -23,15 +23,15 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
  */
 class MailingSubscriber implements EventSubscriberInterface
 {
-    protected MyMailer $myMailer;
+    protected MailerFromTwig $myMailer;
 
     /**
      * MailingSubscriber constructor.
      *
-     * @param MyMailer $myMailer
+     * @param MailerFromTwig $myMailer
      */
     public function __construct(
-        MyMailer $myMailer
+        MailerFromTwig $myMailer
     ) {
         $this->myMailer = $myMailer;
     }
@@ -83,7 +83,7 @@ class MailingSubscriber implements EventSubscriberInterface
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
                 ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
-        $this->myMailer->initMessage();
+        $this->myMailer->initEmail();
         //envoi en copie au responsable si l'option est activée
         if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
             $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig', ['absence' => $absence]);

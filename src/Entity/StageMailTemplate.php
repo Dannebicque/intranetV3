@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 13/09/2020 10:35
 
 namespace App\Entity;
 
@@ -14,6 +14,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class StageMailTemplate
 {
+    public const CHAMPS_PUBLIPOSTAGE = [
+        'prenom_etudiant'    => 'stageEtudiant.etudiant.prenom',
+        'nom_etudiant'       => 'stageEtudiant.etudiant.nom',
+        'entreprise'         => 'stageEtudiant.entreprise.libelle',
+        'prenom_tuteur'      => 'stageEtudiant.tuteur.prenom',
+        'nom_tuteur'         => 'stageEtudiant.tuteur.nom',
+        'prenom_tuteur_univ' => 'stageEtudiant.tuteurUniversitaire.prenom',
+        'nom_tuteur_univ'    => 'stageEtudiant.tuteurUniversitaire.nom',
+        'date_debut_stage'   => 'stageEtudiant.dateDebutStageFr',
+        'date_fin_stage'     => 'stageEtudiant.dateDebutStageFr',
+        'nom_periode_stage'  => 'stageEtudiant.stagePeriode.libelle'
+    ];
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

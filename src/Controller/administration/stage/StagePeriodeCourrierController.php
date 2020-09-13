@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 13:25
+// @lastUpdate 13/09/2020 11:21
 
 namespace App\Controller\administration\stage;
 
@@ -11,13 +11,17 @@ use App\Controller\BaseController;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Classes\MyStageMailTemplate;
+use App\Event\StageEvent;
 use App\Repository\CourrierRepository;
+use App\Repository\StageEtudiantRepository;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Laminas\EventManager\Event;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class StagePeriodeCourrierController
@@ -26,6 +30,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StagePeriodeCourrierController extends BaseController
 {
+    /**
+     * @Route("/test-mail", name="test_mail_stage_twig")
+     *
+     * @return Response
+     */
+    public function testMail(
+        StageEtudiantRepository $stageEtudiantRepository,
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $stageEtudiant = $stageEtudiantRepository->find(8);
+        $eventNotif = StageEvent::CHGT_ETAT_STAGE_AUTORISE;
+        $event = new StageEvent($stageEtudiant);
+
+
+        $eventDispatcher->dispatch($event, $eventNotif);
+        echo 'ok event';
+
+        return $this->render('test-mail.html.twig');
+    }
+
+
     /**
      * @Route("/apercu/{mail}", name="administration_stage_periode_courrier_apercu_defaut")
      *

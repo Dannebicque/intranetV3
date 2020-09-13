@@ -3,13 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 12/09/2020 09:35
 
 namespace App\EventSubscriber;
 
 use App\Entity\Notification;
 use App\Event\EmpruntEvent;
-use App\Classes\Mail\MyMailer;
+use App\Classes\Mail\MailerFromTwig;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Routing\RouterInterface;
 class EmpruntSubscriber implements EventSubscriberInterface
 {
 
-    /** @var MyMailer */
+    /** @var MailerFromTwig */
     protected $myMailer;
 
     /** @var EntityManagerInterface */
@@ -33,12 +33,12 @@ class EmpruntSubscriber implements EventSubscriberInterface
      *
      * @param EntityManagerInterface $entityManager
      * @param RouterInterface        $router
-     * @param MyMailer               $myMailer
+     * @param MailerFromTwig         $myMailer
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        MyMailer $myMailer
+        MailerFromTwig $myMailer
     ) {
         $this->entityManager = $entityManager;
         $this->router = $router;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 13/09/2020 11:21
 
 namespace App\Entity;
 
@@ -535,5 +535,15 @@ class StageEtudiant extends BaseEntity
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    public function dateDebutStageFr(): string
+    {
+        return $this->getDateDebutStage() !== null ? $this->getDateDebutStage()->format('d/m/Y') : '-';
+    }
+
+    public function dateFinStageFr(): string
+    {
+        return $this->getDateFinStage() !== null ? $this->getDateFinStage()->format('d/m/Y') : '-';
     }
 }
