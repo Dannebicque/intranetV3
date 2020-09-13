@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2020 12:42
+// @lastUpdate 13/09/2020 15:39
 
 namespace App\Controller;
 
@@ -189,7 +189,7 @@ class MessagerieController extends BaseController
 
 
         if ($copie !== null) {
-            $messagerie->setCopie($copie);
+            $messagerie->setCopie($copie, $this->getDepartement());
         }
 
         $messagerie->sendSynthese();
