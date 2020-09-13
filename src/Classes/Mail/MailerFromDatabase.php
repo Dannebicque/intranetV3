@@ -3,16 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 13/09/2020 11:34
 
 namespace App\Classes\Mail;
 
 
-use App\Classes\BaseMailer;
 use App\Classes\Configuration;
 use App\Classes\DatabaseTwigLoader;
-use App\Repository\TwigTemplateRepository;
-use Symfony\Bridge\Twig\Mime\WrappedTemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;

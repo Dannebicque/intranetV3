@@ -3,18 +3,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromTwig.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 24/05/2018
- * Time: 15:48
- */
+// @lastUpdate 13/09/2020 11:34
 
 namespace App\Classes\Mail;
 
-use App\Classes\BaseMailer;
 use App\Classes\Configuration;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
