@@ -3,19 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 13/09/2020 11:34
 
-namespace App\Classes;
+namespace App\Classes\Mail;
 
-
-use App\Repository\TwigTemplateRepository;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Classes\Configuration;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
 
 class BaseMailer
 {
@@ -55,7 +51,6 @@ class BaseMailer
             ->replyTo($this->getReplyTo($options));
 
         $this->checkTo($mail, $to);
-        dump($mail);
         $this->mailer->send($mail);
     }
 
