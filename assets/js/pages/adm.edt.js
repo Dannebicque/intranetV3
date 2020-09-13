@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 07:49
+// @lastUpdate 13/09/2020 16:40
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -19,7 +19,7 @@ function updateBloc (id) {
       $('#hdbt').selectpicker('val', data.heureDbtInt)
       $('#hfin').selectpicker('val', data.heureFinInt)
       $('#jourc' + data.jour).prop('checked', true)
-      $('#typecours').selectpicker('val', data.groupeId)
+      $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
       $('#salle').val(data.salle)
       $('#texte').val(data.texte)
       $('#selectmatiere').selectpicker('val', data.matiereId)

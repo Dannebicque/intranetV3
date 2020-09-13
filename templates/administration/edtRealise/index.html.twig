@@ -6,7 +6,18 @@
 
 {% block headeractions %}
     <div class="header-action">
-
+        <a href="{{ path('administration_edt_index') }}"
+           class="btn btn-primary btn-float"
+           data-provide="tooltip"
+           data-placement="bottom"
+           title="{{ 'atitle.retour_administration'|trans }}">
+            <i class="fas fa-arrow-left"></i></a>
+        <a href="{{ path('administration_index') }}"
+           class="btn btn-primary btn-float"
+           data-provide="tooltip"
+           data-placement="bottom"
+           title="{{ 'atitle.retour_administration'|trans }}">
+            <span class="material-icons">build</span></a>
     </div>
 {% endblock %}
 
