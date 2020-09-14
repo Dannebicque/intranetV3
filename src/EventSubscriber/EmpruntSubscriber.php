@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2020 09:35
+// @lastUpdate 14/09/2020 18:10
 
 namespace App\EventSubscriber;
 
@@ -67,12 +67,14 @@ class EmpruntSubscriber implements EventSubscriberInterface
         $emprunt = $event->getEmprunt();
 
         //mail par défaut
+        $this->myMailer->initEmail();
         $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '.txt.twig',
             ['emprunt' => $emprunt]);
         $this->myMailer->sendMessage($emprunt->getEtudiant()->getMails(), $codeEvent);
 
         //copie au RP lors du dépôt par l'étudiant
         if ($codeEvent === EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE && $emprunt->getResponsable() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '_copie.txt.twig',
                 ['emprunt' => $emprunt]);
 

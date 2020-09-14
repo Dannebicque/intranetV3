@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 08:36
+// @lastUpdate 14/09/2020 18:10
 
 namespace App\EventSubscriber;
 
@@ -218,7 +218,7 @@ class StageSubscriber implements EventSubscriberInterface
                 $stageEtudiant->getEtudiant()->getMails(),
                 $mailTemplate->getSubject());
         } else {
-            echo 'defaut';
+
             //mail par défaut
             $this->myMailer->setTemplate('mails/stages/stage_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant],
