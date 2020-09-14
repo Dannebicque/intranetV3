@@ -6,18 +6,20 @@
 
 {% block headeractions %}
     <div class="header-action">
-        <a href="{{ path('administration_edt_index') }}"
-           class="btn btn-primary btn-float"
-           data-provide="tooltip"
-           data-placement="bottom"
-           title="{{ 'atitle.retour_administration'|trans }}">
-            <i class="fas fa-arrow-left"></i></a>
-        <a href="{{ path('administration_index') }}"
-           class="btn btn-primary btn-float"
-           data-provide="tooltip"
-           data-placement="bottom"
-           title="{{ 'atitle.retour_administration'|trans }}">
-            <span class="material-icons">build</span></a>
+        <div class="buttons">
+            <a href="{{ path('administration_edt_index') }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <span class="material-icons">build</span></a>
+        </div>
     </div>
 {% endblock %}
 
@@ -32,8 +34,8 @@
                             class="form-control selectpicker">
                         <option value="">Choisir</option>
                         {% for personnel in personnels %}
-                                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
-                            {% endfor %}
+                            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
@@ -44,8 +46,8 @@
                             class="form-control selectpicker">
                         <option value="0">Choisissez un semestre</option>
                         {% for semestre in semestres %}
-                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
-                            {% endfor %}
+                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">

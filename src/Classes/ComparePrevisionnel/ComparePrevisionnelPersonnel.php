@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 18:11
+// @lastUpdate 13/09/2020 18:14
 
 namespace App\Classes\ComparePrevisionnel;
 
@@ -13,7 +13,6 @@ use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 18:11
+// @lastUpdate 13/09/2020 18:15
 
 namespace App\Classes\ComparePrevisionnel;
 
@@ -55,6 +55,8 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
 
         if ($source === 'intranet') {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
+        } else {
+
         }
 
         $t = [];
