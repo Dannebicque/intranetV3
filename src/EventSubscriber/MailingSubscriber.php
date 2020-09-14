@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 07:42
+// @lastUpdate 14/09/2020 18:10
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
@@ -63,6 +63,7 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         $absence = $event->getAbsence();
         if ($absence->getEtudiant() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_justified.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Une absence a été justifiée');
         }
@@ -79,6 +80,7 @@ class MailingSubscriber implements EventSubscriberInterface
         $absence = $event->getAbsence();
 
         if ($absence->getEtudiant() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_added.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
                 ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
@@ -86,6 +88,7 @@ class MailingSubscriber implements EventSubscriberInterface
         $this->myMailer->initEmail();
         //envoi en copie au responsable si l'option est activée
         if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage(
                 $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp()->getMails(),
@@ -104,9 +107,11 @@ class MailingSubscriber implements EventSubscriberInterface
         $rattrapage = $event->getRattrapage();
         if ($rattrapage->getEtudiant() !== null) {
             if ($rattrapage->getEtatDemande() === 'A') {
+                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/rattrapage_accepted.txt.twig', ['rattrapage' => $rattrapage]);
                 $this->myMailer->sendMessage($rattrapage->getEtudiant()->getMails(), 'Demande de rattrapage acceptée');
             } else {
+                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/rattrapage_refused.txt.twig', ['rattrapage' => $rattrapage]);
                 $this->myMailer->sendMessage($rattrapage->getEtudiant()->getMails(), 'Demande de rattrapage refusée');
             }
@@ -123,11 +128,13 @@ class MailingSubscriber implements EventSubscriberInterface
         $absenceJustificatif = $event->getAbsenceJustificatif();
         if ($absenceJustificatif->getEtudiant() !== null) {
             if ($absenceJustificatif->getEtat() === 'A') {
+                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/justificatif_accepted.txt.twig',
                     ['justificatif' => $absenceJustificatif]);
                 $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
                     'Justificatif d\'absence accepté');
             } else {
+                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/justificatif_refused.txt.twig',
                     ['justificatif' => $absenceJustificatif]);
                 $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
@@ -145,6 +152,7 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         $absenceJustificatif = $event->getAbsenceJustificatif();
         if ($absenceJustificatif->getEtudiant() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/justificatif_deleted.txt.twig',
                 ['justificatif' => $absenceJustificatif]);
             $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
@@ -161,6 +169,7 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         $absence = $event->getAbsence();
         if ($absence->getEtudiant() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_removed.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Suppression d\'une absence enregistrée',
                 ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
@@ -168,6 +177,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
 
         if ($absence->getMatiere() !== null && $absence->getMatiere()->getSemestre() !== null && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_removed_responsable.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage(
                 $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp()->getMails(),
@@ -188,6 +198,7 @@ class MailingSubscriber implements EventSubscriberInterface
             $note->getEvaluation()->getMatiere() !== null &&
             $note->getEvaluation()->getMatiere()->getSemestre() !== null &&
             $note->getEvaluation()->getMatiere()->getSemestre()->getOptDestMailModifNote() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/note_modification.txt.twig', ['note' => $note]);
             $this->myMailer->sendMessage(
                 $note->getEvaluation()->getMatiere()->getSemestre()->getOptDestMailModifNote()->getMails(),
@@ -207,6 +218,7 @@ class MailingSubscriber implements EventSubscriberInterface
         if ($evaluation->getMatiere() !== null &&
             $evaluation->getMatiere()->getSemestre() !== null &&
             $evaluation->getMatiere()->getSemestre()->getOptDestMailReleve() !== null) {
+            $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/new_transcript.txt.twig', ['evaluation' => $evaluation]);
             $this->myMailer->sendMessage(
                 $evaluation->getMatiere()->getSemestre()->getOptDestMailReleve()->getMails(),

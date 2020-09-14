@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 16:59
+// @lastUpdate 14/09/2020 17:33
 import {addCallout} from '../util'
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
@@ -47,7 +47,7 @@ $(document).on('change', '#justifier_etudiant', function () {
           '                        <td>' +
           // '<a href="' + Routing.generate('administration_absence_delete') + '" class="btn btn-danger supprimer"><i class="fas fa-trash"></i></a>' +
           '</td>\n' +
-          '                    </tr>'
+          '</tr>'
         table.append(html)
       })
       table.append('</tbody>')

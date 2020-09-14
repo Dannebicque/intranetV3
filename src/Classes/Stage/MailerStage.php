@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 14/09/2020 18:10
 
 namespace App\Classes\Stage;
 
@@ -42,7 +42,6 @@ class MailerStage
      */
     public function setTemplate(string $template, array $donnees, ?array $destinataires, string $sujet)
     {
-        echo 'hoho' . $template;
         $this->mailerFromTwig->initEmail();
         $this->mailerFromTwig->setTemplate($template, $donnees);
         $this->mailerFromTwig->sendMessage($destinataires, $sujet);
