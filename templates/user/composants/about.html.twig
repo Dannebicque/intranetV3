@@ -3,12 +3,14 @@
     <div class="card-body">
         {% if user.typeUser|lower == 'etudiant' %}
             <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
-            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data
+                .isGoodDepartement('ROLE_CDD') or user_data
+                .isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
                 <p><strong>{{ 'date.naissance'|trans }} :</strong> {{ user.dateNaissance|format_date('short') }}
                     ({{ user.dateNaissance|age }} ans)</p>
             {% endif %}
             <p><strong>{{ 'annee.promotion'|trans }} :</strong> {{ user.promotion }}</p>
-            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
                 <p><strong>{{ 'numero.etudiant'|trans }} :</strong> {{ user.numEtudiant }}</p>
                 <p><strong>{{ 'numero.ine'|trans }} :</strong> {{ user.numIne }}</p>
                 <p><strong>{{ 'login'|trans }} :</strong> {{ user.username }}</p>
@@ -47,7 +49,7 @@
 </div>
 
 
-{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
     <div class="card">
         <header class="card-header">
             <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
@@ -88,7 +90,7 @@
     </div>
 {% endif %}
 
-{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+{% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
     <div class="card">
         <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
         <div class="card-body">
