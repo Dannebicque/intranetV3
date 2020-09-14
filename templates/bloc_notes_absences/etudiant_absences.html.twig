@@ -22,7 +22,7 @@
                 <th>{{ 'justifiee'|trans }}</th>
                 <th class="hide">{{ 'saisie_par'|trans }}</th>
                 <th>{{ 'infos'|trans }}</th>
-                {% if  user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or
+                {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or
                     user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                     <th>Justifiée?</th>
                 {% endif %}
@@ -46,7 +46,7 @@
                             <i class="{{ iconShow }}"></i>
                         </button>
                     </td>
-                    {% if  user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                    {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                         <td>
                             <div class="custom-control custom-control-lg custom-checkbox">
                                 <input type="checkbox" class="custom-control-input checkAbsence" id="check_{{ absence.id }}"
@@ -58,14 +58,18 @@
                 </tr>
             {% else %}
                 <tr>
+                    {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                    <td colspan="6">
+                        {% else %}
                     <td colspan="5">
+                        {% endif %}
                         <div class="alert alert-info">Aucune absence n'a été saisie</div>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+        {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
             <div class="alert alert-info">* Si la case est cochée, l'absence est justifiée.</div>
         {% endif %}
         {% if etudiant.semestre.optPenaliteAbsence == true %}

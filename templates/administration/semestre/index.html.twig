@@ -42,13 +42,16 @@
 {% block content %}
     <div class="row">
         {% if semestre.actif == false %}
-        <div class="col-sm-12">
-        <div class="alert alert-warning">Ce semestre n'est pas actif, <strong>aucune action ne peut être faite par les
-                                                                              enseignants</strong>.</div>
-        </div>
+            <div class="col-sm-12">
+                <div class="alert alert-warning">Ce semestre n'est pas actif, <strong>aucune action ne peut être faite
+                                                                                      par les
+                                                                                      enseignants</strong>.
+                </div>
+            </div>
         {% endif %}
 
-        {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
+        {% if user_data.isGoodDepartement('ROLE_CDD') or user_data
+            .isGoodDepartement('ROLE_DDE') or user_data
             .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement
             ('ROLE_RP') %}
             <div class="col-md-6 col-sm-12">

@@ -1,6 +1,6 @@
 {{ include('bloc_notes_absences/etudiant_absences.html.twig') }}
 
- {% if  user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data
+ {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data
      .isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
      <div class="card">
          <h4 class="card-title">Ajouter une absence</h4>
