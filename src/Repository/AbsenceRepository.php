@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 10:13
+// @lastUpdate 14/09/2020 16:44
 
 namespace App\Repository;
 
@@ -156,9 +156,11 @@ class AbsenceRepository extends ServiceEntityRepository
         //recherche toutes les absences sur la période du justificatif
         return $this->createQueryBuilder('a')
             ->where('a.dateHeure >= :dateDebut')
+            ->andWhere('a.etudiant = :etudiant')
             ->andWhere('a.dateHeure <= :dateFin')
             ->setParameter('dateDebut', $justificatif->getDateHeureDebut())
             ->setParameter('dateFin', $justificatif->getDateHeureFin())
+            ->setParameter('etudiant', $justificatif->getEtudiant()->getId())
             ->getQuery()
             ->getResult();
     }
