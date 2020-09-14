@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DocumentType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 14/09/2020 18:14
 
 namespace App\Form;
 
@@ -38,7 +38,7 @@ class DocumentType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => '100 caractères maximum'])
             ->add('description', TextareaType::class, ['label' => 'label.description'])
             ->add('documentFile', VichFileType::class, [
                 'required'       => false,

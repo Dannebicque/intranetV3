@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 14/09/2020 18:16
 
 namespace App\Entity;
 
@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -62,6 +63,13 @@ class Document extends BaseEntity
      *
      * @ORM\Column(type="string", length=100)
      * @Groups({"document_administration"})
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 100,
+     *      minMessage = "Le titre du document doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le titre du document doit contenir au maximum {{ limit }} caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $libelle;
 
