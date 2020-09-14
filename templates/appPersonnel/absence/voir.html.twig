@@ -31,8 +31,8 @@
                 </thead>
                 <tbody>
                 {% for absence in absences %}
-                    <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-error{% endif %}" id="ligne_{{ absence
-                    .uuidString }}">
+                    <tr class="{% if absence.justifie == true %}bg-pale-success{% else %}bg-pale-error{% endif %}"
+                        id="ligne_{{ absence.uuidString }}">
                         <td>{{ absence.etudiant.nom }}</td>
                         <td>{{ absence.etudiant.prenom }}</td>
                         <td>{{ absence.dateHeure ? absence.dateHeure|format_datetime('long', 'short') : '' }}</td>
