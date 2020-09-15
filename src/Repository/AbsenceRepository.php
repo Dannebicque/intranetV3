@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 16:44
+// @lastUpdate 16/09/2020 10:54
 
 namespace App\Repository;
 
@@ -147,6 +147,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('semestre', $semestre->getId())
+            ->orderBy('a.dateHeure', 'DESC')
             ->getQuery()
             ->getResult();
     }
