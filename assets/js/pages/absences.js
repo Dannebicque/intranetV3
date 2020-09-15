@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 15/09/2020 06:17
 import {addCallout} from '../util'
 import '../../vendor/datatables'
 import $ from 'jquery'
@@ -111,7 +111,8 @@ $(document).on('click', '.etudiant', function () {
 $('#liste-absences').dataTable({
   'language': dataTableLangueFr,
   'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-    if (aData[6] === 'non' || aData[6] === 'no' || aData[6] === 'No' || aData[6] === 'Non') {
+
+    if (aData[5] === 'non' || aData[5] === 'no' || aData[5] === 'No' || aData[5] === 'Non') {
       $('td', nRow).css('background-color', '#fce3e3')
     } else {
       $('td', nRow).css('background-color', '#e3fcf2')

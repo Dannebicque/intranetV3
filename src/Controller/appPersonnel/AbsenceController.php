@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 14:31
+// @lastUpdate 14/09/2020 21:02
 
 namespace App\Controller\appPersonnel;
 
@@ -121,7 +121,7 @@ class AbsenceController extends BaseController
 
 
     /**
-     * @Route("/saisie/{matiere}", name="application_personnel_absence_voir", requirements={"matiere"="\d+"})
+     * @Route("/voir/{matiere}", name="application_personnel_absence_voir", requirements={"matiere"="\d+"})
      * @param Matiere $matiere
      *
      * @return Response
