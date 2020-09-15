@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 16:40
+// @lastUpdate 15/09/2020 06:51
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -106,43 +106,6 @@ $(document).on('click', '#idimportsemaine', function () {
   za.fadeIn(1000)
 })
 
-// //zones
-// $('#idcreerzone').click(function () {
-//   const za = $('#zoneaction')
-//   za.empty();
-//   //za.load("{{ path('da_kernel_administration_edt_creerzone') }}");
-//   za.fadeIn(1000);
-// });
-
-// //export
-// $('#idexport').click(function () {
-//   const za = $('#zoneaction')
-//   za.empty();
-//   //za.load("{{ path('da_kernel_administration_edt_za_export') }}");
-//   za.fadeIn(1000);
-//   $('#load-page').hide();
-//
-// });
-
-// //suppr semestre
-// $('#ideffacer').click(function () {
-//   const za = $('#zoneaction')
-//   za.empty();
-//   //za.load("{{ path('da_kernel_administration_edt_za_effacer') }}");
-//   za.fadeIn(1000);
-//   $('#load-page').hide();
-//
-// });
-
-
-// $(document).on('click', '.closeza', function (e) {
-//   e.preventDefault();
-//   const za = $('#zoneaction')
-//   za.fadeOut(1000);
-//   za.empty();
-//   za.hide();
-// });
-
 //changement d'heure de début
 $(document).on('change', '#hdbt', function () {
   const t = parseInt($(this).val()) + 3
@@ -193,15 +156,19 @@ $(document).on('change', '#affichesalle', function () {
 //
 // });
 
-// //affichage d'une promo sur une semaine précise
-// $(document).on('change', '#affichesemaine', function () {
-//   const tabetu = $('#zone_edt')
-//
-//   tabetu.empty();
-//   let $t = $(this).val().split('_');
-//   //tabetu.load("{{ path('da_kernel_administration_ajaxedt') }}", {filtre: $t[0], valeur: $t[1], semainer: $t[2]});
-//   $('#load-page').hide();
-// });
+//affichage d'une promo sur une semaine précise
+$(document).on('change', '#affichesemaine', function () {
+  const tabetu = $('#zone_edt')
+  const $sem = $('#semaine2').val()
+  let $val = $(this).val().split('_')
+  tabetu.empty()
+  tabetu.load(Routing.generate('administration_edt_ajax_update', {
+    filtre: $val[0],
+    valeur: $val[1],
+    semaine: $val[2]
+  }))
+  tabetu.fadeIn(2000)
+})
 
 //affichage par matière
 $(document).on('change', '#affichematiere', function () {

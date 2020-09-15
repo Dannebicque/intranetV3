@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/validators.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 10/09/2020 08:39 -->
+<!-- @lastUpdate 15/09/2020 06:51 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="validators.fr">
@@ -209,13 +209,13 @@
               <source>This value should be a valid number.</source>
               <target>Cette valeur doit être un nombre.</target>
           </segment>
-    </unit>
-    <unit id="BS2Ez6i" name="This file is not a valid image.">
-      <segment>
-          <source>This file is not a valid image.</source>
-          <target>Ce fichier n'est pas une image valide.</target>
-      </segment>
-    </unit>
+      </unit>
+      <unit id="BS2Ez6i" name="This file is not a valid image.">
+          <segment>
+              <source>This file is not a valid image.</source>
+              <target>Ce fichier n'est pas une image valide.</target>
+          </segment>
+      </unit>
       <unit id="ydcT9kU" name="This is not a valid IP address.">
           <segment>
               <source>This is not a valid IP address.</source>
