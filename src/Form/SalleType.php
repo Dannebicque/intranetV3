@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SalleType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/09/2020 17:20
 
 namespace App\Form;
 
@@ -54,6 +54,7 @@ class SalleType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Salle::class,
+            'translation_domain' => 'form'
         ]);
     }
 }
