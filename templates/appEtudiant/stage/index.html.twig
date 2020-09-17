@@ -6,26 +6,26 @@
                 {% for stagePeriode in stagePeriodes %}
                     <li class="nav-item">
                         <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
-                           href="#stagePeriode{{ stagePeriode.numeroPeriode }}">{{ stagePeriode.libelle }}</a>
+                           href="#stagePeriode{{ stagePeriode.uuidString }}">{{ stagePeriode.libelle }}</a>
                     </li>
                 {% endfor %}
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
-                {% for stagePeriode in stagePeriodes %}
-                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
-                         id="stagePeriode{{ stagePeriode.numeroPeriode }}">
-                        {% if stageEtudiants[stagePeriode.id] is defined %}
-                            {{ include('composants/stage_timeline.html.twig',{stageEtudiant: stageEtudiants[stagePeriode.id]}) }}
-                        {% else %}
-                            {{ include('composants/stage_timeline.html.twig') }}
-                        {% endif %}
+            {% for stagePeriode in stagePeriodes %}
+                <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                     id="stagePeriode{{ stagePeriode.uuidString }}">
+                    {% if stageEtudiants[stagePeriode.id] is defined %}
+                        {{ include('composants/stage_timeline.html.twig',{stageEtudiant: stageEtudiants[stagePeriode.id]}) }}
+                    {% else %}
+                        {{ include('composants/stage_timeline.html.twig') }}
+                    {% endif %}
 
-                        <div class="alert alert-warning">
-                            <p>{{ stagePeriode.texteLibre }}</p>
-                        </div>
+                    <div class="alert alert-warning">
+                        <p>{{ stagePeriode.texteLibre }}</p>
+                    </div>
 
-                        <div class="alert alert-info">
+                    <div class="alert alert-info">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <p>Période de stage du

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/09/2020 17:59
+// @lastUpdate 16/09/2020 20:42
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -568,5 +568,8 @@ td.td-edt.col-new-day {
   border-left: 3px solid black;
 }
 
+.trombinoscope_nom {
+  word-break: initial;
+}
 //correctifs accessibilité
 

@@ -82,6 +82,10 @@
                 <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
                    href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
             </li>
+            <li class="nav-item ">
+                <a class="nav-link changeapplication {% if onglet == 'projet' %}active{% endif %}"
+                   href="{{ path('application_etudiant_projet_index') }}" role="tab">{{ 'menu.projet'|trans }}</a>
+            </li>
 
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'rattrapage' %}active{% endif %}"

@@ -11,7 +11,7 @@
             </header>
             <div class="card-body">
                 <div class="row gap-y">
-                    {% for periode in periodes %}
+                    {% for periode in projetPeriodes %}
                         <div class="col-md-6">
                             <div>
                                 <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}"

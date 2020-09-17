@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 13:46
+// @lastUpdate 18/09/2020 08:30
 
 /**
  * Created by PhpStorm.
@@ -23,6 +23,7 @@ class Constantes
     public const ROLE_CDD = 'ROLE_CDD';
     public const ROLE_DDE = 'ROLE_DDE';
     public const ROLE_ASS = 'ROLE_ASS';
+    public const ROLE_PRJ = 'ROLE_PRJ';
     public const ROLE_RP = 'ROLE_RP';
     public const ROLE_ABS = 'ROLE_ABS';
     public const ROLE_EDT = 'ROLE_EDT';
@@ -71,7 +72,8 @@ class Constantes
         self::ROLE_STA,
         self::ROLE_NOTES,
         self::ROLE_AUTEUR,
-        self::ROLE_MAT
+        self::ROLE_MAT,
+        self::ROLE_PRJ
     ];
 
     public const TAB_HEURES = [

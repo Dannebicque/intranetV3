@@ -32,8 +32,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-      $('.selector-stagePeriodeSoutenances').collection();
-      $('.selector-stagePeriodeInterruptions').collection();
-    </script>
+    {{ encore_entry_script_tags('adm.stage') }}
 {% endblock %}
+
