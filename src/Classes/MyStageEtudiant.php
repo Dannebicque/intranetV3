@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 08:26
+// @lastUpdate 16/09/2020 17:13
 
 /**
  * Created by PhpStorm.
@@ -19,6 +19,7 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Event\StageEvent;
 use App\Repository\StageEtudiantRepository;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -74,27 +75,27 @@ class MyStageEtudiant
         switch ($etat) {
             case StageEtudiant::ETAT_STAGE_AUTORISE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
-                $this->stageEtudiant->setDateAutorise(new DateTime('now'));
+                $this->stageEtudiant->setDateAutorise(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_STAGE_AUTORISE;
                 break;
             case StageEtudiant::ETAT_STAGE_DEPOSE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
-                $this->stageEtudiant->setDateDepotFormulaire(new DateTime('now'));
+                $this->stageEtudiant->setDateDepotFormulaire(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_STAGE_DEPOSE;
                 break;
             case StageEtudiant::ETAT_STAGE_VALIDE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_VALIDE);
-                $this->stageEtudiant->setDateValidation(new DateTime('now'));
+                $this->stageEtudiant->setDateValidation(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_STAGE_VALIDE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE);
-                $this->stageEtudiant->setDateConventionEnvoyee(new DateTime('now'));
+                $this->stageEtudiant->setDateConventionEnvoyee(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_RECUE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_RECUE);
-                $this->stageEtudiant->setDateConventionRecu(new DateTime('now'));
+                $this->stageEtudiant->setDateConventionRecu(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_CONVENTION_RECUE;
                 break;
             case StageEtudiant::ETAT_STAGE_ERASMUS:

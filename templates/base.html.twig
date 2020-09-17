@@ -133,41 +133,19 @@
                         <span class="title">{{ 'menu.informations'|trans }}</span>
                     </a>
                 </li>
-                {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_RP') or user_data
-                    .isGoodDepartement('ROLE_DDE') or
-                    user_data.isGoodDepartement('ROLE_ASS') %}
+                {% if user_data.isGoodDepartement('ROLE_CDD') or
+                    user_data.isGoodDepartement('ROLE_RP') or
+                    user_data.isGoodDepartement('ROLE_DDE') or
+                    user_data.isGoodDepartement('ROLE_ASS') or
+                    user_data.isGoodDepartement('ROLE_STA') or
+                    user_data.isGoodDepartement('ROLE_ABS') or
+                    user_data.isGoodDepartement('ROLE_NOTES') or
+                    user_data.isGoodDepartement('ROLE_PRJ') or
+                    user_data.isGoodDepartement('ROLE_EDT') %}
                     <li class="menu-item" id="menu-administration">
                         <a class="menu-link" href="{{ path('administration_index') }}">
                             <span class="material-icons">build</span>
                             <span class="title">{{ 'menu.administration'|trans }}</span>
-                        </a>
-                    </li>
-                {% elseif user_data.isGoodDepartement('ROLE_STA') %}
-                    <li class="menu-item" id="menu-administration">
-                        <a class="menu-link" href="{{ path('administration_index') }}">
-                            <span class="material-icons">build</span>
-                            <span class="title">{{ 'menu.administration_stage'|trans }}</span>
-                        </a>
-                    </li>
-                {% elseif user_data.isGoodDepartement('ROLE_EDT') %}
-                    <li class="menu-item" id="menu-administration">
-                        <a class="menu-link" href="{{ path('administration_index') }}">
-                            <span class="material-icons">build</span>
-                            <span class="title">{{ 'menu.administration_edt'|trans }}</span>
-                        </a>
-                    </li>
-                {% elseif user_data.isGoodDepartement('ROLE_ABS') %}
-                    <li class="menu-item" id="menu-administration">
-                        <a class="menu-link" href="{{ path('administration_index') }}">
-                            <span class="material-icons">build</span>
-                            <span class="title">{{ 'menu.administration_abs'|trans }}</span>
-                        </a>
-                    </li>
-                {% elseif user_data.isGoodDepartement('ROLE_NOTES') %}
-                    <li class="menu-item" id="menu-administration">
-                        <a class="menu-link" href="{{ path('administration_index') }}">
-                            <span class="material-icons">build</span>
-                            <span class="title">{{ 'menu.administration_notes'|trans }}</span>
                         </a>
                     </li>
                 {% endif %}

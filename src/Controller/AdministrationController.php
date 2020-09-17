@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AdministrationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 10:59
+// @lastUpdate 18/09/2020 08:29
 
 namespace App\Controller;
 
@@ -22,7 +22,9 @@ class AdministrationController extends BaseController
 {
     /**
      * @Route("/", name="administration_index")
-     * @param StagePeriodeRepository $stagePeriodeRepository
+     * @param StagePeriodeRepository  $stagePeriodeRepository
+     *
+     * @param ProjetPeriodeRepository $projetPeriodeRepository
      *
      * @return Response
      */

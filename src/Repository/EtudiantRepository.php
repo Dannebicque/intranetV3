@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 06:42
+// @lastUpdate 16/09/2020 20:50
 
 namespace App\Repository;
 
@@ -14,6 +14,7 @@ use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
@@ -153,15 +154,25 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @param $semestre
      *
-     * @return array
+     * @return QueryBuilder
      */
-    public function findBySemestre($semestre): array
+    public function findBySemestreBuilder($semestre): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->where('e.semestre = :semestre')
             ->setParameter('semestre', $semestre)
             ->orderBy('e.nom', 'ASC')
-            ->addOrderBy('e.prenom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC');
+    }
+
+    /**
+     * @param $semestre
+     *
+     * @return array
+     */
+    public function findBySemestre($semestre): array
+    {
+        return $this->findBySemestreBuilder($semestre)
             ->getQuery()
             ->getResult();
     }

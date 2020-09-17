@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 15/09/2020 06:26 -->
+<!-- @lastUpdate 18/09/2020 08:43 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -2703,7 +2703,7 @@
     <unit id="q6Og1w3" name="label.responsable">
       <segment>
         <source>label.responsable</source>
-        <target>Responsable</target>
+        <target>Représentée par</target>
       </segment>
     </unit>
     <unit id="SV.QxiZ" name="label.civilite">
@@ -2817,7 +2817,7 @@
     <unit id="Raaw2Ut" name="label.sujetStage">
       <segment>
         <source>label.sujetStage</source>
-        <target>Sujet de stage</target>
+        <target>Mission principale</target>
       </segment>
     </unit>
     <unit id="zASD7Pj" name="help.sujetStage">
