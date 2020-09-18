@@ -35,7 +35,8 @@
 {% endblock %}
 
 {% block content %}
-    <img src="{{ linuxpath~'img/logo/urcapetit.jpg' }}" alt="logo" width="100px" style="float:left;"/>
+    <img src="{{ settings('BASE_PATH') }}logo/urca_petit.jpg" alt="logo Université"
+         width="100px" style="float:left;"/>
     <div style="text-align: right;">
         <strong><p style="font-size:18px">CONVENTION DE STAGE EN FRANCE</p><br/>Année Universitaire {{ proposition
             .stagePeriode.semestre.annee.diplome.anneeuniversitaire.displayAnneeUniversitaire }}</strong></div>
@@ -44,8 +45,8 @@
     <div class="blocconvention">
         <p style="font-size:10px">Adresse : Villa Douce – 9 boulevard de la paix – CS 60005 – 51724 REIMS Cedex<br/>
                                   Téléphone : 03.26.91.34.68</p>
-      Représenté par : {{ user_data.departement.ufr.responsable.display }}<br/>
-      Qualité du représentant : Directeur {{ settings('NOM_IUT') }}<br/>
+        Représenté par : {{ user_data.departement.ufr.responsable.display }}<br/>
+        Qualité du représentant : Directeur {{ settings('NOM_IUT') }}<br/>
       Composante
       <ul>
         <li>Intitulé (UFR/IUT …) : {{ settings('NOM_IUT') }}
