@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'applications.etudiant.projet.formulaire.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_index', {onglet:'projet'}) }}" class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_applications'|trans }}"><i
+                        class="material-icons">arrow_back</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'applications.etudiant.projet.formulaire.heading'|trans }}</h4>
+        <div class="card-body">
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form(form) }}
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

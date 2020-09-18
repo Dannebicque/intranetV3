@@ -1,0 +1,97 @@
+<div class="card">
+    <h4 class="card-title">Vos périodes de projet</h4>
+    <div class="card-body">
+        {% if projetsPeriodes|length > 0 %}
+            <ul class="nav nav-tabs">
+                {% for projetPeriode in projetsPeriodes %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                           href="#projetPeriode{{ projetPeriode.uuidString }}">{{ projetPeriode.libelle }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for projetPeriode in projetsPeriodes %}
+                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                         id="projetPeriode{{ projetPeriode.uuidString }}">
+                        {% if projetsEtudiants[projetPeriode.id] is defined %}
+                            {{ include('composants/_projet_timeline.html.twig',{projetEtudiant:
+                                projetsEtudiants[projetPeriode.id]}) }}
+                        {% else %}
+                            {{ include('composants/_projet_timeline.html.twig') }}
+                        {% endif %}
+
+                        <div class="alert alert-warning">
+                            <p>{{ projetPeriode.texteLibre }}</p>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <p>Période de stage du
+                                        <strong>{{ projetPeriode.dateDebut ? projetPeriode.dateDebut|format_date('long') : 'non.defini'|trans }}
+                                            au {{ projetPeriode.dateFin ? projetPeriode.dateFin|format_date('long') : 'non.defini'|trans }}</strong>
+                                    </p>
+                                    <p>Les responsables de cette période sont : </p>
+                                    <ul>
+                                        {% for personnel in projetPeriode.responsables %}
+                                            <li>{{ personnel.displayPr }}</li>
+                                        {% else %}
+                                            {{ 'non.defini'|trans }}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% if projetsEtudiants[projetPeriode.id] is  not defined %}
+                            {# <div class="alert alert-warning">Imprimez <a #}
+                            {# href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}" #}
+                            {# target="_blank">la fiche de stage</a> à faire compléter et signer par #}
+                            {# l'entreprise. #}
+                            <strong>Ce document n'est pas la convention de stage !</strong>
+                            {# </div> #}
+
+                            <a href="{{ path('stage_offre_stage_index') }}" class="btn btn-block btn-large
+                            btn-info">Consultez les offres de stage</a>
+                        {% endif %}
+                        {% if ((projetsEtudiants[projetPeriode.id] is  defined) and (projetsEtudiants[projetPeriode
+                            .id].etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
+                            <div class="alert alert-warning"><p>Votre proposition a été acceptée le
+                                    <strong>{{ projetsEtudiants[projetPeriode.id].dateAutorise|format_date('long') }}</strong>.
+                                                                Vous devez maintenant remplir le formulaire.</p></div>
+                            <a href="{{ path('application_etudiant_projet_formulaire',
+                                {projetEtudiant:projetsEtudiants[projetPeriode.id].uuidString}) }}"
+                               class="btn btn-block btn-large btn-info">Compléter la proposition de projet</a>
+                        {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
+                            (projetsEtudiants[projetPeriode.id].etatStage is constant
+                            ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') )) %}
+                            <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de
+                                                             validation
+                                                             par les responsables de stage. Vous recevrez un mail dés
+                                                             que vous pourrez signer la
+                                                             convention.
+                            </div>
+                        {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
+                            (projetsEtudiants[projetPeriode.id] is constant
+                            ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )) %}
+                            <div class="alert alert-success">Votre formulaire a été validé. La convention va être
+                                                             imprimée
+                                                             prochainement.
+                            </div>
+                        {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
+                            (projetsEtudiants[projetPeriode.id] is constant
+                            ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )) %}
+                            <div class="alert alert-success">La convention est imprimée. Vous devez venir signer votre
+                                                             convention de stage
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">Vous n'avez pas de période de stage à compléter sur ce semestre.</div>
+        {% endif %}
+    </div>
+</div>
+

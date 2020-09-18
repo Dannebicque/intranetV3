@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProjetPeriodeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 17:36
+// @lastUpdate 18/09/2020 08:45
 
 namespace App\Repository;
 
@@ -79,5 +79,15 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('p.anneeUniversitaire', 'DESC')
             ->addOrderBy('p.libelle', 'ASC');
+    }
+
+    public function findBySemestre(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.semestre = :semestre')
+            ->setParameter('semestre', $semestre->getId())
+            ->orderBy('p.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
