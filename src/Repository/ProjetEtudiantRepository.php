@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProjetEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 17:42
+// @lastUpdate 18/09/2020 08:50
 
 namespace App\Repository;
 
+use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
+use App\Entity\ProjetPeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -24,32 +27,22 @@ class ProjetEtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, ProjetEtudiant::class);
     }
 
-    // /**
-    //  * @return ProjetEtudiant[] Returns an array of ProjetEtudiant objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param ProjetPeriode $projetPeriode
+     * @param Etudiant      $etudiant
+     *
+     * @return mixed
+     * @throws NonUniqueResultException
+     */
+    public function findExist(ProjetPeriode $projetPeriode, Etudiant $etudiant)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.etudiants', 'e')
+            ->where('e.id = :etudiant')
+            ->andWhere('s.projetPeriode = :projetPeriode')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->setParameter('projetPeriode', $projetPeriode)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ProjetEtudiant
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

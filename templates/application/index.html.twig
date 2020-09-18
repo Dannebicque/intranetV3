@@ -23,6 +23,10 @@
             {{ render(controller(
                 'App\\Controller\\appPersonnel\\StageController::index'
             )) }}
+        {% elseif onglet == 'projet' %}
+            {{ render(controller(
+                'App\\Controller\\appPersonnel\\ProjetController::index'
+            )) }}
         {% elseif onglet == 'carnet' %}
             {{ render(controller(
                 'App\\Controller\\appPersonnel\\CarnetController::index'

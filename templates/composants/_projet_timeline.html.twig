@@ -1,0 +1,59 @@
+<ul class="nav nav-process nav-process-circle">
+    <li class="nav-item {% if projetEtudiant is not defined %}processing{% else %}complete{% endif %} ">
+        <span class="nav-title">Proposition de projet</span>
+        <a class="nav-link" href="#"></a>
+    </li>
+    <li class="nav-item
+                            {% if ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is not constant
+        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
+                            complete
+                            {% elseif ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is
+        constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
+                            processing
+                            {% endif %}"
+    >
+        <span class="nav-title">Accès au formulaire</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is
+            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
+            <span>{{ projetEtudiant.dateAutorise|format_date('long') }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+                             {% if ((projetEtudiant is  defined) and (
+        (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )
+        or (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )
+        )) %}
+                            complete
+                            {% elseif ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is constant
+        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') )) %}
+                            processing
+                            {% endif %}"
+    >
+        <span class="nav-title">Formulaire soumis</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((projetEtudiant is  defined) and (
+            (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )
+            or (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )
+            )) %}
+            <span>{{ projetEtudiant.dateDepotFormulaire|format_datetime('long') }}</span>
+        {% endif %}
+    </li>
+    <li class="nav-item
+                        {% if ((projetEtudiant is  defined) and ((projetEtudiant.etatProjet is constant
+        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME'))
+        )) %}
+                            complete
+                            {% elseif ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is constant
+        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE'))) %}
+                            processing
+                            {% endif %}">
+        <span class="nav-title">Formulaire Validé</span>
+        <a class="nav-link" href="#"></a>
+        {% if ((projetEtudiant is  defined) and (
+            (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )
+            )) %}
+            <span>{{ projetEtudiant.dateValidation|format_date('long') }}</span>
+        {% endif %}
+    </li>
+</ul>

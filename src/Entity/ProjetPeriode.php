@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetPeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 18:13
+// @lastUpdate 18/09/2020 08:45
 
 namespace App\Entity;
 
@@ -55,6 +55,11 @@ class ProjetPeriode extends BaseEntity
      * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="projetPeriode")
      */
     private $projetEtudiants;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $texteLibre;
 
     public function __construct()
     {
@@ -176,6 +181,18 @@ class ProjetPeriode extends BaseEntity
                 $projetEtudiant->setProjetPeriode(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTexteLibre(): ?string
+    {
+        return $this->texteLibre;
+    }
+
+    public function setTexteLibre(?string $texteLibre): self
+    {
+        $this->texteLibre = $texteLibre;
 
         return $this;
     }

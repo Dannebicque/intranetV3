@@ -88,48 +88,57 @@
                         <tr>
                             <td>{{ projetEtudiant.etudiant.display }}</td>
                             {% if projetEtudiant.projet is defined %}
-                                <td>{{ projetEtudiant.projet.entreprise.libelle }}</td>
-                                <td>{% if projetEtudiant.projet.entreprise.adresse != null %}
+                                {% if projetEtudiant.projet.etatProjet == constant
+                                    ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') %}
+                                    <td colspan="4">
+                                        <button class="btn btn-block btn-primary">{{ 'saisie.autorise.formulaire.non.completee'|trans }}</button>
+                                    </td>
+                                    <td>
+                                        ...
+                                    </td>
+                                {% else %}
+                                    <td>{{ projetEtudiant.projet.entreprise.libelle }}</td>
+                                    <td>{% if projetEtudiant.projet.entreprise.adresse != null %}
 
-                                        {{ projetEtudiant.projet.entreprise.adresse.ville|capitalize }} ({{ projetEtudiant.projet.entreprise.adresse.codePostal }})
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </td>
-                                <td {% if projetEtudiant.projet.dateDebutStage != projetPeriode.dateDebut or
-                                    projetEtudiant.projet.dateFinStage != projetPeriode.dateFin %} style="background-color: firebrick; color: whitesmoke"{% endif %}>
-                                    {{ projetEtudiant.projet.dateDebutStage|format_date('long') }}
-                                    <br/> {{ projetEtudiant.projet.dateFinStage|format_date('long') }}
-                                </td>
-                                <td>
-                                    <label for="tuteur_{{ projetEtudiant.etudiant.id }}" class="sr-only"></label>
-                                    <select name="tuteur_{{ projetEtudiant.etudiant.id }}" id="tuteur_{{ projetEtudiant.etudiant.id }}" data-stage="{{ projetEtudiant.projet.id }}"
-                                            class="changetuteur form-control">
-                                        <option>{{ 'table.tuteur_universitaire'|trans }}</option>
-                                        {% for personnel in user_data.personnels %}
-                                            <option value="{{ personnel.id }}" {% if projetEtudiant.projet
-                                                .tuteurUniversitaire != null and personnel.id ==
-                                                projetEtudiant.projet.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </td>
-                                <td>
+                                            {{ projetEtudiant.projet.entreprise.adresse.ville|capitalize }} ({{ projetEtudiant.projet.entreprise.adresse.codePostal }})
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ projetEtudiant.projet.dateDebut|format_date('long') }}
+                                        <br/> {{ projetEtudiant.projet.dateFin|format_date('long') }}
+                                    </td>
+                                    <td>
+                                        <label for="tuteur_{{ projetEtudiant.etudiant.id }}" class="sr-only"></label>
+                                        <select name="tuteur_{{ projetEtudiant.etudiant.id }}" id="tuteur_{{ projetEtudiant.etudiant.id }}" data-projet="{{ projetEtudiant.projet.id }}"
+                                                class="changetuteur form-control">
+                                            <option>{{ 'table.tuteur_universitaire'|trans }}</option>
+                                            {% for personnel in user_data.personnels %}
+                                                <option value="{{ personnel.id }}" {% if projetEtudiant.projet
+                                                    .tuteurUniversitaire != null and personnel.id ==
+                                                    projetEtudiant.projet.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td>
 
-                                    <a href="{{ path('administration_stage_etudiant_show', {id:projetEtudiant.projet.id}) }}"
-                                       class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                                        <a href="{{ path('administration_stage_etudiant_show', {id:projetEtudiant.projet.id}) }}"
+                                           class="btn btn-info btn-outline btn-square" data-provide="tooltip"
+                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
-                                    <a href="{{ path('administration_stage_etudiant_edit', {id:projetEtudiant.projet.id}) }}"
-                                       class="btn btn-warning btn-outline btn-square"
-                                       data-provide="tooltip"
-                                       data-placement="bottom"
-                                       title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
-                                    <a href="{{ path('administration_stage_etudiant_delete', {id:projetEtudiant.projet.id}) }}"
-                                       data-csrf="{{ csrf_token('delete' ~ projetEtudiant.projet.id) }}"
-                                       class="btn btn-danger btn-outline btn-square supprimer"
-                                       data-provide="tooltip" data-placement="bottom"
-                                       title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
-                                </td>
+                                        <a href="{{ path('administration_stage_etudiant_edit', {id:projetEtudiant.projet.id}) }}"
+                                           class="btn btn-warning btn-outline btn-square"
+                                           data-provide="tooltip"
+                                           data-placement="bottom"
+                                           title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
+                                        <a href="{{ path('administration_stage_etudiant_delete', {id:projetEtudiant.projet.id}) }}"
+                                           data-csrf="{{ csrf_token('delete' ~ projetEtudiant.projet.id) }}"
+                                           class="btn btn-danger btn-outline btn-square supprimer"
+                                           data-provide="tooltip" data-placement="bottom"
+                                           title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
+                                    </td>
+                                {% endif %}
                             {% else %}
                                 <td>{{ 'pas.de.projet'|trans }}</td>
                                 <td>{{ 'pas.de.projet'|trans }}</td>
@@ -137,7 +146,11 @@
                                 <td>{{ 'pas.de.projet'|trans }}</td>
 
                                 <td>
-
+                                    <a href="{{ path('administration_projet_etudiant_change_etat', {projetPeriode:
+                                        projetPeriode.uuidString, etudiant:projetEtudiant.etudiant.id, etat: constant
+                                            ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE')}) }}"
+                                       class="btn btn-danger btn-block" data-provide="tooltip" data-placement="bottom"
+                                       title="Cliquez pour autoriser la saisie des informations (proposition signée reçue)">{{ 'autoriser.la.saisie'|trans }}</a>
                                 </td>
                             {% endif %}
                             {% endfor %}
