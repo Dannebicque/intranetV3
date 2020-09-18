@@ -4,8 +4,12 @@
     {% if monprofil %}
         {{ 'mon.profil.heading'|trans }}
     {% else %}
-        {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestre != null ? user.semestre
-            .libelle : 'non.defini'}) }}
+        {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
+            {{ 'profil.personnel.heading'|trans({'%user%': user.displayPr}) }}
+        {% elseif user.typeUser|lower == 'etudiant' %}
+            {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestre != null ? user.semestre
+                .libelle : 'non.defini'}) }}
+        {% endif %}
     {% endif %}
 {% endblock %}
 
