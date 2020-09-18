@@ -273,13 +273,15 @@
                             {% if diplome.responsableDiplome != null %}
                                 <dt class="col-sm-4">Responsable :</dt>
                                 <dd class="col-sm-6"><a
-                                            href="{{ path('user_profil', {slug: diplome.responsableDiplome.slug, type: 'permanent'}) }}"
+                                            href="{{ path('user_profil', {slug: diplome.responsableDiplome.slug,
+                                                type: 'personnel'}) }}"
                                             target="_blank">{{ diplome.responsableDiplome.displayPr }}</a></dd>
                             {% endif %}
                             {% if diplome.assistantDiplome != null %}
                                 <dt class="col-sm-4">Assistant(e) :</dt>
                                 <dd class="col-sm-6"><a
-                                            href="{{ path('user_profil', {slug: diplome.assistantDiplome.slug, type: 'permanent'}) }}"
+                                            href="{{ path('user_profil', {slug: diplome.assistantDiplome.slug, type:
+                                                'personnel'}) }}"
                                             target="_blank">{{ diplome.assistantDiplome.displayPr }}</a></dd>
                             {% endif %}
                         </dl>
