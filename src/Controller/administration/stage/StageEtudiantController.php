@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/09/2020 16:54
+// @lastUpdate 18/09/2020 09:12
 
 namespace App\Controller\administration\stage;
 
@@ -155,7 +155,7 @@ class StageEtudiantController extends BaseController
         //2. Si oui envoyer
         //3. Si non générer et envoyer + sauvegarde
         //todo: prevoir bouton pour "regenerer" la convention
-        $html = $this->renderView('pdf/conventionStagePDF.html.twig', [
+        $html = $this->renderView('pdf/stage/conventionStagePDF.html.twig', [
             'proposition' => $stageEtudiant,
         ]);
 
