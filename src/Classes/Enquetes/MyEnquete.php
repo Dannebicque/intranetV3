@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/09/2020 15:20
+// @lastUpdate 19/09/2020 17:43
 
 namespace App\Classes\Enquetes;
 
@@ -156,9 +156,7 @@ class MyEnquete
      */
     public function getReponseFromQuestionnaire(QualiteQuestionnaire $questionnaire): void
     {
-        $questionnaire1 = $questionnaire;
         $quizzEtudiants = $this->quizzEtudiantRepository->findBy(['questionnaire' => $questionnaire->getId()]);
-        $nbQuizzEtudiants = count($quizzEtudiants);
         $reponsesEtudiants = $this->quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
 
         /** @var QuizzEtudiantReponse $reponse */
