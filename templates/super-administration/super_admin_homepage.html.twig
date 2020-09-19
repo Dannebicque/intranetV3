@@ -81,6 +81,11 @@
     <div class="card"><h4 class="card-title"><strong>{{ 'sa_configuration.heading'|trans }}</strong></h4>
         <div class="card-body">
             <div class="row gap-y">
+                <div class="col-md-4 col-sm-12">
+                    <div><a href="{{ path('sa_materiel_commun_index') }}"
+                            class="btn btn-block btn-primary"> {{ 'gestion.materiel_commun'|trans }}</a></div>
+                </div>
+
                 <div class="col-md-4 col-sm-12"><a href="{{ path('sa_site_index') }}"
                                                    class="btn btn-block btn-primary"> {{ 'sites-geographiques'|trans }}
                     </a></div>
