@@ -1,0 +1,13 @@
+Bonjour,
+
+Une nouvelle demande de matériel a été faite sur l'intranet.
+
+Demande faite par {{ reservation.personnel.displayPr }}
+Contact : {{ reservation.personnel.mailuniv }}
+
+Prêt pour le {{ reservation.dateEmprunt|date('d/m/Y' ) }}, à {{ reservation.creneau }}
+
+Matériel souhaité :
+{{ reservation.materielCommun.designation }} ({{ reservation.materielCommun.description }})
+
+Message envoyé automatiquement de l'intranet

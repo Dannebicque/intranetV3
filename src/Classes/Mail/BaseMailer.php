@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:34
+// @lastUpdate 19/09/2020 09:29
 
 namespace App\Classes\Mail;
 
@@ -50,7 +50,9 @@ class BaseMailer
             ->subject($this->translator->trans($subject))
             ->replyTo($this->getReplyTo($options));
 
+
         $this->checkTo($mail, $to);
+        $this->checkCc($mail, $options);
         $this->mailer->send($mail);
     }
 
@@ -76,7 +78,7 @@ class BaseMailer
      */
     private function getReplyTo(array $options)
     {
-        if (array_key_exists('replyTofrom', $options) && count($options['replyTo']) > 0) {
+        if (array_key_exists('replyTofrom', $options) && $options['replyTo'] !== '') {
             return new Address($options['replyTo']);
         }
 
@@ -87,11 +89,20 @@ class BaseMailer
      * @param array $mails
      *
      */
-    private function checkTo($mail, array $mails): void
+    private function checkTo(&$mail, array $mails): void
     {
         foreach ($mails as $m) {
             if ($m !== null && trim($m) !== '') {
                 $mail->addTo(new Address(trim($m)));
+            }
+        }
+    }
+
+    private function checkCc(&$mail, array $options)
+    {
+        if (array_key_exists('cc', $options) && count($options['cc']) > 0) {
+            foreach ($options['cc'] as $cc) {
+                $mail->addCc(new Address($cc));
             }
         }
     }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/BacController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 18/09/2020 17:04
 
 namespace App\Controller\superAdministration;
 
@@ -133,6 +133,7 @@ class BacController extends BaseController
 
         $this->entityManager->persist($newBac);
         $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.duplicate.success.flash');
 
         return $this->redirectToRoute('sa_bac_edit', ['id' => $newBac->getId()]);
     }

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 13:57
+// @lastUpdate 19/09/2020 07:56
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -67,6 +67,7 @@ Encore
   .addEntry('scolarite', './assets/js/pages/scolarite.js')
   .addEntry('sadm.scolarite', './assets/js/pages/sadm.scolarite.js')
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
+  .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
 
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
