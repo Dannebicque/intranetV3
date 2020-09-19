@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 16:16
+// @lastUpdate 19/09/2020 16:05
 
 namespace App\Controller\administration;
 
@@ -13,12 +13,14 @@ use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
+use App\Entity\Scolarite;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -173,6 +175,24 @@ class EtudiantController extends BaseController
         $etudiantScolarite->changeEtat($etat);
 
         return $this->json(true, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/demissionnaire/{uuid}", name="administration_etudiant_demissionnaire", methods="GET")
+     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
+     * @param EtudiantScolarite $etudiantScolarite
+     * @param Etudiant          $etudiant
+     *
+     */
+    public function demissionnaire(
+        Request $request,
+        EtudiantScolarite $etudiantScolarite,
+        Etudiant $etudiant
+    ): RedirectResponse {
+        $etudiantScolarite->setEtudiant($etudiant);
+        $etudiantScolarite->changeEtat(Constantes::SEMESTRE_DEMISSIONNAIRE);
+
+        return $this->redirectToRoute('trombinoscope_index');
     }
 
     /**
