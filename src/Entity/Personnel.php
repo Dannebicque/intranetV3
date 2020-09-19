@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/09/2020 15:13
+// @lastUpdate 18/09/2020 18:10
 
 namespace App\Entity;
 
@@ -257,6 +257,16 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $projetPeriodes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=MaterielCommun::class, mappedBy="contact")
+     */
+    private $materielCommuns;
+
+    /**
+     * @ORM\OneToMany(targetEntity=MaterielCommunPret::class, mappedBy="personnel")
+     */
+    private $materielCommunPrets;
+
     public function __construct()
     {
         parent::__construct();
@@ -285,6 +295,8 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
+        $this->materielCommuns = new ArrayCollection();
+        $this->materielCommunPrets = new ArrayCollection();
     }
 
     /**
@@ -1418,6 +1430,68 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         if ($this->projetPeriodes->contains($projetPeriode)) {
             $this->projetPeriodes->removeElement($projetPeriode);
             $projetPeriode->removeResponsable($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MaterielCommun[]
+     */
+    public function getMaterielCommuns(): Collection
+    {
+        return $this->materielCommuns;
+    }
+
+    public function addMaterielCommun(MaterielCommun $materielCommun): self
+    {
+        if (!$this->materielCommuns->contains($materielCommun)) {
+            $this->materielCommuns[] = $materielCommun;
+            $materielCommun->setContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMaterielCommun(MaterielCommun $materielCommun): self
+    {
+        if ($this->materielCommuns->contains($materielCommun)) {
+            $this->materielCommuns->removeElement($materielCommun);
+            // set the owning side to null (unless already changed)
+            if ($materielCommun->getContact() === $this) {
+                $materielCommun->setContact(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MaterielCommunPret[]
+     */
+    public function getMaterielCommunPrets(): Collection
+    {
+        return $this->materielCommunPrets;
+    }
+
+    public function addMaterielCommunPret(MaterielCommunPret $materielCommunPret): self
+    {
+        if (!$this->materielCommunPrets->contains($materielCommunPret)) {
+            $this->materielCommunPrets[] = $materielCommunPret;
+            $materielCommunPret->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMaterielCommunPret(MaterielCommunPret $materielCommunPret): self
+    {
+        if ($this->materielCommunPrets->contains($materielCommunPret)) {
+            $this->materielCommunPrets->removeElement($materielCommunPret);
+            // set the owning side to null (unless already changed)
+            if ($materielCommunPret->getPersonnel() === $this) {
+                $materielCommunPret->setPersonnel(null);
+            }
         }
 
         return $this;

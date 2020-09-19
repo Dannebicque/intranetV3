@@ -289,7 +289,7 @@
         </div>
     </div>
     <div class="col-md-4 col-lg-4 col-sm-12">
-        <div class="card"><h2 class="card-title">{{ 'adm.parametres.departement'|trans }}</h2>
+        <div class="card"><h2 class="card-title">{{ 'adm.examens'|trans }}</h2>
             <div class="card-body">
                 <div class="row gap-y">
                     <div class="col-md-12">
@@ -298,6 +298,19 @@
                     </div>
 
                 </div>
+                <div class="row gap-y">
+                    <div class="col-md-12">
+                        <a href="{{ path('administration_reservation_materiel_commun') }}" class="btn btn-block
+                        btn-primary">
+                            {{ 'adm.materiel_commun_reservation'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+        <div class="card"><h2 class="card-title">{{ 'adm.parametres.departement'|trans }}</h2>
+            <div class="card-body">
                 <div class="row gap-y">
                     <div class="col-md-12">
                         <a href="{{ path('administration_creneau_cours_index') }}" class="btn btn-block btn-primary">

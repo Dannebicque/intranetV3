@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 18/09/2020 14:08 -->
+<!-- @lastUpdate 19/09/2020 09:29 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7488,14 +7488,14 @@
         <target>Profil de %user% (%semestre%)</target>
       </segment>
     </unit>
-    <unit id="7FiVtuX" name="profil.personnel.heading">
-      <notes>
-        <note priority="1">templates/user/profil.html.twig:7</note>
-      </notes>
-      <segment>
-        <source>profil.personnel.heading</source>
-        <target>Profil de %user%</target>
-      </segment>
+    <unit id="NvqBF_x" name="profil.personnel.heading">
+        <notes>
+            <note priority="1">templates/user/profil.html.twig:7</note>
+        </notes>
+        <segment>
+            <source>profil.personnel.heading</source>
+            <target>Profil de %user%</target>
+        </segment>
     </unit>
     <unit id="1LWOZnS" name="numero.harpege">
       <notes>
@@ -8508,12 +8508,12 @@
         <target>L'état du stage a été modifié avec succès</target>
       </segment>
     </unit>
-    <unit id="cEMuEox" name="chgt.etat_stage_autorise">
-        <segment>
-            <source>chgt.etat_stage_autorise</source>
-            <target>Changement d'état de votre stage : Saisie autorisée</target>
-        </segment>
-    </unit>
+      <unit id="cEMuEox" name="chgt.etat_stage_autorise">
+          <segment>
+              <source>chgt.etat_stage_autorise</source>
+              <target>Changement d'état de votre stage : Saisie autorisée</target>
+          </segment>
+      </unit>
     <unit id="7TeNraa" name="fixe">
       <segment>
         <source>fixe</source>
@@ -10653,14 +10653,14 @@
         <target>Voir fichier</target>
       </segment>
     </unit>
-    <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
-      <segment>
-        <source>app.etudiant.justificatif.explication.index</source>
-        <target>Les justificatifs sont validés manuellement. Il peut y avoir un délai de
-            traitement.
-        </target>
-      </segment>
-    </unit>
+      <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
+          <segment>
+              <source>app.etudiant.justificatif.explication.index</source>
+              <target>Les justificatifs sont validés manuellement. Il peut y avoir un délai de
+                  traitement.
+              </target>
+          </segment>
+      </unit>
       <unit id="Qoot1_a" name="fixes">
           <segment>
               <source>fixes</source>
@@ -10683,16 +10683,16 @@
           <segment>
               <source>table.groupe_promo</source>
               <target>Groupes promo.</target>
-      </segment>
-    </unit>
-    <unit id="AT1q8at" name="ufr.edit.success.flash">
-      <segment>
-        <source>ufr.edit.success.flash</source>
-        <target>UFR modifié avec succès</target>
-      </segment>
-    </unit>
-    <unit id="s2XP51V" name="table.site_principal">
-      <segment>
+          </segment>
+      </unit>
+      <unit id="AT1q8at" name="ufr.edit.success.flash">
+          <segment>
+              <source>ufr.edit.success.flash</source>
+              <target>UFR modifié avec succès</target>
+          </segment>
+      </unit>
+      <unit id="s2XP51V" name="table.site_principal">
+          <segment>
         <source>table.site_principal</source>
         <target>Site principal</target>
       </segment>
@@ -11624,16 +11624,16 @@
     </unit>
     <unit id="Y7oGNnP" name="edt.intervenant.synchro.ical.heading">
       <segment>
-        <source>edt.intervenant.synchro.ical.heading</source>
-        <target>Lien pour la synchronisation de l'EDT via ICAL</target>
+          <source>edt.intervenant.synchro.ical.heading</source>
+          <target>Lien pour la synchronisation de l'EDT via ICAL</target>
       </segment>
     </unit>
-    <unit id="cJfy41b" name="annee.en.apprentissage">
-      <segment>
-          <source>annee.en.apprentissage</source>
-          <target>Année en apprentissage</target>
-      </segment>
-    </unit>
+      <unit id="cJfy41b" name="annee.en.apprentissage">
+          <segment>
+              <source>annee.en.apprentissage</source>
+              <target>Année en apprentissage</target>
+          </segment>
+      </unit>
       <unit id="fjam7IK" name="aucune.convention.a.envoyer">
           <segment>
               <source>aucune.convention.a.envoyer</source>
@@ -11674,14 +11674,14 @@
           <segment>
               <source>table.securite_sociale</source>
               <target>Mutuelle étudiante ou sécurité sociale</target>
-      </segment>
-    </unit>
-    <unit id="dpm6hxI" name="table.adresse_securite_sociale">
-      <segment>
-          <source>table.adresse_securite_sociale</source>
-          <target>Adresse mutuelle étudiante ou sécurité sociale</target>
-      </segment>
-    </unit>
+          </segment>
+      </unit>
+      <unit id="dpm6hxI" name="table.adresse_securite_sociale">
+          <segment>
+              <source>table.adresse_securite_sociale</source>
+              <target>Adresse mutuelle étudiante ou sécurité sociale</target>
+          </segment>
+      </unit>
       <unit id="HTyY9yd" name="stage_etudiant.change_tuteur.success.flash">
           <segment>
               <source>stage_etudiant.change_tuteur.success.flash</source>
@@ -11740,16 +11740,16 @@
           <segment>
               <source>ETAT_STAGE_DEPOSE</source>
               <target>Formulaire stage complété</target>
-      </segment>
-    </unit>
-    <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
-      <segment>
-        <source>ETAT_STAGE_VALIDE</source>
-        <target>Stage validé</target>
-      </segment>
-    </unit>
-    <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
-      <segment>
+          </segment>
+      </unit>
+      <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
+          <segment>
+              <source>ETAT_STAGE_VALIDE</source>
+              <target>Stage validé</target>
+          </segment>
+      </unit>
+      <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
+          <segment>
         <source>ETAT_STAGE_REFUS</source>
         <target>Formulaire ou Stage refusé</target>
       </segment>
@@ -11774,16 +11774,16 @@
     </unit>
     <unit id="FjIF_WV" name="ETAT_STAGE_CONVENTION_RECUE">
       <segment>
-        <source>ETAT_STAGE_CONVENTION_RECUE</source>
-        <target>Convention de stage récupérée</target>
+          <source>ETAT_STAGE_CONVENTION_RECUE</source>
+          <target>Convention de stage récupérée</target>
       </segment>
     </unit>
-    <unit id="I6hImAB" name="numEtudiant">
-      <segment>
-          <source>numEtudiant</source>
-          <target>Numéro Etudiant</target>
-      </segment>
-    </unit>
+      <unit id="I6hImAB" name="numEtudiant">
+          <segment>
+              <source>numEtudiant</source>
+              <target>Numéro Etudiant</target>
+          </segment>
+      </unit>
       <unit id="KcFzACF" name="prenom">
           <segment>
               <source>prenom</source>
@@ -11812,16 +11812,16 @@
           <segment>
               <source>cm.maquette</source>
               <target>CM Maquette</target>
-      </segment>
-    </unit>
-    <unit id="U9qPp3i" name="td.maquette">
-      <segment>
-        <source>td.maquette</source>
-        <target>TD Maquette</target>
-      </segment>
-    </unit>
-    <unit id="LZupY.Q" name="table.ppn.maquette">
-      <segment>
+          </segment>
+      </unit>
+      <unit id="U9qPp3i" name="td.maquette">
+          <segment>
+              <source>td.maquette</source>
+              <target>TD Maquette</target>
+          </segment>
+      </unit>
+      <unit id="LZupY.Q" name="table.ppn.maquette">
+          <segment>
         <source>table.ppn.maquette</source>
         <target>PPN Maquette</target>
       </segment>
@@ -13199,16 +13199,16 @@
     </unit>
     <unit id="A29Fp.E" name="ACCEPTE">
       <segment>
-        <source>ACCEPTE</source>
-        <target>ACCEPTE</target>
+          <source>ACCEPTE</source>
+          <target>ACCEPTE</target>
       </segment>
     </unit>
-    <unit id="TBo7ETa" name="emprunt.delete.success.flash">
-      <segment>
-          <source>emprunt.delete.success.flash</source>
-          <target>Emprunt supprimé avec succès</target>
-      </segment>
-    </unit>
+      <unit id="TBo7ETa" name="emprunt.delete.success.flash">
+          <segment>
+              <source>emprunt.delete.success.flash</source>
+              <target>Emprunt supprimé avec succès</target>
+          </segment>
+      </unit>
       <unit id="dkAqfT9" name="%diff% heure">
           <segment>
               <source>%diff% heure</source>
@@ -13237,16 +13237,16 @@
           <segment>
               <source>stage_etudiant.delete.success.flash</source>
               <target>Données du stage étudiant supprimées avec succès</target>
-      </segment>
-    </unit>
-    <unit id="MRm43jJ" name="stage_periode.delete.error.flash">
-      <segment>
-        <source>stage_periode.delete.error.flash</source>
-        <target>Erreur lors de la suppression de la période de stage</target>
-      </segment>
-    </unit>
-    <unit id="gZDMQMO" name="stage_periode.delete.success.flash">
-      <segment>
+          </segment>
+      </unit>
+      <unit id="MRm43jJ" name="stage_periode.delete.error.flash">
+          <segment>
+              <source>stage_periode.delete.error.flash</source>
+              <target>Erreur lors de la suppression de la période de stage</target>
+          </segment>
+      </unit>
+      <unit id="gZDMQMO" name="stage_periode.delete.success.flash">
+          <segment>
         <source>stage_periode.delete.success.flash</source>
         <target>Période de stage supprimée avec succès</target>
       </segment>
@@ -13613,16 +13613,16 @@
     </unit>
     <unit id=".SSDvOz" name="adm.statistiques.vue.globale.heading">
       <segment>
-        <source>adm.statistiques.vue.globale.heading</source>
-        <target>Statistiques du département : vue globale</target>
+          <source>adm.statistiques.vue.globale.heading</source>
+          <target>Statistiques du département : vue globale</target>
       </segment>
     </unit>
-    <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
-      <segment>
-          <source>adm.statistiques.vue.detaillee.heading</source>
-          <target>Statistiques du département : vue détaillée</target>
-      </segment>
-    </unit>
+      <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
+          <segment>
+              <source>adm.statistiques.vue.detaillee.heading</source>
+              <target>Statistiques du département : vue détaillée</target>
+          </segment>
+      </unit>
       <unit id="4ZFF._O" name="table.fax">
           <segment>
               <source>table.fax</source>
@@ -13651,6 +13651,30 @@
           <segment>
               <source>app.personnel.absence.dateHeure</source>
               <target>Date/Heure</target>
+          </segment>
+      </unit>
+      <unit id="_vHVL3n" name="adm.materiel_commun.reservation.heading">
+          <segment>
+              <source>adm.materiel_commun.reservation.heading</source>
+              <target>Réservation de matériel commun</target>
+          </segment>
+      </unit>
+      <unit id="HObP7.z" name="adm.projet">
+          <segment>
+              <source>adm.projet</source>
+              <target>Projets</target>
+          </segment>
+      </unit>
+      <unit id="JvXs3o6" name="adm.examens">
+          <segment>
+              <source>adm.examens</source>
+              <target>Examens</target>
+          </segment>
+      </unit>
+      <unit id="J8zgoa9" name="adm.materiel_commun_reservation">
+          <segment>
+              <source>adm.materiel_commun_reservation</source>
+              <target>Réservation du matériel commun</target>
           </segment>
       </unit>
   </file>

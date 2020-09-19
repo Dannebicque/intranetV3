@@ -1,0 +1,80 @@
+{% extends 'base-super_admin.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.materiel_commun.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-index.html.twig', {elt:'materiel_commun'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.materiel_commun.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered" {% if materiel_communs|length>0 %}data-provide="datatables"{% endif %}>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Designation</th>
+                    <th>Description</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for materiel_commun in materiel_communs %}
+                    <tr>
+                        <td>{{ materiel_commun.id }}</td>
+                        <td>{{ materiel_commun.designation }}</td>
+                        <td>{{ materiel_commun.description }}</td>
+                        <td>
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'materiel_commun', id:
+                                materiel_commun.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block famateriel_communtions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('sa_materiel_commun_export', {_format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf"},
+        {
+            type:'info',
+            href:path('sa_materiel_commun_export', {_format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('sa_materiel_commun_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('sa_materiel_commun_new'),
+            title: 'ajouter'|trans,
+            icone: 'fas fa-plus'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'super-administration_materiel_commun'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}

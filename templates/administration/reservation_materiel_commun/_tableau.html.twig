@@ -1,0 +1,55 @@
+<div style="overflow: auto; width: 100%; height: 600px; ">
+    <table class="table-edt">
+        <thead>
+        <tr>
+            <th>Période</th>
+            {% for jr in jours %}
+                <th colspan="6" {% if jr.texte == 'now'|date('d/m/Y') %} style="background-color: lightpink"{% endif %}>{{ jr.jour }}
+                    <br/>{{ jr.texte }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Matériel</th>
+            {% for jr in jours %}
+                <th>8h00|9h30</th>
+                <th>9h30|11h00</th>
+                <th>11h00|12h30</th>
+                <th>14h00|15h30</th>
+                <th>15h30|17h00</th>
+                <th>17h00|18h30</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for mat in materiels %}
+            <tr>
+                <td>{{ mat.designation }}</td>
+                {% for jr in jours %}
+                    {% set reserve=0 %}
+                    {% set pret=0 %}
+                    {% for cr in creneau %}
+                        <td
+                                {% if dispo[jr.date][cr][mat.id] is defined %}
+                                {% set pret = dispo[jr.date][cr][mat.id] %}
+                                class="reservationaccepte resa_{{ pret.id }} reservation" data-reservation="{{ pret.id }}">
+
+                            <a href="#modalPret" class="voirplus" rel="tooltip" data-placement="top" data-toggle="modal"
+                               data-id="{{ pret.id }}"
+                               title="Emprunt de {{ pret.personnel.displayPr }}">Res.</a>
+                            {% if pret.personnel.id == user_data.user.id %}
+                                <a href="#" class="annulebloc btn btn-danger" data-id="{{ pret.id }}"><i
+                                            class="fa fa-times"></i></a>
+                            {% endif %}
+                            {% else %}
+                                >
+                                <input type="checkbox" value="{{ jr.date }}_{{ cr }}_{{ mat.id }}"
+                                       name="materiels" class="emprunt"/>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

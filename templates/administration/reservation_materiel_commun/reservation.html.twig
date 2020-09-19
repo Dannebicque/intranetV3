@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.materiel_commun.reservation.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <span class="material-icons">build</span></a>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.materiel_commun.reservation.heading'|trans }}</h4>
+        <div class="card-body">
+            {% include 'administration/reservation_materiel_commun/_tableau.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.reservation.materiel_commun') }}
+{% endblock %}
