@@ -74,17 +74,20 @@
             </select>
         </div>
 
-        <h5>Re/initialiation du compte</h5>
-        {% if etudiant.password is defined %}
-            <a href="#" class="btn btn-warning btnInit" data-element="{{ etudiant.id }}" rel="tooltip"
-               data-placement="bottom"
-               title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i></a>
-        {% else %}
-            <div class="alert alert-info">
-                L'authentification se fait par le CAS de l'Université. La gestion du mot de passe doit être faite sur le
-                bureau virtuel de l'étudiant ou en prenant contact avec la scolarité.
-            </div>
-        {% endif %}
+        <h5>Marquer commer démissionnaire</h5>
+
+        <a href="{{ path('administration_etudiant_demissionnaire', {uuid: etudiant.uuidString}) }}" class="btn
+            btn-danger" rel="tooltip"
+           data-placement="bottom"
+           title="Marquer l'étudiant {{ etudiant.displayPr }} comme
+                                                     démissionnaire">Marquer l'étudiant {{ etudiant.displayPr }} comme
+                                                                     démissionnaire</a>
+
+        <div class="alert alert-danger">
+            Si vous marquez l'étudiant comme démissionnaire, il sera retiré des groupes et des semestres, mais
+            restera dans la formation pour un éventuel suivi ou statistiques.
+        </div>
+
         <h3>Editions</h3>
         <table class="table table-border">
             <thead>

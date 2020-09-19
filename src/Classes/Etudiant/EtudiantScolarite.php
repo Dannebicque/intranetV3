@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 17:04
+// @lastUpdate 19/09/2020 15:56
 
 namespace App\Classes\Etudiant;
 
@@ -42,6 +42,7 @@ class EtudiantScolarite
 
         switch ($etat) {
             case Constantes::SCOLARITE_DIPLOME:
+            case Constantes::SEMESTRE_DEMISSIONNAIRE:
             case Constantes::SEMESTRE_REORIENTE:
                 $this->finFormation();
                 //todo: update scolarité
