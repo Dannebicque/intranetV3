@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 17:46
+// @lastUpdate 19/09/2020 17:43
 
 namespace App\Repository;
 
@@ -198,8 +198,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
         $tPrevisionnel = [];
         /** @var Previsionnel $p */
         foreach ($q as $p) {
-            //$tPrevisionnel[$p->getId()] = $p;
-            $tPrevisionnel[$p->getId()]['matiere'] = $p->getMatiere()->getDisplay();
+            $tPrevisionnel[$p->getId()]['matiere'] = $p->getMatiere()->getLibelle();
             $tPrevisionnel[$p->getId()]['personnel'] = $p->getPersonnel()->getDisplayPr();
         }
 
