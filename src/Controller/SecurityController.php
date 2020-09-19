@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2020 09:35
+// @lastUpdate 19/09/2020 16:06
 
 namespace App\Controller;
 
@@ -197,12 +197,13 @@ class SecurityController extends AbstractController
      * @return Response
      */
     public function changeDepartement(
+        Request $request,
         SessionInterface $session,
         Departement $departement
     ): Response {
         $session->set('departement', $departement->getUuidString());
 
-        return $this->redirectToRoute('default_homepage');
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
