@@ -1,0 +1,9 @@
+Bonjour,
+
+La demande de matériel faite par {{ reservation.personnel.displayPr }}
+pour le {{ reservation.dateEmprunt|date('d/m/Y' ) }}, à {{ reservation.creneau }} a été annulée.
+
+Matériel concerné :
+{{ reservation.materielCommun.designation }} ({{ reservation.materielCommun.description }})
+
+Message envoyé automatiquement de l'intranet

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/09/2020 20:42
+// @lastUpdate 19/09/2020 09:29
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -10,6 +10,26 @@
 
 #planning thead {
   height: 30px;
+}
+
+.reserveattente {
+  background-color: skyblue;
+}
+
+.reservationstudio {
+  background-color: orange;
+}
+
+.reservationaccepte {
+  background-color: palegreen;
+}
+
+.reservationsurvol {
+  background-color: red;
+}
+
+.reservationprof {
+  background-color: darkgray;
 }
 
 #planning tbody {

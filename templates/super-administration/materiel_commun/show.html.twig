@@ -1,0 +1,49 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.materiel_commun.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'materiel_commun', id: materiel_commun.id}) }}
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.materiel_commun.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ materiel_commun.id }}</td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td>{{ materiel_commun.created ? materiel_commun.created|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td>{{ materiel_commun.updated ? materiel_commun.updated|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Designation</th>
+                    <td>{{ materiel_commun.designation }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ materiel_commun.description }}</td>
+                </tr>
+                <tr>
+                    <th>PhotoName</th>
+                    <td>{{ materiel_commun.photoName }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
