@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/08/2020 10:19
+// @lastUpdate 19/09/2020 16:53
 
 namespace App\Entity;
 
@@ -1009,5 +1009,10 @@ class Departement extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function libelleInitiales()
+    {
+        return str_replace(' ', '<br>', $this->libelle);
     }
 }
