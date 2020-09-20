@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/09/2020 18:19
+// @lastUpdate 20/09/2020 15:42
 
 /**
  * Created by PhpStorm.
@@ -144,7 +144,7 @@ abstract class Tools
         }
     }
 
-    public static function CheckDirectoryExist(string $dir)
+    public static function checkDirectoryExist(string $dir)
     {
 
         if (!is_dir($dir) && !mkdir($dir)) {

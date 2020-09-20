@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 12:46
+// @lastUpdate 20/09/2020 15:42
 
 namespace App\Classes\LDAP;
 
@@ -46,7 +46,7 @@ class MyLdap
     public function getInfoEtudiant($numetudiant)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $_SERVER['LDAP_BASE_DN'], 'supannetuid=' . $numetudiant);
+        $sr = ldap_search($this->ds, $this->request->server->get('LDAP_BASE_DN'), 'supannetuid=' . $numetudiant);
         if (ldap_count_entries($this->ds, $sr) === 1) {
             $etudiant = ldap_get_entries($this->ds, $sr);
             $t['login'] = $etudiant[0]['uid'][0];
@@ -63,7 +63,7 @@ class MyLdap
     public function getInfoPersonnel($numeroHarpege)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $_SERVER['LDAP_BASE_DN'], 'supannEmpId=' . $numeroHarpege);
+        $sr = ldap_search($this->ds, $this->request->server->get('LDAP_BASE_DN'), 'supannEmpId=' . $numeroHarpege);
         if (ldap_count_entries($this->ds, $sr) === 1) {
             $personnel = ldap_get_entries($this->ds, $sr);
             $t['login'] = $personnel[0]['uid'][0];
