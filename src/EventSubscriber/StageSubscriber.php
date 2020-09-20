@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 18:10
+// @lastUpdate 20/09/2020 15:08
 
 namespace App\EventSubscriber;
 
@@ -218,37 +218,55 @@ class StageSubscriber implements EventSubscriberInterface
                 $stageEtudiant->getEtudiant()->getMails(),
                 $mailTemplate->getSubject());
         } else {
-
             //mail par défaut
             $this->myMailer->setTemplate('mails/stages/stage_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant],
                 $stageEtudiant->getEtudiant()->getMails(),
                 $codeEvent);
-
         }
 
-        //mail en copie à l'assistante
-        if ($stageEtudiant->getStagePeriode() !== null && $stageEtudiant->getStagePeriode()->getCopieAssistant() && $stageEtudiant->getStagePeriode()->getMailAssistant() !== null) {
-            //selon un modèle spécifique
-            $mailTemplate = $this->stageMailTemplateRepository->findEventPeriode(
-                $codeEvent . '_COPIE',
-                $stageEtudiant->getStagePeriode()
+        //selon un modèle spécifique
+        $mailTemplate = $this->stageMailTemplateRepository->findEventPeriode(
+            $codeEvent . '_COPIE',
+            $stageEtudiant->getStagePeriode()
+        );
+
+        $destinataires = [];
+        foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $destinataire) {
+            $destinataires[] = $destinataire->getMailUniv();
+        }
+
+        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() && $stageEtudiant->getEtudiant() !== null) {
+            //mail responsables
+            $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
+                ['stageEtudiant' => $stageEtudiant],
+                $destinataires,
+                $mailTemplate->getSubject()
             );
 
-            if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() && $stageEtudiant->getEtudiant() !== null) {
+            //copie à l'assistante
+            if ($stageEtudiant->getStagePeriode() !== null && $stageEtudiant->getStagePeriode()->getCopieAssistant() && $stageEtudiant->getStagePeriode()->getMailAssistant() !== null) {
                 $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
                     $mailTemplate->getSubject()
                 );
-            } else {
-                //sinon mail par défaut
+            }
+        } else {
+            //sinon mail par défaut
+            $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
+                ['stageEtudiant' => $stageEtudiant],
+                $destinataires,
+                'copie ' . $codeEvent);
+
+            if ($stageEtudiant->getStagePeriode() !== null && $stageEtudiant->getStagePeriode()->getCopieAssistant() && $stageEtudiant->getStagePeriode()->getMailAssistant() !== null) {
                 $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
                     'copie ' . $codeEvent);
             }
         }
+
 
         //copie au RP lors du dépôt par l'étudiant
         if ($codeEvent === StageEvent::CHGT_ETAT_STAGE_DEPOSE) {
