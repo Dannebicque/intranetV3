@@ -2,90 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+
     <style>
-
-        body
-        {
-            font-family: "DejaVu Sans", serif;
-            font-size:12px;
-        }
-
-        thead {
-            display: table-header-group
-        }
-
-        tfoot {
-            display: table-row-group
-        }
-
-        tr {
-            page-break-inside: avoid
-        }
-
-        .table
-        {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        .table td
-        {
-            border: 1px solid black;
-        }
-
-        .table tr
-        {
-            border: 1px solid black;
-        }
-
-        .table th
-        {
-            font-weight: bold;
-            border: 1px solid black;
-        }
-
-        .tableentete
-        {
-            width: 100%;
-            border:0;
-        }
-        h4
-        {
-            text-align: center;
-        }
-
-        #table-edt
-        {
-            border-collapse: collapse;
-            width:100%;
-        }
-
-        #table-edt td, #table-edt th
-        {
-            border:1px solid darkgray;
-        }
-
-        #table-edt th
-        {
-            font-weight: bold;
-        }
-
-        .center
-        {
-            text-align: center;
-        }
-
-        .commentaire
-        {
-            border: none;
-            margin-top: 25px;
-            border-bottom: dotted 1px;
-        }
-
-
-        footer { position: fixed; bottom: -80px; left: 0px; right: 0px; border-top:1px solid black; height: 80px;
-            padding: 5px }
-
         /*https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/*/
         /*footer .pagenum:before {*/
         /*    content: "Page " counter(page) " sur " counter(pages);*/
@@ -105,19 +23,97 @@
         /*    left:0;*/
         /*    width: 40%;*/
         /*}*/
+        body {
+            font-family: "DejaVu Sans", serif;
+            font-size: 12px;
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid
+        }
+
+        .table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .table td {
+            border: 1px solid black;
+        }
+
+        .table tr {
+            border: 1px solid black;
+        }
+
+        .table th {
+            font-weight: bold;
+            border: 1px solid black;
+        }
+
+        .tableentete {
+            width: 100%;
+            border: 0;
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        #table-edt {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #table-edt td, #table-edt th {
+            border: 1px solid darkgray;
+        }
+
+        #table-edt th {
+            font-weight: bold;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .commentaire {
+            border: none;
+            margin-top: 25px;
+            border-bottom: dotted 1px;
+        }
+
+
+        footer {
+            position: fixed;
+            bottom: -80px;
+            left: 0px;
+            right: 0px;
+            border-top: 1px solid black;
+            height: 80px;
+            padding: 5px
+        }
 
         {% block style %}
         {% endblock %}
     </style>
 
-    <title>{% block title %}{% endblock %} - Intranet {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %}</title>
+    <title>{% block title %}{% endblock %} -
+                                           Intranet {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %}</title>
 </head>
 
 <body>
-{#<footer>
+{# <footer>
     <div class="footer-left"> {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %} | le {{ "now"|date('d/m/Y') }}</div>
     <div class="footer-right">Page <span class="pagenum"></span></div>
-</footer>#}
+</footer> #}
 <!--Conteneur principal -->
 <div class="container-fluid" id="content">
     {% block content %}

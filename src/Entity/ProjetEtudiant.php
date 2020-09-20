@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:45
+// @lastUpdate 20/09/2020 10:00
 
 namespace App\Entity;
 
@@ -35,7 +35,7 @@ class ProjetEtudiant extends BaseEntity
     private $projetPeriode;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="projetEtudiants")
+     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="projetEtudiants", cascade={"persist", "remove"})
      */
     private $organisme;
 
@@ -226,7 +226,7 @@ class ProjetEtudiant extends BaseEntity
         return $this->dateAutorise;
     }
 
-    public function setDateAutorise(\DateTimeInterface $dateAutorise): self
+    public function setDateAutorise(?\DateTimeInterface $dateAutorise): self
     {
         $this->dateAutorise = $dateAutorise;
 

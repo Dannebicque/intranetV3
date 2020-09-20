@@ -64,7 +64,7 @@
                                 {projetEtudiant:projetsEtudiants[projetPeriode.id].uuidString}) }}"
                                class="btn btn-block btn-large btn-info">Compléter la proposition de projet</a>
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
-                            (projetsEtudiants[projetPeriode.id].etatStage is constant
+                            (projetsEtudiants[projetPeriode.id].etatProjet is constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') )) %}
                             <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de
                                                              validation

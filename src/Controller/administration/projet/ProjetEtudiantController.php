@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:50
+// @lastUpdate 20/09/2020 10:42
 
 namespace App\Controller\administration\projet;
 
@@ -124,25 +124,7 @@ class ProjetEtudiantController extends BaseController
             ['uuid' => $projetPeriode->getUuidString()]);
     }
 
-    /**
-     * @Route("/change-tuteur/{projetEtudiant}/{tuteur}", name="administration_projet_etudiant_change_tuteur",
-     *                                                   options={"expose"=true})
-     * @param ProjetEtudiant $projetEtudiant
-     * @param Personnel      $tuteur
-     *
-     * @return JsonResponse
-     */
-    public function changeTuteur(
-        ProjetEtudiant $projetEtudiant,
-        Personnel $tuteur
-    ): JsonResponse {
-        $projetEtudiant->setTuteurUniversitaire($tuteur);
-        $this->entityManager->persist($projetEtudiant);
-        $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.change_tuteur.success.flash');
 
-        return $this->json(true, Response::HTTP_OK);
-    }
 
     /**
      * @Route("/convention/pdf/{id}", name="administration_projet_etudiant_convention_pdf", methods="GET")
@@ -152,12 +134,8 @@ class ProjetEtudiantController extends BaseController
      */
     public function conventionPdf(ProjetEtudiant $projetEtudiant): Response
     {
-        //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
-        //2. Si oui envoyer
-        //3. Si non générer et envoyer + sauvegarde
-        //todo: prevoir bouton pour "regenerer" la convention
-        $html = $this->renderView('pdf/conventionStagePDF.html.twig', [
-            'proposition' => $projetEtudiant,
+        $html = $this->renderView('pdf/projetTutore/conventionProjet.html.twig', [
+            'projetEtudiant' => $projetEtudiant,
         ]);
 
         $options = new Options();
@@ -168,7 +146,7 @@ class ProjetEtudiantController extends BaseController
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        return new Response($dompdf->stream('Convention-' . $projetEtudiant->getEtudiant()->getNom(),
+        return new Response($dompdf->stream('Convention-' . $projetEtudiant->getEtudiants()[0]->getNom(),
             ['Attachment' => 1]));
 
     }
