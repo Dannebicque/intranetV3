@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:50
+// @lastUpdate 20/09/2020 10:54
 
 namespace App\Form;
 
@@ -15,6 +15,7 @@ use App\Repository\PersonnelRepository;
 use Svg\Tag\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,8 +31,8 @@ class ProjetEtudiantEtudiantType extends AbstractType
 
         $builder
             ->add('organisme', EntrepriseType::class)
-            ->add('sujet', TextareaType::class)
-            ->add('activitesConfiees', TextareaType::class)
+            ->add('sujet', TextareaType::class, ['label' => 'label.sujet'])
+            ->add('activitesConfiees', TextareaType::class, ['label' => 'label.activitesConfiees'])
             ->add('etudiants', EntityType::class, [
                 'class'         => Etudiant::class,
                 'choice_label'  => 'displayPr',
@@ -42,8 +43,17 @@ class ProjetEtudiantEtudiantType extends AbstractType
                 'expanded'      => true
             ])
             ->add('tempComplet', YesNoType::class)
-            ->add('duree')
-            ->add('uniteDuree');
+            ->add('duree', TextType::class,
+                ['label' => 'label.duree', 'help' => 'durée du projet en jour ou en semaine sur la période'])
+            ->add('uniteDuree', ChoiceType::class, [
+                'choices'  => [
+                    ProjetEtudiant::DUREE_HEURE => ProjetEtudiant::DUREE_HEURE,
+                    ProjetEtudiant::DUREE_JOUR  => ProjetEtudiant::DUREE_JOUR
+                ],
+                'expanded' => true,
+                'label'    => 'label.uniteduree',
+                'help'     => 'Choisir si la durée est exprimée en nombre de jour ou en heure par semaine'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

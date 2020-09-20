@@ -70,6 +70,10 @@
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\StageController::index'
             )) }}
+        {% elseif onglet == 'projet' %}
+            {{ render(controller(
+                'App\\Controller\\appEtudiant\\ProjetController::index'
+            )) }}
         {% elseif onglet == 'justificatif' %}
             {{ render(controller(
                 'App\\Controller\\appEtudiant\\AbsenceJustificatifController::index'

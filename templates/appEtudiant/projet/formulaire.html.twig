@@ -20,7 +20,21 @@
         <h4 class="card-title">{{ 'applications.etudiant.projet.formulaire.heading'|trans }}</h4>
         <div class="card-body">
             {% form_theme form 'form/my-form.html.twig' %}
-            {{ form(form) }}
+            {{ form_start(form) }}
+            <h3>Membres du groupes projet</h3>
+            {{ form_row(form.etudiants) }}
+
+            <h3>Entreprise, association...</h3>
+            {{ form_row(form.organisme) }}
+
+            <h3>Durée du projet</h3>
+            {{ form_row(form.tempComplet) }}
+            {{ form_row(form.duree) }}
+            {{ form_row(form.uniteDuree) }}
+
+            <h3>Sujet</h3>
+            {{ form_row(form.sujet) }}
+            {{ form_row(form.activitesConfiees) }}
             <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
             {{ form_end(form) }}
         </div>
