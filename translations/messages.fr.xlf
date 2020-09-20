@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 19/09/2020 09:29 -->
+<!-- @lastUpdate 20/09/2020 15:02 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -7489,13 +7489,13 @@
       </segment>
     </unit>
     <unit id="NvqBF_x" name="profil.personnel.heading">
-        <notes>
-            <note priority="1">templates/user/profil.html.twig:7</note>
-        </notes>
-        <segment>
-            <source>profil.personnel.heading</source>
-            <target>Profil de %user%</target>
-        </segment>
+      <notes>
+        <note priority="1">templates/user/profil.html.twig:7</note>
+      </notes>
+      <segment>
+        <source>profil.personnel.heading</source>
+        <target>Profil de %user%</target>
+      </segment>
     </unit>
     <unit id="1LWOZnS" name="numero.harpege">
       <notes>
@@ -8508,12 +8508,12 @@
         <target>L'état du stage a été modifié avec succès</target>
       </segment>
     </unit>
-      <unit id="cEMuEox" name="chgt.etat_stage_autorise">
-          <segment>
-              <source>chgt.etat_stage_autorise</source>
-              <target>Changement d'état de votre stage : Saisie autorisée</target>
-          </segment>
-      </unit>
+    <unit id="cEMuEox" name="chgt.etat_stage_autorise">
+      <segment>
+        <source>chgt.etat_stage_autorise</source>
+        <target>Changement d'état de votre stage : Saisie autorisée</target>
+      </segment>
+    </unit>
     <unit id="7TeNraa" name="fixe">
       <segment>
         <source>fixe</source>
@@ -10653,46 +10653,46 @@
         <target>Voir fichier</target>
       </segment>
     </unit>
-      <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
-          <segment>
-              <source>app.etudiant.justificatif.explication.index</source>
-              <target>Les justificatifs sont validés manuellement. Il peut y avoir un délai de
-                  traitement.
-              </target>
-          </segment>
-      </unit>
-      <unit id="Qoot1_a" name="fixes">
-          <segment>
-              <source>fixes</source>
-              <target>fixes</target>
-          </segment>
-      </unit>
-      <unit id="pkL6mT5" name="chgt.etat_stage_depose">
-          <segment>
-              <source>chgt.etat_stage_depose</source>
-              <target>Formulaire complété</target>
-          </segment>
-      </unit>
-      <unit id="RL165g9" name="H">
-          <segment>
-              <source>H</source>
-              <target>Heure</target>
-          </segment>
-      </unit>
-      <unit id="KjKQEql" name="table.groupe_promo">
-          <segment>
-              <source>table.groupe_promo</source>
-              <target>Groupes promo.</target>
-          </segment>
-      </unit>
-      <unit id="AT1q8at" name="ufr.edit.success.flash">
-          <segment>
-              <source>ufr.edit.success.flash</source>
-              <target>UFR modifié avec succès</target>
-          </segment>
-      </unit>
-      <unit id="s2XP51V" name="table.site_principal">
-          <segment>
+    <unit id="Am9ZkcI" name="app.etudiant.justificatif.explication.index">
+      <segment>
+        <source>app.etudiant.justificatif.explication.index</source>
+        <target>Les justificatifs sont validés manuellement. Il peut y avoir un délai de
+          traitement.
+        </target>
+      </segment>
+    </unit>
+    <unit id="Qoot1_a" name="fixes">
+      <segment>
+        <source>fixes</source>
+        <target>fixes</target>
+      </segment>
+    </unit>
+    <unit id="pkL6mT5" name="chgt.etat_stage_depose">
+      <segment>
+        <source>chgt.etat_stage_depose</source>
+        <target>Formulaire complété</target>
+      </segment>
+    </unit>
+    <unit id="RL165g9" name="H">
+      <segment>
+        <source>H</source>
+        <target>Heure</target>
+      </segment>
+    </unit>
+    <unit id="KjKQEql" name="table.groupe_promo">
+      <segment>
+        <source>table.groupe_promo</source>
+        <target>Groupes promo.</target>
+      </segment>
+    </unit>
+    <unit id="AT1q8at" name="ufr.edit.success.flash">
+      <segment>
+        <source>ufr.edit.success.flash</source>
+        <target>UFR modifié avec succès</target>
+      </segment>
+    </unit>
+    <unit id="s2XP51V" name="table.site_principal">
+      <segment>
         <source>table.site_principal</source>
         <target>Site principal</target>
       </segment>
@@ -11420,7 +11420,7 @@
     <unit id="gSxTcaR" name="edt.etudiant.details">
       <segment>
         <source>edt.etudiant.details</source>
-          <target>Détails d'un créneau de cours</target>
+        <target>Détails d'un créneau de cours</target>
       </segment>
     </unit>
     <unit id=".wvc8EB" name="edt.type_groupe">
@@ -11624,132 +11624,132 @@
     </unit>
     <unit id="Y7oGNnP" name="edt.intervenant.synchro.ical.heading">
       <segment>
-          <source>edt.intervenant.synchro.ical.heading</source>
-          <target>Lien pour la synchronisation de l'EDT via ICAL</target>
+        <source>edt.intervenant.synchro.ical.heading</source>
+        <target>Lien pour la synchronisation de l'EDT via ICAL</target>
       </segment>
     </unit>
-      <unit id="cJfy41b" name="annee.en.apprentissage">
-          <segment>
-              <source>annee.en.apprentissage</source>
-              <target>Année en apprentissage</target>
-          </segment>
-      </unit>
-      <unit id="fjam7IK" name="aucune.convention.a.envoyer">
-          <segment>
-              <source>aucune.convention.a.envoyer</source>
-              <target>Aucune convention à envoyer</target>
-          </segment>
-      </unit>
-      <unit id="dDLYWqe" name="mail.chgt.etat_stage_autorise">
-          <segment>
-              <source>mail.chgt.etat_stage_autorise</source>
-              <target>Saisie des informations du stage autorisée</target>
-          </segment>
-      </unit>
-      <unit id="tAxaMLF" name="copie mail.chgt.etat_stage_autorise">
-          <segment>
-              <source>copie mail.chgt.etat_stage_autorise</source>
-              <target>[COPIE] Saisie des informations du stage autorisée</target>
-          </segment>
-      </unit>
-      <unit id="E.NBWyv" name="mail.chgt.etat_stage_depose">
-          <segment>
-              <source>mail.chgt.etat_stage_depose</source>
-              <target>Formulaire complété par l'étudiant</target>
-          </segment>
-      </unit>
-      <unit id="m08qNkb" name="copie mail.chgt.etat_stage_depose">
-          <segment>
-              <source>copie mail.chgt.etat_stage_depose</source>
-              <target>[COPIE] Formulaire complété par l'étudiant</target>
-          </segment>
-      </unit>
-      <unit id="BaUZo_C" name="Formulaire de stage complété">
-          <segment>
-              <source>Formulaire de stage complété</source>
-              <target>Formulaire de stage complété</target>
-          </segment>
-      </unit>
-      <unit id="7r22tl3" name="table.securite_sociale">
-          <segment>
-              <source>table.securite_sociale</source>
-              <target>Mutuelle étudiante ou sécurité sociale</target>
-          </segment>
-      </unit>
-      <unit id="dpm6hxI" name="table.adresse_securite_sociale">
-          <segment>
-              <source>table.adresse_securite_sociale</source>
-              <target>Adresse mutuelle étudiante ou sécurité sociale</target>
-          </segment>
-      </unit>
-      <unit id="HTyY9yd" name="stage_etudiant.change_tuteur.success.flash">
-          <segment>
-              <source>stage_etudiant.change_tuteur.success.flash</source>
-              <target>Tuteur modifié avec succès</target>
-          </segment>
-      </unit>
-      <unit id="wFX4ytE" name="mail.chgt.etat_stage_valide">
-          <segment>
-              <source>mail.chgt.etat_stage_valide</source>
-              <target>Votre stage est validé</target>
-          </segment>
-      </unit>
-      <unit id="0JMdAB1" name="copie mail.chgt.etat_stage_valide">
-          <segment>
-              <source>copie mail.chgt.etat_stage_valide</source>
-              <target>[COPIE] Votre stage est validé</target>
-          </segment>
-      </unit>
-      <unit id="Ekc3ZAn" name="chgt.etat_stage_valide">
-          <segment>
-              <source>chgt.etat_stage_valide</source>
-              <target>Votre stage est validé</target>
-          </segment>
-      </unit>
-      <unit id="smWVx1A" name="mail.chgt.etat_stage_convention_envoyee">
-          <segment>
-              <source>mail.chgt.etat_stage_convention_envoyee</source>
-              <target>Votre convention de stage est envoyée à l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="LIj2otN" name="copie mail.chgt.etat_stage_convention_envoyee">
-          <segment>
-              <source>copie mail.chgt.etat_stage_convention_envoyee</source>
-              <target>[COPIE] Votre convention de stage est envoyée à l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="HyJsROc" name="mail.chgt.etat_stage_convention_recue">
-          <segment>
-              <source>mail.chgt.etat_stage_convention_recue</source>
-              <target>Votre convention de stage est revenue signée par l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="tQuP_f5" name="copie mail.chgt.etat_stage_convention_recue">
-          <segment>
-              <source>copie mail.chgt.etat_stage_convention_recue</source>
-              <target>[COPIE] Votre convention de stage est revenue signée par l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="YJdZxhn" name="ETAT_STAGE_AUTORISE">
-          <segment>
-              <source>ETAT_STAGE_AUTORISE</source>
-              <target>Saisie Stage Autorisée</target>
-          </segment>
-      </unit>
-      <unit id="R8pNITG" name="ETAT_STAGE_DEPOSE">
-          <segment>
-              <source>ETAT_STAGE_DEPOSE</source>
-              <target>Formulaire stage complété</target>
-          </segment>
-      </unit>
-      <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
-          <segment>
-              <source>ETAT_STAGE_VALIDE</source>
-              <target>Stage validé</target>
-          </segment>
-      </unit>
-      <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
-          <segment>
+    <unit id="cJfy41b" name="annee.en.apprentissage">
+      <segment>
+        <source>annee.en.apprentissage</source>
+        <target>Année en apprentissage</target>
+      </segment>
+    </unit>
+    <unit id="fjam7IK" name="aucune.convention.a.envoyer">
+      <segment>
+        <source>aucune.convention.a.envoyer</source>
+        <target>Aucune convention à envoyer</target>
+      </segment>
+    </unit>
+    <unit id="dDLYWqe" name="mail.chgt.etat_stage_autorise">
+      <segment>
+        <source>mail.chgt.etat_stage_autorise</source>
+        <target>Saisie des informations du stage autorisée</target>
+      </segment>
+    </unit>
+    <unit id="tAxaMLF" name="copie mail.chgt.etat_stage_autorise">
+      <segment>
+        <source>copie mail.chgt.etat_stage_autorise</source>
+        <target>[COPIE] Saisie des informations du stage autorisée</target>
+      </segment>
+    </unit>
+    <unit id="E.NBWyv" name="mail.chgt.etat_stage_depose">
+      <segment>
+        <source>mail.chgt.etat_stage_depose</source>
+        <target>Formulaire complété par l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="m08qNkb" name="copie mail.chgt.etat_stage_depose">
+      <segment>
+        <source>copie mail.chgt.etat_stage_depose</source>
+        <target>[COPIE] Formulaire complété par l'étudiant</target>
+      </segment>
+    </unit>
+    <unit id="BaUZo_C" name="Formulaire de stage complété">
+      <segment>
+        <source>Formulaire de stage complété</source>
+        <target>Formulaire de stage complété</target>
+      </segment>
+    </unit>
+    <unit id="7r22tl3" name="table.securite_sociale">
+      <segment>
+        <source>table.securite_sociale</source>
+        <target>Mutuelle étudiante ou sécurité sociale</target>
+      </segment>
+    </unit>
+    <unit id="dpm6hxI" name="table.adresse_securite_sociale">
+      <segment>
+        <source>table.adresse_securite_sociale</source>
+        <target>Adresse mutuelle étudiante ou sécurité sociale</target>
+      </segment>
+    </unit>
+    <unit id="HTyY9yd" name="stage_etudiant.change_tuteur.success.flash">
+      <segment>
+        <source>stage_etudiant.change_tuteur.success.flash</source>
+        <target>Tuteur modifié avec succès</target>
+      </segment>
+    </unit>
+    <unit id="wFX4ytE" name="mail.chgt.etat_stage_valide">
+      <segment>
+        <source>mail.chgt.etat_stage_valide</source>
+        <target>Votre stage est validé</target>
+      </segment>
+    </unit>
+    <unit id="0JMdAB1" name="copie mail.chgt.etat_stage_valide">
+      <segment>
+        <source>copie mail.chgt.etat_stage_valide</source>
+        <target>[COPIE] Votre stage est validé</target>
+      </segment>
+    </unit>
+    <unit id="Ekc3ZAn" name="chgt.etat_stage_valide">
+      <segment>
+        <source>chgt.etat_stage_valide</source>
+        <target>Votre stage est validé</target>
+      </segment>
+    </unit>
+    <unit id="smWVx1A" name="mail.chgt.etat_stage_convention_envoyee">
+      <segment>
+        <source>mail.chgt.etat_stage_convention_envoyee</source>
+        <target>Votre convention de stage est envoyée à l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="LIj2otN" name="copie mail.chgt.etat_stage_convention_envoyee">
+      <segment>
+        <source>copie mail.chgt.etat_stage_convention_envoyee</source>
+        <target>[COPIE] Votre convention de stage est envoyée à l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="HyJsROc" name="mail.chgt.etat_stage_convention_recue">
+      <segment>
+        <source>mail.chgt.etat_stage_convention_recue</source>
+        <target>Votre convention de stage est revenue signée par l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="tQuP_f5" name="copie mail.chgt.etat_stage_convention_recue">
+      <segment>
+        <source>copie mail.chgt.etat_stage_convention_recue</source>
+        <target>[COPIE] Votre convention de stage est revenue signée par l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="YJdZxhn" name="ETAT_STAGE_AUTORISE">
+      <segment>
+        <source>ETAT_STAGE_AUTORISE</source>
+        <target>Saisie Stage Autorisée</target>
+      </segment>
+    </unit>
+    <unit id="R8pNITG" name="ETAT_STAGE_DEPOSE">
+      <segment>
+        <source>ETAT_STAGE_DEPOSE</source>
+        <target>Formulaire stage complété</target>
+      </segment>
+    </unit>
+    <unit id="zaik4PF" name="ETAT_STAGE_VALIDE">
+      <segment>
+        <source>ETAT_STAGE_VALIDE</source>
+        <target>Stage validé</target>
+      </segment>
+    </unit>
+    <unit id="jsv8kqd" name="ETAT_STAGE_REFUS">
+      <segment>
         <source>ETAT_STAGE_REFUS</source>
         <target>Formulaire ou Stage refusé</target>
       </segment>
@@ -11774,54 +11774,54 @@
     </unit>
     <unit id="FjIF_WV" name="ETAT_STAGE_CONVENTION_RECUE">
       <segment>
-          <source>ETAT_STAGE_CONVENTION_RECUE</source>
-          <target>Convention de stage récupérée</target>
+        <source>ETAT_STAGE_CONVENTION_RECUE</source>
+        <target>Convention de stage récupérée</target>
       </segment>
     </unit>
-      <unit id="I6hImAB" name="numEtudiant">
-          <segment>
-              <source>numEtudiant</source>
-              <target>Numéro Etudiant</target>
-          </segment>
-      </unit>
-      <unit id="KcFzACF" name="prenom">
-          <segment>
-              <source>prenom</source>
-              <target>Prénom</target>
-          </segment>
-      </unit>
-      <unit id="pc5wisU" name="chgt.etat_stage_convention_recue">
-          <segment>
-              <source>chgt.etat_stage_convention_recue</source>
-              <target>Votre convention de stage est revenue signée par l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="9hpdNx7" name="chgt.etat_stage_convention_envoyee">
-          <segment>
-              <source>chgt.etat_stage_convention_envoyee</source>
-              <target>Votre convention de stage est envoyée à l'entreprise</target>
-          </segment>
-      </unit>
-      <unit id="bNI0ZJv" name="verificiation">
-          <segment>
-              <source>verificiation</source>
-              <target>Vérificiation</target>
-          </segment>
-      </unit>
-      <unit id="Rogi5P8" name="cm.maquette">
-          <segment>
-              <source>cm.maquette</source>
-              <target>CM Maquette</target>
-          </segment>
-      </unit>
-      <unit id="U9qPp3i" name="td.maquette">
-          <segment>
-              <source>td.maquette</source>
-              <target>TD Maquette</target>
-          </segment>
-      </unit>
-      <unit id="LZupY.Q" name="table.ppn.maquette">
-          <segment>
+    <unit id="I6hImAB" name="numEtudiant">
+      <segment>
+        <source>numEtudiant</source>
+        <target>Numéro Etudiant</target>
+      </segment>
+    </unit>
+    <unit id="KcFzACF" name="prenom">
+      <segment>
+        <source>prenom</source>
+        <target>Prénom</target>
+      </segment>
+    </unit>
+    <unit id="pc5wisU" name="chgt.etat_stage_convention_recue">
+      <segment>
+        <source>chgt.etat_stage_convention_recue</source>
+        <target>Votre convention de stage est revenue signée par l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="9hpdNx7" name="chgt.etat_stage_convention_envoyee">
+      <segment>
+        <source>chgt.etat_stage_convention_envoyee</source>
+        <target>Votre convention de stage est envoyée à l'entreprise</target>
+      </segment>
+    </unit>
+    <unit id="bNI0ZJv" name="verificiation">
+      <segment>
+        <source>verificiation</source>
+        <target>Vérificiation</target>
+      </segment>
+    </unit>
+    <unit id="Rogi5P8" name="cm.maquette">
+      <segment>
+        <source>cm.maquette</source>
+        <target>CM Maquette</target>
+      </segment>
+    </unit>
+    <unit id="U9qPp3i" name="td.maquette">
+      <segment>
+        <source>td.maquette</source>
+        <target>TD Maquette</target>
+      </segment>
+    </unit>
+    <unit id="LZupY.Q" name="table.ppn.maquette">
+      <segment>
         <source>table.ppn.maquette</source>
         <target>PPN Maquette</target>
       </segment>
@@ -12393,7 +12393,7 @@
     <unit id="3Lxw4Mw" name="%diff% jour">
       <segment>
         <source>%diff% jour</source>
-          <target>8 jours</target>
+        <target>8 jours</target>
       </segment>
     </unit>
     <unit id="PGaKetK" name="%diff% mois">
@@ -13199,54 +13199,54 @@
     </unit>
     <unit id="A29Fp.E" name="ACCEPTE">
       <segment>
-          <source>ACCEPTE</source>
-          <target>ACCEPTE</target>
+        <source>ACCEPTE</source>
+        <target>ACCEPTE</target>
       </segment>
     </unit>
-      <unit id="TBo7ETa" name="emprunt.delete.success.flash">
-          <segment>
-              <source>emprunt.delete.success.flash</source>
-              <target>Emprunt supprimé avec succès</target>
-          </segment>
-      </unit>
-      <unit id="dkAqfT9" name="%diff% heure">
-          <segment>
-              <source>%diff% heure</source>
-              <target>%diff% heure</target>
-          </segment>
-      </unit>
-      <unit id="EMJILiK" name="copie chgt.etat_stage_autorise">
-          <segment>
-              <source>copie chgt.etat_stage_autorise</source>
-              <target>copie stage autorisé</target>
-          </segment>
-      </unit>
-      <unit id="xGGz8DY" name="copie chgt.etat_stage_depose">
-          <segment>
-              <source>copie chgt.etat_stage_depose</source>
-              <target>copie formulaire de stage complété</target>
-          </segment>
-      </unit>
-      <unit id="vx2jpsS" name="%diff% seconde">
-          <segment>
-              <source>%diff% seconde</source>
-              <target>%diff% secondes</target>
-          </segment>
-      </unit>
-      <unit id="SU2E2OE" name="stage_etudiant.delete.success.flash">
-          <segment>
-              <source>stage_etudiant.delete.success.flash</source>
-              <target>Données du stage étudiant supprimées avec succès</target>
-          </segment>
-      </unit>
-      <unit id="MRm43jJ" name="stage_periode.delete.error.flash">
-          <segment>
-              <source>stage_periode.delete.error.flash</source>
-              <target>Erreur lors de la suppression de la période de stage</target>
-          </segment>
-      </unit>
-      <unit id="gZDMQMO" name="stage_periode.delete.success.flash">
-          <segment>
+    <unit id="TBo7ETa" name="emprunt.delete.success.flash">
+      <segment>
+        <source>emprunt.delete.success.flash</source>
+        <target>Emprunt supprimé avec succès</target>
+      </segment>
+    </unit>
+    <unit id="dkAqfT9" name="%diff% heure">
+      <segment>
+        <source>%diff% heure</source>
+        <target>%diff% heure</target>
+      </segment>
+    </unit>
+    <unit id="EMJILiK" name="copie chgt.etat_stage_autorise">
+      <segment>
+        <source>copie chgt.etat_stage_autorise</source>
+        <target>copie stage autorisé</target>
+      </segment>
+    </unit>
+    <unit id="xGGz8DY" name="copie chgt.etat_stage_depose">
+      <segment>
+        <source>copie chgt.etat_stage_depose</source>
+        <target>copie formulaire de stage complété</target>
+      </segment>
+    </unit>
+    <unit id="vx2jpsS" name="%diff% seconde">
+      <segment>
+        <source>%diff% seconde</source>
+        <target>%diff% secondes</target>
+      </segment>
+    </unit>
+    <unit id="SU2E2OE" name="stage_etudiant.delete.success.flash">
+      <segment>
+        <source>stage_etudiant.delete.success.flash</source>
+        <target>Données du stage étudiant supprimées avec succès</target>
+      </segment>
+    </unit>
+    <unit id="MRm43jJ" name="stage_periode.delete.error.flash">
+      <segment>
+        <source>stage_periode.delete.error.flash</source>
+        <target>Erreur lors de la suppression de la période de stage</target>
+      </segment>
+    </unit>
+    <unit id="gZDMQMO" name="stage_periode.delete.success.flash">
+      <segment>
         <source>stage_periode.delete.success.flash</source>
         <target>Période de stage supprimée avec succès</target>
       </segment>
@@ -13613,69 +13613,105 @@
     </unit>
     <unit id=".SSDvOz" name="adm.statistiques.vue.globale.heading">
       <segment>
-          <source>adm.statistiques.vue.globale.heading</source>
-          <target>Statistiques du département : vue globale</target>
+        <source>adm.statistiques.vue.globale.heading</source>
+        <target>Statistiques du département : vue globale</target>
       </segment>
     </unit>
-      <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
-          <segment>
-              <source>adm.statistiques.vue.detaillee.heading</source>
-              <target>Statistiques du département : vue détaillée</target>
-          </segment>
-      </unit>
-      <unit id="4ZFF._O" name="table.fax">
-          <segment>
-              <source>table.fax</source>
-              <target>Fax</target>
-          </segment>
-      </unit>
-      <unit id="N_XHxPn" name="adm.etudiant.edit.heading">
-          <segment>
-              <source>adm.etudiant.edit.heading</source>
-              <target>Modification des données de l'étudiant %etudiant%</target>
-          </segment>
-      </unit>
-      <unit id="KNgylNa" name="atitle.retour_etudiants">
-          <segment>
-              <source>atitle.retour_etudiants</source>
-              <target>Retour à la liste des étudiants</target>
-          </segment>
-      </unit>
-      <unit id="k984CfO" name="dateHeure">
-          <segment>
-              <source>dateHeure</source>
-              <target>Date heure</target>
-          </segment>
-      </unit>
-      <unit id="hh.syrK" name="app.personnel.absence.dateHeure">
-          <segment>
-              <source>app.personnel.absence.dateHeure</source>
-              <target>Date/Heure</target>
-          </segment>
-      </unit>
-      <unit id="_vHVL3n" name="adm.materiel_commun.reservation.heading">
-          <segment>
-              <source>adm.materiel_commun.reservation.heading</source>
-              <target>Réservation de matériel commun</target>
-          </segment>
-      </unit>
-      <unit id="HObP7.z" name="adm.projet">
-          <segment>
-              <source>adm.projet</source>
-              <target>Projets</target>
-          </segment>
-      </unit>
-      <unit id="JvXs3o6" name="adm.examens">
-          <segment>
-              <source>adm.examens</source>
-              <target>Examens</target>
-          </segment>
-      </unit>
-      <unit id="J8zgoa9" name="adm.materiel_commun_reservation">
-          <segment>
-              <source>adm.materiel_commun_reservation</source>
-              <target>Réservation du matériel commun</target>
-          </segment>
-      </unit>
+    <unit id="JjS.BTn" name="adm.statistiques.vue.detaillee.heading">
+      <segment>
+        <source>adm.statistiques.vue.detaillee.heading</source>
+        <target>Statistiques du département : vue détaillée</target>
+      </segment>
+    </unit>
+    <unit id="4ZFF._O" name="table.fax">
+      <segment>
+        <source>table.fax</source>
+        <target>Fax</target>
+      </segment>
+    </unit>
+    <unit id="N_XHxPn" name="adm.etudiant.edit.heading">
+      <segment>
+        <source>adm.etudiant.edit.heading</source>
+        <target>Modification des données de l'étudiant %etudiant%</target>
+      </segment>
+    </unit>
+    <unit id="KNgylNa" name="atitle.retour_etudiants">
+      <segment>
+        <source>atitle.retour_etudiants</source>
+        <target>Retour à la liste des étudiants</target>
+      </segment>
+    </unit>
+    <unit id="k984CfO" name="dateHeure">
+      <segment>
+        <source>dateHeure</source>
+        <target>Date heure</target>
+      </segment>
+    </unit>
+    <unit id="hh.syrK" name="app.personnel.absence.dateHeure">
+      <segment>
+        <source>app.personnel.absence.dateHeure</source>
+        <target>Date/Heure</target>
+      </segment>
+    </unit>
+    <unit id="_vHVL3n" name="adm.materiel_commun.reservation.heading">
+      <segment>
+        <source>adm.materiel_commun.reservation.heading</source>
+        <target>Réservation de matériel commun</target>
+      </segment>
+    </unit>
+    <unit id="HObP7.z" name="adm.projet">
+      <segment>
+        <source>adm.projet</source>
+        <target>Projets</target>
+      </segment>
+    </unit>
+    <unit id="JvXs3o6" name="adm.examens">
+      <segment>
+        <source>adm.examens</source>
+        <target>Examens</target>
+      </segment>
+    </unit>
+    <unit id="J8zgoa9" name="adm.materiel_commun_reservation">
+      <segment>
+        <source>adm.materiel_commun_reservation</source>
+        <target>Réservation du matériel commun</target>
+      </segment>
+    </unit>
+    <unit id="d2oL6en" name="projet_periode_gestion.heading">
+      <segment>
+        <source>projet_periode_gestion.heading</source>
+        <target>Gestion de la période de projet %libelle%</target>
+      </segment>
+    </unit>
+    <unit id="QnwDpdP" name="changer.de.projet_periode">
+      <segment>
+        <source>changer.de.projet_periode</source>
+        <target>Changer de période de projet</target>
+      </segment>
+    </unit>
+    <unit id="hSwb1dI" name="periode.de.projet.du">
+      <segment>
+        <source>periode.de.projet.du</source>
+        <target>Projet du</target>
+      </segment>
+    </unit>
+    <unit id="9q4oCuI" name="table.organisme">
+      <segment>
+        <source>table.organisme</source>
+        <target>Organisme/association</target>
+      </segment>
+    </unit>
+    <unit id="2S6SFql" name="pas.de.projet">
+      <segment>
+        <source>pas.de.projet</source>
+        <target>Pas de projet</target>
+      </segment>
+    </unit>
+    <unit id="0">
+      <segment>
+        <source>menu.projet</source>
+        <target>Projet(s)</target>
+      </segment>
+    </unit>
   </file>
 </xliff>
