@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 17:43
+// @lastUpdate 19/09/2020 17:57
 
 namespace App\Classes\Enquetes;
 
@@ -205,10 +205,6 @@ class MyEnquete
             $this->myExcelWriter->getRowDimension($this->ligne, 30);
         }
         $this->ligne++;
-        //texte d'aide de la question
-        $this->myExcelWriter->mergeCellsCaR(1, $this->ligne, 3, $this->ligne);
-        $this->myExcelWriter->writeCellXY(1, $this->ligne, $question->getHelp(),
-            ['wrap' => true, 'font-italic' => true, 'style' => 'HORIZONTAL_CENTER']);
         $this->ligne++;
 
         if ($section->getTypeCalcul() === QualiteSection::GROUPE) {
