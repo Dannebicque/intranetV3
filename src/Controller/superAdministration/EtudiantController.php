@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 21/09/2020 15:45
 
 namespace App\Controller\superAdministration;
 
@@ -73,7 +73,7 @@ class EtudiantController extends BaseController
         EtudiantRepository $etudiantRepository,
         $needle
     ): Response {
-        $etudiants = $etudiantRepository->searchObject($needle);
+        $etudiants = $etudiantRepository->searchScolarite($needle);
 
         return $this->render('super-administration/etudiant/recherche.html.twig', [
             'etudiants'    => $etudiants,

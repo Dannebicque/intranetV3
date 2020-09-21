@@ -2,10 +2,39 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:42
+// @lastUpdate 21/09/2020 15:49
 import {addCallout} from '../util'
 
 require('chart.js')
+
+$(document).on('change', '#chgt_etudiant_departement', function () {
+  $.ajax({
+    url: Routing.generate('user_change_departement', {etudiant: $(this).data('etudiant'), departement: $(this).val()}),
+    method: 'POST',
+    success: function (e) {
+      $('#liste_groupes').empty().append('<tr><td colspan="3">Aucun groupe</td></tr>')
+      addCallout('Mofification enregistrée !', 'success')
+    },
+    error: function (e) {
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
+    }
+
+  })
+})
+
+$(document).on('change', '#chgt_etudiant_fin', function () {
+  $.ajax({
+    url: Routing.generate('user_change_annee_sortie', {etudiant: $(this).data('etudiant'), annee: $(this).val()}),
+    method: 'POST',
+    success: function (e) {
+      addCallout('Mofification enregistrée !', 'success')
+    },
+    error: function (e) {
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
+    }
+
+  })
+})
 
 $(document).on('click', '.changeprofil', function (e) {
   e.preventDefault()
@@ -157,34 +186,7 @@ $(document).on('change', '#chgt_etudiant_semestre', function () {
   })
 })
 
-$(document).on('change', '#chgt_etudiant_departement', function () {
-  $.ajax({
-    url: Routing.generate('user_change_departement', {etudiant: $(this).data('etudiant'), departement: $(this).val()}),
-    method: 'POST',
-    success: function (e) {
-      $('#liste_groupes').empty().append('<tr><td colspan="3">Aucun groupe</td></tr>')
-      addCallout('Mofification enregistrée !', 'success')
-    },
-    error: function (e) {
-      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    }
 
-  })
-})
-
-$(document).on('change', '#chgt_etudiant_fin', function () {
-  $.ajax({
-    url: Routing.generate('user_change_annee_sortie', {etudiant: $(this).data('etudiant'), annee: $(this).val()}),
-    method: 'POST',
-    success: function (e) {
-      addCallout('Mofification enregistrée !', 'success')
-    },
-    error: function (e) {
-      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    }
-
-  })
-})
 
 /*        {% for semestre in semestres %}
   {

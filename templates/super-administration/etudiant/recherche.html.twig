@@ -40,26 +40,11 @@
                 </div>
             </div>
             <div class="row">
-                {# todo: faire avec un live search en fonction du département ? #}
-                {#                <div class="col-sm-4">#}
-                {#                    <div class="form-group">#}
-                {#                        <label class="col-sm-2" for="chgt_etudiant_semestre">Semestre actuel</label>#}
-                {#                        <div class="col-sm-10">#}
-                {#                            <select class="form-control chgt_etudiant_semestre" name="semestre"  data-etudiant="{{ etudiant.id }}">#}
-                {#                                {% for semestre in user_data.semestres %}#}
-                {#                                    <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id == etudiant.semestre.id %} selected {% endif %}>{{ semestre.display }}</option>#}
-                {#                                {% endfor %}#}
-                {#                                <option value="null" {% if etudiant.semestre == null %} selected {% endif %}>Aucun semestre</option>#}
-                {#                            </select>#}
-                {#                        </div>#}
-                {#                    </div>#}
-                {#                </div>#}
                 <div class="col-sm-4">
                     <label for="chgt_etudiant_departement">Département actuel</label>
                     <select id="chgt_etudiant_departement" class="form-control chgt_etudiant_departement"
                             name="departement"
                             data-etudiant="{{ etudiant.id }}">
-                        {#todo: a tester !! #}
                         {% for departement in departements %}
                             <option value="{{ departement.id }}" {% if departement.id == etudiant.departement
                                 .id %} selected {% endif %}>{{ departement.libelle }}</option>
