@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/09/2020 20:50
+// @lastUpdate 21/09/2020 15:45
 
 namespace App\Repository;
 
@@ -277,6 +277,22 @@ class EtudiantRepository extends ServiceEntityRepository
             ->andWhere('p.departement = :departement')
             ->setParameter('needle', '%' . $needle . '%')
             ->setParameter('departement', $departement->getId())
+            ->orderBy('p.nom', 'ASC')
+            ->orderBy('p.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchScolarite($needle)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.nom LIKE :needle')
+            ->orWhere('p.prenom LIKE :needle')
+            ->orWhere('p.username LIKE :needle')
+            ->orWhere('p.mailUniv LIKE :needle')
+            ->orWhere('p.numEtudiant LIKE :needle')
+            ->orWhere('p.numIne LIKE :needle')
+            ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')
             ->getQuery()
