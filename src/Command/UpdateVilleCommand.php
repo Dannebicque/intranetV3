@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 15:46
+// @lastUpdate 22/09/2020 16:05
 
 namespace App\Command;
 
@@ -27,7 +27,8 @@ class UpdateVilleCommand extends Command
      * ClearOldNotificationCommand constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param DepartementRepository  $repository
+     * @param EtudiantRepository     $etudiantRepository
+     * @param CodeInseeRepository    $codeInseeRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -60,13 +61,17 @@ class UpdateVilleCommand extends Command
 
         $datas = $this->etudiantRepository->findAll();
         $i = 0;
+        $io->writeln('depart');
         foreach ($datas as $data) {
             $adresse = $data->getAdresse();
-            if ($adresse !== null && is_int(trim($adresse->getVille()))) {
-                $io->write($adresse->getVille());
-                $adresse->setVille($codeVille[trim($adresse->getVille())]);
-                $this->entityManager->persist($adresse);
-                $i++;
+
+            if ($adresse !== null && $adresse->getVille() !== null && preg_match("(\d{5})",
+                    $adresse->getVille()) === 1) {
+                if (array_key_exists(trim($adresse->getVille()), $codeVille)) {
+                    $adresse->setVille($codeVille[trim($adresse->getVille())]);
+                    $this->entityManager->persist($adresse);
+                    $i++;
+                }
             }
         }
         $this->entityManager->flush();
