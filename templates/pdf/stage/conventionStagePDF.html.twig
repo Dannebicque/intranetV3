@@ -700,40 +700,42 @@
     <div style="page-break-after: always"></div>
     <div style="text-align: right;">
         <strong><p style="font-size:18px">ATTESTATION DE STAGE </p><br/>
-          Année
-          Universitaire {{ proposition.stagePeriode.semestre.annee.diplome.anneeUniversitaire.displayAnneeUniversitaire }}
-          A remettre au stagiaire à l’issue du stage
+            Année
+            Universitaire {{ proposition.stagePeriode.semestre.annee.diplome.anneeUniversitaire.displayAnneeUniversitaire }}
+            A remettre au stagiaire à l’issue du stage
         </strong></div>
-  <div style="clear:both;"></div>
-  <p class="titresuligne">L’ORGANISME D’ACCUEIL</p>
-  <div class="blocconvention">
-    Raison sociale : {{ proposition.entreprise.raisonSociale }} {{ proposition.entreprise.libelle }}<br/>
-    N° de Siret : {{ proposition.entreprise.siret }}<br/>
-    Adresse postale
-    : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display }}{% endif %}<br/>
-    Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}
-  </div>
-  <strong>CERTIFIE QUE :</strong>
-  <p class="titresuligne">L’ÉTUDIANT(E) STAGIAIRE</p>
-  <div class="blocconvention">
-    Nom : {{ proposition.etudiant.nom|upper }}<br/>
-    Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
-    Sexe : {{ proposition.etudiant.civilite }}<br/>
-    Date de naissance : {{ proposition.etudiant.datenaissance|format_date('long') }}<br/>
-    Adresse postale
-    : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display }}{% endif %}<br/>
-    Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
-    Téléphone : {{ proposition.etudiant.tel1|tel_format }}<br/>
-    Formation suivie
-    <ul>
-      <li>Intitulé
-          : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition.etudiant
-          .semestre.annee.diplome.libelle }}</li>
-      <li>Au sein de l’Université de Reims Champagne-Ardenne (9 boulevard de la paix – CS
-          60005 – 51724 REIMS Cedex)
-      </li>
-      <li>Composante (UFR/IUT …) : {{ user_data.departement.ufr.libelle }}
-          ({{ user_data.departement.ufr.sitePrincipal.adresse.display|raw }}) #}
+    <div style="clear:both;"></div>
+    <p class="titresuligne">L’ORGANISME D’ACCUEIL</p>
+    <div class="blocconvention">
+        Raison sociale : {{ proposition.entreprise.raisonSociale }} {{ proposition.entreprise.libelle }}<br/>
+        N° de Siret : {{ proposition.entreprise.siret }}<br/>
+        Adresse postale
+        : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
+        <br/>
+        Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}
+    </div>
+    <strong>CERTIFIE QUE :</strong>
+    <p class="titresuligne">L’ÉTUDIANT(E) STAGIAIRE</p>
+    <div class="blocconvention">
+        Nom : {{ proposition.etudiant.nom|upper }}<br/>
+        Prénom : {{ proposition.etudiant.prenom|capitalize }}<br/>
+        Sexe : {{ proposition.etudiant.civilite }}<br/>
+        Date de naissance : {{ proposition.etudiant.datenaissance|format_date('long') }}<br/>
+        Adresse postale
+        : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}
+        <br/>
+        Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
+        Téléphone : {{ proposition.etudiant.tel1|tel_format }}<br/>
+        Formation suivie
+        <ul>
+            <li>Intitulé
+                : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition.etudiant
+                .semestre.annee.diplome.libelle }}</li>
+            <li>Au sein de l’Université de Reims Champagne-Ardenne (9 boulevard de la paix – CS
+                60005 – 51724 REIMS Cedex)
+            </li>
+            <li>Composante (UFR/IUT …) : {{ user_data.departement.ufr.libelle }}
+                ({{ user_data.departement.ufr.sitePrincipal.adresse.display|striptags }}) #}
             </li>
         </ul>
     </div>
