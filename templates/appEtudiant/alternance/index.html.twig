@@ -1,7 +1,7 @@
 <div class="card">
     <h4 class="card-title">Votre alternance</h4>
     <div class="card-body">
-        {% if form is defined %}
+        {% if form is defined and form !== null %}
             {{ include('composants/adm-form.html.twig') }}
         {% else %}
             <div class="alert alert-info">

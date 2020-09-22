@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2020 12:58
+// @lastUpdate 22/09/2020 06:42
 
 namespace App\Controller;
 
@@ -31,6 +31,10 @@ class DefaultController extends BaseController
     {
         if ($this->isGranted('ROLE_SUPER_ADMIN') || $this->isGranted('ROLE_ADMINISTRATIF')) {
             return $this->redirectToRoute('super_admin_homepage');
+        }
+
+        if ($this->getDepartement() === null) {
+            return $this->redirectToRoute('security_choix_departement');
         }
 
         return $this->render('default/index.html.twig', [
