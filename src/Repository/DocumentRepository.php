@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DocumentRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2020 11:13
+// @lastUpdate 22/09/2020 15:34
 
 namespace App\Repository;
 
@@ -41,7 +41,7 @@ class DocumentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
             ->where('d.typeDocument = :type')
             ->setParameter('type', $type)
-            ->orderBy('d.updated', 'DESC')
+            ->orderBy('d.libelle', 'DESC')
             ->getQuery()
             ->getResult();
     }
