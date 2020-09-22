@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 16:05
+// @lastUpdate 22/09/2020 06:46
 
 namespace App\Controller\administration;
 
@@ -77,11 +77,8 @@ class EtudiantController extends BaseController
     /**
      * @Route("/edit/{id}/{origin}", name="administration_etudiant_edit", methods="GET|POST")
      * @param Request  $request
-     *
      * @param Etudiant $etudiant
-     *
      * @param string   $origin
-     *
      * @return Response
      */
     public function edit(Request $request, Etudiant $etudiant, $origin = 'semestre'): Response
