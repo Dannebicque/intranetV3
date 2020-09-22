@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CodeInseeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2020 08:34
+// @lastUpdate 22/09/2020 15:10
 
 namespace App\Repository;
 
@@ -24,32 +24,13 @@ class CodeInseeRepository extends ServiceEntityRepository
         parent::__construct($registry, CodeInsee::class);
     }
 
-    // /**
-    //  * @return CodeInsee[] Returns an array of CodeInsee objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?CodeInsee
+    public function findVilles()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('c.code_insee, c.ville')
+            ->orderBy('c.code_insee', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }
