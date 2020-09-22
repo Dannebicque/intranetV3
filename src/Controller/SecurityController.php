@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 16:06
+// @lastUpdate 22/09/2020 06:38
 
 namespace App\Controller;
 
@@ -100,7 +100,7 @@ class SecurityController extends AbstractController
 
             $url = $this->generateUrl('security_reset_password', ['token' => $token],
                 UrlGeneratorInterface::ABSOLUTE_URL);
-
+            $myMailer->initEmail();
             $myMailer->setTemplate('mails/passwordLost.txt.twig', ['url' => $url, 'user' => $user]);
             $myMailer->sendMessage([$user->getMailUniv()], 'Mot de passe perdu');
 

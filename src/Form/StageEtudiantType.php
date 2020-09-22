@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:44
+// @lastUpdate 22/09/2020 06:43
 
 namespace App\Form;
 
@@ -42,16 +42,21 @@ class StageEtudiantType extends AbstractType
             ->add(
                 'commentaireDureeHebdomadaire',
                 TextareaType::class,
-                ['label'    => 'label.commentaireDureeHebdomadaire',
-                 'help'     => 'help.commentaireDureeHebdomadaire',
-                 'required' => false
+                [
+                    'label'    => 'label.commentaireDureeHebdomadaire',
+                    'help'     => 'help.commentaireDureeHebdomadaire',
+                    'required' => false
                 ]
             )
             ->add('dureeJoursStage', TextType::class, ['label' => 'label.dureeJoursStage'])
             ->add('amenagementStage', TextareaType::class, ['label' => 'label.amenagementStage', 'required' => false])
             ->add('gratification', YesNoType::class, ['label' => 'label.gratification'])
             ->add('gratificationMontant', TextType::class, ['label' => 'label.gratificationMontant'])
-            ->add('gratificationPeriode', ChoiceType::class, ['label' => 'label.gratificationPeriode'])
+            ->add('gratificationPeriode', ChoiceType::class, [
+                'label'   => 'label.gratificationPeriode',
+                'help'    => 'help.gratificationPeriode',
+                'choices' => ['Heure' => 'H', 'Jour' => 'J', 'Semaine' => 'S', 'Mois' => 'M']
+            ])
             ->add('avantages', TextareaType::class, ['label' => 'label.avantages', 'required' => false])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
