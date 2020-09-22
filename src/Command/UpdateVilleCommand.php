@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 15:27
+// @lastUpdate 22/09/2020 15:41
 
 namespace App\Command;
 
@@ -54,20 +54,22 @@ class UpdateVilleCommand extends Command
         $codes = $this->codeInseeRepository->findVilles();
         $codeVille = [];
         foreach ($codes as $code) {
-            $codeVille[$code['code_insee']] = $code['ville'];
+            $codeVille[trim($code['code_insee'])] = $code['ville'];
         }
 
 
         $datas = $this->etudiantRepository->findAll();
+        $i = 0;
         foreach ($datas as $data) {
-            if ($data->getAdresse() !== null && is_int($data->getAdresse()->getVille())) {
-                $data->getAdresse()->setVille($codeVille[$data->getAdresse()->getVille()]);
+            if ($data->getAdresse() !== null && is_int(trim($data->getAdresse()->getVille()))) {
+                $data->getAdresse()->setVille($codeVille[trim($data->getAdresse()->getVille())]);
+                $i++;
             }
         }
         $this->entityManager->flush();
 
 
-        $io->success(sprintf('Villes mises à jour.'));
+        $io->success(sprintf('%d Villes mises à jour.', ['%d' => $i]));
 
         return 0;
     }
