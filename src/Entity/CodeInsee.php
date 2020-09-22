@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CodeInsee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2020 08:51
+// @lastUpdate 22/09/2020 15:27
 
 namespace App\Entity;
 
@@ -36,21 +36,6 @@ class CodeInsee
      * @ORM\Column(type="string", length=255)
      */
     private $ville;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $departement;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $region;
-
-    /**
-     * @ORM\Column(type="string", length=60)
-     */
-    private $point_geo;
 
     public function getId(): ?int
     {
@@ -89,42 +74,6 @@ class CodeInsee
     public function setVille(string $ville): self
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getDepartement(): ?string
-    {
-        return $this->departement;
-    }
-
-    public function setDepartement(string $departement): self
-    {
-        $this->departement = $departement;
-
-        return $this;
-    }
-
-    public function getRegion(): ?string
-    {
-        return $this->region;
-    }
-
-    public function setRegion(string $region): self
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    public function getPointGeo(): ?string
-    {
-        return $this->point_geo;
-    }
-
-    public function setPointGeo(string $point_geo): self
-    {
-        $this->point_geo = $point_geo;
 
         return $this;
     }
