@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 22/09/2020 09:01
 
 namespace App\Entity;
 
@@ -72,15 +72,15 @@ class Adresse extends BaseEntity
     {
         $html = $this->getAdresse1();
         if ($this->getAdresse2() !== '') {
-            $html .= '<br />' . $this->getAdresse2();
+            $html .= ' <br />' . $this->getAdresse2();
         }
 
         if ($this->getAdresse3() !== '') {
-            $html .= '<br />' . $this->getAdresse3();
+            $html .= ' <br />' . $this->getAdresse3();
         }
 
-        $html .= '<br />' . $this->getCodePostal() . ' ' . $this->getVille();
-        $html .= '<br />' . $this->getPays();
+        $html .= ' <br />' . $this->getCodePostal() . ' ' . $this->getVille();
+        $html .= ' <br />' . $this->getPays();
 
         return $html;
     }
