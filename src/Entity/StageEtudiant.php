@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 23/09/2020 12:45
 
 namespace App\Entity;
 
@@ -511,7 +511,7 @@ class StageEtudiant extends BaseEntity
         return $this->periodesInterruptions;
     }
 
-    public function setPeriodesInterruptions(string $periodesInterruptions): self
+    public function setPeriodesInterruptions(?string $periodesInterruptions): self
     {
         $this->periodesInterruptions = $periodesInterruptions;
 
@@ -523,7 +523,7 @@ class StageEtudiant extends BaseEntity
         return $this->commentaireDureeHebdomadaire;
     }
 
-    public function setCommentaireDureeHebdomadaire(string $commentaireDureeHebdomadaire): self
+    public function setCommentaireDureeHebdomadaire(?string $commentaireDureeHebdomadaire): self
     {
         $this->commentaireDureeHebdomadaire = $commentaireDureeHebdomadaire;
 
