@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 24/09/2020 06:26
 
 namespace App\Classes;
 
@@ -62,7 +62,7 @@ class MyStageMailTemplate
             }
         } else {
             $modele = new StageMailTemplate();
-            $modele->setEvent('MAIL_CHGT_' . $code);
+            $modele->setEvent($code);
             $modele->setStagePeriode($stagePeriode);
             $modele->setSubject($sujet);
             $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(), $message);
