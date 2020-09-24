@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 06:43
+// @lastUpdate 24/09/2020 06:38
 
 namespace App\Form;
 
@@ -28,8 +28,9 @@ class StageEtudiantType extends AbstractType
             ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
             ->add('tuteur', ContactType::class, ['label' => 'label.tuteurEntreprise'])
             ->add('adresseStage', AdresseType::class, [
-                'label' => 'Adresse du lieu où le stage sera effectué',
-                'help'  => 'Cette adresse peut être différente du siège de l\'entreprise.'
+                'label'    => 'Adresse du lieu où le stage sera effectué',
+                'help'     => 'Cette adresse peut être différente du siège de l\'entreprise.',
+                'required' => false
             ])
             ->add('serviceStageEntreprise', TextType::class, ['label' => 'label.serviceStageEntreprise'])
             ->add('sujetStage', TextareaType::class, ['label' => 'label.sujetStage'])
