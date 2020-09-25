@@ -44,16 +44,15 @@
         Adresse : {{ stageEtudiant.etudiant.adresseSecuriteSociale }}<br/>
 
         <h2>Entreprise</h2>
-        Raison sociale : {{ stageEtudiant.entreprise.raisonSociale }}<br />
-        Entreprise : {{ stageEtudiant.entreprise.libelle }}<br />
-        N° de Siret : {{ stageEtudiant.entreprise.siret }}<br />
-        Adresse postale : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display
-        }}{%
-            endif %}<br />
+        Raison sociale/Nom de l'entreprise : {{ stageEtudiant.entreprise.raisonSociale }}<br/>
+        N° de Siret : {{ stageEtudiant.entreprise.siret }}<br/>
+        Adresse postale
+        : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display }}{% endif %}
+        <br/>
         Représenté par (nom et prénom du signataire de la convention) : {{ stageEtudiant.entreprise.responsable
-        .display }}<br />
-        Qualité du représentant : {{ stageEtudiant.entreprise.responsable.fonction }}<br />
-        Service dans lequel le stage sera effectué<br />
+        .display }}<br/>
+        Qualité du représentant : {{ stageEtudiant.entreprise.responsable.fonction }}<br/>
+        Service dans lequel le stage sera effectué<br/>
         <ul>
             <li>Intitulé : {{ stageEtudiant.serviceStageEntreprise }}</li>
             <li>Téléphone : {{ stageEtudiant.entreprise.responsable.telephone|tel_format }}</li>

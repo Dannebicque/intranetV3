@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 10:59
+// @lastUpdate 25/09/2020 13:01
 
 namespace App\Controller\administration\projet;
 
@@ -51,7 +51,7 @@ class ProjetPeriodeGestionController extends BaseController
             ['projet_periode_gestion', 'utilisateur', 'projet_entreprise_administration', 'adresse'],
             [
                 'etudiant'            => ['nom', 'prenom'],
-                'entreprise'          => ['raisonSociale', 'libelle'],
+                'entreprise'          => ['raisonSociale'],
                 'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom'],
                 'dateDebutStage',
