@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2020 15:42
+// @lastUpdate 25/09/2020 16:43
 
 namespace App\Classes\Edt;
 
@@ -120,7 +120,7 @@ class MyEdtExport
             $this->myIcal->setDescription($pl['commentaire']);
             $this->myIcal->setSummary($pl['ical']);
             $this->myIcal->setLocation($pl['salle']);
-            $this->myIcal->addEvent();
+            $this->myIcal->addEvent($pl['id']);
         }
 
         $handle = fopen('php://memory', 'rb+');

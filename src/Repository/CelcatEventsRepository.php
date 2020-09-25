@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/08/2020 09:46
+// @lastUpdate 25/09/2020 16:43
 
 namespace App\Repository;
 
@@ -277,6 +277,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
         /** @var CelcatEvent $event */
         foreach ($data as $event) {
             $pl = [];
+            $pl['id'] = $event->getId();
             $pl['semaine'] = $event->getSemaineFormation();
             $pl['jour'] = $event->getJour();
             $pl['debut'] = $event->getDebut();

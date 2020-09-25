@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 18:11
+// @lastUpdate 25/09/2020 16:43
 
 namespace App\Repository;
 
@@ -364,6 +364,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         /** @var EdtPlanning $event */
         foreach ($query as $event) {
             $pl = [];
+            $pl['id'] = $event->getId();
             $pl['semaine'] = $event->getSemaine();
             $pl['jour'] = $event->getJour();
             $pl['debut'] = $event->getDebut();
@@ -391,6 +392,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         foreach ($data as $event) {
             if (($event->getType() === TypeGroupe::TYPE_GROUPE_CM) || ($event->getType() === TypeGroupe::TYPE_GROUPE_TD && $event->getGroupe() === $this->groupetd) || ($event->getType() === TypeGroupe::TYPE_GROUPE_TP && $event->getGroupe() === $this->groupetp)) {
                 $pl = [];
+                $pl['id'] = $event->getId();
                 $pl['semaine'] = $event->getSemaine();
                 $pl['jour'] = $event->getJour();
                 $pl['debut'] = $event->getDebut();
