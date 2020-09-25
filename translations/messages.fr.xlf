@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 25/09/2020 17:05 -->
+<!-- @lastUpdate 25/09/2020 17:10 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -11778,9 +11778,9 @@
         <target>Formulaire de stage incomplet</target>
       </segment>
     </unit>
-    <unit id="ZIHlkWz" name="ETAT_STAGE_IMPRIME">
+    <unit id="ZIHlkWz" name="ETAT_STAGE_CONVENTION_IMPRIME">
       <segment>
-        <source>ETAT_STAGE_IMPRIME</source>
+        <source>ETAT_STAGE_CONVENTION_IMPRIME</source>
         <target>Convention de stage imprimée</target>
       </segment>
     </unit>
@@ -11790,9 +11790,9 @@
         <target>Convention de stage envoyée</target>
       </segment>
     </unit>
-    <unit id="FLHSsmy" name="ETAT_STAGE_IMPRIMEE">
+    <unit id="FLHSsmy" name="ETAT_STAGE_CONVENTION_IMPRIME">
       <segment>
-        <source>ETAT_STAGE_IMPRIMEE</source>
+        <source>ETAT_STAGE_CONVENTION_IMPRIME</source>
         <target>Convention de stage imprimée</target>
       </segment>
     </unit>
