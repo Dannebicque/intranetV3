@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/AdresseAjaxController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 09:01
+// @lastUpdate 25/09/2020 17:41
 
 namespace App\Controller\ajax;
 
+use App\Classes\MyAdresse;
 use App\Classes\MyContact;
 use App\Controller\BaseController;
 use App\Entity\Adresse;
@@ -34,7 +35,7 @@ class AdresseAjaxController extends BaseController
      *
      * @return JsonResponse
      */
-    public function edit(MyContact $myAdresse, Request $request, Adresse $adresse): JsonResponse
+    public function edit(MyAdresse $myAdresse, Request $request, Adresse $adresse): JsonResponse
     {
         $name = $request->request->get('field');
         $value = $request->request->get('value');

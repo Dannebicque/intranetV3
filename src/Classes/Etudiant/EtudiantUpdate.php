@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 09:36
+// @lastUpdate 25/09/2020 17:38
 
 namespace App\Classes\Etudiant;
 
@@ -19,7 +19,7 @@ class EtudiantUpdate
     private BacRepository $bacRepository;
     private DepartementRepository $departementRepository;
     private SemestreRepository $semestreRepository;
-    private EntityManagerInterface $entityManger;
+    private EntityManagerInterface $entityManager;
     private EtudiantGroupes $etudiantGroupes;
 
     /**
@@ -28,20 +28,20 @@ class EtudiantUpdate
      * @param BacRepository          $bacRepository
      * @param DepartementRepository  $departementRepository
      * @param SemestreRepository     $semestreRepository
-     * @param EntityManagerInterface $entityManger
+     * @param EntityManagerInterface $entityManager
      * @param EtudiantGroupes        $etudiantGroupes
      */
     public function __construct(
         BacRepository $bacRepository,
         DepartementRepository $departementRepository,
         SemestreRepository $semestreRepository,
-        EntityManagerInterface $entityManger,
+        EntityManagerInterface $entityManager,
         EtudiantGroupes $etudiantGroupes
     ) {
         $this->bacRepository = $bacRepository;
         $this->departementRepository = $departementRepository;
         $this->semestreRepository = $semestreRepository;
-        $this->entityManger = $entityManger;
+        $this->entityManager = $entityManager;
         $this->etudiantGroupes = $etudiantGroupes;
     }
 
@@ -76,7 +76,14 @@ class EtudiantUpdate
             case 'bac':
                 $semestre = $this->bacRepository->find($value);
                 $etudiant->setBac($semestre);
-                $this->entityManger->flush();
+                $this->entityManager->flush();
+                break;
+            default:
+                $method = 'set' . $field;
+                if (method_exists($etudiant, $method)) {
+                    $etudiant->$method($value);
+                    $this->entityManager->flush();
+                }
                 break;
         }
 
