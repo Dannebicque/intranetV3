@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/09/2020 12:45
+// @lastUpdate 25/09/2020 17:10
 
 namespace App\Entity;
 
@@ -26,7 +26,7 @@ class StageEtudiant extends BaseEntity
     public const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
     public const ETAT_STAGE_REFUS = 'ETAT_STAGE_REFUS';
     public const ETAT_STAGE_INCOMPLET = 'ETAT_STAGE_INCOMPLET';
-    public const ETAT_STAGE_IMPRIME = 'ETAT_STAGE_IMPRIME';
+    public const ETAT_STAGE_CONVENTION_IMPRIME = 'ETAT_STAGE_CONVENTION_IMPRIME';
     public const ETAT_STAGE_CONVENTION_ENVOYEE = 'ETAT_STAGE_CONVENTION_ENVOYEE';
     public const ETAT_STAGE_CONVENTION_RECUE = 'ETAT_STAGE_CONVENTION_RECUE';
     public const ETAT_STAGE_ERASMUS = 'ETAT_STAGE_ERASMUS';
@@ -43,7 +43,7 @@ class StageEtudiant extends BaseEntity
         self::ETAT_STAGE_VALIDE,
         self::ETAT_STAGE_REFUS,
         self::ETAT_STAGE_INCOMPLET,
-        self::ETAT_STAGE_IMPRIME,
+        self::ETAT_STAGE_CONVENTION_IMPRIME,
         self::ETAT_STAGE_CONVENTION_ENVOYEE,
         self::ETAT_STAGE_CONVENTION_RECUE
     ];
