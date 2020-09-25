@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 13:55
+// @lastUpdate 25/09/2020 13:56
 
 namespace App\Controller;
 
@@ -230,7 +230,7 @@ class SecurityController extends AbstractController
         if ($request->getMethod() === 'POST') {
             foreach ($departements as $departement) {
                 if ($departement->getDepartement() !== null) {
-                    if ($departement->getDepartement()->getId() !== $request->request->get('departement')) {
+                    if ($departement->getDepartement()->getId() !== (int)$request->request->get('departement')) {
                         $departement->setDefaut(false);
                     } else if ($departement->getDepartement()->getId() === (int)$request->request->get('departement')) {
                         $departement->setDefaut(true);
