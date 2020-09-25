@@ -1,8 +1,5 @@
-<h4>Entreprise : {{ entreprise.libelle }}</h4>
+<h4>Entreprise : {{ entreprise.raisonSociale }}</h4>
 <dl class="row">
-
-    <dt class="col-sm-4">Raison Sociale :</dt>
-    <dd class="col-sm-6">{{ entreprise.raisonSociale }}</dd>
     <dt class="col-sm-4">Siret :</dt>
     <dd class="col-sm-6">{{ entreprise.siret }}</dd>
     <dt class="col-sm-4">Adresse Siège :</dt>
@@ -10,7 +7,6 @@
 </dl>
 <h4>Responsable</h4>
 <dl class="row">
-
     <dt class="col-sm-4">Responsable :</dt>
     <dd class="col-sm-6">{{ entreprise.responsable.display }}</dd>
     <dt class="col-sm-4">Email :</dt>

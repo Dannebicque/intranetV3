@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 25/09/2020 13:01
 
 namespace App\Controller\administration\stage;
 
@@ -96,7 +96,15 @@ class StageEntrepriseController extends BaseController
             $entreprises,
             'Entreprises',
             ['stage_entreprise_administration', 'adresse'],
-            ['entreprise' => ['raisonSociale', 'libelle', 'responsable' =>['nom', 'prenom', 'fonction', 'telephone', 'email']], 'tuteur' =>['nom', 'prenom', 'fonction', 'telephone', 'email'], 'serviceStageEntreprise', 'type', 'personnel' => ['nom', 'prenom'], 'dateDebutStage', 'dateFinStage']
+            [
+                'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
+                'tuteur'     => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'serviceStageEntreprise',
+                'type',
+                'personnel'  => ['nom', 'prenom'],
+                'dateDebutStage',
+                'dateFinStage'
+            ]
         );
     }
 }

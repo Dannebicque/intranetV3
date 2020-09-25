@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 08:26
+// @lastUpdate 25/09/2020 12:58
 
 namespace App\Form;
 
@@ -84,18 +84,6 @@ class StageEtudiantEtudiantType extends AbstractType
             $builder
                 ->add('dateRange', DateRangeType::class,
                     ['label' => 'dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
-
-                /*->add(
-                    'dateDebutStage',
-                    DateType::class,
-                    ['label' => 'label.dateDebutStage', 'help' => 'help.dateDebutStage', 'widget' => 'single_text']
-                )
-                ->add(
-                    'dateFinStage',
-                    DateType::class,
-                    ['label' => 'label.dateFinStage', 'help' => 'help.dateFinStage', 'widget' => 'single_text']
-                )*/
-
                 ->add(
                     'dureeJoursStage',
                     TextType::class,

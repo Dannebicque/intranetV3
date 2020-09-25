@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 25/09/2020 13:01
 
 namespace App\Controller\administration\stage;
 
@@ -46,12 +46,13 @@ class StagePeriodeGestionController extends BaseController
             $stageEtudiants,
             'periode_stage_' . $stagePeriode->getLibelle(),
             ['stage_periode_gestion', 'utilisateur', 'stage_entreprise_administration', 'adresse'],
-            ['etudiant'            => ['nom', 'prenom'],
-             'entreprise'          => ['raisonSociale', 'libelle'],
-             'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
-             'tuteurUniversitaire' => ['nom', 'prenom'],
-             'dateDebutStage',
-             'dateFinStage'
+            [
+                'etudiant'            => ['nom', 'prenom'],
+                'entreprise'          => ['raisonSociale'],
+                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'tuteurUniversitaire' => ['nom', 'prenom'],
+                'dateDebutStage',
+                'dateFinStage'
             ]
         );
     }

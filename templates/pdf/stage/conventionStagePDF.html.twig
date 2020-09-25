@@ -60,8 +60,7 @@
     </div>
     <p class="titresuligne">ET L’ORGANISME D’ACCUEIL</p>
     <div class="blocconvention">
-        Raison sociale : {{ proposition.entreprise.raisonSociale }}<br/>
-        Entreprise : {{ proposition.entreprise.libelle }}<br/>
+        Raison sociale/Nom de l'entreprise : {{ proposition.entreprise.raisonSociale }}<br/>
         N° de Siret : {{ proposition.entreprise.siret }}<br/>
         Adresse postale
         : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
@@ -707,7 +706,7 @@
     <div style="clear:both;"></div>
     <p class="titresuligne">L’ORGANISME D’ACCUEIL</p>
     <div class="blocconvention">
-        Raison sociale : {{ proposition.entreprise.raisonSociale }} {{ proposition.entreprise.libelle }}<br/>
+        Raison sociale : {{ proposition.entreprise.raisonSociale }}<br/>
         N° de Siret : {{ proposition.entreprise.siret }}<br/>
         Adresse postale
         : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}

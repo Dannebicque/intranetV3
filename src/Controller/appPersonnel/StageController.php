@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/StageController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 25/09/2020 13:01
 
 namespace App\Controller\appPersonnel;
 
@@ -79,7 +79,16 @@ class StageController extends BaseController
             $stages,
             'stages',
             ['stage_entreprise', 'adresse'],
-            ['entreprise' => ['raisonSociale', 'libelle', 'responsable' =>['nom', 'prenom', 'fonction', 'telephone', 'email']], 'tuteur' =>['nom', 'prenom', 'fonction', 'telephone', 'email'], 'serviceStageEntreprise', 'type', 'personnel' => ['nom', 'prenom'], 'sujetStage', 'dateDebutStage', 'dateFinStage']
+            [
+                'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
+                'tuteur'     => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'serviceStageEntreprise',
+                'type',
+                'personnel'  => ['nom', 'prenom'],
+                'sujetStage',
+                'dateDebutStage',
+                'dateFinStage'
+            ]
         );
     }
 
