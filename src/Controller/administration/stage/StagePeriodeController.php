@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 17:18
+// @lastUpdate 25/09/2020 16:08
 
 namespace App\Controller\administration\stage;
 
@@ -169,6 +169,7 @@ class StagePeriodeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_stage_periode_duplicate", methods="GET")
+     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
      * @param StagePeriode $stagePeriode
      *
      * @return Response
@@ -180,6 +181,6 @@ class StagePeriodeController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_stage_periode_edit', ['id' => $newStagePeriode->getId()]);
+        return $this->redirectToRoute('administration_stage_periode_edit', ['id' => $newStagePeriode->getUuidString()]);
     }
 }
