@@ -3,12 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 06:38
+// @lastUpdate 25/09/2020 13:11
 
 namespace App\Controller;
 
-use App\Entity\Departement;
 use App\Classes\Mail\MailerFromTwig;
+use App\Entity\Departement;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
@@ -38,7 +38,8 @@ class SecurityController extends AbstractController
      */
     public function redirectToCas(): RedirectResponse
     {
-        return $this->redirect('https://cas.univ-reims.fr/cas?service='.$this->generateUrl('cas_return', [], UrlGeneratorInterface::ABSOLUTE_URL));
+        return $this->redirect('https://cas.univ-reims.fr/cas?service=' . $this->generateUrl('cas_return', [],
+                UrlGeneratorInterface::ABSOLUTE_URL));
     }
 
     /**
@@ -225,29 +226,31 @@ class SecurityController extends AbstractController
     ): Response {
         $user = $this->getUser();
         $departements = $personnelDepartementRepository->findByPersonnel($user);
-
+        $update = null;
         if ($request->getMethod() === 'POST') {
-            $personnelDepartement = $personnelDepartementRepository->findOneBy(['departement' => $request->request->get('departement')]);
-            if ($personnelDepartement !== null) {
-                $personnelDepartement->setDefaut(true);
-                $em = $this->getDoctrine()->getManager();
-                //$em->persist($departement);
-                $em->flush();
-                if ($personnelDepartement->getDepartement() !== null) {
-                    $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
-                    $session->set('departement', $personnelDepartement->getDepartement()->getUuid()); //on sauvegarde
-
-                    return $this->redirectToRoute('default_homepage');
+            foreach ($departements as $departement) {
+                if ($departement->getId() !== $request->request->get('departement')) {
+                    $departement->setDefaut(false);
+                } else if ($departement->getId() === (int)$request->request->get('departement')) {
+                    $departement->setDefaut(true);
+                    $update = $departement;
                 }
-
-                $flashBag->add('error', $translator->trans('formation.par.defaut.erreur'));
-
-                return $this->render('security/choix-departement.html.twig',
-                    ['departements' => $departements, 'user' => $user]);
             }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            if ($update !== null && $update->getDepartement() !== null) {
+                $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
+                $session->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
+
+                return $this->redirectToRoute('default_homepage');
+            }
+
+            $flashBag->add('error', $translator->trans('formation.par.defaut.erreur'));
 
             return $this->render('security/choix-departement.html.twig',
                 ['departements' => $departements, 'user' => $user]);
+
         }
 
         return $this->render('security/choix-departement.html.twig',
