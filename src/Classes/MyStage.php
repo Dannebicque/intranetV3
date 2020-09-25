@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:23
+// @lastUpdate 25/09/2020 14:26
 
 /**
  * Created by PhpStorm.
@@ -33,12 +33,13 @@ class MyStage
     /** @var EtudiantRepository */
     protected $etudiantRepository;
 
-    protected $dataEtudiants = array();
+    protected $dataEtudiants = [];
 
-    protected $propositionsAValider = array();
-    protected $conventionAEnvoyer = array();
-    protected $conventionEnAttente = array();
-    protected $conventionComplete = array();
+    protected $propositionsAValider = [];
+    protected $conventionAEnvoyer = [];
+    protected $conventionEnAttente = [];
+    protected $conventionComplete = [];
+    private $conventionAImprimer = [];
 
 
     /**
@@ -86,6 +87,9 @@ class MyStage
                     case StageEtudiant::ETAT_STAGE_VALIDE:
                         $this->conventionAEnvoyer[$stageEtudiant->getEtudiant()->getId()] = $stageEtudiant;
                         break;
+                    case StageEtudiant::ETAT_STAGE_IMPRIME:
+                        $this->conventionAImprimer[$stageEtudiant->getEtudiant()->getId()] = $stageEtudiant;
+                        break;
                     case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
                         $this->conventionEnAttente[$stageEtudiant->getEtudiant()->getId()] = $stageEtudiant;
                         break;
@@ -121,6 +125,14 @@ class MyStage
     public function getConventionAEnvoyer(): array
     {
         return $this->conventionAEnvoyer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConventionAImprimer(): array
+    {
+        return $this->conventionAImprimer;
     }
 
     /**

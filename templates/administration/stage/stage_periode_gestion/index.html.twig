@@ -127,7 +127,13 @@
                 <ul class="nav nav-tabs nav-tabs-danger nav-justified" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#onglet_proposition"
-                           role="tab">{{ 'propositions.a.valider'|trans }} ({{ myStage.propositionsAValider|length }})</a>
+                           role="tab">{{ 'propositions.a.valider'|trans }} ({{ myStage.propositionsAValider|length }}
+                                                                           )</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#onglet_imprimer"
+                           role="tab">{{ 'convention.a.imprimer'|trans }}
+                            ({{ myStage.conventionAImprimer|length }})</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#onglet_envoyer"
@@ -196,6 +202,50 @@
                             {% else %}
                                 <tr class="bg-success">
                                     <td colspan="3">Aucune convention en attente de validation</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="onglet_imprimer">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>{{ 'table.etudiant'|trans }}</th>
+                                <th>{{ 'table.entreprise'|trans }}</th>
+                                <th>{{ 'table.actions'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stageEtudiant in myStage.conventionAImprimer %}
+                                <tr>
+                                    <td>{{ stageEtudiant.etudiant.display }}</td>
+                                    <td>{{ stageEtudiant.entreprise.libelle }}</td>
+                                    <td>
+                                        <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
+                                           class="btn btn-info" data-provide="tooltip" data-placement="top"
+                                           title="Voir/modifier le stage"><i class="{{ iconShow }}"></i></a>
+                                        <a href="{{ path
+                                            ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
+                                           class="btn btn-primary" data-provide="tooltip" data-placement="top"
+                                           title="Imprimer la convention"><i class="fa fa-print"></i></a>
+                                        <a href="{{ path
+                                            ('administration_stage_etudiant_courrier_pdf', {id:stageEtudiant
+                                                .id}) }}" class="btn btn-primary" data-provide="tooltip" data-placement="top"
+                                           title="Editer le courrier" target="_blank"><i
+                                                    class=" fa fa-envelope"></i></a>
+                                        <a href="{{ path('administration_stage_etudiant_change_etat',
+                                            {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
+                                                .etudiant.id, etat: constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIME')}) }}"
+                                           class="btn
+                                                    btn-success" data-provide="tooltip" data-placement="top"
+                                           title="Convention imprimée"><i class="fa fa-check"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr class="bg-success">
+                                    <td colspan="3">{{ 'aucune.convention.a.envoyer'|trans }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
