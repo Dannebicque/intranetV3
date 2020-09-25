@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 17:10
+// @lastUpdate 25/09/2020 17:11
 
 import Quill from '../quill'
 import {addCallout} from '../util'
@@ -54,7 +54,6 @@ $(document).ready(function () {
     'ed_ETAT_STAGE_CONVENTION_ENVOYEE': ed_ETAT_STAGE_CONVENTION_ENVOYEE,
     'ed_ETAT_STAGE_CONVENTION_RECUE': ed_ETAT_STAGE_CONVENTION_RECUE
   }
-
 })
 
 $(document).on('click', '.enregistreModeleMail', function () {
