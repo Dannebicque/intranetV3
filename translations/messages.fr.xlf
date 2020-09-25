@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 20/09/2020 15:02 -->
+<!-- @lastUpdate 25/09/2020 09:28 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -11673,7 +11673,7 @@
     <unit id="7r22tl3" name="table.securite_sociale">
       <segment>
         <source>table.securite_sociale</source>
-        <target>Mutuelle étudiante ou sécurité sociale</target>
+        <target>Régime sécurité sociale ou régime spécifique</target>
       </segment>
     </unit>
     <unit id="dpm6hxI" name="table.adresse_securite_sociale">

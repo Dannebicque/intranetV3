@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 16:29
+// @lastUpdate 25/09/2020 09:36
 
 namespace App\Classes\Etudiant;
 
@@ -79,5 +79,7 @@ class EtudiantUpdate
                 $this->entityManger->flush();
                 break;
         }
+
+        return true;
     }
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/09/2020 17:13
+// @lastUpdate 25/09/2020 09:54
 
 /**
  * Created by PhpStorm.
@@ -28,7 +28,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyStageEtudiant
 {
-    protected EntityManagerInterface $entityManger;
+    protected EntityManagerInterface $entityManager;
 
     protected EventDispatcherInterface $eventDispatcher;
 
@@ -48,12 +48,12 @@ class MyStageEtudiant
      */
     public function __construct(
         Configuration $configuration,
-        EntityManagerInterface $entityManger,
+        EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         StageEtudiantRepository $stageEtudiantRepository
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->entityManger = $entityManger;
+        $this->entityManager = $entityManager;
         $this->configuration = $configuration;
         $this->stageEtudiantRepository = $stageEtudiantRepository;
     }
@@ -115,8 +115,8 @@ class MyStageEtudiant
             $this->eventDispatcher->dispatch($event, $eventNotif);
         }
 
-        $this->entityManger->persist($this->stageEtudiant);
-        $this->entityManger->flush();
+        $this->entityManager->persist($this->stageEtudiant);
+        $this->entityManager->flush();
     }
 
     /**
@@ -153,9 +153,25 @@ class MyStageEtudiant
         $stageEtudiant->setDateDebutStage($stagePeriode->getDateDebut());
         $stageEtudiant->setDateFinStage($stagePeriode->getDateFin());
 
-        $this->entityManger->persist($stageEtudiant);
-        $this->entityManger->flush();
+        $this->entityManager->persist($stageEtudiant);
+        $this->entityManager->flush();
 
         return $stageEtudiant;
+    }
+
+    public function update(StageEtudiant $stageEtudiant, $name, $value): bool
+    {
+        if ($stageEtudiant) {
+
+            $method = 'set' . $name;
+            if (method_exists($stageEtudiant, $method)) {
+                $stageEtudiant->$method($value);
+                $this->entityManager->flush();
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

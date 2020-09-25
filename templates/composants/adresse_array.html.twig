@@ -2,17 +2,58 @@
     <tr>
         <th>{{ 'table.adresse'|trans }}</th>
         <td>
-        {{ adresse.adresse1 }}
-        {% if adresse.adresse2 != '' %}
-            <br/>{{ adresse.adresse2 }}
-        {% endif %}
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="adresse1"
+                   href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                   data-title="Corriger l'adresse">
+                    {{ adresse.adresse1 }}
+                </a>
+                <br/>
+                <a class="myedit"
+                   data-field="adresse2"
+                   href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                   data-title="Corriger l'adresse">
+                    {{ adresse.adresse2 }}
+                </a>
 
-        {% if adresse.adresse3 != '' %}
-            <br/>{{ adresse.adresse3 }}
-        {% endif %}
+                <br/> <a class="myedit"
+                         data-field="adresse3"
+                         href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                         data-title="Corriger l'adresse">
+                {{ adresse.adresse3 }}
+            </a>
+                <br/><a class="myedit"
+                        data-field="codepostal"
+                        href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                        data-title="Corriger l'adresse">
+                {{ adresse.codepostal }}
+            </a> <a class="myedit"
+                    data-field="ville"
+                    href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                    data-title="Corriger l'adresse">
+                {{ adresse.ville }}
+            </a>
+                <br/><a class="myedit"
+                        data-field="pays"
+                        href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                        data-title="Corriger l'adresse">
+                {{ adresse.pays }}
+            </a>
 
-        <br/>{{ adresse.codepostal }} {{ adresse.ville }}
-        <br/>{{ adresse.pays }}
+            {% else %}
+                {{ adresse.adresse1 }}
+                {% if adresse.adresse2 != '' %}
+                    <br/>{{ adresse.adresse2 }}
+                {% endif %}
+
+                {% if adresse.adresse3 != '' %}
+                    <br/>{{ adresse.adresse3 }}
+                {% endif %}
+
+                <br/>{{ adresse.codepostal }} {{ adresse.ville }}
+                <br/>{{ adresse.pays }}
+            {% endif %}
         </td>
     </tr>
 {% else %}

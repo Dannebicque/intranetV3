@@ -1,27 +1,61 @@
 {% if entreprise != null %}
     <tr>
         <th>{{ 'table.entreprise'|trans }}</th>
-        <td>{{ entreprise.raisonSociale }} {{ entreprise.libelle }}</td>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="raisonSociale"
+                   href="{{ path('entreprise_ajax_edit', {id:entreprise.id}) }}"
+                   data-title="Corriger la raison sociale de l'entreprise">
+                    {{ entreprise.raisonSociale }}
+                </a>
+            {% else %}
+                {{ entreprise.raisonSociale }}
+            {% endif %}
+        </td>
     </tr>
     <tr>
         <th>{{ 'table.siret'|trans }}</th>
-        <td>{{ entreprise.siret }}</td>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="siret"
+                   href="{{ path('entreprise_ajax_edit', {id:entreprise.id}) }}"
+                   data-title="Corriger le numéro de siret de l'entreprise">
+                    {{ entreprise.siret }}
+                </a>
+            {% else %}
+                {{ entreprise.siret }}
+            {% endif %}
+        </td>
     </tr>
-    {% if entreprise.adresse != null %}
-        {{ include('composants/adresse_array.html.twig', {adresse:entreprise.adresse}) }}
+
+    {% if editable is defined and editable == 'true' %}
+        {{ include('composants/adresse_array.html.twig', {adresse:entreprise.adresse,editable:'true'}) }}
+    {% else %}
+        {% if entreprise.adresse != null %}
+            {{ include('composants/adresse_array.html.twig', {adresse:entreprise.adresse}) }}
         {% else %}
             <tr>
-        <th>{{ 'table.adresse'|trans }}</th>
-        <td>{{ 'non.defini'|trans }}</td>
-    </tr>
-            {% endif %}
-    {% if entreprise.responsable != null %}
-        {{ include('composants/contact_array.html.twig', {contact:entreprise.responsable}) }}
+                <th>{{ 'table.adresse'|trans }}</th>
+                <td>{{ 'non.defini'|trans }}</td>
+            </tr>
+        {% endif %}
+    {% endif %}
+
+
+    {% if editable is defined and editable == 'true' %}
+        {{ include('composants/contact_array.html.twig', {contact:entreprise.responsable,editable:'true'}) }}
     {% else %}
-        <tr>
-            <th>{{ 'table.responsable'|trans }}</th>
-            <td>{{ 'non.defini'|trans }}</td>
-        </tr>
+        {% if entreprise.responsable != null %}
+            {{ include('composants/contact_array.html.twig', {contact:entreprise.responsable}) }}
+        {% else %}
+            <tr>
+                <th>{{ 'table.responsable'|trans }}</th>
+                <td>
+                    {{ 'non.defini'|trans }} </td>
+            </tr>
+        {% endif %}
     {% endif %}
 {% else %}
     <tr>

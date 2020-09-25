@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 17:52
+// @lastUpdate 25/09/2020 08:40
 
 namespace App\Classes;
 
@@ -32,16 +32,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class MyPrevisionnel
 {
-    /** @var Personnel */
-    private $personnel;
+    private Personnel $personnel;
 
     private $previsionnelRepository;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /** @var HrsRepository */
-    private $hrsRepository;
+    private HrsRepository $hrsRepository;
 
     /**
      * @var Previsionnel[]

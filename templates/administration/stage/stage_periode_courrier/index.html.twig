@@ -75,7 +75,7 @@
                                 <label for="sujet_{{ etat }}">Sujet du message : </label>
                                 <input type="text"
                                        class="form-control"
-                                       value="{% if courriers['MAIL_CHGT_' ~etat] is defined %}{{ courriers['MAIL_CHGT_' ~ etat].subject }}{% endif %}"
+                                       value="{% if courriers[etat] is defined %}{{ courriers[etat].subject }}{% endif %}"
                                        name="sujet_{{ etat }}"
                                        id="sujet_{{ etat }}"/>
                             </div>
@@ -95,6 +95,7 @@
                                     <button class="ql-align" value="justify" type="button"></button>
                                 </span>
                                 <span>
+                                    <label for="custom-fields_{{ etat }}" class="sr-only">custom-fields_{{ etat }}</label>
                                     <select id="custom-fields_{{ etat }}" class="ql-customsfields">
                                         <option selected>Choisir</option>
                                         {% for field in constant
