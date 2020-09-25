@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 13:56
+// @lastUpdate 25/09/2020 13:57
 
 namespace App\Controller;
 
 use App\Classes\Mail\MailerFromTwig;
+use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
@@ -242,13 +243,13 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             if ($update !== null && $update->getDepartement() !== null) {
-                $flashBag->add('success', $translator->trans('formation.par.defaut.sauvegarde'));
+                $flashBag->add(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
                 $session->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
 
                 return $this->redirectToRoute('default_homepage');
             }
 
-            $flashBag->add('error', $translator->trans('formation.par.defaut.erreur'));
+            $flashBag->add(Constantes::FLASHBAG_ERROR, $translator->trans('formation.par.defaut.erreur'));
 
             return $this->render('security/choix-departement.html.twig',
                 ['departements' => $departements, 'user' => $user]);
