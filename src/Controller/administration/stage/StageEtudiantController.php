@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 09:12
+// @lastUpdate 25/09/2020 09:54
 
 namespace App\Controller\administration\stage;
 
@@ -50,8 +50,32 @@ class StageEtudiantController extends BaseController
     }
 
     /**
+     * @Route("/ajax/edit/{id}", name="administration_stage_etudiant_ajax_edit", options={"expose":true})
+     *
+     * @param MyStageEtudiant $myStageEtudiant
+     * @param Request         $request
+     *
+     * @param StageEtudiant   $stageEtudiant
+     *
+     * @return JsonResponse
+     */
+    public function ajaxEdit(
+        MyStageEtudiant $myStageEtudiant,
+        Request $request,
+        StageEtudiant $stageEtudiant
+    ): JsonResponse {
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        $update = $myStageEtudiant->update($stageEtudiant, $name, $value);
+
+        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * @Route("/{id}/edit", name="administration_stage_etudiant_edit", methods="GET|POST")
-     * @param Request       $request
+     * @param Request $request
      * @param StageEtudiant $stageEtudiant
      *
      * @return Response

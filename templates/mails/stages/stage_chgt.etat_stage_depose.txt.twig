@@ -1,6 +1,5 @@
 Bonjour {{ stageEtudiant.etudiant.prenom|capitalize }},
 
-
 Récapitulatif des infos du stage.
 
 * Stage pour la période : {{ stageEtudiant.stagePeriode.libelle }}
@@ -10,7 +9,7 @@ Récapitulatif des infos du stage.
 * Tuteur entreprise : {{ stageEtudiant.entreprise.adresse.display }}
 * Adresse du stage : {{ stageEtudiant.adresseStage.display }}
 * Service d'accueil : {{ stageEtudiant.serviceStageEntreprise }}
-* Dte du début du stage : {{ stageEtudiant.dateDebutStage|format_date('long') }}
+* Date du début du stage : {{ stageEtudiant.dateDebutStage|format_date('long') }}
 * Date de fin du stage : {{ stageEtudiant.dateFinStage|format_date('long') }}
 * Sujet du stage : {{ stageEtudiant.sujetStage }}
 * Activités : {{ stageEtudiant.activites }}
@@ -21,6 +20,7 @@ Récapitulatif des infos du stage.
 * Autres avantages : {{ stageEtudiant.avantages }}
 * Durée hebdomadaire : {{ stageEtudiant.dureeHebdomadaire }}
 * Nb de jours : {{ stageEtudiant.dureeJoursStage }}
+* Période(s) d'interuptions : {{ stageEtudiant.periodesInterruptions }}
 
 Si les informations ci-dessous sont erronés, contactez au plus vite le responsable des stages
 

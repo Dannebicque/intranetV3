@@ -1,31 +1,102 @@
 {% if contact != null %}
-<tr>
-    <th>{{ 'table.prenom_nom'|trans }}</th>
-    <td>{{ contact.display }}</td>
-</tr>
-<tr>
-    <th>{{ 'table.fonction'|trans }}</th>
-    <td>{{ contact.fonction }}</td>
-</tr>
-<tr>
-    <th>{{ 'table.email'|trans }}</th>
-    <td>{{ contact.email|mailto }}</td>
-</tr>
-<tr>
-    <th>{{ 'table.telephone'|trans }}</th>
-    <td>{{ contact.telephone|tel_format }}</td>
-</tr>
-<tr>
-    <th>{{ 'table.portable'|trans }}</th>
-    <td>{{ contact.portable|tel_format }}</td>
-</tr>
-<tr>
-    <th>{{ 'table.fax'|trans }}</th>
-    <td>{{ contact.fax|tel_format }}</td>
-</tr>
+    <tr>
+        <th>{{ 'table.prenom_nom'|trans }}</th>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="prenom"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger le prénom">
+                    {{ contact.prenom }}
+                </a>
+                <a class="myedit"
+                   data-field="nom"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger le nom">
+                    {{ contact.nom }}
+                </a>
+            {% else %}
+                {{ contact.display }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'table.fonction'|trans }}</th>
+        <td>{% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="fonction"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger la fonction">
+                    {{ contact.fonction }}
+                </a>
+            {% else %}
+                {{ contact.fonction }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'table.email'|trans }}</th>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="email"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger l'email">
+                    {{ contact.email }}
+                </a>
+            {% else %}
+                {{ contact.email|mailto }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'table.telephone'|trans }}</th>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="telephone"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger le numéro de téléphone">
+                    {{ contact.telephone }}
+                </a>
+            {% else %}
+                {{ contact.telephone|tel_format }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'table.portable'|trans }}</th>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="portable"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger le numéro de portable">
+                    {{ contact.portable }}
+                </a>
+            {% else %}
+                {{ contact.portable|tel_format }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'table.fax'|trans }}</th>
+        <td>
+            {% if editable is defined and editable == 'true' %}
+                <a class="myedit"
+                   data-field="fax"
+                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   data-title="Corriger le numéro de fax">
+                    {{ contact.fax }}
+                </a>
+            {% else %}
+                {{ contact.fax|tel_format }}
+            {% endif %}
+        </td>
+    </tr>
 {% else %}
-<tr>
-    <th>{{ 'table.contact'|trans }}</th>
-    <td>{{ 'non.defini'|trans }}</td>
-</tr>
+    <tr>
+        <th>{{ 'table.contact'|trans }}</th>
+        <td>{{ 'non.defini'|trans }}</td>
+    </tr>
 {% endif %}

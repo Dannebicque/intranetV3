@@ -21,32 +21,34 @@
     <div class="card-body">
         {% form_theme form 'form/my-form.html.twig' %}
         {{ form_start(form) }}
-      <h3 class="titre_rub">Vos informations</h3>
-      <div class="alert alert-warning">Merci de vérifier vos informations ci-dessous.</div>
-      <div class="form-group row">
-        <div class="col-sm-3" style="text-align: right">
-          <b>Organismme de sécurité sociale</b> <span class="required"
-                                                      title="Ce champ est obligatoire">*</span> :
+        <h3 class="titre_rub">Vos informations</h3>
+        <div class="alert alert-warning">Merci de vérifier vos informations ci-dessous.</div>
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Organismme de sécurité sociale</b> <span class="required"
+                                                            title="Ce champ est obligatoire">*</span> :
+            </div>
+            <div class="col-sm-9">
+                <a class="myedit"
+                   data-field="intituleSecuriteSociale"
+                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   data-title="Corrigez votre organisme de sécurité social">{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</a>
+                <p>Indiquer "CPAM" pour le régime de sécurité social général ou le nom de votre régime spécial (ou celui
+                   de vos parents)</p>
+            </div>
         </div>
-        <div class="col-sm-9">
-          <a class="myedit"
-             data-field="intituleSecuriteSociale"
-             href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-             data-title="Corrigez votre organisme de sécurité social">{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</a>
-          (Mutuelle étudiante (LMDE ou MGEL par exemple, ou régime de sécurité sociale)
-        </div>
-      </div>
 
-      <div class="form-group row">
-        <div class="col-sm-3" style="text-align: right">
-          <b>Adresse de l'organisme</b> <span class="required" title="Ce champ est obligatoire">*</span> :
-        </div>
-        <div class="col-sm-9">
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Adresse de l'organisme</b> <span class="required" title="Ce champ est obligatoire">*</span> :
+            </div>
+            <div class="col-sm-9">
                 <a class="myedit"
                    data-field="adresseSecuriteSociale"
-                   href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
                    data-title="Corrigez l'adresse de votre organisme de sécurité social">
                     {{ stageEtudiant.etudiant.adresseSecuriteSociale }}</a>
+                <p>Uniquement si vous n'êtes pas au régime général de la sécurité sociale.</p>
             </div>
         </div>
 
@@ -60,27 +62,27 @@
                 {% if stageEtudiant.etudiant.adresse != null %}
                     <a class="myedit"
                        data-field="adresse1"
-                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
                        data-title="Corriger votre numéro de téléphone">
                         {{ stageEtudiant.etudiant.adresse.adresse1 }}</a><br>
                     <a class="myedit"
                        data-field="adresse2"
-                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
                        data-title="Corriger votre numéro de téléphone">
                         {{ stageEtudiant.etudiant.adresse.adresse2 }}</a><br>
                     <a class="myedit"
                        data-field="adresse3"
-                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
                        data-title="Corriger votre numéro de téléphone">
                         {{ stageEtudiant.etudiant.adresse.adresse3 }}</a><br>
                     <a class="myedit"
                        data-field="codePostal"
-                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
                        data-title="Corriger votre numéro de téléphone">
                         {{ stageEtudiant.etudiant.adresse.codePostal }}</a>
                     <a class="myedit"
                        data-field="ville"
-                       href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
                        data-title="Corriger votre numéro de téléphone">
                         {{ stageEtudiant.etudiant.adresse.ville }}</a>
                 {% else %}
