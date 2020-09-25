@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 25/09/2020 14:33 -->
+<!-- @lastUpdate 25/09/2020 17:05 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -13746,7 +13746,7 @@
     <unit id="1">
       <segment>
         <source>convention.a.imprimer</source>
-        <target>messages</target>
+        <target>Conventions à imprimer</target>
       </segment>
     </unit>
   </file>
