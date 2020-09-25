@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 16:14
+// @lastUpdate 25/09/2020 16:44
 
 namespace App\Classes;
 
@@ -94,10 +94,11 @@ class MyIcal
     /**
      *
      */
-    public function addEvent(): void
+    public function addEvent($id): void
     {
         $d = new DateTime('now');
-        $uid = $d->format(DateTime::ATOM) . '-' . substr(md5($d), 0, 12) . '-@IUT3Cours';
+        $d = $d->format(DateTime::ATOM);
+        $uid = $d . '-' . substr(md5($d . $id), 0, 12) . '-@IUT3Cours';
         $this->filevt .= 'BEGIN:VEVENT' . chr(13) . chr(10);
         $this->filevt .= 'UID:' . $uid . chr(13) . chr(10);
         $this->filevt .= $this->dtstart . chr(13) . chr(10);
