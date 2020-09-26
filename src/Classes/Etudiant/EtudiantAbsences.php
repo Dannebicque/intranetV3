@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 20:40
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Classes\Etudiant;
 
@@ -18,7 +18,6 @@ use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 18:10
+// @lastUpdate 26/09/2020 08:45
 
 namespace App\EventSubscriber;
 
@@ -60,7 +60,6 @@ class EmpruntSubscriber implements EventSubscriberInterface
      * @param EmpruntEvent $event
      * @param              $codeEvent
      *
-     * @throws TransportExceptionInterface
      */
     public function sendMail(EmpruntEvent $event, $codeEvent): void
     {

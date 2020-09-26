@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/09/2020 15:21
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Classes;
 
@@ -57,6 +57,7 @@ class MyGroupes
      * @param TypeGroupeRepository   $typeGroupeRepository
      * @param GroupeRepository       $groupeRepository
      * @param MyUpload               $myUpload
+     * @param MyCelcat               $myCelcat
      * @param EtudiantRepository     $etudiantRepository
      */
     public function __construct(

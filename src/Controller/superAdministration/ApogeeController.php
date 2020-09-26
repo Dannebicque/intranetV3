@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/09/2020 20:54
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\superAdministration;
 
@@ -13,8 +13,6 @@ use App\Classes\Etudiant\EtudiantImport;
 use App\Classes\LDAP\MyLdap;
 use App\Classes\Tools;
 use App\Controller\BaseController;
-use App\Entity\Adresse;
-use App\Entity\Etudiant;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
@@ -60,7 +58,7 @@ class ApogeeController extends BaseController
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @param MyApogee                     $myApogee
-     * @param MyLdap                       $myLdap
+     * @param EtudiantImport               $etudiantImport
      * @param Request                      $request
      * @param SemestreRepository           $semestreRepository
      * @param EtudiantRepository           $etudiantRepository

@@ -3,17 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2020 10:42
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\administration\projet;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
-use App\Entity\Personnel;
 use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
-use App\Entity\StagePeriode;
 use App\Form\ProjetEtudiantType;
 use App\Classes\MyProjetEtudiant;
 use App\Repository\PersonnelRepository;
@@ -21,7 +19,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

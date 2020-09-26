@@ -3,15 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 07:04
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Form;
 
 use App\Entity\ProjetEtudiant;
-use Svg\Tag\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

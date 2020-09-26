@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 16:05
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Command;
 
 use App\Repository\CodeInseeRepository;
-use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;

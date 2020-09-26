@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Controller\appPersonnel;
 
@@ -172,8 +172,7 @@ class NoteController extends BaseController
      * @param Evaluation   $evaluation
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws Exception
      */
     public function import(
         Request $request,

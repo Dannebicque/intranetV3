@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MaterielCommunController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\superAdministration;
 
@@ -12,7 +12,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\MaterielCommun;
 use App\Form\MaterielCommunType;
-use App\Repository\BacRepository;
 use App\Repository\MaterielCommunRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,6 +88,9 @@ class MaterielCommunController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_materiel_commun_show", methods={"GET"})
+     * @param MaterielCommun $materielCommun
+     *
+     * @return Response
      */
     public function show(MaterielCommun $materielCommun): Response
     {

@@ -3,14 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 17:10
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 

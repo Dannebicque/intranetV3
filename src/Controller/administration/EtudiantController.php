@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 06:46
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\administration;
 
@@ -13,7 +13,6 @@ use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
-use App\Entity\Scolarite;
 use App\Form\EtudiantType;
 use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
@@ -180,9 +179,9 @@ class EtudiantController extends BaseController
      * @param EtudiantScolarite $etudiantScolarite
      * @param Etudiant          $etudiant
      *
+     * @return RedirectResponse
      */
     public function demissionnaire(
-        Request $request,
         EtudiantScolarite $etudiantScolarite,
         Etudiant $etudiant
     ): RedirectResponse {

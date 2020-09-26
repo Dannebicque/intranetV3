@@ -3,24 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/ProjetController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:45
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
-use App\Entity\Alternance;
 use App\Entity\Constantes;
 use App\Entity\ProjetEtudiant;
-use App\Entity\StageEtudiant;
 use App\Event\ProjetEvent;
-use App\Event\StageEvent;
 use App\Form\ProjetEtudiantEtudiantType;
-use App\Form\StageEtudiantEtudiantType;
 use App\Repository\ProjetPeriodeRepository;
-use App\Repository\StagePeriodeRepository;
 use Carbon\Carbon;
-use DateTime;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

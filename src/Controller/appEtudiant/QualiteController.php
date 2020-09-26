@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 26/09/2020 08:47
 
 namespace App\Controller\appEtudiant;
 
@@ -61,7 +61,6 @@ class QualiteController extends BaseController
      * @param QualiteQuestionnaire    $qualiteQuestionnaire
      *
      * @return Response
-     * @throws TransportExceptionInterface
      */
     public function complet(
         QuizzEtudiantRepository $quizzEtudiantRepository,

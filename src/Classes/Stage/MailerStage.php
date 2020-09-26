@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 18:10
+// @lastUpdate 26/09/2020 08:45
 
 namespace App\Classes\Stage;
 
@@ -38,7 +38,6 @@ class MailerStage
      * @param array|null $destinataires
      * @param string     $sujet
      *
-     * @throws TransportExceptionInterface
      */
     public function setTemplate(string $template, array $donnees, ?array $destinataires, string $sujet)
     {
@@ -53,7 +52,6 @@ class MailerStage
      * @param array|null $destinataires
      * @param string     $sujet
      *
-     * @throws TransportExceptionInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 16:17
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Entity;
 
@@ -12,8 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use function chr;
-use function ord;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SemestreRepository")

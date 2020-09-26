@@ -3,12 +3,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/StageExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 11:21
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Twig;
 
-use App\Entity\QuizzQuestion;
-use App\Classes\Tools;
 use App\Entity\StageMailTemplate;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

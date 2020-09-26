@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 16:43
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Classes\Edt;
 
@@ -135,7 +135,6 @@ class MyEdtExport
 
     /**
      * @param Departement $departement
-     * @param Personnel[] $personnels
      *
      * @return array
      */

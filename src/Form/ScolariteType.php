@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Form;
 
@@ -11,7 +11,6 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Scolarite;
-use App\Entity\ScolariteMoyenneUe;
 use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,8 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ScolariteType extends AbstractType

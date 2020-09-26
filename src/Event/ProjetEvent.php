@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Event/ProjetEvent.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:50
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Event;
 
 use App\Entity\ProjetEtudiant;
-use App\Entity\StageEtudiant;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjetEvent extends Event

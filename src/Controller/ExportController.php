@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 07:42
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Controller;
 
@@ -14,6 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class ExportController
@@ -30,6 +33,9 @@ class ExportController extends AbstractController
      *
      * @return bool|null|StreamedResponse
      * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function listing(MatiereRepository $matiereRepository, MyExportListing $myExport, Request $request)
     {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 17:50
+// @lastUpdate 26/09/2020 08:52
 
 /**
  * Created by PhpStorm.
@@ -14,7 +14,6 @@
 
 namespace App\Classes\Pdf;
 
-use App\Entity\Departement;
 use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;

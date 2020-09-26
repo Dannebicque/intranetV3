@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Classes\Etudiant;
 
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Repository\GroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EtudiantGroupes

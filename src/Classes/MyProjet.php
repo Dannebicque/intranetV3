@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 18:19
+// @lastUpdate 26/09/2020 08:39
 
 /**
  * Created by PhpStorm.
@@ -36,9 +36,9 @@ class MyProjet
     /**
      * MyStage constructor.
      *
-     * @param EntityManagerInterface  $entityManger
-     * @param StageEtudiantRepository $stageEtudiantRepository
-     * @param EtudiantRepository      $etudiantRepository
+     * @param EntityManagerInterface   $entityManger
+     * @param ProjetEtudiantRepository $projetEtudiantRepository
+     * @param EtudiantRepository       $etudiantRepository
      */
     public function __construct(
         EntityManagerInterface $entityManger,

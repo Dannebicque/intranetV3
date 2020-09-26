@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 26/09/2020 08:52
 
 /**
  * Created by PhpStorm.
@@ -21,7 +21,6 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;

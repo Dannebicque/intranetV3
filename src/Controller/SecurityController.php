@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 13:57
+// @lastUpdate 26/09/2020 08:47
 
 namespace App\Controller;
 
@@ -63,7 +63,6 @@ class SecurityController extends AbstractController
      * @param EtudiantRepository      $etudiantRepository
      *
      * @return Response
-     * @throws TransportExceptionInterface
      */
     public function passwordLost(
         Request $request,
@@ -193,6 +192,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/change-departement/{departement}", name="security_change_departement")
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
+     * @param Request          $request
      * @param SessionInterface $session
      * @param Departement      $departement
      *

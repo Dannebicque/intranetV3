@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommunReservation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Classes;
 
@@ -21,13 +21,14 @@ class MyMaterielCommunReservation
 
     private MaterielCommunRepository $materielCommunRepository;
     private MaterielCommunPretRepository $materielCommunPretRepository;
-    private array $jours;
 
     /**
      * MyMaterielCommun constructor.
      *
      * @param MaterielCommunRepository     $materielCommunRepository
      * @param MaterielCommunPretRepository $materielCommunPretRepository
+     * @param EntityManagerInterface       $entityManager
+     * @param EventDispatcherInterface     $eventDispatcher
      */
     public function __construct(
         MaterielCommunRepository $materielCommunRepository,

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 08:40
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Classes;
 
@@ -22,7 +22,6 @@ use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

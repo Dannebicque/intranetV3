@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyContact.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 09:54
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Classes;
 
 
-use App\Entity\Adresse;
 use App\Entity\Contact;
 use Doctrine\ORM\EntityManagerInterface;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjetEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:50
+// @lastUpdate 26/09/2020 08:52
 
 /**
  * Created by PhpStorm.
@@ -19,10 +19,8 @@ use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
 use App\Entity\StagePeriode;
 use App\Event\ProjetEvent;
-use App\Event\StageEvent;
 use App\Repository\ProjetEtudiantRepository;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
@@ -102,12 +100,11 @@ class MyProjetEtudiant
     }
 
     /**
-     * @param StagePeriode $stagePeriode
-     * @param Etudiant     $etudiant
+     * @param ProjetPeriode $projetPeriode
+     * @param Etudiant      $etudiant
      *
      * @return ProjetEtudiant|mixed
      * @throws NonUniqueResultException
-     * @throws Exception
      */
     private function checkProjetEtudiantExist(ProjetPeriode $projetPeriode, Etudiant $etudiant)
     {

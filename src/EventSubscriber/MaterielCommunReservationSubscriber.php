@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MaterielCommunReservationSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:13
+// @lastUpdate 26/09/2020 08:39
 
 // App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
@@ -34,6 +34,7 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
      *
      * @param EntityManagerInterface       $entityManager
      * @param MaterielCommunPretRepository $materielCommunPretRepository
+     * @param MailerFromTwig               $myMailer
      */
     public function __construct(
         EntityManagerInterface $entityManager,

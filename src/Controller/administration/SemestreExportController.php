@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Controller\administration;
 
@@ -14,6 +14,9 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class SemestreExportController
@@ -39,6 +42,9 @@ class SemestreExportController extends BaseController
      * @param Etudiant             $etudiant
      * @param Semestre|null        $semestre
      *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function exportReleveProvisoire(

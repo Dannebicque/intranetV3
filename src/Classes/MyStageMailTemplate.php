@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/09/2020 06:26
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Classes;
 
 
-use App\Entity\StageEtudiant;
 use App\Entity\StageMailTemplate;
 use App\Entity\StagePeriode;
 use App\Entity\TwigTemplate;

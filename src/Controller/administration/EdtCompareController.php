@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 18:11
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\administration;
 
@@ -14,7 +14,6 @@ use App\Entity\Matiere;
 use App\Classes\MyPrevisionnel;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,9 +44,9 @@ class EdtCompareController extends BaseController
 
     /**
      *
-     * @param MyPrevisionnel $myPrevisionnel
+     * @param ComparePrevisionnelPersonnel $myPrevisionnel
      *
-     * @param                $source
+     * @param                              $source
      *
      * @return Response
      * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"})
@@ -66,7 +65,9 @@ class EdtCompareController extends BaseController
 
     /**
      *
-     * @param MyPrevisionnel $myPrevisionnel
+     * @param ComparePrevisonnelMatiere $myPrevisionnel
+     *
+     * @param                           $source
      *
      * @return Response
      * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"})

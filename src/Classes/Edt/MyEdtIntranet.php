@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 18:11
+// @lastUpdate 26/09/2020 08:39
 
 /**
  * Created by PhpStorm.
@@ -358,7 +358,9 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     }
 
     /**
-     * @param $p
+     * @param EdtPlanning $p
+     *
+     * @param string      $type
      *
      * @return string
      */

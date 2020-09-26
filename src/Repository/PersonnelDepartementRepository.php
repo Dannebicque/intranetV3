@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 06:54
+// @lastUpdate 26/09/2020 08:41
 
 namespace App\Repository;
 
@@ -123,7 +123,9 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $needle
+     * @param             $needle
+     *
+     * @param Departement $departement
      *
      * @return array
      */

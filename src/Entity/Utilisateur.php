@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 10:13
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use JsonException;
 use Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -520,6 +521,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @param array $roles
      *
+     * @throws JsonException
      */
     public function setRoles(array $roles): void
     {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/09/2020 15:45
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Repository;
 
@@ -193,7 +193,9 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $needle
+     * @param             $needle
+     *
+     * @param Departement $departement
      *
      * @return array
      */

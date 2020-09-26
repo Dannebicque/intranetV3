@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Classes\Mail;
 
@@ -38,13 +38,14 @@ class BaseMailer
     }
 
     /**
+     * @param        $mail
      * @param array  $to
      * @param string $subject
      * @param array  $options
      *
      * @throws TransportExceptionInterface
      */
-    public function baseSendMessage($mail, array $to, $subject, array $options = []): void
+    public function baseSendMessage($mail, array $to, string $subject, array $options = []): void
     {
         $mail->from($this->getFrom($options))
             ->subject($this->translator->trans($subject))
@@ -86,8 +87,8 @@ class BaseMailer
     }
 
     /**
+     * @param       $mail
      * @param array $mails
-     *
      */
     private function checkTo(&$mail, array $mails): void
     {

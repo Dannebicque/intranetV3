@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 18:15
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Classes\ComparePrevisionnel;
 
@@ -45,6 +45,8 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
     /**
      * @param Departement $departement
      * @param             $annee
+     *
+     * @param             $source
      *
      * @return array
      */
