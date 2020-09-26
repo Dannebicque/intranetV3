@@ -77,11 +77,11 @@
         <div class="col-sm-12">
             {% if user_data.departement.optEdt == true %}
                 {% if is_granted('ROLE_PERMANENT') %}
-                    {{ render(controller(
+                    {{ render_esi(controller(
                         'App\\Controller\\EdtController::dashboardPersonnel'
                     )) }}
                 {% elseif is_granted('ROLE_ETUDIANT') %}
-                    {{ render(controller(
+                    {{ render_esi(controller(
                         'App\\Controller\\EdtController::dashboardEtudiant'
                     )) }}
                 {% else %}
@@ -91,22 +91,22 @@
         </div>
 
         {% if is_granted('ROLE_PERMANENT') %}
-            {{ render(controller(
+            {{ render_esi(controller(
                 'App\\Controller\\BlocNotesAbsencesController::personnel'
             )) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
             <div class="col-lg-6 col-md-12 col-sm-12">
-                {{ render(controller(
+                {{ render_esi(controller(
                     'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences'
                 )) }}
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12">
-                {{ render(controller(
+                {{ render_esi(controller(
                     'App\\Controller\\BlocNotesAbsencesController::etudiantNotes'
                 )) }}
             </div>
 
-            {{ render(controller(
+            {{ render_esi(controller(
                 'App\\Controller\\BlocNotesAbsencesController::mccSemestre'
             )) }}
         {% endif %}
