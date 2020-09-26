@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 18:13
+// @lastUpdate 26/09/2020 07:36
 
 namespace App\Entity;
 
@@ -27,12 +27,6 @@ class Entreprise extends BaseEntity
      * @Groups({ "stage_entreprise_administration"})
      */
     private $raisonSociale;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"alternance_administration", "stage_entreprise_administration"})
-     */
-    private $libelle;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
@@ -82,18 +76,6 @@ class Entreprise extends BaseEntity
     public function setRaisonSociale(string $raisonSociale): self
     {
         $this->raisonSociale = $raisonSociale;
-
-        return $this;
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
 
         return $this;
     }

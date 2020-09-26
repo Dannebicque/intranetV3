@@ -96,8 +96,9 @@
                                         ...
                                     </td>
                                 {% else %}
-                                    <td>{{ projetEtudiant.projet.organisme.libelle }}</td>
-                                    <td>{% if projetEtudiant.projet.organisme.adresse != null %}
+                                    <td>{{ projetEtudiant.projet.organisme != null ? projetEtudiant.projet.organisme
+                                        .raisonSociale : 'non.defini'|trans }}</td>
+                                    <td>{% if projetEtudiant.projet.organisme!= null and projetEtudiant.projet.organisme.adresse != null %}
 
                                             {{ projetEtudiant.projet.organisme.adresse.ville|capitalize }} ({{ projetEtudiant.projet.organisme.adresse.codePostal }})
                                         {% else %}
@@ -111,25 +112,35 @@
 
                                     <td>
 
+
+                                        {% if projetEtudiant.projet.etatProjet == constant
+                                            ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') %}
+                                            <a href="#" class="btn
+                                                   btn-success" data-provide="tooltip" data-placement="top"
+                                               title="Valider le projet">Projet validé</a>
+                                        {% else %}
+                                            <a href="{{ path('administration_projet_etudiant_change_etat',
+                                                {projetPeriode: projetPeriode.uuidString, etudiant:projetEtudiant
+                                                    .etudiant.id, etat: constant
+                                                    ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE')}) }}" class="btn
+                                                    btn-success" data-provide="tooltip" data-placement="top"
+                                               title="Valider le projet"><i class="fa fa-check"></i></a>
+
+                                        {% endif %}
                                         <a href="{{ path
                                             ('administration_projet_etudiant_convention_pdf', {id:projetEtudiant
                                                 .projet.id}) }}"
                                            class="btn btn-success" data-provide="tooltip" data-placement="top"
                                            title="Editer la convention" target="_blank"><i
                                                     class="fa fa-print"></i></a>
-                                        <a href="{{ path('administration_projet_etudiant_change_etat',
-                                            {projetPeriode: projetPeriode.uuidString, etudiant:projetEtudiant
-                                                .etudiant.id, etat: constant
-                                                ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE')}) }}" class="btn
-                                                    btn-success" data-provide="tooltip" data-placement="top"
-                                           title="Valider le projet"><i class="fa fa-check"></i></a>
-
-                                        <a href="{{ path('administration_stage_etudiant_edit', {id:projetEtudiant.projet.id}) }}"
+                                        <a href="{{ path('administration_projet_etudiant_edit', {id:projetEtudiant
+                                            .projet.id}) }}"
                                            class="btn btn-warning btn-outline btn-square"
                                            data-provide="tooltip"
                                            data-placement="bottom"
                                            title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
-                                        <a href="{{ path('administration_stage_etudiant_delete', {id:projetEtudiant.projet.id}) }}"
+                                        <a href="{{ path('administration_projet_etudiant_delete', {id:projetEtudiant
+                                            .projet.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ projetEtudiant.projet.id) }}"
                                            class="btn btn-danger btn-outline btn-square supprimer"
                                            data-provide="tooltip" data-placement="bottom"
@@ -190,13 +201,3 @@
     ]}) }}
 {% endblock %}
 
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.stage') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.stage') }}
-{% endblock %}

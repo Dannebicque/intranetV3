@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 25/09/2020 17:10 -->
+<!-- @lastUpdate 26/09/2020 08:16 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -9681,11 +9681,11 @@
         <target>Convention envoyée</target>
       </segment>
     </unit>
-    <unit id="3VTOQth" name="convention.imprimee">
-      <segment>
-        <source>convention.imprimee</source>
-        <target>Convention imprimée</target>
-      </segment>
+    <unit id="B74u.JW" name="convention.imprimee">
+        <segment>
+            <source>convention.imprimee</source>
+            <target>Convention imprimée</target>
+        </segment>
     </unit>
     <unit id="ClVFXMA" name="stage.valide">
       <segment>
@@ -11718,24 +11718,24 @@
         <target>Votre convention de stage est envoyée à l'entreprise</target>
       </segment>
     </unit>
-    <unit id="smWVx1A" name="mail.chgt.etat_stage_convention_imprimee">
-      <segment>
-        <source>mail.chgt.etat_stage_convention_imprimee</source>
-        <target>Votre convention de stage est imprimée</target>
-      </segment>
-    </unit>
+      <unit id="tYT1f0l" name="mail.chgt.etat_stage_convention_imprimee">
+          <segment>
+              <source>mail.chgt.etat_stage_convention_imprimee</source>
+              <target>Votre convention de stage est imprimée</target>
+          </segment>
+      </unit>
     <unit id="LIj2otN" name="copie mail.chgt.etat_stage_convention_envoyee">
       <segment>
         <source>copie mail.chgt.etat_stage_convention_envoyee</source>
         <target>[COPIE] Votre convention de stage est envoyée à l'entreprise</target>
       </segment>
     </unit>
-    <unit id="LIj2otN" name="copie mail.chgt.etat_stage_convention_imprimee">
-      <segment>
-        <source>copie mail.chgt.etat_stage_convention_imprimee</source>
-        <target>[COPIE] Votre convention de stage est imprimée</target>
-      </segment>
-    </unit>
+      <unit id="EeMEwXC" name="copie mail.chgt.etat_stage_convention_imprimee">
+          <segment>
+              <source>copie mail.chgt.etat_stage_convention_imprimee</source>
+              <target>[COPIE] Votre convention de stage est imprimée</target>
+          </segment>
+      </unit>
     <unit id="HyJsROc" name="mail.chgt.etat_stage_convention_recue">
       <segment>
         <source>mail.chgt.etat_stage_convention_recue</source>
@@ -11778,22 +11778,16 @@
         <target>Formulaire de stage incomplet</target>
       </segment>
     </unit>
-    <unit id="ZIHlkWz" name="ETAT_STAGE_CONVENTION_IMPRIME">
-      <segment>
-        <source>ETAT_STAGE_CONVENTION_IMPRIME</source>
-        <target>Convention de stage imprimée</target>
-      </segment>
-    </unit>
+      <unit id="d6RRBwJ" name="ETAT_STAGE_CONVENTION_IMPRIME">
+          <segment>
+              <source>ETAT_STAGE_CONVENTION_IMPRIME</source>
+              <target>Convention de stage imprimée</target>
+          </segment>
+      </unit>
     <unit id="FLHSsmy" name="ETAT_STAGE_CONVENTION_ENVOYEE">
       <segment>
         <source>ETAT_STAGE_CONVENTION_ENVOYEE</source>
         <target>Convention de stage envoyée</target>
-      </segment>
-    </unit>
-    <unit id="FLHSsmy" name="ETAT_STAGE_CONVENTION_IMPRIME">
-      <segment>
-        <source>ETAT_STAGE_CONVENTION_IMPRIME</source>
-        <target>Convention de stage imprimée</target>
       </segment>
     </unit>
     <unit id="FjIF_WV" name="ETAT_STAGE_CONVENTION_RECUE">
@@ -11826,12 +11820,12 @@
         <target>Votre convention de stage est envoyée à l'entreprise</target>
       </segment>
     </unit>
-    <unit id="9hpdNx7" name="chgt.etat_stage_convention_imprimee">
-      <segment>
-        <source>chgt.etat_stage_convention_imprimee</source>
-        <target>Votre convention de stage est imprimée</target>
-      </segment>
-    </unit>
+      <unit id="clTObUB" name="chgt.etat_stage_convention_imprimee">
+          <segment>
+              <source>chgt.etat_stage_convention_imprimee</source>
+              <target>Votre convention de stage est imprimée</target>
+          </segment>
+      </unit>
     <unit id="bNI0ZJv" name="verificiation">
       <segment>
         <source>verificiation</source>
@@ -13737,17 +13731,23 @@
         <target>Pas de projet</target>
       </segment>
     </unit>
-    <unit id="0">
-      <segment>
-        <source>menu.projet</source>
-        <target>Projet(s)</target>
-      </segment>
-    </unit>
-    <unit id="1">
-      <segment>
-        <source>convention.a.imprimer</source>
-        <target>Conventions à imprimer</target>
-      </segment>
-    </unit>
+      <unit id="lww2kJg" name="menu.projet">
+          <segment>
+              <source>menu.projet</source>
+              <target>Projet(s)</target>
+          </segment>
+      </unit>
+      <unit id="ef8OGFv" name="convention.a.imprimer">
+          <segment>
+              <source>convention.a.imprimer</source>
+              <target>Conventions à imprimer</target>
+          </segment>
+      </unit>
+      <unit id="_tGzMQA" name="applications.etudiant.projet.formulaire.heading">
+          <segment>
+              <source>applications.etudiant.projet.formulaire.heading</source>
+              <target>Formulaire pour la convention de projet</target>
+          </segment>
+      </unit>
   </file>
 </xliff>
