@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2020 10:00
+// @lastUpdate 26/09/2020 07:04
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
+use App\Form\ProjetEtudiantType;
 use App\Repository\ProjetEtudiantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=ProjetEtudiantRepository::class)
@@ -97,6 +99,7 @@ class ProjetEtudiant extends BaseEntity
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
+        $this->setUuid(Uuid::uuid4());
     }
 
     public function getProjetPeriode(): ?ProjetPeriode

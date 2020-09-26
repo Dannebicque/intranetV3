@@ -27,11 +27,11 @@
     <p>Et</p>
 
     <p><strong>l’Entreprise, l’organisme ou la (ou les) personne(s) physique(s), dénommés ci-après
-               commanditaire(s) : {{ projetEtudiant.organisme.libelle }}</strong></p>
+               commanditaire(s) : {{ projetEtudiant.organisme.raisonSociale }}</strong></p>
     <p>Commanditaire (Entreprise ou organisme) représenté(e) par : {{ projetEtudiant.organisme.responsable.display }}.
        En qualité de : {{ projetEtudiant.organisme.responsable.fonction }}<br>
-       Adresse: {{ projetEtudiant.organisme.adresse.display }}.<br>
-       Tél : {{ projetEtudiant.organisme.responsable.telephone }}.<br>
+       Adresse: {{ projetEtudiant.organisme.adresse.display|striptags }}.<br>
+       Tél : {{ projetEtudiant.organisme.responsable.telephone|tel_format }}.<br>
        Courriel : {{ projetEtudiant.organisme.responsable.email }}.</p>
 
     <p><strong>Article 1 :</strong> La présente convention concerne :</p>
@@ -48,9 +48,9 @@
     <table class="table" style="width: 100%;">
         <thead>
         <tr>
-            <th>Civilité</th>
+            <th style="width:10%">Civilité</th>
             <th>Nom et Prénom</th>
-            <th>Tél.</th>
+            <th style="width:20%">Tél.</th>
             <th>Courriel</th>
         </tr>
         </thead>
@@ -59,7 +59,7 @@
             <tr>
                 <td>{{ etudiant.civilite }}</td>
                 <td>{{ etudiant.display }}</td>
-                <td>{{ etudiant.tel1 }}</td>
+                <td>{{ etudiant.tel1|tel_format }}</td>
                 <td>{{ etudiant.mailUniv }}</td>
             </tr>
         {% endfor %}
@@ -108,7 +108,7 @@
                                                                                                              : {{ projetEtudiant.organisme.responsable.fonction }}
                                                                                                              .<br>
                                                                                                              tél
-                                                                                                             : {{ projetEtudiant.organisme.responsable.telephone }}
+                                                                                                             : {{ projetEtudiant.organisme.responsable.telephone|tel_format }}
                                                                                                              .<br>
                                                                                                              Courriel
                                                                                                              : {{ projetEtudiant.organisme.responsable.email }}

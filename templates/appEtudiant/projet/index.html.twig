@@ -21,7 +21,6 @@
                         {% else %}
                             {{ include('composants/_projet_timeline.html.twig') }}
                         {% endif %}
-
                         <div class="alert alert-warning">
                             <p>{{ projetPeriode.texteLibre }}</p>
                         </div>
@@ -44,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        {% if projetsEtudiants[projetPeriode.id] is  not defined %}
+                        {% if projetsEtudiants[projetPeriode.id] is not defined %}
                             {# <div class="alert alert-warning">Imprimez <a #}
                             {# href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}" #}
                             {# target="_blank">la fiche de stage</a> à faire compléter et signer par #}
@@ -52,11 +51,10 @@
                             <strong>Ce document n'est pas la convention de stage !</strong>
                             {# </div> #}
 
-                            <a href="{{ path('stage_offre_stage_index') }}" class="btn btn-block btn-large
-                            btn-info">Consultez les offres de stage</a>
                         {% endif %}
-                        {% if ((projetsEtudiants[projetPeriode.id] is  defined) and (projetsEtudiants[projetPeriode
-                            .id].etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
+                        {% if ((projetsEtudiants[projetPeriode.id] is defined) and
+                            (projetsEtudiants[projetPeriode.id].etatProjet == constant
+                            ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
                             <div class="alert alert-warning"><p>Votre proposition a été acceptée le
                                     <strong>{{ projetsEtudiants[projetPeriode.id].dateAutorise|format_date('long') }}</strong>.
                                                                 Vous devez maintenant remplir le formulaire.</p></div>
@@ -64,26 +62,26 @@
                                 {projetEtudiant:projetsEtudiants[projetPeriode.id].uuidString}) }}"
                                class="btn btn-block btn-large btn-info">Compléter la proposition de projet</a>
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
-                            (projetsEtudiants[projetPeriode.id].etatProjet is constant
+                            (projetsEtudiants[projetPeriode.id].etatProjet == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') )) %}
                             <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de
                                                              validation
-                                                             par les responsables de stage. Vous recevrez un mail dés
+                                                             par les responsables du projet. Vous recevrez un mail dés
                                                              que vous pourrez signer la
                                                              convention.
                             </div>
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
-                            (projetsEtudiants[projetPeriode.id] is constant
+                            (projetsEtudiants[projetPeriode.id] == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )) %}
                             <div class="alert alert-success">Votre formulaire a été validé. La convention va être
                                                              imprimée
                                                              prochainement.
                             </div>
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
-                            (projetsEtudiants[projetPeriode.id] is constant
+                            (projetsEtudiants[projetPeriode.id] == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )) %}
                             <div class="alert alert-success">La convention est imprimée. Vous devez venir signer votre
-                                                             convention de stage
+                                                             convention de projet
                             </div>
                         {% endif %}
                     </div>

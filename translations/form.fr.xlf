@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/form.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 20/09/2020 15:01 -->
+<!-- @lastUpdate 26/09/2020 08:16 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="form.fr">
@@ -4122,17 +4122,53 @@
         <target>Adresse parentale</target>
       </segment>
     </unit>
-    <unit id="Zk.KlSD" name="vich_uploader.link.download">
-      <segment>
-        <source>vich_uploader.link.download</source>
-        <target>Télécharger</target>
-      </segment>
-    </unit>
-    <unit id="_orotqB" name="vich_uploader.form_label.delete_confirm">
-      <segment>
-        <source>vich_uploader.form_label.delete_confirm</source>
-        <target>Confirmer la suppression</target>
-      </segment>
-    </unit>
+      <unit id="Zk.KlSD" name="vich_uploader.link.download">
+          <segment>
+              <source>vich_uploader.link.download</source>
+              <target>Télécharger</target>
+          </segment>
+      </unit>
+      <unit id="_orotqB" name="vich_uploader.form_label.delete_confirm">
+          <segment>
+              <source>vich_uploader.form_label.delete_confirm</source>
+              <target>Confirmer la suppression</target>
+          </segment>
+      </unit>
+      <unit id="vFukw3W" name="label.duree">
+          <segment>
+              <source>label.duree</source>
+              <target>Durée</target>
+          </segment>
+      </unit>
+      <unit id="5thtUyV" name="label.uniteduree">
+          <segment>
+              <source>label.uniteduree</source>
+              <target>Unité de durée</target>
+          </segment>
+      </unit>
+      <unit id="4bk9eWV" name="label.sujet">
+          <segment>
+              <source>label.sujet</source>
+              <target>Sujet</target>
+          </segment>
+      </unit>
+      <unit id="qqlAJmT" name="h">
+          <segment>
+              <source>h</source>
+              <target>Heure</target>
+          </segment>
+      </unit>
+      <unit id="xcoEmee" name="label.activitesConfiees">
+          <segment>
+              <source>label.activitesConfiees</source>
+              <target>Activités confiées</target>
+          </segment>
+      </unit>
+      <unit id="GJ9AA0v" name="j">
+          <segment>
+              <source>j</source>
+              <target>Jour</target>
+          </segment>
+      </unit>
   </file>
 </xliff>

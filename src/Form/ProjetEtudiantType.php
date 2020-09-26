@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:50
+// @lastUpdate 26/09/2020 07:04
 
 namespace App\Form;
 
@@ -22,7 +22,7 @@ class ProjetEtudiantType extends AbstractType
         $semestre = $options['semestre'];
 
         $builder
-            ->add('organisme', TextType::class)
+            ->add('organisme', AdresseType::class)
             ->add('etudiants', EntityType::class)
             ->add('tempComplet')
             ->add('duree')

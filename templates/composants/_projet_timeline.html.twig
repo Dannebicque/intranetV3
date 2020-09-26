@@ -15,7 +15,8 @@
         <span class="nav-title">Accès au formulaire</span>
         <a class="nav-link" href="#"></a>
         {% if ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is
-            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
+            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') ) or projetEtudiant.etatProjet is
+            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') ) %}
             <span>{{ projetEtudiant.dateAutorise|format_date('long') }}</span>
         {% endif %}
     </li>
@@ -36,22 +37,19 @@
             (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )
             or (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )
             )) %}
-            <span>{{ projetEtudiant.dateDepotFormulaire|format_datetime('long') }}</span>
+            <span>{{ projetEtudiant.dateDepose|format_date('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
                         {% if ((projetEtudiant is  defined) and ((projetEtudiant.etatProjet is constant
-        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME'))
+        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE'))
         )) %}
                             complete
-                            {% elseif ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is constant
-        ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE'))) %}
-                            processing
                             {% endif %}">
         <span class="nav-title">Formulaire Validé</span>
         <a class="nav-link" href="#"></a>
         {% if ((projetEtudiant is  defined) and (
-            (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )
+            (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )
             )) %}
             <span>{{ projetEtudiant.dateValidation|format_date('long') }}</span>
         {% endif %}
