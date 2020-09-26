@@ -166,7 +166,7 @@
                             {% for stageEtudiant in myStage.propositionsAValider %}
                                 <tr>
                                     <td>{{ stageEtudiant.etudiant.display }}</td>
-                                    <td>{{ stageEtudiant.entreprise.libelle }}</td>
+                                    <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
@@ -220,7 +220,7 @@
                             {% for stageEtudiant in myStage.conventionAImprimer %}
                                 <tr>
                                     <td>{{ stageEtudiant.etudiant.display }}</td>
-                                    <td>{{ stageEtudiant.entreprise.libelle }}</td>
+                                    <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
@@ -264,7 +264,7 @@
                             {% for stageEtudiant in myStage.conventionAEnvoyer %}
                                 <tr>
                                     <td>{{ stageEtudiant.etudiant.display }}</td>
-                                    <td>{{ stageEtudiant.entreprise.libelle }}</td>
+                                    <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
@@ -308,7 +308,7 @@
                             {% for stageEtudiant in myStage.conventionEnAttente %}
                                 <tr>
                                     <td>{{ stageEtudiant.etudiant.display }}</td>
-                                    <td>{{ stageEtudiant.entreprise.libelle }}</td>
+                                    <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
@@ -347,7 +347,7 @@
                             {% for stageEtudiant in myStage.conventionComplete %}
                                 <tr>
                                     <td>{{ stageEtudiant.etudiant.display }}</td>
-                                    <td>{{ stageEtudiant.entreprise.libelle }}</td>
+                                    <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
                                     <td>
                                         <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.id}) }}"
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
@@ -455,7 +455,7 @@
                                         </div>
                                     </td>
                                 {% else %}
-                                    <td>{{ stageEtudiant.stage.entreprise.libelle }}</td>
+                                    <td>{{ stageEtudiant.stage.entreprise.raisonSociale }}</td>
                                     <td>{% if stageEtudiant.stage.entreprise.adresse != null %}
 
                                             {{ stageEtudiant.stage.entreprise.adresse.ville|capitalize }} ({{ stageEtudiant.stage.entreprise.adresse.codePostal }})

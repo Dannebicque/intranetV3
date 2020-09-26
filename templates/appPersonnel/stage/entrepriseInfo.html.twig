@@ -1,4 +1,4 @@
-<h3>{{ stageEtudiant.entreprise.libelle }}</h3>
+<h3>{{ stageEtudiant.entreprise.raisonSociale }}</h3>
 <p>Contacts :</p>
 <ul>
     <li>Responsable : {{ stageEtudiant.entreprise.responsable.display }}
@@ -6,7 +6,7 @@
         <a href="mailto:{{ stageEtudiant.entreprise.responsable.email }}" target="_blank">{{ stageEtudiant.entreprise.responsable.email }}</a>
     </li>
     <li>Tuteur : {{ stageEtudiant.tuteur.display }} | {{ stageEtudiant.tuteur.telephone|tel_format }} |
-        <a href="mailto:{{ stageEtudiant.tuteur.email }}" target="_blank">{{ stageEtudiant.tuteur.email }}</a></li>
+        {{ stageEtudiant.tuteur.email|mailto }}</li>
     <li>Lieu de stage (peut être différente du siège):
         <ul>
             <li>Siège

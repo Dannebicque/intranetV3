@@ -25,13 +25,15 @@
                                                             class="btn btn-info btn-outline btn-xs"
                                                             data-placement="bottom"
                                                             title="Informations sur l'entreprise"
-                                                            data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
+                                                            data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
-                    <td>{% if stage.tuteur != null %}{{ stage.tuteur.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
+                    <td>{% if stage.tuteur != null %}{{ stage.tuteur.display }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
-                {% else %}
+            {% else %}
                 <tr>
-                    <td colspan="4"><div class="alert alert-info">Pas de stage en cours</div></td>
+                    <td colspan="4">
+                        <div class="alert alert-info">Pas de stage en cours</div>
+                    </td>
                 </tr>
             {% endfor %}
 
@@ -46,7 +48,7 @@
                                                                  class="btn btn-info btn-outline btn-xs"
                                                                  data-placement="bottom"
                                                                  title="Informations sur l'entreprise"
-                                                                 data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
+                                                                 data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
                     <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
                     .defini'|trans }}{% endif %}</td>
@@ -92,7 +94,7 @@
                                                             class="btn btn-info btn-outline btn-xs"
                                                             data-placement="bottom"
                                                             title="Informations sur l'entreprise"
-                                                            data-title="Informations sur l'entreprise" >{{ stage.entreprise.libelle }}</a>{% else %} - {% endif %}
+                                                            data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
                     <td>{% if stage.tuteur != null %}{{ stage.tuteur.display }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
@@ -114,7 +116,7 @@
                                                                  class="btn btn-info btn-outline btn-xs"
                                                                  data-placement="bottom"
                                                                  title="Informations sur l'entreprise"
-                                                                 data-title="Informations sur l'entreprise" >{{ alternance.entreprise.libelle }}</a>{% else %} - {% endif %}
+                                                                 data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
                     <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
                     .defini'|trans }}{% endif %}</td>
