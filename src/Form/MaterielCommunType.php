@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielCommunType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Form;
 
@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\VichUploaderBundle;
 
 class MaterielCommunType extends AbstractType
 {

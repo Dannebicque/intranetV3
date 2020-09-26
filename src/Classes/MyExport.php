@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 26/09/2020 09:02
 
 /**
  * Created by PhpStorm.
@@ -54,7 +54,6 @@ class MyExport
      * @param array  $colonne
      *
      * @return Response|bool
-     * @throws Exception
      */
     public function genereFichierGenerique($format, $data, $nomFichier, array $groups, array $colonne): ?Response
     {
@@ -78,7 +77,6 @@ class MyExport
      * @param $nomFichier
      *
      * @return StreamedResponse|bool
-     * @throws Exception
      */
     public function genereFichierAbsence($format, $myAbsences, $nomFichier): ?Response
     {
@@ -100,13 +98,16 @@ class MyExport
      * @param Evaluation $evaluation
      *
      * @return Response|null
-     * @throws Exception
      */
     public function genereModeleImportNote(Evaluation $evaluation): ?Response
     {
         $semestre = $evaluation->getSemestre();
-        $this->excel->genereModeleExcel($semestre);
+        if ($semestre !== null) {
+            $this->excel->genereModeleExcel($semestre);
 
-        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
+            return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
+        }
+
+        return null;
     }
 }

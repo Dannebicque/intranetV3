@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 12:52
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Controller\superAdministration;
 
@@ -13,6 +13,7 @@ use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Ldap\Ldap;
@@ -127,6 +128,7 @@ class RhController extends BaseController
      * @param Request $request
      *
      * @return Response
+     * @throws JsonException
      */
     public function create(Request $request): Response
     {

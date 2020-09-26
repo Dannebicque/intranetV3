@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 07:36
+// @lastUpdate 26/09/2020 08:28
 
 namespace App\Entity;
 
@@ -20,35 +20,35 @@ class Entreprise extends BaseEntity
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $siret;
+    private ?string $siret;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({ "stage_entreprise_administration"})
      */
-    private $raisonSociale;
+    private ?string $raisonSociale;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
      * @Groups({ "stage_entreprise_administration"})
      */
-    private $adresse;
+    private ?Adresse $adresse;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
      * @Groups({"stage_entreprise_administration"})
      */
-    private $responsable;
+    private ?Contact $responsable;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="entreprise")
      */
-    private $stageEtudiants;
+    private ArrayCollection $stageEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="organisme")
      */
-    private $projetEtudiants;
+    private ArrayCollection $projetEtudiants;
 
     public function __construct()
     {

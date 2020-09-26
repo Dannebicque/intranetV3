@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 20:36
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\administration;
 
@@ -11,7 +11,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

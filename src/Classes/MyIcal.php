@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 16:44
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Classes;
 
@@ -92,7 +92,7 @@ class MyIcal
     }
 
     /**
-     *
+     * @param $id
      */
     public function addEvent($id): void
     {

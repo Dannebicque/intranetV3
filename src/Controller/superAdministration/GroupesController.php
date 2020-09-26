@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/08/2020 11:43
+// @lastUpdate 26/09/2020 09:02
 
 namespace App\Controller\superAdministration;
 
@@ -32,7 +32,6 @@ class GroupesController extends BaseController
 {
     /**
      * @Route("/{departement}/{semestre}", name="sa_groupes_departement_index")
-     * @param GroupeRepository   $groupeRepository
      * @param SemestreRepository $semestreRepository
      * @param Departement        $departement
      *
@@ -109,18 +108,22 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/semestre/{semestre}", name="sa_groupes_departement_synchro_semestre")
+     * @param MyApogee         $myApogee
      * @param GroupeRepository $groupeRepository
      * @param Semestre         $semestre
      *
      * @return Response
      */
-    public function synchroApogeeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
-    {
+    public function synchroApogeeSemestre(
+        MyApogee $myApogee,
+        GroupeRepository $groupeRepository,
+        Semestre $semestre
+    ): Response {
         //supprimer les groupes du semestre
         //récupérer les gorupes
         //calcluler l'aroborescence
 
-        $groupes = MyApogee::getHierarchieGroupesSemestre($semestre);
+        $groupes = $myApogee->getHierarchieGroupesSemestre($semestre);
 
         while ($row = $groupes->fetch($groupes)) {
 
@@ -129,14 +132,19 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
+     * @param MyApogee           $myApogee
      * @param EtudiantRepository $etudiantRepository
      * @param GroupeRepository   $groupeRepository
      * @param Semestre           $semestre
      *
      * @return Response
      */
-    public function synchroApogeeEtudiantSemestre(EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository, Semestre $semestre): Response
-    {
+    public function synchroApogeeEtudiantSemestre(
+        MyApogee $myApogee,
+        EtudiantRepository $etudiantRepository,
+        GroupeRepository $groupeRepository,
+        Semestre $semestre
+    ): Response {
         //suppression des groupes d'origine.
         $tEtudiants = [];
         $etudiants = $etudiantRepository->findEtudiantEnFormation();
@@ -155,7 +163,7 @@ class GroupesController extends BaseController
             $tGroupes[$groupe->getCodeApogee()] = $groupe;
         }
         //récupération des groupes
-        $groupes = MyApogee::getEtudiantsGroupesSemestre($semestre);
+        $groupes = $myApogee->getEtudiantsGroupesSemestre($semestre);
 
         while ($groupe = $groupes->fetch()) {
             if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'], $tGroupes)) {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 18:10
+// @lastUpdate 26/09/2020 08:45
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
@@ -57,7 +57,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param AbsenceEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceJustified(AbsenceEvent $event): void
     {
@@ -72,7 +71,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param AbsenceEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceAdded(AbsenceEvent $event): void
     {
@@ -100,7 +98,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param RattrapageEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailDecisionRattrapage(RattrapageEvent $event): void
     {
@@ -121,7 +118,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param JustificatifEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailDecisionJustificatif(JustificatifEvent $event): void
     {
@@ -146,7 +142,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param JustificatifEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailDeleteJustificatif(JustificatifEvent $event): void
     {
@@ -163,7 +158,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param AbsenceEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
@@ -189,7 +183,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param NoteEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailNoteModificationResponsable(NoteEvent $event): void
     {
@@ -210,7 +203,6 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param EvaluationEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {

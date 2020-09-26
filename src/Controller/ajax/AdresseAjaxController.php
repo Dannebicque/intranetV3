@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/AdresseAjaxController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 17:41
+// @lastUpdate 26/09/2020 08:34
 
 namespace App\Controller\ajax;
 
@@ -28,7 +28,7 @@ class AdresseAjaxController extends BaseController
     /**
      * @Route("/edit/{id}", name="adresse_ajax_edit", options={"expose":true})
      *
-     * @param MyContact $myAdresse
+     * @param MyAdresse $myAdresse
      * @param Request   $request
      *
      * @param Adresse   $adresse

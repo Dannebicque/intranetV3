@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 09:54
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\ajax;
 
 use App\Classes\Etudiant\EtudiantUpdate;
 use App\Classes\MyContact;
-use App\Classes\MyEtudiants;
 use App\Controller\BaseController;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
@@ -31,10 +30,10 @@ class EtudiantAjaxController extends BaseController
     /**
      * @Route("/edit/uuid/{uuid}", name="etudiant_ajax_edit_uuid", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     * @param MyContact $myAdresse
-     * @param Request   $request
+     * @param EtudiantUpdate $etudiantUpdate
+     * @param Request        $request
      *
-     * @param Adresse   $adresse
+     * @param Etudiant       $etudiant
      *
      * @return JsonResponse
      */

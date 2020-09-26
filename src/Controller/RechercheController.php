@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RechercheController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 06:47
+// @lastUpdate 26/09/2020 08:41
 
 namespace App\Controller;
 
@@ -22,9 +22,9 @@ class RechercheController extends BaseController
 {
     /**
      * @Route("/{keyword}", name="recherche", options={"expose":true}, methods={"GET"})
-     * @param EtudiantRepository  $etudiantRepository
-     * @param PersonnelRepository $personnelRepository
-     * @param                     $keyword
+     * @param EtudiantRepository             $etudiantRepository
+     * @param PersonnelDepartementRepository $personnelRepository
+     * @param                                $keyword
      *
      * @return JsonResponse
      */

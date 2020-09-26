@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2020 10:54
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Form;
 
@@ -11,8 +11,6 @@ use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
 use App\Form\Type\YesNoType;
 use App\Repository\EtudiantRepository;
-use App\Repository\PersonnelRepository;
-use Svg\Tag\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

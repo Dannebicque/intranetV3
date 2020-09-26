@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2020 06:53
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Controller\administration;
 
@@ -98,11 +98,12 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/new/{diplome}/{ue}", name="administration_matiere_new", methods="GET|POST")
-     * @param Request $request
+     * @param Configuration $configuration
+     * @param Request       $request
      *
-     * @param Diplome $diplome
+     * @param Diplome       $diplome
      *
-     * @param Ue|null $ue
+     * @param Ue|null       $ue
      *
      * @return Response
      */

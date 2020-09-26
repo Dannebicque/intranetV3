@@ -3,14 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 20:39
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use Carbon\CarbonInterface;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Serializable;

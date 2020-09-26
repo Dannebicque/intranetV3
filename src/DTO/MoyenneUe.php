@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\DTO;
 
@@ -23,6 +23,7 @@ class MoyenneUe
      * MoyenneUe constructor.
      *
      * @param Ue $ue
+     * @param    $penalite
      */
     public function __construct(Ue $ue, $penalite)
     {

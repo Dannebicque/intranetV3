@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 20:41
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Classes\MyPrevisionnel;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 

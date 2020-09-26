@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 15:39
+// @lastUpdate 26/09/2020 08:39
 
 namespace App\Classes;
 
@@ -60,6 +60,7 @@ class MyMessagerie
      * @param GroupeRepository       $groupeRepository
      * @param EtudiantRepository     $etudiantRepository
      * @param PersonnelRepository    $personnelRepository
+     * @param Configuration          $configuration
      */
     public function __construct(
         MailerInterface $mailer,
@@ -79,7 +80,9 @@ class MyMessagerie
 
 
     /**
-     * @param $destinataires
+     * @param             $destinataires
+     *
+     * @param Departement $departement
      *
      * @throws TransportExceptionInterface
      */
@@ -174,7 +177,9 @@ class MyMessagerie
     }
 
     /**
-     * @param array $copie
+     * @param array       $copie
+     *
+     * @param Departement $departement
      *
      * @throws TransportExceptionInterface
      */
@@ -206,8 +211,10 @@ class MyMessagerie
     }
 
     /**
-     * @param             $destinataires
-     * @param             $typeDestinataire
+     * @param                  $destinataires
+     * @param                  $typeDestinataire
+     *
+     * @param Departement|null $departement
      *
      * @throws TransportExceptionInterface
      */

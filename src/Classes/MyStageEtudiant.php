@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 17:10
+// @lastUpdate 26/09/2020 08:52
 
 /**
  * Created by PhpStorm.
@@ -20,7 +20,6 @@ use App\Entity\StagePeriode;
 use App\Event\StageEvent;
 use App\Repository\StageEtudiantRepository;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
@@ -42,7 +41,7 @@ class MyStageEtudiant
      * MyStageEtudiant constructor.
      *
      * @param Configuration            $configuration
-     * @param EntityManagerInterface   $entityManger
+     * @param EntityManagerInterface   $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param StageEtudiantRepository  $stageEtudiantRepository
      */

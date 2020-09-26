@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 13:01
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Controller\administration\projet;
 
@@ -11,10 +11,7 @@ use App\Classes\MyExport;
 use App\Classes\MyProjet;
 use App\Controller\BaseController;
 use App\Entity\ProjetPeriode;
-use App\Entity\StagePeriode;
-use App\Classes\MyStage;
 use App\Repository\ProjetPeriodeRepository;
-use App\Repository\StagePeriodeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +30,7 @@ class ProjetPeriodeGestionController extends BaseController
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      * @param MyExport               $myExport
-     * @param ProjetPeriode          $stagePprojetPeriodeeriode
-     *
+     * @param ProjetPeriode          $projetPeriode
      * @param                        $_format
      *
      * @return Response
@@ -42,7 +38,7 @@ class ProjetPeriodeGestionController extends BaseController
      */
     public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {
-        $projetEtudiants = $projetPeriode->getStageEtudiants();
+        $projetEtudiants = $projetPeriode->getProjetEtudiants();
 
         return $myExport->genereFichierGenerique(
             $_format,
@@ -63,8 +59,9 @@ class ProjetPeriodeGestionController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_projet_periode_gestion")
      * @ParamConverter("projetPeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StagePeriodeRepository $stagePeriodeRepository
-     * @param StagePeriode           $stagePeriode
+     * @param ProjetPeriodeRepository $projetPeriodeRepository
+     * @param MyProjet                $myProjet
+     * @param ProjetPeriode           $projetPeriode
      *
      * @return Response
      */

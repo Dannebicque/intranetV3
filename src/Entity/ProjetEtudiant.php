@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 07:04
+// @lastUpdate 26/09/2020 08:52
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
-use App\Form\ProjetEtudiantType;
 use App\Repository\ProjetEtudiantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

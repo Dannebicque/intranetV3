@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommun.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+// @lastUpdate 26/09/2020 08:47
 
 namespace App\Classes;
 
@@ -36,8 +36,6 @@ class MyMaterielCommun
 
 
     /**
-     * @param string $role
-     *
      * @return array
      */
     public function getJours()
@@ -82,7 +80,6 @@ class MyMaterielCommun
             $t[$j['date']]['1700'] = [];
         }
 
-        /** @var MaterielCommunPret $p */
         foreach ($prets as $p) {
             $t[$p->getDateEmprunt()->format('Y-m-d')][$p->getCreneau()][$p->getMaterielCommun()->getId()] = $p;
         }

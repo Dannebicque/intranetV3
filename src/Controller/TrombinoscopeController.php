@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2020 06:32
+// @lastUpdate 26/09/2020 09:02
 
 namespace App\Controller;
 
@@ -19,7 +19,6 @@ use App\Repository\PersonnelRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -71,11 +70,14 @@ class TrombinoscopeController extends BaseController
      * @Route("/etudiant/export-groupe/{groupe}.{_format}", name="trombinoscope_etudiant_export_groupe", methods="GET",
      *                                                   requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExportListing  $myExportListing
-     * @param Groupe       $groupe
+     * @param Groupe           $groupe
      * @param                  $_format
      *
      * @return null|StreamedResponse
      * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function trombiEtudiantExportGroupe(
         MyExportListing $myExportListing,
@@ -97,6 +99,7 @@ class TrombinoscopeController extends BaseController
      * @param MyPDF      $myPDF
      * @param TypeGroupe $typeGroupe
      *
+     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -104,7 +107,7 @@ class TrombinoscopeController extends BaseController
     public function trombiEtudiantExportImage(
         MyPDF $myPDF,
         TypeGroupe $typeGroupe
-    ) {
+    ): Response {
 
         $myPDF::generePdf('pdf/trombinoscope.html.twig',
             [
@@ -121,9 +124,10 @@ class TrombinoscopeController extends BaseController
 
     /**
      * @Route("/etudiant/{semestre}/{typegroupe}", name="trombinoscope_etudiant_semestre", options={"expose":true})
-     * @param Semestre        $semestre
+     * @param GroupeRepository $groupeRepository
+     * @param Semestre         $semestre
      *
-     * @param TypeGroupe|null $typegroupe
+     * @param TypeGroupe|null  $typegroupe
      *
      * @return Response
      */
