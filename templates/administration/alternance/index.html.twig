@@ -46,7 +46,7 @@
                         {% if alternances[etudiant.id] is defined %}
                             {% set alternance = alternances[etudiant.id] %}
                             <td>{{ alternance.typeContrat }}</td>
-                            <td>{{ alternance.entreprise ? alternance.entreprise.libelle : 'non.defini'|trans }}</td>
+                            <td>{{ alternance.entreprise ? alternance.entreprise.raisonSociale : 'non.defini'|trans }}</td>
                             <td>{{ alternance.tuteur ? alternance.tuteur.display : 'non.defini'|trans }}</td>
                             <td>
                                 <label class="sr-only" for="tuteurUniversitaire">Tuteur universitaire</label>

@@ -33,7 +33,7 @@
                 <tbody>
                 {% for entreprise in entreprises %}
                     <tr>
-                        <td>{{ entreprise.entreprise.libelle }}</td>
+                        <td>{{ entreprise.entreprise.raisonSociale }}</td>
                         <td>{{ entreprise.entreprise.adresse.ville }}</td>
                         <td>{{ entreprise.entreprise.responsable.display }}</td>
                         <td>{{ entreprise.entreprise.responsable.email|mailto }}</td>

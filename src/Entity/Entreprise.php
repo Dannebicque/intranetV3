@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:28
+// @lastUpdate 26/09/2020 16:25
 
 namespace App\Entity;
 
@@ -43,12 +43,12 @@ class Entreprise extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="entreprise")
      */
-    private ArrayCollection $stageEtudiants;
+    private Collection $stageEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="organisme")
      */
-    private ArrayCollection $projetEtudiants;
+    private Collection $projetEtudiants;
 
     public function __construct()
     {
