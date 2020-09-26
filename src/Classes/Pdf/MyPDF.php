@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 26/09/2020 15:25
 
 /**
  * Created by PhpStorm.
@@ -24,13 +24,11 @@ use Twig\Error\SyntaxError;
 
 class MyPDF
 {
-    /** @var Dompdf */
-    protected static $domPdf;
+    protected static Dompdf $domPdf;
 
-    protected static $options;
+    protected static Options $options;
 
-    /** @var Environment */
-    protected static $templating;
+    protected static Environment $templating;
 
     /**
      * MyPDF constructor.
@@ -72,6 +70,17 @@ class MyPDF
         self::$domPdf->stream($name, ['Attachment' => 1]);
     }
 
+    /**
+     * @param string $template
+     * @param array  $data
+     * @param string $name
+     * @param string $dir
+     * @param string $departement
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public static function genereAndSavePdf(
         string $template,
         array $data,
@@ -99,7 +108,6 @@ class MyPDF
     private static function genereOutputPdf($template, $data, $departement): void
     {
         $html = self::$templating->render($template, $data);
-
         self::$domPdf = new Dompdf(self::$options);
         self::$domPdf->loadHtml($html);
         self::$domPdf->render();

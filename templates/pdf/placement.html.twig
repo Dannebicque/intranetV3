@@ -48,16 +48,18 @@
                 <th>Retour copie</th>
             </tr>
             </thead>
-        {% for key, t in tabplace.place|filter((key, t) => key|slice(0,1) == (lettre+64)|chr) %}
-            <tr style="height: 20px;">
-                <td style="text-align:center">{{ key }}</td>
-                <td>{{ t.numetudiant }}</td>
-                <td>{{ t.display }}</td>
-                <td>{% for g in t.groupes|filter(g =>  g.typegroupe.type == typeg) %}{{ g.libelle }}{% endfor %}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            {% for key, t in tabplace.place %}
+                {% if key|slice(0,1) == (lettre+64)|chr %}
+                    <tr style="height: 20px;">
+                        <td style="text-align:center">{{ key }}</td>
+                        <td>{{ t.numetudiant }}</td>
+                        <td>{{ t.display }}</td>
+                        <td>{% for g in t.groupes|filter(g =>  g.typegroupe.type == typeg) %}{{ g.libelle }}{% endfor %}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
         {% endfor %}
         </table>
             <div style="page-break-after: always"></div>
