@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/search.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 11:59
+// @lastUpdate 26/09/2020 18:18
 
 $(document).on('keyup', '#search', function (e) {
 
@@ -31,14 +31,14 @@ $(document).on('keyup', '#search', function (e) {
               html = html + '<img class="avatar avatar-sm" src="' + data.basepath + 'etudiants/' + etudiant.photo + '" alt="Photo de profil de ' + etudiant.displayPr + '">\n'
             }
             html = html + '                        <div class="media-body">\n' +
-              '                            <p><strong>' + etudiant.displayPr + '</strong>\n' +
+              '                            <p><strong>' + etudiant.displayPr + ' (' + etudiant.semestre + ')</strong>\n' +
               '                                <time class="float-right">' + etudiant.groupes + '</time>\n' +
               '                            </p>\n' +
               '                        </div>\n' +
               '                    </a>'
           })
         } else {
-          html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
+          html = '<div class="alert alert-warning">Pas de résultat pour votre recherche <strong>"' + keyword + '"</strong></div>'
         }
 
         search_reponse_etudiant.empty().append(html)
@@ -61,7 +61,7 @@ $(document).on('keyup', '#search', function (e) {
               '</a>'
           })
         } else {
-          html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
+          html = '<div class="alert alert-warning">Pas de résultat pour votre recherche <strong>"' + keyword + '"</strong></div>'
         }
         search_reponse_personnel.empty().append(html)
 
@@ -74,7 +74,7 @@ $(document).on('keyup', '#search', function (e) {
               '                    </a>'
           })
         } else {
-          html = '<div class="alert alert-warning">Pas de résultat pour votre rehcerche <strong>"' + keyword + '"</strong></div>'
+          html = '<div class="alert alert-warning">Pas de résultat pour votre recherche <strong>"' + keyword + '"</strong></div>'
         }
         search_reponse_autre.empty().append(html)
       }
@@ -86,3 +86,4 @@ $(document).on('keyup', '#search', function (e) {
     search_reponse_etudiant.empty().append(html)
   }
 })
+

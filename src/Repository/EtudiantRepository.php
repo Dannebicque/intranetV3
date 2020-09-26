@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 26/09/2020 17:23
 
 namespace App\Repository;
 
@@ -213,7 +213,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['photo'] = $etudiant->getPhotoName();
             $tt['mailUniv'] = $etudiant->getMailUniv();
             $tt['mailPerso'] = $etudiant->getMailPerso();
-            $tt['semestre'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getLibelle() : null;
+            $tt['semestre'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getLibelle() : 'non défini';
             $tt['semestreId'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getId() : null;
             $tt['diplomeId'] = $etudiant->getSemestre() !== null ? $etudiant->getDiplome()->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
