@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 11:07
+// @lastUpdate 27/09/2020 15:09
 
 namespace App\Classes;
 
@@ -65,7 +65,8 @@ class MyStageMailTemplate
             $modele->setEvent($code);
             $modele->setStagePeriode($stagePeriode);
             $modele->setSubject($sujet);
-            $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(), $message);
+            $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(),
+                $this->transformeFromEditeur($message));
             $this->entityManager->persist($template);
             $modele->setTwigTemplate($template);
             $this->entityManager->persist($modele);
