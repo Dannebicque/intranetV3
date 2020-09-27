@@ -11,6 +11,18 @@ doctrine:
             type: service
             id: doctrine.result_cache_provider
 
+services:
+    doctrine.result_cache_provider:
+        class: Symfony\Component\Cache\DoctrineProvider
+        public: false
+        arguments:
+            - '@doctrine.result_cache_pool'
+    doctrine.system_cache_provider:
+        class: Symfony\Component\Cache\DoctrineProvider
+        public: false
+        arguments:
+            - '@doctrine.system_cache_pool'
+
 framework:
     #dbal:
     #    profiling_collect_schema_errors: false
