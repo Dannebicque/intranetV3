@@ -109,8 +109,16 @@
                                 </button>
                             </div>
                             <div class="col-sm-12 col-md-4">
-                                <a href="{{ path('test_mail_stage_twig') }}" class="btn btn-info btn-block">Aperçu
-                                                                                                            du mail</a>
+                                <a data-provide="modaler"
+                                   data-url="{{ path
+                                       ('administration_stage_periode_courrier_apercu_modele',
+                                       {mail: 'courrier', stagePeriode:stagePeriode.id}) }}"
+                                   title="Courrier d'accompagnement par défaut"
+                                   data-title="Courrier d'accompagnement par défaut" class="btn btn-info btn-block">Aperçu
+                                                                                                                    du
+                                                                                                                    mail</a>
+
+
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <button data-type="courrier" data-periode="{{ stagePeriode.uuidString }}" class="btn
@@ -197,9 +205,14 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
-                                    <a href="{{ path('test_mail_stage_twig') }}" class="btn btn-info btn-block">Aperçu
-                                                                                                                du
-                                                                                                                mail</a>
+                                    <a data-provide="modaler"
+                                       data-url="{{ path
+                                           ('administration_stage_periode_courrier_apercu_modele',
+                                           {mail: etat, stagePeriode:stagePeriode.id}) }}"
+                                       title="Courrier d'accompagnement par défaut"
+                                       data-title="Courrier d'accompagnement par défaut" class="btn btn-info btn-block">Aperçu
+                                                                                                                        du
+                                                                                                                        mail</a>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
                                     <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
