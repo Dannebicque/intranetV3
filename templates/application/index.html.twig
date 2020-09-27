@@ -12,9 +12,8 @@
     {% if is_granted('ROLE_PERMANENT') %}
         {% if onglet == 'messagerie' %}
             {{ render(controller(
-                'App\\Controller\\MessagerieController::index'
+                'App\\Controller\\MessagerieController::index', {param:param}
             )) }}
-            {# todo: gérer l'affichage directement d'un message... en JS ? ou ici ? #}
         {% elseif onglet == 'previsionnel' %}
             {{ render(controller(
                 'App\\Controller\\PrevisionnelController::index'

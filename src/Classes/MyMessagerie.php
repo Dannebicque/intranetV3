@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 27/09/2020 10:42
 
 namespace App\Classes;
 
@@ -13,12 +13,14 @@ use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
+use App\Entity\MessagePieceJointe;
 use App\Entity\Personnel;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 
@@ -51,6 +53,8 @@ class MyMessagerie
     private $typeDestinataires = '';
     private $type;
     private $id;
+    private $pjs = [];
+    private string $dir;
 
     /**
      * MyMessagerie constructor.
@@ -68,7 +72,8 @@ class MyMessagerie
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
         PersonnelRepository $personnelRepository,
-        Configuration $configuration
+        Configuration $configuration,
+        ParameterBagInterface $parameterBag
     ) {
         $this->myMailer = $mailer;
         $this->entityManager = $entityManager;
@@ -76,6 +81,7 @@ class MyMessagerie
         $this->etudiantRepository = $etudiantRepository;
         $this->personnelRepository = $personnelRepository;
         $this->configuration = $configuration;
+        $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/pj/';
     }
 
 
@@ -89,8 +95,6 @@ class MyMessagerie
     public function sendToPersonnels($destinataires, Departement $departement): void
     {
         //mail réel + notification (utiliser le busMessage ?
-
-
         //sauvegarde en BDD
         $mess = $this->saveMessageDatabase('E');
         $listeDestinataires = [];
@@ -116,6 +120,11 @@ class MyMessagerie
                         ->textTemplate('mails/message.txt.twig')
                         ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
+                    //récupération des fichiers uploadés
+                    foreach ($this->pjs as $file) {
+                        $message->attachFromPath($file);
+                    }
+
                     foreach ($destinataire->getMails() as $mail) {
                         $message->addTo($mail);
                     }
@@ -124,7 +133,6 @@ class MyMessagerie
                     $this->nbEtudiants++;
                     $this->myMailer->send($message);
                     $this->nbMessagesEnvoyes++;
-                    //todo: envoyer notification ?
                 }
             }
         }
@@ -150,7 +158,9 @@ class MyMessagerie
                 ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
             //récupération des fichiers uploadés
-            //todo: gérer les pièces jointes
+            foreach ($this->pjs as $file) {
+                $message->attachFromPath($this->dir . $file);
+            }
 
             foreach ($etu->getMails() as $mail) {
                 $message->addTo($mail);
@@ -160,7 +170,6 @@ class MyMessagerie
             $this->nbEtudiants++;
             $this->myMailer->send($message);
             $this->nbMessagesEnvoyes++;
-            //todo: envoyer notification ?
         }
 
         $this->entityManager->flush();
@@ -173,7 +182,6 @@ class MyMessagerie
         $this->sujet = $sujet;
         $this->expediteur = $expediteur;
         $this->message = $message;
-        $pjs1 = $pjs;
     }
 
     /**
@@ -244,8 +252,6 @@ class MyMessagerie
                 $this->sendToEtudiants();
                 break;
         }
-
-
     }
 
     private function saveMessageDatabase($etat = 'D'): Message
@@ -260,6 +266,18 @@ class MyMessagerie
         $mess->setEtat($etat);
 
         $this->entityManager->persist($mess);
+
+        foreach ($this->pjs as $file) {
+            $fichier = new MessagePieceJointe();
+            $ext = explode('/', $file);
+            $fichier->setFichier($ext[count($ext) - 1]);
+            $ext = explode('.', $file);
+            $fichier->setExtension($ext[count($ext) - 1]);
+            $fichier->setMessage($mess);
+            $this->entityManager->persist($fichier);
+        }
+
+
         $this->entityManager->flush();
         $this->id = $mess->getId();
 
@@ -327,6 +345,11 @@ class MyMessagerie
     public function getId()
     {
         return $this->id;
+    }
+
+    public function addPj($file)
+    {
+        $this->pjs[] = $file;
     }
 
 }
