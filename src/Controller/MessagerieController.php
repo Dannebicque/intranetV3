@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 10:42
+// @lastUpdate 27/09/2020 17:46
 
 namespace App\Controller;
 
@@ -174,6 +174,7 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/envoyer", name="messagerie_sent", methods={"POST"}, options={"expose":true})
+     * @param MyUpload     $myUpload
      * @param Request      $request
      * @param MyMessagerie $messagerie
      *
@@ -190,12 +191,14 @@ class MessagerieController extends BaseController
         $message = $request->request->get('message');
 
         foreach ($request->files as $file) {
-            $fichier = $myUpload->upload($file, 'pj/');
-            $messagerie->addPj($fichier);
+            if ($file !== null) {
+                $fichier = $myUpload->upload($file, 'pj/');
+                $messagerie->addPj($fichier);
+            }
         }
 
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
-        $messagerie->sendToDestinataires($destinataires, $typeDestinataire, $this->getDepartement());
+        $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
 
 
         if ($copie !== null) {

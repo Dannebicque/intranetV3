@@ -1,75 +1,81 @@
-    <div class="card">
-        <header class="card-header">
-            <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} | {{ user_data.user.displayPr }} |
-                                                                       Semaine {{ edt.semaine }}
-                                                                       (semaine formation {{ edt.semaineFormation }}
-                                                                       )</h4>
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} | {{ user_data.user.displayPr }} |
+                                                                   Semaine {{ edt.semaine }}
+                                                                   (semaine formation {{ edt.semaineFormation }}
+                                                                   )</h4>
 
-            <div class="card-header-actions">
-                <ul class="card-controls">
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" href="#"><i
-                                    class="fas fa-ellipsis-h rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            {# todo:                          <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}" #}
-                            {# class="dropdown-item"><i #}
-                            {# class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a> #}
-                            {# <a href="{{ path('edt_intervenant_export_annee') }}" #}
-                            {# class="dropdown-item"><i #}
-                            {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.annee'|trans }} #}
-                            {# </a> #}
-                            {# <a href="{{ path('edt_intervenant_export_ical') }}" #}
-                            {# class="dropdown-item"><i #}
-                            {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
-                            <a href="#"
-                               data-provide="modaler tooltip"
-                               data-url="{{ path('edt_affiche_ical') }}"
-                               data-placement="bottom"
-                               title="{{ 'atitle.lien_ical'|trans }}"
-                               data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
-                               class="dropdown-item"><i
-                                        class="fas fa-file-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}
-                            </a>
-                        </div>
-                        </li>
-                    </ul>
-                </div>
-
-        </header>
-        <div class="card-body">
-            {{ include('edt/_navpersonnel.html.twig') }}
-            <br>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="wrapper-edt-etudiant">
-                        {{ include('edt/_header_edt.html.twig') }}
-                        {% for ligne in 1..7 %}
-                            <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}<br>{{ tabHeures[ligne][1] }}</div>
-                            {% for j in 1..5 %}
-                                {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
-                                    <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
-                                         style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
-                                        <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
-                                        .couleurTexte }};">
-                                            {{ edt.planning[j][ligne].texte|raw }}
-                                            {% if edt.planning[j][ligne].format == 'nok' %}
-                                                <br/>
-                                                <span class="edt-extra-time">{{ convertHeureEdt(edt
-                                                        .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
-                                                        .planning[j][ligne].fin) }}</span>
-                                            {% endif %}
-                                        </a>
-                                    </div>
-                                {% else %}
-                                    <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
-                                        &nbsp;
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
+        <div class="card-header-actions">
+            <ul class="card-controls">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i
+                                class="fas fa-ellipsis-h rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        {# todo:                          <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a> #}
+                        {# <a href="{{ path('edt_intervenant_export_annee') }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.annee'|trans }} #}
+                        {# </a> #}
+                        {# <a href="{{ path('edt_intervenant_export_ical') }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
+                        <a href="#"
+                           data-provide="modaler tooltip"
+                           data-url="{{ path('edt_affiche_ical') }}"
+                           data-placement="bottom"
+                           title="{{ 'atitle.lien_ical'|trans }}"
+                           data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
+                           class="dropdown-item"><i
+                                    class="fas fa-file-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}
+                        </a>
                     </div>
+                </li>
+            </ul>
+        </div>
+
+    </header>
+    <div class="card-body">
+        {{ include('edt/_navpersonnel.html.twig') }}
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="wrapper-edt-etudiant">
+                    {{ include('edt/_header_edt.html.twig') }}
+                    {% for ligne in 1..7 %}
+                        <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}
+                            <br>{{ tabHeures[ligne][1] }}</div>
+                        {% for j in 1..5 %}
+                            {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
+                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
+                                     style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                                    {% if edt.planning[j][ligne].pl != "" %}
+                                    <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
+                                    .couleurTexte }};">
+                                        {% endif %}
+                                        {{ edt.planning[j][ligne].texte|raw }}
+                                        {% if edt.planning[j][ligne].format == 'nok' %}
+                                            <br/>
+                                            <span class="edt-extra-time">{{ convertHeureEdt(edt
+                                                    .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
+                                                    .planning[j][ligne].fin) }}</span>
+                                        {% endif %}
+                                        {% if edt.planning[j][ligne].pl != "" %}
+                                    </a>
+                                    {% endif %}
+
+                                </div>
+                            {% else %}
+                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
+                                    &nbsp;
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+</div>
 
