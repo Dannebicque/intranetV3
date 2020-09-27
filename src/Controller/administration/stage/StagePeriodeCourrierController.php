@@ -3,19 +3,21 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 27/09/2020 14:30
 
 namespace App\Controller\administration\stage;
 
+use App\Classes\MyStageMailTemplate;
 use App\Controller\BaseController;
 use App\Entity\StageEtudiant;
+use App\Entity\StageMailTemplate;
 use App\Entity\StagePeriode;
-use App\Classes\MyStageMailTemplate;
 use App\Event\StageEvent;
 use App\Repository\StageEtudiantRepository;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,8 +63,38 @@ class StagePeriodeCourrierController extends BaseController
      */
     public function apercuDefaut($mail): Response
     {
+        $donnees = [
+            'etudiant'            => [
+                'prenom' => 'Etudiant',
+                'nom'    => 'De Test',
+            ],
+            'entreprise'          => [
+                'raisonSociale' => 'Fictive Compagnie',
+            ],
+            'tuteur'              => [
+                'prenom' => 'Pierre',
+                'nom'    => 'Dupond',
+            ],
+            'tuteurUniversitaire' => [
+                'prenom' => 'John',
+                'nom'    => 'Doe',
+            ],
+            'stagePeriode'        => [
+                'libelle'      => 'Période de stage fictive',
+                'responsables' => [
+                    0 =>
+                        ['displayPr' => 'Paul Pierre']
+                ]
+            ],
+            'dateDebutStageFr'    => '01/01/2020',
+            'dateFinStageFr'      => '31/12/2020'
+
+        ];
+
+
         return $this->render('administration/stage/stage_periode_courrier/apercuDefaut.html.twig', [
-            'mail' => $mail
+            'mail'          => $mail,
+            'stageEtudiant' => $donnees
         ]);
     }
 
@@ -91,6 +123,32 @@ class StagePeriodeCourrierController extends BaseController
             'etatsConvention' => StageEtudiant::ETATS,
             'stagePeriode'    => $stagePeriode,
         ]);
+    }
+
+    /**
+     * @Route("/reset/{id}/{etat}", name="administration_stage_periode_courrier_reset", options={"expose"=true})
+     *
+     * @param StageMailTemplateRepository $stageMailTemplateRepository
+     * @param StagePeriode                $stagePeriode
+     * @param                             $etat
+     *
+     * @return Response
+     */
+    public function reset(
+        StageMailTemplateRepository $stageMailTemplateRepository,
+        StagePeriode $stagePeriode,
+        $etat
+    ): Response {
+        $mails = $stageMailTemplateRepository->findBy(['stagePeriode' => $stagePeriode->getId(), 'event' => $etat]);
+        foreach ($mails as $mail) {
+            if ($mail->getTwigTemplate() !== null) {
+                $this->entityManager->remove($mail->getTwigTemplate());
+            }
+            $this->entityManager->remove($mail);
+        }
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     /**

@@ -1,4 +1,10 @@
-{{ include('mails/stages/stage_chgt.'~mail|lower~'.txt.twig')|raw }}
-{# todo: comment gérer les variables du twig ? avoir un template par défaut avec le même formattage des champs ? Du
-coup traitement uniquement si provenant de la BDD ou du defaut. #}
-
+{% if mail == 'courrier' %}
+    {{ include('pdf/stages/courrier.html.twig')|nl2br|raw }}
+{% else %}
+    {{ include('mails/stages/stage_chgt.'~mail|lower~'.txt.twig')|nl2br|raw }}
+{% endif %}
+<br>
+<br>
+<div class="alert alert-info">
+    Les données sont fictives.
+</div>

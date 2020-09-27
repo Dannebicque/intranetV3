@@ -1,0 +1,55 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block style %}
+    {% include('pdf/cssPDF.css.twig') %}
+{% endblock %}
+
+{% block content %}
+    <img src="{{ settings('BASE_PATH') }}logo/urca_petit.jpg" alt="logo Université"
+         width="100px" style="float:left;"/>
+    <div id="courrier">
+        <div id="adresseresp">
+            {% set initiales = '' %}
+            {% for responsable in stageEtudiant.stagePeriode.responsables %}
+                {% set initiales = initiales~responsable.nom|slice(0,1)~responsable.prenom|slice(0,1)~'/' %}
+                {{ responsable.displayPr }}<br/>
+            {% endfor %}
+            Responsable des stages<br/><br/>
+
+            <div id="adresseent">
+                A<br/><br/>
+                {{ stageEtudiant.entreprise.raisonSociale }}<br/>
+                {{ stageEtudiant.entreprise.responsable.display }}<br/>
+                {{ stageEtudiant.entreprise.adresse.display|raw }}
+            </div>
+        </div>
+        <div id="refcourrier">
+            {{ stageEtudiant.etudiant.semestre.annee.diplome.typeDiplome.sigle }} N° {{ date('now')|date('Y') }}
+                                                                                  /{{ initiales }}
+                                                                                  /{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.nom|slice(0,1) }}{{ stageEtudiant.etudiant
+            .semestre.annee.diplome.responsableDiplome.prenom|slice(0,1) }}
+        </div>
+        <div id="datecourrier">
+            {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.ville }},
+                                                                                                           le {{ 'now'|date
+                ('d/m/Y') }}
+        </div>
+
+        <div id="messagecourrier">
+            {{ render(controller(
+                'App\\Controller\\administration\\stage\\StageEtudiantController::genereContentCourrier',
+                {stageEtudiant:stageEtudiant}
+            )) }}
+        </div>
+        <div id="signatures">
+            Le(s) responsable(s) des stages<br/>
+            {% for responsable in stageEtudiant.stagePeriode.responsables %}
+                {{ responsable.displayPr }}<br/>
+            {% endfor %}
+            {# {% if proposition.periode.personnel.signatureelectronique != null %} #}
+            {# <img src="{{ asset(linuxpath~'img/enseignants/signature/'~proposition.periode.personnel.signatureelectronique) }}" height="100px" /> #}
+            {# {% endif %} #}
+        </div>
+    </div>
+
+{% endblock %}
