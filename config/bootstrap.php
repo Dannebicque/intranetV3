@@ -1,4 +1,9 @@
 <?php
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/config/bootstrap.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 27/09/2020 18:20
 
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -14,7 +19,7 @@ if (is_array($env = @include dirname(__DIR__) . '/.env.local.php') && (!isset($e
     throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
 } else {
     // load all the .env files
-    (new Dotenv(false))->loadEnv(dirname(__DIR__) . '/.env');
+    (new Dotenv())->loadEnv(dirname(__DIR__) . '/.env');
 }
 
 $_SERVER += $_ENV;
