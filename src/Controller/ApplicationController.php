@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ApplicationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 27/09/2020 10:42
 
 namespace App\Controller;
 
@@ -18,15 +18,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApplicationController extends BaseController
 {
     /**
-     * @Route("/{onglet}", name="application_index")
+     * @Route("/{onglet}/{param}", name="application_index", requirements={"param"="\d+"})
      * @param string $onglet
+     *
+     * @param string $param
      *
      * @return Response
      */
-    public function index($onglet = 'messagerie'): Response
+    public function index($onglet = 'messagerie', $param = ''): Response
     {
         return $this->render('application/index.html.twig', [
-            'onglet' => $onglet
+            'onglet' => $onglet,
+            'param'  => $param
         ]);
     }
 }

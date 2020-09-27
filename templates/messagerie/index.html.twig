@@ -4,9 +4,15 @@
     </div>
     <div class="col-sm-10">
         <div class="media-list media-list-divided media-list-hover" data-provide="selectall" id="messages-liste">
-            {{ render(controller(
-                'App\\Controller\\MessagerieController::listeMessages'
-            )) }}
+            {% if param != '' %}
+                {{ render(controller(
+                    'App\\Controller\\MessagerieController::message', {message:param}
+                )) }}
+            {% else %}
+                {{ render(controller(
+                    'App\\Controller\\MessagerieController::listeMessages'
+                )) }}
+            {% endif %}
         </div>
     </div>
 </div>

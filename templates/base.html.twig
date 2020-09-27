@@ -338,7 +338,8 @@
                              style="height: 290px">
                             {% for message in user_data.messages %}
                                 <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
-                                   href="{{ path('application_index',{onglet: 'message', message:message.message.id}) }}">
+                                   href="{{ path('application_index',{onglet:'messagerie', param:message.message
+                                       .id}) }}">
                           <span class="avatar status-success">
                               {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
                                   <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)

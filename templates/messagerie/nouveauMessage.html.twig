@@ -1,149 +1,154 @@
 <div class="card card-body">
-    <div>
-        <div class="form-group">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
-                       id="messageSemestre" value="s">
-                <label class="form-check-label" for="messageSemestre">Semestre</label>
+    <form>
+        <div>
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
+                           id="messageSemestre" value="s">
+                    <label class="form-check-label" for="messageSemestre">Semestre</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType" id="messageGroupe"
+                           value="g">
+                    <label class="form-check-label" for="messageGroupe">Groupe(s)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
+                           id="messageEtudiant"
+                           value="e">
+                    <label class="form-check-label" for="messageEtudiant">Etudiant(s)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
+                           id="messagePersonnel" value="p">
+                    <label class="form-check-label" for="messagePersonnel">Personnel(s)/vacataire(s)</label>
+                </div>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType" id="messageGroupe"
-                       value="g">
-                <label class="form-check-label" for="messageGroupe">Groupe(s)</label>
+            <div id="blocDestMessgaeInfo" class="alert alert-info">Choisir d'abord le type de destinataire pour filtrer
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
-                       id="messageEtudiant"
-                       value="e">
-                <label class="form-check-label" for="messageEtudiant">Etudiant(s)</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
-                       id="messagePersonnel" value="p">
-                <label class="form-check-label" for="messagePersonnel">Personnel(s)/vacataire(s)</label>
+            <div id="blocDestSemestre" style="display:none">
+                <label for="messageToSemestre" class="sr-only">Choix semestre(s)</label>
+                <select multiple
+                        class="form-control selectpicker"
+                        id="messageToSemestre" name="messageToSemestre" data-size="10"
+                        title="Choisir le(s) semestre(s)"
+                >
+                    {% for semestre in user_data.semestres %}
+                        <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                    {% endfor %}
+                </select>
+
             </div>
         </div>
-        <div id="blocDestMessgaeInfo" class="alert alert-info">Choisir d'abord le type de destinataire pour filtrer
-        </div>
-        <div id="blocDestSemestre" style="display:none">
-            <label for="messageToSemestre" class="sr-only">Choix semestre(s)</label>
-            <select multiple
+        <div id="blocDestGroupe" style="display:none">
+            <label for="messageToGroupe" class="sr-only">Choix groupe(s)</label>
+            <select
+                    multiple
                     class="form-control selectpicker"
-                    id="messageToSemestre" data-size="10"
-                    title="Choisir le(s) semestre(s)"
+                    id="messageToGroupe" name="messageToGroupe" data-size="10"
+                    title="Choisir le(s) groupe(s)"
             >
-                {% for semestre in user_data.semestres %}
-                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                {% for type_groupe in type_groupes %}
+                    <optgroup label="{{ type_groupe.display }}">
+                        {% for groupe in type_groupe.groupes %}
+                            <option value="{{ groupe.id }}">{{ groupe.libelle }}</option>
+                        {% endfor %}
+                    </optgroup>
                 {% endfor %}
             </select>
-
         </div>
-    </div>
-    <div id="blocDestGroupe" style="display:none">
-        <label for="messageToGroupe" class="sr-only">Choix groupe(s)</label>
-        <select
-                multiple
-                class="form-control selectpicker"
-                id="messageToGroupe" data-size="10"
-                title="Choisir le(s) groupe(s)"
-        >
-            {% for type_groupe in type_groupes %}
-                <optgroup label="{{ type_groupe.display }}">
-                    {% for groupe in type_groupe.groupes %}
-                        <option value="{{ groupe.id }}">{{ groupe.libelle }}</option>
-                    {% endfor %}
-                </optgroup>
-            {% endfor %}
-        </select>
-    </div>
-    <div id="blocDestLibreEtudiant" style="display:none">
-        <label for="messageToLibreEtudiant" class="sr-only">Choisir le(s) étudiants(s)</label>
-        <select
-                multiple
-                class="form-control selectpicker"
-                id="messageToLibreEtudiant"
-                title="Choisir le(s) étudiants(s)"
-                data-size="10"
+        <div id="blocDestLibreEtudiant" style="display:none">
+            <label for="messageToLibreEtudiant" class="sr-only">Choisir le(s) étudiants(s)</label>
+            <select
+                    multiple
+                    class="form-control selectpicker"
+                    id="messageToLibreEtudiant" name="messageToLibreEtudiant"
+                    title="Choisir le(s) étudiants(s)"
+                    data-size="10"
 
-        >
-            {% for semestre in user_data.semestres %}
-                <optgroup label="{{ semestre.display }}">
-                    {% for etudiant in semestre.etudiants %}
-                        <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
-                    {% endfor %}
-                </optgroup>
-            {% endfor %}
-        </select>
-        <div>Saisissez les premières lettre d'un nom d'étudiant.</div>
-    </div>
-    <div id="blocDestLibrePersonnel" style="display:none">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="cc-permanent"
-                           name="messageToLibrePersonnel" value="permanent">
-                    <label class="custom-control-label" for="cc-permanent">Tous les permanents</label>
+            >
+                {% for semestre in user_data.semestres %}
+                    <optgroup label="{{ semestre.display }}">
+                        {% for etudiant in semestre.etudiants %}
+                            <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+            </select>
+            <div>Saisissez les premières lettre d'un nom d'étudiant.</div>
+        </div>
+        <div id="blocDestLibrePersonnel" style="display:none">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="cc-permanent"
+                               name="messageToLibrePersonnel" value="permanent">
+                        <label class="custom-control-label" for="cc-permanent">Tous les permanents</label>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="custom-control custom-checkbox" data-children-count="1">
-                    <input type="checkbox" class="custom-control-input" id="cc-vacataires"
-                           name="messageToLibrePersonnel" value="vacataire">
-                    <label class="custom-control-label" for="cc-vacataires">Tous les vacataires</label>
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox" data-children-count="1">
+                        <input type="checkbox" class="custom-control-input" id="cc-vacataires"
+                               name="messageToLibrePersonnel" value="vacataire">
+                        <label class="custom-control-label" for="cc-vacataires">Tous les vacataires</label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="messageCopy" class="sr-only">Copie(s)</label>
+        <br>
+        <div class="form-group">
+            <label for="messageCopy" class="sr-only">Copie(s)</label>
 
-        <select class="form-control selectpicker" data-size="10"
-                title="{{ 'message.copy'|trans }}" id="messageCopy" name="copie" multiple>
-            {% for personnel in user_data.personnels %}
-                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <label for="messageSubject" class="sr-only">Sujet</label>
+            <select class="form-control selectpicker" data-size="10"
+                    title="{{ 'message.copy'|trans }}" id="messageCopy" name="messageCopy" multiple>
+                {% for personnel in user_data.personnels %}
+                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <label for="messageSubject" class="sr-only">Sujet</label>
 
-    <input class="form-control form-control-lg" type="text"
-           placeholder="{{ 'message.subject'|trans }}" id="messageSubject">
-    <br>
-    <div class="quill">
-        <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..."
-             style="height: 206px" id="messageMessage"></div>
-    </div>
-    <div class="gap-items-2 text-right p-10 bg-lightest bt-1">
-        <button class="btn btn-light" type="button" data-toggle="modal" data-target="#modalPj"><i
-                    class="fa fa-paperclip" title="Ajouter des pièces jointes"></i></button>
-        <button class="btn btn-light" type="button" title="Sauvegarder le brouillon"><i
-                    class="fa fa-save" id="saveDraft"></i></button>
-
-        <button class="btn btn-secondary" type="button" data-dock="close">{{ 'annuler'|trans }}</button>
-        <button class="btn btn-primary" type="submit" id="messageSent">{{ 'envoyer'|trans }}</button>
-    </div>
-</div>
-
-<div id="modalPj" role="dialog" aria-hidden="true" class="modal fade" style="display: none;">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div tabindex="-1" class="modal-content">
-            <header class="modal-header"><h5 class="modal-title">
-                    {{ 'message.ajouter.piece.jointe'|trans }}</h5>
-                <button type="button" data-dismiss="modal" class="close">×</button>
-            </header>
-            <div class="modal-body">
-                <div class="alert alert-info">
-                    La gestion des pièces jointes arrivent très vite...
+        <input class="form-control form-control-lg" type="text"
+               placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject">
+        <br>
+        <div class="quill">
+            <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..."
+                 style="height: 206px" id="messageMessage"></div>
+        </div>
+        <br>
+        <div style="display:none" id="blocPj">
+            <div class="alert alert-info">
+                Le total du poids des pièce jointe, ne peut pas exceder 10Mo. Dans le cas contraire utilisez par exemple
+                <a href="https://filesender.renater.fr" target="_blank">filesender</a> pour obtenir un lien de partage
+                de
+                vos fichiers volumineux.
+            </div>
+            <div class="row" id="file1">
+                <div class="col-10">
+                    <input type="file" name="pj1" id="pj1" class="form-control pjFile" placeholder="Ajouter une pièce
+                jointe">
                 </div>
-                <div data-provide="dropzone" data-url="path/to/file-uploader.php">
-
+                <div class="col-1">
+                    <button class="btn btn-block btn-success-outline addFile" data-file="1"><i class="fa
+                fa-plus-circle"></i></button>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-block btn-danger-outline removeFile" data-file="1"><i class="fa
+            fa-minus-circle"></i></button>
                 </div>
             </div>
-            <footer class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'fermer'|trans }}</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal">{{ 'valider'|trans }}</button>
-            </footer>
         </div>
-    </div>
+        <br>
+
+        <div class="gap-items-2 text-right p-10 bg-lightest bt-1">
+            <span id="poidPj"></span>
+            <button class="btn btn-light" type="button" id="modalPj">
+                <i class="fa fa-paperclip" title="Ajouter des pièces jointes"></i></button>
+            <button class="btn btn-light" type="button" title="Sauvegarder le brouillon"><i
+                        class="fa fa-save" id="saveDraft"></i></button>
+
+            <button class="btn btn-secondary" type="button" data-dock="close">{{ 'annuler'|trans }}</button>
+            <button class="btn btn-primary" type="submit" id="messageSent">{{ 'envoyer'|trans }}</button>
+        </div>
+    </form>
 </div>

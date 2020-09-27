@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 15:39
+// @lastUpdate 27/09/2020 10:42
 
 namespace App\Controller;
 
+use App\Classes\MyUpload;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\Personnel;
@@ -32,12 +33,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessagerieController extends BaseController
 {
     /**
-     * @Route("/", name="messagerie_index")
+     * @Route("/{param}", name="messagerie_index", requirements={"param"="\d+"})
+     * @param string $param
+     *
+     * @return Response
      */
-    public function index(): Response
+    public function index($param = ''): Response
     {
         return $this->render('messagerie/index.html.twig', [
-            'filtre' => 'all'
+            'filtre' => 'all',
+            'param'  => $param,
         ]);
     }
 
@@ -175,14 +180,19 @@ class MessagerieController extends BaseController
      * @return JsonResponse
      * @throws TransportExceptionInterface
      */
-    public function sendMessage(Request $request, MyMessagerie $messagerie): JsonResponse
+    public function sendMessage(MyUpload $myUpload, Request $request, MyMessagerie $messagerie): JsonResponse
     {
-        $typeDestinataire = $request->request->get('typeDestinataire');
+        $typeDestinataire = $request->request->get('messageDestinataireType');
         $destinataires = $this->getDestinataires($typeDestinataire, $request);
 
-        $sujet = $request->request->get('sujet');
+        $sujet = $request->request->get('messageSubject');
         $copie = $request->request->get('copie');
         $message = $request->request->get('message');
+
+        foreach ($request->files as $file) {
+            $fichier = $myUpload->upload($file, 'pj/');
+            $messagerie->addPj($fichier);
+        }
 
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
         $messagerie->sendToDestinataires($destinataires, $typeDestinataire, $this->getDepartement());
@@ -229,7 +239,8 @@ class MessagerieController extends BaseController
             case 'e':
                 return $request->request->get('messageToLibreEtudiant');
             case 'p':
-                return $request->request->get('messageToLibrePersonnel');
+
+                return $this->checkArray($request->request->get('messageToLibrePersonnel'));
 
         }
 
@@ -283,6 +294,15 @@ class MessagerieController extends BaseController
         return $this->render('messagerie/message.html.twig', [
             'message' => $message
         ]);
+    }
+
+    private function checkArray($get)
+    {
+        if (!is_array($get)) {
+            return [$get];
+        }
+
+        return $get;
     }
 
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 27/09/2020 07:38
 
 /**
  * Created by PhpStorm.
@@ -325,10 +325,10 @@ class DataUserSession
     {
         if ($this->messages === null) {
             if ($this->getUser() instanceof Etudiant) {
-                $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+                $this->messages = $this->messagesRepository->findLast($this->getUser(), 4);
                 $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
             } else {
-                $this->messages = $this->messagesRepository->findLast($this->getUser(), 10);
+                $this->messages = $this->messagesRepository->findLast($this->getUser(), 4);
                 $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
             }
         }
