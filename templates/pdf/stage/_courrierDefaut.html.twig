@@ -1,0 +1,24 @@
+<p>{% if stageEtudiant.entreprise.responsable.civilite=='M.' %} Monsieur{% else %} Madame{% endif %},</p>
+<p>Vous avez accepté d'accueillir dans votre structure, pour un stage
+   pratique, {% if stageEtudiant.etudiant.civilite=='M.' %} Monsieur{% else %}Madame{% endif %} {{ stageEtudiant.etudiant.displayPr }}
+   qui prépare actuellement un(e) {{ stageEtudiant.etudiant.semestre.annee.diplome.typediplome.libelle }}
+   en {{ stageEtudiant.etudiant.semestre.annee.diplome.libelle }} à
+   l'{{ settings('NOM_IUT') }}. <br/><br/>Ce stage est
+   pris en compte pour la délivrance du diplôme.</p>
+<p>
+
+    Cet étudiant sera donc dans <strong>vos locaux </strong>
+
+    à compter du {{ stageEtudiant.dateDebutStage|date('d/m/Y') }}. </p>
+<p>Vous trouverez, ci-joint, les conventions de stages en 3 exemplaires dont 2 sont à retourner : <br/><br/>
+    {{ settings('NOM_IUT') }}<br/>
+    {{ stageEtudiant.etudiant.semestre.annee.diplome.libelle }}<br/>
+    {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.display|raw }}<br/><br/>
+   revêtus de votre signature et du cachet de la société.
+    <br/><br/>
+   La fiche E1 (évaluation du stagiaire) devra nous être retournée dûment complétée à la date qui y est indiquée.<br/>Nous
+   vous remercions de l'aide précieuse que vous voulez bien nous apporter en accueillant cet étudiant dans votre
+   établissement.</p>
+<p>Nous vous prions
+   d'agréer, {% if stageEtudiant.entreprise.responsable.civilite=='M.' %} Monsieur{% else %} Madame{% endif %}, nos
+   salutations distinguées.</p>

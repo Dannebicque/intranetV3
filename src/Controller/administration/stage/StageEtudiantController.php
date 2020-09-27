@@ -3,10 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 09:54
+// @lastUpdate 27/09/2020 14:30
 
 namespace App\Controller\administration\stage;
 
+use App\Classes\DatabaseTwigLoader;
+use App\Classes\MyStageEtudiant;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -14,8 +16,8 @@ use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Form\StageEtudiantType;
-use App\Classes\MyStageEtudiant;
 use App\Repository\PersonnelRepository;
+use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -25,6 +27,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  *  * @Route("/administration/stage/etudiant")
@@ -75,7 +81,7 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_stage_etudiant_edit", methods="GET|POST")
-     * @param Request $request
+     * @param Request       $request
      * @param StageEtudiant $stageEtudiant
      *
      * @return Response
@@ -139,7 +145,7 @@ class StageEtudiantController extends BaseController
         StagePeriode $stagePeriode,
         Etudiant $etudiant,
         $etat
-    ) {
+    ): RedirectResponse {
         $myStageEtudiant->changeEtat($stagePeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.change_etat.success.flash');
 
@@ -193,7 +199,6 @@ class StageEtudiantController extends BaseController
 
         return new Response($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(),
             ['Attachment' => 1]));
-
     }
 
 
@@ -206,6 +211,53 @@ class StageEtudiantController extends BaseController
     public function courrierPdf(StageEtudiant $stageEtudiant): Response
     {
 
+        $html = $this->renderView('pdf/stage/baseCourrier.html.twig', [
+            'stageEtudiant' => $stageEtudiant,
+        ]);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $options->set('isPhpEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+
+        return new Response($dompdf->stream('courrier-' . $stageEtudiant->getEtudiant()->getNom(),
+            ['Attachment' => 1]));
+    }
+
+    /**
+     * @param DatabaseTwigLoader          $databaseTwigLoader
+     * @param StageMailTemplateRepository $stageMailTemplateRepository
+     * @param StageEtudiant               $stageEtudiant
+     *
+     * @return Response
+     * @throws NonUniqueResultException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function genereContentCourrier(
+        DatabaseTwigLoader $databaseTwigLoader,
+        StageMailTemplateRepository $stageMailTemplateRepository,
+        StageEtudiant $stageEtudiant
+    ): Response {
+        $mailTemplate = $stageMailTemplateRepository->findEventPeriode(
+            'courrier',
+            $stageEtudiant->getStagePeriode()
+        );
+
+        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
+            $twig = new Environment($databaseTwigLoader);
+            $html = $twig->render($mailTemplate->getTwigTemplate()->getName(), ['stageEtudiant' => $stageEtudiant]);
+
+            return new Response($html);
+        }
+
+        return $this->render('pdf/stage/_courrierDefaut.html.twig', [
+            'stageEtudiant' => $stageEtudiant,
+        ]);
     }
 
     /**
