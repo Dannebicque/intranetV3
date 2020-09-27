@@ -14,8 +14,10 @@
                             {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
                                 <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
                                      style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                                    {% if edt.planning[j][ligne].pl != "" %}
                                     <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
                                     .couleurTexte }};">
+                                        {% endif %}
                                         {{ edt.planning[j][ligne].texte|raw }}
                                         {% if edt.planning[j][ligne].format == 'nok' %}
                                             <br/>
@@ -23,7 +25,9 @@
                                                     .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
                                                     .planning[j][ligne].fin) }}</span>
                                         {% endif %}
+                                        {% if edt.planning[j][ligne].pl != "" %}
                                     </a>
+                                    {% endif %}
                                 </div>
                             {% else %}
                                 <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">

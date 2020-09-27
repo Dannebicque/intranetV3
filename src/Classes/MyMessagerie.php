@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 10:42
+// @lastUpdate 27/09/2020 17:46
 
 namespace App\Classes;
 
@@ -231,7 +231,9 @@ class MyMessagerie
         $this->type = $typeDestinataire;
         switch ($typeDestinataire) {
             case 'p':
-                $this->sendToPersonnels($destinataires, $departement);
+                if ($departement !== null) {
+                    $this->sendToPersonnels($destinataires, $departement);
+                }
                 break;
             case 's':
                 foreach ($destinataires as $destinataire) {
