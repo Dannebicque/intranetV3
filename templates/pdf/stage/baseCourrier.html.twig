@@ -2,6 +2,10 @@
 
 {% block style %}
     {% include('pdf/cssPDF.css.twig') %}
+    body {
+    font-family: "DejaVu Sans", serif;
+    font-size: 13px;
+    }
 {% endblock %}
 
 {% block content %}
@@ -11,7 +15,10 @@
         <div id="adresseresp">
             {% set initiales = '' %}
             {% for responsable in stageEtudiant.stagePeriode.responsables %}
-                {% set initiales = initiales~responsable.nom|slice(0,1)~responsable.prenom|slice(0,1)~'/' %}
+                {% set initiales = initiales~responsable.nom|slice(0,1)~responsable.prenom|slice(0,1) %}
+                {% if not loop.last %}
+                    {% set initiales = initiales~'/' %}
+                {% endif %}
                 {{ responsable.displayPr }}<br/>
             {% endfor %}
             Responsable des stages<br/><br/>
@@ -24,10 +31,8 @@
             </div>
         </div>
         <div id="refcourrier">
-            {{ stageEtudiant.etudiant.semestre.annee.diplome.typeDiplome.sigle }} N° {{ date('now')|date('Y') }}
-                                                                                  /{{ initiales }}
-                                                                                  /{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.nom|slice(0,1) }}{{ stageEtudiant.etudiant
-            .semestre.annee.diplome.responsableDiplome.prenom|slice(0,1) }}
+            {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }} N° {{ date('now')|date('Y') }}
+                                                                      /{{ initiales }}{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.nom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.prenom|slice(0,1) }}
         </div>
         <div id="datecourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.ville }},

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 17:10
+// @lastUpdate 28/09/2020 09:18
 
 /**
  * Created by PhpStorm.
@@ -67,6 +67,9 @@ class MyStage
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());
+        if (count($etudiants) === 0) {
+            $etudiants = $this->etudiantRepository->findByAnnee($stagePeriode->getSemestre()->getAnnee());
+        }
 
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
