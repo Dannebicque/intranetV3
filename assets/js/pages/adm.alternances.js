@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.alternances.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 17:43
+// @lastUpdate 28/09/2020 17:46
 import {addCallout} from '../util'
 import Swal from 'sweetalert2'
 
@@ -26,7 +26,7 @@ $(document).on('click', '.initAllAlternance', function (e) {
   e.preventDefault()
   const url = $(this).attr('href')
 
-  swal({
+  Swal({
     title: 'Etes vous sûr?',
     text: 'Vous allez initialiser tous les suivis d\'alternances. Cela effacera les données déjà présente. !',
     type: 'warning',
@@ -45,14 +45,14 @@ $(document).on('click', '.initAllAlternance', function (e) {
         type: 'POST',
         success: function () {
           addCallout('Initialisation effectuée avec succès', 'success')
-          swal(
+          Swal(
             'Initialisé!',
             'Toutes les fiches des alertnants ont été initialisées.',
             'success'
           )
         },
         error: function () {
-          swal('Error deleting!', 'Please try again', 'error')
+          Swal('Error deleting!', 'Please try again', 'error')
           addCallout('Erreur lors de la tentative d\'initialisation', 'danger')
         }
       })
@@ -61,7 +61,7 @@ $(document).on('click', '.initAllAlternance', function (e) {
       // Read more about handling dismissals
       result.dismiss === 'cancel'
     ) {
-      swal(
+      Swal(
         'Cancelled',
         'OK, on ne change rien...',
         'error'
