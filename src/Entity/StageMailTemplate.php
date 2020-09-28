@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 14:11
+// @lastUpdate 28/09/2020 08:40
 
 namespace App\Entity;
 
@@ -15,16 +15,18 @@ use Doctrine\ORM\Mapping as ORM;
 class StageMailTemplate
 {
     public const CHAMPS_PUBLIPOSTAGE = [
-        '{{prenom_etudiant}}'    => '{{stageEtudiant.etudiant.prenom}}',
-        '{{nom_etudiant}}'       => '{{stageEtudiant.etudiant.nom}}',
-        '{{entreprise}}'         => '{{stageEtudiant.entreprise.raisonSociale}}',
-        '{{prenom_tuteur}}'      => '{{stageEtudiant.tuteur.prenom}}',
-        '{{nom_tuteur}}'         => '{{stageEtudiant.tuteur.nom}}',
-        '{{prenom_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.prenom}}',
-        '{{nom_tuteur_univ}}'    => '{{stageEtudiant.tuteurUniversitaire.nom}}',
-        '{{date_debut_stage}}'   => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{date_fin_stage}}'     => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{nom_periode_stage}}'  => '{{stageEtudiant.stagePeriode.libelle}}'
+        '{{civilite_etudiant}}'    => '{{stageEtudiant.etudiant.civilite}}',
+        '{{nom_etudiant}}'         => '{{stageEtudiant.etudiant.nom}}',
+        '{{entreprise}}'           => '{{stageEtudiant.entreprise.raisonSociale}}',
+        '{{civilite_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
+        '{{prenom_tuteur}}'        => '{{stageEtudiant.tuteur.prenom}}',
+        '{{nom_tuteur}}'           => '{{stageEtudiant.tuteur.nom}}',
+        '{{civilite_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.civilite}}',
+        '{{prenom_tuteur_univ}}'   => '{{stageEtudiant.tuteurUniversitaire.prenom}}',
+        '{{nom_tuteur_univ}}'      => '{{stageEtudiant.tuteurUniversitaire.nom}}',
+        '{{date_debut_stage}}'     => '{{stageEtudiant.dateDebutStageFr}}',
+        '{{date_fin_stage}}'       => '{{stageEtudiant.dateDebutStageFr}}',
+        '{{nom_periode_stage}}'    => '{{stageEtudiant.stagePeriode.libelle}}'
     ];
 
 
