@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:17
+// @lastUpdate 28/09/2020 19:47
 
 namespace App\Controller\administration;
 
@@ -30,30 +30,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class AlternanceController extends BaseController
 {
     /**
-     * @Route("/{annee}", name="administration_alternance_index", methods="GET")
-     * @param EtudiantRepository   $etudiantRepository
-     * @param AlternanceRepository $alternanceRepository
-     * @param Annee                $annee
-     *
-     * @return Response
-     */
-    public function index(
-        EtudiantRepository $etudiantRepository,
-        AlternanceRepository $alternanceRepository,
-        Annee $annee
-    ): Response {
-        $etudiants = $etudiantRepository->findByAnnee($annee);
-
-        return $this->render('administration/alternance/index.html.twig',
-            [
-                'alternances' => $alternanceRepository->getByAnneeAndAnneeUniversitaireArray($annee,
-                    $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null),
-                'annee'       => $annee,
-                'etudiants'   => $etudiants,
-            ]);
-    }
-
-    /**
      * @Route("/init/all/{annee}", name="administration_alternance_init_all")
      * @param EtudiantRepository   $etudiantRepository
      * @param AlternanceRepository $alternanceRepository
@@ -75,7 +51,7 @@ class AlternanceController extends BaseController
                 'anneeUniversitaire' => $annee->getAnneeUniversitaire(),
                 'annee'              => $annee->getId()
             ]);
-            if ($exist === null) {
+            if (count($exist) === 0) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
                 $alternance->setAnneeUniversitaire($annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
@@ -141,12 +117,20 @@ class AlternanceController extends BaseController
     ): Response {
         $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
             $annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'alternances',
             ['alternance_administration', 'utilisateur'],
-            ['entreprise' => ['libelle'], 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'], 'etudiant' => ['nom', 'prenom', 'mailUniv'],'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'], 'typeContrat', 'dateDebut', 'dateFin']
+            ['entreprise'          => ['libelle'],
+             'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
+             'etudiant'            => ['nom', 'prenom', 'mailUniv'],
+             'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
+             'typeContrat',
+             'dateDebut',
+             'dateFin'
+            ]
         );
     }
 
@@ -186,6 +170,32 @@ class AlternanceController extends BaseController
             'form'       => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{annee}", name="administration_alternance_index", methods="GET", requirements={"annee"="\d+"})
+     * @param EtudiantRepository   $etudiantRepository
+     * @param AlternanceRepository $alternanceRepository
+     * @param Annee                $annee
+     *
+     * @return Response
+     */
+    public function index(
+        EtudiantRepository $etudiantRepository,
+        AlternanceRepository $alternanceRepository,
+        Annee $annee
+    ): Response {
+        $etudiants = $etudiantRepository->findByAnnee($annee);
+
+        return $this->render('administration/alternance/index.html.twig',
+            [
+                'alternances' => $alternanceRepository->getByAnneeAndAnneeUniversitaireArray($annee,
+                    $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null),
+                'annee'       => $annee,
+                'etudiants'   => $etudiants,
+            ]);
+    }
+
+
 
     /**
      * @Route("/{id}", name="administration_alternance_delete", methods="DELETE")
