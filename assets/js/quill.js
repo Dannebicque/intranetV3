@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/quill.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 13:25
+// @lastUpdate 28/09/2020 08:40
 
 import '../css/quill.css'
 
@@ -17,7 +17,7 @@ import Underline from 'quill/formats/underline'
 import Header from 'quill/formats/header'
 import {AlignStyle} from 'quill/formats/align'
 import $ from 'jquery'
-
+import List, {ListItem} from 'quill/formats/list'
 
 Quill.register({
   'modules/toolbar': Toolbar,
@@ -26,6 +26,8 @@ Quill.register({
   'formats/italic': Italic,
   'formats/underline': Underline,
   'formats/header': Header,
+  'formats/list': List,
+  'formats/list-item': ListItem,
   'formats/align': AlignStyle
 })
 
