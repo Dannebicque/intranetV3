@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 08:41
+// @lastUpdate 28/09/2020 11:37
 
 namespace App\Entity;
 
@@ -17,6 +17,7 @@ class StageMailTemplate
     public const CHAMPS_PUBLIPOSTAGE = [
         '{{civilite_court_etudiant}}'    => '{{stageEtudiant.etudiant.civilite}}',
         '{{civilite_etudiant}}'          => '{{stageEtudiant.etudiant.civiliteLong}}',
+        '{{prenom_etudiant}}'            => '{{stageEtudiant.etudiant.prenom}}',
         '{{nom_etudiant}}'               => '{{stageEtudiant.etudiant.nom}}',
         '{{entreprise}}'                 => '{{stageEtudiant.entreprise.raisonSociale}}',
         '{{civilite_court_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
