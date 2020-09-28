@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:24
+// @lastUpdate 28/09/2020 08:41
 
 namespace App\Entity;
 
@@ -166,5 +166,13 @@ class Contact extends BaseEntity
         $this->nom = $nom;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCiviliteLong(): ?string
+    {
+        return $this->civilite === 'M.' ? 'Monsieur' : 'Madame';
     }
 }

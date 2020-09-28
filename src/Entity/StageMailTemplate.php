@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 08:40
+// @lastUpdate 28/09/2020 08:41
 
 namespace App\Entity;
 
@@ -15,18 +15,21 @@ use Doctrine\ORM\Mapping as ORM;
 class StageMailTemplate
 {
     public const CHAMPS_PUBLIPOSTAGE = [
-        '{{civilite_etudiant}}'    => '{{stageEtudiant.etudiant.civilite}}',
-        '{{nom_etudiant}}'         => '{{stageEtudiant.etudiant.nom}}',
-        '{{entreprise}}'           => '{{stageEtudiant.entreprise.raisonSociale}}',
-        '{{civilite_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
-        '{{prenom_tuteur}}'        => '{{stageEtudiant.tuteur.prenom}}',
-        '{{nom_tuteur}}'           => '{{stageEtudiant.tuteur.nom}}',
-        '{{civilite_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.civilite}}',
-        '{{prenom_tuteur_univ}}'   => '{{stageEtudiant.tuteurUniversitaire.prenom}}',
-        '{{nom_tuteur_univ}}'      => '{{stageEtudiant.tuteurUniversitaire.nom}}',
-        '{{date_debut_stage}}'     => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{date_fin_stage}}'       => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{nom_periode_stage}}'    => '{{stageEtudiant.stagePeriode.libelle}}'
+        '{{civilite_court_etudiant}}'    => '{{stageEtudiant.etudiant.civilite}}',
+        '{{civilite_etudiant}}'          => '{{stageEtudiant.etudiant.civiliteLong}}',
+        '{{nom_etudiant}}'               => '{{stageEtudiant.etudiant.nom}}',
+        '{{entreprise}}'                 => '{{stageEtudiant.entreprise.raisonSociale}}',
+        '{{civilite_court_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
+        '{{civilite_tuteur}}'            => '{{stageEtudiant.tuteur.civiliteLong}}',
+        '{{prenom_tuteur}}'              => '{{stageEtudiant.tuteur.prenom}}',
+        '{{nom_tuteur}}'                 => '{{stageEtudiant.tuteur.nom}}',
+        '{{civilite_court_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.civilite}}',
+        '{{civilite_tuteur_univ}}'       => '{{stageEtudiant.tuteurUniversitaire.civiliteLong}}',
+        '{{prenom_tuteur_univ}}'         => '{{stageEtudiant.tuteurUniversitaire.prenom}}',
+        '{{nom_tuteur_univ}}'            => '{{stageEtudiant.tuteurUniversitaire.nom}}',
+        '{{date_debut_stage}}'           => '{{stageEtudiant.dateDebutStageFr}}',
+        '{{date_fin_stage}}'             => '{{stageEtudiant.dateDebutStageFr}}',
+        '{{nom_periode_stage}}'          => '{{stageEtudiant.stagePeriode.libelle}}'
     ];
 
 
