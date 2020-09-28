@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+// @lastUpdate 28/09/2020 08:41
 
 namespace App\Entity;
 
@@ -323,6 +323,14 @@ abstract class Utilisateur implements UserInterface, Serializable
     public function getCivilite(): ?string
     {
         return $this->civilite;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCiviliteLong(): ?string
+    {
+        return $this->civilite === 'M.' ? 'Monsieur' : 'Madame';
     }
 
     /**
