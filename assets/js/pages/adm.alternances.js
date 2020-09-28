@@ -2,8 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.alternances.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 28/09/2020 17:43
 import {addCallout} from '../util'
+import Swal from 'sweetalert2'
+
 
 $(document).on('change', '.tuteurUniversitaireAlternance', function () {
   $.ajax({
@@ -61,7 +63,7 @@ $(document).on('click', '.initAllAlternance', function (e) {
     ) {
       swal(
         'Cancelled',
-        'Your imaginary file is safe :)',
+        'OK, on ne change rien...',
         'error'
       )
     }
