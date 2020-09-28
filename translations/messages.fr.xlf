@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/translations/messages.fr.xlf -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 26/09/2020 08:16 -->
+<!-- @lastUpdate 28/09/2020 17:39 -->
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="fr" trgLang="fr">
   <file id="messages.fr">
@@ -11712,16 +11712,22 @@
         <target>Votre stage est validé</target>
       </segment>
     </unit>
+    <unit id="Ekc3ZAn" name="copie chgt.etat_stage_valide">
+      <segment>
+        <source>chgt.etat_stage_valide</source>
+        <target>[COPIE] Votre stage est validé</target>
+      </segment>
+    </unit>
     <unit id="smWVx1A" name="mail.chgt.etat_stage_convention_envoyee">
       <segment>
         <source>mail.chgt.etat_stage_convention_envoyee</source>
         <target>Votre convention de stage est envoyée à l'entreprise</target>
       </segment>
     </unit>
-      <unit id="tYT1f0l" name="mail.chgt.etat_stage_convention_imprimee">
-          <segment>
-              <source>mail.chgt.etat_stage_convention_imprimee</source>
-              <target>Votre convention de stage est imprimée</target>
+    <unit id="tYT1f0l" name="mail.chgt.etat_stage_convention_imprimee">
+      <segment>
+        <source>mail.chgt.etat_stage_convention_imprimee</source>
+        <target>Votre convention de stage est imprimée</target>
           </segment>
       </unit>
     <unit id="LIj2otN" name="copie mail.chgt.etat_stage_convention_envoyee">
