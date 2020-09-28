@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 14:08
+// @lastUpdate 28/09/2020 06:44
 
 namespace App\Controller;
 
+use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Classes\Edt\MyEdtBorne;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,15 +39,7 @@ class BorneController extends AbstractController
         $content = $this->renderView('borne/index.html.twig', [
             't'        => $myEdtBorne->getData(),
             'messages' => $messages,
-            'lignes'   => [
-                1  => ['8h00', '9h30'],
-                4  => ['9h30', '11h00'],
-                7  => ['11h00', '12h30'],
-                10 => ['12h30', '14h00'],
-                13 => ['14h00', '15h30'],
-                16 => ['15h30', '17h00'],
-                19 => ['17h00', '18h30']
-            ]
+            'lignes'   => Constantes::TAB_CRENEAUX
         ]);
 
         $response->setContent($content);
