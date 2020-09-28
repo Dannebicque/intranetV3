@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 17:23
+// @lastUpdate 28/09/2020 17:58
 
 namespace App\Repository;
 
@@ -262,7 +262,7 @@ class EtudiantRepository extends ServiceEntityRepository
         }
 
         return $query->orderBy('e.nom', 'ASC')
-            ->orderBy('e.prenom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
