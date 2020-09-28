@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 09:09
+// @lastUpdate 28/09/2020 20:23
 
 namespace App\Repository;
 
@@ -72,8 +72,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
         }
-        $query->andWhere('s.ann
-        eeUniversitaire = :annee')
+
+        $query->andWhere('s.anneeUniversitaire = :annee')
             ->setParameter('semestreCourant', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire()->getId());
         if ($semestre->getSuivant() !== null) {
