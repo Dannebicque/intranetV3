@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 11:39
+// @lastUpdate 28/09/2020 11:43
 
 import Quill from '../quill'
 import {addCallout} from '../util'
@@ -72,7 +72,7 @@ $(document).on('click', '.enregistreModeleMail', function () {
     }),
     method: 'POST',
     data: {
-      message: tabEd['ed_' + onglet].getContents(),
+      message: tabEd['ed_' + onglet].root.innerHTML,
       sujet: $('#sujet_' + etat).val()
     },
     success: function () {
