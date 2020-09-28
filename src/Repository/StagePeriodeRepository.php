@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 28/09/2020 09:09
 
 namespace App\Repository;
 
@@ -14,8 +14,8 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method StagePeriode|null find($id, $lockMode = null, $lockVersion = null)
@@ -66,8 +66,14 @@ class StagePeriodeRepository extends ServiceEntityRepository
     {
         //trouver les périodes de stage sur ce semestre et le suivant
         $query = $this->createQueryBuilder('s')
-            ->where('s.semestre = :semestreCourant')
-            ->andWhere('s.anneeUniversitaire = :annee')
+            ->where('s.semestre = :semestreCourant');
+
+        if ($semestre->getSuivant() !== null) {
+            $query->orWhere('s.semestre = :semestreSuivant')
+                ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
+        }
+        $query->andWhere('s.ann
+        eeUniversitaire = :annee')
             ->setParameter('semestreCourant', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire()->getId());
         if ($semestre->getSuivant() !== null) {
