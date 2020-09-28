@@ -550,7 +550,7 @@
                                                     <a class="dropdown-item" href="{{ path
                                                         ('administration_stage_etudiant_change_etat',
                                                         {stagePeriode: stagePeriode.uuidString,
-                                                            etudiant:stageEtudiantetudiant.id,
+                                                            etudiant:stageEtudiant.etudiant.id,
                                                             etat: constant('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE')}) }}"
                                                        title="Valider le stage">Valider le stage</a>
                                                     <a class="dropdown-item" href="{{ path
