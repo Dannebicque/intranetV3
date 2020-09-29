@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/09/2020 11:46
+// @lastUpdate 29/09/2020 11:50
 
 /**
  * Created by PhpStorm.
@@ -327,9 +327,14 @@ class MyExcelWriter
      */
     public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
     {
+        $color = $array['color'];
+        if (strpos($color, '#') === 0) {
+            $color = substr($color, 1, strlen($color));
+        }
+
         $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
         $cell2 = Coordinate::stringFromColumnIndex($col2) . $lig2;
-        $this->sheet->getStyle($cell1 . ':' . $cell2)->getBorders()->getBottom()->setBorderStyle($array['size'])->getColor()->setARGB('FF'.$array['color']);
+        $this->sheet->getStyle($cell1 . ':' . $cell2)->getBorders()->getBottom()->setBorderStyle($array['size'])->getColor()->setARGB('FF' . $color);
     }
 
     /**

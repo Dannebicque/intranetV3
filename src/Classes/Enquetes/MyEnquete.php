@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/09/2020 11:46
+// @lastUpdate 29/09/2020 11:50
 
 namespace App\Classes\Enquetes;
 
@@ -259,7 +259,7 @@ class MyEnquete
                 $moyenne = $this->sommePourcentage / $nbQuestionsPourcentage;
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Satisfaction globale =',
                     ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                if ($moyenne < self::SEUIL) {
+                if ($moyenne * 100 < self::SEUIL) {
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
                         [
                             'wrap'          => true,
