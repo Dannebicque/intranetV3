@@ -32,12 +32,12 @@ before_install:
 
 install:
   - php -i
-  - cp .env.test.dist .env.test
+  - cp .env.test.dist .env
   - cp phpunit.xml.dist phpunit.xml
   - composer update #--prefer-dist --no-interaction
   #- php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:update --force --env=test
-  - php bin/console doctrine:fixtures:load -n --env=test
+  - php bin/console doctrine:schema:update --force
+  - php bin/console doctrine:fixtures:load -n
 
 script:
   #- .bin/phpunit #--configuration phpunit.xml #a confirmer ? prendrait le .env.test
