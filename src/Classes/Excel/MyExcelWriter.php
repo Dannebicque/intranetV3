@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 29/09/2020 11:46
 
 /**
  * Created by PhpStorm.
@@ -159,6 +159,10 @@ class MyExcelWriter
                             $row)->getStyle()->getNumberFormat()->setFormatCode($valeur);
                         break;
                     case 'color':
+                        if (strpos($valeur, '#') === 0) {
+                            $valeur = substr($valeur, 1, strlen($valeur));
+                        }
+
                         $this->sheet->getCellByColumnAndRow($col,
                             $row)->getStyle()->getFont()->getColor()->setARGB('FF' . $valeur);
                         break;
