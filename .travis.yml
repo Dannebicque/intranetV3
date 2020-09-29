@@ -33,7 +33,7 @@ before_install:
 install:
   - cp .env.test.dist .env.test
   - cp phpunit.xml.dist phpunit.xml
-  - composer update --no-script #--prefer-dist --no-interaction
+  - composer update --no-scripts #--prefer-dist --no-interaction
   #- php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:update --force --env=test
   - php bin/console doctrine:fixtures:load -n --env=test
