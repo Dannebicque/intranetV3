@@ -44,14 +44,44 @@
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
     },
+    "symfony/browser-kit": {
+        "version": "v5.1.6"
+    },
+    "symfony/css-selector": {
+        "version": "v5.1.6"
+    },
     "symfony/deprecation-contracts": {
         "version": "v2.1.2"
+    },
+    "symfony/dom-crawler": {
+        "version": "v5.1.6"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.2.0"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-php80": {
         "version": "v1.17.0"
     },
     "symfony/property-info": {
         "version": "v5.1.0"
+    },
+    "symfony/test-pack": {
+        "version": "v1.0.6"
     },
     "symfony/webpack-encore-bundle": {
         "version": "1.6",

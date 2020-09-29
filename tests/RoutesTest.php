@@ -1,5 +1,9 @@
 <?php
-
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/tests/RoutesTest.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 29/09/2020 08:46
 
 namespace App\Tests;
 
@@ -7,6 +11,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RoutesTest extends WebTestCase
 {
+    public function testShowPost()
+    {
+        //$client = static::createClient();
+
+        $this->client->request('GET', '/fr/connexion');
+
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     private $client;
 
     public function setUp(): void
