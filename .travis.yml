@@ -31,6 +31,7 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS testing;'
 
 install:
+  - php -i
   - cp .env.test.dist .env.test
   - cp phpunit.xml.dist phpunit.xml
   - composer update #--prefer-dist --no-interaction
