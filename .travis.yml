@@ -32,13 +32,10 @@ before_install:
 install:
   - cp .env.test.dist .env.test
   - cp phpunit.xml.dist phpunit.xml
-  - composer update #si install pas la bonne version de Ocramius/proxy-manager
+  - composer install --prefer-dist --no-interaction
   #- php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:create --env=test
-  #- bin/console make:migration
-  #- php bin/console doctrine:migrations:migrate
+  - php bin/console doctrine:schema:update --force --env=test
   - php bin/console doctrine:fixtures:load -n --env=test
-  #- ./vendor/bin/simple-phpunit install
 
 script:
   #- .bin/phpunit #--configuration phpunit.xml #a confirmer ? prendrait le .env.test
