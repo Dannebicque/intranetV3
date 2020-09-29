@@ -31,13 +31,12 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS testing;'
 
 install:
-  - php -i
-  - cp .env.test.dist .env
+  - cp .env.test.dist .env.test
   - cp phpunit.xml.dist phpunit.xml
-  - composer update #--prefer-dist --no-interaction
+  - composer update --no-script #--prefer-dist --no-interaction
   #- php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:update --force
-  - php bin/console doctrine:fixtures:load -n
+  - php bin/console doctrine:schema:update --force --env=test
+  - php bin/console doctrine:fixtures:load -n --env=test
 
 script:
   #- .bin/phpunit #--configuration phpunit.xml #a confirmer ? prendrait le .env.test
