@@ -3,18 +3,19 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 17:57
+// @lastUpdate 29/09/2020 11:46
 
 namespace App\Classes\Enquetes;
 
 
+use App\Classes\Configuration;
+use App\Classes\Excel\MyExcelWriter;
+use App\Classes\Tools;
 use App\Entity\Previsionnel;
 use App\Entity\QualiteQuestionnaire;
 use App\Entity\QualiteSection;
 use App\Entity\QuizzEtudiantReponse;
 use App\Entity\QuizzQuestion;
-use App\Classes\Excel\MyExcelWriter;
-use App\Classes\Tools;
 use App\Repository\QuizzEtudiantReponseRepository;
 use App\Repository\QuizzEtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class MyEnquete
 {
 
+    const SEUIL = 65;
     private QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository;
 
     private QuizzEtudiantRepository $quizzEtudiantRepository;
@@ -45,6 +47,10 @@ class MyEnquete
      * @var float|int
      */
     private $sommePourcentage = 0;
+    /**
+     * @var Configuration
+     */
+    private Configuration $configuration;
 
     /**
      * MyEnquete constructor.
@@ -56,11 +62,13 @@ class MyEnquete
     public function __construct(
         QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
         QuizzEtudiantRepository $quizzEtudiantRepository,
-        MyExcelWriter $myExcelWriter
+        MyExcelWriter $myExcelWriter,
+        Configuration $configuration
     ) {
         $this->quizzEtudiantReponseRepository = $quizzEtudiantReponseRepository;
         $this->quizzEtudiantRepository = $quizzEtudiantRepository;
         $this->myExcelWriter = $myExcelWriter;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -86,13 +94,23 @@ class MyEnquete
         $this->myExcelWriter->mergeCellsCaR(1, 1, 3, 1);
         $this->myExcelWriter->mergeCellsCaR(1, 2, 3, 2);
         $this->myExcelWriter->writeCellXY(1, 1, $questionnaire->getTitre(),
-            ['color' => 'B8007F', 'font-size' => 16, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
+            [
+                'color'       => $this->configuration->get('COLOR_IUT'),
+                'font-size'   => 16,
+                'font-weight' => 'bold',
+                'style'       => 'HORIZONTAL_CENTER'
+            ]);
         $this->myExcelWriter->writeCellXY(1, 2,
             $questionnaire->getSemestre()->getDiplome()->getDisplay() . ' - ' . $questionnaire->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire(),
-            ['color' => 'B8007F', 'font-size' => 16, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
+            [
+                'color'       => $this->configuration->get('COLOR_IUT'),
+                'font-size'   => 16,
+                'font-weight' => 'bold',
+                'style'       => 'HORIZONTAL_CENTER'
+            ]);
 
         $this->myExcelWriter->borderBottomCellsRange(1, 3, 3, 3,
-            ['color' => 'B8007F', 'size' => Border::BORDER_MEDIUM]);
+            ['color' => $this->configuration->get('COLOR_IUT'), 'size' => Border::BORDER_MEDIUM]);
 
         $this->myExcelWriter->writeCellXY(1, 5, 'Nombre de questionnaires envoyés :');
         $this->myExcelWriter->writeCellXY(2, 5, $nbEtudiants, ['style' => 'HORIZONTAL_CENTER']);
@@ -102,14 +120,14 @@ class MyEnquete
         $this->myExcelWriter->writeCellXY(2, 7, $pourcentageReponses,
             ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
         $this->myExcelWriter->borderBottomCellsRange(1, 8, 3, 8,
-            ['color' => 'B8007F', 'size' => Border::BORDER_MEDIUM]);
+            ['color' => $this->configuration->get('COLOR_IUT'), 'size' => Border::BORDER_MEDIUM]);
 
         $this->ligne = 11;
         foreach ($questionnaire->getQualiteQuestionnaireSections() as $qualiteQuestionnaireSection) {
             if ($qualiteQuestionnaireSection->getSection() !== null) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne,
                     $qualiteQuestionnaireSection->getOrdre() . '. ' . $qualiteQuestionnaireSection->getSection()->getTitre(),
-                    ['color' => 'B8007F', 'font-size' => 10, 'font-weight' => 'bold']);
+                    ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
                 if ($qualiteQuestionnaireSection->getSection()->getConfig() !== null && $qualiteQuestionnaireSection->getSection()->getConfig() !== '') {
                     $arrayConfig = explode('-', $qualiteQuestionnaireSection->getSection()->getConfig());
@@ -241,12 +259,24 @@ class MyEnquete
                 $moyenne = $this->sommePourcentage / $nbQuestionsPourcentage;
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Satisfaction globale =',
                     ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
-                    ['wrap'          => true,
-                     'font-weight'   => 'bold',
-                     'style'         => 'HORIZONTAL_CENTER',
-                     'number_format' => NumberFormat::FORMAT_PERCENTAGE
-                    ]);
+                if ($moyenne < self::SEUIL) {
+                    $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
+                        [
+                            'wrap'          => true,
+                            'font-weight'   => 'bold',
+                            'style'         => 'HORIZONTAL_CENTER',
+                            'color'         => 'bb1e10',
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                        ]);
+                } else {
+                    $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
+                        [
+                            'wrap'          => true,
+                            'font-weight'   => 'bold',
+                            'style'         => 'HORIZONTAL_CENTER',
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                        ]);
+                }
                 $this->ligne++;
             }
 
@@ -265,8 +295,7 @@ class MyEnquete
         QualiteSection $section,
         $config = '',
         QuizzQuestion $questionParent = null
-    ): void
-    {
+    ): void {
         if ($questionParent === null) {
             $questionParent = $question;
         }
@@ -355,9 +384,10 @@ class MyEnquete
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit',
                         ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
                     $this->myExcelWriter->writeCellXY(2, $this->ligne, $total,
-                        ['font-weight'   => 'bold',
-                         'style'         => 'HORIZONTAL_CENTER',
-                         'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                        [
+                            'font-weight'   => 'bold',
+                            'style'         => 'HORIZONTAL_CENTER',
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE
                         ]);
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, 'de satisfaction',
                         ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
