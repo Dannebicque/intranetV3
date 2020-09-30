@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 13:28
+// @lastUpdate 29/09/2020 20:10
 
 namespace App\Controller\superAdministration;
 
@@ -38,7 +38,7 @@ class CelcatController extends BaseController
 
 
     /**
-     * @Route("/index", methods={"GET"}, name="sa_celcat_index")
+     * @Route("/", methods={"GET"}, name="sa_celcat_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @param DiplomeRepository $diplomeRepository
      *
