@@ -1,22 +1,27 @@
 <?php
 // Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/tests/RoutesTest.php
+// @file /Users/davidannebicque/htdocs/intranetV3/tests/RoutesAdministratifTest.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/09/2020 20:07
+// @lastUpdate 29/09/2020 20:10
 
 namespace App\Tests;
 
 use App\Repository\PersonnelRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RoutesTest extends WebTestCase
+class RoutesAdministratifTest extends WebTestCase
 {
     private $client;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
+        $personnelRepository = static::$container->get(PersonnelRepository::class);
+        $testUser = $personnelRepository->findOneBy(['username' => 'superAdmin']);
+
+        // simulate $testUser being logged in
+        $this->client->loginUser($testUser);
     }
 
     /**
@@ -35,10 +40,14 @@ class RoutesTest extends WebTestCase
     public function providePermanentUrls()
     {
         return [
-            ['/fr/connexion'],
-            ['/fr/mentions-legales/'],
-            ['/fr/mentions-legales/about'],
-            ['/fr/mentions-legales/rgpd']
+            ['/fr/administratif/'],
+            ['/fr/administratif/etudiants/'],
+            ['/fr/administratif/scolarite/'],
+            ['/fr/administratif/ressources-humaines/'],
+            ['/fr/administratif/previsionnel'],
+            ['/fr/administratif/celcat/'],
+            ['/fr/administratif/qualite/'],
+
         ];
     }
 }

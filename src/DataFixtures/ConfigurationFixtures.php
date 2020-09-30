@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/ConfigurationFixtures.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 29/09/2020 17:53
 
 namespace App\DataFixtures;
 
@@ -78,6 +78,11 @@ class ConfigurationFixtures extends Fixture
         $conf = new Configuration();
         $conf->setCle('MODIFICATION_GROUPE');
         $conf->setValeur(true);
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('LOGO_INTRANET_IUT');
+        $conf->setValeur('logo_intranet_iut_troyes.svg');
         $manager->persist($conf);
 
         $manager->flush();
