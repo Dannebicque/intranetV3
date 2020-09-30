@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 17:10
+// @lastUpdate 30/09/2020 06:36
 
 namespace App\EventSubscriber;
 
@@ -236,7 +236,7 @@ class StageSubscriber implements EventSubscriberInterface
             $destinataires[] = $destinataire->getMailUniv();
         }
 
-        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() && $stageEtudiant->getEtudiant() !== null) {
+        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() && $stageEtudiant !== null) {
             //mail responsables
             $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                 ['stageEtudiant' => $stageEtudiant],
@@ -265,17 +265,6 @@ class StageSubscriber implements EventSubscriberInterface
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
                     'copie ' . $codeEvent);
             }
-        }
-
-
-        //copie au RP lors du dépôt par l'étudiant
-        if ($codeEvent === StageEvent::CHGT_ETAT_STAGE_DEPOSE) {
-            $tMails = [];
-            foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $resp) {
-                $tMails[] = $resp->getMailUniv();
-            }
-            $this->myMailer->setTemplate('mails/stages/stage_copie_depot_rp.txt.twig',
-                ['stageEtudiant' => $stageEtudiant], $tMails, 'Formulaire de stage complété');
         }
     }
 }

@@ -125,10 +125,18 @@
                 </li>
 
                 <li class="menu-item" id="menu-agenda">
-                    <a class="menu-link" href="{{ path('agenda_index') }}">
-                        <span class="material-icons">perm_contact_calendar</span>
-                        <span class="title">{{ 'menu.agenda'|trans }}</span>
-                    </a>
+                    {% if user_data.departement.optEdt == true %}
+                        <a class="menu-link" href="{{ path('agenda_index') }}">
+                            <span class="material-icons">perm_contact_calendar</span>
+                            <span class="title">{{ 'menu.agenda'|trans }}</span>
+                        </a>
+                    {% else %}
+                        <a class="menu-link" href="{{ path('planning_index', {annee:user_data.anneeUniversitaire
+                            .annee}) }}">
+                            <span class="material-icons">perm_contact_calendar</span>
+                            <span class="title">{{ 'menu.agenda'|trans }}</span>
+                        </a>
+                    {% endif %}
                 </li>
 
                 <li class="menu-item" id="menu-application">
