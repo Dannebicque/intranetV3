@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 20:23
+// @lastUpdate 01/10/2020 19:44
 
 namespace App\Repository;
 
@@ -80,7 +80,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
         }
-        $query->orderBy('s.dateDebut', 'DESC');
+        $query->orderBy('s.numeroPeriode', 'ASC');
 
         return $query->getQuery()->getResult();
     }
