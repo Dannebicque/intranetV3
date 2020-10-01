@@ -70,11 +70,19 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.email'|trans }}</th>
-                    <td>{{ stageEtudiant.etudiant.mailuniv|mailto }}</td>
+                    <td>
+                        {{ stageEtudiant.etudiant.mailuniv|mailto }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.mail_perso'|trans }}</th>
-                    <td>{{ stageEtudiant.etudiant.mailPerso|mailto }}</td>
+                    <td>
+                        <a class="myedit"
+                           data-field="mailPerso"
+                           href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                           data-title="Corriger le mail personnel">
+                            {{ stageEtudiant.etudiant.mailPerso }}
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.telephone'|trans }}</th>
@@ -264,4 +272,14 @@
             icone: 'fa fa-check'
         }
     ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.stage') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.stage') }}
 {% endblock %}
