@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 15:09
+// @lastUpdate 01/10/2020 19:21
 
 namespace App\Controller\administration\stage;
 
@@ -35,19 +35,47 @@ class StagePeriodeCourrierController extends BaseController
 
     private $donnees = [
         'etudiant'            => [
-            'prenom' => 'Etudiant',
-            'nom'    => 'De Test',
+            'civilite'  => 'M.',
+            'prenom'    => 'Etudiant',
+            'nom'       => 'De Test',
+            'displayPr' => 'Etudiant De Test',
+            'semestre'  => [
+                'annee' => [
+                    'diplome' => [
+                        'typediplome' => [
+                            'libelle' => 'DUT'
+                        ],
+                        'libelle'     => 'MMI',
+                        'departement' => [
+                            'ufr' => [
+                                'sitePrincipal' => [
+                                    'adresse' => [
+                                        'display' => '9 rue de Québec, 10026 Troyes Cedex'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ],
         'entreprise'          => [
             'raisonSociale' => 'Fictive Compagnie',
+            'responsable'   => [
+                'civilite' => 'M.',
+                'prenom'   => 'Jacques',
+                'nom'      => 'Paul',
+            ]
         ],
         'tuteur'              => [
-            'prenom' => 'Pierre',
-            'nom'    => 'Dupond',
+            'civilite' => 'M.',
+            'prenom'   => 'Pierre',
+            'nom'      => 'Dupond',
         ],
         'tuteurUniversitaire' => [
-            'prenom' => 'John',
-            'nom'    => 'Doe',
+            'civilite' => 'M.',
+            'prenom'   => 'John',
+            'nom'      => 'Doe',
         ],
         'stagePeriode'        => [
             'libelle'      => 'Période de stage fictive',

@@ -1,5 +1,5 @@
 {% if mail == 'courrier' %}
-    {{ include('pdf/stages/courrier.html.twig')|nl2br|raw }}
+    {{ include('pdf/stage/_courrierDefaut.html.twig')|nl2br|raw }}
 {% else %}
     {{ include('mails/stages/stage_chgt.'~mail|lower~'.txt.twig')|nl2br|raw }}
 {% endif %}
