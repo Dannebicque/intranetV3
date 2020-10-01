@@ -62,48 +62,48 @@
                 {% if stageEtudiant.etudiant.adresse != null %}
                     <a class="myedit"
                        data-field="adresse1"
-                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                       data-title="Corriger votre numéro de téléphone">
+                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       data-title="Corriger votre adresse">
                         {{ stageEtudiant.etudiant.adresse.adresse1 }}</a><br>
                     <a class="myedit"
                        data-field="adresse2"
-                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                       data-title="Corriger votre numéro de téléphone">
+                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       data-title="Corriger votre adresse">
                         {{ stageEtudiant.etudiant.adresse.adresse2 }}</a><br>
                     <a class="myedit"
                        data-field="adresse3"
-                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                       data-title="Corriger votre numéro de téléphone">
+                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       data-title="Corriger votre adresse">
                         {{ stageEtudiant.etudiant.adresse.adresse3 }}</a><br>
                     <a class="myedit"
                        data-field="codePostal"
-                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                       data-title="Corriger votre numéro de téléphone">
+                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       data-title="Corriger votre code postal">
                         {{ stageEtudiant.etudiant.adresse.codePostal }}</a>
                     <a class="myedit"
                        data-field="ville"
-                       href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                       data-title="Corriger votre numéro de téléphone">
+                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       data-title="Corriger votre ville">
                         {{ stageEtudiant.etudiant.adresse.ville }}</a>
                 {% else %}
                 {% endif %}
             </div>
         </div>
-      <div class="form-group row">
-        <div class="col-sm-3" style="text-align: right">
-          <b>Téléphone portable</b> <span class="required" title="Ce champ est obligatoire">*</span> :
+        <div class="form-group row">
+            <div class="col-sm-3" style="text-align: right">
+                <b>Téléphone portable</b> <span class="required" title="Ce champ est obligatoire">*</span> :
+            </div>
+            <div class="col-sm-9">
+                <a class="myedit"
+                   data-field="tel1"
+                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   data-title="Corriger votre numéro de téléphone">
+                    {{ stageEtudiant.etudiant.tel1|tel_format }}</a>
+            </div>
         </div>
-        <div class="col-sm-9">
-          <a class="myedit"
-             data-field="tel1"
-             href="{{ path('application_personnel_evaluation_update', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-             data-title="Corriger votre numéro de téléphone">
-              {{ stageEtudiant.etudiant.tel1|tel_format }}</a>
-        </div>
-      </div>
 
 
-      <h3 class="titre_rub">L'entreprise d'accueil</h3>
+        <h3 class="titre_rub">L'entreprise d'accueil</h3>
         {{ form_row(form.entreprise.raisonSociale) }}
         {{ form_row(form.entreprise.siret) }}
         {{ form_row(form.entreprise.adresse) }}

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 01/10/2020 15:38
 
 namespace App\Controller\ajax;
 
@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AbsenceApiController
  * @package App\Controller
  * @Route("/ajax/etudiant")
- * @IsGranted("ROLE_PERMANENT")
  */
 class EtudiantAjaxController extends BaseController
 {

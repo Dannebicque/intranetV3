@@ -66,11 +66,6 @@
                                                     {% endif %}
                                                 </a>
                                                 <div class="flex-grow pl-20">
-                                                    <h4><a class="text-white trombinoscope_nom" data-provide="tooltip"
-                                                           target="_blank"
-                                                           data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
-                                                            {{ etudiant.displayPr }}
-                                                        </a></h4>
                                                     <div><i class="fa fa-fw fa-map-marker w-20px"></i>
                                                         {% for grEtu in etudiant.groupes %}{{ grEtu.libelle }} {% endfor %}
                                                     </div>
@@ -111,6 +106,11 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
+                                            <h4><a class="text-white trombinoscope_nom" data-provide="tooltip"
+                                                   target="_blank"
+                                                   data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                                    {{ etudiant.displayPr }}
+                                                </a></h4>
                                         </div>
                                     </div>
                                 {% endfor %}

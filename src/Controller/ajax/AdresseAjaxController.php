@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/AdresseAjaxController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+// @lastUpdate 01/10/2020 15:37
 
 namespace App\Controller\ajax;
 
@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AbsenceApiController
  * @package App\Controller
  * @Route("/ajax/adresse")
- * @IsGranted("ROLE_PERMANENT")
  */
 class AdresseAjaxController extends BaseController
 {

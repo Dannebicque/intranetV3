@@ -1,0 +1,34 @@
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/color.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 30/09/2020 10:40
+
+$colors: (
+        blue:#007bff,
+        indigo: #6610f2,
+        purple: #6f42c1,
+        pink: #e83e8c,
+        red: #dc3545,
+        orange: #fd7e14,
+        yellow: #ffc107,
+        green: #28a745,
+        teal: #20c997,
+        cyan: #17a2b8
+);
+
+@each $color-key, $color-value in $colors {
+  .cm_#{$color-key} {
+    background-color: $color-value;
+  }
+
+  .td_#{$color-key} {
+    background-color: lighten($color-value, 10%);
+  }
+
+  .tp_#{$color-key} {
+    background-color: lighten($color-value, 20%);
+  }
+
+}
+
