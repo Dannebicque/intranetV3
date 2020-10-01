@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 09:21
+// @lastUpdate 01/10/2020 16:58
 
 namespace App\Controller\superAdministration;
 
@@ -108,7 +108,7 @@ class DiplomeController extends BaseController
     /**
      * @param Request $request
      * @param Diplome $diplome
-     * @Route("/{id}/edit-ajax", name="sa_diplome_edit_ajax", methods="POST")
+     * @Route("/{id}/edit-ajax", name="sa_diplome_edit_ajax", methods="POST", options={"expose":true})
      *
      * @return Response
      * @throws Exception
@@ -119,6 +119,7 @@ class DiplomeController extends BaseController
         $value = $request->request->get('value');
 
         $update = $diplome->update($name, $value);
+        $this->entityManager->flush();
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
             Response::HTTP_INTERNAL_SERVER_ERROR);

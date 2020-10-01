@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 21:26
+// @lastUpdate 01/10/2020 16:57
 
 namespace App\Entity;
 
@@ -383,7 +383,7 @@ class Diplome extends BaseEntity
     /**
      * @param int $codeCelcatDepartement
      */
-    public function setCodeCelcatDepartement(int $codeCelcatDepartement): void
+    public function setCodeCelcatDepartement($codeCelcatDepartement): void
     {
         $this->codeCelcatDepartement = $codeCelcatDepartement;
     }
@@ -478,8 +478,8 @@ class Diplome extends BaseEntity
      */
     public function update($name, $value): bool
     {
-        $t = explode('_', $name);
-        $name = $t[0];
+//        $t = explode('_', $name);
+//        $name = $t[0];
         $name[0] = chr(ord($name[0]) - 32);
         $method = 'set' . $name;
         if (method_exists($this, $method)) {
