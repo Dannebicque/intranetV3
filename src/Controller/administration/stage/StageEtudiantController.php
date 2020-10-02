@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 14:30
+// @lastUpdate 02/10/2020 09:15
 
 namespace App\Controller\administration\stage;
 
@@ -249,7 +249,7 @@ class StageEtudiantController extends BaseController
         );
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
-            $twig = new Environment($databaseTwigLoader);
+            $twig = new Environment($databaseTwigLoader, ['auto_reload' => true]);
             $html = $twig->render($mailTemplate->getTwigTemplate()->getName(), ['stageEtudiant' => $stageEtudiant]);
 
             return new Response($html);
