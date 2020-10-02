@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 11:16
+// @lastUpdate 02/10/2020 11:24
 
 namespace App\Controller\administration\stage;
 
@@ -21,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -123,6 +124,7 @@ class StagePeriodeCourrierController extends BaseController
      * @throws SyntaxError
      */
     public function apercu(
+        KernelInterface $kernel,
         DatabaseTwigLoader $databaseTwigLoader,
         StageMailTemplateRepository $stageMailTemplateRepository,
         StagePeriode $stagePeriode,
@@ -135,8 +137,7 @@ class StagePeriodeCourrierController extends BaseController
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
             $twig = new Environment($databaseTwigLoader,
-                ['auto_reload' => true, 'cache' => $this->get('kernel')->getCacheDir() . 'databaseTemplate/']);
-            $twig->setCache(false);
+                ['auto_reload' => true, 'cache' => $kernel->getCacheDir() . 'databaseTemplate/']);
             $mail = $twig->render($twig->load($mailTemplate->getTwigTemplate()->getName()),
                 ['stageEtudiant' => $this->donnees]);
 
