@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 09:39
+// @lastUpdate 02/10/2020 12:19
 
 namespace App\Classes\Mail;
 
 
 use App\Classes\Configuration;
 use App\Classes\DatabaseTwigLoader;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -23,6 +24,10 @@ class MailerFromDatabase extends BaseMailer
     private DatabaseTwigLoader $databaseTwigLoader;
 
     private Email $mail;
+    /**
+     * @var KernelInterface
+     */
+    private KernelInterface $kernel;
 
     /**
      * MailerFromDatabase constructor.
@@ -33,6 +38,7 @@ class MailerFromDatabase extends BaseMailer
      * @param DatabaseTwigLoader  $databaseTwigLoader
      */
     public function __construct(
+        KernelInterface $kernel,
         MailerInterface $mailer,
         TranslatorInterface $translator,
         Configuration $configuration,
@@ -40,6 +46,7 @@ class MailerFromDatabase extends BaseMailer
     ) {
         parent::__construct($mailer, $translator, $configuration);
         $this->databaseTwigLoader = $databaseTwigLoader;
+        $this->kernel = $kernel;
     }
 
     public function initEmail(): void
@@ -57,8 +64,8 @@ class MailerFromDatabase extends BaseMailer
      */
     public function setTemplate(string $templateName, array $array): void
     {
-        $twig = new Environment($this->databaseTwigLoader, ['auto_reload' => true]);
-        $twig->load($templateName);
+        $twig = new Environment($this->databaseTwigLoader,
+            ['cache' => $this->kernel->getCacheDir() . '/databaseTemplate/']);
         $this->mail->html($twig->render($templateName, $array));
     }
 

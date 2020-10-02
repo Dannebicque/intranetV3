@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 09:39
+// @lastUpdate 02/10/2020 12:19
 
 namespace App\Controller\administration\stage;
 
@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -239,6 +240,7 @@ class StageEtudiantController extends BaseController
      * @throws SyntaxError
      */
     public function genereContentCourrier(
+        KernelInterface $kernel,
         DatabaseTwigLoader $databaseTwigLoader,
         StageMailTemplateRepository $stageMailTemplateRepository,
         StageEtudiant $stageEtudiant
@@ -249,7 +251,7 @@ class StageEtudiantController extends BaseController
         );
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
-            $twig = new Environment($databaseTwigLoader, ['auto_reload' => true]);
+            $twig = new Environment($databaseTwigLoader, ['cache' => $kernel->getCacheDir() . '/databaseTemplate/']);
             $twig->load($mailTemplate->getTwigTemplate()->getName());
             $html = $twig->render($mailTemplate->getTwigTemplate()->getName(), ['stageEtudiant' => $stageEtudiant]);
 

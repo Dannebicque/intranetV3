@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 15:09
+// @lastUpdate 02/10/2020 12:18
 
 namespace App\Classes;
 
@@ -45,7 +45,7 @@ class MyStageMailTemplate
      */
     public function updateTemplate($code, $sujet, $message, StagePeriode $stagePeriode): void
     {
-
+        //todo: update du mail généré $this->>load(template) avec Environnment
         //rechercher si le modèle existe
         $modele = $this->stageMailTemplateRepository->findEventPeriode($code, $stagePeriode);
 
