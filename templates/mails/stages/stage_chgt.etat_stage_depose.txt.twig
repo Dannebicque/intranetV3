@@ -5,9 +5,10 @@ Récapitulatif des infos du stage.
 * Stage pour la période : {{ stageEtudiant.stagePeriode.libelle }}
 * {{ stageEtudiant.entreprise.raisonSociale }}
 * Responsable de l'entreprise : {{ stageEtudiant.entreprise.responsable.display }}
-* Adresse du siège de l'entreprise : {{ stageEtudiant.entreprise.adresse.display }}
-* Tuteur entreprise : {{ stageEtudiant.entreprise.adresse.display }}
-* Adresse du stage : {{ stageEtudiant.adresseStage.display }}
+* Adresse du siège de l'entreprise : {{ stageEtudiant.entreprise.adresse.display|striptags }}
+* Tuteur entreprise : {{ stageEtudiant.tuteur.display }}
+* Adresse entreprise : {{ stageEtudiant.entreprise.adresse.display|striptags }}
+* Adresse du stage : {{ stageEtudiant.adresseStage.display|striptags }}
 * Service d'accueil : {{ stageEtudiant.serviceStageEntreprise }}
 * Date du début du stage : {{ stageEtudiant.dateDebutStage|format_date('long') }}
 * Date de fin du stage : {{ stageEtudiant.dateFinStage|format_date('long') }}

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 02/10/2020 10:47
 
 /**
  * Created by PhpStorm.
@@ -76,6 +76,14 @@ class MyStageEtudiant
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
                 $this->stageEtudiant->setDateAutorise(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_STAGE_AUTORISE;
+                break;
+            case StageEtudiant::ETAT_STAGE_REFUS:
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_REFUS;
+                $this->entityManager->remove($this->stageEtudiant);
+                break;
+            case StageEtudiant::ETAT_STAGE_INCOMPLET:
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_AUTORISE);
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_INCOMPLET;
                 break;
             case StageEtudiant::ETAT_STAGE_DEPOSE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
