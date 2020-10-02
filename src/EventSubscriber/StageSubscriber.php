@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/09/2020 06:36
+// @lastUpdate 02/10/2020 10:54
 
 namespace App\EventSubscriber;
 
@@ -59,6 +59,8 @@ class StageSubscriber implements EventSubscriberInterface
             StageEvent::CHGT_ETAT_STAGE_AUTORISE           => 'onChgtEtatStageAutorise',
             StageEvent::CHGT_ETAT_STAGE_DEPOSE             => 'onChgtEtatStageDepose',
             StageEvent::CHGT_ETAT_STAGE_VALIDE             => 'onChgtEtatStageValide',
+            StageEvent::CHGT_ETAT_STAGE_REFUS              => 'onChgtEtatStageRefus',
+            StageEvent::CHGT_ETAT_STAGE_INCOMPLET          => 'onChgtEtatStageIncomplet',
             StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIME => 'onChgtEtatStageImprime',
             StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onChgtEtatStageConventionEnvoyee',
             StageEvent::CHGT_ETAT_CONVENTION_RECUE         => 'onChgtEtatStageConventionRecue',
@@ -171,6 +173,36 @@ class StageSubscriber implements EventSubscriberInterface
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
+    }
+
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
+    public function onChgtEtatStageRefus(StageEvent $event): void
+    {
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_REFUS);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_REFUS);
+    }
+
+    /**
+     * @param StageEvent $event
+     *
+     * @throws LoaderError
+     * @throws NonUniqueResultException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     */
+    public function onChgtEtatStageIncomplet(StageEvent $event): void
+    {
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_INCOMPLET);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_INCOMPLET);
     }
 
     /**

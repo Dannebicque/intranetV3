@@ -73,10 +73,10 @@
         <ul>
             <li>Intitulé : {{ proposition.serviceStageEntreprise }}</li>
             <li>Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}</li>
-            <li>Téléphone portable :</li>
+            <li>Téléphone portable : {{ proposition.entreprise.responsable.portable|tel_format }}</li>
             <li>Courriel : {{ proposition.entreprise.responsable.email }}</li>
-    </ul>
-    Adresse du lieu du stage (si différente de celle de l’organisme): {% if proposition.adresseStage != null %}
+        </ul>
+        Adresse du lieu du stage (si différente de celle de l’organisme): {% if proposition.adresseStage != null %}
             {{ proposition.adresseStage.display|striptags }}
         {% endif %}
     </div>
@@ -91,8 +91,8 @@
         : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}
         <br/>
         Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
-        Téléphone : {{ proposition.etudiant.tel1|tel_format }}<br/>
-        Téléphone portable : {{ proposition.etudiant.tel2|tel_format }}<br/>
+        Téléphone : {{ proposition.etudiant.tel2|tel_format }}<br/>
+        Téléphone portable : {{ proposition.etudiant.tel1|tel_format }}<br/>
         Formation suivie
         <ul>
             <li>Intitulé
@@ -100,9 +100,9 @@
                 .semestre.annee.diplome.libelle }}</li>
             <li>Volume horaire de la formation : {{ proposition.etudiant.semestre.annee.diplome.volumehoraire }}
                 heures.
-      </li>
-    </ul>
-    Caisse Primaire d’Assurance Maladie à contacter en cas d’accident (lieu de domicile de l’étudiant sauf
+            </li>
+        </ul>
+        Caisse Primaire d’Assurance Maladie à contacter en cas d’accident (lieu de domicile de l’étudiant sauf
     exception) :
         <ul>
             <li>Intitulé : {{ proposition.etudiant.intituleSecuriteSociale }}</li>
@@ -138,7 +138,8 @@
                     : {% if proposition.adresseStage == null  or proposition.adresseStage.adresse1 == '' %} {% if
                         proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}{% else %}{{ proposition.adresseStage.display }}{% endif %}</li>
                 <li>Courriel : {{ proposition.entreprise.responsable.email }}</li>
-                <li>Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}</li>
+                <li>Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }} / {{ proposition
+                    .entreprise.responsable.portable|tel_format }}</li>
             {% endif %}
         </ul>
 
@@ -191,7 +192,8 @@
                 <li>Date de fin :{{ interuption.dateFin|format_date('long') }}</li>
             </ul>
         {% endfor %}
-        Durée de présence effective du stagiaire dans l’organisme d’accueil : {{ proposition.dureeJoursStage }}
+        Durée de présence effective du stagiaire dans l’organisme d’accueil
+        : {% if proposition.dureeJoursStage != 0 %}{{ proposition.dureeJoursStage }}{% else %}{{ proposition.stagePeriode.nbJours }}{% endif %}
         jours<br/>
         Nombre de jours de congés autorisés ou modalités des congés et autorisations d’absence (art. 9) : 0<br/>
         Présence dans l’organisme : Temps complet / <s>Temps partiel</s> (*) (rayer la mention inutile)<br/>
@@ -199,9 +201,9 @@
         Commentaire sur le temps de travail :{{ proposition.commentaireDureeHebdomadaire }}<br/>
         Aménagements particuliers (présence en horaires décalés, la nuit, les jours fériés, déplacements)
         :{{ proposition.amenagementStage }}<br/>
-        {#{% if proposition.stageiut == 'O' %}<strong>Le stagiaire sera dans les locaux de#}
-                                                    {#l'{{ settings('NOM_IUT') }} pour la période#}
-                                                    {#de stage.</strong><br/>{% endif %}#}
+        {# {% if proposition.stageiut == 'O' %}<strong>Le stagiaire sera dans les locaux de #}
+        {# l'{{ settings('NOM_IUT') }} pour la période #}
+        {# de stage.</strong><br/>{% endif %} #}
         <i>(*) : En cas de temps partiel ou de stage en plusieurs périodes, un calendrier détaillé devra obligatoirement
            être joint en annexe.</i>
     </div>
@@ -230,7 +232,7 @@
         :{{ proposition.stagePeriode.documentRendre }}<br/>
         Modalités d’évaluation pédagogique du stage (art. 12)
         :{{ proposition.stagePeriode.modaliteevaluationpedagogique }}<br/>
-        Ce stage donne lieu à la validation d’ECTS (art. 12) : {% if proposition.stagePeriode.nbEcts=='O' %}Oui /
+        Ce stage donne lieu à la validation d’ECTS (art. 12) : {% if proposition.stagePeriode.nbEcts > 0 %}Oui /
             <s>Non</s> {% else %} <s>Oui</s>/ Non{% endif %} (rayer la mention inutile)<br/>
         Si oui, nombre d’ECTS à valider (art. 12) :{{ proposition.stagePeriode.nbects }}
     </div>
@@ -711,7 +713,8 @@
         Adresse postale
         : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
         <br/>
-        Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }}
+        Téléphone : {{ proposition.entreprise.responsable.telephone|tel_format }} | {{ proposition.entreprise
+        .responsable.portable|tel_format }}
     </div>
     <strong>CERTIFIE QUE :</strong>
     <p class="titresuligne">L’ÉTUDIANT(E) STAGIAIRE</p>
@@ -724,7 +727,7 @@
         : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}
         <br/>
         Courriel(s) : {{ proposition.etudiant.mailuniv }} | {{ proposition.etudiant.mailperso }}<br/>
-        Téléphone : {{ proposition.etudiant.tel1|tel_format }}<br/>
+        Téléphone : {{ proposition.etudiant.tel1|tel_format }} | {{ proposition.etudiant.tel2|tel_format }}<br/>
         Formation suivie
         <ul>
             <li>Intitulé

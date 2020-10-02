@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 09:01
+// @lastUpdate 02/10/2020 10:36
 
 namespace App\Entity;
 
@@ -70,18 +70,21 @@ class Adresse extends BaseEntity
      */
     public function getDisplay(): ?string
     {
-        $html = $this->getAdresse1();
-        if ($this->getAdresse2() !== '') {
-            $html .= ' <br />' . $this->getAdresse2();
+        if ($this->getAdresse1() !== '' && $this->getCodePostal() !== '' && $this->getVille() !== '') {
+            $html = $this->getAdresse1();
+            if ($this->getAdresse2() !== '') {
+                $html .= ' <br />' . $this->getAdresse2();
+            }
+
+            if ($this->getAdresse3() !== '') {
+                $html .= ' <br />' . $this->getAdresse3();
+            }
+
+            $html .= ' <br />' . $this->getCodePostal() . ' ' . $this->getVille();
+            $html .= ' <br />' . $this->getPays();
+        } else {
+            $html = '';
         }
-
-        if ($this->getAdresse3() !== '') {
-            $html .= ' <br />' . $this->getAdresse3();
-        }
-
-        $html .= ' <br />' . $this->getCodePostal() . ' ' . $this->getVille();
-        $html .= ' <br />' . $this->getPays();
-
         return $html;
     }
 

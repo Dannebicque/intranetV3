@@ -7,11 +7,12 @@ Récapitulatif des infos du stage.
 * Stage pour la période : {{ stageEtudiant.stagePeriode.libelle }}
 * {{ stageEtudiant.entreprise.raisonSociale }}
 * Responsable de l'entreprise : {{ stageEtudiant.entreprise.responsable.display }}
-* Adresse du siège de l'entreprise : {{ stageEtudiant.entreprise.adresse.display }}
-* Tuteur entreprise : {{ stageEtudiant.entreprise.adresse.display }}
-* Adresse du stage : {{ stageEtudiant.adresseStage.display }}
+* Adresse du siège de l'entreprise : {{ stageEtudiant.entreprise.adresse.display|striptags }}
+* Tuteur entreprise : {{ stageEtudiant.tuteur.display }}
+* Adresse entreprise : {{ stageEtudiant.entreprise.adresse.display|striptags }}
+* Adresse du stage : {{ stageEtudiant.adresseStage.display|striptags }}
 * Service d'accueil : {{ stageEtudiant.serviceStageEntreprise }}
-* Dte du début du stage : {{ stageEtudiant.dateDebutStage|format_date('long') }}
+* Date du début du stage : {{ stageEtudiant.dateDebutStage|format_date('long') }}
 * Date de fin du stage : {{ stageEtudiant.dateFinStage|format_date('long') }}
 * Sujet du stage : {{ stageEtudiant.sujetStage }}
 * Activités : {{ stageEtudiant.activites }}
@@ -22,6 +23,7 @@ Récapitulatif des infos du stage.
 * Autres avantages : {{ stageEtudiant.avantages }}
 * Durée hebdomadaire : {{ stageEtudiant.dureeHebdomadaire }}
 * Nb de jours : {{ stageEtudiant.dureeJoursStage }}
+* Période(s) d'interuptions : {{ stageEtudiant.periodesInterruptions }}
 
 Le(s) responsable(s) de la période de stage
 {% for resp in stageEtudiant.stagePeriode.Responsables %}
