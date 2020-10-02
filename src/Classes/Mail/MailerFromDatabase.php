@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 18:26
+// @lastUpdate 02/10/2020 09:11
 
 namespace App\Classes\Mail;
 
@@ -57,7 +57,7 @@ class MailerFromDatabase extends BaseMailer
      */
     public function setTemplate(string $templateName, array $array): void
     {
-        $twig = new Environment($this->databaseTwigLoader);
+        $twig = new Environment($this->databaseTwigLoader, ['auto_reload' => true]);
         $this->mail->html($twig->render($templateName, $array));
     }
 
