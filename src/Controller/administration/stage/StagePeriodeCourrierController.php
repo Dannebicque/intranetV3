@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/10/2020 19:21
+// @lastUpdate 02/10/2020 08:38
 
 namespace App\Controller\administration\stage;
 
@@ -24,6 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class StagePeriodeCourrierController
@@ -108,9 +111,16 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/apercu/{stagePeriode}/{mail}", name="administration_stage_periode_courrier_apercu_modele")
      *
-     * @param $mail
+     * @param DatabaseTwigLoader          $databaseTwigLoader
+     * @param StageMailTemplateRepository $stageMailTemplateRepository
+     * @param StagePeriode                $stagePeriode
+     * @param                             $mail
      *
      * @return Response
+     * @throws NonUniqueResultException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function apercu(
         DatabaseTwigLoader $databaseTwigLoader,
