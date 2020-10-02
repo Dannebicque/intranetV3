@@ -6,6 +6,9 @@
 parameters:
     locale: fr
     BASE_URL: '%env(resolve:BASE_URL)%'
+    maintenance:
+        statut: true
+        ipAuthorized: [ '::1','10.152.24.86' ]
 
 services:
     # default configuration for services in *this* file
@@ -43,3 +46,7 @@ services:
         arguments:
             - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
             - '@Symfony\Component\HttpFoundation\Session\SessionInterface'
+#    App\EventListener\MaintenanceListener:
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, priority: 2050 }
+#        arguments: [ '%maintenance%' ]
