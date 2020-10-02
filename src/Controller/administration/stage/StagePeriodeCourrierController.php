@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 09:39
+// @lastUpdate 02/10/2020 09:42
 
 namespace App\Controller\administration\stage;
 
@@ -135,8 +135,9 @@ class StagePeriodeCourrierController extends BaseController
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
             $twig = new Environment($databaseTwigLoader, ['auto_reload' => true]);
-            $twig->load($mailTemplate->getTwigTemplate()->getName());
-            $mail = $twig->render($mailTemplate->getTwigTemplate()->getName(), ['stageEtudiant' => $this->donnees]);
+
+            $mail = $twig->render($twig->load($mailTemplate->getTwigTemplate()->getName()),
+                ['stageEtudiant' => $this->donnees]);
 
             return $this->render('administration/stage/stage_periode_courrier/apercu.html.twig', [
                 'mail' => $mail
