@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 10:42
+// @lastUpdate 04/10/2020 07:15
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -112,48 +112,31 @@ $(document).on('click', '#messageSent', function (e) {
   $(this).attr('disabled', true)
   $(this).text('Envoi en cours...')
 
-  // let messageToLibrePersonnel = []
-  // $('input:checkbox[name=messageToLibrePersonnel]:checked').each(function () {
-  //   messageToLibrePersonnel.push($(this).val())
-  // })
-
-  // let fichiers = []
-  // $('input[type="file"]').each(function(file, element){
-  //   if (typeof element.files[0] !== 'undefined') {
-  //     fichiers.push(element.files[0])
-  //   }
-  // })
   var formData = new FormData($('form')[0])
   formData.append('message', $('.ql-editor').html())
 
 
   $.ajax({
     url: Routing.generate('messagerie_sent'),
-    data: formData
-    //{
-    // messageToSemestre: $('#messageToSemestre').val(),
-    // messageToGroupe: $('#messageToGroupe').val(),
-    // messageToLibreEtudiant: $('#messageToLibreEtudiant').val(),
-    // messageToLibrePersonnel: messageToLibrePersonnel,
-    // typeDestinataire: $('input[type=radio][name=messageDestinataireType]:checked').val(),
-    // copie: $('#messageCopy').val(),
-    // message: $('.ql-editor').html(),
-    // sujet: $('#messageSubject').val(),
-    // fichiers: fichiers
-    //}
-    ,
+    data: formData,
     async: false,
     cache: false,
     contentType: false,
     enctype: 'multipart/form-data',
     processData: false,
-    method: 'POST'
-    // success: function (data) {
-    //   $('#messages-liste').empty().load(Routing.generate('messagerie_message_envoye', {message: data.message}))
-    //   $('#messageSent').attr('disabled', false)
-    //   $(this).text('Envoyer')
-    // }
+    method: 'POST',
+    success: function (data) {
+      $('#messages-liste').empty().load(Routing.generate('messagerie_message_envoye', {message: data.message}))
+      $('#messageSent').attr('disabled', false)
+      $(this).text('Envoyer')
+    }
   })
+})
+
+$(document).on('click', '.send_draft', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
+  $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau', {message: $(this).data('message')}))
 })
 
 $(document).on('click', '.starred', function () {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 17:46
+// @lastUpdate 04/10/2020 07:15
 
 namespace App\Controller;
 
@@ -47,15 +47,18 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @Route("/ecrire", name="messagerie_nouveau", options={"expose":true})
+     * @Route("/ecrire/{message}", name="messagerie_nouveau", options={"expose":true})
      * @param TypeGroupeRepository $typeGroupeRepository
+     *
+     * @param Message|null         $message
      *
      * @return Response
      */
-    public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository): Response
+    public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository, ?Message $message = null): Response
     {
         return $this->render('messagerie/nouveauMessage.html.twig', [
-            'type_groupes' => $typeGroupeRepository->findByDepartement($this->dataUserSession->getDepartement())
+            'type_groupes' => $typeGroupeRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'message'      => $message
         ]);
     }
 

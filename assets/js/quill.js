@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/quill.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 08:40
+// @lastUpdate 04/10/2020 06:58
 
 import '../css/quill.css'
 
@@ -18,12 +18,19 @@ import Header from 'quill/formats/header'
 import {AlignStyle} from 'quill/formats/align'
 import $ from 'jquery'
 import List, {ListItem} from 'quill/formats/list'
+import {SizeStyle} from 'quill/formats/size'
+import {ColorStyle} from 'quill/formats/color'
+import {BackgroundStyle} from 'quill/formats/background'
+import Blockquote from 'quill/formats/blockquote'
 
 Quill.register({
   'modules/toolbar': Toolbar,
   'themes/snow': Snow,
   'formats/bold': Bold,
   'formats/italic': Italic,
+  'formats/size': SizeStyle,
+  'formats/color': ColorStyle,
+  'formats/background': BackgroundStyle,
   'formats/underline': Underline,
   'formats/header': Header,
   'formats/list': List,
@@ -46,7 +53,7 @@ let toolbarFullOptions = [
   ],
   ['bold', 'italic', 'underline'],        // toggled buttons
   [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-  [{'header': 1}, {'header': 2}, 'blockquote', 'code-block'],
+  [{'header': 1}, {'header': 2}],
   [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
   ['link'],
   ['clean']                                         // remove formatting button
