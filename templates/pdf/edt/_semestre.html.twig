@@ -1,0 +1,64 @@
+<table class="table-edt" style="width:100%;">
+    <thead>
+    <tr>
+        <th>&nbsp;</th>
+        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}" style="padding:0;">Lundi {{ edt
+            .tabJour.lundi|format_date('short') }}</th>
+        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}" style="padding:0;">
+            Mardi {{ edt.tabJour.mardi|format_date('short') }}</th>
+        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}" style="padding:0;">
+            Mercredi {{ edt.tabJour.mercredi|format_date('short') }}</th>
+        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}" style="padding:0;">
+            Jeudi {{ edt.tabJour.jeudi|format_date('short') }}</th>
+        <th class="center" colspan="{{ edt.semestre.nbgroupeTPEDT }}" style="padding:0;">
+            Vendredi {{ edt.tabJour.vendredi|format_date('short') }}</th>
+    </tr>
+    <tr>
+        <th>&nbsp;</th>
+        {% for jour in 1..5 %}
+            {% for groupe in 1..edt.semestre.nbgroupeTPEDT %}
+                <td style="padding:0;min-width:10px;">{{ edt.groupes[groupe] }}</td>
+            {% endfor %}
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for ligne in 1..27 %}
+        {% set heure=(ligne/2+7.5)|number_format(0) %}
+        <tr>
+            <td class="heures" style="padding:0;">
+                {% if(ligne/2+7.5)-heure!=0 %}
+                    {{ heure-1 }}h30
+                {% else %}
+                    {{ heure }}h00
+                {% endif %}</td>
+            {% for jour in 1..5 %}
+                {% if edt.planning[jour][ligne] is defined %}
+                    {% for groupe in 1..edt.semestre.nbgroupeTPEDT %}
+                        {% if edt.planning[jour][ligne][groupe] is defined %}
+                            {% if edt.planning[jour][ligne][groupe].texte!='xx' %}
+                                <td class="center td-edt {% if groupe == 1 %} col-new-day{% endif %}"
+                                    colspan="{{ edt.planning[jour][ligne][groupe].largeur }}"
+                                    rowspan="{{ edt.planning[jour][ligne][groupe].duree }}"
+                                    style="background-color:{{ edt.planning[jour][ligne][groupe].couleur }}; color:{{ edt.planning[jour][ligne][groupe].couleurTexte }};padding:0;">
+                                    {{ edt.planning[jour][ligne][groupe].texte|raw }}
+                                </td>
+                            {% endif %}
+                        {% else %}
+                            <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
+                                &nbsp;
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for groupe in 1..edt.semestre.nbgroupeTPEDT %}
+                        <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
+                            &nbsp;
+                        </td>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

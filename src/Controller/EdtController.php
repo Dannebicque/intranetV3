@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 15:16
+// @lastUpdate 04/10/2020 14:20
 
 namespace App\Controller;
 
@@ -146,6 +146,14 @@ class EdtController extends BaseController
     }
 
     /**
+     * @Route("/semestre/export/semaine/{semaine}/{semestre}", name="edt_semestre_export_semaine_courante")
+     */
+    public function exportSemestreSemaine(MyEdtExport $myEdtExport, $semaine, Semestre $semestre)
+    {
+        $myEdtExport->exportSemestre($semaine, $semestre);
+    }
+
+    /**
      * @Route("/intervenant/export/annee", name="edt_intervenant_export_annee")
      */
     public function exportIntervenantAnnee(): void
@@ -225,7 +233,7 @@ class EdtController extends BaseController
                 $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         }
 
-        $myPDF->generePdf('pdf/edtPersoSemaine.html.twig', ['edt' => $edt, 'tabHeures' => self::$tabHeures],
+        $myPDF->generePdf('pdf/edt/edtPersoSemaine.html.twig', ['edt' => $edt, 'tabHeures' => Constantes::TAB_HEURES],
             'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
     }
 

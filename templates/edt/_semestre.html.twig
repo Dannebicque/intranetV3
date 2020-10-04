@@ -1,8 +1,7 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} | {{ semestre.display }} | Semaine {{ edt
-            .semaine }}
-                                                                   (semaine formation {{ edt.semaineFormation }})</h4>
+            .semaine }} (semaine formation {{ edt.semaineFormation }})</h4>
 
         <div class="card-header-actions">
             <ul class="card-controls">
@@ -11,19 +10,20 @@
                                 class="fas fa-ellipsis-h rotate-90" data-provide="tooltip" title="Options d'export ou de
                                 synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
                     <div class="dropdown-menu dropdown-menu-right">
-{#                        <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}"#}
-{#                           class="dropdown-item"><i#}
-{#                                    class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>#}
-{#                        <a href="{{ path('edt_intervenant_export_annee') }}"#}
-{#                           class="dropdown-item"><i#}
-{#                                    class="ti-export"></i>{{ 'edt.intervenant.export.annee'|trans }}</a>#}
-{#                        <a href="{{ path('edt_intervenant_export_ical') }}"#}
-{#                           class="dropdown-item"><i#}
-{#                                    class="ti-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a>#}
-{#                        <a href="#"#}
-{#                           data-provide="modaler tooltip"#}
-{#                           data-url="{{ path('edt_affiche_ical') }}"#}
-{#                           data-placement="bottom"#}
+                        <a href="{{ path('edt_semestre_export_semaine_courante', {semaine:edt.semaineFormation,
+                            semestre:semestre.id}) }}"
+                           class="dropdown-item"><i
+                                    class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>
+                        {# <a href="{{ path('edt_intervenant_export_annee') }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="ti-export"></i>{{ 'edt.intervenant.export.annee'|trans }}</a> #}
+                        {# <a href="{{ path('edt_intervenant_export_ical') }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="ti-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
+                        {# <a href="#" #}
+                        {# data-provide="modaler tooltip" #}
+                        {# data-url="{{ path('edt_affiche_ical') }}" #}
+                        {# data-placement="bottom" #}
 {#                           title="{{ 'atitle.lien_ical'|trans }}"#}
 {#                           data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"#}
 {#                           class="dropdown-item"><i#}
@@ -82,13 +82,7 @@
                                                     colspan="{{ edt.planning[jour][ligne][groupe].largeur }}"
                                                     rowspan="{{ edt.planning[jour][ligne][groupe].duree }}"
                                                     style="background-color:{{ edt.planning[jour][ligne][groupe].couleur }}; color:{{ edt.planning[jour][ligne][groupe].couleurTexte }};padding:0;">
-                                                    {# <a href="#modalEdt" title="plus d'infos" class="lienedt" #}
-                                                    {# data-toggle="modal" #}
-                                                    {# style="color:{{ edt.planning[jour][ligne][groupe].couleurTexte }};" #}
-                                                    {# data-idedt="{{ edt.planning[jour][ligne][groupe].planning.id }}"> #}
                                                     {{ edt.planning[jour][ligne][groupe].texte|raw }}
-                                                    {# {% if edt.planning[jour][ligne][groupe].commentaire==true %} #}
-                                                    {# <i class="icon-info-circled-1"></i>{% endif %}</a> #}
                                                 </td>
                                             {% endif %}
                                         {% else %}
