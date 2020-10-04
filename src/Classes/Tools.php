@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2020 15:42
+// @lastUpdate 04/10/2020 08:27
 
 /**
  * Created by PhpStorm.
@@ -132,7 +132,7 @@ abstract class Tools
         return Carbon::create($date->year, $date->month, $date->day, $heure->hour, $heure->minute, 0);
     }
 
-    public static function updateFields($name, $value, $obj)
+    public static function updateFields($name, $value, $obj): void
     {
         $t = explode('_', $name);
         $name = $t[0];

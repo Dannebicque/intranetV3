@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 04/10/2020 08:42
 
 namespace App\Entity;
 
@@ -26,42 +26,42 @@ class Annee extends BaseEntity
      * @ORM\Column(type="string", length=255)
      * @Groups({"annee"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="ordre", type="integer")
      */
-    private $ordre = 1;
+    private int $ordre = 1;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurCM", type="string", length=7,nullable=true)
      */
-    private $couleurCm;
+    private ?string $couleurCm;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurTD", type="string", length=7,nullable=true)
      */
-    private $couleurTd;
+    private ?string $couleurTd;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurTP", type="string", length=7,nullable=true)
      */
-    private $couleurTp;
+    private ?string $couleurTp;
 
     /**
      * @var string
      *
      * @ORM\Column(name="couleurtexte", type="string", length=7,nullable=true)
      */
-    private $couleurTexte;
+    private ?string $couleurTexte;
 
     /**
      * @var string
@@ -69,19 +69,19 @@ class Annee extends BaseEntity
      * @ORM\Column(type="string", length=150, nullable=true)
      * @Groups({"annee"})
      */
-    private $libelleLong;
+    private ?string $libelleLong;
 
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
      */
-    private $optAlternance = false;
+    private bool $optAlternance = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="annees")
      */
-    private $diplome;
+    private ?Diplome $diplome;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="annee")
@@ -92,7 +92,7 @@ class Annee extends BaseEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    private $actif = true;
+    private bool $actif = true;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="annee")
@@ -102,7 +102,7 @@ class Annee extends BaseEntity
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $couleur;
+    private ?string $couleur;
 
     public function __construct()
     {

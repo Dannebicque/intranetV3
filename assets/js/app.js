@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/09/2020 12:30
+// @lastUpdate 04/10/2020 08:37
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
@@ -37,6 +37,12 @@ $('input[type="file"]').on('change', function (e) {
 
 // require('./theme')
 $(document).ready(function () {
+  // copy link EDT
+  $(document).on('click', '#copyLink', function () {
+    $('#lienIcal').select()
+    document.execCommand('copy')
+  })
+
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
     const files = []

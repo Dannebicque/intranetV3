@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyConfiguration.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 04/10/2020 08:41
 
 /**
  * Created by PhpStorm.
@@ -31,40 +31,19 @@ use function strlen;
  */
 class MyConfiguration
 {
-    /**
-     * @var DepartementRepository
-     */
-    private $departementRepository;
+    private DepartementRepository $departementRepository;
 
-    /**
-     * @var DiplomeRepository
-     */
-    private $diplomeRepository;
+    private DiplomeRepository $diplomeRepository;
 
-    /**
-     * @var AnneeRepository
-     */
-    private $anneeRepository;
+    private AnneeRepository $anneeRepository;
 
-    /**
-     * @var SemestreRepository
-     */
-    private $semestreRepository;
+    private SemestreRepository $semestreRepository;
 
-    /**
-     * @var AnneeUniversitaireRepository
-     */
-    private $anneeUniversitaireRepository;
+    private AnneeUniversitaireRepository $anneeUniversitaireRepository;
 
-    /**
-     * @var PersonnelRepository
-     */
-    private $personnelRepository;
+    private PersonnelRepository $personnelRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     /**
      * MyConfiguration constructor.
