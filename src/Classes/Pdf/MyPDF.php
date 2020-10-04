@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 15:25
+// @lastUpdate 04/10/2020 14:41
 
 /**
  * Created by PhpStorm.
@@ -24,6 +24,7 @@ use Twig\Error\SyntaxError;
 
 class MyPDF
 {
+    public const LANDSCAPE = 'landscape';
     protected static Dompdf $domPdf;
 
     protected static Options $options;
@@ -51,6 +52,13 @@ class MyPDF
      */
     public static function addOptions(array $options):void
     {
+        if (array_key_exists('orientation', $options)) {
+            self::$options->set('defaultPaperOrientation', $options['orientation']);
+        }
+
+        if (array_key_exists('fontHeightRatio', $options)) {
+            self::$options->set('fontHeightRatio', $options['fontHeightRatio']);
+        }
     }
 
     /**

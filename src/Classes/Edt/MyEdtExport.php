@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 04/10/2020 17:11
 
 namespace App\Classes\Edt;
 
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Classes\MyIcal;
+use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
@@ -51,6 +52,8 @@ class MyEdtExport
         EdtPlanningRepository $edtPlanningRepository,
         CelcatEventsRepository $celcatEventsRepository,
         CalendrierRepository $calendrierRepository,
+        MyEdtIntranet $myEdtIntranet,
+        MyEdtCelcat $myEdtCelcat,
         MyIcal $myIcal,
         MyPDF $myPDF,
         KernelInterface $kernel
@@ -60,6 +63,8 @@ class MyEdtExport
 
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->celcatEventsRepository = $celcatEventsRepository;
+        $this->myEdtIntranet = $myEdtIntranet;
+        $this->myEdtCelcat = $myEdtCelcat;
         $this->calendrierRepository = $calendrierRepository;
         $this->myIcal = $myIcal;
         $this->myPDF = $myPDF;
@@ -182,9 +187,24 @@ class MyEdtExport
 
         if ($source === 'intranet') {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId());
-            $this->myPDF::genereAndSavePdf('pdf/planning.html.twig',
+            $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
                 ['planning' => $planning, 'personnel' => $personnel], $personnel->getId() . '_' . $personnel->getNom(),
                 $dir, $departement->getLibelle());
         }
+    }
+
+    public function exportSemestre($semaine, Semestre $semestre)
+    {
+        $departement = $semestre->getDiplome()->getDepartement();
+        if ($departement->getOptUpdateCelcat() === true) {
+            $edt = $this->celcatEventsRepository->findEdtSemestre($semestre, $semaine);
+        } else {
+            $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());
+        }
+
+        $this->myPDF::addOptions(['orientation' => MyPDF::LANDSCAPE, 'fontHeightRatio' => 0.8]);
+        $this->myPDF::generePdf('pdf/edt/edtSemestre.html.twig',
+            ['edt' => $edt, 'semestre' => $semestre, 'departement' => $departement], $semestre->getLibelle(),
+            $departement->getLibelle());
     }
 }
