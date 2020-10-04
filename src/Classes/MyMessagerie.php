@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 17:46
+// @lastUpdate 04/10/2020 07:42
 
 namespace App\Classes;
 
@@ -145,8 +145,7 @@ class MyMessagerie
      */
     public function sendToEtudiants(): void
     {
-        $this->nbMessagesEnvoyes = 0;
-        $this->nbEtudiants = 0;
+
         //sauvegarde en BDD
         $mess = $this->saveMessageDatabase('E');
 
@@ -229,6 +228,8 @@ class MyMessagerie
     public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement = null): void
     {
         $this->type = $typeDestinataire;
+        $this->nbMessagesEnvoyes = 0;
+        $this->nbEtudiants = 0;
         switch ($typeDestinataire) {
             case 'p':
                 if ($departement !== null) {
