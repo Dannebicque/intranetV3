@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 07:15
+// @lastUpdate 04/10/2020 07:36
 
 namespace App\Controller;
 
@@ -18,6 +18,7 @@ use App\Repository\MessageRepository;
 use App\Repository\TypeGroupeRepository;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -183,6 +184,7 @@ class MessagerieController extends BaseController
      *
      * @return JsonResponse
      * @throws TransportExceptionInterface
+     * @throws Exception
      */
     public function sendMessage(MyUpload $myUpload, Request $request, MyMessagerie $messagerie): JsonResponse
     {
@@ -245,8 +247,7 @@ class MessagerieController extends BaseController
             case 'e':
                 return $request->request->get('messageToLibreEtudiant');
             case 'p':
-
-                return $this->checkArray($request->request->get('messageToLibrePersonnel'));
+                return $request->request->get('messageToLibrePersonnel');
 
         }
 

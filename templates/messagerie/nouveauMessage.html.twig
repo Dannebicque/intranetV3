@@ -36,7 +36,7 @@
                 <label for="messageToSemestre" class="sr-only">Choix semestre(s)</label>
                 <select multiple
                         class="form-control selectpicker"
-                        id="messageToSemestre" name="messageToSemestre" data-size="10"
+                        id="messageToSemestre" name="messageToSemestre[]" data-size="10"
                         title="Choisir le(s) semestre(s)"
                 >
                     {% for semestre in user_data.semestres %}
@@ -51,7 +51,7 @@
             <select
                     multiple
                     class="form-control selectpicker"
-                    id="messageToGroupe" name="messageToGroupe" data-size="10"
+                    id="messageToGroupe" name="messageToGroupe[]" data-size="10"
                     title="Choisir le(s) groupe(s)"
             >
                 {% for type_groupe in type_groupes %}
@@ -68,7 +68,7 @@
             <select
                     multiple
                     class="form-control selectpicker"
-                    id="messageToLibreEtudiant" name="messageToLibreEtudiant"
+                    id="messageToLibreEtudiant" name="messageToLibreEtudiant[]"
                     title="Choisir le(s) étudiants(s)"
                     data-size="10"
 
@@ -88,14 +88,14 @@
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="cc-permanent"
-                               name="messageToLibrePersonnel" value="permanent">
+                               name="messageToLibrePersonnel[]" value="permanent">
                         <label class="custom-control-label" for="cc-permanent">Tous les permanents</label>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox" data-children-count="1">
                         <input type="checkbox" class="custom-control-input" id="cc-vacataires"
-                               name="messageToLibrePersonnel" value="vacataire">
+                               name="messageToLibrePersonnel[]" value="vacataire">
                         <label class="custom-control-label" for="cc-vacataires">Tous les vacataires</label>
                     </div>
                 </div>

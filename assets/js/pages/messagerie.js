@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 07:15
+// @lastUpdate 04/10/2020 07:37
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -112,9 +112,8 @@ $(document).on('click', '#messageSent', function (e) {
   $(this).attr('disabled', true)
   $(this).text('Envoi en cours...')
 
-  var formData = new FormData($('form')[0])
+  let formData = new FormData($('form')[0])
   formData.append('message', $('.ql-editor').html())
-
 
   $.ajax({
     url: Routing.generate('messagerie_sent'),
