@@ -81,7 +81,9 @@
                     <a class="text-lighter fs-18 opacity-0" href="#"><i class="fas fa-clipboard"></i></a>
                 {% endif %}
                 {% if filtre=='draft' %}
-                    Modifier / Envoyer
+                    <button class="btn btn-warning send_draft" data-message="{{ message.id }}">Modifier /
+                                                                                               envoyer
+                    </button>
                 {% else %}
                     <time datetime="2018">{{ message.created|time_ago(app.request.locale) }}</time>
                 {% endif %}

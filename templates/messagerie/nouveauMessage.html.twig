@@ -4,29 +4,35 @@
             <div class="form-group">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
-                           id="messageSemestre" value="s">
+                           id="messageSemestre" value="s"
+                           {% if message != null and message.type== "s" %}checked{% endif %}>
                     <label class="form-check-label" for="messageSemestre">Semestre</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType" id="messageGroupe"
-                           value="g">
+                    <input class="form-check-input messageDestinataireType"
+                           type="radio" name="messageDestinataireType" id="messageGroupe"
+                           value="g"
+                           {% if message != null and message.type== "g" %}checked{% endif %}>
                     <label class="form-check-label" for="messageGroupe">Groupe(s)</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
                            id="messageEtudiant"
-                           value="e">
+                           value="e"
+                           {% if message != null and message.type== "e" %}checked{% endif %}>
                     <label class="form-check-label" for="messageEtudiant">Etudiant(s)</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input messageDestinataireType" type="radio" name="messageDestinataireType"
-                           id="messagePersonnel" value="p">
+                           id="messagePersonnel" value="p"
+                           {% if message != null and message.type== "p" %}checked{% endif %}>
                     <label class="form-check-label" for="messagePersonnel">Personnel(s)/vacataire(s)</label>
                 </div>
             </div>
             <div id="blocDestMessgaeInfo" class="alert alert-info">Choisir d'abord le type de destinataire pour filtrer
             </div>
-            <div id="blocDestSemestre" style="display:none">
+            <div id="blocDestSemestre"
+                 {% if message != null and message.type== "s" %}style="display:block" {% else %}style="display:none"{% endif %}>
                 <label for="messageToSemestre" class="sr-only">Choix semestre(s)</label>
                 <select multiple
                         class="form-control selectpicker"
@@ -40,7 +46,7 @@
 
             </div>
         </div>
-        <div id="blocDestGroupe" style="display:none">
+        <div id="blocDestGroupe" {% if message != null and message.type== "g" %}style="display:block" {% else %}style="display:none"{% endif %}>
             <label for="messageToGroupe" class="sr-only">Choix groupe(s)</label>
             <select
                     multiple
@@ -57,7 +63,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div id="blocDestLibreEtudiant" style="display:none">
+        <div id="blocDestLibreEtudiant" {% if message != null and message.type== "e" %}style="display:block" {% else %}style="display:none"{% endif %}>
             <label for="messageToLibreEtudiant" class="sr-only">Choisir le(s) étudiants(s)</label>
             <select
                     multiple
@@ -77,7 +83,7 @@
             </select>
             <div>Saisissez les premières lettre d'un nom d'étudiant.</div>
         </div>
-        <div id="blocDestLibrePersonnel" style="display:none">
+        <div id="blocDestLibrePersonnel" {% if message != null and message.type== "p" %}style="display:block" {% else %}style="display:none"{% endif %}>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
@@ -109,11 +115,14 @@
         <label for="messageSubject" class="sr-only">Sujet</label>
 
         <input class="form-control form-control-lg" type="text"
-               placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject">
+               placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
+               {% if message != null %}value="{{ message.sujet }}"{% endif %}>
         <br>
         <div class="quill">
             <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..."
-                 style="height: 206px" id="messageMessage"></div>
+                 style="height: 206px" id="messageMessage">
+                {% if message != null %}{{ message.message|raw }}{% endif %}
+            </div>
         </div>
         <br>
         <div style="display:none" id="blocPj">
