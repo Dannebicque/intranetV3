@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 07:36
+// @lastUpdate 05/10/2020 20:47
 
 namespace App\Controller;
 
@@ -198,6 +198,7 @@ class MessagerieController extends BaseController
         foreach ($request->files as $file) {
             if ($file !== null) {
                 $fichier = $myUpload->upload($file, 'pj/');
+                chmod($fichier, 755);
                 $messagerie->addPj($fichier);
             }
         }
