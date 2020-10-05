@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 05/10/2020 12:30
 
 namespace App\Controller\administration;
 
@@ -37,7 +37,8 @@ class NoteController extends BaseController
         return $this->render('administration/notes/index.html.twig', [
             'semestre'    => $semestre,
             'matieres'    => $myEvaluations->getMatieresSemestre(),
-            'evaluations' => $myEvaluations->getEvaluationsSemestre(),
+            'evaluations' => $myEvaluations->getEvaluationsSemestre($semestre,
+                $this->dataUserSession->getAnneeUniversitaire()),
         ]);
     }
 
