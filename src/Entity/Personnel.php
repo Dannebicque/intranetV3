@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 18:10
+// @lastUpdate 06/10/2020 15:41
 
 namespace App\Entity;
 
@@ -266,6 +266,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      * @ORM\OneToMany(targetEntity=MaterielCommunPret::class, mappedBy="personnel")
      */
     private $materielCommunPrets;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $signatureElectronique;
 
     public function __construct()
     {
@@ -1493,6 +1498,18 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
                 $materielCommunPret->setPersonnel(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSignatureElectronique(): ?string
+    {
+        return $this->signatureElectronique;
+    }
+
+    public function setSignatureElectronique(?string $signatureElectronique): self
+    {
+        $this->signatureElectronique = $signatureElectronique;
 
         return $this;
     }

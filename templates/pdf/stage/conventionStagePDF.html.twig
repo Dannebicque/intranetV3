@@ -572,22 +572,22 @@
         <tr>
             <td><strong>Tuteur Universitaire</strong><br/>Nom et signature
                                                           :<br/>{% if proposition.tuteurUniversitaire != null %}{{ proposition.tuteurUniversitaire.displayPr }}{% endif %}
-                {# {% if proposition.tuteurUniversitaire.signatureelectronique != null %} #}
-                {# <br/> #}
-                {# <img src="{{ linuxpath~'img/enseignants/signature/'~proposition.tuteurUniversitaire.signatureelectronique }}" width="150px"/> #}
-                {# {% endif %} #}
+                {% if proposition.tuteurUniversitaire.signatureElectronique != null %}
+                    <br/>
+                    <img src="{{ settings('BASE_PATH') }}'signature/'{{ proposition.tuteurUniversitaire.signatureElectronique }}" width="150px"/>
+                {% endif %}
             </td>
             <td><strong>Le tuteur de l’organisme d’accueil</strong><br/>
                 Nom et signature :<br/>{% if proposition.tuteur != null %}
                     {{ proposition.tuteur.prenom|capitalize }}  {{ proposition.tuteur.nom|upper }}{% else %}{{ proposition.entreprise.responsable.prenom|capitalize }} {{ proposition.entreprise.responsable.nom|upper }}{% endif %}
             </td>
         </tr>
-        {#{% if proposition.tuteur.signatureelectronique == null %}#}
-        <tr style="height: 80px;">
-            <td>&nbsp;<br><br><br><br><br></td>
-            <td><br><br><br><br><br></td>
+        {% if proposition.tuteurUniversitaire.signatureElectronique == null %}
+            <tr style="height: 80px;">
+                <td>&nbsp;<br><br><br><br><br></td>
+                <td><br><br><br><br><br></td>
         </tr>
-        {# {% endif %} #}
+        {% endif %}
     </table>
 
     <p>Annexe 1 : attestation de stage / Annexe 2 à fournir par l’étudiant (e) : attestation de
