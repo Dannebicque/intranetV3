@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySalleExamen.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 14:39
+// @lastUpdate 06/10/2020 17:24
 
 /**
  * Created by PhpStorm.
@@ -36,29 +36,19 @@ use function in_array;
 
 class MySalleExamen
 {
-    /** @var MatiereRepository */
-    protected $matiereRepository;
-    /** @var TypeGroupeRepository */
-    protected $typeGroupeRepository;
-    /** @var PersonnelRepository */
-    protected $personnelRepository;
-    /** @var SalleExamenRepository */
-    protected $salleExamenRepository;
-    /** @var GroupeRepository */
-    protected $groupeRepository;
+    protected MatiereRepository $matiereRepository;
+    protected TypeGroupeRepository $typeGroupeRepository;
+    protected PersonnelRepository $personnelRepository;
+    protected SalleExamenRepository $salleExamenRepository;
+    protected GroupeRepository $groupeRepository;
 
-    /** @var EtudiantRepository */
-    protected $etudiantRepository;
+    protected EtudiantRepository $etudiantRepository;
 
-    /** @var SalleExamen */
-    protected $salle;
-    /** @var TypeGroupe */
-    protected $typeGroupe;
-    /** @var Matiere */
-    protected $matiere;
+    protected ?SalleExamen $salle;
+    protected ?TypeGroupe $typeGroupe;
+    protected ?Matiere $matiere;
 
-    /** @var MyPDF */
-    private $myPdf;
+    private MyPDF $myPdf;
 
     /**
      * MySalleExamen constructor.
@@ -159,10 +149,10 @@ class MySalleExamen
                 $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
             }
 
-            $this->container->get('session')->getFlashBag()->add(
-                'warning',
-                'Salle Trop petite Veuillez choisir une autre salle !'
-            );
+//            $this->container->get('session')->getFlashBag()->add(
+//                'warning',
+//                'Salle Trop petite Veuillez choisir une autre salle !'
+//            );
         }
     }
 
