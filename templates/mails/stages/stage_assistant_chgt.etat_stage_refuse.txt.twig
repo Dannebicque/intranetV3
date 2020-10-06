@@ -1,0 +1,15 @@
+Bonjour,
+
+La proposition de stage de {{ stageEtudiant.etudiant.displayPr }} au sein de l'entreprise {% if stageEtudiant
+.entreprise != null %}{{ stageEtudiant.entreprise.raisonSociale }}{% else%} "non précisé"{% endif%} est refusée car ne correspondant pas aux objectifs
+pédagogiques de
+la
+formation.
+
+Bien cordialement
+
+Le(s) responsable(s) des {{stageEtudiant.stagePeriode.libelle }}
+{% for responsable in stageEtudiant.stagePeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}

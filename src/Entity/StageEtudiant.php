@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 06/10/2020 20:04
 
 namespace App\Entity;
 
@@ -34,7 +34,6 @@ class StageEtudiant extends BaseEntity
 
     public const PERIODE_GRATIFICATION_HEURE = 'H';
     public const PERIODE_GRATIFICATION_JOUR = 'J';
-    public const PERIODE_GRATIFICATION_SEMAINE = 'S';
     public const PERIODE_GRATIFICATION_MOIS = 'M';
     public const ETATS = [
         self::ETAT_STAGE_AUTORISE,
