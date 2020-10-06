@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 10:54
+// @lastUpdate 06/10/2020 17:12
 
 namespace App\EventSubscriber;
 
@@ -230,7 +230,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function sendMail(StageEvent $event, $codeEvent): void
     {
