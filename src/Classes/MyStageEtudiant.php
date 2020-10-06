@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 10:47
+// @lastUpdate 06/10/2020 20:01
 
 /**
  * Created by PhpStorm.
@@ -164,6 +164,7 @@ class MyStageEtudiant
         $stageEtudiant->setStagePeriode($stagePeriode);
         $stageEtudiant->setDateDebutStage($stagePeriode->getDateDebut());
         $stageEtudiant->setDateFinStage($stagePeriode->getDateFin());
+        $stageEtudiant->setDureeJoursStage($stagePeriode->getNbJours());
 
         $this->entityManager->persist($stageEtudiant);
         $this->entityManager->flush();
