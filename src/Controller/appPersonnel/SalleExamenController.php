@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 06/10/2020 17:43
 
 namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
 use App\Classes\MySalleExamen;
+use App\Entity\Constantes;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,7 +51,7 @@ class SalleExamenController extends BaseController
      * @param Request       $request
      *
      *
-     * @return void
+     * @return RedirectResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -57,17 +59,22 @@ class SalleExamenController extends BaseController
      *     name="application_personnel_salle_examen_genere_placement",
      *     methods={"POST"})
      */
-    public function generePlacement(MySalleExamen $mySalleExamen, Request $request): void
+    public function generePlacement(MySalleExamen $mySalleExamen, Request $request): ?RedirectResponse
     {
-        $mySalleExamen->genereDocument(
-            $request->request->get('dateeval'),
-            $request->request->get('salle'),
-            $request->request->get('selectmatiere'),
-            $request->request->get('selectgroupes'),
-            $request->request->get('detail_groupes'),
-            $request->request->get('enseignant1'),
-            $request->request->get('enseignant2'),
-            $this->dataUserSession->getDepartement()
-        );
+        $capacite = $mySalleExamen->calculCapacite($request->request->get('salle'),
+            $request->request->get('selectgroupes'), $request->request->get('detail_groupes'));
+        if ($capacite) {
+            $mySalleExamen->genereDocument(
+                $request->request->get('dateeval'),
+                $request->request->get('selectmatiere'),
+                $request->request->get('enseignant1'),
+                $request->request->get('enseignant2'),
+                $this->dataUserSession->getDepartement()
+            );
+        } else {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Salle trop petite');
+
+            return $this->redirectToRoute('application_index', ['onglet' => 'salle_examen']);
+        }
     }
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySalleExamen.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 17:24
+// @lastUpdate 06/10/2020 17:36
 
 /**
  * Created by PhpStorm.
@@ -14,13 +14,13 @@
 
 namespace App\Classes;
 
+use App\Classes\Pdf\MyPDF;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Matiere;
 use App\Entity\SalleExamen;
 use App\Entity\TypeGroupe;
-use App\Classes\Pdf\MyPDF;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
@@ -49,6 +49,7 @@ class MySalleExamen
     protected ?Matiere $matiere;
 
     private MyPDF $myPdf;
+    private $requestgroupes;
 
     /**
      * MySalleExamen constructor.
@@ -68,7 +69,7 @@ class MySalleExamen
         SalleExamenRepository $salleExamenRepository,
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
-    MyPDF $myPdf
+        MyPDF $myPdf
     ) {
         $this->matiereRepository = $matiereRepository;
         $this->typeGroupeRepository = $typeGroupeRepository;
@@ -81,10 +82,7 @@ class MySalleExamen
 
     /**
      * @param             $requestdateeval
-     * @param             $requestsalle
      * @param             $requestmatiere
-     * @param             $requesttypegroupe
-     * @param             $requestgroupes
      * @param             $requestenseignant1
      * @param             $requestenseignant2
      * @param Departement $departement
@@ -95,66 +93,55 @@ class MySalleExamen
      */
     public function genereDocument(
         $requestdateeval,
-        $requestsalle,
         $requestmatiere,
-        $requesttypegroupe,
-        $requestgroupes,
         $requestenseignant1,
         $requestenseignant2,
         Departement $departement
-    ): void
-    {
-        $this->salle = $this->salleExamenRepository->find($requestsalle);
+    ): void {
+
         $this->matiere = $this->matiereRepository->find($requestmatiere);
 
         if ($this->salle !== null && $this->matiere !== null) {
-            if ($requesttypegroupe !== '') {
-                $this->typeGroupe = $this->typeGroupeRepository->find($requesttypegroupe);
-                $groupes = $this->typeGroupe->getGroupes();
-                $grdetail = array();
-                $etudiants = array();
-                /** @var Groupe $gr */
-                foreach ($groupes as $gr) {
-                    foreach ($requestgroupes as $dgr) {
-                        if ($gr->getId() === (int)$dgr) {
-                            $grdetail[] = $gr;
-                            foreach ($gr->getEtudiants() as $etu) {
-                                $etudiants[] = $etu;
-                            }
+            $groupes = $this->typeGroupe->getGroupes();
+            $grdetail = [];
+            $etudiants = [];
+            /** @var Groupe $gr */
+            foreach ($groupes as $gr) {
+                foreach ($this->requestgroupes as $dgr) {
+                    if ($gr->getId() === (int)$dgr) {
+                        $grdetail[] = $gr;
+                        foreach ($gr->getEtudiants() as $etu) {
+                            $etudiants[] = $etu;
                         }
                     }
                 }
-            } else {
-                $grdetail = $this->groupeDefaut($this->matiere->getSemestre());
-                $this->typeGroupe = $grdetail[0]->getTypeGroupe();
-                $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->getSemestre());
             }
+        } else {
+            $grdetail = $this->groupeDefaut($this->matiere->getSemestre());
+            $this->typeGroupe = $grdetail[0]->getTypeGroupe();
+            $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->getSemestre());
+        }
 
-            if (count($etudiants) <= $this->salle->getCapacite()) {
-                $tabplace = $this->calculPlaces();
+        if (count($etudiants) <= $this->salle->getCapacite()) {
+            $tabplace = $this->calculPlaces();
 
-                /* document 1 par groupe */
-                $data = array(
-                    'matiere'   => $this->matiere,
-                    'etudiants' => $etudiants,
-                    'tabplace'  => $this->placement($etudiants, $tabplace),
-                    'typeg'     => $this->typeGroupe,
-                    'salle'     => $this->salle,
-                    'ens1'      => $requestenseignant1 !== '' ? $this->personnelRepository->find($requestenseignant1) : null,
-                    'ens2'      => $requestenseignant2 !== '' ? $this->personnelRepository->find($requestenseignant2) : null,
-                    'groupes'   => $grdetail,
-                    'depreuve'  => (string)$requestdateeval,
-                );
+            /* document 1 par groupe */
+            $data = [
+                'matiere'   => $this->matiere,
+                'etudiants' => $etudiants,
+                'tabplace'  => $this->placement($etudiants, $tabplace),
+                'typeg'     => $this->typeGroupe,
+                'salle'     => $this->salle,
+                'ens1'      => $requestenseignant1 !== '' ? $this->personnelRepository->find($requestenseignant1) : null,
+                'ens2'      => $requestenseignant2 !== '' ? $this->personnelRepository->find($requestenseignant2) : null,
+                'groupes'   => $grdetail,
+                'depreuve'  => (string)$requestdateeval,
+            ];
 
-                $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
-            }
-
-//            $this->container->get('session')->getFlashBag()->add(
-//                'warning',
-//                'Salle Trop petite Veuillez choisir une autre salle !'
-//            );
+            $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
         }
     }
+
 
     /**
      * @param $semestre
@@ -182,7 +169,7 @@ class MySalleExamen
     {
         $k = 0;
         $tabinterdit = explode(';', $this->salle->getPlacesInterdites());
-        $tabplace = array();
+        $tabplace = [];
 
         $nbCol = $this->salle->getNbColonnes();
         $nbRang = $this->salle->getNbRangs();
@@ -214,8 +201,8 @@ class MySalleExamen
      */
     private function placement($etudiants, $tabplace): array
     {
-        $placementetu = array();
-        $placement = array();
+        $placementetu = [];
+        $placement = [];
         $i = 0;
 
         /** @var Etudiant $etu */
@@ -225,9 +212,32 @@ class MySalleExamen
             $i++;
         }
         ksort($placement);
-        $pl = array();
+        $pl = [];
         $pl['etudiant'] = $placementetu;
         $pl['place'] = $placement;
+
         return $pl;
+    }
+
+    public function calculCapacite($salle, $typeGroupe, $requestgroupes)
+    {
+        $this->requestgroupes = $requestgroupes;
+        $this->salle = $this->salleExamenRepository->find($salle);
+        $this->typeGroupe = $this->typeGroupeRepository->find($typeGroupe);
+        $groupes = $this->typeGroupe->getGroupes();
+        $nbEtu = 0;
+        /** @var Groupe $gr */
+        foreach ($groupes as $gr) {
+            foreach ($this->requestgroupes as $dgr) {
+                if ($gr->getId() === (int)$dgr) {
+
+                    foreach ($gr->getEtudiants() as $etu) {
+                        $nbEtu++;
+                    }
+                }
+            }
+        }
+
+        return $nbEtu <= $this->salle->getCapacite();
     }
 }
