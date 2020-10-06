@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 07:37
+// @lastUpdate 06/10/2020 15:26
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -13,10 +13,14 @@ $(document).on('click', '.messagerie-filtre', function (e) {
 })
 
 $(document).on('click', '#modalPj', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
   $('#blocPj').toggle()
 })
 
 $(document).on('click', '.addFile', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
   let $id = parseInt($(this).data('file')) + 1
   let html = '<div class="row" id="file' + $id + '">\n' +
     '            <div class="col-10">\n' +
@@ -35,11 +39,15 @@ $(document).on('click', '.addFile', function (e) {
 })
 
 $(document).on('click', '.removeFile', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
   let $id = $(this).data('file')
   $('#file' + $id).remove()
 })
 
 $(document).on('click', '#saveDraft', function (e) {
+  e.preventDefault()
+  e.stopPropagation()
   $.ajax({
     url: Routing.generate('messagerie_draft'),
     data: {

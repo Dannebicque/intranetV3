@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 07:42
+// @lastUpdate 06/10/2020 15:54
 
 namespace App\Classes;
 
@@ -158,7 +158,7 @@ class MyMessagerie
 
             //récupération des fichiers uploadés
             foreach ($this->pjs as $file) {
-                $message->attachFromPath($this->dir . $file);
+                $message->attachFromPath($file);
             }
 
             foreach ($etu->getMails() as $mail) {
