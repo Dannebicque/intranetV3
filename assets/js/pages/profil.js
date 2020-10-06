@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/09/2020 15:49
+// @lastUpdate 06/10/2020 12:23
 import {addCallout} from '../util'
 
 require('chart.js')
@@ -149,7 +149,6 @@ $(document).on('click', '#btnabs', function (e) {
 
 $(document).on('click', '.checkAbsence', function (e) {
   let absence = $(this).data('absence')
-  console.log(absence)
   let etat = 0
 
   if (($(this).is(':checked'))) {
@@ -160,7 +159,6 @@ $(document).on('click', '.checkAbsence', function (e) {
     url: Routing.generate('administration_absences_justifie', {'absence': absence, 'etat': etat}),
     type: 'GET',
     success: function (data) {
-      console.log(data)
       if (data) {
         $('#ligne_' + absence).removeClass('bg-pale-warning').addClass('bg-pale-success')
       } else {

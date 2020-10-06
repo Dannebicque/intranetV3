@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:08
+// @lastUpdate 06/10/2020 15:10
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\MyAbsences;
 use App\Classes\MyExport;
+use App\Classes\StatsAbsences;
 use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Absence;
@@ -38,24 +39,29 @@ class AbsenceController extends BaseController
     /**
      * @Route("/semestre/etudiant/{etudiant}", name="administration_absences_liste_absence_etudiant",
      *                                         options={"expose":true})
-     * @param Etudiant $etudiant
+     * @param EtudiantAbsences $etudiantAbsences
+     * @param StatsAbsences    $statsAbsences
+     * @param Etudiant         $etudiant
      *
      * @return Response
+     * @throws Exception
      */
-    public function listeAbsenceEtudiant(Etudiant $etudiant): Response
-    {
-        $tAbs = [];
-        foreach ($etudiant->getAbsences() as $abs) {
-            $t = [];
-            $t['date'] = $abs->getDateHeure() !== null ? $abs->getDateHeure()->format('d/m/Y') : '';
-            $t['id'] = $abs->getId();
-            $t['heure'] = $abs->getDateHeure() !== null ? $abs->getDateHeure()->format('H:i') : '';
-            $t['matiere'] = $abs->getMatiere() !== null ? $abs->getMatiere()->getDisplay() : '';
-            $t['justifie'] = $abs->isJustifie();
-            $tAbs[] = $t;
-        }
+    public function listeAbsenceEtudiant(
+        EtudiantAbsences $etudiantAbsences,
+        StatsAbsences $statsAbsences,
+        Etudiant $etudiant
+    ): Response {
+        $etudiantAbsences->setEtudiant($etudiant);
 
-        return $this->json($tAbs);
+        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+            $this->dataUserSession->getAnneeUniversitaire());
+        $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
+
+        return $this->render('administration/absence/_listeEtudiant.html.twig', [
+            'absences'             => $absences,
+            'etudiant'             => $etudiant,
+            'statistiquesAbsences' => $statistiquesAbsences
+        ]);
     }
 
     /**
