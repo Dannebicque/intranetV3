@@ -12,7 +12,7 @@
     <img src="{{ settings('BASE_PATH') }}logo/urca_petit.jpg" alt="logo Université"
          width="100px" style="float:left;"/>
     <div id="courrier">
-        <div id="adresseresp">
+        <div id="adresseent">
             {% set initiales = '' %}
             {% for responsable in stageEtudiant.stagePeriode.responsables %}
                 {% set initiales = initiales~responsable.nom|slice(0,1)~responsable.prenom|slice(0,1) %}
@@ -23,7 +23,7 @@
             {% endfor %}
             Responsable des stages<br/><br/>
 
-            <div id="adresseent">
+            <div>
                 A<br/><br/>
                 {{ stageEtudiant.entreprise.raisonSociale }}<br/>
                 {{ stageEtudiant.entreprise.responsable.display }}<br/>
@@ -32,7 +32,8 @@
         </div>
         <div id="refcourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }} N° {{ date('now')|date('Y') }}
-                                                                      /{{ initiales }}{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.nom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.prenom|slice(0,1) }}
+                                                                      /{{ initiales }}/{{ stageEtudiant.etudiant
+            .semestre.annee.diplome.responsableDiplome.nom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.prenom|slice(0,1) }}
         </div>
         <div id="datecourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.ville }},
