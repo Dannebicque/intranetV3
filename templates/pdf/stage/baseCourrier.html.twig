@@ -15,7 +15,7 @@
         <div id="adresseent">
             {% set initiales = '' %}
             {% for responsable in stageEtudiant.stagePeriode.responsables %}
-                {% set initiales = initiales~responsable.nom|slice(0,1)~responsable.prenom|slice(0,1) %}
+                {% set initiales = initiales~responsable.prenom|slice(0,1)~responsable.nom|slice(0,1) %}
                 {% if not loop.last %}
                     {% set initiales = initiales~'/' %}
                 {% endif %}
@@ -24,7 +24,7 @@
             Responsable des stages<br/><br/>
 
             <div>
-                A<br/><br/>
+                A<br/>
                 {{ stageEtudiant.entreprise.raisonSociale }}<br/>
                 {{ stageEtudiant.entreprise.responsable.display }}<br/>
                 {{ stageEtudiant.entreprise.adresse.display|raw }}
@@ -33,7 +33,9 @@
         <div id="refcourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }} N° {{ date('now')|date('Y') }}
                                                                       /{{ initiales }}/{{ stageEtudiant.etudiant
-            .semestre.annee.diplome.responsableDiplome.nom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee.diplome.responsableDiplome.prenom|slice(0,1) }}
+            .semestre.annee.diplome.assistantDiplome.prenom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee
+            .diplome
+            .assistantDiplome.nom|slice(0,1) }}
         </div>
         <div id="datecourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.ville }},
@@ -48,13 +50,23 @@
             )) }}
         </div>
         <div id="signatures">
-            Le(s) responsable(s) des stages<br/>
-            {% for responsable in stageEtudiant.stagePeriode.responsables %}
-                {{ responsable.displayPr }}<br/>
-            {% endfor %}
-            {# {% if proposition.periode.personnel.signatureelectronique != null %} #}
-            {# <img src="{{ asset(linuxpath~'img/enseignants/signature/'~proposition.periode.personnel.signatureelectronique) }}" height="100px" /> #}
-            {# {% endif %} #}
+            {% if stageEtudiant.stagePeriode.responsables|length == 1 %}
+                {% if stageEtudiant.stagePeriode.responsables[0].civilite == 'M.' %}
+                    Le responsable des stages<br/>
+                {% else %}
+                    La responsable des stages<br/>
+                {% endif %}
+            {% else %}
+                Le(s) responsable(s) des stages<br/>
+                {% for responsable in stageEtudiant.stagePeriode.responsables %}
+                    {{ responsable.displayPr }}<br/>
+                {% endfor %}
+            {% endif %}
+            {% if stageEtudiant.stagePeriode.responsables[0].signatureElectronique != null %}
+                <br/>
+                <img src="{{ settings('BASE_PATH') }}signature/{{ stageEtudiant.stagePeriode.responsables[0].signatureElectronique }}" width="100px"/>
+            {% endif %}
+            </td>
         </div>
     </div>
 
