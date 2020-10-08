@@ -31,11 +31,9 @@
             </div>
         </div>
         <div id="refcourrier">
-            {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }} N° {{ date('now')|date('Y') }}/{{ initiales }}
-                                                                      /{{ stageEtudiant.etudiant
-            .semestre.annee.diplome.assistantDiplome.prenom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee
-            .diplome
-            .assistantDiplome.nom|slice(0,1) }}
+            {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }}
+            N° {{ date('now')|date('Y') }}/{{ initiales }}
+            /{{ stageEtudiant.etudiant.semestre.annee.diplome.assistantDiplome.prenom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee.diplome.assistantDiplome.nom|slice(0,1) }}
         </div>
         <div id="datecourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.ville }},
