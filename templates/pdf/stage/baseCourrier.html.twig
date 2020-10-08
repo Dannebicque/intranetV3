@@ -31,8 +31,8 @@
             </div>
         </div>
         <div id="refcourrier">
-            {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }} N° {{ date('now')|date('Y') }}
-                                                                      /{{ initiales }}/{{ stageEtudiant.etudiant
+            {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }} N° {{ date('now')|date('Y') }}/{{ initiales }}
+                                                                      /{{ stageEtudiant.etudiant
             .semestre.annee.diplome.assistantDiplome.prenom|slice(0,1) }}{{ stageEtudiant.etudiant.semestre.annee
             .diplome
             .assistantDiplome.nom|slice(0,1) }}
@@ -53,8 +53,10 @@
             {% if stageEtudiant.stagePeriode.responsables|length == 1 %}
                 {% if stageEtudiant.stagePeriode.responsables[0].civilite == 'M.' %}
                     Le responsable des stages<br/>
+                    {{ stageEtudiant.stagePeriode.responsables[0].displayPr }}
                 {% else %}
                     La responsable des stages<br/>
+                    {{ stageEtudiant.stagePeriode.responsables[0].displayPr }}
                 {% endif %}
             {% else %}
                 Le(s) responsable(s) des stages<br/>
