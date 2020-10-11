@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 12:19
+// @lastUpdate 11/10/2020 07:39
 
 namespace App\Controller\administration\stage;
 
@@ -73,8 +73,9 @@ class StageEtudiantController extends BaseController
     ): JsonResponse {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
+        $type = $request->request->get('type');
 
-        $update = $myStageEtudiant->update($stageEtudiant, $name, $value);
+        $update = $myStageEtudiant->update($stageEtudiant, $name, $value, $type);
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
             Response::HTTP_INTERNAL_SERVER_ERROR);

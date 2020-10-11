@@ -86,8 +86,19 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.telephone'|trans }}</th>
-                    <td>{{ stageEtudiant.etudiant.tel1|tel_format }}
-                        ou {{ stageEtudiant.etudiant.tel2|tel_format }}</td>
+                    <td><a class="myedit"
+                           data-field="tel1"
+                           href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                           data-title="Corriger le numéro de téléphone">
+                            {{ stageEtudiant.etudiant.tel1|tel_format }}
+                        </a>
+                        ou <a class="myedit"
+                              data-field="tel2"
+                              href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                              data-title="Corriger le numéro de téléphone">
+                            {{ stageEtudiant.etudiant.tel2|tel_format }}
+                        </a>
+                    </td>
                 </tr>
                 {{ include('composants/adresse_array.html.twig', {adresse:stageEtudiant.etudiant.adresse,editable:'true'
                 }) }}
@@ -117,11 +128,27 @@
 
                 <tr>
                     <th>{{ 'table.dateDebutStage'|trans }}</th>
-                    <td>{{ stageEtudiant.dateDebutStage ? stageEtudiant.dateDebutStage|format_date('long') : '' }}</td>
+                    <td>
+                        <a class="myedit"
+                           data-field="dateDebutStage"
+                           data-type="date"
+                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           data-title="Corriger la date de début du stage">
+                            {{ stageEtudiant.dateDebutStage ? stageEtudiant.dateDebutStage|format_date('short') : '' }}
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dateFinStage'|trans }}</th>
-                    <td>{{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|format_date('long') : '' }}</td>
+                    <td>
+                        <a class="myedit"
+                           data-field="dateFinStage"
+                           data-type="date"
+                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           data-title="Corriger la date de début du stage">
+                            {{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|format_date('short') : '' }}
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dureeHebdomadaire'|trans }}</th>
