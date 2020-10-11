@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/08/2020 10:37
+// @lastUpdate 11/10/2020 16:15
 
 namespace App\Controller\administration;
 
@@ -33,40 +33,17 @@ class EvaluationController extends BaseController
     /**
      * @Route("/details/{uuid}", name="administration_evaluation_show", methods="GET|POST")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param Request      $request
      * @param MyEvaluation $myEvaluation
      * @param Evaluation   $evaluation
      *
      * @return RedirectResponse|Response
      */
-    public function show(Request $request, MyEvaluation $myEvaluation, Evaluation $evaluation)
+    public function show(MyEvaluation $myEvaluation, Evaluation $evaluation)
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
-        $form = $this->createForm(
-            EvaluationType::class,
-            $evaluation,
-            [
-                'departement'     => $this->dataUserSession->getDepartement(),
-                'semestre'        => $evaluation->getSemestre(),
-                'matiereDisabled' => true,
-                'locale'          => $request->getLocale(),
-                'attr'            => [
-                    'data-provide' => 'validation'
-                ]
-            ]
-        );
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.edit.success.flash');
-
-            return $this->redirectToRoute('administration_evaluation_show', ['uuid' => $evaluation->getUuidString()]);
-        }
 
         return $this->render('administration/evaluation/show.html.twig', [
             'evaluation' => $evaluation,
-            'form'       => $form->createView(),
             'notes'      => $notes
         ]);
     }
@@ -131,7 +108,6 @@ class EvaluationController extends BaseController
         return $this->render('administration/evaluation/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes,
-            'autorise'   => true
         ]);
     }
 

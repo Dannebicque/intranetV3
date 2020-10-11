@@ -44,7 +44,10 @@
         </header>
         <div class="card-content">
             <div class="card-body">
-                {{ include('composants/_edit_eval.html.twig') }}
+                {{ render_esi(controller(
+                    'App\\Controller\\composants\\NoteController::editFormEvaluation', {evaluation: evaluation.id,
+                        source: 'admin', autorise:true}
+                )) }}
             </div>
         </div>
     </div>
@@ -56,8 +59,6 @@
             {{ include('composants/_saisie_notes.html.twig') }}
         </div>
     </div>
-
-    {# todo: gérer le modal pour ajotuer des enseignants dans les notes #}
 {% endblock %}
 
 
