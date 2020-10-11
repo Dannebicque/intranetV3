@@ -54,10 +54,12 @@
 {% block content %}
     <table style="width:100%; border-spacing: 0;">
         <tr>
-            <td width="40%">&nbsp;</td>
-            <td width="60%" style="font-size:16px; text-align: center; border: 1px solid black;
-            padding:10px; font-weight: bold">Année universitaire : 2020/2021<br><br>Convention de stage (après le 11 mai
-                                             2020)
+            <td style="width:40%">&nbsp;</td>
+            <td style="font-size:16px; text-align: center; border: 1px solid black;
+            padding:10px; font-weight: bold; width:60%">Année universitaire : 2020/2021<br><br>Convention de stage
+                                                        (après le 11
+                                                        mai
+                                                        2020)
             </td>
         </tr>
     </table>
@@ -86,8 +88,8 @@
                 <p>Nom : {{ proposition.entreprise.raisonSociale }}</p>
                 <p>Adresse
                    : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}</p>
-                <p>Représenté par (nom du signataire de la convention) :</p>
-                {{ proposition.entreprise.responsable.display }}</p>
+                <p>Représenté par (nom du signataire de la convention) :<br>
+                    {{ proposition.entreprise.responsable.display }}</p>
                 <p>Qualité du représentant : {{ proposition.entreprise.responsable.fonction }}</p>
                 <p>Service dans lequel le stage sera effectué : {{ proposition.serviceStageEntreprise }}</p>
                 <p>Tél. : {{ proposition.entreprise.responsable.telephone }}</p>
@@ -228,7 +230,7 @@
 
         La législation française protégera directement le stagiaire en cas d'accident du travail dont la rémunération
         est
-        inférieure ou égale à 3,90 euros pour une heure. De la rémunération est au-dessus de cela, l'organisation
+        inférieure ou égale à 3,90 euros pour une heure. Si la rémunération est au-dessus de cela, l'organisation
         d'accueil est entièrement responsable.<br>
     </div>
     <div style="page-break-after: always"></div>
@@ -352,7 +354,8 @@
                 les étudiants en médecine, en chirurgie dentaire ou en pharmacie qui le font ne pas avoir de statut
                 hospitalier pendant le cours dispensé dans les conditions prévues au b du 2ème article L.412-8 du Code
                 des assurances sociales, l'organisme d'accueil transmet la déclaration à la Caisse Primaire d'Assurance
-                Maladie ou la caisse maladie compétente (voir adresse page 1)
+                Maladie ou la caisse maladie compétente (voir adresse page 1) mentionnant l'établissement d'enseignement
+                en tant qu'employeur, avec copie à l'établissement d'enseignement supérieur.
 
             </td>
         </tr>
@@ -361,16 +364,13 @@
     <table class="blocconvention_colonne">
         <tr>
             <td style="width: 50%;padding-right: 5px">
-                mentionnant l'établissement d'enseignement en tant qu'employeur, avec copie à l'établissement
-                d'enseignement supérieur.<br><br>
-
                 6.2 - Rémunération supérieure à 15% du plafond horaire de sécurité sociale: Les cotisations sociales
                 sont calculées sur la différence entre le montant de la rémunération et 15% du plafond horaire de la
                 sécurité sociale. L'étudiant stagiaire bénéficie d'une couverture légale conformément aux dispositions
                 des articles L.411-1 et suivants du Code des assurances sociales. En cas d'accident survenu à l'étudiant
                 stagiaire soit lors d'activités dans l'organisation, soit pendant le voyage, soit dans des lieux rendus
                 utiles aux fins de son stage, l'organisme d'accueil devra faire toutes les démarches nécessaires auprès
-                de la Caisse Primaire d’Assurance Maladie »et informer au plus tôt l'établissement d'enseignement
+                de la Caisse Primaire d’Assurance Maladie et informer au plus tôt l'établissement d'enseignement
                 supérieur.
                 <br><br>
                 6.3 - Assurance maladie pour les stagiaires travaillant à l'étranger<br>
@@ -384,7 +384,7 @@
                 demander le formulaire SE401Q (104 pour les stages en entreprise et 106 pour les stages universitaires);<br>
                 - Dans tous les autres cas, les étudiants qui encourent des frais médicaux peuvent être remboursés par
                 la mutuelle agissant en tant qu'agence de sécurité sociale étudiante, à leur retour et sur présentation
-                de justificatifs: le remboursement sera alors effectué sur la base des tarifs français . Des différences
+                de justificatifs: le remboursement sera alors effectué sur la base des tarifs français. Des différences
                 importantes peuvent exister entre les frais encourus et les tarifs français servant de base au
                 remboursement. Il est fortement conseillé aux étudiants de souscrire une assurance maladie
                 complémentaire spécifique valable pour le pays concerné et pour la durée de leur stage, le cours, auprès
@@ -395,18 +395,20 @@
                 2) Protection sociale de l'organisation d'accueil<br>
                 En cochant la case appropriée ci-dessous, l'organisation d'accueil indique si elle fournit une
                 couverture d'assurance maladie au stagiaire en vertu de la législation locale:<br>
-                * OUI: Cette couverture s'ajoute au maintien à l'étranger des droits accordés par la loi française<br>
-                * NON: la couverture est donc exclusivement assurée par le maintien à l'étranger des droits accordés
-                dans le cadre de la couverture étudiante française).<br>
-                Si aucune case n'est cochée, l'article 6.3-1 s'applique<br>
+                [ ] OUI: Cette couverture s'ajoute au maintien à l'étranger des droits accordés par la loi
+                française<br>
+                [ ] NON: la couverture est donc exclusivement assurée par le maintien à l'étranger des droits
+                accordés
+                dans le cadre de la couverture étudiante française.<br>
+                Si aucune case n'est cochée, l'article 6.3-1 s'applique.<br>
                 <br>
                 6.4 Couverture des accidents du travail pour les stagiaires à l'étranger<br>
                 1) Afin de bénéficier de la législation française couvrant les accidents du travail, ce stage doit:<br>
-                - ont une durée n'excédant pas six mois, y compris toute prolongation;<br>
+                - avoir une durée n'excédant pas six mois, y compris toute prolongation;<br>
                 - ne pas inclure de rémunération susceptible de donner droit à une protection contre les accidents du
                 travail dans le pays d'accueil; les compensations ou allocations sont acceptables, dans la limite de 15%
-                du plafond horaire de la sécurité sociale<br>
-                (voir point 5) et sous réserve de l'approbation par l'Agence d'assurance maladie primaire d'une demande
+                du plafond horaire de la sécurité sociale (voir point 5) et sous réserve de l'approbation par
+                l'Agence d'assurance maladie primaire d'une demande
                 de maintien de ces droits;<br>
                 - avoir lieu exclusivement au sein de l'organisation signataire de cet accord;<br>
                 - avoir lieu exclusivement dans le pays hôte étranger susmentionné.<br>
@@ -420,19 +422,22 @@
                 [ ] sur le trajet normal aller-retour entre la résidence du stagiaire dans le pays étranger et le lieu
                 du stage,<br>
                 [ ] dans le cadre d'une mission fournie par l'organisation d'accueil du stagiaire lors d'un mandat de
-                mission formel,pendant le premier voyage de son domicile à son lieu de résidence au cours de
+                mission formel, pendant le premier voyage de son domicile à son lieu de résidence au cours du stage
+                (voyage à la date de début du stage), pendant le dernier voyage de retour de sa résidence pendant le
+                stage à son domicile personnel.
 
             </td>
             <td style="width: 50%;padding-left: 5px">
-                stage (voyage à la date de début du stage), Uringpendant le dernier voyage de retour de sa résidence
-                pendant le stage à son domicile personnel. 4) Dans le cas où l'une des conditions énoncées à la section
-                6.4-1 / n'est pas remplie, l'organisation d'accueil s'engage à couvrir le stagiaire contre les risques
+                4) Dans le cas où l'une des conditions énoncées à la section 6.4-1 / n'est pas remplie, l'organisation
+                d'accueil s'engage à couvrir le stagiaire contre les risques
                 d'accidents du travail, d'accidents de voyage et de maladies professionnelles, et à fournir toutes les
-                déclarations nécessaires de couverture. 5) Dans tous les cas: si l'étudiant est victime d'un accident
-                du travail pendant son stage, le l'organisation d'accueil doit informer immédiatement l'établissement
-                d'enseignement de l'accident; si l'étudiant effectue des missions limitées en dehors de l'organisation
-                d'accueil ou en dehors du pays du stage, l'organisation d'accueil doit prendre toutes les mesures
-                nécessaires pour lui fournir l'assurance appropriée.
+                déclarations nécessaires de couverture. <br>
+                5) Dans tous les cas: <br>
+                - si l'étudiant est victime d'un accident du travail pendant son stage, l'organisation d'accueil
+                doit informer immédiatement l'établissement d'enseignement de l'accident; <br>
+                - si l'étudiant effectue des missions limitées en dehors de l'organisation d'accueil ou en dehors du
+                pays du stage, l'organisation d'accueil doit prendre toutes les mesures nécessaires pour lui fournir
+                l'assurance appropriée.
                 <br><br>
                 Article 7: Responsabilité civile et assurance <br>
                 L'organisation d'accueil et l'étudiant déclarent être couverts par la responsabilité civile. Quelle que
@@ -452,7 +457,7 @@
                 organisation d'accueil ET à son établissement d'enseignement supérieur.<br>
                 Les procédures disciplinaires ne peuvent être déterminées que par l'établissement d'enseignement
                 supérieur. En cas de manquement à la discipline, l'organisation d'accueil doit informer le tuteur
-                académique et l'établissement d'enseignement supérieur de la ou des manquements et fournir les éléments
+                académique et l'établissement d'enseignement supérieur du ou des manquements et fournir les éléments
                 constitutifs.<br>
                 En cas de manquement à la discipline particulièrement grave, l'organisation d'accueil se réserve le
                 droit de mettre fin au stage dans le respect des clauses fixées à l'article 9 du présent contrat.<br>
@@ -501,7 +506,7 @@
         Article 11: Propriété intellectuelle<br>
         Conformément au Code de la propriété intellectuelle, si le travail entrepris par le stagiaire aboutit à la
         création d'une œuvre protégée par le droit d'auteur ou la propriété industrielle (y compris les logiciels), et
-        si l'organisation d'accueil souhaite utiliser l'œuvre et que l'étudiant y consent Pour cela, un contrat doit
+        si l'organisation d'accueil souhaite utiliser l'œuvre et que l'étudiant y consent, un contrat doit
         être établi et signé par le stagiaire (auteur) et l'organisation d'accueil.<br>
         Le contrat doit notamment inclure l'étendue des droits transférés, les conditions d'exclusivité, la destination
         du travail, les ressources utilisées et la durée du transfert des droits ainsi que la rémunération totale due à
@@ -521,7 +526,7 @@
         3) Evaluation de l'activité de l'étudiant: A l'issue du stage, l'organisme d'accueil remplira un formulaire
         d'évaluation en fonction des performances du stagiaire (voir annexe) qui devra être retourné au tuteur
         académique de l'établissement d'enseignement supérieur.<br>
-        4) Méthodes d'évaluation pédagogique: l'étudiant doit: (préciser la nature du travail à fournir par une pièce
+        4) Méthodes d'évaluation pédagogique: (préciser la nature du travail à fournir par une pièce
         jointe en annexe, si nécessaire) {{ proposition.stagePeriode.documentRendre }}.<br>
         Indiquez les conditions de validation du stage, le cas
         échéant: {{ proposition.stagePeriode.modaliteEvaluationPedagogique }}.<br>
@@ -536,7 +541,7 @@
         à la juridiction française compétente.<br>
     </div>
     <br><br><br>
-    <strong>A</strong> Troyes <strong>DATE</strong> {{ 'now'|date('d/m/Y') }}
+    <strong>A</strong> Troyes <strong>le</strong> {{ 'now'|date('d/m/Y') }}
     <br>
     <br>
     <br>
@@ -560,9 +565,8 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td><strong>Stagiaire (ou son représentant légal échéant)</strong><br/>Nom et signature
-                                                                                   :<br/>{{ proposition.etudiant
-                .displayPr }}</td>
+            <td><strong>Stagiaire (ou son représentant légal échéant)</strong><br/>
+                Nom et signature:<br/>{{ proposition.etudiant.displayPr }}</td>
             <td></td>
         </tr>
         <tr style="height: 120px;">
@@ -575,7 +579,7 @@
                 {% if proposition.tuteurUniversitaire.signatureElectronique != null %}
                     <br/>
                     <img src="{{ settings('BASE_PATH') }}signature/{{ proposition.tuteurUniversitaire
-                    .signatureElectronique }}" width="100px"/>
+                    .signatureElectronique }}" width="100px" alt="Signature électronique"/>
                 {% endif %}
             </td>
             <td><strong>Le tuteur de l’organisme d’accueil</strong><br/>
@@ -597,10 +601,10 @@
     <div style="page-break-after: always"></div>
     <table style="width:100%; border-spacing: 0;">
         <tr>
-            <td width="40%" style="font-size: 12px; font-weight: bold">(1) Attestation de stage</td>
-            <td width="60%" style="font-size:16px; text-align: center; border:1px solid black;
-            padding:10px; font-weight: bold">Attestation de stage<br>
-                                             À remettre à la fin du stage par l’organisme d’accueil
+            <td style="font-size: 12px; font-weight: bold; width:40%">(1) Attestation de stage</td>
+            <td style="font-size:16px; text-align: center; border:1px solid black;
+            padding:10px; font-weight: bold; width:60%">Attestation de stage<br>
+                                                        À remettre à la fin du stage par l’organisme d’accueil
             </td>
         </tr>
     </table>
