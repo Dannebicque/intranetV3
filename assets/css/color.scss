@@ -2,7 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/color.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/09/2020 10:40
+// @lastUpdate 11/10/2020 15:06
+@use "sass:map";
 
 $colors: (
         blue:#007bff,
@@ -17,6 +18,7 @@ $colors: (
         cyan: #17a2b8
 );
 
+
 @each $color-key, $color-value in $colors {
   .cm_#{$color-key} {
     background-color: $color-value;
@@ -30,5 +32,8 @@ $colors: (
     background-color: lighten($color-value, 20%);
   }
 
+  .carre_#{$color-key} {
+    background-color: $color-value;
+  }
 }
 

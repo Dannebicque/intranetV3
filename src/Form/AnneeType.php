@@ -3,16 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 11/10/2020 15:17
 
 namespace App\Form;
 
 use App\Entity\Annee;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\Type\YesNoType;
 use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -64,25 +66,10 @@ class AnneeType extends AbstractType
             ->add('ordre', TextType::class, [
                 'label' => 'label.ordre'
             ])
-            ->add('couleur', ColorType::class, [
+            ->add('couleur', ChoiceType::class, [
                 'label'    => 'label.couleur',
-                'required' => true
-            ])
-            ->add('couleurCm', ColorType::class, [
-                'label'    => 'label.couleur_cm',
-                'required' => false
-            ])
-            ->add('couleurTd', ColorType::class, [
-                'label'    => 'label.couleur_td',
-                'required' => false
-            ])
-            ->add('couleurTp', ColorType::class, [
-                'label'    => 'label.couleur_tp',
-                'required' => false
-            ])
-            ->add('couleurTexte', ColorType::class, [
-                'label'    => 'label.couleur_texte',
-                'required' => false
+                'required' => true,
+                'choices'  => Constantes::COULEURS
             ])
             ->add('optAlternance', YesNoType::class, [
                 'label' => 'label.opt_alternance'

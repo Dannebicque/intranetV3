@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 08:42
+// @lastUpdate 11/10/2020 14:27
 
 namespace App\Entity;
 
@@ -34,34 +34,6 @@ class Annee extends BaseEntity
      * @ORM\Column(name="ordre", type="integer")
      */
     private int $ordre = 1;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="couleurCM", type="string", length=7,nullable=true)
-     */
-    private ?string $couleurCm;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="couleurTD", type="string", length=7,nullable=true)
-     */
-    private ?string $couleurTd;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="couleurTP", type="string", length=7,nullable=true)
-     */
-    private ?string $couleurTp;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="couleurtexte", type="string", length=7,nullable=true)
-     */
-    private ?string $couleurTexte;
 
     /**
      * @var string
@@ -140,70 +112,6 @@ class Annee extends BaseEntity
     public function setOrdre(int $ordre): void
     {
         $this->ordre = $ordre;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCouleurCm(): ?string
-    {
-        return $this->couleurCm;
-    }
-
-    /**
-     * @param string $couleurCm
-     */
-    public function setCouleurCm(string $couleurCm): void
-    {
-        $this->couleurCm = $couleurCm;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCouleurTd(): ?string
-    {
-        return $this->couleurTd;
-    }
-
-    /**
-     * @param string $couleurTd
-     */
-    public function setCouleurTd(string $couleurTd): void
-    {
-        $this->couleurTd = $couleurTd;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCouleurTp(): ?string
-    {
-        return $this->couleurTp;
-    }
-
-    /**
-     * @param string $couleurTp
-     */
-    public function setCouleurTp(string $couleurTp): void
-    {
-        $this->couleurTp = $couleurTp;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCouleurTexte(): ?string
-    {
-        return $this->couleurTexte;
-    }
-
-    /**
-     * @param string $couleurTexte
-     */
-    public function setCouleurTexte(string $couleurTexte): void
-    {
-        $this->couleurTexte = $couleurTexte;
     }
 
     /**
