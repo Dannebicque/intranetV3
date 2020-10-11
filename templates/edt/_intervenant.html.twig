@@ -48,8 +48,8 @@
                             <br>{{ tabHeures[ligne][1] }}</div>
                         {% for j in 1..5 %}
                             {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
-                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
-                                     style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %} {{ edt.planning[j][ligne].couleur }}"
+                                     style="color:{{ edt.planning[j][ligne].couleurTexte }};">
                                     {% if edt.planning[j][ligne].pl != "" %}
                                     <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
                                     .couleurTexte }};">
@@ -67,7 +67,7 @@
 
                                 </div>
                             {% else %}
-                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
+                                <div class="edt-etudiant-col1 edt-cours edt-vide {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
                                     &nbsp;
                                 </div>
                             {% endif %}

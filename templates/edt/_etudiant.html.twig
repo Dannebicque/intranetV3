@@ -77,8 +77,8 @@
                     <br>{{ tabHeures[ligne][1] }}</div>
                 {% for j in 1..5 %}
                     {% if edt.planning[j][ligne] is defined %}
-                        <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
-                             style="background-color:{{ edt.planning[j][ligne].couleur }}; color:{{ edt.planning[j][ligne].couleurTexte }};">
+                        <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %} {{ edt.planning[j][ligne].couleur }}"
+                             style="color:{{ edt.planning[j][ligne].couleurTexte }};">
                             {% if edt.planning[j][ligne].id != '' %}
                             <a href="#" data-provide="modaler"
                                data-url="{{ path('edt_etudiant_detail_event', {'event': edt.planning[j][ligne].id,type: 'planning'}) }}"
@@ -99,7 +99,7 @@
                             {% endif %}
                         </div>
                     {% else %}
-                        <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"></div>
+                        <div class="edt-etudiant-col1 edt-cours edt-vide {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"></div>
                     {% endif %}
                 {% endfor %}
             {% endfor %}

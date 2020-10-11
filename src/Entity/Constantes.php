@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 06:42
+// @lastUpdate 11/10/2020 15:17
 
 /**
  * Created by PhpStorm.
@@ -216,6 +216,19 @@ class Constantes
         5 => ['14h00', '15h25'],
         6 => ['15h35', '17h00'],
         7 => ['17h10', '18h35']
+    ];
+
+    public const COULEURS = [
+        'Bleu'          => 'blue',
+        'Indigo'        => 'Indigo',
+        'Mauve/pourpre' => 'purple',
+        'Rose'          => 'pink',
+        'Rouge'         => 'red',
+        'Orange'        => 'orange',
+        'Jaune'         => 'yellow',
+        'Vert'          => 'green',
+        'Turquoise'     => 'teal',
+        'Cyan'          => 'cyan'
     ];
 
 }

@@ -58,34 +58,21 @@
               <td>{{ annee.codeVersion }}</td>
             </tr>
             <tr>
-              <th>{{ 'table.code_departement'|trans }}</th>
-              <td>{{ annee.codeDepartement }}</td>
+                <th>{{ 'table.code_departement'|trans }}</th>
+                <td>{{ annee.codeDepartement }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_alternance'|trans }}</th>
                 <td>{{ annee.optAlternance ? 'Yes'|trans : 'No'|trans }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.couleur_cm'|trans }}</th>
-                <td><span class="carre"
-                          style="background-color: {{ annee.couleurCm }}">&nbsp;</span> {{ annee.couleurCm }}</td>
+                <th>{{ 'table.couleur'|trans }}</th>
+                <td>
+                    <span class="carre carre_{{ annee.couleur }}">&nbsp;</span> {{ annee.couleur }}
+                    (Emploi du temps : <span class="cm_{{ annee.couleur }}">CM</span>,
+                    <span class="td_{{ annee.couleur }}">TD</span>, <span class="tp_{{ annee.couleur }}">TP</span>)
+                </td>
             </tr>
-            <tr>
-                <th>{{ 'table.couleur_td'|trans }}</th>
-                <td><span class="carre"
-                          style="background-color: {{ annee.couleurTd }}">&nbsp;</span> {{ annee.couleurTd }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.couleur_tp'|trans }}</th>
-                <td><span class="carre"
-                          style="background-color: {{ annee.couleurTp }}">&nbsp;</span> {{ annee.couleurTp }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.couleur_texte'|trans }}</th>
-                <td><span class="carre"
-                          style="background-color: {{ annee.couleurTexte }}">&nbsp;</span> {{ annee.couleurTexte }}</td>
-            </tr>
-
         </tbody>
     </table>
     </div>

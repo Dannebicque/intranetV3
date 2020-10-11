@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 11/10/2020 15:17
 
 /**
  * Created by PhpStorm.
@@ -296,8 +296,8 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     break;
                 case 'TD':
                 case 'td':
-                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 2;
-                    $taille = 8;
+                $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 2;
+                $taille = 12;
                     break;
             }
 
@@ -332,16 +332,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
      */
     private function getCouleur(EdtPlanning $p): ?string
     {
-        switch ($p->getType()) {
-            case 'CM':
+        switch (strtolower($p->getType())) {
             case 'cm':
-                return $p->getSemestre()->getAnnee()->getCouleurCM();
-            case 'TD':
             case 'td':
-                return $p->getSemestre()->getAnnee()->getCouleurTd();
-            case 'TP':
             case 'tp':
-                return $p->getSemestre()->getAnnee()->getCouleurTp();
+                return strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
             default:
                 return 'CCCCCC';
         }
@@ -354,7 +349,14 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
      */
     private function getCouleurTexte(EdtPlanning $p): string
     {
-        return $p->getSemestre()->getAnnee()->getCouleurTexte();
+        switch ($p->getSemestre()->getAnnee()->getCouleur()) {
+            case 'pink':
+            case 'red':
+            case 'orange':
+                return 'black';
+            default:
+                return 'white';
+        }
     }
 
     /**

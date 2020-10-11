@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/09/2020 10:33
+// @lastUpdate 11/10/2020 15:08
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -201,9 +201,12 @@ fieldset legend {
 }
 
 .edt-cours {
-  background-color: #EBEAEA;
   text-align: center;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+.edt-vide {
+  background-color: #EBEAEA;
 }
 
 table {
