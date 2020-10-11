@@ -411,7 +411,7 @@ administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
 administration.evaluation.details.heading: 'Détails d''une évaluation'
 administration.heading: Administration
-administration.note.saisie.titre: __administration.note.saisie.titre
+administration.note.saisie.titre: 'Saisie d''une évaluation'
 administration.previsionnel.heading: 'Prévisionnels de la formation (année : %annee%)'
 adresse.de.letudiant: 'Adresse de l''étudiant'
 adresse.parentale: 'Adresse parentale'
