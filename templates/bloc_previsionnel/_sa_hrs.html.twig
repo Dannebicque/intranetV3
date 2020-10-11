@@ -19,8 +19,7 @@
             {% for hr in previsionnel.hrs %}
                 <tr>
                     <td>{{ hr.libelle }}</td>
-                    <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non
-                    .defini'|trans) }}</td>
+                    <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
                     <td>{{ hr.typeHrs ? hr.typeHrs.libelle : 'non.defini'|trans }}</td>
                     <td>{{ hr.nbHeuresTd }} h</td>
                 </tr>

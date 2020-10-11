@@ -22,12 +22,9 @@
                     <th>Id</th>
                     <td>{{ materiel_commun.id }}</td>
                 </tr>
+
                 <tr>
-                    <th>Created</th>
-                    <td>{{ materiel_commun.created ? materiel_commun.created|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Updated</th>
+                    <th>{{ 'table.updated'|trans }}</th>
                     <td>{{ materiel_commun.updated ? materiel_commun.updated|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 09:02
+// @lastUpdate 11/10/2020 12:12
 
 namespace App\Controller;
 
@@ -32,7 +32,7 @@ use Twig\Error\SyntaxError;
 class TrombinoscopeController extends BaseController
 {
     /**
-     * @Route("/", name="trombinoscope_index")
+     * @Route("", name="trombinoscope_index")
      */
     public function index(): Response
     {

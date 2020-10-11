@@ -1,0 +1,1959 @@
+__name__label__: __name__label__
+.show.heading: .show.heading
+'%diff% heure': '%diff% heure'
+'%diff% jour': '8 jours'
+'%diff% minute': '%diff% minute'
+'%diff% mois': '1 mois'
+'%diff% seconde': '%diff% secondes'
+'%diff%': '%diff%'
+'Account has expired.': 'Le compte a expiré.'
+'Account is disabled.': 'Le compte est désactivé.'
+'Account is locked.': 'Le compte est bloqué.'
+'An authentication exception occurred.': 'Une exception d''authentification s''est produite.'
+'Authentication credentials could not be found.': 'Les identifiants d''authentification n''ont pas pu être trouvés.'
+'Authentication request could not be processed due to a system problem.': 'La requête d''authentification n''a pas pu être executée à cause d''un problème système.'
+'Capacité d''adaptation': 'Capacité d''adaptation'
+'CODE ELEMENT*': 'CODE ELEMENT*'
+'CODE HARPEGE*': 'CODE HARPEGE*'
+'CODE VET': 'CODE VET'
+'Commentaire libre': 'Commentaire libre'
+'Comportement de manière globale': 'Comportement de manière globale'
+'Cookie has already been used by someone else.': 'Le cookie a déjà été utilisé par quelqu''un d''autre.'
+'copie chgt.etat_stage_autorise': 'copie stage autorisé'
+'copie chgt.etat_stage_depose': 'copie formulaire de stage complété'
+'copie chgt.etat_stage_valide': '[COPIE] Votre stage est validé'
+'copie mail.chgt.etat_stage_autorise': '[COPIE] Saisie des informations du stage autorisée'
+'copie mail.chgt.etat_stage_convention_envoyee': '[COPIE] Votre convention de stage est envoyée à l''entreprise'
+'copie mail.chgt.etat_stage_convention_imprimee': '[COPIE] Votre convention de stage est imprimée'
+'copie mail.chgt.etat_stage_convention_recue': '[COPIE] Votre convention de stage est revenue signée par l''entreprise'
+'copie mail.chgt.etat_stage_depose': '[COPIE] Formulaire complété par l''étudiant'
+'copie mail.chgt.etat_stage_valide': '[COPIE] Votre stage est validé'
+'Credentials have expired.': 'Les identifiants ont expiré.'
+'Date de l''entretien': 'Date de l''entretien'
+'Date debut': 'Date de début'
+'Date fermeture': 'Date fermeture'
+'Date fin': 'Date de fin'
+'Date ouverture': 'Date ouverture'
+'Demande de rattrapage acceptée': 'Demande de rattrapage acceptée'
+'Formulaire de stage complété': 'Formulaire de stage complété'
+'GP CM PREVU*': 'GP CM PREVU*'
+'GP TD PREVU*': 'GP TD PREVU*'
+'GP TP PREVU*': 'GP TP PREVU*'
+'H CM PREVU*': 'H CM PREVU*'
+'H TD PREVU*': 'H TD PREVU*'
+'H TP PREVU*': 'H TP PREVU*'
+'Intégration dans l''entreprise': 'Intégration dans l''entreprise'
+'Invalid credentials.': 'Identifiants invalides.'
+'Invalid CSRF token.': 'Jeton CSRF invalide.'
+'Justificatif d''absence accepté': 'Justificatif d''absence accepté'
+'Libelle long': 'Libellé long'
+'LIBELLE VET': 'LIBELLE VET'
+'Méthode de l''entretien': 'Méthode de l''entretien'
+'Modification de la visibilité des notes effectuées': 'Modification de la visibilité des notes effectuées'
+'Mot de passe perdu': 'Mot de passe perdu'
+'Niveau de performances': 'Niveau de performances'
+'No authentication provider found to support the authentication token.': "Aucun fournisseur d'authentification n'a été trouvé pour supporter le jeton\n          d'authentification.\n        "
+'No session available, it either timed out or cookies are not enabled.': 'Aucune session disponible, celle-ci a expiré ou les cookies ne sont pas activés.'
+'No token could be found.': 'Aucun jeton n''a pu être trouvé.'
+'No': Non
+'NOM PRENOM': 'NOM PRENOM'
+'Not privileged to request the resource.': 'Privilèges insuffisants pour accéder à la ressource.'
+'Nouvelle absence enregistrée': 'Nouvelle absence enregistrée'
+'Prise d''initiative': 'Prise d''initiative'
+'Quizz questionnaires': 'Quizz questionnaires'
+'Quizz reponses': 'Quizz reponses'
+'Remise Copie': 'Remise Copie'
+'remise copie': 'remise copie'
+'Respect des délais': 'Respect des délais'
+'Suppression d''une absence enregistrée': 'Suppression d''une absence enregistrée'
+'texte d''aide': 'texte d''aide'
+'Texte explication': 'Texte explication'
+
+'Très Bonne': 'Très Bonne'
+'Type contrat': 'Type de contrat'
+'Username could not be found.': 'Le nom d''utilisateur n''a pas pu être trouvé.'
+'Yes': Oui
+"consulter.son.site.personnel": 'Consulter son site personnel'
+a.saisir: 'à saisir'
+about.heading: 'A propos'
+
+abs:
+  justificiatif:
+    date_debut: 'Date de début du justificatif'
+    date_fin: 'Date de fin du justificatif'
+    etat: 'Etat du justificatif'
+    etudiant: Etudiant
+    fichier: Fichier
+    motif: 'Motif de l''absence'
+
+absence_justificatif_deposer: 'Déposer un justificatif d''absence'
+absence_justificatif_etat: 'Etat du justificatif d''absence'
+absence_justificatif:
+  add.success.flash: 'Justificatif d''absence ajouté avec succès'
+  delete.success.flash: 'Justificatif d''absence supprimé avec succès'
+  edit.success.flash: 'Justificatif d''absence modifié avec succès'
+
+absence:
+  added: 'Absence ajoutée'
+  delete.success.flash: 'Absence supprimée avec succès'
+  justificatif.valide.success.flash: 'Justificatif d''absence validé avec succès'
+  removed: 'Absence supprimée'
+
+ACCEPTE: ACCEPTE
+acceptee: Acceptée
+actions: Actions
+
+actualite:
+  add.success.flash: 'Actualité ajoutée avec succès'
+  duplicate.success.flash: 'Actualité dupliquée avec succès'
+  edit.success.flash: 'Actualité modifiée avec succès'
+  liste.heading: 'Liste des actualités'
+
+adm:
+  actualite:
+    index.heading: 'Liste des actualités'
+    modification.heading: 'Modification d''une actualité'
+    new.heading: 'Création d''une actualité'
+    show.heading: 'Détails d''une actualité'
+  actualites.bornes: Actualités/Bornes
+  ajouter.articles: 'Ajouter un article (RI/Formation/...)'
+  alternance:
+    fiche_suivi:
+      edit.heading: 'Modification d''une fiche de suivi d''une alternance'
+      new.heading: 'Création d''une fiche de suivi d''une alternance'
+      show.heading: 'Détails de la fiche de suivi d''alternance de %etudiant%'
+    index.heading: 'Gestion des Alternances de l''année %annee%'
+    modification.heading: 'Modification d''une Alternance'
+    show.heading: 'Détails de l''aternance de %etudiant%'
+  alternances: Alternances
+  analyser.competences: 'Analyser les compétences'
+  annee_universitaire:
+    departement.heading: 'Année universitaire des départements'
+    index.heading: 'Gestion des années universitaires'
+    modification.heading: 'Modification d''une année universitaire'
+    new.heading: 'Création d''une année universitaire'
+    show.heading: 'Détails d''une année universitaire'
+  apogee.index.heading: Apogée
+  article:
+    index.heading: 'Liste des articles'
+    modification.heading: 'Modification d''un article'
+    new.heading: 'Création d''un article'
+    show.heading: 'Détails d''un article'
+  articles: Articles
+  bac:
+    index.heading: 'Gestion des diplômes du bac'
+    modification.heading: 'Modification d''un diplôme du bac'
+    new.heading: 'Création d''un diplôme du bac'
+    show.heading: 'Détails d''un diplôme du bac'
+  borne:
+    index.heading: 'Liste des messages pour les bornes'
+    modification.heading: 'Modification d''un message des bornes'
+    new.heading: 'Création d''un message pour les bornes'
+    show.heading: 'Détails d''un message des bornes'
+  celcat_calendrier:
+    new.heading: 'Création d''un nouveau calendrier Celcat'
+    show.heading: 'Détails du calendrier Celcat'
+  cohortes: Cohortes
+  competence:
+    index.heading: 'Liste des compétences du diplôme'
+    modification.heading: 'Modification d''une compétence'
+    new.heading: 'Création d''une compétence'
+    show.heading: 'Détails d''une compétence'
+  competences: Compétences
+  configuration:
+    menu: Configuration
+    heading: 'Configuration de l''intranet'
+    new.heading: 'Nouveau paramètre de configuration'
+    show.heading: 'Détail d''un paramètre de configuration'
+    tab:
+      annee.heading: 'Options par année'
+      annee.menu: Année(s)
+      departement.heading: 'Configuration du département'
+      departement.menu: 'Configuration du département'
+      diplome.heading: 'Options par diplôme'
+      diplome.menu: Diplôme(s)
+      formation.heading: 'Options par formation'
+      formation.menu: Formation
+      semestre.heading: 'Options par semestre'
+      semestre.menu: Semestre(s)
+  creneau_cour:
+    duplicate.annee.heading: 'Dupliquer un créneau de cours'
+    menu: 'Créneaux de cours'
+    index.heading: 'Gestion des créneaux de cours'
+  date:
+    index.heading: 'Liste des événéments'
+    modification.heading: 'Modification d''un événement'
+    new.heading: 'Création d''un événement'
+    show.heading: 'Détails d''un événement'
+  document:
+    index.heading: 'Liste des documents'
+    modification.heading: 'Modification d''un document'
+    new.heading: 'Création d''un document'
+    show.heading: 'Détails d''un document'
+  documents: Documents
+  edt:
+    menu: 'Emploi du Temps'
+    actions: Actions
+    comparaison: 'Outils de comparaison'
+    comparaison.matieres: 'Comparaison de l''emploi du temps et du prévisionnel en fonction des matières'
+    comparaison.personnels: 'Comparaison de l''emploi du temps et du prévisionnel en fonction des personnels'
+    compare.matieres.heading: 'Comparaison de l''emploi du temps et du prévisionnel en fonction des matières'
+    compare.personnels.heading: 'Comparaison de l''emploi du temps et du prévisionnel en fonction des personnels'
+    effacer.semestre: 'Effacer un semestre'
+    export: Exports
+    export.index.heading: 'Exports de l''emploi du temps'
+    export.voir.heading: 'Voir les exports de l''emploi du temps'
+    import.semaine: 'Importer une semaine'
+    index.heading: 'Emploi du temps'
+    realise.chronologique.heading: 'Emploi du temps réalisé réalisé chronologique'
+    realise.index.heading: 'Emploi du temps réalisé'
+    service.realise: 'Services réalisés'
+  emprunt:
+    show.heading: 'Détails de l''emprunt'
+  emprunts:
+    menu: Emprunts
+    historique.heading: Historique des emprints
+    index.heading: 'Gestion des emprunts'
+  etudiant:
+    add.heading: 'Ajout d''étudiants'
+    edit.heading: 'Modification des données de l''étudiant %etudiant%'
+    import.photo.heading: 'Importer une photo'
+    semestre.parcours.heading: 'Parcours d''un étudiant'
+  etudiants: Etudiants
+  examens: Examens
+  gerer:
+    actualites: 'Gérer les actualités de l''intranet'
+    articles: 'Gérer les articles'
+    bornes: 'Gérer les bornes'
+    creneaux: 'Gérer créneaux de cours'
+    dates: 'Gestion des dates'
+    edt: 'Gérer l''emploi du temps'
+    les.categories.articles: 'Gérer les catégories d''articles'
+    les.categories.de.document: 'Gérer les catégories de documents'
+    les.competences: 'Gérer les compétences des diplômes'
+    les.documents: 'Gérer les documents'
+  gestion.des.etudiants.departement: 'Gestion des étudiants du département'
+  gestion.des.etudiants.formation: 'Gestion des étudiants de la formation'
+  groupe:
+    index.heading: 'Liste des groupes'
+    modification.heading: 'Modification d''un groupe'
+    new.heading: 'Création d''un groupe'
+    semestre.add.heading: 'Ajouter un groupe dans le semestre'
+    semestre.index.heading: 'Groupes du semestre'
+    show.heading: 'Détails d''un groupe'
+  groupes.index.titre: 'Gestion des groupes'
+  hrs:
+    add.heading: 'Création d''une HRS/Prime'
+    duplicate.annee.heading: 'Dupliquer les HRS et Primes pour une année'
+    index.heading: 'Liste des HRS et Primes pour l''année %annee%'
+    modification.heading: 'Modification d''une HRS ou Prime'
+    new.heading: 'Création d''une HRS ou Prime'
+    primes: HRS/Primes
+    supprimer.annee.heading: 'Supprimer les HRS et primes pour une année'
+  materiel_commun_reservation: 'Réservation du matériel commun'
+  materiel_commun:
+    index.heading: 'Gestion du matériel commun'
+    modification.heading: 'Modification d''un matériel commun'
+    new.heading: 'Création d''un matériel commun'
+    reservation.heading: 'Réservation de matériel commun'
+    show.heading: 'Détails d''un matériel commun'
+  materiel:
+    index.heading: 'Liste des matériels'
+    modification.heading: 'Modification d''un matériel'
+    new.heading: 'Ajout d''un matériel'
+    show.heading: 'Détails d''un matériel'
+  materiels: Matériels
+  matiere:
+    index.heading: 'Liste des matières'
+    modification.heading: 'Modification d''une matière'
+    new.heading: 'Création d''une matière'
+    show.heading: 'Détails d''une matière'
+  parametres:
+    departement: 'Paramètres du département'
+    formation: 'Paramètres de la formation'
+  permanents.et.vacataires: 'Permanents & vacataires de la formation'
+  personnel:
+    add.titre: 'Ajout d''un personnel dans la formation'
+    index.heading: 'Liste des personnels'
+    modification.heading: 'Modification d''un personnel'
+    new.heading: 'Création d''un personnel'
+    show.heading: 'Détails d''un personnel'
+  personnels: Personnels
+  ppn:
+    menu: PPN
+    copie.heading: 'Copie d''un PPN'
+    index.heading: 'Liste des PPN'
+    modification.heading: 'Modification d''un PPN'
+    new.heading: 'Création d''un PPN'
+    show.heading: 'Détails d''un PPN'
+  previsionnel:
+    duplicate.annee.heading: 'Dupliquer un prévisionnel'
+    index.heading: 'Liste des prévisionnels'
+    new.heading: 'Création d''un Service Prévisionnel'
+    supprimer.annee.heading: 'Supprimer le prévisionnel pour une année'
+  previsionnels: Prévisionnels
+  programme.pedagogique: 'Programmes Pédagogiques'
+  projet_periode:
+    index.heading: 'Périodes de projet tutoré'
+    modification.heading: 'Modification d''une période de projet tutoré'
+    new.heading: 'Création d''une période de projet tutoré'
+    show.heading: 'Détails d''une période de projet tutoré'
+  projet: Projets
+  salle_examen:
+    index.heading: 'Liste des salles d''évaluations'
+    modification.heading: 'Modifier une salle d''examen'
+    new.heading: 'Ajout d''une salle d''évaluation'
+    show.heading: 'Détails d''une salle d''examen'
+  salle_examens: 'Salles d''examens'
+  salle:
+    index.heading: 'Liste des salles de l''UFR'
+    modification.heading: 'Modification d''une salle'
+    new.heading: 'Création d''une salle'
+    show.heading: 'Détails d''une salle'
+  scolarite:
+    add.flashbag: 'Parcours de scolarité ajouté avec succès'
+    edit.heading: 'Modifier le parcours de scolarité de %etudiant%'
+  site:
+    index.heading: 'Liste des sites géographiques'
+    modification.heading: 'Modification d''un site géographique'
+    new.heading: 'Création d''un site géographique'
+    show.heading: 'Détails d''un site géographique'
+  stage_entreprise:
+    index.heading: 'Gestion des entreprises pour stage'
+  stage_etudiant:
+    modification.heading: 'Modification d''une entreprise'
+    show.heading: 'Détails du stage de l''étudiant'
+  stage_periode_courrier:
+    index.heading: 'Gestion des courriers pour la période de stage'
+  stage_periode_offre:
+    index.heading: 'Gestion des offres de stage pour la période'
+    modification.heading: 'Modification d''une offre de stage pour la période'
+    new.heading: 'Ajout d''une offre de stage pour la période'
+    show.heading: 'Détails d''une offre de stage pour la période'
+  stage_periode_soutenance:
+    index.heading: 'Gestion des soutenances pour la période'
+  stage_periode:
+    index.heading: 'Gestion des périodes de stage'
+    modification.heading: 'Période de stage modifiée avec succès'
+    new.heading: 'Création d''une période de stage'
+    show.heading: 'Détails d''une période de stage'
+  stages: Stages
+  statistiques:
+    menu: Statistiques
+    vue.detaillee.heading: 'Statistiques du département : vue détaillée'
+    vue.globale.heading: 'Statistiques du département : vue globale'
+  structure:
+    menu: 'Structure de la formation'
+    annee:
+      index.heading: 'Liste des années du diplôme'
+      modification.heading: 'Modification d''une année'
+      new.heading: 'Création d''une année'
+      show.heading: 'Détails d''une année'
+    departement: 'Structure du département (maquette)'
+    departement.modification.heading: 'Modification de la structure du département'
+    departement.new.heading: 'Création d''un département'
+    departement.show.heading: 'Détails de la structure du département'
+    diplome:
+      index.heading: 'Liste des diplômes d''une formation'
+      modification.heading: 'Modification d''un diplôme'
+      new.heading: 'Création d''un diplôme'
+      show.heading: 'Détails d''un diplôme'
+    formation: 'Structure / Configuration'
+    parcour:
+      modification.heading: 'Modification des parcours/options'
+      new.heading: 'Ajout d''un parcours/option'
+      show.heading: 'Détail d''un parcours/option'
+    semestre:
+      index.heading: 'Liste des semestres'
+      modification.heading: 'Modification d''un semestre'
+      new.heading: 'Création d''un semestre'
+      show.heading: 'Détails d''un semestre'
+    ue:
+      index.heading: 'Liste des Unités d''Enseignement (UE)'
+      modification.heading: 'Modification d''une Unité d''Enseignement (UE)'
+      new.heading: 'Création d''une Unité d''Enseignement (UE)'
+      show.heading: 'Détails d''une Unité d''Enseignement (UE)'
+  tous.les.etudiants: 'Tous les étudiants'
+  type_diplome:
+    index.heading: 'Liste des types de diplôme'
+    modification.heading: 'Modification d''un type de diplôme'
+    new.heading: 'Création d''un type de diplôme'
+    show.heading: 'Détails d''un type de diplôme'
+  type_document:
+    index.heading: 'Liste des catégories de document'
+    liste.documents: 'Liste des documents de la catégorie'
+    modification.heading: 'Modification d''un type de document'
+    new.heading: 'Création d''un type de document'
+    show.heading: 'Détails d''un type de document'
+  type_groupe:
+    modification.heading: 'Modification d''un type de groupe'
+    new.heading: 'Création d''un type de groupe'
+    show.heading: 'Détails d''un type de groupe'
+  type_hrs:
+    index.heading: 'Liste des types de primes et HRS'
+    modification.heading: 'Modification d''un type de prime ou HRS'
+    new.heading: 'Création d''un type de prime ou HRS'
+    show.heading: 'Détails d''un type de prime ou HRS'
+  type_materiel:
+    index.heading: 'Liste des catégories de matériel'
+    modification.heading: 'Modification d''une catégorie de matériel'
+    show.heading: 'Détails d''une type de matériel'
+  type.groupes: 'Types de Groupes'
+  type.groupes.index.titre: 'Liste des types de groupe'
+  typegroupe.semestre.index.heading: 'Type de groupe du semestre'
+  ufr:
+    index.heading: 'Liste des Composantes/UFR'
+    modification.heading: 'Modification d''une UFR'
+    new.heading: 'Création d''une UFR'
+    show.heading: 'Détails d''une UFR'
+
+administratif_homepage.heading: 'Tableau de bord administratif'
+administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
+administration.evaluation.details.heading: 'Détails d''une évaluation'
+administration.heading: Administration
+administration.note.saisie.titre: __administration.note.saisie.titre
+administration.previsionnel.heading: 'Prévisionnels de la formation (année : %annee%)'
+adresse.de.letudiant: 'Adresse de l''étudiant'
+adresse.parentale: 'Adresse parentale'
+affecter.enseignant.groupe: 'Affecter les enseignants aux groupes pour la saisie'
+affecter.enseignants.groupes: 'Affecter les enseignants aux groupes'
+afficher_masquer: afficher/masquer
+afficher.les.absences: 'Afficher les absences'
+afficher.les.notes: 'Afficher les notes'
+afficher.toutes.les.semaines: 'Afficher toutes les semaines'
+agenda.heading: 'Agenda / Emploi du temps'
+aide-sur.heading: 'Aide sur'
+aide: Aide
+aide.heading: Aide
+ajout.manuel.etudiant: 'Ajouter manuellement un étudiant'
+ajouter: Ajouter
+ajouter.annee.diplome: "Ajouter une nouvelle année au diplome %libelle%"
+Ajouter.des.etudiants: 'Ajouter des étudiants'
+ajouter.diplome.departement: 'Ajouter un diplôme'
+ajouter.diplome.formation: "Ajouter un nouveau diplôme à la formation %libelle%"
+ajouter.intervenant: 'Ajouter un intervenant'
+ajouter.ppn.diplome: 'Ajouter un PPN au diplôme'
+
+alternance:
+  edit.success.flash: 'Alternance modifiée avec succès'
+  init.all.success.flash: 'Toutes les alternances de l''année ont été initialisées'
+  init.one.success.flash: 'Initialisation d''une alternance avec succès'
+
+amenagements.particuliers: 'Aménagements particuliers'
+amis: Amis
+amphi: amphi
+annee_universitaire:
+  add.success.flash: 'Année universitaire ajoutée avec succès'
+  delete.error.flash: 'Erreur lros de la suppression d''une année universitaire'
+  delete.success.flash: 'Année universitaire supprimée avec succès'
+  duplicate.success.flash: 'Année universitaire dupliquée avec succès'
+  edit.success.flash: 'Année universitaire modifiée avec succès'
+
+annee:
+  add.success.flash: 'Année ajoutée avec succès'
+  create.success.flash: 'Année créée avec succès'
+  en.apprentissage: 'Année en apprentissage'
+  promotion: Promotion
+  universitaire: 'Année Universitaire'
+
+annuler: Annuler
+aout: Août
+
+app:
+  alternance_fiche_suivi:
+    new.heading: 'Création d''une fiche de suivi d''alternance'
+    show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
+  etudiant:
+    absence:
+      justificatif:
+        edit.heading: 'Modifier un justificatif d''absence'
+        index.heading: 'Liste de vos justificatifs d''absence'
+        new.heading: 'Déposer un nouveau justificatif d''absence'
+        show.heading: 'Détails d''un justificatif d''absence'
+    emprunt.show.heading: app.etudiant.emprunt.show.heading
+    justificatif.explication.index: "Les justificatifs sont validés manuellement. Il peut y avoir un délai de\n          traitement.\n        "
+  personnel:
+    absence:
+      date: 'Date de l''absence'
+      dateHeure: Date/Heure
+      duree: 'Durée d''absence'
+      heure: 'Heure de l''absence'
+      justifie: 'Absence justifiée'
+      nom: Nom
+      prenom: Prénom
+      saisiepar: 'Saisie par'
+      voir: 'Voir les absences'
+    alternance:
+      fiche_suivi:
+        edit.heading: 'Modifier une fiche de suivi d''alternance'
+        index.heading: 'Fiches de suivi pour l''alternance de %etudiant%'
+        new.heading: 'Ajout d''une fiche de suivi de l''alternance de %etudiant%'
+    carnet:
+      edit.heading: 'Modification d''un élément du cahier de texte'
+      new.heading: 'Ajouter un travail à rendre'
+      show.heading: 'Détails d''une note du cahier de texte'
+    note:
+      confirme.import.titre: 'Confirmer l''import des notes'
+      import.titre: 'Importer des notes'
+      index.titre: 'Evaluations / Notes'
+      saisie.titre: 'Saisir des notes'
+
+application:
+  disponibilite.heading: 'Vos disponibilités'
+  progression.heading: 'Progression pédagogique'
+  quizz.heading: Quizz
+  vos.stages.et.alternances.heading: 'Vos stages et alternances'
+  vos.stages.heading: 'Les stagiaires que vous suivez'
+  votre.previsionnel.chronologique.heading: 'Votre service réalisé chronologique'
+
+applications:
+  etudiant:
+    carnet.heading: 'Cahier de texte'
+    emprunt.heading: 'Vos emprunts'
+    projet.formulaire.heading: 'Formulaire pour la convention de projet'
+    qualite.questionnaire.heading: 'Questionnaire qualité de votre diplôme'
+    quizz.heading: Quizz
+    stage.formulaire.heading: 'Formulaire de proposition de stage'
+  heading: Applications
+
+apprentissage: Apprentissage
+article_categories: 'Catégories d''article'
+
+article:
+  add.success.flash: 'Article ajouté avec succès'
+  duplicate.success.flash: 'Article dupliqué avec succès'
+  edit.success.flash: 'Article modifié avec succès'
+
+assistant.creation.departement: 'Assistant pour la création d''un nouveau département'
+
+atitle:
+  accepter.la.demande: 'Accepter la demande'
+  accepter.le.justificatif: 'Accepter le justificatif et justifier les absences'
+  active: Activer
+  afficher_semestre: 'Afficher semestre'
+  afficher:
+    invisibile: 'Afficher invisible'
+    masquer: Afficher/masquer
+    visibile: 'Afficher visible'
+  agenda: 'Retour à l''emploi du temps'
+  ajouter_article: __ ajouter_article
+  annuler: Annuler
+  basculer.sous_comm_travail: 'Basculer vers la sous-commission de travail (editable)'
+  board: Board
+  changer.semestre: 'Changer de semestre'
+  code_celcat: 'Code Ceclat'
+  comparer_par_matiere: 'Comparer par matière'
+  comparer_par_personnels: 'Comparer par enseignant'
+  creer_nouveau_document: 'Créer un nouveau document'
+  creer_nouveau: 'Créer un élément'
+  creer_nouvelle_annee: 'Créer une nouvelle année'
+  deposer_nouvel_evenement: 'Déposer un nouvel événement'
+  deposer_nouvelle_actualite: 'Déposer une nouvelle actualité'
+  desactiver: Désactiver
+  details: Détails
+  dupliquer: Dupliquer
+  emprunt_accepte: 'Emprunt accepté'
+  emprunt_refuse: 'Emprunt refusé'
+  emprunt_revenu: 'Emprunt rendu'
+  emprunt_sortie: 'Emprunt sortie'
+  export_apogee: 'Export Apogée'
+  export_omega: 'Export OMEGA'
+  export: Exporter
+  exporter: Exporter
+  gerer_autorise_evaluation: 'Gérer les personnels autorisées à modifier l''évaluation'
+  historique.emprunt: 'Historique des emprunts'
+  import_etudiant: 'Importer des étudiants'
+  import_personnel: 'Importer personnels'
+  import_ppn: 'Importer PPN'
+  import_previsionnel: 'Importer un prévisionnel'
+  import: Importer
+  imprimer_pdf: 'Imprimer (pdf)'
+  imprimer: Imprimer
+  init_all: 'Tout initialiser'
+  initialiser_false: 'Initiliaser à "pas d''alternance"'
+  initialiser: (ré)Initialiser
+  lien_ical: 'Générer lien ICAL'
+  masquer_semestre: 'Masquer semestre'
+  modifier: Modifier
+  modifier.la.periode: 'Modifier la période'
+  nouveau_depot: 'Déposer un justificatif'
+  planning_annuel: 'Planning annuel'
+  planning: Planning
+  print: Imprimer
+  profil: Profil
+  refresh: Actualiser
+  refuser.le.justificatif: 'Refuser le justificatif'
+  reponses: Réponses
+  retirer_departement: 'Retirer du département'
+  retour_administratif: 'Retour à l''administration'
+  retour_administration: 'Retour à l''administration'
+  retour_application_stage: 'Retour application stage'
+  retour_applications: 'Retour à vos applications'
+  retour_categories: 'Retour aux catégories de document'
+  retour_dashboard: 'Retour au Dashboard'
+  retour_diplome: 'Retour au diplôme'
+  retour_edt: 'Retour emploi du temps'
+  retour_emprunt: retour_emprunt
+  retour_enquete: 'Retour aux enquêtes'
+  retour_etudiants: 'Retour à la liste des étudiants'
+  retour_groupe: 'Retour aux groupes'
+  retour_groupes: 'Retour aux groupes'
+  retour_index: 'Retour à l''index'
+  retour_informations: 'Retour aux informations'
+  retour_liste_diplome: 'Retour à la liste des diplômes'
+  retour_liste: 'Retour à la liste'
+  retour_matieres: 'Retour aux matières'
+  retour_profil: 'Retour au profil'
+  retour_saisie: 'Retour à la saisie'
+  retour_scolarite: 'Retour à la scolarité'
+  retour_semestres: 'Retour aux semestres'
+  retour_structure: 'Retour à la structure'
+  retour_super_administration: 'Retour au Dashboard de Super Administration'
+  retour_synthese: 'Retour à la synthèse'
+  retour:
+    alternance.etudiant: 'Retour à l''alternance de l''étudiant'
+    articles: 'Retour aux articles'
+    stage_periode_gestion: 'Retour à la période de stage'
+    stage_periode_offre: 'Retour aux offres de stage de la période'
+  saisir.evaluation: 'Saisir une évaluation'
+  save_csv: 'Exporter en CSV'
+  save_pdf: 'Sauvegarder en PDF'
+  save_xls: 'Export Excel (xlsx)'
+  settings: Paramètres
+  stage_courrier: 'Gestion des courriers'
+  stage_entreprises: 'Liste des entreprises'
+  stage_offres: 'Offres de stage'
+  stage_periode_offre: 'Offres de stage de la période'
+  stage_soutenances: 'Soutenances de stage'
+  supprimer: Supprimer
+  supprimer.impossible: 'Suppression impossible'
+  synchro_apogee: 'Synchronisation apogée'
+  synchro_parent: 'Synchronisation des parents'
+  update_events: 'Forcer la Mise à jour les événements depuis Celcat'
+  voir_fichier: 'Voir fichier'
+  voir: Voir
+
+au: au
+aucun: aucun
+aucun.etudiant.groupe: 'Aucun étudiant dans ce groupe.'
+aucun.groupe.dans.typegroupe: 'Aucun groupe dans ce type de groupe.'
+aucune: Aucune
+aucune.adresse.fournie: 'Aucune adresse fournie'
+aucune.convention.a.envoyer: 'Aucune convention à envoyer'
+aucune.note.matiere: 'Aucune note pour la matière'
+aucune.notification: 'Aucune notification'
+autoriser.la.saisie: "Autoriser la saisie"
+autre.situation: 'Autre Situation'
+autres: Autres
+avril: Avril
+bac:
+  menu: Bac
+  add.success.flash: 'Diplôme de bac ajouté avec succès'
+  delete.error.flash: 'Erreur lors de la suppression d''un diplôme du Bac'
+  delete.success.flash: 'Suppression d''un diplôme de bac avec succès'
+  edit.success.flash: 'Diplôme de bac modifié avec succès'
+
+bloc:
+  absence.etu.heading: 'Vos absences'
+  actions.etu.heading: Actions
+  actions.personnel.heading: Actions
+  note.etu.heading: 'Vos notes'
+  previsionnel.personnel.heading: 'Prévisionnel d''un personnel'
+  scolarite.etu.heading: Scolarité
+  stage.etu.heading: 'Stage(s) / Alternance(s)'
+  stage.histo.etu.heading: 'Historique des stages / alternances'
+
+Bonne: Bonne
+borne:
+  add.success.flash: 'Message pour les bornes ajouté avec succès'
+  delete.success.flash: 'Message pour les bornes supprimé avec succès'
+  duplicate.success.flash: 'Message pour les bornes dupliqué avec succès'
+  edit.success.flash: 'Message pour les bornes modifié avec succès'
+
+btn.read_more: 'Lire plus'
+bureau: bureau
+button_update_index: 'Sauvegarder et revenir à l''index'
+C2I: C2I
+callouterror: Erreur
+calloutsuccess: Succès
+
+celcat_calendrier:
+  create.success.flash: 'Element de correspondance Celcat ajouté avec succès.'
+  delete.success.flash: 'Calendrier celcat supprimé avec succès'
+  delete.error.flash: 'Erreur lors de la suppression du calendrier celcat'
+  edit.success.flash: 'Calendrier celcat modifié avec succès'
+
+change_annee_temp_hrs: 'Changer temporairement d''année pour les HRS et Primes'
+change_annee_temp_previsionnel: 'Changer temporairement d''année pour le prévisionnel'
+change_annee_universitiare_temp: 'Changer temporairement d''année universitaire'
+changement.semestre: 'Changement de semestre'
+
+changer:
+  de:
+    projet_periode: 'Changer de période de projet'
+    semestre: 'Changer de semestre'
+    stage_periode: 'Changer de période de stage'
+
+chgt:
+  emprunt.demande: 'Changement de la demande d''emprunt'
+  emprunt.refus: 'Emprunt de matériel refusé'
+  etat_stage_autorise: 'Changement d''état de votre stage : Saisie autorisée'
+  etat_stage_convention_envoyee: 'Votre convention de stage est envoyée à l''entreprise'
+  etat_stage_convention_imprimee: 'Votre convention de stage est imprimée'
+  etat_stage_convention_recue: 'Votre convention de stage est revenue signée par l''entreprise'
+  etat_stage_depose: 'Formulaire complété'
+  etat_stage_valide: 'Votre stage est validé'
+
+choice:
+  non: Non
+  oui: Oui
+
+choisir: Choisir
+choisir.dabord.un.semestre: 'Choisir d''abord un semestre'
+choisir.dabord.une.matiere: 'Choisir d''abord une matière'
+choisir.export: 'Exporter des documents'
+choisir.heure.debut: 'Choisir l''heure du début'
+choisir.intervenant: 'Choisir l''intervenant'
+choisir.letudiant: 'Choisir l''étudiant'
+choisir.matiere: 'Choisir matière'
+choisir.un.semestre: 'Choisir un semestre'
+
+chronologique: Chronologique
+Cle: Clé
+cm: CM
+cm.maquette: 'CM Maquette'
+coefficient: coefficient
+coefficient.dans.la.matiere: 'Coefficient dans la matière'
+coefficient.de.levaluation: 'Coefficient de l''évaluation'
+coefficient.de.matiere: 'Coefficient du module'
+colonne.document: colonne.document
+com_eval: 'Commentaire de l''évaluation'
+commentaire: Commentaire
+commentaire.evaluation: 'Commentaire évaluation'
+commission.des.absences: 'Commission des absences'
+compare:
+  plusinfos:
+    details: 'Plus d''informations'
+
+competence:
+  add.success.flash: 'Compétence ajoutée avec succès'
+  duplicate.success.flash: 'Compétence dupliquée avec succès'
+  delete.success.flash: 'Compétence supprimée avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de la compétence'
+  edit.success.flash: 'Compétence modifiée avec succès'
+
+configuration.edit.success.flash: 'Configuration modifiée avec succès'
+
+connectez.vous: Connectez-vous
+consulter.espace.travail: 'Consulter son espace de travail/portefolio'
+contacter: Contacter
+contacter.sur.mail.univ: 'Contacter sur son mail universitaire'
+contacts.heading: Contacts
+convention:
+  a.envoyer: 'Conventions à envoyer'
+  a.imprimer: 'Conventions à imprimer'
+  complete: 'Convention complète'
+  en.attente.de.retour: 'Convention en attente de retour'
+  envoyee: 'Convention envoyée'
+  imprimee: 'Convention imprimée'
+
+conventions.completes: 'Conventions complétes'
+copie.des.mails.generes: 'des mails générés par l''intranet'
+created: 'Créé le'
+creation.departement.manuellement: 'Création d''un département'
+creation.formation.manuellement: 'Création d''une nouvelle formation manuellement'
+csv:
+  point-virgule: 'Csv (;)'
+  virgule: 'Csv (,)'
+
+danger: danger
+
+date:
+  create.success.flash: 'Evénement ajouté avec succès'
+  de.levaluation: 'Date de l''évaluation'
+  duplicate.success.flash: 'Evénement dupliqué avec succès'
+  edit.success.flash: 'Evénement modifié avec succès'
+  naissance: 'Date de naissance'
+
+dateHeure: 'Date heure'
+
+Day: Jour
+decembre: Décembre
+
+decision:
+  justificatif.acceptee: 'Jutificatif d''absence accepté.'
+  rattrapage.acceptee: 'Demande de rattrapage acceptée'
+  rattrapage.refusee: 'Demande de rattrapage refusée'
+
+déconnexion: Déconnexion
+default.heading: 'Intranet du département <strong>%departement%</strong>'
+DEMANDE: DEMANDE
+demandes.rattrapages: 'Demandes de rattrapages'
+departement:
+  activate..flash: departement.activate..flash
+  activate.1.flash: departement.activate.1.flash
+  add.success.flash: 'Département ajouté avec succès'
+
+departements.heading: Départements
+dernieres.actualites.departement.heading: 'Dernières actualités du département'
+desposer.un.justificatif: 'Déposer un justificatif'
+
+detail:
+  absence: 'Détails de l''absence'
+  absencejustificatif: 'Détails du justificatif'
+  du.module: 'Détail de la matière'
+  enquete.semestre.heading: 'Détails des enquêtes du semestre'
+  evaluation: 'Détails de l''évaluation'
+  note: 'Détails d''une note'
+
+details:
+  des.absences: 'Détails des absences'
+  groupes.groupe: 'Détails des groupes'
+  groupes.type_groupe: 'Détails des types de groupe'
+
+diplome:
+  add.success.flash: 'Diplôme ajouté avec succès'
+  create.success.flash: 'Diplôme créé avec succès'
+  delete.error.non-vide.flash: 'Impossible de supprimer un diplôme non vide.'
+  delete.success.flash: 'Diplôme supprimé avec succès'
+  duplicate.success.flash: 'Diplôme dupliqué avec succès'
+
+document:
+  add.success.flash: 'Document ajouté avec succès'
+  delete.error.flash: 'Document supprimé avec succès'
+  delete.success.flash: 'Erreur lors de la suppression du document'
+  duplicate.success.flash: 'Document dupliqué avec succès'
+  edit.success.flash: 'Document modifié avec succès'
+
+documents.heading: Documents
+
+donnees.des.etudiants: 'Données des étudiants'
+donnees.personnelles: 'Données personnelles'
+donnees.update.success.flash: 'Données mises à jour avec succès'
+du: du
+ecart.type: 'Ecart Type'
+echelle: echelle
+editer.le.courrier: 'Editer le courrier'
+edt:
+  actions.calendrier: 'Gestion Calendrier Universitaire (EDT)'
+  actions.heading: 'Actions sur l''EDT'
+  commentaire: Commentaire
+  enseignant: Enseignant
+  etudiant.details: 'Détails d''un créneau de cours'
+  etudiant.export.ical: 'Export de l''EDT format ICAL/ICS'
+  etudiant.synchro.ical: 'Synchronisation de l''EDT par lien ICAL'
+  evaluation: Evaluation
+  filtrer.jour: 'Afficher toutes les promos sur un jour'
+  filtrer.matiere: 'Filtrer par matiere'
+  filtrer.personnel: 'Filtrer par personnel'
+  filtrer.salle: 'Filtrer par salle'
+  filtrer.semaine: 'Filtrer par semaine'
+  horaires: Horaires
+  intervenant.export.annee: 'Exporter l''année complète (.pdf)'
+  intervenant.export.ical: 'Exporter un fichier Ical (ics)'
+  intervenant.synchro.ical: 'Lien de synchronisation ICAL'
+  intervenant.synchro.ical.heading: 'Lien pour la synchronisation de l''EDT via ICAL'
+  salle: Salle
+  type_groupe: 'Type de groupe'
+
+email.address: 'Adresse Email'
+emargement: Emargement
+emprunt.delete.success.flash: 'Emprunt supprimé avec succès'
+en.attente: 'En attente'
+
+enquete:
+  create.heading: 'Création d''une enquête qualité'
+  edit.heading: 'Modification d''une enquète'
+  index: 'Gérer les enquêtes'
+  index.heading: 'Liste des enquêtes'
+  semestre.heading: 'Enquête pour le semestre %semestre%'
+
+entreprise: Entreprise
+envoyer: Envoyer
+eqtd: 'Eq. TD'
+erreur: Erreur
+erreur.type.user: ''
+erreur404.heading: 'Erreur 404'
+erreur500.heading: 'Erreur 500'
+erreur666.heading: 'Erreur 666'
+espace.travail: 'Espace Travail'
+est.en.copie: 'Est en copie'
+
+ETAT_STAGE_APPRENTISSAGE: 'Année en apprentissage'
+ETAT_STAGE_AUTORISE: 'Saisie Stage Autorisée'
+ETAT_STAGE_CONVENTION_ENVOYEE: 'Convention de stage envoyée'
+ETAT_STAGE_CONVENTION_IMPRIME: 'Convention de stage imprimée'
+ETAT_STAGE_CONVENTION_RECUE: 'Convention de stage récupérée'
+ETAT_STAGE_DEPOSE: 'Formulaire stage complété'
+ETAT_STAGE_ERASMUS: 'Semestre/Stage ERASMUS'
+ETAT_STAGE_ETRANGER: 'Semestre/Stage à l''étranger'
+ETAT_STAGE_INCOMPLET: 'Formulaire de stage incomplet'
+ETAT_STAGE_REFUS: 'Formulaire ou Stage refusé'
+ETAT_STAGE_VALIDE: 'Stage validé'
+
+Etat: Etat
+ETU: ETU
+ETUDIANT: ETUDIANT
+etudiant.add.success.flash: 'Etudiant ajouté avec succès'
+etudiants: Etudiants
+etudiants.du.semestre: 'Etudiants du semestre'
+eval.de: 'Evaluation de'
+eval.du: 'Evaluation du'
+evaluation: Evaluation
+evaluation.edit.success.flash: 'Evaluation modifié avec sccès'
+evaluation.initialisee.success: 'Evaluation initialisée avec succès'
+excel: 'Excel (xlsx)'
+Excellente: Excellente
+explication.volume.horaire: 'Le volume horaire saisie correspond au nombre d''heure pour un groupe CM ou TD ou TP.'
+export: Export
+export.heading: 'Choissiez les options pour générer le fichier'
+exporter: Exporter
+exporter.csv: 'Exporter (csv)'
+exporter.omega: 'Export OMEGA'
+exporter.pdf: 'Exporter (pdf)'
+exporter.semaine.courante.pdf: 'Exporter la semaine courante (.pdf)'
+exporter.trombi: 'Exporter le trombinoscope'
+exporter.xls: 'Exporter (xlsx)'
+exporter.xlsx: 'Exporter (xlsx)'
+Faible: Faible
+faq.heading: 'Foire aux Questions'
+favori: favori
+fermer: Fermer
+fevrier: Février
+fiche.enseignant: 'Fiche enseignant'
+Fichier: Fichier
+fichier.personnel.import: 'Fichier d''import de personnels'
+fixe: fixe
+fixes: fixes
+flexibles: flexibles
+forcer.maj.liste: 'Forcer une màj'
+form_date: Date(s)
+format.document: 'Format du document'
+formation:
+  activate..flash: formation.activate..flash
+  activate.1.flash: activate.1.flash
+  en.apprentissage: 'Formation en apprentissage'
+  par.defaut.erreur: 'Erreur lors de la sauvegarde du département par défaut'
+  par.defaut.sauvegarde: 'Département par défaut sauvegardé'
+formations.heading: Formation
+
+friends: Amis
+from_date: 'A partir du'
+fullscreen: 'Mode plein écran'
+generer.fichier: 'Générer le fichier'
+gerer_autorise_evaluation.heading: 'Personnels autorisées à modifier l''évaluation'
+gerer.fin.semestre: 'Gérer <strong>la fin</strong> de semestre'
+
+gestion:
+  categorie.materiel: 'Gestion des catégories de matériel'
+  cohorte:
+    choix.annee.heading: 'Gestion des cohortes, choisir l''année'
+    heading: 'Gestion <strong>des cohortes de la promotion %annee%</strong>'
+  des.absences: 'Gestion des <strong>Absences</strong>'
+  des.emprunts: 'Gestion des emprunts'
+  des.etudiants: 'Gestion des <strong>Etudiants</strong>'
+  des.groupes.semestre.heading: 'Gestion <strong>des groupes du semestre %libelle%</strong>'
+  des.notes: 'Gestion des <strong>Notes</strong>'
+  du.semestre.heading: 'Gestion du <strong>semestre %libelle%</strong>'
+  materiel_commun: 'Gestion du matériel commun'
+  materiel: 'Gestion du matériel'
+  personnel.droit.access: 'Gestion des droits d''accès des personnels'
+  ppn: 'Gestion des PPN'
+
+groupe: Groupe
+groupe.add.success.flash: 'Groupe créé avec succès'
+groupe.delete.success.flash: 'Groupe supprimé avec succès'
+
+groupes: Groupes
+groupes.parents.synchronises: 'Groupes Parents synchronisés'
+
+H: Heure
+heading.edt.dashboard: 'Votre emploi du temps'
+
+help:
+  annee_courante: 'Année courante pour la formation universitaire'
+  import.etudiant: "Le fichier doit être au format CSV (séparateur ;) et doit correspondre au formatage présenté ici\n          (télécharger un exemple). Toutes les colonnes doivent être présente (l'ordre n'a pas d'importante si\n          les\n          en-têtes sont présentes)\n        "
+  notfound.heading: 'Aide non trouvée'
+  notfound.message: 'Aucune aide n''a été trouvée'
+  opt_agence: 'Activer les outils de gestion de groupe de projet (trombinoscope, ...)'
+  opt_alternance: 'L''année est proposée en alternance'
+  opt_annee_previsionnel: 'Année courante pour le service prévisionnel'
+  opt_anonymat: 'L''édition des documents se fera sans le nom et prénom de l''étudiant'
+  opt_commentaires_releve: 'Les relevés de notes peuvent contenir des commentaires manuscrits'
+  opt_destinataire_mail_releve: 'Destinataire du mail en cas de nouveau relevé de note'
+  opt_destinataure_mail_absence_responsable: 'Destinataire du mail en cas d''absence d''un étudiant'
+  opt_destinataure_mail_modification_note: 'Destinataire du mail en cas de modification d''une note'
+  opt_dilpome_decale: 'Le diplôme est proposé en semestrialisation décalée'
+  opt_edt: 'Afficher l''emploi du temps dans l''intranet et sur le dashboard'
+  opt_espace_perso_visible: 'Les espaces personnels des étudiants sont accessibles à tous'
+  opt_evaluation_modifiable: 'Les évaluations sont modifiables par les enseignants autorisés à l''issue de la saisie'
+  opt_evaluation_pre_initialisee: "Si l'option est active, les enseignants ne peuvent pas créer d'évaluation. Le responsble du\n          dpépartement\n          ou des études doit initialiser toutes les évaluations.\n        "
+  opt_evaluation_visible: 'Les évaluations sont automatiquement visible des étudiants après la saisie'
+  opt_Infos: 'Activer la partie "Information Pratiques" (blog du département)'
+  opt_mail_absence_etudiant: 'Les étudiants reçoivent un mail à chaque absence saisie sur l''intranet'
+  opt_mail_absence_responsable: "Le responsable ou un destinataire de votre choix recevra un mail à chaque absence d'un étudiant\n        "
+  opt_mail_modification_note: 'Un email est envoyé au directeur des études en cas de modification d''une note.'
+  opt_mail_releve: 'Un email est envoyé à un personnel en cas de saisie d''un nouveau relevé'
+  opt_materiel: 'Activer la gestion de matériel et d''emprunt'
+  opt_messagerie: 'Activer le système de messagerie interne'
+  opt_methode_calcul: 'Permet de choisir la manière dont est calculée la moyenne d''un semestre'
+  opt_nb_jours_saisie_absence: 'Nombre maximum de jour pour saisir une absence. Mettre 0 pour un délai illimité'
+  opt_nb_jours_saisie: 'Nombre de jour maximum pour saisir une absence (0 = illimité)'
+  opt_nb_semaines_visibles: "Configurer le nombre de semaine visible sur l'EDT par l'étudiant. 0 pour toutes les semaines.\n        "
+  opt_penalite_absence: 'Des pénalités sont appliqués à chaque absence sur la matière concernée'
+  opt_point_penalite_absence: 'Nombre de point de pénalité pour chaque absence'
+  opt_qualite: 'Indiquer si le diplôme est certifié par un organisme qualité.'
+  opt_responsable_qualite: 'Définir la personne en charge de la qualié au niveau de l''IUT pour le diplôme.'
+  opt_stage: 'Gérer les stages (conventions, offres, courriers, ...) depuis l''intranet'
+  opt_suppr_absence: 'Autoriser la suppression d''absence par un enseignant'
+  opt_synthese: 'Permettre aux personnels de voir les sous-commissions en "temps réel"'
+  opt_update_celcat: 'Permettre la synchronisation de l''emploi du temps avec Celcat'
+  respRi: 'Définir le responsable des RI, pour l''édition les informations'
+
+heure: Heure
+heures: heures
+heures.complementaires: 'Heures complémentaires'
+Hour: Heure
+
+hrs:
+  add.success.flash: 'HRS/Prime ajoutée avec succès'
+  duplicate_annee.success.flash: 'HRS et Primes dupliquées avec succès'
+  delete.error.flash: 'Erreur lors de la suppression d''une HRS/Prime'
+  delete.success.flash: 'HRS/Prime supprimée avec succès'
+  duplicate.success.flash: 'HRS/Prime dupliquée avec succès'
+  edit.success.flash: 'HRS/Prime modifiée avec succès'
+  suivis.responsabilite.heading: 'HRS, Primes et responsabilités'
+
+illimite: illimité
+import_note_a_verifier: 'Vérifier l''import des notes'
+import:
+  d_un.ppn.heading: 'Import d''un PPN'
+  etudiant.heading: 'Importer des étudiants'
+  etudiants.groupes.heading: 'Importer les étudiants dans les groupes du semestre %semestre%'
+  previsionnel.heading: 'Import d''un prévisionnel'
+importer:
+  fichier.liste.groupe: __importer.fichier.liste.groupe
+  liste.etudiant: 'Importer une liste d''étudiant'
+  photo: 'Importer les photos'
+  photo.zip: 'Importer un fichier zip'
+  une.etudiant: 'Importer un étudiant'
+  une.liste: 'Importer une liste d''étudiants (csv)'
+imprimer: Imprimer
+info: info
+informations.heading: Informations
+infos: Informations
+initialisation.des.evaluations: 'Initialisation des évaluations'
+initialiser.les.evaluations: 'Initialiser les évaluations'
+intervenant: Intervenant
+intervenant.non.defini: __intervenant.non.defini
+janvier: Janvier
+jour.s: jour(s)
+juillet: Juillet
+juin: Juin
+justificatif.absence.semestre.heading: 'Justificatifs d''absence du semestre'
+justifiee: Justifiée
+justifier.absences.heading: 'Justifier des <strong>absences du semestre %semestre%</strong>'
+justifier.les.absences: 'Justifier des absences'
+l.assistant.e: 'L''assistant(e)'
+label:
+  annee_previsionnel: 'Année du prévisionnel'
+  annee_universitaire: 'Année universitaire'
+  capacite: Capacité
+  codeApogee: 'Code Apogée'
+  cv: 'Votre CV'
+  date_evaluation: 'Date de l''évaluation'
+  dateLundi: 'Date du lundi'
+  duree_evaluation: 'Durée de l''évaluation'
+  envoyer.demande: 'Envoyer la demande'
+  fichier: Fichier
+  heure_evaluation: 'Heure du début de l''évaluation'
+  import: Import
+  importer.les.notes: 'Importer le fichier de notes'
+  libelle: Libellé
+  logoFile: 'Logo du département'
+  matiere: Matière
+  personnel: Personnel
+  photo: Photo
+  previsionnel_commentaire: 'Commentaire sur le prévisionnel'
+  question.help: question.help
+  save_and_continue: 'Sauvegarder et continuer'
+  save: Sauvegarder
+  semaineFormation: 'Numéro Semaine Département'
+  semaineReelle: 'Numéro Semaine Réelle'
+  semestre: Semestre
+  site: Site
+  typeGroupe: 'Type de groupe'
+  typesalle: 'Type de salle'
+  update: 'Mise à jour'
+
+les.dates.de.la.periode.sont: 'Les dates de cette période de stage sont'
+les.responsables.sont: 'Les responsables de cette période sont'
+Libelle: Libellé
+libelle.evaluation: 'Libellé de l''évaluation'
+libre: libre
+liens.utiles.heading: 'Liens utiles'
+like: 'j''aime'
+lire.toutes.les.notifications: 'Lire toutes les notifications'
+
+liste: liste
+liste.absence.semestre.heading: 'Liste des <strong>absences du semestre %semestre%</strong>'
+liste.des.notes.du.semestre: 'Liste des <strong>notes du semestre %libelle%</strong>'
+liste.destinataires: 'Liste des destinataires'
+liste.etudiants.semestre: 'Liste des <strong>étudiants du semestre %libelle%</strong>'
+liste.justificatifs: 'Liste des justificatifs'
+
+lock: Vérrouiller
+login: login
+M.: M.
+mai: Mai
+
+mail: mail
+mail.chgt.emprunt.accepte: mail.chgt.emprunt.accepte
+mail.chgt.etat_stage_autorise: 'Saisie des informations du stage autorisée'
+mail.chgt.etat_stage_convention_envoyee: 'Votre convention de stage est envoyée à l''entreprise'
+mail.chgt.etat_stage_convention_imprimee: 'Votre convention de stage est imprimée'
+mail.chgt.etat_stage_convention_recue: 'Votre convention de stage est revenue signée par l''entreprise'
+mail.chgt.etat_stage_depose: 'Formulaire complété par l''étudiant'
+mail.chgt.etat_stage_valide: 'Votre stage est validé'
+mail.etudiant: 'Mail étudiant'
+mail.personnel: 'Mail personnel'
+mail.universite: 'Mail Université'
+
+maj.liste.etudiant: 'Màj Liste d''étudiants'
+marquer.tout.comme.lu: 'Marquer tout comme lu'
+mars: Mars
+
+materiel:
+  add.success.flash: 'Matériel ajouté avec succès'
+  delete.error.flash: 'Erreur lors de la suppression d''un Matériel'
+  delete.success.flash: 'Matériel supprimé avec succès'
+  duplicate.success.flash: 'Matériel dupliqué avec succès'
+  edit.success.flash: 'Matériel modifié avec succès'
+
+matiere: Matière
+matiere.add.success.flash: 'Matière ajoutée avec succès'
+matiere.delete.error.flash: 'Erreur lors de la suppression de la matière'
+matiere.delete.success.flash: 'Matière supprimée avec succès'
+matiere.duplicate.success.flash: 'Matière dupliquée avec succès'
+matiere.edit.success.flash: 'Matière modifiée avec succès'
+
+mcc: 'Modalités de Contrôle des Connaissances'
+mentions-legales.heading: 'Mentions Légales'
+menu:
+  about: 'A propos'
+  administration_abs: 'Adm. Abs.'
+  administration_edt: 'Adm. Edt'
+  administration_notes: 'Adm. Notes'
+  administration_stage: 'Adm. Stages'
+  administration: Administration
+  agenda: Agenda
+  alternance: Alternance
+  apogee: Apogée
+  applications: Applications
+  carnet: 'Cahier de texte'
+  celcat: Celcat
+  csa_previsionnel: 'Gestion des prévisionnels'
+  dashboard: Dashboard
+  disponibilite: Disponibilités
+  documentation: Aide
+  documents: Documents
+  emprunt: Emprunts
+  etudiants: Etudiants
+  faq: FAQ
+  informations: Informations
+  internationale: 'Relations Internationales'
+  justificatif: Justificatifs
+  mentions_legales: 'Mentions Légales'
+  messagerie: Messagerie
+  previsionnel: Prévisionnels
+  progression: 'Progression pédagogique'
+  projet: Projet(s)
+  qualite: Qualité
+  questions: Questions
+  quizz: Quizz
+  rattrapage: Rattrapages
+  rgpd: 'Données personnelles'
+  rh: Personnels
+  salle_examen: 'Salle d''examens'
+  scolarite: Scolarité
+  stages: Stages
+  trombinoscope: Trombinoscope
+
+mes_cours.heading: 'Mes cours'
+message.404: 'Hum. Il semblerait que vous recherchiez quelque chose qui n''existe pas.'
+message.500: "On dirait qu'on a un petit problème interne. Merci de réessayer dans quelques minutes ou de\n signaler\n ce problème.\n"
+message.666: 'Il semblerait que tu essaies d''accéder à des endroits non autorisés.'
+
+message:
+  ajouter.piece.jointe: 'Ajouter une pièce jointe'
+  copy: Cc
+  danger.etudiant.import: 'L''import des étudiants va supprimer toutes les données des étudiants du semestre'
+  danger.previsionnel.import: "Toutes les données du prévisionnel du diplôme et de l'année concernée seront surpprimées. Mais\n vous pourrez modifier les données importées.\n"
+  subject: Sujet
+  to: Destinataire(s)
+
+messagerie:
+  boite.brouillons: Brouillons
+  boite.corbeille: Corbeille
+  boite.envoyes: Envoyés
+  boite.epingles: Epinglés
+  boite.reception: Réception
+
+mettre.a.jour.la.convetion: 'Mettre à jour la convention'
+modifiez.vos.informations: 'Modifiez vos informations'
+mon.profil.heading: 'Mon profil'
+moyenne.promo: 'Moyenne de la promotion'
+nb.documents.categories: 'Nb. de documents dans la catérogie'
+nb.gr.: 'NB Gr.'
+nb.h.gr.: 'NB h/ Gr.'
+nb.note.matiere: 'Nombre de note du module'
+nb.seance.indicatif: 'Nb de séances de 1h30 donné à titre indicatif.'
+nbCoursManques: nbCoursManques
+nbJustifie: nbJustifie
+nbNonJustifie: nbNonJustifie
+nest.pas.en.copie: 'N''est pas en copie'
+no.record.found: 'Aucune donnée trouvée'
+nom: nom
+nom.evaluation: nom.evaluation
+nom.prenom: 'Nom & Prénom'
+
+non-defini: 'Non défini'
+non.defini: 'Non défini'
+non.selectione: 'Non selectionné'
+non.selectionee: 'Non sélectionnée'
+
+note: Note
+note.import: 'Importer les notes (Excel ou csv)'
+note.maximale: 'Note maximale'
+note.minimale: 'Note minimale'
+note.saisie: 'Saisir les notes'
+note.saisie.manuelle: 'Saisir manuellement'
+
+notification.heading: Notifications
+nouveau.message: 'Nouveau message'
+novembre: Novembre
+num_etudiant: num_etudiant
+num: num
+numero:
+  etudiant: 'Numéro étudiant'
+  harpege: 'Numéro harpège'
+  ine: 'Numéro INE'
+
+obtenu.en: 'obtenu en'
+octobre: Octobre
+offre_stage.heading: 'Offres de stage/Alternance'
+or: ou
+
+parametres: Paramètres
+
+parcour.duplicate.success.flash: 'Parcours ou option dupliquée avec succès'
+parcours.scolaire: 'Parcours Scolaire'
+
+pas.d.espace.travail: 'Pas d''espace de travail'
+pas.de.projet: 'Pas de projet'
+pas.de.stage: 'Pas de stage'
+pas.encore.actualite: 'Pas encore d''actualité'
+pas.encore.date: 'Pas encore d''événement planifié'
+pas.etudiant.groupe: 'Pas d''étudiant dans le groupe'
+
+passer.en.anglais: 'Go to english version'
+password_lost: 'Mot de passe perdu ?'
+password: password
+pdf: PDF
+
+periode: Période
+periode.de.projet.du: 'Projet du'
+periode.de.soutenance.prevue.le: 'Périodes de soutenances prévues'
+periode.de.stage.du: 'Période de stage du'
+periode.interruption.prevues: 'Périodes d''interruptions prévues'
+
+permanent: Permanent
+permanents: Permanents
+permanents.heading: Permanents
+
+personnel: Personnel
+personnel.delete.error.flash: 'Erreur lors de la suppression d''un personnel'
+personnel.droit.access: 'Droit d''accès'
+
+Place: Place
+planning.annee.annee: planning.annee.annee
+planning.annuel.heading: 'Planning Annuel %annee% / %annees%'
+point.s: point(s)
+ppn:
+  add.success.flash: 'PPN ajouté avec succès'
+  copie.integrale.success.flash: 'Copie du PPN réalisée avec succès'
+  import.success.flash: 'PPN importé avec succès'
+
+prenom: Prénom
+prenom.nom: 'Prénom Nom'
+preparer.sous-commission: 'Préparer la sous-commission'
+Présence: Présence
+
+previsionnel:
+  add.success.flash: 'Prévisionnel ajouté avec succès'
+  duplicate_annee.success.flash: 'Prévisionnel complet dupliqué avec succès'
+  duplicate.success.flash: 'Prévisionnel dupliqué avec succès'
+  et.intervenants.matiere: 'Prévisionnel et intervenants dans la matière'
+  import.success.flash: 'Prévisionnel importé avec succès'
+
+prochains.evenements.heading: 'Prochains événements'
+professionalisation: Professionalisation
+
+profil: Profil
+profil.heading: 'Profil de %user% (%semestre%)'
+profil.personnel.heading: 'Profil de %user%'
+
+projet_periode_gestion.heading: 'Gestion de la période de projet %libelle%'
+proposition.effectuee: 'Proposition effectuée'
+propositions.a.valider: "Propositions\n à\n valider\n"
+qcm: qcm
+qcu: qcu
+qualiteQuestionnaire.add.success.flash: 'Quesionnaire qualité ajouté avec succès'
+questions.index: 'Gérer les questions'
+
+quizz_question:
+  add.success.flash: 'Question de quizz ajoutée avec succès'
+  show.heading: 'Détails d''une question'
+quizz:
+  question.index.heading: 'Question disponible pour un Quizz'
+  new.heading: quizz.question.new.heading
+
+rang: rang
+rapport.pour.le: 'Rapport pour le'
+recherche:
+  etudiant.heading: 'Rechercher un étudiant'
+  personnel.heading: 'Rechercher un personnel/intervenant'
+rechercher: rechercher
+
+recuperation.apogee.etudiant: 'Récupération depuis Apogée'
+REFUS: REFUS
+refusee: Refusée
+report.problem: 'Signaler le problème'
+reset: 'Ré-initialiser le mot de passe.'
+
+retour_applications: 'Retour aux applications'
+retour.666: 'Retourner sur le bon chemin'
+retour.administratif: retour.administratif
+retour.qualite: 'Retour qualité'
+return.home: 'Retourner au dashboard'
+return.page.precedente: 'Revenir à la page précédente'
+
+REVENU: REVENU
+rgpd.heading: 'Vos données personnelles (RGPD)'
+rh.add.success.flash: 'Personnel ajouté avec succès'
+ri: 'Relations Internationales'
+ri.heading: 'Relations Internationales'
+
+ROLE_ABS: 'Responsable des absences'
+ROLE_ASS: 'Assistant(e) de formation'
+ROLE_AUTEUR: Auteur
+ROLE_CDD: 'Chef de département'
+ROLE_DDE: 'Directeur des études'
+ROLE_EDT: 'Responsable des emplois du temps'
+ROLE_MAT: 'Responsable du matériel'
+ROLE_NOTES: 'Responsable des notes'
+ROLE_PERMANENT: Enseignant
+ROLE_RDA: 'Responsable des absences'
+ROLE_RDS: 'Responsable des stages'
+ROLE_RP: 'Responsable de formation'
+ROLE_STA: 'Responsable des stages'
+
+s.heading: s.heading
+
+sa_configuration.heading: Configuration
+sa_enquete.heading: 'Enquêtes qualité'
+sa_qualite.heading: Qualité
+sa_quizz.heading: 'Gérer les quizz et les questions'
+sa.ajouter.etudiant: 'Ajouter un étudiant'
+sa.ajouter.personnel: 'Associer le personnel au département'
+sa.creer.personnel: 'Ajouter un personnel'
+sa.synchro_apogee_groupe_etudiant_semestre: 'Synchronisation des étudiants et des groupes avec apogée'
+sa.synchro_apogee_semestre: 'Synchronisation des semestres avec Apogée'
+
+sadm:
+  celcat_calendrier:
+    index.heading: 'Calendrier de correspondance Celcat'
+    modification.heading: 'Modification d''un élément du calendrier Celcat'
+  celcat:
+    extraction.heading: 'Extractions Celcat'
+    index.heading: 'Gestion lien Celcat'
+  configuration:
+    index.heading: Configuration
+    modification.heading: 'Modification d''un paramètre de configuration'
+  etudiant:
+    heading: Etudiants
+    resultat.heading: 'Résultat de la recherche'
+  gestion:
+    rh:
+      heading: 'Ressources Humaines'
+      import.heading: 'Gestion RH, importer des personnels'
+      import.ldap.heading: gestion.rh.import.ldap.heading
+  personnel:
+    edit.heading: 'Modifier un personnel'
+    new.heading: 'Création d''un personnel'
+  previsionnel:
+    index.heading: Prévisionnels
+    index.par_enseignant: 'Prévisionnel par personnels'
+  scolarite:
+    ajouter.heading: 'Ajouter/Importer des étudiants'
+    ajouter.un.heading: 'Ajouter un étudiant'
+    heading: Scolarité
+    import.listing.heading: 'Importer une liste d''étudiants'
+    resultat.heading: Résultats
+    synchro.apogee.heading: 'Synchroniser avec Apogée'
+  service.previsionnel.heading: 'Services prévisionnels'
+
+saisie_par: 'Saisie par'
+saisie.autorise.formulaire.non.completee: 'Saisie autorisée, mais non complétée'
+saisir:
+  absence.semestre.heading: 'Saisir des <strong>absences du semestre %semestre%</strong>'
+  absences: 'Saisir des absences'
+  evaluation: 'Saisir l''évaluation'
+  password.lock: 'Saisir votre mot de passe pour accéder à votre session'
+  voir.modifier.absences: 'Saisir, voir ou modifier des absences'
+  voir.modifier.notes: 'Saisir, voir ou modifier des notes'
+
+salle_examen:
+  add.success.flash: 'Salle d''examen créée avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de la salle d''examen'
+  delete.success.flash: 'Salle d''examen supprimée avec succès'
+  duplicate.success.flash: 'Salle d''examen dupliquée avec succès'
+  edit.success.flash: 'Salle d''examen modifiée avec succès'
+
+salle: Salles
+salle.add.success.flash: 'Salle ajoutée avec succès'
+salle.delete.success.flash: 'Salle supprimée avec succès'
+salle.edit.success.flash: 'Salle modifiée avec succès'
+
+sauvegarder: Sauvegarder
+
+scolarite:
+  detail.heading: 'Détail de la scolarité de %etudiant% pour le semestre %semestre%'
+  diplome.heading: diplome.heading
+  index.heading: index.heading
+  recherche.heading: Rechercher
+  semestre.heading: scolarite.semestre.heading
+
+security:
+  lock.heading: 'Accès vérouillé'
+  login:
+    connexion: Connexion
+    deverouiller: Déverrouiller
+    forgot-password: 'Mot de passe oublié'
+    heading: 'Connexion à l''intranet'
+    login: Login
+    password: 'Mot de passe'
+    remenber-me: 'Se souvenir de moi'
+    sign-with: 'Compte invité'
+    username: Login
+
+selectionnez.un.etudiant: 'Selectionnez un étudiant'
+semaine:
+  courante: 'Semaine courante'
+  precedente: 'semaine précédente'
+  s: semaine(s)
+  suivante: 'Semaine suivante'
+
+semestre:
+  add.success.flash: 'Semestre créé avec succès'
+  create.success.flash: 'Semestre créé avec succès'
+  duplicate.success.flash: 'Semestre dupliqué avec succès'
+  edit.success.flash: 'Modification du semestre effectuée avec succès'
+  erasmus: 'Semestre ERASMUS'
+  semestre_decale: 'Equivalent semestre décalé'
+
+septembre: Septembre
+service:
+  chronologique.heading: 'Service réalisé chronologique'
+  previsionnel:
+    heading: 'Service prévisionnel'
+    matiere.heading: 'Service prévisionnel pour une matière'
+    semestre.heading: 'Service prévisionnel pour un semestre'
+settings:
+  heading: Paramètres
+  vos.informations: 'Vos informations'
+  vos.parametres: 'Vos paramètres'
+
+simulation.sous-commission: 'Simulation Sous-commission'
+site-personnel: 'Site personnel'
+site-univ: 'Site institutionnel'
+site:
+  add.success.flash: 'Site créé avec succès'
+  delete.error.flash: 'Erreur lors de la suppression du site'
+  delete.success.flash: 'Site supprimé avec succès'
+  duplicate.success.flash: 'Site dupliqué avec succès'
+  edit.success.flash: 'Site modifié avec succès'
+  personnel: 'Site personnel'
+  universite: 'Site université/pro'
+
+sites-geographiques: 'Sites géographiques'
+situation.par.rapport.promo: 'Votre situation par rapport à la promo'
+situation.par.semestre.notes: 'Situation par semestre'
+
+soit: soit
+
+stage_etudiant:
+  change_etat.success.flash: 'L''état du stage a été modifié avec succès'
+  change_tuteur.success.flash: 'Tuteur modifié avec succès'
+  delete.success.flash: 'Données du stage étudiant supprimées avec succès'
+  formulaire.success.flash: 'Le formulaire a été envoyé avec succès'
+
+stage_periode_gestion.heading: 'Période de stage : %libelle%'
+stage_periode_offre.create.success.flash: 'Offre de stage ajoutée avec succès'
+stage_periode:
+  create.success.flash: 'Période de stage créée avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de la période de stage'
+  delete.success.flash: 'Période de stage supprimée avec succès'
+  edit.success.flash: 'Période de stage modifiée avec succès'
+
+stage.valide: 'Stage Validé'
+
+structure.de.la.departement.heading: 'Structure du département'
+success: Succès
+super-admin:
+  add.personnel-departement.heading: 'Ajouter un personnel au département %departement%'
+  etudiant-departement.heading: 'Gestion des étudiants par département'
+  groupes-departement.heading: 'Groupes du département'
+  heading: 'Super administration'
+  personnel-departement.heading: 'Gestion des personnels du département %departement%'
+  personnel-formation.heading: 'Gestion des personnels pour le département %formation%'
+supprimer: Supprimer
+synthese: Synthèse
+synthese.des.parcours: 'Synthèse des parcours'
+synthese.previsionnel.heading: 'Synthèse du service prévisionnel'
+tab:
+  a-propos: 'A propos'
+  absences: Absences
+  actions: Actions
+  notes: Notes
+  previsionnel: Prévisionnel
+  scolarite: Scolarité
+  stages: Stages
+  timeline: Timeline
+  vosInformations: 'Vos informations'
+  vosParametres: 'Vos paramètres'
+
+table:
+  absence_justificatif_etat: 'Etat du justificatif d''absence'
+  absence_justifiee: 'Absence justifiée'
+  absence: Absences
+  absences: Absences
+  actif: Actif
+  actions: Actions
+  active: Active
+  activites: Activités
+  adresse_securite_sociale: 'Adresse mutuelle étudiante ou sécurité sociale'
+  adresse: Adresse
+  amenagementStage: 'Aménagement du stage'
+  annee_courante: 'Année courante'
+  annee_ppn: 'Année du PPN'
+  annee: Année
+  anneeUniversitaire: 'Année universitaire'
+  assistant_diplome: 'Assistant(e) du diplôme'
+  au: Au
+  auteur: Auteur
+  avantages: 'Autres avantages'
+  bac: Bac
+  bureau1: Bureau
+  bureaux: Bureau(x)
+  capacite_salle: 'Capacité de la salle'
+  categorie: Catégorie
+  cle: Clé
+  cm_formation: 'Nb Heures CM (Formation)'
+  cm_ppn: 'Nb Heures CM (PPN)'
+  cm: CM
+  code_apogee: 'Code Apogée'
+  code_celcat_departement: 'Code Celcat du diplôme'
+  code_celcat: 'Voir les codes dans Celcat'
+  code_departement: 'Code département'
+  code_element: code_element
+  code_matiere: 'Code matière'
+  code_version: 'Code Version'
+  code: Code
+  coefficient: Coefficient
+  commentaire_optionnel: 'Commentaire (optionnel)'
+  commentaire: Commentaire
+  competences_visees: 'Compétences visées'
+  competencesVisees: 'Compétences visées'
+  contact: Contact
+  contenu: 'Contenu de la matière'
+  copieAssistant: 'Copie des mails à l''assitant(e)'
+  couleur_cm: 'Couleur CM (EDT)'
+  couleur_td: 'Couleur TD (EDT)'
+  couleur_texte: 'Couleur des textes (EDT)'
+  couleur_tp: 'Couleur TP (EDT)'
+  couleur: Couleur
+  created: 'Créé le'
+  cv: CV
+  dans_service: 'Dans le service'
+  date_debut: 'Date de début'
+  date_demande: 'Date de la demande'
+  date_evaluation: 'Date de l''évaluation'
+  date_evenement: 'Date de l''événement'
+  date_fin: 'Date de fin'
+  date_rattrapage: 'Date rattrapage'
+  date_retour: 'Date retour'
+  date: Date
+  dateDebut: 'Date de début'
+  dateDebutPublication: 'Date de début de publication'
+  dateDebutStage: 'Date de début de stage'
+  dateFin: 'Date de fin'
+  dateFinPublication: 'Date de fin de publication'
+  dateFinStage: 'Date de fin de stage'
+  dateLundi: 'Date du lundi'
+  datenaissance: 'Date de naissance'
+  datesFlexibles: 'Dates Flexibles'
+  deadline: 'Date limite'
+  decision: Décision
+  deleted: Etat
+  departement: Département
+  departements: Départements
+  description: Description
+  diplome_Semestre: 'Diplôme Semestres'
+  diplome: Diplôme
+  diplomes: Diplômes
+  document: Document
+  documentRendre: 'Document(s) à rendre'
+  domaines: 'Domaines de compétences'
+  duree_cours_manques: 'Durée cours manqués'
+  duree_demi_journee: 'Durée en demi-journée'
+  duree_stage: 'Durée du stage'
+  dureeHebdomadaire: 'Durée de travail hebdomadaire'
+  dureeJoursStage: 'Nombre de jours de stage'
+  email: E-mail
+  entreprise_vacataire: 'Entreprise (vacataire)'
+  entreprise: Entreprise
+  etat_justificatif: 'Etat du justificatif'
+  etat: Etat
+  etudiant: Etudiant
+  evaluations: Evaluations
+  exports: Exports
+  fax: Fax
+  fiche_suivi: 'Fiche de suivi'
+  ficheRenseignement: 'Fiche de renseignement'
+  fichier: Fichier
+  fonction: Fonctions
+  formations: Formations
+  gratification: Gratification
+  gratificationMontant: 'Montant de la gratification'
+  groupe_promo: 'Groupes promo.'
+  groupe: Groupe
+  groupes: Groupes
+  heure_debut: 'Heure de début'
+  heure_event: 'Heure de l''événement'
+  heure_fin: 'Heure de fin'
+  heure_rattrapage: 'Heure rattrapage'
+  heure: Heure
+  heureDebut: 'Heure de début'
+  icone_couleur: Icône/couleur
+  icone: Icône
+  id: Id
+  infos: Informations
+  intervenants: Intervenants
+  jour: Jour
+  justifier: Justifier
+  libelle_long: 'Libellé long'
+  libelle: Libellé
+  lieu: Lieu
+  login: Login
+  logo: logo
+  mail_perso: 'Email personnel'
+  mail_univ: 'Mail université'
+  matiere: Matière
+  maximum: Maximum
+  membres: Membres
+  message_visible: 'Message visible'
+  message: Message
+  minimum: Minimum
+  modaliteEncadrement: 'Modalités d''encadrement'
+  modaliteEvaluation: 'Modalités d''évaluation'
+  modaliteEvaluationPedagogique: 'Modalités d''évaluations pédagogiques'
+  modalites: Modalités
+  modifier_etat: 'Modifier l''état'
+  motif: 'Motif de l''absence'
+  mots_cles: 'Mots Clés'
+  moyenne: Moyenne
+  moyenneues: 'Moyenne des UEs'
+  mumeroPeriode: 'Numéro de période de stage'
+  nb_articles: 'Nb. Articles'
+  nb_cours_manques: 'Nb. de cours manqués'
+  nb_documents: 'Nb. de documents'
+  nb_ects: 'Nb. ECTS'
+  nb_groupes_td: 'Nb. Groupes de TD'
+  nb_groupes_tp: 'Nb. Groupes de TP'
+  nb_heures_eq_td: 'Nb Heures Eq. TD'
+  nb_heures_td: 'Nb. Heures TD'
+  nb_justifies: 'Nb. justiifées'
+  nb_non_justifies: 'Nb. non justifiées'
+  nb_notes: 'Nb. Notes'
+  nb_semestres: 'Nb. Semestres'
+  nbColonnes: 'Nb. Colonnes'
+  nbEcts: 'Nb ECTS'
+  nbJours: 'Nombre de jours'
+  nbLike: 'Nb Like'
+  nbRangs: 'Nb. Rangs'
+  nbSemaines: 'Nombre de semaines'
+  nbstagiaire: 'Nb. stagiaires'
+  niveau_entree: 'Niveau entrée'
+  niveau_sortie: 'Niveau sortie'
+  nom: Nom
+  nombre.notes: 'Nombre de notes'
+  note: Note
+  notes: Notes
+  numero_harpege: 'Identifiant Admin.'
+  numero_ue: 'Numéro de l''UE'
+  numeroPeriode: 'Numéro de la période'
+  numetudiant: 'Numéro étudiant'
+  objectifs_module: 'Objectifs de la matière'
+  opt_agence: 'Notion d''agence ou de groupe de projet'
+  opt_alternance: 'Année en alternance'
+  opt_annee_previsionnel: 'Année du prévisionnel'
+  opt_anonymat: 'Documents anonymes'
+  opt_commentaires_releve: 'Commentaire sur les relevés de note'
+  opt_destinataire_mail_releve: 'Destinataire des mails lors d''un nouveau relevé de note'
+  opt_destinataure_mail_absence_responsable: 'Destinataire des mails lors d''une absence'
+  opt_destinataure_mail_modification_note: 'Destinataire des mails lors d''une modification de note'
+  opt_dilpome_decale: 'Diplôme en décalé'
+  opt_edt: 'Onglet Emploi du temps'
+  opt_espace_perso_visible: 'Espace personnel des étudiants visible de tous'
+  opt_evaluation_modifiable: 'Evaluation modifiable après saisie'
+  opt_evaluation_pre_initialisee: 'Evaluations pré-initialisées'
+  opt_evaluation_visible: 'Evaluation automatiquement visible des étudiants'
+  opt_Infos: 'Onglet Informations pratiques'
+  opt_mail_absence_etudiant: 'Mail lors de l''absence d''un étudiant'
+  opt_mail_absence_responsable: 'Mail au responsable lors de l''absence d''un étudiant'
+  opt_mail_modification_note: 'Mail au responsable lors de la modification d''une note'
+  opt_mail_releve: 'Mail au responsable lors de la saisie d''un relevé de note'
+  opt_materiel: 'Onglet emprunt de matériel'
+  opt_messagerie: 'Onglet messagerie'
+  opt_methode_calcul: 'Méthode de calcul de la moyenne'
+  opt_nb_jours_saisie_absence: 'Nombre de jours pour saisir une absence'
+  opt_nb_jours_saisie: 'Nb. de jours pour saisir les absences'
+  opt_nb_semaines_visibles: 'Nombre de semaines visibles sur l''EDT'
+  opt_penalite_absence: 'Pénalité en cas d''absence'
+  opt_point_penalite_absence: 'Nb. de point de pénalité en cas d''asbsence'
+  opt_qualite: 'Diplôme certifiée qualité'
+  opt_responsable_qualite: 'Responsable qualité'
+  opt_stage: 'Onglet stage'
+  opt_suppr_absence: 'Possibilité de supprimer des absences'
+  opt_synthese: 'Onglet synthèse des semestres (sous-commission)'
+  opt_update_celcat: 'Synchronisation avec Celcat (EDT)'
+  ordre_annee: 'Ordre dans l''année'
+  ordre_lmd: 'Ordre dans le système LMD'
+  ordre: Ordre
+  organisme: Organisme/association
+  pac: 'PAC ou Sport'
+  par.defaut: 'Par défaut'
+  parcours: 'Parcours associé'
+  parent: Parent
+  periode_absence: 'Période de l''absence'
+  periode: Période
+  personnel: Personnel
+  placesInterdites: 'Places Interdites'
+  portable: Portable
+  poste_interne: 'Poste Interne'
+  ppn: 'Version PPN'
+  ppn.maquette: 'PPN Maquette'
+  pre_requis: Pré-requis
+  prenom_nom: 'Prénom Nom'
+  prenom: Prénom
+  previ: Prévisionnel
+  prolongements: Prolongements
+  promo: Promo.
+  proposition: Proposition
+  qrcode: 'QR Code'
+  refmatiere: 'Réf. Matière'
+  remarques: Remarques
+  responsabilite: Responsabilités
+  responsable_diplome: 'Responsable du diplôme'
+  responsable_site: 'Responsable site'
+  responsable: Représentant
+  responsables_projet_periode: 'Responsable(s) de la période de projet'
+  responsables_stage_periode: 'Responsable(s) de cette période de stage'
+  respRi: 'Responsable des RI'
+  salle: Salle
+  securite_sociale: 'Régime sécurité sociale ou régime spécifique'
+  semaineFormation: 'Semaine de Formation'
+  semaineReelle: 'Semaine réelle'
+  semestre_ou_diplome: 'Semestre ou diplôme'
+  semestre_precedent: 'Semestre précédent'
+  semestre_suivant: 'Semestre suivant'
+  semestre: Semestre
+  semestres_document: Semestre
+  semestres: Semestres
+  serviceStageEntreprise: 'Service d''accueil'
+  sigle: Sigle
+  signature: Signature
+  siret: SIRET/SIREN
+  site_principal: 'Site principal'
+  site_univ_perso: 'Site web'
+  site_web: Site web
+  site: 'Site géographique'
+  sites: 'Autres Sites'
+  slug: Slug
+  stage_periode_interruptions: 'Période(s) d''interruption du stage'
+  stage_periode_soutenance: 'Période(s) de soutenance'
+  stage: 'Information sur le stage'
+  sujetAlternance: 'Sujet de l''alternance'
+  sujetStage: 'Sujet du stage'
+  suspendu: Suspendu
+  synchro_edt: 'Synchronisation de l''EDT'
+  taille: Taille
+  td_formation: 'Nb Heures TD (Formation)'
+  td_ppn: 'Nb Heures TD (PPN)'
+  td: TD
+  tel_bureau: 'Tél. Bureau'
+  tel_contact: 'Téléphone du contact'
+  telephone: Téléphone
+  telephones: Téléphone(s)
+  texte: Texte
+  titre: Titre
+  total_prime: 'Total prime/HRS'
+  tp_formation: 'Nb Heures TP (Formation)'
+  tp_ppn: 'Nb Heures TP (PPN)'
+  tp: TP
+  tuteur_entreprise: 'Tuteur Entreprise'
+  tuteur_universitaire: 'Tuteur Universitaire'
+  tuteur: Tuteur
+  type_contrat: 'Type de contrat'
+  type_cours: 'Type de cours'
+  type_diplome: 'Type de diplôme'
+  type_document: 'Catégorie de document'
+  type_event: 'Typé d''événement'
+  type_fichier: 'Type de fichier'
+  type_hrs: 'Type de prime/HRS'
+  type_responsabilite: 'Type de responsabilité'
+  type_salle: 'Type de salle'
+  type_variable: 'Type de variable de configuration'
+  typeGroupe: 'Type de groupe'
+  ue: UE
+  ufr_site: 'Liste des UFR du site'
+  updated: 'Mise à jour le'
+  url: URL
+  valeur: Valeur
+  ville: Ville
+  visible: Visible
+  volume_horaire: 'Volume horaire'
+
+taille: Taille
+td: TD
+td.maquette: 'TD Maquette'
+tel.pro: 'Tél. professionnel'
+tel1: Téléphone
+tel2: 'Autre téléphone'
+telecharger: Télécharger
+telecharger.la.convention: 'Télécharger la convention'
+Téléphone: Téléphone
+telephone.de.letudiant: 'Téléphone de l''étudiant'
+Texte: Texte
+Titre: Titre
+titre.404: 'Page non trouvée !'
+titre.500: 'Erreur interne !'
+titre.666: 'Hey Hey, Petit Malin ...'
+to_date: 'Jusqu''au'
+
+total:
+  cm: 'Total CM'
+  eq.td: 'Total Eq. TD'
+  etudiant: 'Total Etudiant'
+  matiere: 'Total Matière'
+  td: 'Total TD'
+  tp: 'Total TP'
+
+totalDuree: totalDuree
+Tous.les.champs.obligatoires: 'Tous les champs avec un * sont obligatoires'
+toute.la.journee: 'Toute la journée'
+tp: TP
+
+trombinoscope.heading: Trombinoscope
+
+type_diplome: 'Type de diplôme'
+type_diplome.add.success.flash: 'Type de diplôme créé avec succès'
+type_diplome.delete.error.flash: 'Erreur lors de la suppression du type de diplôme'
+type_diplome.delete.success.flash: 'Type de diplôme supprimé avec succès'
+type_diplome.duplicate.success.flash: 'Type de diplôme dupliqué avec succès'
+type_diplome.edit.success.flash: 'Type de diplôme modifié avec succès'
+type_document.add.success.flash: 'Type de document ajouté avec succès'
+
+type_fichier: 'Type de fichier'
+
+type_groupe:
+  add.success.flash: 'Type de groupe créé avec succès'
+  delete.error.flash: 'Erreur lors de la suppression du type de goupe'
+  delete.success.flash: 'Type de goupe supprimé avec succès'
+  duplicate.success.flash: 'Type de groupe dupliqué avec succès'
+  edit.success.flash: 'Type de groupe modiifé avec succès'
+
+type_hrs: 'Type de HRS/Prime'
+type_hrs.add.success.flash: 'Type de HRS/Prime créé avec succès'
+type_hrs.delete.error.flash: 'Erreur lors de la suppression du type de HRS'
+type_hrs.delete.success.flash: 'Type de HRS supprimé avec succès'
+type_hrs.duplicate.success.flash: 'Type de HRS dupliqué avec succès'
+type_hrs.edit.success.flash: 'Type de HRS/Prime modifié avec succès'
+
+type_materiel.add.success.flash: type_materiel.add.success.flash
+type_materiel.delete.error.flash: type_materiel.duplicate.success.flash
+type_materiel.delete.success.flash: type_materiel.duplicate.success.flash
+type_materiel.duplicate.success.flash: type_materiel.duplicate.success.flash
+type_materiel.edit.success.flash: type_materiel.edit.success.flash
+
+Type: Type
+type:
+  autre: Autre
+  commission: Commission/Jury
+  document: 'Type de document'
+  projet: Projet
+  rentree: Rentrée
+  reunion: Réunion/conseil
+  soutenance: Soutenance(s)
+  stage: Stage
+
+ue: UE
+ue.add.success.flash: 'UE créée avec succès'
+ue.delete.error.flash: 'Erreur lors de la suppression de l''UE'
+ue.delete.success.flash: 'UE supprimée avec succès'
+ue.duplicate.success.flash: 'UE dupliquée avec succès'
+ue.edit.success.flash: 'UE modifiée avec succès'
+
+ufr:
+  heading: 'UFR / Composante'
+  add.success.flash: 'UFR créée avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de l''UFR'
+  delete.success.flash: 'UFR supprimée avec succès'
+  duplicate.success.flash: 'UFR dupliquée avec succès'
+  edit.success.flash: 'UFR modifiée avec succès'
+
+update: 'Mettre à jour'
+Updated: 'Mise à jour'
+username.import: username.import
+vacataire: Vacataire
+vacataires.heading: Vacataires
+Valeur: Valeur
+valider: Valider
+valider.stage.etranger: 'Valider stage étranger'
+variable.configuration: 'Variable de Configuration'
+verificiation: Vérificiation
+verouiller_deverouiller: Verrouiller/Déverrouiller
+verrouiller: Verrouiller
+ville: ville
+Visite: Visite
+
+voir: Voir
+voir.anciennes.actualites: 'Voir les anciennes actualités'
+voir.détail.du.module: 'Voir les détails de la matière'
+voir.le.document: 'Voir le document'
+voir.le.fichier: 'Voir le fichier'
+voir.modifier: Voir/modifier
+voir.planning: 'Voir le planning annuel'
+voir.previsionnel.et.intervenants.matiere: 'Voir prévisionnel'
+voir.tous.les.messages: 'Voir tous les messages'
+
+volume.matiere: 'Colume matière'
+vos.informations.identification: 'Vos informations d''identification'
+vos.modules.du.semestre: 'Vos Modules au semestre %semestre%'
+votre.message: 'Votre message'
+vous: vous
+vous.netes.pas: 'Vous n''êtes pas'
+Year: Année
+yesno: yesno
+

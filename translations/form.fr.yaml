@@ -1,0 +1,448 @@
+titre: Titre
+'Adresse du lieu où le stage sera effectué': 'Adresse du lieu où le stage sera effectué'
+'Annee universitaire': 'Année universitaire'
+'Cette adresse peut être différente du siège de l''entreprise.': 'Cette adresse peut être différente du siège de l''entreprise.'
+'Choisir d''abord un semestre ...': 'Choisir d''abord un semestre ...'
+'Choisir le semestre': 'Choisir le semestre'
+'Choisir un semestre ...': 'Choisir un semestre ...'
+'Choose an option': 'Choose an option'
+'Date debut': 'Date debut'
+'Date fin': 'Date fin'
+'Fichier import': 'Fichier import'
+'Laissez 0 si scolarité en cours': 'Laissez 0 si scolarité en cours'
+'Nb absences': 'Nb absences'
+
+'Select a City...': 'Select a City...'
+'Select a Semestre first ...': 'Select a Semestre first ...'
+'Séparer les places par des ";"': 'Séparer les places par des ";"'
+
+'Si erreur contacté les RH': 'Si erreur, veuillez contacter les RH'
+'Stage periode interruptions': 'Stage periode interruptions'
+'Stage periode soutenances': 'Stage periode soutenances'
+'Type contrat': 'Type de contrat'
+
+adresse: Adresse
+annee_bac: 'Année d''obtention du bac'
+apprentissage: 'En Apprentissage'
+bac: 'Bac obtenu'
+boursier: Boursier
+choice:
+  autre: Autre
+  c2i: C2I
+  contractuel: 'Contractuel (CDD/CDI)'
+  femme: Femme
+  homme: Homme
+  hrs: HRS
+  info_pratique: 'Informations pratiques'
+  mcf: 'Maître de Conférences'
+  moymodules: 'Moyenne des modules'
+  moyues: 'Moyennes des UEs'
+  pca: PCA
+  pr: 'Professeur des universités'
+  prag: PRAG
+  prce: PRCE
+  prp: PRP
+  ri: 'Relations Internationales'
+  suivi: Suivi
+  vacataire: Vacataire
+
+cm: cm
+CM: CM
+Commentaire: Commentaire
+complete: 'Complété par l''étudiant'
+danger: danger
+date_naissance: 'Date de naissance'
+dateRange: 'Période d''affichage'
+dateRange.interruption: 'Périodes d''interruption du stage'
+dateRange.periode: 'Période de stage (début / fin)'
+dateRange.soutenance: 'Dates de Soutenance'
+Day: Jour
+Décembre: Décembre
+Decision: Decision
+Defaut: Defaut
+DEM: DEM
+demandeurEmploi: 'Demandeur d''emploi'
+E: E
+E.C.: E.C.
+EC: EC
+Entreprise: Entreprise
+Etat: Etat
+fichier_import: 'Fichier à importer'
+h: Heure
+help:
+  activites: 'Décrivez les missions qui vous seront confiées'
+  amenagementStage: 'Aménagement du temps de travail par exemple'
+  avantages: 'Autres avantages (frais de transports, ...)'
+  bonification: 'UE comptabilisée comme une bonification de semestre'
+  coefficient: 'Coefficient de l''évaluation par rapport aux autres évaluations du module.'
+  commentaire_evaluation: 'Commentaire de l''évaluation'
+  commentaireDureeHebdomadaire: 'Toutes précisions nécessaires sur la durée de travail'
+  competencesVisees: 'Compétences visées pendant la période de stage'
+  copieAssistant: "Permet de mettre en copie des envois automatique de l'intranet l'assistant(e) de la formation\n        "
+  dateDebutStage: 'Date de début de stage'
+  dateFermeture.enquete: 'Date de fermeture de l''enquête (aucune réponse possible passée cette date)'
+  dateFinStage: 'Date de fin de stage'
+  dateOuverture.enquete: 'Date d''ouverture de l''enquête'
+  datesFlexibles: "Si les dates sont flexibles, l'étudiant pourra les modifier dans le formulaire qu'il va remplir\n          pour établir la convention\n        "
+  documentRendre: 'Documents à rendre par l''étudiant à l''issue du stage'
+  dureeHebdomadaire: 'Durée hebdomadaire de travail pendant la période de stage'
+  dureeJoursStage: 'En jour ouvré (hors week end et jours fériés)'
+  gratification: 'Le stage sera-t-il rémunéré'
+  gratificationMontant: 'En fonction de la période sélectionnée'
+  gratificationPeriode: 'Choisissez la période de calcul de la gratification'
+  libelle_evaluation: 'Vous pouvez nommer vos évaluations. Ce nom sera visible des étudiants'
+  libelle.enquete: 'Libellé de l''enquête affiché dans l''administration'
+  libelleStagePeriode: 'Nom de la période de stage (affichée pour les étudiants)'
+  modaliteEncadrement: 'Précisez comment sera effectué l''encadrement par le tuteur universitaire'
+  modaliteEvaluation: 'Modalité d''évaluation du stagiraire par l''entreprise'
+  modaliteEvaluationPedagogique: 'Indiquez la manière dont sera évalué le stage par l''équipe pédagogique'
+  nbEcts: 'Nombre d''ECTS attribués pour la réalisation et la validation du stage'
+  nbJours: "Indiquez le nombre de jours de stage sur la période (nécessaire pour la convention de stage)\n        "
+  nbSemaines: "Indiquez le nombre de semaine où l'étudiant sera en stage (nécessaire pour la convention)\n        "
+  periodesInterruptions: 'En complément des périodes déjà prévues'
+  personnelAutorise: "Vous pouvez donner l'autorisation à d'autres enseignants pour modifier ou compléter votre\n          évaluation\n        "
+  responsables: 'Indiquez les collègues en charge de la période de stage'
+  serviceStageEntreprise: 'Service dans lequel vous effectuerez votre stage'
+  sujetStage: 'Sujet du stage'
+  texteExplication.enquete: 'Texte explicatif des consignes de l''enquête affiché aux étudiants'
+  texteLibre: 'Commentaire libre sur la période de stage. Sera visible de l''étudiant'
+  titre.enquete: 'Titre de l''enquête affiché pour l''étudiant'
+  tuteur_universitaire: 'Tuteur universitaire en charge du suivi de l''alternance de l''étudiant'
+
+Heure: Heure
+Hour: Hour
+information: information
+init: Initialisé
+initiales: Initiales
+j: Jour
+Jour: Jour
+label:
+  actif: Actif
+  activites: 'Activités à réaliser'
+  activitesConfiees: 'Activités confiées'
+  adresse_parentale: 'Adresse parentale'
+  adresse: Adresse
+  adresse1: 'Adresse (numéro, rue)'
+  adresse2: 'Suite adresse (étage, bâtiment, ...)'
+  adresse3: 'Complément d''adresse'
+  adresseParentale: 'Adresse parentale'
+  allday: 'Toute la journée'
+  amenagementsParticuliers: 'Aménagements particuliers'
+  amenagementStage: 'Aménagement du stage'
+  annee_bac: 'Année d''obtention du bac'
+  annee_courante: 'Année courante'
+  annee_entree: 'Année d''entrée'
+  annee_sortie: 'Année de publication'
+  annee: Année
+  annee.par.defaut: 'Année par défaut'
+  anneeSortie: 'Année de sortie'
+  anneeUniversitaire: 'Année Universitaire'
+  article_categorie: 'Catégorie de l''article'
+  assistant_diplome: 'Assistant(e) du diplôme'
+  avantages: Avantages
+  bac: 'Bac obtenu'
+  bonification: 'UE de bonification'
+  boursier: Boursier
+  bureau1: Bureau
+  bureau2: 'Autre bureau'
+  civilite: Civilité
+  cm_formation: 'Nb. Heures CM (80%)'
+  cm_ppn: 'Nb. Heures CM (PPN)'
+  code_apogee: 'Code Apogée'
+  code_celcat_departement: 'Code Celcat du diplôme'
+  code_departement: 'Code département'
+  code_diplome: 'Code diplôme'
+  code_element: 'Code élément'
+  code_etape: 'Code étape'
+  code_matiere: 'Code Matière'
+  code_postal: 'Code Postal'
+  code_version: 'Code version'
+  code: Code/Référence
+  codeApogee: 'Code apogée'
+  codebarre: 'Code barre'
+  codeDepartement: 'Code département'
+  codeVersion: 'Code version'
+  coefficient: Coefficient
+  commentaire: Commentaire
+  commentaireDureeHebdomadaire: 'Commentaires sur la durée de travail'
+  competences_visees: 'Compétences visées'
+  competencesVisees: 'Competences visées'
+  contenu: Contenu
+  contrat_alternance: 'Type de contrat d''alternance'
+  copieAssistant: 'Copie assistant(e)'
+  couleur_cm: 'Couleur des CM (EDT)'
+  couleur_td: 'Couleur des TD (EDT)'
+  couleur_texte: 'Couleur des textes'
+  couleur_tp: 'Couleur des TP (EDT)'
+  couleur: Couleur
+  cv: CV
+  date_debut: 'Date de début'
+  date_evaluation: 'Date de l''évaluation'
+  date_fin: 'Date de fin'
+  date_naissance: 'Date de naissance'
+  dateDebut: 'Date de début'
+  dateDebutPublication: 'Date de début de publication'
+  dateDebutStage: 'Date de début de stage'
+  dateFermeture: 'Date de fermeture du questionnaire'
+  dateFin: 'Date de fin'
+  dateFinPublication: 'Date de fin de publication'
+  dateFinStage: 'Date de fin du stage'
+  dateOuverture: 'Date d''ouverture du questionnaire'
+  dateRenduRapport: 'Date de rendu du rapport de stage'
+  dateRetour: 'Date de rendu'
+  datesFlexibles: 'Dates de stage flexibles'
+  deadline: Deadline
+  decision: Décision
+  demandeurEmploi: 'Demandeur d''emploi'
+  description: Description
+  diplome: Diplôme
+  documentRendre: 'Documents à rendre'
+  domaines: 'Domaines de compétences'
+  duree: Durée
+  dureeHebdomadaire: 'Durée de travail hebdomadaire'
+  dureeJoursStage: 'Nombre de jour de stage'
+  email: Email
+  empruntable: 'Matériel empruntable'
+  entreprise: Entreprise
+  etat_alternance: 'Etat du formulaire de l''alternance'
+  evaluation_matiere: Matière
+  evaluation_personnelAutorise: 'Personne(s) autorisée(s) pour modifier ou compléter l''évaluation'
+  evaluation_type_groupe: 'Type de groupe pour la saisie'
+  fax: Fax
+  fichier: Fichier
+  fonction: 'Fonction dans l''entreprise'
+  gratification: Gratification
+  gratificationMontant: 'Montant de la gratification'
+  gratificationPeriode: 'Période de gratification'
+  heure_debut: 'Heure de début'
+  heure_fin: 'Heure de fin'
+  icone: Icône
+  incluService: 'Comptabilisé dans le service'
+  initiales: Initiales
+  libelle_evaluation: 'Libellé de l''évaluation'
+  libelle_long: 'Libellé long'
+  libelle: Libellé
+  lieu_date: 'Lieu de l''événement'
+  logoFile: 'Fichier du logo'
+  mail_perso: 'Email personnel'
+  mail_univ: 'Email université (ou professionnel)'
+  matiere.parent: 'Matière parente'
+  maximum: 'Nb. Heures Maximum'
+  message: Message
+  modaliteEncadrement: 'Modalité d''encadrement'
+  modaliteEvaluation: 'Modalités d''évaluation du stage par l''entreprise'
+  modaliteEvaluationPedagogique: 'Modalités d''évaluations pédagogiques du stage'
+  modalites: Modalités
+  mois_debut: 'Mois de début'
+  motif: Motif
+  mots_cles: 'Mots clés'
+  moyenne: Moyenne
+  nb_ects: 'Nombre d''ECTS'
+  nb_notes: 'Nombre de notes'
+  nb_semestres: 'Nombre de semestres'
+  nbAbsences: 'Nb Absences'
+  nbEcts: 'Nombre d''ECTS'
+  nbGroupesTd: 'Nb. Groupes de TD'
+  nbGroupesTP: 'Nb. Groupes de TP'
+  nbHeuresService: 'Nb. Heures dans service'
+  nbHeuresTd: 'Nb. Heures TD'
+  nbJours: 'Nombre de jours de stage'
+  nbSemaines: 'Nombre de semaine de stage'
+  niveau_entree: 'Niveau d''entrée'
+  niveau_sortie: 'Niveau de sortie'
+  nom: Nom
+  num_etudiant: 'Numéro étudiant'
+  num_ine: 'Numéro INE'
+  numero_harpege: 'Numéro Harpège/administratif'
+  numero_ue: 'Numéro de l''UE'
+  objectifs_module: 'Objectifs du module'
+  opt_agence: 'Notion d''agence ou de groupe de projet'
+  opt_alternance: 'Année en alternance'
+  opt_annee_previsionnel: 'Année du prévisionnel'
+  opt_anonymat: 'Documents anonymes'
+  opt_commentaires_releve: 'Commentaires sur les relevés de notes'
+  opt_destinataire_mail_absence_responsable: 'Destinataire des mails en cas d''absence d''un étudiant'
+  opt_destinataire_mail_modification_note: 'Destinataire du mail pour une modification de note'
+  opt_destinataire_mail_releve: 'Destinataire du mail pour la saisie d''un relevé de notes'
+  opt_dilpome_decale: 'Diplôme proposé en semestres décalés'
+  opt_edt: 'Onglet Emploi du temps'
+  opt_espace_perso_visible: 'Lien vers les espaces personnels des étudiants visible'
+  opt_evaluation_modifiable: 'Evaluation modifiable après saisie'
+  opt_evaluation_visible: 'Evaluation visible des étudiants'
+  opt_mail_absence_etudiant: 'Mail en cas d''absence à l''étudiant'
+  opt_mail_absence_responsable: 'Mail en cas d''absence à un responsable'
+  opt_mail_modification_note: 'Mail en cas de modification d''une note à un responsable'
+  opt_mail_releve: 'Mail en cas de saisie d''un relevé de notes à un responsable'
+  opt_materiel: 'Onglet "emprunt matériel"'
+  opt_messagerie: 'Onglet "Messagerie"'
+  opt_methode_calcul: 'Choix de la méthode de calcul des moyennes'
+  opt_nb_jours_saisie: 'Nb. de jour pour saisir les absences'
+  opt_penalite_absence: 'Pénalité en cas d''absence'
+  opt_point_penalite_absence: 'Nombre de point de pénalité en cas d''absence'
+  opt_RI: 'Onglet relations internationales'
+  opt_stage: 'Onglet Stage'
+  opt_suppr_absence: 'Possibilité de supprimer des absences après leur saisie'
+  opt_synthese: 'Onglet "synthèse des semestres"'
+  opt_update_celcat: 'Synchronisation avec Celcat'
+  ordre_annee: 'Ordre dans l''année'
+  ordre_lmd: 'Ordre dans le système LMD'
+  ordre: Ordre
+  pac: 'PAC, ou Sport'
+  parcours: Parcours
+  pays: Pays
+  periodesInterruptions: 'Périodes d''interruptions'
+  personnel: Personnel
+  photo: Photo
+  portable: Portable
+  poste_interne: 'Numéro de poste interne'
+  ppn_actif_add: 'Ajouter un PPN actif'
+  ppn_actif: 'PPN Actif'
+  Ppn: PPN
+  pre_requis: Pré-requis
+  prenom: Prénom
+  prolongements: Prolongements
+  promotion: 'Année d''entrée à l''IUT'
+  proposition: Proposition
+  qui_concerne: 'Qui concerné par l''événement'
+  raisonSociale: 'Raison Sociale'
+  remarque: Remarque
+  responsabilites: Responsabilités
+  responsable_diplome: 'Responsable du diplôme'
+  responsable_site: 'Responsable du site'
+  responsable: 'Représentée par'
+  responsables: 'Responsables de la période de stage'
+  respri: 'Responsable des relations internationales'
+  semestre_decale: 'Semestre décalé équivalent'
+  semestre_precedent: 'Semestre précédent'
+  semestre_stage_periode: 'Semestre pour lequel compte la période de stage'
+  semestre_suivant: 'Semestre suivant'
+  semestre: Semestre
+  semestres_article: 'Article visible pour les semestres'
+  semestres_date: 'Date visible pour les semestres'
+  semestres_document: 'Document visible pour les semestres'
+  serviceStageEntreprise: 'Service dans l''entreprise'
+  sexe: Sexe
+  sigle: Sigle
+  signature: Signature
+  siret: 'N° SIRET'
+  site_perso: 'Site web personnel'
+  site_principal: 'Site principal'
+  site_univ: 'Site web université'
+  site_web: 'Site Web'
+  site: 'Site géographique'
+  sites: 'Autres Sites'
+  slug: Slug
+  stagePeriodes: 'Période de stage'
+  statut: Statut
+  sujet: Sujet
+  sujetStage: 'Mission principale'
+  suspendu: Suspendu
+  td_formation: 'Nb. Heures TD (80%)'
+  td_ppn: 'Nb. Heures CM (PPN)'
+  tel_bureau: 'Téléphone Bureau'
+  tel_contact: 'Téléphone de la formation'
+  tel1: Téléphone
+  tel2: 'Autre téléphone'
+  telephone: Téléphone
+  texte_date: 'Description de l''événement'
+  texte: Texte
+  texteExplication: 'Texte d''explication'
+  texteLibre: 'Commentaire libre'
+  titre_date: 'Titre de l''événement'
+  tp_formation: 'Nb. Heures TP (80%)'
+  tp_ppn: 'Nb. Heures TP (PPN)'
+  tuteur_universitaire: 'Tuteur universitaire'
+  tuteur: 'Tuteur entreprise'
+  tuteurEntreprise: 'Tuteur entreprise'
+  type_article: 'Type d''article'
+  type_diplome: 'Type de diplôme'
+  type_document: 'Catégorie du document'
+  type_groupe: 'Type de groupe'
+  type_materiel: 'Type de matériel'
+  type_materiel.libelle: Libellé
+  typedate: 'Type d''événement'
+  typehrs: 'Type d''HRS ou de prime'
+  ue_bonification: 'UE de bonification'
+  ue: 'Unité d''enseignement (UE)'
+  ufr: UFR
+  uniteduree: 'Unité de durée'
+  url: URL
+  username: Login
+  ville: Ville
+  visible: Visible
+  volume_horaire: 'Volume horaire du diplôme'
+
+labele.libelle: Libellé
+labele.nbHeuresTd: 'Nb heures TD'
+
+libelle:
+  capacite: 'Capacité réelle'
+  nbColonnes: 'Nombre de colonnes'
+  nbRangs: 'Nombre de rangs'
+  placesInterdites: 'Liste des places interdites'
+  salle: 'Nom de la salle'
+
+login: Login
+M.: M.
+mail_perso: 'Email personnel'
+mail_univ: 'Email université (ou professionnel)'
+Motif: Motif
+Moyenne: Moyenne
+nom: Nom
+Nom: Nom
+Non: Non
+num_etudiant: 'Numéro étudiant'
+num_ine: 'Numéro INE étudiant'
+numero_harpege: 'Numéro identifiant personnel'
+NV: NV
+Ordre: Ordre
+Oui: Oui
+P: P
+Parcours: Parcours
+photo: Photo
+poste_interne: 'N° poste interne'
+Prenom: Prenom
+prenom: Prénom
+professionalisation: Professionalisation
+Proposition: Proposition
+remarque: Remarques
+REO: REO
+responsabilites: Responsabilités
+Semaine: Semaine
+semestre: Semestre
+Semestre: Semestre
+sexe: Sexe
+signature: Signature
+site_perso: 'Site web personnel'
+site_univ: 'Site web université ou professionnel'
+slug: Slug
+statut: Statut
+td: td
+TD: TD
+tel_bureau: 'Téléphone de bureau'
+tel1: Téléphone
+tel2: 'Autre Téléphone'
+tp: tp
+TP: TP
+Tuteur: Tuteur
+type_user: 'Type d''utilisateur'
+type:
+  autre: Autre
+  commission: 'Commission ou Jury'
+  projet: Projets
+  rentree: Rentrée
+  reunion: 'Réunion ou Conseil'
+  soutenance: Soutenance
+  stage: Stage
+Ue: Ue
+updated: 'Mise à jour le'
+username: Login
+V: V
+valide: Validé
+value1: value1
+value2: value2
+VCJ: VCJ
+vich_uploader.form_label.delete_confirm: 'Confirmer la suppression'
+vich_uploader.link.download: Télécharger
+visible: Visible
+Year: Année

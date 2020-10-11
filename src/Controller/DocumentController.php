@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 18:13
+// @lastUpdate 11/10/2020 12:15
 
 namespace App\Controller;
 
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DocumentController extends BaseController
 {
     /**
-     * @Route("/", name="document_index")
+     * @Route("", name="document_index")
      */
     public function index(): Response
     {

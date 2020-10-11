@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/10/2020 16:47
+// @lastUpdate 11/10/2020 12:24
 
 namespace App\Controller\superAdministration;
 
@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrevisionnelController extends BaseController
 {
     /**
-     * @Route("/previsionnel", name="sa_previsionnel_index")
      * @Route("/previsionnel/{annee}", name="sa_previsionnel_index")
      * @param PersonnelRepository $personnelRepository
      * @param int                 $annee

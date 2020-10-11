@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:38
+// @lastUpdate 11/10/2020 12:15
 
 namespace App\Controller;
 
@@ -27,7 +27,7 @@ use function count;
 class InformationController extends BaseController
 {
     /**
-     * @Route("/", name="informations_index")
+     * @Route("", name="informations_index")
      */
     public function index(): Response
     {
