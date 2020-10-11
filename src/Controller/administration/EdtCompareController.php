@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 11/10/2020 09:51
 
 namespace App\Controller\administration;
 
@@ -89,14 +89,14 @@ class EdtCompareController extends BaseController
      * @param Matiere $matiere
      *
      * @return Response
-     * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info", methods={"POST"})
+     * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info")
      */
     public function comparePlusInfoAction(Matiere $matiere): Response
     {
         //tester si celcat ou intranet
         $planning = $this->edtPlanningRepository->findBy(['matiere' => $matiere->getId()]);
 
-        $calendrier = $this->calendrierRepository->findCalendrier();
+        $calendrier = $this->calendrierRepository->findCalendrierArray();
 
         return $this->render('administration/edtCompare/_plusInfo.html.twig', [
             'planning'   => $planning,

@@ -11,18 +11,18 @@
     <tbody>
     {% for pl in planning %}
         <tr>
-            <td>{{ pl.jourlong }} {{ pl.dateFr(calendrier[pl.semaine].semainereelle) }}</td>
-            <td>{{ pl.hDebut }} | {{ pl.hFin }}</td>
+            <td>{{ pl.date|format_date('short') }}</td>
+            <td>{{ pl.debutTexte }} | {{ pl.finTexte }}</td>
             {% if pl.intervenant != null %}
                 <td>{{ pl.intervenant.displayPr }}</td>
             {% else %}
-                <td> - </td>
+                <td> -</td>
             {% endif %}
             <td>{{ pl.type|upper }}</td>
             {% if pl.groupe != null %}
                 <td>{{ pl.displayGroupe }}</td>
             {% else %}
-                <td> - </td>
+                <td> -</td>
             {% endif %}
         </tr>
     {% endfor %}
