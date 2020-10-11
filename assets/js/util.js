@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 11/10/2020 08:04
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -140,16 +140,21 @@ export function addCallout (message, label) {
 
 //Editable
 let myEditInitialContent = ''
-
+let type = 'text'
+let EditOnLine = false
 
 $(document).on('click', '.myedit', function (e) {
   e.preventDefault()
   myEditInitialContent = $(this)
   let html = ''
+  EditOnLine = true
+  if (typeof ($(this).data('type')) !== 'undefined') {
+    type = $(this).data('type')
+  }
+
   if ($(this).data('type') === 'select') {
     //todo: A finaliser
   } else {
-    console.log('toto')
     html = genereInput($(this))
   }
   $(this).replaceWith(html)
@@ -169,6 +174,18 @@ $(document).on('click', '#myedit-valide', function (e) {
   updateData()
 })
 
+$(document).on('keypress', function (e) {
+  if (EditOnLine === true && e.which === 13) {
+    e.preventDefault()
+    updateData()
+  }
+
+  if (EditOnLine === true && e.which === 27) {
+    e.preventDefault()
+    $('#myEdit-zone').replaceWith(myEditInitialContent)
+  }
+})
+
 $(document).on('click', '#myedit-annule', function (e) {
   e.preventDefault()
   $('#myEdit-zone').replaceWith(myEditInitialContent)
@@ -180,12 +197,14 @@ function updateData () {
     url: myEditInitialContent.attr('href'),
     data: {
       field: myEditInitialContent.data('field'),
-      value: val
+      value: val,
+      type: type
     },
     method: 'POST',
     success: function () {
       myEditInitialContent.html(val)
       $('#myEdit-zone').replaceWith(myEditInitialContent)
+      EditOnLine = false
     }
   })
 }

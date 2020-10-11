@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 20:01
+// @lastUpdate 11/10/2020 08:04
 
 /**
  * Created by PhpStorm.
@@ -172,8 +172,12 @@ class MyStageEtudiant
         return $stageEtudiant;
     }
 
-    public function update(StageEtudiant $stageEtudiant, $name, $value): bool
+    public function update(StageEtudiant $stageEtudiant, $name, $value, $type = 'text'): bool
     {
+        if ($type === 'date') {
+            $value = Tools::convertDateToObject($value);
+        }
+
         if ($stageEtudiant) {
 
             $method = 'set' . $name;

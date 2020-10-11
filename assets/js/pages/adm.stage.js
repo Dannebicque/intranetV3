@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 08:26
+// @lastUpdate 11/10/2020 08:04
 import {addCallout} from '../util'
 import '../../vendor/jquery.collection.min'
 import $ from 'jquery'
@@ -19,33 +19,23 @@ $(document).on('change', '.changetuteur', function () {
   })
 })
 
-$(document).on('click', '.enregistreModeleMail', function () {
-  const etat = $(this).data('type')
-  $.ajax({
-    url: Routing.generate('administration_stage_periode_courrier_sauvegarde_modele', {
-      uuid: $(this).data('periode'),
-      mail: etat
-    }),
-    data: {
-      message: ed2.root.innerHTML,
-      sujet: $('#sujet_' + etat).val()
-    },
-    success: function () {
-      addCallout('Modèle enregistré !', 'success')
-    }
-  })
-})
-
 $(document).ready(function () {
-  $('.selector-stagePeriodeSoutenances').collection()
-  $('.selector-stagePeriodeInterruptions').collection()
-  $(document).on('click', '.stage_periode_stagePeriodeInterruptions-collection-action', function () {
-    updateDatePicker()
-  })
+  let stagePeriodeSoutenances = $('.selector-stagePeriodeSoutenances')
+  if (stagePeriodeSoutenances.length > 0) {
+    stagePeriodeSoutenances.collection()
+    $(document).on('click', '.stage_periode_stagePeriodeSoutenances-collection-action', function () {
+      updateDatePicker()
+    })
+  }
+  let stagePeriodeInterruptions = $('.selector-stagePeriodeInterruptions')
+  if (stagePeriodeInterruptions.length > 0) {
+    stagePeriodeInterruptions.collection()
+    $(document).on('click', '.stage_periode_stagePeriodeInterruptions-collection-action', function () {
+      updateDatePicker()
+    })
+  }
 
-  $(document).on('click', '.stage_periode_stagePeriodeSoutenances-collection-action', function () {
-    updateDatePicker()
-  })
+
 })
 
 function updateDatePicker () {
