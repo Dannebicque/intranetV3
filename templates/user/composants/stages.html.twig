@@ -50,12 +50,13 @@
                                                                  title="Informations sur l'entreprise"
                                                                  data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
-                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
-                    .defini'|trans }}{% endif %}</td>
+                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4"><div class="alert alert-info">Pas d'alternance en cours</div></td>
+                    <td colspan="4">
+                        <div class="alert alert-info">Pas d'alternance en cours</div>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
@@ -118,12 +119,13 @@
                                                                  title="Informations sur l'entreprise"
                                                                  data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
-                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non
-                    .defini'|trans }}{% endif %}</td>
+                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5"><div class="alert alert-info">Pas d'alternance réalisée</div></td>
+                    <td colspan="5">
+                        <div class="alert alert-info">Pas d'alternance réalisée</div>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
