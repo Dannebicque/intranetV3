@@ -1,3 +1,9 @@
+/* Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved */
+/* @file /Users/davidannebicque/htdocs/intranetV3/public/assets/bornes/css/style.css */
+/* @author davidannebicque */
+/* @project intranetV3 */
+/* @lastUpdate 11/10/2020 18:00 */
+
 /* CONTENEUR 1080px */
 html, body {
 	margin: 0 auto;
@@ -256,15 +262,15 @@ html, body {
 	background-color: #FFA726;
 }
 
-.rosecm, .rose {
+.pinkcm, .pink {
 	background-color: #880E4F;
 }
 
-.rosetd {
+.pinktd {
 	background-color: #C2185B;
 }
 
-.rosetp {
+.pinktp {
 	background-color: #F06292;
 }
 
@@ -280,41 +286,42 @@ html, body {
 	background-color: #4DB6AC;
 }
 
-.violetcm, .violet {
+.purplecm, .purple {
 	background-color: #8e24aa;
 }
 
-.violettd {
+.purpletd {
 	background-color: #ab47bc;
 }
 
-.violettp {
+.purpletp {
 	background-color: #cb76da;
 }
 
-.vertcm, .vert{
+.greencm, .green {
 	background-color: #1B5E20;
 }
 
-.verttd {
+.greentd {
 	background-color: #388E3C;
 }
 
-.verttp {
+.greentp {
 	background-color: #4CAF50;
 }
 
-.bleucm, .bleu {
+.bluecm, .blue {
 	background-color: #0d47a1;
 }
 
-.bleutd {
+.bluetd {
 	background-color: #2979FF;
 }
 
-.bleutp {
+.bluetp {
 	background-color: #42A5F5;
 }
+
 .bleummi {
 	background-color: #146f88;
 }
