@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:14
+// @lastUpdate 11/10/2020 17:17
 
 namespace App\Form;
 
@@ -41,22 +41,30 @@ class EvaluationType extends AbstractType
     {
         $this->departement = $options['departement'];
         $locale = $options['locale'];
+        $autorise = !$options['autorise'];
         $this->semestre = $options['semestre'];
         $import = $options['import'];
         $matiereDisabled = $options['matiereDisabled'];
 
         $builder
             ->add('libelle', TextType::class,
-                ['label' => 'label.libelle_evaluation', 'help' => 'help.libelle_evaluation', 'required' => false])
+                ['label'    => 'label.libelle_evaluation',
+                 'help'     => 'help.libelle_evaluation',
+                 'required' => false,
+                 'disabled' => $autorise
+                ])
             ->add('dateEvaluation', DateType::class, [
-                'label'  => 'label.date_evaluation',
-                'format' => 'dd/MM/yyyy',
-                'widget' => 'single_text',
-                'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker', 'data-language' => $locale]
+                'label'    => 'label.date_evaluation',
+                'format'   => 'dd/MM/yyyy',
+                'widget'   => 'single_text',
+                'html5'    => false,
+                'disabled' => $autorise,
+                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $locale]
             ])
-            ->add('coefficient', TextType::class, ['label' => 'label.coefficient', 'help' => 'help.coefficient'])
-            ->add('commentaire', TextType::class, ['label' => 'label.commentaire', 'help' => 'help.commentaire_evaluation'])
+            ->add('coefficient', TextType::class,
+                ['label' => 'label.coefficient', 'help' => 'help.coefficient', 'disabled' => $autorise])
+            ->add('commentaire', TextType::class,
+                ['label' => 'label.commentaire', 'help' => 'help.commentaire_evaluation', 'disabled' => $autorise])
             ->add('matiere', EntityType::class, [
                 'class'         => Matiere::class,
                 'label'         => 'label.evaluation_matiere',
@@ -67,12 +75,13 @@ class EvaluationType extends AbstractType
                 'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'disabled'      => $matiereDisabled
+                'disabled' => !($matiereDisabled && $autorise)
             ])
             ->add('typeGroupe', EntityType::class, [
                 'class'         => TypeGroupe::class,
                 'label'         => 'label.evaluation_type_groupe',
                 'choice_label'  => 'libelle',
+                'disabled'      => $autorise,
                 'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
@@ -84,6 +93,7 @@ class EvaluationType extends AbstractType
                 'class'         => Personnel::class,
                 'help'          => 'help.personnelAutorise',
                 'label'         => 'label.evaluation_personnelAutorise',
+                'disabled'      => $autorise,
                 'choice_label'  => 'display',
                 'attr'          => ['class' => ''],
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
@@ -111,6 +121,7 @@ class EvaluationType extends AbstractType
             'semestre'           => null,
             'import'             => null,
             'matiereDisabled'    => null,
+            'autorise'           => null,
             'translation_domain' => 'form',
             'locale'             => 'fr'
 

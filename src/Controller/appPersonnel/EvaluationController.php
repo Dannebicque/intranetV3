@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 11/10/2020 16:33
 
 namespace App\Controller\appPersonnel;
 
@@ -134,43 +134,5 @@ class EvaluationController extends BaseController
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
             $this->dataUserSession->getDepartement());
-    }
-
-    /**
-     * @Route("/ajax/gere/{uuid}", name="application_personnel_evaluation_ajax_autorise", methods="GET|POST")
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param Request    $request
-     * @param Evaluation $evaluation
-     *
-     * @return Response
-     */
-    public function ajaxAddPersonneAction(Request $request, Evaluation $evaluation): Response
-    {
-        if ($evaluation !== null)
-        {
-            $form = $this->createForm(EvaluationsPersonnelsType::class, $evaluation, [
-                'attr'     => ['id' => 'formPersonne', 'class' => 'form-horizontal'],
-                'semestre' => $evaluation->getSemestre(),
-                'action'   => $this->generateUrl('application_personnel_evaluation_ajax_autorise',
-                    ['uuid' => $evaluation->getUuidString()])
-            ]);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted()) {
-                $this->entityManager->flush();
-
-                return $this->redirectToRoute('application_personnel_evaluation_show',
-                    ['uuid' => $evaluation->getUuidString()]);
-            }
-
-
-            return $this->render('appPersonnel/note/addPersonne.html.twig',
-                [
-                    'form' => $form->createView(),
-                    'eval' => $evaluation
-                ]);
-        }
-
-        return $this->render('bundles/TwigBundle/Exception/error666.html.twig');
     }
 }

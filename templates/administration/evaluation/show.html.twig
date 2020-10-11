@@ -35,7 +35,7 @@
     <div class="card card-slided-up">
         <header class="card-header">
             <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ evaluation.matiere.codeMatiere }}
-                | {{ evaluation.matiere.libelle }}</h4>
+                                                            | {{ evaluation.matiere.libelle }}</h4>
             <ul class="card-controls">
                 <li><a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-provide="tooltip">
                         <i class="fas fa-chevron-down"></i>
@@ -44,18 +44,17 @@
         </header>
         <div class="card-content">
             <div class="card-body">
-                {% form_theme form 'form/my-form.html.twig' %}
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <button class="btn btn-success">{{ button_label|default('label.update'|trans) }}</button>
-                {{ form_end(form) }}
+                {{ render_esi(controller(
+                    'App\\Controller\\composants\\NoteController::editFormEvaluation', {evaluation: evaluation.id,
+                        source:'admin', autorise:true}
+                )) }}
             </div>
         </div>
     </div>
 
     <div class="card">
         <h4 class="card-title"><strong>Saisie</strong> des notes | {{ evaluation.matiere.codeMatiere }}
-            | {{ evaluation.matiere.libelle }}
+                                                       | {{ evaluation.matiere.libelle }}
         </h4>
         <div class="card-body">
             <div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant

@@ -3,20 +3,20 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+// @lastUpdate 11/10/2020 16:35
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Etudiant\EtudiantNotes;
+use App\Classes\MyEvaluation;
+use App\Classes\MyEvaluations;
+use App\Classes\MyExport;
+use App\Classes\MyUpload;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Form\EvaluationType;
-use App\Classes\MyEvaluation;
-use App\Classes\MyEvaluations;
-use App\Classes\MyExport;
-use App\Classes\MyUpload;
 use App\Repository\EtudiantRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -48,7 +48,7 @@ class NoteController extends BaseController
     {
         if ($matiere->getSemestre()) {
             $myEvaluations->setMatiere($matiere);
-            $myEvaluations->getEvaluationsMatiere($matiere->getSemestre()->getAnneeUniversitaire());
+            $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
 
             return $this->render('appPersonnel/note/index.html.twig', [
                 'matiere'     => $matiere,
@@ -112,20 +112,21 @@ class NoteController extends BaseController
     /**
      * @Route("/saisie/etape-2/{uuid}", name="application_personnel_note_saisie_2",
      *                                        requirements={"matiere"="\d+"})
+     * @param Request      $request
      * @param MyEvaluation $myEvaluation
      * @param Evaluation   $evaluation
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
      * @return Response
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     *
      */
-    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    public function saisieNotes(Request $request, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes,
-            'autorise'   => true
+            'notes'      => $notes
         ]);
     }
 
