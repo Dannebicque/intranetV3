@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 07:33
+// @lastUpdate 11/10/2020 08:10
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
@@ -180,17 +180,12 @@ lookup.open = function (e) {
 // =====================
 // Sidebar
 // =====================
-//
-//+function ($, window) {
-//
+
 var sidebar = {}
-//
-//   sidebar.init = function () {
 
 // Scrollable
 //
-//$('.sidebar-navigation').perfectScrollbar()
-
+const ps = new PerfectScrollbar('.sidebar-navigation')
 
 // Handle sidebar openner
 //
