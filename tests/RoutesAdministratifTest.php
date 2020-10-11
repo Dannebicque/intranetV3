@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/tests/RoutesAdministratifTest.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/09/2020 20:10
+// @lastUpdate 11/10/2020 13:59
 
 namespace App\Tests;
 
@@ -44,7 +44,7 @@ class RoutesAdministratifTest extends WebTestCase
             ['/fr/administratif/etudiants/'],
             ['/fr/administratif/scolarite/'],
             ['/fr/administratif/ressources-humaines/'],
-            ['/fr/administratif/previsionnel'],
+            // ['/fr/administratif/previsionnel/'],
             ['/fr/administratif/celcat/'],
             ['/fr/administratif/qualite/'],
 
