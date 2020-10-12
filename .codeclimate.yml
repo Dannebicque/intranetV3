@@ -43,3 +43,4 @@ exclude_patterns:
 - translations/
 - var/
 - vendor/
+- assets/vendor/
