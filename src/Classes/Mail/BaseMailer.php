@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 12/10/2020 15:46
 
 namespace App\Classes\Mail;
 
@@ -50,7 +50,6 @@ class BaseMailer
         $mail->from($this->getFrom($options))
             ->subject($this->translator->trans($subject))
             ->replyTo($this->getReplyTo($options));
-
 
         $this->checkTo($mail, $to);
         $this->checkCc($mail, $options);
