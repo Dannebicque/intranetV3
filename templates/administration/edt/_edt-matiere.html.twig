@@ -36,10 +36,10 @@
                         {% for group in 1..edt.semestre.nbgroupeTPEDT %}
                             {% if edt.planning[jour][ligne][group] is defined %}
                                 {% if edt.planning[jour][ligne][group].texte!='xx' %}
-                                    <td class="center td-edt edt_cours"
+                                    <td class="center td-edt edt_cours {{ edt.planning[jour][ligne][group].couleur }}"
                                         id="cell_{{ ligne }}_{{ jour }}_{{ group }}_{{ edt.planning[jour][ligne][group].planning.id }}"
                                         rowspan="{{ edt.planning[jour][ligne][group].duree }}"
-                                        style="background:{{ edt.planning[jour][ligne][group].couleur }};color:{{ edt.planning[jour][ligne][group].couleurTexte }}; padding:0;"
+                                        style="color:{{ edt.planning[jour][ligne][group].couleurTexte }}; padding:0;"
                                         colspan="{{ edt.planning[jour][ligne][group].largeur }}">{{ edt.planning[jour][ligne][group].texte|raw }}</td>
                                 {% endif %}
                             {% else %}

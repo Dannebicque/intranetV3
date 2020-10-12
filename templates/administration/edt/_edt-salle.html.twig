@@ -22,9 +22,8 @@
                     {% for jour in 1..5 %}
                         {% if edt.planning[jour][ligne] is defined %}
                             {% if edt.planning[jour][ligne].texte!='xx' %}
-                                <td class="center td-edt edt_cours" rowspan="{{ edt.planning[jour][ligne].duree }}"
-                                    style="background:{{ edt.planning[jour][ligne].couleur }}; color:{{ edt
-                                    .planning[jour][ligne].couleurTexte }};">{{ edt.planning[jour][ligne].texte|raw }}</td>
+                                <td class="center td-edt edt_cours {{ edt.planning[jour][ligne].couleur }}" rowspan="{{ edt.planning[jour][ligne].duree }}"
+                                    style="color:{{ edt.planning[jour][ligne].couleurTexte }};">{{ edt.planning[jour][ligne].texte|raw }}</td>
                             {% endif %}
                         {% else %}
                             <td>&nbsp;</td>
