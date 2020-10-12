@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 12/10/2020 14:53
 
 namespace App\Repository;
 
@@ -102,7 +102,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Entreprise::class, 'e', 'WITH', 's.entreprise = e.id')
             ->where('s.stagePeriode = :stagePeriode')
             ->setParameter('stagePeriode', $stagePeriode->getId())
-            ->orderBy('e.libelle', 'ASC')
+            ->orderBy('e.raisonSociale', 'ASC')
             ->getQuery()
             ->getResult();
     }

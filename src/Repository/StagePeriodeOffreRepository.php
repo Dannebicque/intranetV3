@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeOffreRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 12/10/2020 14:53
 
 namespace App\Repository;
 
@@ -38,7 +38,7 @@ class StagePeriodeOffreRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
             ->groupBy('o.id')
-            ->orderBy('o.libelle', 'ASC')
+            ->orderBy('o.raisonSociale', 'ASC')
             ->getQuery()
             ->getResult();
     }
