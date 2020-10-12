@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 14:53
+// @lastUpdate 12/10/2020 15:38
 
 namespace App\Repository;
 
@@ -42,8 +42,8 @@ class StageEtudiantRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->where('s.etudiant = :etudiant')
             ->andWhere('s.stagePeriode = :stagePeriode')
-            ->setParameter('etudiant', $etudiant)
-            ->setParameter('stagePeriode', $stagePeriode)
+            ->setParameter('etudiant', $etudiant->getId())
+            ->setParameter('stagePeriode', $stagePeriode->getId())
             ->getQuery()
             ->getOneOrNullResult();
     }

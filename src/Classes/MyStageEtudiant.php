@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 08:04
+// @lastUpdate 12/10/2020 15:38
 
 /**
  * Created by PhpStorm.
@@ -68,7 +68,6 @@ class MyStageEtudiant
     {
         $this->stageEtudiant = $this->checkStageEtudiantExist($stagePeriode, $etudiant);
 
-        $eventMail = '';
         $eventNotif = '';
 
         switch ($etat) {
@@ -121,14 +120,15 @@ class MyStageEtudiant
                 break;
         }
 
+        $this->entityManager->persist($this->stageEtudiant);
+        $this->entityManager->flush();
+
         $event = new StageEvent($this->stageEtudiant);
 
         if ($eventNotif !== '') {
             $this->eventDispatcher->dispatch($event, $eventNotif);
         }
 
-        $this->entityManager->persist($this->stageEtudiant);
-        $this->entityManager->flush();
     }
 
     /**
@@ -143,11 +143,7 @@ class MyStageEtudiant
     {
         $result = $this->stageEtudiantRepository->findExist($stagePeriode, $etudiant);
 
-        if ($result === null) {
-            return $this->createStageEtudiant($stagePeriode, $etudiant);
-        }
-
-        return $result;
+        return $result ?? $this->createStageEtudiant($stagePeriode, $etudiant);
     }
 
     /**
