@@ -1,0 +1,16 @@
+<header class="quickview-header">
+    <p class="quickview-title">{% block qvTitle %}{% endblock %}</p>
+    <span class="close"><i class="fas fa-times"></i></span>
+</header>
+
+<div class="quickview-body">
+    <div class="quickview-block">
+        {% block qvBody %}{% endblock %}
+    </div>
+</div>
+
+<footer class="quickview-footer">
+    {% block qvFooter %}{% endblock %}
+    {# <button class="btn btn-primary">Submit</button> #}
+    {# <button class="btn btn-secondary" data-dismiss="quickview">Cancel</button> #}
+</footer>
