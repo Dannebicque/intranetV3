@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 14:27
+// @lastUpdate 12/10/2020 18:22
 
 namespace App\Entity;
 
@@ -76,10 +76,16 @@ class Annee extends BaseEntity
      */
     private ?string $couleur;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="annee")
+     */
+    private $apcNiveaux;
+
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
         $this->alternances = new ArrayCollection();
+        $this->apcNiveaux = new ArrayCollection();
     }
 
     /**
@@ -282,5 +288,36 @@ class Annee extends BaseEntity
     public function getOptAlternance(): ?bool
     {
         return $this->optAlternance;
+    }
+
+    /**
+     * @return Collection|ApcNiveau[]
+     */
+    public function getApcNiveaux(): Collection
+    {
+        return $this->apcNiveaux;
+    }
+
+    public function addApcNiveau(ApcNiveau $apcNiveau): self
+    {
+        if (!$this->apcNiveaux->contains($apcNiveau)) {
+            $this->apcNiveaux[] = $apcNiveau;
+            $apcNiveau->setAnnee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcNiveau(ApcNiveau $apcNiveau): self
+    {
+        if ($this->apcNiveaux->contains($apcNiveau)) {
+            $this->apcNiveaux->removeElement($apcNiveau);
+            // set the owning side to null (unless already changed)
+            if ($apcNiveau->getAnnee() === $this) {
+                $apcNiveau->setAnnee(null);
+            }
+        }
+
+        return $this;
     }
 }

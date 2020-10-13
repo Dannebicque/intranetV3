@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 16:53
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -228,6 +228,11 @@ class Departement extends BaseEntity
         $this->articleCategories = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
+    }
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
 

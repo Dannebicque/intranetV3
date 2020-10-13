@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -260,6 +260,13 @@ class Etudiant extends Utilisateur
         $this->quizzEtudiants = new ArrayCollection();
         $this->projetEtudiants = new ArrayCollection();
     }
+
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
+    }
+
 
     /**
      * @return mixed
