@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2020 13:05
+// @lastUpdate 13/10/2020 08:56
 
 namespace App\Controller\administration;
 
@@ -13,7 +13,6 @@ use App\Entity\Constantes;
 use App\Form\ActualiteType;
 use App\Classes\MyExport;
 use App\Repository\ActualiteRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,7 +45,6 @@ class ActualiteController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {

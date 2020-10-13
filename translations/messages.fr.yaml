@@ -406,6 +406,42 @@ adm:
     modification.heading: 'Modification d''une UFR'
     new.heading: 'Création d''une UFR'
     show.heading: 'Détails d''une UFR'
+  apc_apprentissage_critique:
+    index:
+      heading: 'Liste des apprentissages critiques'
+    modification:
+      heading: 'Modificaition d''un apprentissage critique'
+    new:
+      heading: 'Création d''un apprentissage critique'
+    show:
+      heading: 'Détails d''un apprentissage critique'
+  apc_competence:
+    modification:
+      heading: 'Modification d''une compétence'
+    index:
+      heading: 'Liste des compétences'
+    new:
+      heading: 'Création d''une compétence'
+    show:
+      heading: 'Détails d''une compétence'
+  apc_composante_essentielle:
+    modification:
+      heading: 'Modification d''une composante essentielle'
+    index:
+      heading: 'Liste des composantes essentielles'
+    new:
+      heading: 'Création d''une composante essentielle'
+    show:
+      heading: 'Détails d''une composante essentielle'
+  apc_niveau:
+    modification:
+      heading: 'Modification d''un niveau de compétence'
+    index:
+      heading: 'Liste des niveaux de compétence'
+    new:
+      heading: 'Création d''un niveau de compétence'
+    show:
+      heading: 'Détails d''un niveau de compétence'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -458,6 +494,32 @@ annee:
 
 annuler: Annuler
 aout: Août
+
+apc:
+  apprentissageCritique:
+    create.success.flash: 'Apprentissage critique modifié avec succès'
+    delete.success.flash: 'Apprentissage critique supprimé avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''un apprentissage critique'
+    duplicate.success.flash: 'Apprentissage critique dupliqué avec succès'
+    edit.success.flash: 'Apprentissage critique modifié avec succès'
+  composanteEssentielle:
+    create.success.flash: 'Composante essentielle modifié avec succès'
+    delete.success.flash: 'Composante essentielle supprimé avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''une composante essentielle'
+    duplicate.success.flash: 'Composante essentielle dupliqué avec succès'
+    edit.success.flash: 'Composante essentielle modifié avec succès'
+  competence:
+    create.success.flash: 'Compétence critique modifié avec succès'
+    delete.success.flash: 'Compétence critique supprimé avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''une compétence'
+    duplicate.success.flash: 'Compétence critique dupliqué avec succès'
+    edit.success.flash: 'Compétence critique modifié avec succès'
+  niveau:
+    create.success.flash: 'Niveau de compétence modifié avec succès'
+    delete.success.flash: 'Niveau de compétence supprimé avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''un niveau de compétence'
+    duplicate.success.flash: 'Niveau de compétence dupliqué avec succès'
+    edit.success.flash: 'Niveau de compétence modifié avec succès'
 
 app:
   alternance_fiche_suivi:
