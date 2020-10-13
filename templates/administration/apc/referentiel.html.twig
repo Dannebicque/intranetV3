@@ -1,0 +1,35 @@
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% set baseurl = 'sa_' %}
+{% else %}
+    {% set baseurl = 'administration_' %}
+{% endif %}
+
+{% block header %}
+    {{ 'referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}"><i
+                            class="material-icons">dashboard</i></a>
+            {% else %}
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+        <div class="card-body">
+        </div>
+    </div>
+{% endblock %}
+
