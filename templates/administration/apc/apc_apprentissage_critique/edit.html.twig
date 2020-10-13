@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.apc_apprentissage_critique.modification.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-edit.html.twig', {elt:'apc_apprentissage_critique', id:
+            apc_apprentissage_critique
+            .id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.apc_apprentissage_critique.modification.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
+{% endblock %}

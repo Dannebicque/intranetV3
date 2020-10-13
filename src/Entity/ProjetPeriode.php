@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetPeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 08:45
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -66,6 +66,11 @@ class ProjetPeriode extends BaseEntity
         $this->responsables = new ArrayCollection();
         $this->setUuid(Uuid::uuid4());
         $this->projetEtudiants = new ArrayCollection();
+    }
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
     public function getLibelle(): ?string
