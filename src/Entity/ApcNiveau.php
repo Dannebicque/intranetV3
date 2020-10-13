@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 08:33
+// @lastUpdate 13/10/2020 09:52
 
 namespace App\Entity;
 
@@ -30,7 +30,7 @@ class ApcNiveau
     private $libelle;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ApcComptence::class, inversedBy="apcNiveaux")
+     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcNiveaux")
      */
     private $competence;
 
