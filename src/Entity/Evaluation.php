@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 11:34
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -119,6 +119,12 @@ class Evaluation extends BaseEntity
         $this->personnelAutorise = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->enfants = new ArrayCollection();
+    }
+
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
     /**

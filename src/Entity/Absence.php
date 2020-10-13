@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -82,6 +82,11 @@ class Absence extends BaseEntity implements Serializable
      * @throws Exception
      */
     public function __construct()
+    {
+        $this->setUuid(Uuid::uuid4());
+    }
+
+    public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }

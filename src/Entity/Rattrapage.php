@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -104,6 +104,11 @@ class Rattrapage extends BaseEntity
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
         $this->anneeuniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
+    }
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
 

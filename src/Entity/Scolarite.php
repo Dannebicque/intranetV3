@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -87,6 +87,11 @@ class Scolarite extends BaseEntity
         $this->scolariteMoyenneMatieres = new ArrayCollection();
     }
 
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
+    }
 
     /**
      * @return int|null

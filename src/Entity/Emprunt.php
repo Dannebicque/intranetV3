@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Emprunt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -100,6 +100,12 @@ abstract class Emprunt extends BaseEntity
         $this->setUuid(Uuid::uuid4());
         $this->empruntMateriels = new ArrayCollection();
         $this->setEtat(self::DEMANDE);
+    }
+
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
 
