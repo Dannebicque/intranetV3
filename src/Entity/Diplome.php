@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 08:33
+// @lastUpdate 13/10/2020 09:53
 
 namespace App\Entity;
 
@@ -161,7 +161,7 @@ class Diplome extends BaseEntity
     private $optResponsableQualite;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcComptence::class, mappedBy="diplome")
+     * @ORM\OneToMany(targetEntity=ApcCompetence::class, mappedBy="diplome")
      */
     private $apcComptences;
 
