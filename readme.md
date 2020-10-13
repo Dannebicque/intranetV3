@@ -99,6 +99,10 @@ Cette nouvelle version apporte une refonte ergonomique complète, et une optimis
 * Suivi des services prévisionnels de manière globale par l’administration
 * Accès RH pour gérer les vacataires et nouveaux recrutements
 
+## Fonctionnalités pour la partie "Qualité / ISO 9001" ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
+* Mise en place d'un "lime-survey" interne pour la création des questions qualités
+* Export des résultats des enquêtes au formation qualité
+
 # Nouveautés globales à toutes les fonctionnalités ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
 * Version multilangue (Français et Anglais pour le moment)
@@ -113,12 +117,13 @@ Cette nouvelle version apporte une refonte ergonomique complète, et une optimis
 * Celcat pour la récupération des emplois du temps ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Apogée pour la synchornisation des maquettes et la récupération des listes. ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
-# Features sur la version 3.1 ![Nouveauté V3.1](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
+# Features sur la version 3.1 ![Nouveauté V3.1 Début 2021](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
 
 * Notion de "sous-évaluations" pour permettre la saisie de l'intérgalité des notes.
 * Prise en compte de l'évaluation en compétences
 * Dimension « sociale » et  »participative » de l’intranet
 * Mise en place d'API pour le développement d'applications tierces
+* Mise en place d'un "cahier de texte", auto-alimenté par les étudiants
 * Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP, module).
     * Répondre à une demande étudiante
     * Possibilité pour l’équipe d’interagir sur ces forums
