@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 18:20
+// @lastUpdate 13/10/2020 08:33
 
 namespace App\Entity;
 
@@ -696,14 +696,14 @@ class Diplome extends BaseEntity
     }
 
     /**
-     * @return Collection|ApcComptence[]
+     * @return Collection|ApcCompetence[]
      */
     public function getApcComptences(): Collection
     {
         return $this->apcComptences;
     }
 
-    public function addApcComptence(ApcComptence $apcComptence): self
+    public function addApcComptence(ApcCompetence $apcComptence): self
     {
         if (!$this->apcComptences->contains($apcComptence)) {
             $this->apcComptences[] = $apcComptence;
@@ -713,7 +713,7 @@ class Diplome extends BaseEntity
         return $this;
     }
 
-    public function removeApcComptence(ApcComptence $apcComptence): self
+    public function removeApcComptence(ApcCompetence $apcComptence): self
     {
         if ($this->apcComptences->contains($apcComptence)) {
             $this->apcComptences->removeElement($apcComptence);
