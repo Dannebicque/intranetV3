@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 08:33
+// @lastUpdate 13/10/2020 09:52
 
 namespace App\Entity;
 
@@ -28,7 +28,7 @@ class ApcComposanteEssentielle
     private $libelle;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ApcComptence::class, inversedBy="apcComposanteEssentielles")
+     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcComposanteEssentielles")
      */
     private $competence;
 
