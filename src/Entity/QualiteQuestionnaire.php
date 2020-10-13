@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QualiteQuestionnaire.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 08:57
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -80,6 +80,11 @@ class QualiteQuestionnaire extends BaseEntity
         $this->semestre = $semestre;
         $this->qualiteQuestionnaireSections = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
+    }
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
     public function getLibelle(): ?string

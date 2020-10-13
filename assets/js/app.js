@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 08:10
+// @lastUpdate 12/10/2020 17:16
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
@@ -15,17 +15,16 @@ import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import '../css/app.scss'
 
 import $ from 'jquery'
-
-require('bootstrap')
-
-let lookup = {}
-
 import PerfectScrollbar from 'perfect-scrollbar'
 import './validator-bs4'
 import {getDataOptions} from './util'
 import './material'
 import './search'
 import './modaler'
+
+require('bootstrap')
+
+let lookup = {}
 
 require('bootstrap-select')
 
@@ -134,7 +133,7 @@ function updateInterface () {
     var options = {
       multidateSeparator: ', ',
       language: 'fr',
-      daysOfWeekHighlighted: '06',
+      daysOfWeekHighlighted: '06'
       /*templates: {
         leftArrow: '>',
         rightArrow: '<'
@@ -243,6 +242,7 @@ sidebar.fold = function () {
   app.state('sidebar.folded', true)
 }
 
+
 sidebar.unfold = function () {
   $('body').removeClass('sidebar-folded')
   app.state('sidebar.folded', false)
@@ -273,4 +273,144 @@ sidebar.close = function () {
   $('body').removeClass('sidebar-open')
   $('.backdrop-sidebar').remove()
 }
+
+
+// =====================
+// Quickview
+// =====================
+//
+
+let quickview = {}
+let qps
+//const qps = new PerfectScrollbar('.quickview-body')
+
+// Update scrollbar on tab change
+//
+$(document).on('shown.bs.tab', '.quickview-header a[data-toggle="tab"]', function (e) {
+  // $(this).closest('.quickview').find('.quickview-body').perfectScrollbar('update')
+  qps.update()
+})
+
+
+// Quickview closer
+//
+$(document).on('click', '[data-dismiss="quickview"]', function () {
+  quickview.close($(this).closest('.quickview'))
+})
+
+
+// Handle quickview openner
+//
+$(document).on('click', '[data-toggle="quickview"]', function (e) {
+  e.preventDefault()
+  let target = app.getTarget($(this))
+
+  if (target == false) {
+    quickview.close($(this).closest('.quickview'))
+  } else {
+    let url = ''
+    if ($(this).hasDataAttr('url')) {
+      url = $(this).data('url')
+    }
+    quickview.toggle(target, url)
+  }
+})
+
+
+// Close quickview when backdrop touches
+//
+$(document).on('click', '.backdrop-quickview', function () {
+  let qv = $(this).attr('data-target')
+  if (!$(qv).is('[data-disable-backdrop-click]')) {
+    quickview.close(qv)
+  }
+})
+
+$(document).on('click', '.quickview .close, [data-dismiss="quickview"]', function () {
+  let qv = $(this).closest('.quickview')
+  quickview.close(qv)
+})
+
+// Toggle open/close state
+//
+quickview.toggle = function (e, url) {
+  if ($(e).hasClass('reveal')) {
+    quickview.close(e)
+  } else {
+    if (url !== '') {
+      $(e).html('<div class="spinner-linear"><div class="line"></div></div>')
+      $(e).load(url, function () {
+        //$('.quickview-body').perfectScrollbar()
+        qps = new PerfectScrollbar('.quickview-body')
+
+      })
+    }
+    quickview.open(e)
+  }
+}
+
+
+// Open quickview
+//
+quickview.open = function (e) {
+  let quickview = $(e)
+  let url = ''
+  // Load content from URL if required
+  if (quickview.hasDataAttr('url') && 'true' !== quickview.data('url-has-loaded')) {
+    if (quickview.data('url') === 'no-url') {
+      url = Routing.generate('quick_view')
+    } else {
+      url = quickview.data('url')
+    }
+
+    quickview.load(url, function () {
+      qps = new PerfectScrollbar('.quickview-body')
+
+      //$('.quickview-body').perfectScrollbar()
+      // Don't load it next time, if don't need to
+      if (quickview.hasDataAttr('always-reload') && 'true' === quickview.data('always-reload')) {
+
+      } else {
+        quickview.data('url-has-loaded', 'true')
+      }
+    })
+
+  }
+
+// Open it
+  quickview.addClass('reveal').not('.backdrop-remove').after('<div class="app-backdrop backdrop-quickview" data-target="' + e + '"></div>')
+}
+
+
+// Close quickview
+//
+quickview.close = function (e) {
+  $(e).removeClass('reveal')
+  $('.backdrop-quickview').remove()
+}
+
+
+let app = {}
+
+app.getTarget = function (e) {
+  let target
+  if (e.hasDataAttr('target')) {
+    target = e.data('target')
+  } else {
+    target = e.attr('href')
+  }
+
+  if (target == 'next') {
+    target = $(e).next()
+  } else if (target == 'prev') {
+    target = $(e).prev()
+  }
+
+  if (target == undefined) {
+    return false
+  }
+
+  return target
+}
+
 

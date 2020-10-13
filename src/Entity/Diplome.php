@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 08:25
+// @lastUpdate 13/10/2020 09:53
 
 namespace App\Entity;
 
@@ -160,12 +160,18 @@ class Diplome extends BaseEntity
      */
     private $optResponsableQualite;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ApcCompetence::class, mappedBy="diplome")
+     */
+    private $apcComptences;
+
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
         $this->annees = new ArrayCollection();
+        $this->apcComptences = new ArrayCollection();
     }
 
     /**
@@ -685,6 +691,37 @@ class Diplome extends BaseEntity
     public function setOptResponsableQualite(?Personnel $responsableQualite): self
     {
         $this->optResponsableQualite = $responsableQualite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcCompetence[]
+     */
+    public function getApcComptences(): Collection
+    {
+        return $this->apcComptences;
+    }
+
+    public function addApcComptence(ApcCompetence $apcComptence): self
+    {
+        if (!$this->apcComptences->contains($apcComptence)) {
+            $this->apcComptences[] = $apcComptence;
+            $apcComptence->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcComptence(ApcCompetence $apcComptence): self
+    {
+        if ($this->apcComptences->contains($apcComptence)) {
+            $this->apcComptences->removeElement($apcComptence);
+            // set the owning side to null (unless already changed)
+            if ($apcComptence->getDiplome() === $this) {
+                $apcComptence->setDiplome(null);
+            }
+        }
 
         return $this;
     }

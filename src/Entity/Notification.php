@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 13:16
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -92,6 +92,11 @@ class Notification extends BaseEntity
      * @throws Exception
      */
     public function __construct()
+    {
+        $this->setUuid(Uuid::uuid4());
+    }
+
+    public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 20:04
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -199,6 +199,11 @@ class StageEtudiant extends BaseEntity
         $this->setUuid(Uuid::uuid4());
 
         $this->setGratificationMontant($gratificationMontant);
+    }
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
     /**

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Event/StageEvent.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 20:05
+// @lastUpdate 12/10/2020 15:25
 
 namespace App\Event;
 
@@ -32,8 +32,7 @@ class StageEvent extends Event
         self::CHGT_ETAT_STAGE_REFUS              => StageEtudiant::ETAT_STAGE_REFUS
     ];
 
-    /** @var StageEtudiant */
-    protected $stageEtudiant;
+    protected StageEtudiant $stageEtudiant;
 
     public function __construct(StageEtudiant $stageEtudiant)
     {

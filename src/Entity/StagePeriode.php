@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 15:11
+// @lastUpdate 13/10/2020 06:34
 
 namespace App\Entity;
 
@@ -176,6 +176,11 @@ class StagePeriode extends BaseEntity implements Serializable
         $this->stagePeriodeOffres = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->stageMailTemplates = new ArrayCollection();
+    }
+
+    public function __clone()
+    {
+        $this->setUuid(Uuid::uuid4());
     }
 
     public function getNumeroPeriode(): ?int
