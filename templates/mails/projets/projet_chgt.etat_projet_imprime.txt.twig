@@ -1,0 +1,12 @@
+Bonjour {{ stageEtudiant.etudiant.prenom|capitalize }},
+
+La proposition de projet au sein de l'entreprise {{ projetEtudiant.organisme.raisonSociale }} vient d'être imprimée.
+Merci de venir la signer auprés de l'assitant(e) pédagogique.
+
+Bien cordialement
+
+Le(s) responsable(s) des {{projetEtudiant.projetPeriode.libelle }}
+{% for responsable in projetEtudiant.projetPeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}

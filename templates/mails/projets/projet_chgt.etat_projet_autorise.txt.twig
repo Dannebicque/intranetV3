@@ -1,0 +1,14 @@
+Bonjour,
+
+Nous avons bien reçu votre proposition de projet signée. Vous pouvez maintenant accéder au formulaire pour saisir les
+informations en vue de l'édition de la convention. Seul le responsable du groupe de projet doit saisir les informations
+et indiquer l'ensemble des étudiants componsants le groupe de projet.
+Vous serez informés par mail des étapes suivantes.
+
+Bien cordialement
+
+Le(s) responsable(s) des {{projetEtudiant.projetPeriode.libelle }}
+{% for responsable in projetEtudiant.projetPeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}
