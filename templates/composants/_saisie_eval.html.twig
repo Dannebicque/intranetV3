@@ -6,7 +6,6 @@
             {{ form_row(form.dateEvaluation) }}
             {{ form_row(form.coefficient) }}
             {{ form_row(form.commentaire) }}
-
             {{ form_label(form.typeGroupe) }}
 <div class="row">
     {% for child in form.typeGroupe %}
@@ -16,11 +15,11 @@
         </div>
     {% endfor %}
 </div>
+
 {{ form_help(form.typeGroupe) }}
+    {{ form_errors(form.typeGroupe) }}
+    {{ form_label(form.personnelAutorise) }}
 
-            {{ form_errors(form.typeGroupe) }}
-
-            {{ form_label(form.personnelAutorise) }}
 <div class="row">
     {% for child in form.personnelAutorise %}
         <div class="col-sm-2">
@@ -33,9 +32,9 @@
         </div>
     {% endfor %}
 </div>
-{{ form_help(form.personnelAutorise) }}
 
-            {{ form_errors(form.personnelAutorise) }}
+{{ form_help(form.personnelAutorise) }}
+    {{ form_errors(form.personnelAutorise) }}
 
 <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
 {{ form_end(form) }}

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 16:35
+// @lastUpdate 14/10/2020 18:19
 
 namespace App\Controller\appPersonnel;
 
@@ -126,7 +126,8 @@ class NoteController extends BaseController
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes
+            'notes'      => $notes,
+            'autorise'   => true
         ]);
     }
 
