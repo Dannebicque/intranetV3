@@ -1,10 +1,11 @@
-
-
 // Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.articles.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/02/2020 18:05
+// @lastUpdate 14/10/2020 12:02
+
+import {dataTableLangueFr} from '../lang/fr'
+
 
 $(document).on('click', '#addCategorie', function () {
   if ($('#listeCategories').hasDataAttr('data-checkbox')) {
@@ -60,7 +61,7 @@ $(document).on('click', '#addCategorie', function () {
         '                </tr>\n' +
         '                </tfoot>')
       table.dataTable({
-        'language': langueFr
+        'language': dataTableLangueFr
       })
     }
   })

@@ -29,12 +29,15 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.groupe~adm.justificat~0d230585.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/vendors~agenda~app.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/agenda~app.js",
         "/build/agenda.js"
       ],
       "css": [
         "/build/vendors~agenda~app.css",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css",
         "/build/agenda~app.css"
       ]
     },
@@ -47,12 +50,12 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.edt~adm.etudiants~adm~7452d955.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
-        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/datatable.js"
       ],
       "css": [
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.css"
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css"
       ]
     },
     "quill": {
@@ -84,12 +87,12 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.groupe~adm.justificat~0d230585.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
-        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/absences.js"
       ],
       "css": [
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.css"
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css"
       ]
     },
     "applications": {
@@ -196,12 +199,12 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.edt~adm.etudiants~adm~7452d955.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
-        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/adm.etudiants.js"
       ],
       "css": [
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.css"
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css"
       ]
     },
     "adm.personnels": {
@@ -213,12 +216,12 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.edt~adm.etudiants~adm~7452d955.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
-        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/adm.personnels.js"
       ],
       "css": [
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.css"
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css"
       ]
     },
     "sadm.personnels": {
@@ -230,12 +233,12 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.edt~adm.etudiants~adm~7452d955.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
-        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/sadm.personnels.js"
       ],
       "css": [
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.css"
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css"
       ]
     },
     "adm.rattrapages": {
@@ -337,12 +340,12 @@
         "/build/vendors~absences~adm.absences~adm.alternances~adm.bornes~adm.configuration~adm.groupe~adm.justificat~0d230585.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~adm.stage~agenda~app~datatable~sa~a52fa8c5.js",
         "/build/vendors~absences~adm.absences~adm.edt~adm.etudiants~adm.personnels~agenda~app~datatable~sadm.personnels.js",
-        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.js",
+        "/build/vendors~absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.js",
         "/build/adm.absences.js"
       ],
       "css": [
-        "/build/absences~adm.absences~adm.etudiants~adm.personnels~datatable~sadm.personnels.css"
+        "/build/absences~adm.absences~adm.etudiants~adm.personnels~agenda~datatable~sadm.personnels.css"
       ]
     },
     "adm.matieres": {
