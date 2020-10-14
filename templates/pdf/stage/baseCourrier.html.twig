@@ -6,15 +6,23 @@
     font-family: "DejaVu Sans", serif;
     font-size: 13px;
     }
+
+    #logoCourrier {
+    position:fixe;
+    top: 5px;
+    right:5px;
+    }
 {% endblock %}
 
 {% block content %}
-    <img src="{{ settings('BASE_PATH') }}logo/urca_petit.jpg" alt="logo Université"
-         width="100px" style="float:left;"/><br>
-    <img
-            src="{{ settings('BASE_PATH') }}logo/{{ settings('LOGO_IUT') }}"
-            alt="logo"
-            height="75px"/>
+    <div id="logoCourrier">
+        <img src="{{ settings('BASE_PATH') }}logo/urca_petit.jpg" alt="logo Université"
+             width="100px"/><br>
+        <img
+                src="{{ settings('BASE_PATH') }}logo/{{ settings('LOGO_IUT') }}"
+                alt="logo"
+                height="75px"/>
+    </div>
     <div id="courrier">
         <div id="adresseent">
             {% set initiales = '' %}
