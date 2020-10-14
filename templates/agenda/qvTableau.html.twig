@@ -1,6 +1,7 @@
-<table class="table">
+<table class="table" data-provide="datatables" id="qvAgendaDatatable">
     <thead>
     <tr>
+        <th>#</th>
         <th>{{ 'table.date'|trans }}</th>
         <th>{{ 'table.jour'|trans }}</th>
         <th>{{ 'table.heure'|trans }}</th>
@@ -11,6 +12,7 @@
     <tbody>
     {% for chrono in chronologique %}
         <tr class="previ{{ chrono.type_cours|lower }}">
+            <td>{{ loop.index }}</td>
             <td>{{ chrono.date }}</td>
             <td>{{ chrono.jour }}</td>
             <td>{{ chrono.heure }}</td>

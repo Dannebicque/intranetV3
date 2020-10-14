@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 10:25
+// @lastUpdate 14/10/2020 11:56
 
 
 namespace App\Classes\ServiceRealise;
@@ -80,7 +80,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $ev = new EvenementEdt();
         $ev->groupe = $event->getDisplayGroupe();
         $ev->jour = $date->dayName;
-        $ev->duree = $date->getDureeInt();
+        $ev->duree = $event->getDureeInt();
         $ev->date = $date->isoFormat('L');
         $ev->heure = Constantes::TAB_HEURES[$event->getDebut()] . ' à ' . Constantes::TAB_HEURES[$event->getFin()];
         $ev->matiere = $event->getMatiere() !== null ? $event->getMatiere()->getDisplay() : $event->getTexte();
