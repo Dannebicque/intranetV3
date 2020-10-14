@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 14:19
+// @lastUpdate 14/10/2020 10:25
 
 namespace App\Classes\ServiceRealise;
 
@@ -15,11 +15,12 @@ use App\Entity\Personnel;
 
 interface ServiceRealiseInterface
 {
-    public function getServiceRealiseParMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire): array;
+    public function getServiceRealiseParMatiere(Matiere $matiere): array;
+
+    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, Matiere $matiere): array;
 
     public function getServiceRealiserParEnseignant(
-        Personnel $personnel,
-        AnneeUniversitaire $anneeUniversitaire
+        Personnel $personnel
     ): array;
 
     public function convertToEvenementEdt($event): EvenementEdt;

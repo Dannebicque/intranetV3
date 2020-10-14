@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 14:28
+// @lastUpdate 13/10/2020 21:16
 
 namespace App\Classes\ServiceRealise;
 
@@ -28,12 +28,12 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         $this->celcatEventsRepository = $celcatEventsRepository;
     }
 
-    public function getServiceRealiseParMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire): array
+    public function getServiceRealiseParMatiere(Matiere $matiere): array
     {
         // TODO: Implement getServiceRealiseParMatiere() method.
     }
 
-    public function getServiceRealiserParEnseignant(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
+    public function getServiceRealiserParEnseignant(Personnel $personnel): array
     {
         $events = $this->celcatEventsRepository->findBy(['codePersonnel' => $personnel->getNumeroHarpege()],
             ['matiere' => 'ASC', 'semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
@@ -63,5 +63,9 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         $ev->personnel = $event->getLibPersonnel();
 
         return $ev;
+    }
+
+    public function getServiceRealiseParPersonnelMatiere(Personnel $getConnectedUser, Matiere $getMatiere): array
+    {
     }
 }
