@@ -217,12 +217,12 @@
                         <a class="myedit"
                            data-field="gratificationMontant"
                            href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le numéro de fax">
+                           data-title="Corriger le montant de la gratification">
                             {{ stageEtudiant.gratificationMontant|number_format(2) }}
                         </a> € par <a class="myedit"
                                       data-field="gratificationPeriode"
                                       href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                                      data-title="Corriger le numéro de fax">
+                                      data-title="Corriger la période de gratification">
                             {{ stageEtudiant.gratificationPeriode|trans }}
                         </a></td>
                 </tr>
