@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/Dannebicque/intranetV3.svg?branch=master)](https://travis-ci.org/Dannebicque/intranetV3) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/?branch=master) [![SymfonyInsight](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1/mini.svg)](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1) [![Maintainability](https://api.codeclimate.com/v1/badges/78fd8b8fb668f9887a71/maintainability)](https://codeclimate.com/github/Dannebicque/intranetV3/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a2bbcd727ce29ecc7520/maintainability)](https://codeclimate.com/github/arnaudlevy/intranetV3/maintainability)
+
 
 # IntranetV3
 
@@ -14,7 +16,7 @@ Les instructions se trouve dans le fichier [install.md](install.md)
 
 Cet intranet est spécialisé dans la gestion de formation universitaire de type DUT ou Licences professionnelles.
 
-Il propose de nombreuses gestions comme le suivi des notes, des absences, des rattrapages, des services prévisionnels des enseignants, des trombinoscopes et des groupes d'étudiants et beaucoup d'autres fonctionnaltiés.
+Il propose de nombreuses gestions comme le suivi des notes, des absences, des rattrapages, des services prévisionnels des enseignants, des trombinoscopes et des groupes d'étudiants et beaucoup d'autres fonctionnalités.
 
 Cette nouvelle version apporte une refonte ergonomique complète, et une optimisation du code, pour prendre en compte les standard de SF 4.1 et PHP 7.2.
 
@@ -67,7 +69,7 @@ Cette nouvelle version apporte une refonte ergonomique complète, et une optimis
 ## Fonctionnalités pour la direction du département
 
 * Suivi des étudiants, de leurs notes et de leurs absences ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
-* Possibilité de justifier des absences (une à une) 
+* Possibilité de justifier des absences (une à une)
 * Possibilité de justifier des absences par lot ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Gestion des commissions des absences (convocation des étudiants, mailings, planning) ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Gestion des notes et des sous-commissions (calculs des moyennes, proposition de décision)
@@ -131,6 +133,3 @@ Cette nouvelle version apporte une refonte ergonomique complète, et une optimis
 * Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP, module).
     * Répondre à une demande étudiante
     * Possibilité pour l’équipe d’interagir sur ces forums
-
-
-
