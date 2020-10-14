@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/aaasauvegarde/theme.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 13:17
+// @lastUpdate 14/10/2020 10:54
 
 // Check if an element has a specific data attribute
 //
