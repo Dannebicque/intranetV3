@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/SalleExamen.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 14/10/2020 15:59
 
 namespace App\Entity;
 
@@ -45,7 +45,7 @@ class SalleExamen extends BaseEntity
     private $capacite;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"salle_examen_administration"})
      */
     private $placesInterdites;
@@ -120,7 +120,7 @@ class SalleExamen extends BaseEntity
         return $this->placesInterdites;
     }
 
-    public function setPlacesInterdites(string $placesInterdites): self
+    public function setPlacesInterdites(?string $placesInterdites): self
     {
         $this->placesInterdites = $placesInterdites;
 

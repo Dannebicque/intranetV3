@@ -10,7 +10,11 @@
 
 {% block content %}
     <img src="{{ settings('BASE_PATH') }}logo/urca_petit.jpg" alt="logo Université"
-         width="100px" style="float:left;"/>
+         width="100px" style="float:left;"/><br>
+    <img
+            src="{{ settings('BASE_PATH') }}logo/{{ settings('LOGO_IUT') }}"
+            alt="logo"
+            height="75px"/>
     <div id="courrier">
         <div id="adresseent">
             {% set initiales = '' %}
