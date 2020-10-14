@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 09:00
+// @lastUpdate 14/10/2020 13:14
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
@@ -22,4 +22,5 @@ return [
     Liip\ImagineBundle\LiipImagineBundle::class                          => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class                    => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class               => ['all' => true],
+    Bugsnag\BugsnagBundle\BugsnagBundle::class                           => ['all' => true],
 ];
