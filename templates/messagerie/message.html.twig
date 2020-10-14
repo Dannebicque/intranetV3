@@ -31,14 +31,12 @@
             {% if message.messagePieceJointes|length > 0 %}
                 <h6 class="text-lighter text-uppercase mb-3">
                     <i class="fa fa-paperclip mr-2"></i>
-                    <small>Attchments ({{ message.messagePieceJointes|length }})</small>
+                    <small>{{ message.messagePieceJointes|length }} Pièce(s) jointe(s)</small>
                 </h6>
                 <div class="gap-items-2 gap-y">
                     {% for pj in message.messagePieceJointes %}
-                        <a class="d-inline-block" href="#">
-                            <img class="w-140px"
-                                 src="{{ asset('assets/img/gallery/thumb-sm/10.jpg') }}"
-                                 alt="...">
+                        <a class="d-inline-block" href="{{ asset('upload/pj/'~pj.fichier) }}">
+                            <i class="fas fa-file fa-5x"></i>
                         </a>
                     {% endfor %}
                 </div>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 18:14
+// @lastUpdate 14/10/2020 18:22
 
 namespace App\Controller\appPersonnel;
 
@@ -109,7 +109,6 @@ class EvaluationController extends BaseController
      * @param                  $_format
      *
      * @return Response|StreamedResponse|null
-     * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

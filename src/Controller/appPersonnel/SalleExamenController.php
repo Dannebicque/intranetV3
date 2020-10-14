@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 17:43
+// @lastUpdate 14/10/2020 21:57
 
 namespace App\Controller\appPersonnel;
 
@@ -71,10 +71,12 @@ class SalleExamenController extends BaseController
                 $request->request->get('enseignant2'),
                 $this->dataUserSession->getDepartement()
             );
-        } else {
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Salle trop petite');
 
-            return $this->redirectToRoute('application_index', ['onglet' => 'salle_examen']);
+            return null;
         }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Salle trop petite');
+
+        return $this->redirectToRoute('application_index', ['onglet' => 'salle_examen']);
     }
 }

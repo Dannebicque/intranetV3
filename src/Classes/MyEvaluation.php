@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:45
+// @lastUpdate 14/10/2020 18:36
 
 /**
  * Created by PhpStorm.
@@ -250,7 +250,6 @@ class MyEvaluation
      * @param             $groupes
      * @param Departement $departement
      *
-     * @return StreamedResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -266,7 +265,7 @@ class MyEvaluation
                     'groupes'    => $groupes,
                     'notes'      => $notes
                 ], $name, $departement->getLibelle());
-                break;
+                return null;
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
@@ -275,7 +274,6 @@ class MyEvaluation
                 );
 
                 return $this->myExcelMultiExport->saveXlsx($name);
-                break;
             case Constantes::FORMAT_CSV_POINT_VIRGULE:
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
@@ -284,8 +282,9 @@ class MyEvaluation
                 );
 
                 return $this->myExcelMultiExport->saveCsv($name);
-                break;
         }
+
+        return null;
     }
 
     /**
