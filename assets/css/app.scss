@@ -2,12 +2,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 15:08
+// @lastUpdate 14/10/2020 08:29
 
 @import "core.min.css";
 @import "./material-icons.css";
 @import "./theme.scss";
 @import "./color.scss";
+@import "perfect-scrollbar.css";
 
 #planning thead {
   height: 30px;

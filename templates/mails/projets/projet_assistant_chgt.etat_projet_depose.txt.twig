@@ -1,0 +1,24 @@
+Bonjour,
+
+Les étudiants : {% for etudiant in projetEtudiant.etudiants %}{{ etudiant.displayPr  }}{% if not loop.last %}, {% endif %}{% endfor %} viennent de compléter le formulaire de projet sur l'intranet.
+
+Récapitulatif des infos du projet.
+
+ * Période de projet : {{ projetEtudiant.projetPeriode.libelle}}
+ * Organisme : {{ projetEtudiant.organisme.raisonSociale}}
+ * Temps complet : {{ projetEtudiant.tempComplet == true ? 'Oui' : 'Non'}}
+ * Durée : {{ projetEtudiant.duree }} {{ projetEtudiant.uniteDuree }}
+ * Sujet : {{ projetEtudiant.sujet }}
+ * Activités confiées : {{ projetEtudiant.$ctivitesConfiees }}
+{% for etudiant in projetEtudiant.etudiants %}
+*{{ etudiant.displayPr  }}
+{% endfor %}
+
+
+Le(s) responsable(s) des {{projetEtudiant.projetPeriode.libelle }}
+{% for responsable in projetEtudiant.projetPeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}
+
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.

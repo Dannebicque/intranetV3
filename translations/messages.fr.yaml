@@ -442,6 +442,9 @@ adm:
       heading: 'Création d''un niveau de compétence'
     show:
       heading: 'Détails d''un niveau de compétence'
+  projet_etudiant:
+    modification:
+      heading: 'messages'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -677,6 +680,7 @@ atitle:
     articles: 'Retour aux articles'
     stage_periode_gestion: 'Retour à la période de stage'
     stage_periode_offre: 'Retour aux offres de stage de la période'
+    projet_periode_gestion: 'messages'
   saisir.evaluation: 'Saisir une évaluation'
   save_csv: 'Exporter en CSV'
   save_pdf: 'Sauvegarder en PDF'
@@ -694,6 +698,7 @@ atitle:
   update_events: 'Forcer la Mise à jour les événements depuis Celcat'
   voir_fichier: 'Voir fichier'
   voir: Voir
+  service_chronologique: 'Service Chronologique'
 
 au: au
 aucun: aucun
@@ -1364,6 +1369,12 @@ professionalisation: Professionalisation
 profil: Profil
 profil.heading: 'Profil de %user% (%semestre%)'
 profil.personnel.heading: 'Profil de %user%'
+
+projet_etudiant:
+  edit.success.flash: 'Projet étudiant modifié avec succès'
+  delete.error.flash: 'Erreur lors de la suppression des donénes du projet étudiant'
+  delete.success.flash: 'Projet étudiant supprimé avec succès'
+  change_etat.success.flash: 'Etat du projet modifié avec succès'
 
 projet_periode_gestion.heading: 'Gestion de la période de projet %libelle%'
 proposition.effectuee: 'Proposition effectuée'

@@ -1,0 +1,12 @@
+Bonjour,
+
+Le formulaire des étudiants : {% for etudiant in projetEtudiant.etudiants %}{{ etudiant.displayPr  }}{% if not loop.last %}, {% endif %}{% endfor %} vient d'être validé. La convention de projet peut être
+imprimée.
+
+Bien cordialement
+
+Le(s) responsable(s) des {{projetEtudiant.projetPeriode.libelle }}
+{% for responsable in projetEtudiant.projetPeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}

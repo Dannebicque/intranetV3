@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 17:16
+// @lastUpdate 14/10/2020 10:25
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
@@ -29,7 +29,6 @@ let lookup = {}
 require('bootstrap-select')
 
 $('input[type="file"]').on('change', function (e) {
-  console.log('toto')
   let filename = e.target.files[0].name
   $('.custom-file-label').html(filename)
 })
@@ -95,7 +94,6 @@ $(document).on('click', '.card-btn-fullscreen', function () {
 
 // Slide up/down
 $(document).on('click', '.card-btn-slide', function () {
-  console.log('toto')
   $(this).toggleClass('rotate-180').closest('.card').find('.card-content').slideToggle()
 })
 
@@ -134,14 +132,9 @@ function updateInterface () {
       multidateSeparator: ', ',
       language: 'fr',
       daysOfWeekHighlighted: '06'
-      /*templates: {
-        leftArrow: '>',
-        rightArrow: '<'
-      }*/
     }
 
     if ($(this).prop('tagName') != 'INPUT') {
-      console.log('daterange')
       //si ce n'est pas un input => donc un date range
       options.inputs = [$(this).find('input:first'), $(this).find('input:last')]
     }
@@ -281,16 +274,18 @@ sidebar.close = function () {
 //
 
 let quickview = {}
-let qps
-//const qps = new PerfectScrollbar('.quickview-body')
+let qps = null
 
 // Update scrollbar on tab change
 //
 $(document).on('shown.bs.tab', '.quickview-header a[data-toggle="tab"]', function (e) {
-  // $(this).closest('.quickview').find('.quickview-body').perfectScrollbar('update')
   qps.update()
 })
 
+export default function reloadQv () {
+  qps.destroy()
+  qps = new PerfectScrollbar('.quickview')
+}
 
 // Quickview closer
 //
@@ -340,9 +335,7 @@ quickview.toggle = function (e, url) {
     if (url !== '') {
       $(e).html('<div class="spinner-linear"><div class="line"></div></div>')
       $(e).load(url, function () {
-        //$('.quickview-body').perfectScrollbar()
-        qps = new PerfectScrollbar('.quickview-body')
-
+        qps = new PerfectScrollbar('.quickview')
       })
     }
     quickview.open(e)
@@ -364,9 +357,8 @@ quickview.open = function (e) {
     }
 
     quickview.load(url, function () {
-      qps = new PerfectScrollbar('.quickview-body')
+      qps = new PerfectScrollbar('.quickview')
 
-      //$('.quickview-body').perfectScrollbar()
       // Don't load it next time, if don't need to
       if (quickview.hasDataAttr('always-reload') && 'true' === quickview.data('always-reload')) {
 
@@ -412,5 +404,4 @@ app.getTarget = function (e) {
 
   return target
 }
-
 

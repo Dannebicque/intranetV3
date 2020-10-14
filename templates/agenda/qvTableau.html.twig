@@ -1,0 +1,53 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>{{ 'table.date'|trans }}</th>
+        <th>{{ 'table.jour'|trans }}</th>
+        <th>{{ 'table.heure'|trans }}</th>
+        <th>{{ 'table.type_cours'|trans }}</th>
+        <th>{{ 'table.groupe'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for chrono in chronologique %}
+        <tr class="previ{{ chrono.type_cours|lower }}">
+            <td>{{ chrono.date }}</td>
+            <td>{{ chrono.jour }}</td>
+            <td>{{ chrono.heure }}</td>
+            <td>{{ chrono.type_cours }}</td>
+            <td>{{ chrono.groupe }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>NB Séances</th>
+        <th>Nb Heures</th>
+    </tr>
+    </thead>
+    <tr>
+        <th>CM</th>
+        <th>{{ statistiques.nbCM }}</th>
+        <th>{{ statistiques.nbHCM }}</th>
+    </tr>
+    <tr class="previtd">
+        <th>TD</th>
+        <th>{{ statistiques.nbTD }}</th>
+        <th>{{ statistiques.nbHTD }}</th>
+    </tr>
+    <tr class="previtp">
+        <th>TP</th>
+        <th>{{ statistiques.nbTP }}</th>
+        <th>{{ statistiques.nbHTP }}</th>
+    </tr>
+    <tr>
+        <th>Total</th>
+        <th>{{ statistiques.total }}</th>
+        <th>{{ statistiques.totalH }}</th>
+    </tr>
+</table>
+
