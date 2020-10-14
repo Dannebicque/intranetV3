@@ -1,4 +1,4 @@
-name: PHP Composer
+name: IntranetV3
 
 on:
   push:
@@ -17,20 +17,42 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
+    -   name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+            coverage: "none"
+            extensions: "json,couchbase,memcached,mongodb,redis,rdkafka,xsl"
+            ini-values: "memory_limit=-1"
+            php-version: "${{ matrix.php }}"
+            tools: flex,pecl
 
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+    -   name: Configure composer
+        run: |
+            ([ -d ~/.composer ] || mkdir ~/.composer) && cp .github/composer-config.json ~/.composer/config.json
+            SYMFONY_VERSION=$(cat composer.json | grep '^ *\"branch-version\". *\"[1-9]' | grep -o '[0-9.]*')
+            echo "::set-env name=SYMFONY_VERSION::$SYMFONY_VERSION"
+            echo "::set-env name=COMPOSER_ROOT_VERSION::$SYMFONY_VERSION.x-dev"
+    -   name: Determine composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=directory::$(composer config cache-dir)"
 
-    - name: PHPUnit for Symfony
-      # You may pin to the exact commit or the version.
-      # uses: chindit/actions-phpunit-symfony@c02bff1f84d757d030c15e2985be601cdba3039e
-      uses: chindit/actions-phpunit-symfony@1.0.0
+    -   name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+            path: ${{ steps.composer-cache.outputs.directory }}
+            key: ${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
+            restore-keys: ${{ matrix.php }}-composer-
+
+    -   name: Install dependencies
+        run: |
+            echo "::group::composer update"
+            composer require --dev --no-update mongodb/mongodb:@stable
+            composer update --no-progress --no-suggest --ansi
+            echo "::endgroup::"
+            echo "::group::install phpunit"
+            ./phpunit install
+            echo "::endgroup::"
+            
+    -   name: Run tests
+        run: ./phpunit --group integration
+
