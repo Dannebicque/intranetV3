@@ -2,8 +2,26 @@
     "brick/math": {
         "version": "0.8.15"
     },
+    "bugsnag/bugsnag": {
+        "version": "v3.23.0"
+    },
+    "bugsnag/bugsnag-symfony": {
+        "version": "v1.7.0"
+    },
+    "composer/ca-bundle": {
+        "version": "1.2.8"
+    },
     "doctrine/sql-formatter": {
         "version": "1.1.0"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "7.2.0"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.4.0"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.7.0"
     },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
@@ -25,6 +43,9 @@
     },
     "psr/http-message": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "ramsey/collection": {
         "version": "1.0.1"
