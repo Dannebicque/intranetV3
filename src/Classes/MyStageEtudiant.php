@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 15:38
+// @lastUpdate 14/10/2020 18:19
 
 /**
  * Created by PhpStorm.
@@ -172,6 +172,10 @@ class MyStageEtudiant
     {
         if ($type === 'date') {
             $value = Tools::convertDateToObject($value);
+        }
+
+        if ($type === 'gratificationPeriode') {
+            $value = strtoupper(substr($value, 0, 1));
         }
 
         if ($stageEtudiant) {
