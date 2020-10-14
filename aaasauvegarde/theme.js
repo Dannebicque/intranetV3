@@ -1,8 +1,8 @@
 // Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/theme.js
+// @file /Users/davidannebicque/htdocs/intranetV3/aaasauvegarde/theme.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 13:16
+// @lastUpdate 27/08/2020 13:17
 
 // Check if an element has a specific data attribute
 //
