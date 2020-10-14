@@ -23,25 +23,27 @@
                 alt="logo"
                 height="75px"/>
     </div>
-    <div id="courrier">
-        <div id="adresseent">
-            {% set initiales = '' %}
-            {% for responsable in stageEtudiant.stagePeriode.responsables %}
-                {% set initiales = initiales~responsable.prenom|slice(0,1)~responsable.nom|slice(0,1) %}
-                {% if not loop.last %}
-                    {% set initiales = initiales~'/' %}
-                {% endif %}
-                {{ responsable.displayPr }}<br/>
-            {% endfor %}
-            Responsable des stages<br/><br/>
 
-            <div>
-                A<br/>
-                {{ stageEtudiant.entreprise.raisonSociale }}<br/>
-                {{ stageEtudiant.entreprise.responsable.display }}<br/>
-                {{ stageEtudiant.entreprise.adresse.display|raw }}
-            </div>
+    <div id="adresseent">
+        {% set initiales = '' %}
+        {% for responsable in stageEtudiant.stagePeriode.responsables %}
+            {% set initiales = initiales~responsable.prenom|slice(0,1)~responsable.nom|slice(0,1) %}
+            {% if not loop.last %}
+                {% set initiales = initiales~'/' %}
+            {% endif %}
+            {{ responsable.displayPr }}<br/>
+        {% endfor %}
+        Responsable des stages<br/><br/>
+
+        <div>
+            A<br/>
+            {{ stageEtudiant.entreprise.raisonSociale }}<br/>
+            {{ stageEtudiant.entreprise.responsable.display }}<br/>
+            {{ stageEtudiant.entreprise.adresse.display|raw }}
         </div>
+    </div>
+    <div id="courrier">
+
         <div id="refcourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }}
             N° {{ date('now')|date('Y') }}/{{ initiales }}
