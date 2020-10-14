@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 13:01
+// @lastUpdate 14/10/2020 18:40
 
 namespace App\Controller\administration\stage;
 
@@ -41,12 +41,12 @@ class StageEntrepriseController extends BaseController
         /** @var StageEtudiant $entreprise */
         foreach ($entreprises as $entreprise) {
             if ($entreprise->getEntreprise() !== null) {
-                if (array_key_exists(mb_strtolower($entreprise->getEntreprise()->getLibelle()), $tEntreprises)) {
-                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['entreprise'] = $entreprise->getEntreprise();
-                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['nbstagiaire']++;
+                if (array_key_exists(mb_strtolower($entreprise->getEntreprise()->getRaisonSociale()), $tEntreprises)) {
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['entreprise'] = $entreprise->getEntreprise();
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['nbstagiaire']++;
                 } else {
-                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['entreprise'] = $entreprise->getEntreprise();
-                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getLibelle())]['nbstagiaire'] = 1;
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['entreprise'] = $entreprise->getEntreprise();
+                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['nbstagiaire'] = 1;
                 }
             }
         }
