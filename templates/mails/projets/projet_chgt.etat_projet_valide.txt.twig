@@ -1,0 +1,12 @@
+Bonjour,
+
+La proposition de projet au sein de l'entreprise {{ projetEtudiant.organisme.raisonSociale }} vient d'être validée.
+Vous recevrez un mail pour venir signer les convention dans le bureau de l'assistant(e) pédagogique.
+
+Bien cordialement
+
+Le(s) responsable(s) des {{projetEtudiant.projetPeriode.libelle }}
+{% for responsable in projetEtudiant.projetPeriode.responsables %}
+{{ responsable.displayPr  }}
+{% if not loop.last %}, {% endif %}
+{% endfor %}

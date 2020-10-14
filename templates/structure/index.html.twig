@@ -106,6 +106,15 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="row gap-y lignehover">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-11">
+                        <a href="{{ path('administration_apc_referentiel_index', {diplome:diplome.id}) }}"
+                           class="btn btn-info btn-block" title="Accéder au référentiel de compétences"><i
+                                    class="fa fa-warehouse"></i> Accéder au référentiel de compétences</a>
+                    </div>
+                </div>
+
                 {% for annee in diplome.annees %}
                     <div class="row gap-y dip_{{ diplome.id }} lignehover">
                         <div class="col-md-2"></div>

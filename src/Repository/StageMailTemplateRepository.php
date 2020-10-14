@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageMailTemplateRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 11:56
+// @lastUpdate 13/10/2020 15:21
 
 namespace App\Repository;
 
@@ -81,4 +81,5 @@ class StageMailTemplateRepository extends ServiceEntityRepository
 
         return $t;
     }
+
 }

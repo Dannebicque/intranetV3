@@ -1,0 +1,23 @@
+{% extends 'base-qv.html.twig' %}
+
+{% block qvTitle %}Service Chronologique{% endblock %}
+
+{% block qvBody %}
+    <div class="row">
+        <div class="col-sm-12">
+            <select class="form-control" data-provide="select-picker" data-live-search="true" id="chronologiqueMatiere">
+                <option value="">Choisir une matière</option>
+                {% for previsionnel in previsionnels %}
+                    <option value="{{ previsionnel.id }}">{{ previsionnel.matiere.display }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12" id="afficheChronologique">
+            <div class="alert alert-info">Choisir une matière de votre service</div>
+        </div>
+    </div>
+{% endblock %}
+

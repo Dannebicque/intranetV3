@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/TypeDiplomeFixtures.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 13/10/2020 09:56
 
 namespace App\DataFixtures;
 
@@ -24,6 +24,16 @@ class TypeDiplomeFixtures extends Fixture
         $td->setNbSemestres(4);
         $td->setNiveauEntree(0);
         $td->setNiveauSortie(2);
+        $manager->persist($td);
+
+        $td = new TypeDiplome();
+        $td->setLibelle('Bachelor Universitaire de Technologie');
+        $td->setCreated(new DateTime('now'));
+        $td->setUpdated(new DateTime('now'));
+        $td->setSigle('B.U.T.');
+        $td->setNbSemestres(6);
+        $td->setNiveauEntree(0);
+        $td->setNiveauSortie(3);
         $manager->persist($td);
 
         $td = new TypeDiplome();

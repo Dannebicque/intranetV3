@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 13/10/2020 20:16
 
 namespace App\Controller\administration\projet;
 
@@ -30,24 +30,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjetEtudiantController extends BaseController
 {
     /**
-     * @Route("/{id}", name="administration_projet_etudiant_show", methods="GET")
-     * @param PersonnelRepository $personnelRepository
-     * @param ProjetEtudiant      $projetEtudiant
-     *
-     * @return Response
-     */
-    public function show(PersonnelRepository $personnelRepository, ProjetEtudiant $projetEtudiant): Response
-    {
-        return $this->render(
-            'administration/projet/projet_etudiant/show.html.twig',
-            [
-                'projetEtudiant' => $projetEtudiant,
-                'personnels'     => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())
-            ]
-        );
-    }
-
-    /**
      * @Route("/{id}/edit", name="administration_projet_etudiant_edit", methods="GET|POST")
      * @param Request        $request
      * @param ProjetEtudiant $projetEtudiant
@@ -56,12 +38,20 @@ class ProjetEtudiantController extends BaseController
      */
     public function edit(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
-        $form = $this->createForm(ProjetEtudiantType::class, $projetEtudiant);
+        $form = $this->createForm(ProjetEtudiantType::class, $projetEtudiant, [
+            'semestre' => $projetEtudiant->getProjetPeriode()->getSemestre()
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.create.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.edit.success.flash');
+
+            if ($request->request->get('btn_update') !== null) {
+                return $this->redirectToRoute('administration_projet_periode_gestion', [
+                    'uuid' => $projetEtudiant->getProjetPeriode()->getUuidString()
+                ]);
+            }
 
             return $this->redirectToRoute('administration_projet_etudiant_edit', ['id' => $projetEtudiant->getId()]);
         }
@@ -146,42 +136,5 @@ class ProjetEtudiantController extends BaseController
         return new Response($dompdf->stream('Convention-' . $projetEtudiant->getEtudiants()[0]->getNom(),
             ['Attachment' => 1]));
 
-    }
-
-
-    /**
-     * @Route("/courrier/pdf/{id}", name="administration_projet_etudiant_courrier_pdf", methods="GET")
-     * @param ProjetEtudiant $projetEtudiant
-     *
-     * @return Response
-     */
-    public function courrierPdf(ProjetEtudiant $projetEtudiant): Response
-    {
-
-    }
-
-    /**
-     * @Route("/fiche-enseignant/{id}", name="administration_projet_etudiant_fiche_enseignant", methods="GET")
-     * @param ProjetEtudiant $projetEtudiant
-     *
-     * @return Response
-     */
-    public function ficheEnseignant(ProjetEtudiant $projetEtudiant): Response
-    {
-        $html = $this->renderView('pdf/fichePDFStage.html.twig',
-            [
-                'projetEtudiant' => $projetEtudiant
-            ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response ($dompdf->stream('Fiche-Enseignant-projet-' . $projetEtudiant->getEtudiant()->getNom(),
-            ['Attachment' => 1]));
     }
 }
