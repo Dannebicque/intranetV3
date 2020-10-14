@@ -491,7 +491,7 @@
 <!-- END Main container -->
 
 <!-- Global quickview -->
-<div id="qv-global" class="quickview quickview-lg" data-url="{% block quickViewUrl %}no-url{% endblock %}">
+<div id="qv-global" class="quickview {% block sizeQv %}quickview-lg{% endblock %}" data-url="{% block quickViewUrl %}no-url{% endblock %}">
     <div class="spinner-linear">
         <div class="line"></div>
     </div>

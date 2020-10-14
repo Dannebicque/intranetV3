@@ -3,10 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 14/10/2020 10:25
 
 namespace App\Controller;
 
+use App\Classes\ServiceRealise\ServiceRealiseCelcat;
+use App\Classes\ServiceRealise\ServiceRealiseIntranet;
+use App\Entity\Previsionnel;
+use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,6 +21,53 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AgendaController extends BaseController
 {
+
+    /**
+     * @Route("/qv", name="agenda_qv", options={"expose"=true})
+     *
+     * @return Response
+     */
+    public function qv(PrevisionnelRepository $previsionnelRepository): Response
+    {
+
+        return $this->render('agenda/qv.html.twig', [
+            'previsionnels' => $previsionnelRepository->findPrevisionnelEnseignantDepartement($this->getConnectedUser(),
+                $this->dataUserSession->getDepartement())
+        ]);
+    }
+
+    /**
+     * @Route("/qv/{previ}", name="agenda_qv_previ", options={"expose"=true})
+     *
+     * @param ServiceRealiseIntranet $serviceRealiseIntranet
+     * @param ServiceRealiseCelcat   $serviceRealiseCelcat
+     * @param Previsionnel           $previ
+     *
+     * @return Response
+     */
+    public function qvPrevi(
+        ServiceRealiseIntranet $serviceRealiseIntranet,
+        ServiceRealiseCelcat $serviceRealiseCelcat,
+        Previsionnel $previ
+    ): Response {
+
+        if ($this->getDepartement() !== null && $this->getDepartement()->getOptUpdateCelcat() === true) {
+            $chronologique = $serviceRealiseCelcat->getServiceRealiseParPersonnelMatiere($this->getConnectedUser(),
+                $previ->getMatiere());
+            $statistiques = $serviceRealiseIntranet->statistiques($chronologique);
+        } else {
+            $chronologique = $serviceRealiseIntranet->getServiceRealiseParPersonnelMatiere($this->getConnectedUser(),
+                $previ->getMatiere());
+            $statistiques = $serviceRealiseIntranet->statistiques($chronologique);
+        }
+
+        return $this->render('agenda/qvTableau.html.twig', [
+            'previ'         => $previ,
+            'chronologique' => $chronologique,
+            'statistiques'  => $statistiques
+        ]);
+    }
+
     /**
      * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index", options={"expose"=true},
      *                                        requirements={"semaine":"\d+"})

@@ -18,8 +18,6 @@
 {% endblock %}
 
 {% block content %}
-
-
     {% if user_data.departement.optEdt == true %}
         {% if is_granted('ROLE_PERMANENT') %}
             {% if filtre == 'prof' %}
@@ -39,4 +37,12 @@
             erreur
         {% endif %}
     {% endif %}
+{% endblock %}
+
+{% block quickViewUrl %}{{ path('agenda_qv') }}{% endblock %}
+{% block sizeQv %}quickview-xl{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('agenda') }}
 {% endblock %}

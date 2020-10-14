@@ -698,6 +698,7 @@ atitle:
   update_events: 'Forcer la Mise à jour les événements depuis Celcat'
   voir_fichier: 'Voir fichier'
   voir: Voir
+  service_chronologique: 'Service Chronologique'
 
 au: au
 aucun: aucun

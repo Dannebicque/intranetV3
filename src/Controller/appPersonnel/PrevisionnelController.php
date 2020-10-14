@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 13/10/2020 21:14
 
 namespace App\Controller\appPersonnel;
 
@@ -62,8 +62,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
-            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser(),
-                $this->dataUserSession->getAnneeUniversitaire())
+            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser())
         ]);
     }
 
