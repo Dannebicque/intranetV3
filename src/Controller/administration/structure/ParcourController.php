@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/ParcourController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/10/2020 12:24
 
 namespace App\Controller\administration\structure;
 
@@ -122,9 +122,29 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_parcour_delete", methods="DELETE")
-     * @param Parcour $id
+     * @param Request $request
+     * @param Parcour $parcour
+     *
+     * @return Response
      */
-    public function delete(Parcour $id): void
+    public function delete(Request $request, Parcour $parcour): Response
     {
+        $id = $parcour->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+            count($parcour->getMatieres()) === 0
+        ) {
+            $this->entityManager->remove($parcour);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'parcour.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'parcour.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

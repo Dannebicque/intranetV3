@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/10/2020 12:28
 
 namespace App\Controller\administration\structure;
 
@@ -115,9 +115,32 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_diplome_delete", methods="DELETE")
-     * @param Diplome $id
+     * @param Request $request
+     * @param Diplome $diplome
+     *
+     * @return Response
      */
-    public function delete(Diplome $id): void
+    public function delete(Request $request, Diplome $diplome): Response
     {
+        $id = $diplome->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+            count($diplome->getAnnees()) === 0 &&
+            count($diplome->getSemestres()) === 0 &&
+            count($diplome->getPpns()) === 0 &&
+            count($diplome->getHrs()) === 0 &&
+            count($diplome->getApcComptences()) === 0) {
+            $this->entityManager->remove($diplome);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'diplome.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

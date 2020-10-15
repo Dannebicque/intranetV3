@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/SemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/10/2020 12:26
 
 namespace App\Controller\administration\structure;
 
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
+use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use Symfony\Component\Form\Exception\LogicException;
@@ -129,8 +130,35 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_semestre_delete", methods="DELETE")
+     * @param Request  $request
+     * @param Semestre $semestre
+     *
+     * @return Response
      */
-    public function delete(): void
+    public function delete(Request $request, Semestre $semestre): Response
     {
+        $id = $semestre->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+            count($semestre->getUes()) === 0 &&
+            count($semestre->getEtudiants()) === 0 &&
+            count($semestre->getProjetPeriodes()) === 0 &&
+            count($semestre->getTypeGroupes()) === 0 &&
+            count($semestre->getParcours()) === 0 &&
+            count($semestre->getArticles()) === 0 &&
+            count($semestre->getDocuments()) === 0 &&
+            count($semestre->getScolaritePromos()) === 0) {
+            $this->entityManager->remove($semestre);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'semestre.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'semestre.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

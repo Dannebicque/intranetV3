@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/AnneeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/10/2020 12:30
 
 namespace App\Controller\administration\structure;
 
@@ -132,8 +132,30 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_annee_delete", methods="DELETE")
+     * @param Request $request
+     * @param Annee   $annee
+     *
+     * @return Response
      */
-    public function delete(): void
+    public function delete(Request $request, Annee $annee): Response
     {
+        $id = $annee->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+            count($annee->getSemestres()) === 0 &&
+            count($annee->getAlternances()) === 0 &&
+            count($annee->getApcNiveaux()) === 0) {
+            $this->entityManager->remove($annee);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'annee.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
