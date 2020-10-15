@@ -46,10 +46,10 @@
             <tbody>
             {% for etudiant in groupe.etudiants %}
                 <tr>
-                    <td style="text-align: center; height: 20px">{{ etudiant.numetudiant }}</td>
+                    <td style="text-align: center; height: 20px">{{ etudiant.numEtudiant }}</td>
 
                     {% if evaluation.semestre.annee.diplome.optAnonymat == false %}
-                        <td>&nbsp; {{ etudiant.display  }} </td>
+                        <td>&nbsp; {{ etudiant.display }} </td>
                     {% endif %}
 
                     <td style="text-align: center">{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note|number_format(2) }}{% else %} - {% endif %}</td>
