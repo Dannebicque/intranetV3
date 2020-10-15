@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/UeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 15/10/2020 12:27
 
 namespace App\Controller\administration\structure;
 
@@ -125,8 +125,30 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_ue_delete", methods="DELETE")
+     * @param Request $request
+     * @param Ue      $ue
+     *
+     * @return Response
      */
-    public function delete(): void
+    public function delete(Request $request, Ue $ue): Response
     {
+        $id = $ue->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+            count($ue->getMatieres()) === 0 &&
+            count($ue->getScolariteMoyenneUes()) === 0 &&
+            count($ue->getScolaritePromoUes()) === 0) {
+            $this->entityManager->remove($ue);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'ue.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'ue.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
