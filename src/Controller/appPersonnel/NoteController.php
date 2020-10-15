@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 18:19
+// @lastUpdate 15/10/2020 19:32
 
 namespace App\Controller\appPersonnel;
 
@@ -79,6 +79,7 @@ class NoteController extends BaseController
                     'departement'     => $this->dataUserSession->getDepartement(),
                     'semestre'        => $matiere->getSemestre(),
                     'matiereDisabled' => false,
+                    'autorise'        => true,
                     'locale'          => $request->getLocale(),
                     'attr'            => [
                         'data-provide' => 'validation'
