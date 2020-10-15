@@ -9,7 +9,7 @@ Récapitulatif des infos du projet.
  * Temps complet : {{ projetEtudiant.tempComplet == true ? 'Oui' : 'Non'}}
  * Durée : {{ projetEtudiant.duree }} {{ projetEtudiant.uniteDuree }}
  * Sujet : {{ projetEtudiant.sujet }}
- * Activités confiées : {{ projetEtudiant.$ctivitesConfiees }}
+ * Activités confiées : {{ projetEtudiant.activitesConfiees }}
 {% for etudiant in projetEtudiant.etudiants %}
 *{{ etudiant.displayPr  }}
 {% endfor %}
