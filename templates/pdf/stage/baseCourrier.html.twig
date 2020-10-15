@@ -83,11 +83,11 @@
             </td>
         </div>
     </div>
-    <div style="text-align: right; position:relative; margin-top: 160px; font-size:11px">
+    <div style="text-align: right; position:fixed; bottom: 50px; right:15px; font-size:11px">
         Université de Reims Champagne-Ardenne<br/>
-        {{ settings('NOM_IUT') }} - Département {{ proposition.etudiant.semestre.annee.diplome.sigle }}<br/>
-        {{ user_data.departement.ufr.sitePrincipal.adresse.display|striptags }} / Tél. {{ proposition.etudiant
-        .semestre.annee.diplome.departement.telContact|tel_format }}<br/>
+        {{ settings('NOM_IUT') }} - Département {{ stageEtudiant.etudiant.semestre.annee.diplome.sigle }}<br/>
+        {{ user_data.departement.ufr.sitePrincipal.adresse.display|striptags }} /
+        Tél. {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.telContact|tel_format }}<br/>
         {{ settings('SITE_IUT') }}<br/>
     </div>
 {% endblock %}
