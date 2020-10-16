@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:45
+// @lastUpdate 16/10/2020 12:10
 
 namespace App\Classes\Stage;
 
 
 use App\Classes\Mail\MailerFromDatabase;
 use App\Classes\Mail\MailerFromTwig;
+use App\Entity\TwigTemplate;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -57,7 +58,7 @@ class MailerStage
      * @throws SyntaxError
      */
     public function setTemplateFromDatabase(
-        string $template,
+        TwigTemplate $template,
         array $donnees,
         ?array $destinataires,
         string $sujet

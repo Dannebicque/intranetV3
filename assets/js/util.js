@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 08:04
+// @lastUpdate 16/10/2020 11:50
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -69,6 +69,7 @@ $(document).on('click', '.supprimer', function (e) {
           if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
             document.location.href = id.url
           } else {
+            //t.row("#ligne_"+id).remove().draw(); =< datattable todo: remove ligne si datatable ?? problème dans adm>personnel
             $('#ligne_' + id).closest('tr').remove()
             addCallout('Suppression effectuée avec succès', 'success')
             Swal.fire({

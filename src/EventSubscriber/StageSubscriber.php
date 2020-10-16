@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 15:25
+// @lastUpdate 16/10/2020 12:06
 
 namespace App\EventSubscriber;
 
@@ -244,7 +244,7 @@ class StageSubscriber implements EventSubscriberInterface
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null && $stageEtudiant->getEtudiant() !== null) {
             $this->myMailer->setTemplateFromDatabase(
-                $mailTemplate->getTwigTemplate()->getName(),
+                $mailTemplate->getTwigTemplate(),
                 ['stageEtudiant' => $stageEtudiant],
                 $stageEtudiant->getEtudiant()->getMails(),
                 $mailTemplate->getSubject());

@@ -3,30 +3,23 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 12:18
+// @lastUpdate 16/10/2020 12:23
 
 namespace App\Controller\administration\stage;
 
-use App\Classes\DatabaseTwigLoader;
 use App\Classes\MyStageMailTemplate;
 use App\Controller\BaseController;
 use App\Entity\StageEtudiant;
-use App\Entity\StageMailTemplate;
 use App\Entity\StagePeriode;
-use App\Event\StageEvent;
-use App\Repository\StageEtudiantRepository;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
@@ -112,20 +105,18 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/apercu/{stagePeriode}/{mail}", name="administration_stage_periode_courrier_apercu_modele")
      *
-     * @param DatabaseTwigLoader          $databaseTwigLoader
+     * @param Environment                 $twig
      * @param StageMailTemplateRepository $stageMailTemplateRepository
      * @param StagePeriode                $stagePeriode
      * @param                             $mail
      *
      * @return Response
-     * @throws NonUniqueResultException
      * @throws LoaderError
-     * @throws RuntimeError
+     * @throws NonUniqueResultException
      * @throws SyntaxError
      */
     public function apercu(
-        KernelInterface $kernel,
-        DatabaseTwigLoader $databaseTwigLoader,
+        Environment $twig,
         StageMailTemplateRepository $stageMailTemplateRepository,
         StagePeriode $stagePeriode,
         $mail
@@ -136,11 +127,8 @@ class StagePeriodeCourrierController extends BaseController
         );
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
-            $twig = new Environment($databaseTwigLoader,
-                ['cache' => $kernel->getCacheDir() . '/databaseTemplate/']);
-
-            $mail = $twig->render($mailTemplate->getTwigTemplate()->getName(),
-                ['stageEtudiant' => $this->donnees]);
+            $template = $twig->createTemplate($mailTemplate->getTwigTemplate()->getSource());
+            $mail = $template->render(['stageEtudiant' => $this->donnees]);
 
             return $this->render('administration/stage/stage_periode_courrier/apercu.html.twig', [
                 'mail' => $mail

@@ -52,3 +52,4 @@ services:
 #        tags:
 #            - { name: kernel.event_listener, event: kernel.request, priority: 2050 }
 #        arguments: [ '%maintenance%' ]
+
