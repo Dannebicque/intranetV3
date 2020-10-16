@@ -174,9 +174,10 @@
                     <th>{{ 'table.sujetStage'|trans }}</th>
                     <td><a class="myedit"
                            data-field="sujetStage"
+                           data-type="textarea"
                            href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
                            data-title="Corriger le numéro de fax">
-                            {{ stageEtudiant.sujetStage }}
+                            {{ stageEtudiant.sujetStage|raw }}
                         </a>
                     </td>
                 </tr>
